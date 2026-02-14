@@ -1,0 +1,185 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  * {
+    @apply box-border;
+  }
+
+  html {
+    @apply scroll-smooth;
+  }
+
+  body {
+    @apply bg-abyss text-white antialiased;
+    @apply min-h-screen m-0 p-0;
+    @apply font-sans;
+    overflow-x: hidden;
+  }
+
+  /* Scrollbar personnalisé pour Dark Mode */
+  ::-webkit-scrollbar {
+    @apply w-2;
+  }
+
+  ::-webkit-scrollbar-track {
+    @apply bg-abyss-light;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    @apply bg-ocean-teal/30 rounded-full;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    @apply bg-ocean-teal/50;
+  }
+}
+
+@layer components {
+  /* Glassmorphism utilities */
+  .glass {
+    @apply bg-white/5 backdrop-blur-lg border border-white/10;
+  }
+
+  .glass-strong {
+    @apply bg-black/40 backdrop-blur-xl border border-white/20;
+  }
+
+  /* Gradient text */
+  .gradient-text {
+    @apply bg-gradient-to-r from-ocean-teal to-ocean-blue bg-clip-text text-transparent;
+  }
+
+  /* Glow effect */
+  .glow-teal {
+    box-shadow: 0 0 20px rgba(33, 196, 123, 0.3);
+  }
+
+  .glow-blue {
+    box-shadow: 0 0 20px rgba(0, 145, 255, 0.3);
+  }
+
+  /* Container responsive */
+  .container-custom {
+    @apply max-w-7xl mx-auto px-4 sm:px-6 lg:px-8;
+  }
+
+  /* Button styles */
+  .btn-primary {
+    @apply px-6 py-3 bg-gradient-to-r from-ocean-teal to-ocean-blue;
+    @apply text-white font-semibold rounded-full;
+    @apply transition-all duration-300;
+    @apply hover:shadow-lg hover:shadow-ocean-teal/50;
+    @apply hover:scale-105 active:scale-95;
+  }
+
+  .btn-secondary {
+    @apply px-6 py-3 glass;
+    @apply text-white font-semibold rounded-full;
+    @apply transition-all duration-300;
+    @apply hover:bg-white/10 hover:border-ocean-teal/50;
+  }
+
+  /* Card styles */
+  .card {
+    @apply glass-strong rounded-2xl p-6;
+    @apply transition-all duration-300;
+    @apply hover:border-ocean-teal/30 hover:shadow-xl;
+  }
+
+  /* Input styles */
+  .input {
+    @apply w-full px-4 py-3 glass rounded-lg;
+    @apply text-white placeholder-gray-400;
+    @apply border-white/20 focus:border-ocean-teal/50;
+    @apply focus:outline-none focus:ring-2 focus:ring-ocean-teal/20;
+    @apply transition-all duration-200;
+  }
+
+  .textarea {
+    @apply input resize-none;
+  }
+}
+
+@layer utilities {
+  /* Animation utilities */
+  .animate-on-scroll {
+    @apply opacity-0 translate-y-8;
+    animation: fadeInUp 0.8s ease-out forwards;
+  }
+
+  @keyframes fadeInUp {
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  /* Parallax effect */
+  .parallax {
+    will-change: transform;
+  }
+
+  /* Background patterns */
+  .bg-ocean-pattern {
+    background-image:
+      radial-gradient(circle at 20% 80%, rgba(33, 196, 123, 0.06) 1px, transparent 1.5px),
+      radial-gradient(circle at 70% 90%, rgba(0, 145, 255, 0.08) 1.2px, transparent 1.8px),
+      radial-gradient(circle at 45% 70%, rgba(255, 255, 255, 0.05) 0.8px, transparent 1.2px);
+    background-size: 150% 150%;
+    animation: bubbleUp 60s linear infinite;
+  }
+
+  @keyframes bubbleUp {
+    from { background-position: 0% 100%; }
+    to { background-position: 100% 0%; }
+  }
+
+  /* Text selection */
+  ::selection {
+    @apply bg-ocean-teal/30 text-white;
+  }
+
+  /* Focus visible */
+  .focus-ring {
+    @apply focus:outline-none focus-visible:ring-2 focus-visible:ring-ocean-teal/50 focus-visible:ring-offset-2 focus-visible:ring-offset-abyss;
+  }
+}
+
+/* Loading spinner */
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+.spinner {
+  border: 3px solid rgba(33, 196, 123, 0.1);
+  border-top-color: rgba(33, 196, 123, 1);
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  animation: spin 0.8s linear infinite;
+}
+
+/* Skeleton loading */
+@keyframes pulse-subtle {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.5; }
+}
+
+.skeleton {
+  @apply bg-white/5 rounded;
+  animation: pulse-subtle 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+/* Hide scrollbar but keep functionality */
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
+
+.scrollbar-hide {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
