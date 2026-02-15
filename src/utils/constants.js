@@ -9,6 +9,7 @@ export const APP_CONFIG = {
 
 export const SOCIAL_LINKS = {
   instagram: import.meta.env.VITE_INSTAGRAM_URL || 'https://www.instagram.com/karimsaari/',
+  twitter: import.meta.env.VITE_TWITTER_URL || 'https://x.com/dark_massilia',
   tiktok: import.meta.env.VITE_TIKTOK_URL || 'https://www.tiktok.com/@dark.massilia',
   youtube: import.meta.env.VITE_YOUTUBE_URL || 'https://www.youtube.com/@dark.massilia',
   px500: import.meta.env.VITE_500PX_URL || 'https://500px.com/p/karimsaari',
@@ -24,6 +25,7 @@ export const NAV_LINKS = [
   { name: 'Médias', path: '/medias', icon: 'Film' },
   { name: 'Vidéos', path: '/videos', icon: 'Video' },
   { name: 'Instagram', path: '/instagram', icon: 'Instagram' },
+  { name: 'X', path: '/twitter', icon: 'Twitter' },
   { name: 'Contact', path: '/contact', icon: 'Mail' },
 ];
 

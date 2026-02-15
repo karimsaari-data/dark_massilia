@@ -1,8 +1,15 @@
 import { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Home, Compass, Film, Video, Instagram, Mail, Menu, X } from 'lucide-react';
+import { Home, Compass, Film, Video, Instagram, Mail, Menu, X as XIcon } from 'lucide-react';
 import { NAV_LINKS } from '../../utils/constants';
+
+// Custom Twitter/X icon
+const Twitter = ({ className }) => (
+  <svg className={className} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+    <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
+  </svg>
+);
 
 const iconMap = {
   Home,
@@ -10,6 +17,7 @@ const iconMap = {
   Film,
   Video,
   Instagram,
+  Twitter,
   Mail,
 };
 
@@ -117,7 +125,7 @@ const Navbar = () => {
               aria-label="Toggle menu"
             >
               {isMobileMenuOpen ? (
-                <X className="w-6 h-6" />
+                <XIcon className="w-6 h-6" />
               ) : (
                 <Menu className="w-6 h-6" />
               )}
@@ -154,7 +162,7 @@ const Navbar = () => {
                   className="absolute top-4 right-4 p-2 rounded-lg hover:bg-white/10 transition-colors"
                   aria-label="Close menu"
                 >
-                  <X className="w-6 h-6" />
+                  <XIcon className="w-6 h-6" />
                 </button>
 
                 {/* Logo */}
