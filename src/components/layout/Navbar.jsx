@@ -1,13 +1,14 @@
 import { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Home, Compass, Film, Instagram, Mail, Menu, X } from 'lucide-react';
+import { Home, Compass, Film, Video, Instagram, Mail, Menu, X } from 'lucide-react';
 import { NAV_LINKS } from '../../utils/constants';
 
 const iconMap = {
   Home,
   Compass,
   Film,
+  Video,
   Instagram,
   Mail,
 };

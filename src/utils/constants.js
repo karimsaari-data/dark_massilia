@@ -22,6 +22,7 @@ export const NAV_LINKS = [
   { name: 'Accueil', path: '/', icon: 'Home' },
   { name: 'Missions', path: '/missions', icon: 'Compass' },
   { name: 'Médias', path: '/medias', icon: 'Film' },
+  { name: 'Vidéos', path: '/videos', icon: 'Video' },
   { name: 'Instagram', path: '/instagram', icon: 'Instagram' },
   { name: 'Contact', path: '/contact', icon: 'Mail' },
 ];
