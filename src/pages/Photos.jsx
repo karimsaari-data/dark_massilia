@@ -42,35 +42,21 @@ const Photos = () => {
   return (
     <div className="min-h-screen py-24">
       <div className="container-custom">
-        {/* Header */}
+        {/* Header avec lien */}
         <motion.div
           initial="hidden"
           animate="visible"
           variants={STAGGER_CONTAINER}
-          className="text-center mb-12"
+          className="mb-12"
         >
-          <motion.h1
-            variants={FADE_IN_UP}
-            className="text-4xl md:text-5xl font-bold text-white mb-4"
-          >
-            Portfolio <span className="gradient-text">Photo</span>
-          </motion.h1>
-
-          <motion.p
-            variants={FADE_IN_UP}
-            className="text-text-secondary text-lg max-w-2xl mx-auto mb-8"
-          >
-            Photographe sous-marin et documentariste des fonds marins méditerranéens.
-          </motion.p>
-
-          <motion.div variants={FADE_IN_UP}>
+          <motion.div variants={FADE_IN_UP} className="text-center mb-6">
             <a
               href="https://500px.com/p/karimsaari?view=photos"
               target="_blank"
               rel="noopener noreferrer"
               className="inline-flex items-center gap-2 text-ocean-teal hover:text-white transition-colors text-lg font-medium"
             >
-              Voir le portfolio complet sur 500px
+              Voir sur 500px
               <ExternalLink className="w-5 h-5" />
             </a>
           </motion.div>
