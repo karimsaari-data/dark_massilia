@@ -49,12 +49,22 @@ const Home = () => {
             {/* Bio / Mission Statement */}
             <motion.p
               variants={FADE_IN_UP}
-              className="text-lg md:text-xl text-text-secondary max-w-3xl mx-auto leading-relaxed"
+              className="text-lg md:text-xl text-text-secondary max-w-3xl mx-auto leading-relaxed mb-8"
             >
-              Éco-acteur marseillais, apnéiste & sentinelle de la Méditerranée.
-              Depuis Marseille, je filme ce que la Mer cache sous la surface des Calanques.
-              Avec <strong className="text-ocean-teal">Team Oxygen</strong>, chaque immersion devient une mission de dépollution.
+              Éco-acteur basé à Marseille, apnéiste engagé pour la préservation de la Méditerranée. Je documente les zones immergées des Calanques pour rendre visible l'impact des pollutions sous-marines. Avec <strong className="text-ocean-teal">Team Oxygen</strong>, chaque immersion est structurée comme une opération de dépollution et de collecte de données environnementales.
             </motion.p>
+
+            {/* Signature */}
+            <motion.div
+              variants={FADE_IN_UP}
+              className="flex justify-center"
+            >
+              <img
+                src="/images/Karim-SAARI-white-low-res.png"
+                alt="Signature Karim Saari"
+                className="h-16 md:h-20 opacity-80"
+              />
+            </motion.div>
           </motion.div>
         </div>
 
