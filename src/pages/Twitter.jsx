@@ -22,30 +22,16 @@ const Twitter = () => {
   }, []);
 
   return (
-    <div className="min-h-screen py-32">
-      <div className="container-custom max-w-2xl">
-        {/* Header */}
+    <div className="min-h-screen py-24">
+      <div className="container-custom">
+        {/* Header avec lien */}
         <motion.div
           initial="hidden"
           animate="visible"
           variants={STAGGER_CONTAINER}
-          className="text-center mb-12"
+          className="mb-12"
         >
-          <motion.h1
-            variants={FADE_IN_UP}
-            className="text-4xl md:text-5xl font-bold text-white mb-4"
-          >
-            Actualités <span className="gradient-text">X</span>
-          </motion.h1>
-
-          <motion.p
-            variants={FADE_IN_UP}
-            className="text-text-secondary text-lg max-w-2xl mx-auto mb-8"
-          >
-            Suivez nos dernières actions de dépollution et actualités environnementales en temps réel.
-          </motion.p>
-
-          <motion.div variants={FADE_IN_UP} className="mb-6">
+          <motion.div variants={FADE_IN_UP} className="text-center mb-6">
             <a
               href="https://x.com/dark_massilia"
               target="_blank"
@@ -60,20 +46,23 @@ const Twitter = () => {
 
         {/* Twitter Feed */}
         <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.3 }}
-          className="glass-strong rounded-2xl overflow-hidden border border-white/10 p-6 flex justify-center"
+          initial="hidden"
+          animate="visible"
+          variants={STAGGER_CONTAINER}
         >
-          <blockquote
-            className="twitter-tweet"
-            data-lang="fr"
-            data-theme="dark"
-            data-dnt="true"
-          >
-            <p lang="fr" dir="ltr">Chargement du tweet...</p>
-            <a href="https://twitter.com/dark_massilia/status/1954162961947230533?ref_src=twsrc%5Etfw">February 5, 2025</a>
-          </blockquote>
+          <motion.div variants={FADE_IN_UP}>
+            <div className="glass-strong rounded-2xl overflow-hidden border border-white/10 p-6 flex justify-center">
+              <blockquote
+                className="twitter-tweet"
+                data-lang="fr"
+                data-theme="dark"
+                data-dnt="true"
+              >
+                <p lang="fr" dir="ltr">Chargement du tweet...</p>
+                <a href="https://twitter.com/dark_massilia/status/1954162961947230533?ref_src=twsrc%5Etfw">February 5, 2025</a>
+              </blockquote>
+            </div>
+          </motion.div>
         </motion.div>
 
         {/* Back to Home */}
