@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion';
-import { ArrowLeft } from 'lucide-react';
+import { ArrowLeft, ExternalLink } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { FADE_IN_UP, STAGGER_CONTAINER } from '../utils/constants';
 
@@ -62,33 +62,24 @@ const Videos = () => {
   ];
 
   return (
-    <div className="min-h-screen py-32">
+    <div className="min-h-screen py-24">
       <div className="container-custom">
-        {/* Header */}
+        {/* Header avec lien */}
         <motion.div
           initial="hidden"
           animate="visible"
           variants={STAGGER_CONTAINER}
-          className="text-center mb-16"
+          className="mb-12"
         >
-          <motion.p
-            variants={FADE_IN_UP}
-            className="text-text-secondary text-lg max-w-2xl mx-auto mb-8"
-          >
-            Découvrez mes documentaires et reportages sur la protection de la Méditerranée et les actions de dépollution dans les Calanques de Marseille.
-          </motion.p>
-
-          <motion.div variants={FADE_IN_UP}>
+          <motion.div variants={FADE_IN_UP} className="text-center mb-6">
             <a
               href="https://www.youtube.com/@dark.massilia"
               target="_blank"
               rel="noopener noreferrer"
-              className="btn-primary inline-flex items-center gap-2"
+              className="inline-flex items-center gap-2 text-ocean-teal hover:text-white transition-colors text-lg font-medium"
             >
-              <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
-                <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/>
-              </svg>
-              <span>Voir ma chaîne YouTube</span>
+              Voir sur YouTube
+              <ExternalLink className="w-5 h-5" />
             </a>
           </motion.div>
         </motion.div>
