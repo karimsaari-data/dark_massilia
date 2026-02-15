@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Instagram - Connexion en cours | Dark Massilia</title>
+    <link rel="icon" type="image/png" href="favicon-96x96.png" sizes="96x96" />
+
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+            color: #f5f5f5;
+            min-height: 100vh;
+            padding: 40px 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-image: url("bg-home.jpg");
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-color: #041320;
+            background-attachment: fixed;
+        }
+
+        body::before {
+            content: "";
+            position: fixed;
+            inset: 0;
+            background:
+                radial-gradient(circle at 10% 0%, rgba(0, 255, 190, 0.17), transparent 55%),
+                radial-gradient(circle at 90% 100%, rgba(0, 145, 255, 0.18), transparent 55%),
+                linear-gradient(to bottom, rgba(0,0,0,0.55), rgba(0,0,0,0.92));
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .container {
+            position: relative;
+            z-index: 2;
+            text-align: center;
+            max-width: 500px;
+            background: rgba(0, 0, 0, 0.88);
+            border-radius: 22px;
+            padding: 40px 32px;
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(33, 196, 123, 0.15);
+            box-shadow:
+                0 26px 60px rgba(0, 0, 0, 0.95),
+                0 0 40px rgba(33, 196, 123, 0.08);
+        }
+
+        .spinner {
+            width: 50px;
+            height: 50px;
+            margin: 0 auto 24px;
+            border: 4px solid rgba(33, 196, 123, 0.2);
+            border-top: 4px solid #21c47b;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        h1 {
+            font-size: 24px;
+            color: #21c47b;
+            margin-bottom: 16px;
+        }
+
+        p {
+            font-size: 14px;
+            color: #d8e8f5;
+            line-height: 1.6;
+        }
+
+        .error {
+            color: #ff6b6b;
+            margin-top: 16px;
+        }
+
+        .success {
+            color: #21c47b;
+            margin-top: 16px;
+        }
+
+        .back-link {
+            display: inline-block;
+            margin-top: 24px;
+            padding: 12px 24px;
+            background: linear-gradient(90deg, #21c47b, #19b06c);
+            border: 1px solid #21c47b;
+            border-radius: 999px;
+            color: #041320;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 14px;
+            transition: all 0.18s ease;
+        }
+
+        .back-link:hover {
+            background: linear-gradient(90deg, #19b06c, #15a05f);
+            transform: translateY(-1px);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="spinner"></div>
+        <h1>Connexion Instagram en cours...</h1>
+        <p id="status">Veuillez patienter pendant que nous vous connectons.</p>
+        <div id="message"></div>
+        <a href="index.html" class="back-link" style="display: none;" id="backLink">← Retour à l'accueil</a>
+    </div>
+
+    <script>
+        // Cette page gère le retour OAuth d'Instagram
+        window.addEventListener('load', function() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const code = urlParams.get('code');
+            const error = urlParams.get('error');
+            const errorReason = urlParams.get('error_reason');
+            const errorDescription = urlParams.get('error_description');
+
+            const statusEl = document.getElementById('status');
+            const messageEl = document.getElementById('message');
+            const backLinkEl = document.getElementById('backLink');
+
+            if (error) {
+                // Erreur lors de l'authentification
+                document.querySelector('.spinner').style.display = 'none';
+                statusEl.textContent = 'Erreur de connexion';
+                messageEl.innerHTML = `
+                    <p class="error">
+                        <strong>Erreur :</strong> ${errorDescription || error}<br>
+                        <small>Raison : ${errorReason || 'Non spécifiée'}</small>
+                    </p>
+                `;
+                backLinkEl.style.display = 'inline-block';
+            } else if (code) {
+                // Code d'autorisation reçu
+                // Ici, vous devrez échanger le code contre un access token
+                // Cela nécessite un appel serveur car vous ne pouvez pas exposer votre App Secret côté client
+
+                statusEl.textContent = 'Code d\'autorisation reçu';
+                messageEl.innerHTML = `
+                    <p class="success">
+                        Authentification réussie !<br>
+                        <small>Code : ${code.substring(0, 20)}...</small>
+                    </p>
+                    <p style="margin-top: 16px; font-size: 13px; color: #9dc5e8;">
+                        Vous devez maintenant échanger ce code contre un access token via votre serveur backend.
+                    </p>
+                `;
+
+                // Vous pouvez rediriger vers une page qui traite le code
+                // ou l'envoyer à votre serveur
+                setTimeout(function() {
+                    // Exemple : redirection après 3 secondes
+                    // window.location.href = 'index.html';
+                }, 3000);
+
+                backLinkEl.style.display = 'inline-block';
+            } else {
+                // Aucun code ni erreur
+                statusEl.textContent = 'Aucune donnée reçue';
+                messageEl.innerHTML = `
+                    <p class="error">
+                        Aucune information d'authentification reçue.<br>
+                        Veuillez réessayer.
+                    </p>
+                `;
+                backLinkEl.style.display = 'inline-block';
+            }
+
+            // Masquer le spinner après traitement
+            setTimeout(function() {
+                document.querySelector('.spinner').style.display = 'none';
+            }, 500);
+        });
+    </script>
+</body>
+</html>

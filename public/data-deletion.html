@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Suppression des données | Dark Massilia</title>
+
+    <link rel="icon" type="image/png" href="favicon-96x96.png" sizes="96x96" />
+    <link rel="icon" type="image/svg+xml" href="favicon.svg" />
+    <link rel="shortcut icon" href="favicon.ico" />
+    <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png" />
+
+    <link rel="canonical" href="https://karimsaari.com/data-deletion">
+    <meta name="robots" content="noindex,nofollow">
+    <meta name="description" content="Instructions pour la suppression de vos données personnelles de l'application Dark Massilia.">
+
+    <style>
+        /* CSS GÉNÉRAL DARK MASSILIA (V16 - Data Deletion) */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        html {
+            overflow-x: hidden;
+            overflow-y: auto;
+        }
+
+        body {
+            font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+            color: #f5f5f5;
+            min-height: 100vh;
+            padding: 40px 20px;
+            position: relative;
+            overflow-x: hidden;
+            overflow-y: auto;
+            background-image: url("assets/bg-home.jpg");
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-color: #041320;
+            background-attachment: fixed;
+        }
+
+        @media (max-width: 900px) {
+            body {
+                background-attachment: scroll;
+                padding: 30px 16px;
+            }
+        }
+
+        body::before {
+            content: "";
+            position: fixed;
+            inset: 0;
+            background:
+                radial-gradient(circle at 10% 0%, rgba(0, 255, 190, 0.17), transparent 55%),
+                radial-gradient(circle at 90% 100%, rgba(0, 145, 255, 0.18), transparent 55%),
+                linear-gradient(to bottom, rgba(0,0,0,0.55), rgba(0,0,0,0.92));
+            pointer-events: none;
+            z-index: 2;
+        }
+
+        .container {
+            position: relative;
+            z-index: 3;
+            width: 100%;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .card {
+            width: 100%;
+            background: rgba(0, 0, 0, 0.88);
+            border-radius: 22px;
+            padding: 40px 32px;
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(33, 196, 123, 0.15);
+            box-shadow:
+                0 26px 60px rgba(0, 0, 0, 0.95),
+                0 0 40px rgba(10, 40, 60, 0.9),
+                0 0 40px rgba(33, 196, 123, 0.08),
+                0 0 30px rgba(0, 145, 255, 0.08);
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 32px;
+            padding-bottom: 24px;
+            border-bottom: 1px solid rgba(255,255,255,0.12);
+        }
+
+        h1 {
+            font-size: 28px;
+            color: #21c47b;
+            margin-bottom: 8px;
+            font-weight: 600;
+        }
+
+        .subtitle {
+            font-size: 14px;
+            color: #9dc5e8;
+            font-style: italic;
+        }
+
+        h2 {
+            font-size: 20px;
+            color: #21c47b;
+            margin-top: 28px;
+            margin-bottom: 14px;
+            font-weight: 600;
+        }
+
+        h3 {
+            font-size: 16px;
+            color: #b8d8ec;
+            margin-top: 20px;
+            margin-bottom: 10px;
+            font-weight: 600;
+        }
+
+        p, li {
+            font-size: 14px;
+            line-height: 1.8;
+            color: #d8e8f5;
+            margin-bottom: 14px;
+        }
+
+        ul, ol {
+            margin-left: 20px;
+            margin-bottom: 14px;
+        }
+
+        li {
+            margin-bottom: 8px;
+        }
+
+        strong {
+            color: #21c47b;
+            font-weight: 600;
+        }
+
+        .date {
+            font-style: italic;
+            color: #9dc5e8;
+            font-size: 13px;
+        }
+
+        .info-box {
+            background: rgba(33, 196, 123, 0.1);
+            border: 1px solid rgba(33, 196, 123, 0.3);
+            border-radius: 12px;
+            padding: 16px;
+            margin: 20px 0;
+        }
+
+        .warning-box {
+            background: rgba(255, 165, 0, 0.1);
+            border: 1px solid rgba(255, 165, 0, 0.3);
+            border-radius: 12px;
+            padding: 16px;
+            margin: 20px 0;
+        }
+
+        .back-link {
+            display: inline-block;
+            margin-top: 32px;
+            padding: 12px 24px;
+            background: linear-gradient(90deg, #21c47b, #19b06c);
+            border: 1px solid #21c47b;
+            border-radius: 999px;
+            color: #041320;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 14px;
+            transition: all 0.18s ease;
+            box-shadow: 0 0 20px rgba(33,196,123,0.6);
+        }
+
+        .back-link:hover {
+            background: linear-gradient(90deg, #19b06c, #15a05f);
+            transform: translateY(-1px);
+            box-shadow: 0 0 24px rgba(33,196,123,0.8);
+        }
+
+        @media (max-width: 480px) {
+            .card {
+                padding: 28px 20px;
+                border-radius: 18px;
+            }
+
+            h1 {
+                font-size: 24px;
+            }
+
+            h2 {
+                font-size: 18px;
+            }
+
+            h3 {
+                font-size: 15px;
+            }
+
+            p, li {
+                font-size: 13px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <main class="card">
+            <div class="header">
+                <h1>Suppression des données utilisateur</h1>
+                <p class="subtitle">Dark Massilia — Karim Saari</p>
+                <p class="date">Dernière mise à jour : 15 février 2025</p>
+            </div>
+
+            <h2>Instructions pour la suppression de vos données</h2>
+            <p>
+                Conformément au RGPD (Règlement Général sur la Protection des Données), vous avez le droit de
+                demander la suppression de vos données personnelles collectées par notre application Instagram.
+            </p>
+
+            <div class="info-box">
+                <p style="margin-bottom: 0;">
+                    <strong>Important :</strong> Notre application n'enregistre et ne stocke AUCUNE donnée personnelle
+                    sur nos serveurs. Toutes les données Instagram affichées sont récupérées en temps réel via l'API
+                    Instagram et ne sont pas conservées de manière permanente.
+                </p>
+            </div>
+
+            <h2>Données collectées par notre application</h2>
+            <p>Notre application accède temporairement aux données suivantes via l'API Instagram :</p>
+            <ul>
+                <li>Votre nom d'utilisateur Instagram (public)</li>
+                <li>Votre photo de profil Instagram (publique)</li>
+                <li>Vos publications Instagram (publiques)</li>
+                <li>Nombre d'abonnés (public)</li>
+            </ul>
+
+            <div class="warning-box">
+                <p style="margin-bottom: 0;">
+                    <strong>Note :</strong> Ces données sont affichées uniquement pendant votre navigation et ne sont
+                    pas stockées dans une base de données. Elles proviennent directement d'Instagram via leur API officielle.
+                </p>
+            </div>
+
+            <h2>Comment supprimer vos données ?</h2>
+            <p>
+                Étant donné que nous ne stockons pas vos données de manière permanente, il n'y a pas de données à supprimer
+                de nos serveurs. Cependant, vous pouvez révoquer l'accès de notre application à votre compte Instagram :
+            </p>
+
+            <h3>Méthode 1 : Révoquer l'accès via Instagram</h3>
+            <ol>
+                <li>Connectez-vous à votre compte <strong>Instagram</strong></li>
+                <li>Allez dans <strong>Paramètres et confidentialité</strong></li>
+                <li>Sélectionnez <strong>Site Web et applications</strong></li>
+                <li>Recherchez <strong>"Dark Massilia Website"</strong></li>
+                <li>Cliquez sur <strong>Supprimer</strong> ou <strong>Révoquer l'accès</strong></li>
+            </ol>
+
+            <h3>Méthode 2 : Révoquer l'accès via Facebook</h3>
+            <ol>
+                <li>Connectez-vous à votre compte <strong>Facebook</strong></li>
+                <li>Allez dans <strong>Paramètres et confidentialité</strong> → <strong>Paramètres</strong></li>
+                <li>Cliquez sur <strong>Applications et sites web</strong></li>
+                <li>Recherchez <strong>"Dark Massilia Website"</strong> dans la liste</li>
+                <li>Cliquez sur <strong>Supprimer</strong></li>
+            </ol>
+
+            <h3>Méthode 3 : Nous contacter directement</h3>
+            <p>Si vous souhaitez de l'aide ou avez des questions concernant vos données, contactez-nous :</p>
+            <ul>
+                <li><strong>Email</strong> : <a href="mailto:karimsaari.com@gmail.com" style="color: #21c47b; text-decoration: none;">karimsaari.com@gmail.com</a></li>
+                <li><strong>WhatsApp</strong> : <a href="https://wa.me/33695331301" target="_blank" rel="noopener" style="color: #21c47b; text-decoration: none;">+33 6 95 33 13 01</a></li>
+            </ul>
+
+            <h2>Délai de traitement</h2>
+            <p>
+                Si vous nous contactez pour supprimer vos données, nous traiterons votre demande dans un délai de
+                <strong>30 jours maximum</strong>, conformément au RGPD.
+            </p>
+
+            <h2>Tokens d'accès</h2>
+            <p>
+                Les tokens d'accès Instagram utilisés pour afficher votre contenu sont stockés temporairement
+                (durée de vie : 60 jours maximum). Si vous révoquez l'accès via Instagram, ces tokens deviennent
+                immédiatement invalides.
+            </p>
+
+            <h2>Données de navigation (Cookies)</h2>
+            <p>
+                Notre site n'utilise que des cookies essentiels au fonctionnement de l'application.
+                Pour supprimer les cookies :
+            </p>
+            <ul>
+                <li>Effacez l'historique et les données de navigation de votre navigateur</li>
+                <li>Ou utilisez le mode navigation privée/incognito</li>
+            </ul>
+
+            <h2>Vos droits RGPD</h2>
+            <p>En plus du droit à la suppression, vous disposez également des droits suivants :</p>
+            <ul>
+                <li><strong>Droit d'accès</strong> : obtenir une copie de vos données</li>
+                <li><strong>Droit de rectification</strong> : corriger vos données inexactes</li>
+                <li><strong>Droit d'opposition</strong> : vous opposer au traitement de vos données</li>
+                <li><strong>Droit à la portabilité</strong> : recevoir vos données dans un format structuré</li>
+                <li><strong>Droit de retirer votre consentement</strong> : à tout moment</li>
+            </ul>
+
+            <h2>Contact pour les demandes de suppression</h2>
+            <div class="info-box">
+                <p><strong>Email</strong> : <a href="mailto:karimsaari.com@gmail.com" style="color: #21c47b; text-decoration: none;">karimsaari.com@gmail.com</a></p>
+                <p><strong>Objet du mail</strong> : "Demande de suppression de données - Dark Massilia"</p>
+                <p style="margin-bottom: 0;"><strong>Informations à fournir</strong> : Votre nom d'utilisateur Instagram et la raison de votre demande (facultatif)</p>
+            </div>
+
+            <h2>Politique de confidentialité complète</h2>
+            <p>
+                Pour plus d'informations sur la gestion de vos données personnelles, consultez notre
+                <a href="privacy-policy.html" style="color: #21c47b; text-decoration: none; font-weight: 600;">Politique de confidentialité complète</a>.
+            </p>
+
+            <div style="text-align: center;">
+                <a href="/" class="back-link" rel="internal">← Retour à l'accueil</a>
+            </div>
+        </main>
+    </div>
+</body>
+</html>
