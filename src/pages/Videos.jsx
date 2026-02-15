@@ -6,6 +6,12 @@ import { FADE_IN_UP, STAGGER_CONTAINER } from '../utils/constants';
 const Videos = () => {
   const videos = [
     {
+      id: 'cxjAQtSHHyI',
+      title: 'Documentaire ARTE',
+      description: 'Reportage sur les actions de dépollution en Méditerranée',
+      url: 'https://www.youtube.com/watch?v=cxjAQtSHHyI'
+    },
+    {
       id: 'XHqB603STuw',
       title: 'Projet Sentinelle Frioul',
       description: 'Mission de dépollution dans l\'archipel du Frioul',
