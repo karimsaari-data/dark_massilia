@@ -11,14 +11,6 @@ const Twitter = () => {
     script.src = 'https://platform.twitter.com/widgets.js';
     script.async = true;
     script.charset = 'utf-8';
-
-    script.onload = () => {
-      // Force reload of twitter widgets when script loads
-      if (window.twttr && window.twttr.widgets) {
-        window.twttr.widgets.load();
-      }
-    };
-
     document.body.appendChild(script);
 
     return () => {
@@ -68,24 +60,22 @@ const Twitter = () => {
           </motion.div>
         </motion.div>
 
-        {/* Twitter Timeline */}
+        {/* Twitter Feed */}
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.3 }}
-          className="glass-strong rounded-2xl overflow-hidden border border-white/10 p-6"
+          className="glass-strong rounded-2xl overflow-hidden border border-white/10 p-6 flex justify-center"
         >
-          <a
-            className="twitter-timeline"
+          <blockquote
+            className="twitter-tweet"
+            data-lang="fr"
             data-theme="dark"
-            data-chrome="noheader nofooter noborders"
-            data-tweet-limit="5"
-            data-width="600"
-            data-height="600"
-            href="https://twitter.com/dark_massilia"
+            data-dnt="true"
           >
-            Chargement des tweets de @dark_massilia...
-          </a>
+            <p lang="fr" dir="ltr">Chargement des tweets de @dark_massilia...</p>
+            <a href="https://twitter.com/dark_massilia">@dark_massilia</a>
+          </blockquote>
         </motion.div>
 
         {/* Back to Home */}
