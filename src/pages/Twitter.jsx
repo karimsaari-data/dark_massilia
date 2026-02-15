@@ -73,8 +73,8 @@ const Twitter = () => {
             data-theme="dark"
             data-dnt="true"
           >
-            <p lang="fr" dir="ltr">Chargement des tweets de @dark_massilia...</p>
-            <a href="https://twitter.com/dark_massilia">@dark_massilia</a>
+            <p lang="fr" dir="ltr">Chargement du tweet...</p>
+            <a href="https://twitter.com/dark_massilia/status/1954162961947230533?ref_src=twsrc%5Etfw">February 5, 2025</a>
           </blockquote>
         </motion.div>
 
