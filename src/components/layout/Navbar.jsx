@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Home, Compass, Film, Video, Instagram, Mail, Menu, X as XIcon } from 'lucide-react';
+import { Home, Compass, Film, Camera, Video, Instagram, Mail, Menu, X as XIcon } from 'lucide-react';
 import { NAV_LINKS } from '../../utils/constants';
 
 // Custom Twitter/X icon
@@ -15,6 +15,7 @@ const iconMap = {
   Home,
   Compass,
   Film,
+  Camera,
   Video,
   Instagram,
   Twitter,

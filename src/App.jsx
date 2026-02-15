@@ -3,6 +3,7 @@ import Layout from './components/layout/Layout';
 import Home from './pages/Home';
 import Missions from './pages/Missions';
 import Medias from './pages/Medias';
+import Photos from './pages/Photos';
 import Videos from './pages/Videos';
 import Instagram from './pages/Instagram';
 import Twitter from './pages/Twitter';
@@ -17,6 +18,7 @@ function App() {
           <Route index element={<Home />} />
           <Route path="missions" element={<Missions />} />
           <Route path="medias" element={<Medias />} />
+          <Route path="photos" element={<Photos />} />
           <Route path="videos" element={<Videos />} />
           <Route path="instagram" element={<Instagram />} />
           <Route path="twitter" element={<Twitter />} />
