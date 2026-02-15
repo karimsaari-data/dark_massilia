@@ -65,19 +65,26 @@ const Videos = () => {
           variants={STAGGER_CONTAINER}
           className="text-center mb-16"
         >
-          <motion.h1
-            variants={FADE_IN_UP}
-            className="text-4xl md:text-5xl font-bold text-white mb-4"
-          >
-            Mes <span className="gradient-text">Productions</span>
-          </motion.h1>
-
           <motion.p
             variants={FADE_IN_UP}
-            className="text-text-secondary text-lg max-w-2xl mx-auto"
+            className="text-text-secondary text-lg max-w-2xl mx-auto mb-8"
           >
             Découvrez mes documentaires et reportages sur la protection de la Méditerranée et les actions de dépollution dans les Calanques de Marseille.
           </motion.p>
+
+          <motion.div variants={FADE_IN_UP}>
+            <a
+              href="https://www.youtube.com/@dark.massilia"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="btn-primary inline-flex items-center gap-2"
+            >
+              <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/>
+              </svg>
+              <span>Voir ma chaîne YouTube</span>
+            </a>
+          </motion.div>
         </motion.div>
 
         {/* Video Grid */}
@@ -85,13 +92,13 @@ const Videos = () => {
           initial="hidden"
           animate="visible"
           variants={STAGGER_CONTAINER}
-          className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-16"
+          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-16"
         >
           {videos.map((video, index) => (
             <motion.div
               key={index}
               variants={FADE_IN_UP}
-              className="glass-strong rounded-2xl overflow-hidden border border-white/10 hover:border-ocean-teal/50 transition-all duration-300 group"
+              className="glass-strong rounded-xl overflow-hidden border border-white/10 hover:border-ocean-teal/50 transition-all duration-300 group"
             >
               {/* YouTube Embed */}
               <div className="relative aspect-video bg-black">
@@ -105,11 +112,11 @@ const Videos = () => {
               </div>
 
               {/* Video Info */}
-              <div className="p-6">
-                <h3 className="text-xl font-bold text-white mb-2 group-hover:text-ocean-teal transition-colors">
+              <div className="p-4">
+                <h3 className="text-lg font-bold text-white mb-1 group-hover:text-ocean-teal transition-colors line-clamp-2">
                   {video.title}
                 </h3>
-                <p className="text-text-secondary text-sm">
+                <p className="text-text-secondary text-xs line-clamp-2">
                   {video.description}
                 </p>
               </div>
@@ -117,25 +124,6 @@ const Videos = () => {
           ))}
         </motion.div>
 
-        {/* YouTube Channel CTA */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.6 }}
-          className="text-center mb-16"
-        >
-          <a
-            href="https://www.youtube.com/@dark.massilia"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="btn-primary inline-flex items-center gap-2"
-          >
-            <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
-              <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/>
-            </svg>
-            <span>Voir ma chaîne YouTube</span>
-          </a>
-        </motion.div>
 
         {/* Back to Home */}
         <motion.div
