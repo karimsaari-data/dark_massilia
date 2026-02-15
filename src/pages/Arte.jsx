@@ -28,18 +28,21 @@ const Arte = () => {
             Regardez le reportage intégral sur la Méditerranée et l'engagement des éco-acteurs.
           </motion.p>
 
-          {/* YouTube CTA */}
-          <motion.a
+          {/* YouTube Video Embed */}
+          <motion.div
             variants={FADE_IN_UP}
-            href="https://www.youtube.com/watch?v=cxjAQtSHHyI"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="btn-primary inline-flex items-center gap-3 text-lg px-8 py-4 group"
+            className="glass-strong rounded-2xl overflow-hidden border border-white/10 mb-12"
           >
-            <Youtube className="w-6 h-6" />
-            <span>Regarder le Documentaire sur YouTube</span>
-            <ExternalLink className="w-5 h-5 group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform" />
-          </motion.a>
+            <div className="relative aspect-video bg-black">
+              <iframe
+                src="https://www.youtube.com/embed/cxjAQtSHHyI"
+                title="Documentaire ARTE"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                allowFullScreen
+                className="absolute inset-0 w-full h-full"
+              />
+            </div>
+          </motion.div>
         </motion.div>
 
         {/* Mission Summary */}

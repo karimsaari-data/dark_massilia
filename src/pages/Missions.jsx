@@ -63,42 +63,67 @@ const Missions = () => {
             </div>
           </motion.div>
 
-          {/* Stats */}
+          {/* Éditions - 4 années */}
           <motion.div
             variants={FADE_IN_UP}
-            className="grid grid-cols-2 md:grid-cols-4 gap-6 mb-12"
+            className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-12"
           >
             {[
-              { label: 'Déchets collectés', value: '450 kg', color: '#21c47b' },
-              { label: 'Heures de plongée', value: '35h', color: '#0091ff' },
-              { label: 'Participants', value: '12', color: '#ff6b35' },
-              { label: 'Profondeur max', value: '20m', color: '#ffd93d' },
-            ].map((stat, index) => (
-              <div key={index} className="glass-strong rounded-2xl p-6 text-center">
-                <p
-                  className="text-3xl md:text-4xl font-bold mb-2"
-                  style={{ color: stat.color }}
-                >
-                  {stat.value}
-                </p>
-                <p className="text-sm text-text-muted">{stat.label}</p>
+              {
+                year: '2022',
+                waste: '900 Kg',
+                duration: '8 jours',
+                location: 'Côte Bleue, de Martigues à l\'Estaque',
+                color: '#21c47b'
+              },
+              {
+                year: '2023',
+                waste: '1 357 Kg',
+                duration: '7 jours',
+                location: 'Archipel du Frioul',
+                color: '#0091ff'
+              },
+              {
+                year: '2024',
+                waste: '1 147 Kg',
+                duration: '9 jours',
+                location: 'Parc National des Calanques',
+                color: '#ff6b35'
+              },
+              {
+                year: '2025',
+                waste: '2 320 Kg',
+                duration: '7 jours',
+                location: 'Rade de Marseille',
+                color: '#ffd93d'
+              },
+            ].map((edition, index) => (
+              <div key={index} className="glass-strong rounded-2xl p-6 md:p-8">
+                <div className="flex items-start justify-between mb-4">
+                  <h3
+                    className="text-3xl md:text-4xl font-bold"
+                    style={{ color: edition.color }}
+                  >
+                    {edition.year}
+                  </h3>
+                  <div className="text-right">
+                    <p className="text-2xl md:text-3xl font-bold text-white">{edition.waste}</p>
+                    <p className="text-sm text-text-muted">déchets collectés</p>
+                  </div>
+                </div>
+                <div className="space-y-2">
+                  <p className="text-white font-medium">{edition.duration} d'aventure</p>
+                  <p className="text-text-secondary text-sm">{edition.location}</p>
+                </div>
               </div>
             ))}
           </motion.div>
 
-          {/* Call to Action */}
+          {/* Description */}
           <motion.div variants={FADE_IN_UP} className="text-center">
-            <p className="text-text-secondary mb-6">
+            <p className="text-text-secondary">
               Cette galerie retrace nos actions terrain dans le Parc National des Calanques de Marseille.
             </p>
-            <a
-              href="https://www.facebook.com/groups/calanque/"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="btn-primary inline-flex items-center gap-2"
-            >
-              <span>Rejoindre le Groupe Facebook</span>
-            </a>
           </motion.div>
         </motion.div>
 

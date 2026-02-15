@@ -10,22 +10,26 @@ const Medias = () => {
       title: 'Ville de Marseille — Reconnaissance Officielle',
       url: 'https://www.facebook.com/marseilleville/photos/a.220707724621813/3697054720320412/?_rdr',
       featured: true,
+      image: '/images/ville de marseille.jpg'
     },
     {
       title: 'La Provence — Opération Sentinelle',
       url: 'https://www.laprovence.com/article/ecoplanete/1845794554454214/de-montredon-a-cassis-les-apneistes-lancent-leur-operation-sentinelle-des-samedi-et-jusquau-6-octobre',
       featured: true,
+      image: '/images/la provence.jpg'
     },
     {
       title: 'Documentaire ARTE',
       url: '/arte',
       internal: true,
       featured: true,
+      image: '/images/photo profil Arte.jpg'
     },
     {
       title: 'Interview Presse — Tired Earth (EN/FR)',
       url: 'https://www.tiredearth.com/interviews/interview-de-karim-saari-apneiste-et-photographe-sous-marin#',
       featured: false,
+      image: '/images/tiredearth.jpg'
     },
   ];
 
@@ -59,35 +63,68 @@ const Medias = () => {
           initial="hidden"
           animate="visible"
           variants={STAGGER_CONTAINER}
-          className="max-w-3xl mx-auto"
+          className="max-w-5xl mx-auto"
         >
           <motion.h2
             variants={FADE_IN_UP}
-            className="text-sm uppercase tracking-widest text-text-muted mb-6 font-semibold text-center"
+            className="text-sm uppercase tracking-widest text-text-muted mb-8 font-semibold text-center"
           >
             À la une
           </motion.h2>
 
-          <motion.div variants={STAGGER_CONTAINER} className="space-y-4">
+          <motion.div
+            variants={STAGGER_CONTAINER}
+            className="grid grid-cols-1 md:grid-cols-2 gap-6"
+          >
             {pressLinks.map((link, index) => (
               <motion.div key={index} variants={FADE_IN_UP}>
                 {link.internal ? (
                   <Link
                     to={link.url}
-                    className={`btn ${link.featured ? 'font-semibold' : ''} w-full inline-flex items-center justify-between group hover:scale-105 transition-all duration-300`}
+                    className="glass-strong rounded-xl overflow-hidden border border-white/10 hover:border-ocean-teal/50 transition-all duration-300 group block h-full"
                   >
-                    <span>{link.title}</span>
-                    <ArrowLeft className="w-4 h-4 rotate-180 group-hover:translate-x-1 transition-transform" />
+                    {/* Image */}
+                    <div className="relative aspect-[4/3] bg-black overflow-hidden">
+                      <img
+                        src={link.image}
+                        alt={link.title}
+                        className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                      />
+                      <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
+                    </div>
+
+                    {/* Content */}
+                    <div className="p-6">
+                      <h3 className="text-lg font-bold text-white mb-2 group-hover:text-ocean-teal transition-colors flex items-center justify-between">
+                        <span>{link.title}</span>
+                        <ArrowLeft className="w-5 h-5 rotate-180 group-hover:translate-x-1 transition-transform flex-shrink-0 ml-2" />
+                      </h3>
+                    </div>
                   </Link>
                 ) : (
                   <a
                     href={link.url}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className={`btn ${link.featured ? 'font-semibold' : ''} w-full inline-flex items-center justify-between group hover:scale-105 transition-all duration-300`}
+                    className="glass-strong rounded-xl overflow-hidden border border-white/10 hover:border-ocean-teal/50 transition-all duration-300 group block h-full"
                   >
-                    <span>{link.title}</span>
-                    <ExternalLink className="w-4 h-4 group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform" />
+                    {/* Image */}
+                    <div className="relative aspect-[4/3] bg-black overflow-hidden">
+                      <img
+                        src={link.image}
+                        alt={link.title}
+                        className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                      />
+                      <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
+                    </div>
+
+                    {/* Content */}
+                    <div className="p-6">
+                      <h3 className="text-lg font-bold text-white mb-2 group-hover:text-ocean-teal transition-colors flex items-center justify-between">
+                        <span>{link.title}</span>
+                        <ExternalLink className="w-5 h-5 group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform flex-shrink-0 ml-2" />
+                      </h3>
+                    </div>
                   </a>
                 )}
               </motion.div>
