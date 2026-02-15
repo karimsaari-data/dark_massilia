@@ -22,11 +22,11 @@ export const SOCIAL_LINKS = {
 export const NAV_LINKS = [
   { name: 'Accueil', path: '/', icon: 'Home' },
   { name: 'Missions', path: '/missions', icon: 'Compass' },
-  { name: 'Médias', path: '/medias', icon: 'Film' },
   { name: 'Photos', path: '/photos', icon: 'Camera' },
   { name: 'Vidéos', path: '/videos', icon: 'Video' },
   { name: 'Instagram', path: '/instagram', icon: 'Instagram' },
   { name: 'X', path: '/twitter', icon: 'Twitter' },
+  { name: 'Médias', path: '/medias', icon: 'Film' },
   { name: 'Contact', path: '/contact', icon: 'Mail' },
 ];
 
