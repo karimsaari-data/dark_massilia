@@ -1,13 +1,14 @@
 import { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Home, Compass, Film, Mail, Menu, X } from 'lucide-react';
+import { Home, Compass, Film, Instagram, Mail, Menu, X } from 'lucide-react';
 import { NAV_LINKS } from '../../utils/constants';
 
 const iconMap = {
   Home,
   Compass,
   Film,
+  Instagram,
   Mail,
 };
 
@@ -61,23 +62,20 @@ const Navbar = () => {
         className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
           isScrolled
             ? 'glass-strong shadow-lg shadow-black/20'
-            : 'bg-transparent'
+            : 'bg-black/60 backdrop-blur-md border-b border-white/5'
         }`}
       >
         <div className="container-custom">
           <div className="flex items-center justify-between h-16 md:h-20">
             {/* Logo */}
-            <Link to="/" className="flex items-center space-x-3 group">
-              <div className="relative">
-                <div className="w-10 h-10 md:w-12 md:h-12 rounded-full bg-gradient-to-br from-ocean-teal to-ocean-blue flex items-center justify-center glow-teal group-hover:glow-blue transition-all duration-300">
-                  <span className="text-white font-bold text-lg md:text-xl">D</span>
-                </div>
-              </div>
-              <div className="hidden sm:block">
-                <h1 className="text-xl md:text-2xl font-bold gradient-text">
-                  Dark Massilia
+            <Link to="/" className="group">
+              <div className="text-left">
+                <h1 className="text-2xl md:text-3xl font-bold text-white group-hover:text-ocean-teal transition-colors duration-300" style={{ fontFamily: 'serif' }}>
+                  Karim Saari
                 </h1>
-                <p className="text-xs text-gray-400 -mt-1">Sentinelle de la Mer</p>
+                <p className="text-xs md:text-sm text-gray-400 uppercase tracking-widest" style={{ letterSpacing: '0.15em' }}>
+                  Photographe / Sentinelle de la Mer
+                </p>
               </div>
             </Link>
 
@@ -91,14 +89,21 @@ const Navbar = () => {
                   <Link
                     key={link.path}
                     to={link.path}
-                    className={`flex items-center space-x-2 px-4 py-2 rounded-full transition-all duration-300 ${
+                    className={`flex items-center space-x-2 px-4 py-2 rounded-full transition-all duration-300 relative ${
                       isActive
-                        ? 'bg-ocean-teal/20 text-ocean-teal border border-ocean-teal/30'
-                        : 'text-gray-300 hover:text-white hover:bg-white/5'
+                        ? 'bg-ocean-teal/20 text-ocean-teal border border-ocean-teal/30 shadow-lg shadow-ocean-teal/20'
+                        : 'text-text-secondary hover:text-white hover:bg-white/5'
                     }`}
                   >
                     <Icon className="w-4 h-4" />
                     <span className="font-medium">{link.name}</span>
+                    {isActive && (
+                      <motion.div
+                        layoutId="navbar-active"
+                        className="absolute bottom-0 left-1/2 -translate-x-1/2 w-1/2 h-0.5 bg-ocean-teal rounded-full"
+                        transition={{ type: 'spring', stiffness: 380, damping: 30 }}
+                      />
+                    )}
                   </Link>
                 );
               })}
@@ -153,8 +158,8 @@ const Navbar = () => {
 
                 {/* Logo */}
                 <div className="mb-8 mt-4">
-                  <h2 className="text-xl font-bold gradient-text">Dark Massilia</h2>
-                  <p className="text-sm text-gray-400 mt-1">Sentinelle de la Mer</p>
+                  <h2 className="text-xl font-bold text-white" style={{ fontFamily: 'serif' }}>Karim Saari</h2>
+                  <p className="text-xs text-gray-400 mt-1 uppercase tracking-widest">Photographe / Sentinelle de la Mer</p>
                 </div>
 
                 {/* Navigation Links */}
@@ -167,14 +172,17 @@ const Navbar = () => {
                       <Link
                         key={link.path}
                         to={link.path}
-                        className={`flex items-center space-x-3 px-4 py-3 rounded-lg transition-all duration-300 ${
+                        className={`flex items-center space-x-3 px-4 py-3 rounded-lg transition-all duration-300 relative ${
                           isActive
-                            ? 'bg-ocean-teal/20 text-ocean-teal border border-ocean-teal/30'
-                            : 'text-gray-300 hover:text-white hover:bg-white/5'
+                            ? 'bg-ocean-teal/20 text-ocean-teal border border-ocean-teal/30 shadow-lg shadow-ocean-teal/20'
+                            : 'text-text-secondary hover:text-white hover:bg-white/5'
                         }`}
                       >
                         <Icon className="w-5 h-5" />
                         <span className="font-medium">{link.name}</span>
+                        {isActive && (
+                          <div className="absolute left-0 top-1/2 -translate-y-1/2 w-1 h-3/4 bg-ocean-teal rounded-r-full" />
+                        )}
                       </Link>
                     );
                   })}
@@ -182,7 +190,7 @@ const Navbar = () => {
 
                 {/* Social Links in Mobile Menu */}
                 <div className="mt-8 pt-6 border-t border-white/10">
-                  <p className="text-xs text-gray-400 uppercase tracking-wider mb-3">
+                  <p className="text-xs text-text-muted uppercase tracking-wider mb-3">
                     Suivez-nous
                   </p>
                   <div className="flex flex-wrap gap-2">

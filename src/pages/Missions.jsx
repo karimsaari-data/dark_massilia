@@ -1,114 +1,122 @@
-import { useState } from 'react';
 import { motion } from 'framer-motion';
-import { useProjects, useCategories } from '../hooks/useSupabase';
-import ProjectCard from '../components/ui/ProjectCard';
+import { ArrowLeft } from 'lucide-react';
+import { Link } from 'react-router-dom';
+import PhotoCarousel from '../components/ui/PhotoCarousel';
 import { FADE_IN_UP, STAGGER_CONTAINER } from '../utils/constants';
-import * as LucideIcons from 'lucide-react';
 
 const Missions = () => {
-  const [selectedCategory, setSelectedCategory] = useState(null);
-  const { categories } = useCategories();
-  const { projects, loading } = useProjects({ category: selectedCategory });
-
   return (
-    <div className="min-h-screen py-20">
+    <div className="min-h-screen py-32">
       <div className="container-custom">
         {/* Header */}
         <motion.div
           initial="hidden"
           animate="visible"
           variants={STAGGER_CONTAINER}
-          className="text-center mb-12"
+          className="text-center mb-16"
         >
-          <motion.h1 variants={FADE_IN_UP} className="text-4xl md:text-5xl font-bold text-white mb-4">
-            Nos <span className="gradient-text">Missions</span>
+          <motion.h1
+            variants={FADE_IN_UP}
+            className="text-4xl md:text-5xl font-bold text-white mb-4"
+          >
+            Projet <span className="gradient-text">Sentinelle</span>
           </motion.h1>
-          <motion.p variants={FADE_IN_UP} className="text-gray-400 text-lg max-w-2xl mx-auto">
-            Découvrez toutes nos actions de dépollution, plongées en apnée et expéditions pour protéger la Méditerranée
+
+          <motion.p
+            variants={FADE_IN_UP}
+            className="text-text-secondary text-lg max-w-3xl mx-auto mb-8"
+          >
+            Une fois par an, à l'automne, nous organisons une grande dépollution d'une semaine en apnée dans les Calanques de Marseille, de 0 à 20 mètres de profondeur.
           </motion.p>
         </motion.div>
 
-        {/* Category Filters */}
+        {/* Photo Carousel */}
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, delay: 0.3 }}
+          className="mb-16"
+        >
+          <PhotoCarousel />
+        </motion.div>
+
+        {/* Mission Description */}
         <motion.div
           initial="hidden"
           animate="visible"
-          variants={FADE_IN_UP}
-          className="flex flex-wrap justify-center gap-3 mb-12"
+          variants={STAGGER_CONTAINER}
+          className="max-w-4xl mx-auto"
         >
-          <button
-            onClick={() => setSelectedCategory(null)}
-            className={`px-6 py-2.5 rounded-full font-medium transition-all duration-300 ${
-              selectedCategory === null
-                ? 'bg-ocean-teal/20 text-ocean-teal border border-ocean-teal/30 glow-teal'
-                : 'glass text-gray-300 hover:text-white hover:bg-white/10'
-            }`}
+          <motion.div variants={FADE_IN_UP} className="glass-strong rounded-3xl p-8 md:p-12 mb-12">
+            <h2 className="text-2xl md:text-3xl font-bold text-white mb-6">
+              La Mission
+            </h2>
+
+            <div className="space-y-6 text-text-secondary leading-relaxed">
+              <p>
+                De 0 à 20 mètres de profondeur, nous documentons et nettoyons les fonds marins. Chaque plongée devient une mission de dépollution.
+              </p>
+
+              <p>
+                Avec <strong className="text-ocean-teal">Team Oxygen</strong>, nous allions l'apnée sportive à l'action environnementale. Notre objectif : sensibiliser le public sur l'état réel de nos calanques et inspirer le changement.
+              </p>
+            </div>
+          </motion.div>
+
+          {/* Stats */}
+          <motion.div
+            variants={FADE_IN_UP}
+            className="grid grid-cols-2 md:grid-cols-4 gap-6 mb-12"
           >
-            Toutes
-          </button>
-          {categories.map((category) => {
-            const IconComponent = LucideIcons[category.icon];
-            return (
-              <button
-                key={category.id}
-                onClick={() => setSelectedCategory(category.slug)}
-                className={`inline-flex items-center gap-2 px-6 py-2.5 rounded-full font-medium transition-all duration-300 ${
-                  selectedCategory === category.slug
-                    ? 'border'
-                    : 'glass text-gray-300 hover:text-white hover:bg-white/10'
-                }`}
-                style={
-                  selectedCategory === category.slug
-                    ? {
-                        backgroundColor: `${category.color}20`,
-                        borderColor: `${category.color}40`,
-                        color: category.color,
-                        boxShadow: `0 0 20px ${category.color}30`,
-                      }
-                    : {}
-                }
-              >
-                {IconComponent && <IconComponent className="w-4 h-4" />}
-                <span>{category.name}</span>
-              </button>
-            );
-          })}
+            {[
+              { label: 'Déchets collectés', value: '450 kg', color: '#21c47b' },
+              { label: 'Heures de plongée', value: '35h', color: '#0091ff' },
+              { label: 'Participants', value: '12', color: '#ff6b35' },
+              { label: 'Profondeur max', value: '20m', color: '#ffd93d' },
+            ].map((stat, index) => (
+              <div key={index} className="glass-strong rounded-2xl p-6 text-center">
+                <p
+                  className="text-3xl md:text-4xl font-bold mb-2"
+                  style={{ color: stat.color }}
+                >
+                  {stat.value}
+                </p>
+                <p className="text-sm text-text-muted">{stat.label}</p>
+              </div>
+            ))}
+          </motion.div>
+
+          {/* Call to Action */}
+          <motion.div variants={FADE_IN_UP} className="text-center">
+            <p className="text-text-secondary mb-6">
+              Cette galerie retrace nos actions terrain dans le Parc National des Calanques de Marseille.
+            </p>
+            <a
+              href="https://www.facebook.com/groups/calanque/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="btn-primary inline-flex items-center gap-2"
+            >
+              <span>Rejoindre le Groupe Facebook</span>
+            </a>
+          </motion.div>
         </motion.div>
 
-        {/* Projects Grid */}
-        {loading ? (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {[1, 2, 3, 4, 5, 6].map((i) => (
-              <div key={i} className="skeleton h-96 rounded-2xl" />
-            ))}
-          </div>
-        ) : projects.length > 0 ? (
-          <motion.div
-            initial="hidden"
-            animate="visible"
-            variants={STAGGER_CONTAINER}
-            className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
+        {/* Back to Home */}
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 0.8 }}
+          className="text-center mt-16"
+        >
+          <Link
+            to="/"
+            className="btn-secondary inline-flex items-center gap-2 group"
           >
-            {projects.map((project) => (
-              <ProjectCard key={project.id} project={project} />
-            ))}
-          </motion.div>
-        ) : (
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            className="text-center py-20"
-          >
-            <div className="w-20 h-20 mx-auto mb-6 rounded-full bg-white/5 flex items-center justify-center">
-              <LucideIcons.Inbox className="w-10 h-10 text-gray-600" />
-            </div>
-            <h3 className="text-xl font-semibold text-gray-400 mb-2">Aucune mission trouvée</h3>
-            <p className="text-gray-500">
-              {selectedCategory
-                ? 'Essayez de sélectionner une autre catégorie'
-                : 'Les missions seront bientôt disponibles'}
-            </p>
-          </motion.div>
-        )}
+            <ArrowLeft className="w-4 h-4 group-hover:-translate-x-1 transition-transform" />
+            <span>Retour à l'Accueil</span>
+          </Link>
+        </motion.div>
       </div>
     </div>
   );
