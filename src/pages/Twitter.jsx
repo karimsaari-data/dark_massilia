@@ -70,11 +70,13 @@ const Twitter = () => {
           <a
             className="twitter-timeline"
             data-theme="dark"
-            data-chrome="noheader nofooter noborders transparent"
+            data-chrome="noheader nofooter noborders"
             data-tweet-limit="5"
-            href="https://twitter.com/dark_massilia?ref_src=twsrc%5Etfw"
+            data-width="600"
+            data-height="600"
+            href="https://twitter.com/dark_massilia"
           >
-            Chargement des tweets...
+            Chargement des tweets de @dark_massilia...
           </a>
         </motion.div>
 
