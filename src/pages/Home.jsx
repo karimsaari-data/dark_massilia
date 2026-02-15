@@ -62,7 +62,7 @@ const Home = () => {
               <img
                 src="/images/Karim-SAARI-white-low-res.png"
                 alt="Signature Karim Saari"
-                className="h-16 md:h-20 opacity-80"
+                className="h-24 md:h-32 lg:h-36 opacity-90"
               />
             </motion.div>
           </motion.div>

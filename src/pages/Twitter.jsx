@@ -11,6 +11,14 @@ const Twitter = () => {
     script.src = 'https://platform.twitter.com/widgets.js';
     script.async = true;
     script.charset = 'utf-8';
+
+    script.onload = () => {
+      // Force reload of twitter widgets when script loads
+      if (window.twttr && window.twttr.widgets) {
+        window.twttr.widgets.load();
+      }
+    };
+
     document.body.appendChild(script);
 
     return () => {
