@@ -1,33 +1,31 @@
 import { motion } from 'framer-motion';
-import { ArrowLeft } from 'lucide-react';
+import { ArrowLeft, ExternalLink } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import PhotoCarousel from '../components/ui/PhotoCarousel';
 import { FADE_IN_UP, STAGGER_CONTAINER } from '../utils/constants';
 
 const Missions = () => {
   return (
-    <div className="min-h-screen py-32">
+    <div className="min-h-screen py-24">
       <div className="container-custom">
-        {/* Header */}
+        {/* Header avec lien */}
         <motion.div
           initial="hidden"
           animate="visible"
           variants={STAGGER_CONTAINER}
-          className="text-center mb-16"
+          className="mb-12"
         >
-          <motion.h1
-            variants={FADE_IN_UP}
-            className="text-4xl md:text-5xl font-bold text-white mb-4"
-          >
-            Projet <span className="gradient-text">Sentinelle</span>
-          </motion.h1>
-
-          <motion.p
-            variants={FADE_IN_UP}
-            className="text-text-secondary text-lg max-w-3xl mx-auto mb-8"
-          >
-            Une fois par an, à l'automne, nous organisons une grande dépollution d'une semaine en apnée dans les Calanques de Marseille, de 0 à 20 mètres de profondeur.
-          </motion.p>
+          <motion.div variants={FADE_IN_UP} className="text-center mb-6">
+            <a
+              href="https://www.team-oxygen.com/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-2 text-ocean-teal hover:text-white transition-colors text-lg font-medium"
+            >
+              Voir sur Team Oxygen
+              <ExternalLink className="w-5 h-5" />
+            </a>
+          </motion.div>
         </motion.div>
 
         {/* Photo Carousel */}
