@@ -1,12 +1,35 @@
-import { motion } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 import { Link } from 'react-router-dom';
-import { ArrowRight, Users } from 'lucide-react';
+import { ArrowRight, Users, AlertTriangle } from 'lucide-react';
 import { useProjects } from '../hooks/useSupabase';
 import ProjectCard from '../components/ui/ProjectCard';
 import { FADE_IN_UP, FADE_IN, STAGGER_CONTAINER, TAGLINE, MISSION_STATEMENT, FACEBOOK_GROUP_MEMBERS } from '../utils/constants';
+import { useState, useEffect } from 'react';
+
+// Phrases choc sur la pollution marine
+const IMPACT_FACTS = [
+  "8 millions de tonnes de plastique sont déversées chaque année dans l'océan.",
+  "80 % des déchets marins proviennent d'activités terrestres.",
+  "95 % des déchets flottants en Méditerranée sont des plastiques.",
+  "Plus de 90 % des oiseaux marins ont déjà ingéré du plastique.",
+  "La Méditerranée est l'une des mers les plus polluées au monde en concentration de microplastiques.",
+  "La Méditerranée concentre 7 % des microplastiques mondiaux pour moins de 1 % de la surface océanique.",
+  "Un sac plastique peut persister plusieurs centaines d'années en mer.",
+  "Plus de 600 espèces marines méditerranéennes sont affectées par les déchets plastiques.",
+];
 
 const Home = () => {
   const { projects: featuredProjects, loading } = useProjects({ featured: true, limit: 3 });
+  const [currentFactIndex, setCurrentFactIndex] = useState(0);
+
+  // Auto-rotation des phrases choc
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrentFactIndex((prev) => (prev + 1) % IMPACT_FACTS.length);
+    }, 5000); // Change toutes les 5 secondes
+
+    return () => clearInterval(interval);
+  }, []);
 
   return (
     <div className="min-h-screen">
@@ -156,7 +179,7 @@ const Home = () => {
             {/* Signature */}
             <motion.div
               variants={FADE_IN_UP}
-              className="flex justify-center"
+              className="flex justify-center mb-12"
             >
               <img
                 src="/images/Karim-SAARI-white-low-res.webp"
@@ -164,6 +187,53 @@ const Home = () => {
                 className="h-36 md:h-48 lg:h-56 opacity-90"
                 decoding="async"
               />
+            </motion.div>
+
+            {/* Phrases choc - Impact environnemental */}
+            <motion.div
+              variants={FADE_IN_UP}
+              className="mt-16 mb-8"
+            >
+              <div className="glass-strong rounded-2xl border border-orange-500/30 p-8 md:p-10 max-w-4xl mx-auto shadow-lg shadow-orange-500/10">
+                <div className="flex items-start gap-4">
+                  <div className="flex-shrink-0 mt-1">
+                    <div className="w-12 h-12 rounded-full bg-gradient-to-br from-orange-500 to-red-600 flex items-center justify-center shadow-lg shadow-orange-500/30">
+                      <AlertTriangle className="w-6 h-6 text-white" />
+                    </div>
+                  </div>
+
+                  <div className="flex-1 min-h-[80px] flex items-center">
+                    <AnimatePresence mode="wait">
+                      <motion.p
+                        key={currentFactIndex}
+                        initial={{ opacity: 0, y: 20 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        exit={{ opacity: 0, y: -20 }}
+                        transition={{ duration: 0.5, ease: "easeInOut" }}
+                        className="text-lg md:text-xl lg:text-2xl font-semibold text-white leading-relaxed"
+                      >
+                        {IMPACT_FACTS[currentFactIndex]}
+                      </motion.p>
+                    </AnimatePresence>
+                  </div>
+                </div>
+
+                {/* Indicateurs de progression */}
+                <div className="flex justify-center gap-2 mt-6">
+                  {IMPACT_FACTS.map((_, index) => (
+                    <button
+                      key={index}
+                      onClick={() => setCurrentFactIndex(index)}
+                      className={`h-1.5 rounded-full transition-all duration-300 ${
+                        index === currentFactIndex
+                          ? 'w-8 bg-orange-500'
+                          : 'w-1.5 bg-gray-600 hover:bg-gray-500'
+                      }`}
+                      aria-label={`Afficher le fait ${index + 1}`}
+                    />
+                  ))}
+                </div>
+              </div>
             </motion.div>
           </motion.div>
         </div>
