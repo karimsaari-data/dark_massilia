@@ -173,7 +173,7 @@ const Home = () => {
               variants={FADE_IN_UP}
               className="text-lg md:text-xl text-text-secondary max-w-3xl mx-auto leading-relaxed mb-8"
             >
-              Éco-acteur basé à Marseille, apnéiste engagé pour la préservation de la Méditerranée. Je documente les zones immergées des Calanques pour rendre visible l'impact des pollutions sous-marines. Avec <strong className="text-ocean-teal">Team Oxygen</strong>, chaque immersion est structurée comme une opération de dépollution et de collecte de données environnementales.
+              Apnéiste engagé pour la préservation de la Méditerranée, je suis président de l'association éco-engagée <strong className="text-ocean-teal">Team Oxygen</strong>. Basé à Marseille, je documente les zones immergées des Calanques pour rendre visible l'impact des pollutions sous-marines. Chaque immersion est structurée comme une opération de dépollution et de collecte de données environnementales.
             </motion.p>
 
             {/* Signature */}
