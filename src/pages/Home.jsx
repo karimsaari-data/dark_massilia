@@ -63,6 +63,7 @@ const Home = () => {
                 src="/images/Karim-SAARI-white-low-res.png"
                 alt="Signature Karim Saari"
                 className="h-36 md:h-48 lg:h-56 opacity-90"
+                decoding="async"
               />
             </motion.div>
           </motion.div>
@@ -106,6 +107,8 @@ const Home = () => {
                 alt="Team Oxygen - Projet Sentinelle Marseille"
                 className="absolute inset-0 w-full h-full object-cover"
                 style={{ objectPosition: '12% 25%' }}
+                loading="lazy"
+                decoding="async"
               />
               {/* Overlay subtil */}
               <div className="absolute inset-0 bg-gradient-to-l from-transparent to-black/20" />
@@ -161,6 +164,8 @@ const Home = () => {
                 alt="Groupe Facebook Amoureux des Calanques de Marseille à Port-Cros"
                 className="absolute inset-0 w-full h-full object-cover"
                 style={{ objectPosition: '12% 25%' }}
+                loading="lazy"
+                decoding="async"
               />
               {/* Overlay subtil */}
               <div className="absolute inset-0 bg-gradient-to-l from-transparent to-black/20" />

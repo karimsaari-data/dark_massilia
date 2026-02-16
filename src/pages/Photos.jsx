@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect, useCallback, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { X, ExternalLink, ChevronLeft, ChevronRight } from 'lucide-react';
 import { FADE_IN_UP, STAGGER_CONTAINER } from '../utils/constants';
@@ -7,12 +7,13 @@ import { FADE_IN_UP, STAGGER_CONTAINER } from '../utils/constants';
 const portfolioImages = Array.from({ length: 54 }, (_, i) => ({
   id: i + 1,
   src: `/images/portfolio/${i + 1}.jpg`,
-  alt: `Photo Karim Saari - ${i + 1}`
+  alt: `Photo sous-marine Karim Saari – Calanques de Marseille ${i + 1}`
 }));
 
 const Photos = () => {
   const [selectedImage, setSelectedImage] = useState(null);
   const [isLightboxOpen, setIsLightboxOpen] = useState(false);
+  const closeBtnRef = useRef(null);
 
   const openLightbox = (image) => {
     setSelectedImage(image);
@@ -20,24 +21,54 @@ const Photos = () => {
     document.body.style.overflow = 'hidden';
   };
 
-  const closeLightbox = () => {
+  const closeLightbox = useCallback(() => {
     setIsLightboxOpen(false);
     document.body.style.overflow = 'auto';
     setTimeout(() => setSelectedImage(null), 300);
-  };
+  }, []);
 
-  const navigateImage = (direction) => {
-    const currentIndex = portfolioImages.findIndex(img => img.id === selectedImage.id);
-    let newIndex;
+  const navigateImage = useCallback((direction) => {
+    setSelectedImage((current) => {
+      if (!current) return current;
+      const currentIndex = portfolioImages.findIndex(img => img.id === current.id);
+      let newIndex;
+      if (direction === 'next') {
+        newIndex = (currentIndex + 1) % portfolioImages.length;
+      } else {
+        newIndex = (currentIndex - 1 + portfolioImages.length) % portfolioImages.length;
+      }
+      return portfolioImages[newIndex];
+    });
+  }, []);
 
-    if (direction === 'next') {
-      newIndex = (currentIndex + 1) % portfolioImages.length;
-    } else {
-      newIndex = (currentIndex - 1 + portfolioImages.length) % portfolioImages.length;
+  // Focus trap : déplacer le focus dans la lightbox à l'ouverture
+  useEffect(() => {
+    if (isLightboxOpen && closeBtnRef.current) {
+      closeBtnRef.current.focus();
     }
+  }, [isLightboxOpen]);
 
-    setSelectedImage(portfolioImages[newIndex]);
-  };
+  // Navigation clavier : flèches + Escape
+  useEffect(() => {
+    if (!isLightboxOpen) return;
+
+    const handleKeyDown = (e) => {
+      switch (e.key) {
+        case 'Escape':
+          closeLightbox();
+          break;
+        case 'ArrowRight':
+          navigateImage('next');
+          break;
+        case 'ArrowLeft':
+          navigateImage('prev');
+          break;
+      }
+    };
+
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [isLightboxOpen, closeLightbox, navigateImage]);
 
   return (
     <div className="min-h-screen py-24">
@@ -96,14 +127,18 @@ const Photos = () => {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
+            role="dialog"
+            aria-modal="true"
+            aria-label={`Photo ${selectedImage.id} sur ${portfolioImages.length}`}
             className="fixed inset-0 z-50 flex items-center justify-center bg-black/95 backdrop-blur-sm p-4"
             onClick={closeLightbox}
           >
             {/* Close Button */}
             <button
+              ref={closeBtnRef}
               onClick={closeLightbox}
               className="absolute top-4 right-4 z-60 p-2 rounded-full bg-white/10 hover:bg-white/20 transition-colors backdrop-blur-md"
-              aria-label="Fermer"
+              aria-label="Fermer la galerie"
             >
               <X className="w-6 h-6 text-white" />
             </button>
