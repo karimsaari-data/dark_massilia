@@ -173,7 +173,8 @@ const Home = () => {
               variants={FADE_IN_UP}
               className="text-lg md:text-xl text-text-secondary max-w-3xl mx-auto leading-relaxed mb-8"
             >
-              Apnéiste engagé pour la préservation de la Méditerranée, je suis président de l'association éco-engagée <strong className="text-ocean-teal">Team Oxygen</strong>. Basé à Marseille, je documente les zones immergées des Calanques pour rendre visible l'impact des pollutions sous-marines. Chaque immersion est structurée comme une opération de dépollution et de collecte de données environnementales.
+              Apnéiste engagé depuis plus de 10 ans pour la préservation de la Méditerranée, je suis président de l'association éco-engagée <strong className="text-ocean-teal">Team Oxygen</strong> depuis cette année.
+              Photographe de paysages basé à Marseille, je documente les calanques et le littoral méditerranéen, en surface comme sous l'eau, pour rendre visible l'impact des pollutions marines et témoigner de l'état réel des écosystèmes.
             </motion.p>
 
             {/* Signature */}
