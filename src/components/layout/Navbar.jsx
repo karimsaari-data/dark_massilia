@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef, useCallback } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Home, Compass, Film, Camera, Video, Instagram, Mail, Menu, X as XIcon } from 'lucide-react';
@@ -27,12 +27,20 @@ const Navbar = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const location = useLocation();
 
+  // Scroll listener throttlé avec requestAnimationFrame
   useEffect(() => {
+    let ticking = false;
     const handleScroll = () => {
-      setIsScrolled(window.scrollY > 20);
+      if (!ticking) {
+        requestAnimationFrame(() => {
+          setIsScrolled(window.scrollY > 20);
+          ticking = false;
+        });
+        ticking = true;
+      }
     };
 
-    window.addEventListener('scroll', handleScroll);
+    window.addEventListener('scroll', handleScroll, { passive: true });
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
@@ -80,9 +88,9 @@ const Navbar = () => {
             {/* Logo */}
             <Link to="/" className="group">
               <div className="text-left">
-                <h1 className="text-2xl md:text-3xl font-bold text-white group-hover:text-ocean-teal transition-colors duration-300" style={{ fontFamily: 'serif' }}>
+                <span className="text-2xl md:text-3xl font-bold text-white group-hover:text-ocean-teal transition-colors duration-300 block" style={{ fontFamily: 'serif' }}>
                   Karim Saari
-                </h1>
+                </span>
                 <p className="text-xs md:text-sm text-gray-400 uppercase tracking-widest" style={{ letterSpacing: '0.15em' }}>
                   Photographe / Sentinelle de la Mer
                 </p>
@@ -123,7 +131,7 @@ const Navbar = () => {
             <button
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
               className="md:hidden p-2 rounded-lg glass hover:bg-white/10 transition-colors focus-ring"
-              aria-label="Toggle menu"
+              aria-label="Ouvrir le menu"
             >
               {isMobileMenuOpen ? (
                 <XIcon className="w-6 h-6" />
@@ -161,7 +169,7 @@ const Navbar = () => {
                 <button
                   onClick={() => setIsMobileMenuOpen(false)}
                   className="absolute top-4 right-4 p-2 rounded-lg hover:bg-white/10 transition-colors"
-                  aria-label="Close menu"
+                  aria-label="Fermer le menu"
                 >
                   <XIcon className="w-6 h-6" />
                 </button>

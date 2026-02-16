@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 
@@ -110,15 +110,15 @@ const PhotoCarousel = () => {
     setShuffledImages(shuffleArray(allImages));
   }, []);
 
-  const nextSlide = () => {
+  const nextSlide = useCallback(() => {
     setDirection(1);
     setCurrentIndex((prev) => (prev + 1) % shuffledImages.length);
-  };
+  }, [shuffledImages.length]);
 
-  const prevSlide = () => {
+  const prevSlide = useCallback(() => {
     setDirection(-1);
     setCurrentIndex((prev) => (prev - 1 + shuffledImages.length) % shuffledImages.length);
-  };
+  }, [shuffledImages.length]);
 
   // Navigation au clavier
   useEffect(() => {
@@ -128,7 +128,7 @@ const PhotoCarousel = () => {
     };
     window.addEventListener('keydown', handleKeyDown);
     return () => window.removeEventListener('keydown', handleKeyDown);
-  }, [shuffledImages.length]);
+  }, [nextSlide, prevSlide]);
 
   if (shuffledImages.length === 0) {
     return <div className="skeleton aspect-[16/9] rounded-3xl" />;

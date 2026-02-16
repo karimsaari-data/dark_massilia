@@ -1,5 +1,6 @@
 import { lazy, Suspense } from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import ErrorBoundary from './components/ErrorBoundary';
 import Layout from './components/layout/Layout';
 import Home from './pages/Home';
 
@@ -21,24 +22,26 @@ const PageLoader = () => (
 
 function App() {
   return (
-    <Router>
-      <Suspense fallback={<PageLoader />}>
-        <Routes>
-          <Route path="/" element={<Layout />}>
-            <Route index element={<Home />} />
-            <Route path="missions" element={<Missions />} />
-            <Route path="medias" element={<Medias />} />
-            <Route path="photos" element={<Photos />} />
-            <Route path="videos" element={<Videos />} />
-            <Route path="instagram" element={<Instagram />} />
-            <Route path="twitter" element={<Twitter />} />
-            <Route path="arte" element={<Arte />} />
-            <Route path="contact" element={<Contact />} />
-            <Route path="*" element={<NotFound />} />
-          </Route>
-        </Routes>
-      </Suspense>
-    </Router>
+    <ErrorBoundary>
+      <Router>
+        <Suspense fallback={<PageLoader />}>
+          <Routes>
+            <Route path="/" element={<Layout />}>
+              <Route index element={<Home />} />
+              <Route path="missions" element={<Missions />} />
+              <Route path="medias" element={<Medias />} />
+              <Route path="photos" element={<Photos />} />
+              <Route path="videos" element={<Videos />} />
+              <Route path="instagram" element={<Instagram />} />
+              <Route path="twitter" element={<Twitter />} />
+              <Route path="arte" element={<Arte />} />
+              <Route path="contact" element={<Contact />} />
+              <Route path="*" element={<NotFound />} />
+            </Route>
+          </Routes>
+        </Suspense>
+      </Router>
+    </ErrorBoundary>
   );
 }
 
