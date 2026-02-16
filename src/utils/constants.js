@@ -25,7 +25,7 @@ export const NAV_LINKS = [
   { name: 'Photos', path: '/photos', icon: 'Camera' },
   { name: 'Vidéos', path: '/videos', icon: 'Video' },
   { name: 'Instagram', path: '/instagram', icon: 'Instagram' },
-  { name: 'X', path: '/twitter', icon: 'Twitter' },
+  { name: 'Références', path: '/sources', icon: 'BookOpen' },
   { name: 'Médias', path: '/medias', icon: 'Film' },
   { name: 'Contact', path: '/contact', icon: 'Mail' },
 ];

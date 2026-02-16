@@ -58,7 +58,7 @@ const Sources = () => {
     {
       category: "Méditerranée : Concentrations et Impacts",
       icon: FileText,
-      image: "/images/portfolio/33.webp",
+      image: "/images/portfolio/12.webp",
       references: [
         {
           authors: "Cózar, A., et al.",

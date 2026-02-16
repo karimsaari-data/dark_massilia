@@ -1,4 +1,4 @@
-import { Instagram, Youtube, Linkedin, Facebook } from 'lucide-react';
+import { Instagram, Youtube, Linkedin, Facebook, AtSign } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { SOCIAL_LINKS, APP_CONFIG, NAV_LINKS } from '../../utils/constants';
 
@@ -26,6 +26,7 @@ const Footer = () => {
     { Icon: Youtube, href: SOCIAL_LINKS.youtube, label: 'YouTube' },
     { Icon: Facebook, href: SOCIAL_LINKS.facebook, label: 'Facebook' },
     { Icon: Linkedin, href: SOCIAL_LINKS.linkedin, label: 'LinkedIn' },
+    { Icon: AtSign, href: '/contact', label: 'Contact', internal: true },
   ];
 
   return (
@@ -33,37 +34,27 @@ const Footer = () => {
       <div className="container-custom py-8">
         {/* Social Icons - Centered */}
         <div className="flex justify-center items-center space-x-4 mb-6">
-          {socialIcons.map(({ Icon, href, label }) => (
-            <a
-              key={label}
-              href={href}
-              target="_blank"
-              rel="noopener noreferrer"
-              aria-label={label}
-              className="w-10 h-10 rounded-full border border-white/10 flex items-center justify-center hover:border-ocean-teal/50 hover:bg-ocean-teal/10 transition-all duration-300 group"
-            >
-              <Icon className="w-5 h-5 text-gray-400 group-hover:text-ocean-teal transition-colors" />
-            </a>
-          ))}
+          {socialIcons.map(({ Icon, href, label, internal }) => {
+            const Component = internal ? Link : 'a';
+            const linkProps = internal
+              ? { to: href }
+              : { href, target: '_blank', rel: 'noopener noreferrer' };
+
+            return (
+              <Component
+                key={label}
+                {...linkProps}
+                aria-label={label}
+                className="w-10 h-10 rounded-full border border-white/10 flex items-center justify-center hover:border-ocean-teal/50 hover:bg-ocean-teal/10 transition-all duration-300 group"
+              >
+                <Icon className="w-5 h-5 text-gray-400 group-hover:text-ocean-teal transition-colors" />
+              </Component>
+            );
+          })}
         </div>
 
-        {/* Links & Copyright - Centered */}
-        <div className="text-center space-y-3">
-          <div className="flex justify-center items-center gap-4 text-sm">
-            <Link
-              to="/sources"
-              className="text-gray-400 hover:text-ocean-teal transition-colors"
-            >
-              Sources scientifiques
-            </Link>
-            <span className="text-gray-700">•</span>
-            <Link
-              to="/contact"
-              className="text-gray-400 hover:text-ocean-teal transition-colors"
-            >
-              Contact
-            </Link>
-          </div>
+        {/* Copyright - Centered */}
+        <div className="text-center">
           <p className="text-xs text-gray-500">
             © {currentYear} Dark Massilia · Karim Saari
           </p>
