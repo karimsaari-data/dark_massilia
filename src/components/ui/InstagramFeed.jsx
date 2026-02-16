@@ -180,15 +180,15 @@ const InstagramFeed = ({ limit = 9 }) => {
             {/* Stats */}
             <div className="flex items-center space-x-4 mb-3">
               {post.like_count && (
-                <div className="flex items-center space-x-1.5 text-white">
-                  <Heart className="w-4 h-4 fill-white" />
-                  <span className="text-sm font-semibold">{post.like_count}</span>
+                <div className="flex items-center space-x-2.5 text-white">
+                  <Heart className="w-5 h-5 fill-white" />
+                  <span className="text-base font-semibold">{post.like_count}</span>
                 </div>
               )}
               {post.comments_count && (
-                <div className="flex items-center space-x-1.5 text-white">
-                  <MessageCircle className="w-4 h-4" />
-                  <span className="text-sm font-semibold">{post.comments_count}</span>
+                <div className="flex items-center space-x-2.5 text-white">
+                  <MessageCircle className="w-5 h-5" />
+                  <span className="text-base font-semibold">{post.comments_count}</span>
                 </div>
               )}
             </div>

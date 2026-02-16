@@ -36,14 +36,113 @@ const Home = () => {
               </div>
             </motion.div>
 
-            {/* Tagline - Accroche principale */}
+            {/* Tagline - Accroche principale avec animations modernes */}
             <motion.h1
               variants={FADE_IN_UP}
-              className="text-4xl md:text-6xl lg:text-7xl font-bold mb-6 leading-tight"
+              className="text-4xl md:text-6xl lg:text-7xl font-bold mb-6 leading-tight perspective-1000"
             >
-              <span className="gradient-text block">Une Mer</span>
-              <span className="gradient-text block">Une Ville</span>
-              <span className="gradient-text block">Une Mission</span>
+              {/* Une Mer - Gradient animé bleu océan */}
+              <motion.span
+                className="block relative py-2 cursor-pointer"
+                style={{
+                  background: 'linear-gradient(90deg, #21c47b, #0091ff, #21c47b, #0091ff)',
+                  backgroundSize: '200% 100%',
+                  WebkitBackgroundClip: 'text',
+                  WebkitTextFillColor: 'transparent',
+                  backgroundClip: 'text',
+                  transformStyle: 'preserve-3d',
+                }}
+                animate={{
+                  backgroundPosition: ['0% 50%', '100% 50%', '0% 50%'],
+                }}
+                transition={{
+                  duration: 5,
+                  repeat: Infinity,
+                  ease: "linear"
+                }}
+                whileHover={{
+                  scale: 1.05,
+                  rotateX: 8,
+                  y: -5,
+                  transition: { duration: 0.3, ease: "easeOut" }
+                }}
+              >
+                Une Mer
+              </motion.span>
+
+              {/* Une Ville - Gradient animé vert/cyan */}
+              <motion.span
+                className="block relative py-2 cursor-pointer"
+                style={{
+                  background: 'linear-gradient(90deg, #0091ff, #21c47b, #00d4ff, #21c47b)',
+                  backgroundSize: '200% 100%',
+                  WebkitBackgroundClip: 'text',
+                  WebkitTextFillColor: 'transparent',
+                  backgroundClip: 'text',
+                  transformStyle: 'preserve-3d',
+                }}
+                animate={{
+                  backgroundPosition: ['0% 50%', '100% 50%', '0% 50%'],
+                }}
+                transition={{
+                  duration: 6,
+                  repeat: Infinity,
+                  ease: "linear",
+                  delay: 0.5
+                }}
+                whileHover={{
+                  scale: 1.08,
+                  rotateY: 8,
+                  x: 10,
+                  transition: { duration: 0.3, ease: "easeOut" }
+                }}
+              >
+                Une Ville
+              </motion.span>
+
+              {/* Une Mission - Gradient animé avec effet glow */}
+              <motion.span
+                className="block relative py-2 cursor-pointer"
+                style={{
+                  background: 'linear-gradient(90deg, #21c47b, #ffd93d, #0091ff, #21c47b)',
+                  backgroundSize: '200% 100%',
+                  WebkitBackgroundClip: 'text',
+                  WebkitTextFillColor: 'transparent',
+                  backgroundClip: 'text',
+                  filter: 'drop-shadow(0 0 20px rgba(33, 196, 123, 0.4))',
+                  transformStyle: 'preserve-3d',
+                }}
+                animate={{
+                  backgroundPosition: ['0% 50%', '100% 50%', '0% 50%'],
+                  filter: [
+                    'drop-shadow(0 0 20px rgba(33, 196, 123, 0.4))',
+                    'drop-shadow(0 0 40px rgba(0, 145, 255, 0.6))',
+                    'drop-shadow(0 0 20px rgba(33, 196, 123, 0.4))'
+                  ]
+                }}
+                transition={{
+                  backgroundPosition: {
+                    duration: 7,
+                    repeat: Infinity,
+                    ease: "linear",
+                    delay: 1
+                  },
+                  filter: {
+                    duration: 3,
+                    repeat: Infinity,
+                    ease: "easeInOut"
+                  }
+                }}
+                whileHover={{
+                  scale: 1.1,
+                  rotateZ: 2,
+                  y: -8,
+                  filter: 'drop-shadow(0 0 60px rgba(33, 196, 123, 0.9))',
+                  transition: { duration: 0.3, ease: "easeOut" }
+                }}
+              >
+                Une Mission
+              </motion.span>
             </motion.h1>
 
             {/* Bio / Mission Statement */}
@@ -60,7 +159,7 @@ const Home = () => {
               className="flex justify-center"
             >
               <img
-                src="/images/Karim-SAARI-white-low-res.png"
+                src="/images/Karim-SAARI-white-low-res.webp"
                 alt="Signature Karim Saari"
                 className="h-36 md:h-48 lg:h-56 opacity-90"
                 decoding="async"

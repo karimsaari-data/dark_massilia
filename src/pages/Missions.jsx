@@ -8,63 +8,40 @@ const Missions = () => {
   return (
     <div className="min-h-screen py-24">
       <div className="container-custom">
-        {/* Header avec lien */}
-        <motion.div
-          initial="hidden"
-          animate="visible"
-          variants={STAGGER_CONTAINER}
-          className="mb-12"
-        >
-          <motion.div variants={FADE_IN_UP} className="text-center mb-6">
-            <a
-              href="https://www.team-oxygen.com/"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 text-ocean-teal hover:text-white transition-colors text-lg font-medium"
-            >
-              Voir sur Team Oxygen
-              <ExternalLink className="w-5 h-5" />
-            </a>
-          </motion.div>
-        </motion.div>
-
-        {/* Photo Carousel */}
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.3 }}
-          className="mb-16"
-        >
-          <PhotoCarousel />
-        </motion.div>
-
         {/* Mission Description */}
         <motion.div
           initial="hidden"
           animate="visible"
           variants={STAGGER_CONTAINER}
-          className="max-w-4xl mx-auto"
+          className="max-w-4xl mx-auto mb-12"
         >
-          <motion.div variants={FADE_IN_UP} className="glass-strong rounded-3xl p-8 md:p-12 mb-12">
+          <motion.div variants={FADE_IN_UP} className="glass-strong rounded-3xl p-8 md:p-12">
             <h2 className="text-2xl md:text-3xl font-bold text-white mb-6">
               La Mission
             </h2>
 
             <div className="space-y-6 text-text-secondary leading-relaxed">
               <p>
-                De 0 à 20 mètres de profondeur, nous documentons et nettoyons les fonds marins. Chaque plongée devient une mission de dépollution.
+                De la surface à 20 mètres de profondeur, nous intervenons en Méditerranée, sur l'ensemble du littoral de Marseille, de la Côte Bleue à La Ciotat, pour observer, documenter et extraire les déchets présents sur les fonds marins. Chaque immersion est structurée comme une opération de dépollution sous-marine et de collecte de données environnementales dans les calanques de Marseille.
               </p>
 
               <p>
-                Avec <strong className="text-ocean-teal">Team Oxygen</strong>, nous allions l'apnée sportive à l'action environnementale. Notre objectif : sensibiliser le public sur l'état réel de nos calanques et inspirer le changement.
+                Avec <strong className="text-ocean-teal">Team Oxygen</strong>, nous mobilisons l'apnée comme outil d'action écologique en Méditerranée. Notre engagement à Marseille vise à documenter l'état réel des fonds marins, sensibiliser à la pollution marine et agir concrètement pour la protection du littoral méditerranéen.
               </p>
             </div>
           </motion.div>
+        </motion.div>
 
-          {/* Éditions - 4 années */}
+        {/* Éditions - 4 années */}
+        <motion.div
+          initial="hidden"
+          animate="visible"
+          variants={STAGGER_CONTAINER}
+          className="max-w-4xl mx-auto mb-12"
+        >
           <motion.div
             variants={FADE_IN_UP}
-            className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-12"
+            className="grid grid-cols-1 md:grid-cols-2 gap-6"
           >
             {[
               {
@@ -116,13 +93,48 @@ const Missions = () => {
               </div>
             ))}
           </motion.div>
+        </motion.div>
 
-          {/* Description */}
+        {/* Header avec lien Team Oxygen */}
+        <motion.div
+          initial="hidden"
+          animate="visible"
+          variants={STAGGER_CONTAINER}
+          className="mb-8"
+        >
           <motion.div variants={FADE_IN_UP} className="text-center">
-            <p className="text-text-secondary">
-              Cette galerie retrace nos actions terrain dans le Parc National des Calanques de Marseille.
-            </p>
+            <a
+              href="https://www.team-oxygen.com/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-2 text-ocean-teal hover:text-white transition-colors text-lg font-medium"
+            >
+              Voir sur Team Oxygen
+              <ExternalLink className="w-5 h-5" />
+            </a>
           </motion.div>
+        </motion.div>
+
+        {/* Photo Carousel */}
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, delay: 0.3 }}
+          className="mb-16"
+        >
+          <PhotoCarousel />
+        </motion.div>
+
+        {/* Description galerie */}
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 0.6 }}
+          className="text-center mb-16"
+        >
+          <p className="text-text-secondary">
+            Cette galerie retrace nos actions terrain dans le Parc National des Calanques de Marseille.
+          </p>
         </motion.div>
 
         {/* Back to Home */}
