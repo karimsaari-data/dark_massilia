@@ -27,7 +27,6 @@ export const NAV_LINKS = [
   { name: 'Instagram', path: '/instagram', icon: 'Instagram' },
   { name: 'Références', path: '/sources', icon: 'BookOpen' },
   { name: 'Médias', path: '/medias', icon: 'Film' },
-  { name: 'Contact', path: '/contact', icon: 'Mail' },
 ];
 
 export const TAGLINE = 'Une Mer · Une Ville · Une Mission';
