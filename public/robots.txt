@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://karimsaari.com/home/sitemap.xml
+Sitemap: https://karimsaari.com/sitemap.xml
