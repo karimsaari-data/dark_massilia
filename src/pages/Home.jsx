@@ -179,7 +179,7 @@ const Home = () => {
             {/* Signature */}
             <motion.div
               variants={FADE_IN_UP}
-              className="flex justify-center mb-12"
+              className="flex justify-center"
             >
               <img
                 src="/images/Karim-SAARI-white-low-res.webp"
@@ -188,56 +188,51 @@ const Home = () => {
                 decoding="async"
               />
             </motion.div>
-
-            {/* Phrases choc - Impact environnemental */}
-            <motion.div
-              variants={FADE_IN_UP}
-              className="mt-16 mb-8"
-            >
-              <div className="glass-strong rounded-2xl border border-orange-500/30 p-8 md:p-10 max-w-4xl mx-auto shadow-lg shadow-orange-500/10">
-                <div className="flex items-start gap-4">
-                  <div className="flex-shrink-0 mt-1">
-                    <div className="w-12 h-12 rounded-full bg-gradient-to-br from-orange-500 to-red-600 flex items-center justify-center shadow-lg shadow-orange-500/30">
-                      <AlertTriangle className="w-6 h-6 text-white" />
-                    </div>
-                  </div>
-
-                  <div className="flex-1 min-h-[80px] flex items-center">
-                    <AnimatePresence mode="wait">
-                      <motion.p
-                        key={currentFactIndex}
-                        initial={{ opacity: 0, y: 20 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        exit={{ opacity: 0, y: -20 }}
-                        transition={{ duration: 0.5, ease: "easeInOut" }}
-                        className="text-lg md:text-xl lg:text-2xl font-semibold text-white leading-relaxed"
-                      >
-                        {IMPACT_FACTS[currentFactIndex]}
-                      </motion.p>
-                    </AnimatePresence>
-                  </div>
-                </div>
-
-                {/* Indicateurs de progression */}
-                <div className="flex justify-center gap-2 mt-6">
-                  {IMPACT_FACTS.map((_, index) => (
-                    <button
-                      key={index}
-                      onClick={() => setCurrentFactIndex(index)}
-                      className={`h-1.5 rounded-full transition-all duration-300 ${
-                        index === currentFactIndex
-                          ? 'w-8 bg-orange-500'
-                          : 'w-1.5 bg-gray-600 hover:bg-gray-500'
-                      }`}
-                      aria-label={`Afficher le fait ${index + 1}`}
-                    />
-                  ))}
-                </div>
-              </div>
-            </motion.div>
           </motion.div>
         </div>
 
+      </section>
+
+      {/* Section Phrases choc - Impact environnemental */}
+      <section className="container-custom py-8 md:py-12">
+        <motion.div
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true }}
+          variants={FADE_IN_UP}
+          className="glass-strong rounded-3xl border border-ocean-teal/20 p-8 md:p-12 shadow-lg shadow-ocean-teal/10 mb-16"
+        >
+          <div className="min-h-[100px] flex items-center justify-center text-center">
+            <AnimatePresence mode="wait">
+              <motion.p
+                key={currentFactIndex}
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -20 }}
+                transition={{ duration: 0.5, ease: "easeInOut" }}
+                className="text-xl md:text-2xl lg:text-3xl font-bold text-white leading-relaxed"
+              >
+                {IMPACT_FACTS[currentFactIndex]}
+              </motion.p>
+            </AnimatePresence>
+          </div>
+
+          {/* Indicateurs de progression */}
+          <div className="flex justify-center gap-2 mt-8">
+            {IMPACT_FACTS.map((_, index) => (
+              <button
+                key={index}
+                onClick={() => setCurrentFactIndex(index)}
+                className={`h-1.5 rounded-full transition-all duration-300 ${
+                  index === currentFactIndex
+                    ? 'w-8 bg-ocean-teal'
+                    : 'w-1.5 bg-gray-600 hover:bg-gray-500'
+                }`}
+                aria-label={`Afficher le fait ${index + 1}`}
+              />
+            ))}
+          </div>
+        </motion.div>
       </section>
 
       {/* Missions Section - Card moderne */}
