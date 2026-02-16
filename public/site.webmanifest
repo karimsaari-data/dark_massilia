@@ -1,0 +1,28 @@
+{
+  "name": "Dark Massilia · Karim Saari",
+  "short_name": "Dark Massilia",
+  "description": "Sentinelle de la Méditerranée — Photographie sous-marine & actions de dépollution des Calanques de Marseille",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#050505",
+  "theme_color": "#050505",
+  "lang": "fr",
+  "icons": [
+    {
+      "src": "/favicon-96x96.png",
+      "sizes": "96x96",
+      "type": "image/png"
+    },
+    {
+      "src": "/apple-touch-icon.png",
+      "sizes": "180x180",
+      "type": "image/png"
+    },
+    {
+      "src": "/app-icon-1024x1024.png",
+      "sizes": "1024x1024",
+      "type": "image/png",
+      "purpose": "any"
+    }
+  ]
+}

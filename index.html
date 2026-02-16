@@ -6,16 +6,21 @@
     <title>Dark Massilia · Karim Saari · Sentinelle de la Méditerranée</title>
     <meta name="description" content="Dark Massilia - Sentinelle de la Méditerranée. Karim Saari, apnéiste et éco-acteur marseillais, documente et nettoie les fonds marins des Calanques avec Team Oxygen." />
 
-    <!-- Favicons -->
+    <!-- Favicons & PWA -->
     <link rel="icon" type="image/x-icon" href="/favicon.ico" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <link rel="manifest" href="/site.webmanifest" />
 
     <!-- Preconnect pour Google Fonts (élimine le round-trip DNS) -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" />
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" media="print" onload="this.media='all'" />
+
+    <!-- Preload hero background (LCP optimization) -->
+    <link rel="preload" as="image" href="/assets/hero-bg.jpg" />
+    <link rel="preload" as="image" href="/assets/dark-massilia-logo.png" />
 
     <!-- Preconnect YouTube thumbnails -->
     <link rel="preconnect" href="https://img.youtube.com" />
@@ -76,6 +81,13 @@
   </head>
   <body>
     <div id="root"></div>
+    <noscript>
+      <div style="padding:2rem;text-align:center;color:#ccc;font-family:system-ui,sans-serif;background:#050505;min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center">
+        <h1 style="font-size:2rem;margin-bottom:1rem">Dark Massilia · Karim Saari</h1>
+        <p style="max-width:600px;line-height:1.6">Sentinelle de la Méditerranée — Apnéiste engagé pour la préservation de la Méditerranée. Documentation et dépollution des fonds marins des Calanques de Marseille avec Team Oxygen.</p>
+        <p style="margin-top:1rem;color:#888">Activez JavaScript pour accéder au site complet.</p>
+      </div>
+    </noscript>
     <script type="module" src="/src/main.jsx"></script>
   </body>
 </html>
