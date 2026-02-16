@@ -7,7 +7,7 @@ const Sources = () => {
     {
       category: "Données Globales et Flux",
       icon: Globe,
-      image: "/images/portfolio/10.webp",
+      image: "/images/Marseille-dark-massilia-plastique-polluttion-projet-sentinelle-huveaune.webp",
       references: [
         {
           authors: "Jambeck, J. R., et al.",
@@ -58,7 +58,7 @@ const Sources = () => {
     {
       category: "Méditerranée : Concentrations et Impacts",
       icon: FileText,
-      image: "/images/portfolio/12.webp",
+      image: "/images/Marseille-dark-massilia-plastique-pollution-projet-sentinelle-archipel-frioul-barquette-5.webp",
       references: [
         {
           authors: "Cózar, A., et al.",
@@ -121,7 +121,7 @@ const Sources = () => {
     {
       category: "Focus Local : Marseille et Calanques",
       icon: BookOpen,
-      image: "/images/portfolio/54.webp",
+      image: "/images/Marseille-dark-massilia-plastique-pollution-projet-sentinelle-vélo-métropole.webp",
       references: [
         {
           authors: "Association MerTerre",
@@ -271,24 +271,6 @@ const Sources = () => {
           })}
         </div>
 
-        {/* Footer Note */}
-        <motion.div
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true }}
-          variants={FADE_IN_UP}
-          className="mt-16 glass-strong rounded-2xl p-8 border border-ocean-teal/20 text-center"
-        >
-          <p className="text-gray-300 leading-relaxed">
-            Ces études et rapports offrent une base solide pour comprendre l'ampleur de la pollution plastique
-            en Méditerranée. Ils permettent d'appréhender les mécanismes de dégradation des écosystèmes marins
-            et l'urgence de mobiliser autour de solutions concrètes. Toutes ces ressources sont librement
-            accessibles pour approfondir vos connaissances.
-          </p>
-          <p className="text-ocean-teal font-semibold mt-4">
-            Dernière mise à jour : Février 2025
-          </p>
-        </motion.div>
       </div>
     </div>
   );

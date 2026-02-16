@@ -8,14 +8,16 @@ import { useState, useEffect } from 'react';
 
 // Phrases choc sur la pollution marine
 const IMPACT_FACTS = [
-  "8 millions de tonnes de plastique sont déversées chaque année dans l'océan.",
-  "80 % des déchets marins proviennent d'activités terrestres.",
-  "95 % des déchets flottants en Méditerranée sont des plastiques.",
-  "Plus de 90 % des oiseaux marins ont déjà ingéré du plastique.",
-  "La Méditerranée est l'une des mers les plus polluées au monde en concentration de microplastiques.",
-  "La Méditerranée concentre 7 % des microplastiques mondiaux pour moins de 1 % de la surface océanique.",
-  "Un sac plastique peut persister plusieurs centaines d'années en mer.",
-  "Plus de 600 espèces marines méditerranéennes sont affectées par les déchets plastiques.",
+  "Une concentration disproportionnée : La mer Méditerranée ne représente que 1 % de la surface océanique mondiale, mais elle concentre pourtant 7 % de tous les microplastiques de la planète.",
+  "L'absurdité de l'usage unique : Il faut environ 1 seconde pour fabriquer un sac plastique et son utilisation moyenne ne dure que 20 minutes, alors qu'il lui faudra plus d'un siècle pour se dégrader dans le milieu naturel.",
+  "Une persistance millénaire : Si un mégot de cigarette met environ 10 ans à se dégrader en mer, une ligne de pêche en plastique peut mettre jusqu'à 600 ans pour disparaître.",
+  "L'ampleur mondiale : On estime à 5 250 milliards le nombre de particules plastiques qui flottent actuellement à la surface des océans, ce qui équivaut à un poids de près de 269 000 tonnes.",
+  "L'omniprésence en Méditerranée : La densité moyenne de plastique en Méditerranée (1 objet tous les 4 m²) est comparable à celle des zones d'accumulation des cinq grands gyres océaniques subtropicaux, souvent qualifiés de « continents de plastique ».",
+  "Un piège mortel pour la faune : Les tortues marines confondent les plastiques transparents avec des méduses, ce qui provoque des lésions graves ou la mort, tandis que des dauphins peuvent mourir la mâchoire bloquée par des anneaux en plastique avec lesquels ils tentaient de jouer.",
+  "Une contamination massive des oiseaux : On estime aujourd'hui que plus de 90 % des oiseaux marins ont déjà ingéré du plastique, et les projections indiquent que 99 % des espèces seront touchées d'ici 2050.",
+  "Le flux incessant : Les populations côtières déversent environ 8 millions de tonnes de déchets plastiques dans les océans chaque année, un chiffre qui pourrait doubler en une décennie sans amélioration de la gestion des déchets.",
+  "Le fléau des mégots : Lors de la seule opération « Calanques Propres » en 2023, plus de 70 000 mégots ont été ramassés, soulignant une pollution locale massive et préoccupante.",
+  "Une pollution inévitable : Lors d'une vaste campagne d'échantillonnage à travers le bassin méditerranéen, des débris plastiques flottants ont été retrouvés dans 100 % des sites analysés.",
 ];
 
 const Home = () => {
@@ -26,7 +28,7 @@ const Home = () => {
   useEffect(() => {
     const interval = setInterval(() => {
       setCurrentFactIndex((prev) => (prev + 1) % IMPACT_FACTS.length);
-    }, 5000); // Change toutes les 5 secondes
+    }, 10000); // Change toutes les 10 secondes (phrases plus longues)
 
     return () => clearInterval(interval);
   }, []);
@@ -203,7 +205,7 @@ const Home = () => {
           variants={FADE_IN_UP}
           className="glass-strong rounded-3xl border border-ocean-teal/20 p-8 md:p-12 shadow-lg shadow-ocean-teal/10 mb-16"
         >
-          <div className="min-h-[100px] flex items-center justify-center text-center">
+          <div className="min-h-[180px] md:min-h-[140px] flex items-center justify-center text-center">
             <AnimatePresence mode="wait">
               <motion.p
                 key={currentFactIndex}
@@ -211,7 +213,7 @@ const Home = () => {
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: -20 }}
                 transition={{ duration: 0.5, ease: "easeInOut" }}
-                className="text-xl md:text-2xl lg:text-3xl font-bold text-white leading-relaxed"
+                className="text-lg md:text-xl lg:text-2xl font-semibold text-white leading-relaxed max-w-5xl"
               >
                 {IMPACT_FACTS[currentFactIndex]}
               </motion.p>
