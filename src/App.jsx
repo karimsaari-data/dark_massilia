@@ -13,6 +13,7 @@ const Instagram = lazy(() => import('./pages/Instagram'));
 const Twitter = lazy(() => import('./pages/Twitter'));
 const Contact = lazy(() => import('./pages/Contact'));
 const Arte = lazy(() => import('./pages/Arte'));
+const Sources = lazy(() => import('./pages/Sources'));
 
 const PageLoader = () => (
   <div className="min-h-screen flex items-center justify-center">
@@ -35,6 +36,7 @@ function App() {
               <Route path="instagram" element={<Instagram />} />
               <Route path="twitter" element={<Twitter />} />
               <Route path="arte" element={<Arte />} />
+              <Route path="sources" element={<Sources />} />
               <Route path="contact" element={<Contact />} />
               <Route path="*" element={<NotFound />} />
             </Route>

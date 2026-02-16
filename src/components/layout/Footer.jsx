@@ -47,8 +47,23 @@ const Footer = () => {
           ))}
         </div>
 
-        {/* Copyright - Centered */}
-        <div className="text-center">
+        {/* Links & Copyright - Centered */}
+        <div className="text-center space-y-3">
+          <div className="flex justify-center items-center gap-4 text-sm">
+            <Link
+              to="/sources"
+              className="text-gray-400 hover:text-ocean-teal transition-colors"
+            >
+              Sources scientifiques
+            </Link>
+            <span className="text-gray-700">•</span>
+            <Link
+              to="/contact"
+              className="text-gray-400 hover:text-ocean-teal transition-colors"
+            >
+              Contact
+            </Link>
+          </div>
           <p className="text-xs text-gray-500">
             © {currentYear} Dark Massilia · Karim Saari
           </p>
