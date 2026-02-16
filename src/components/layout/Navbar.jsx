@@ -85,8 +85,8 @@ const Navbar = () => {
                   Karim Saari
                 </span>
                 <div className="text-xs md:text-sm text-gray-400 uppercase tracking-widest leading-tight" style={{ letterSpacing: '0.15em' }}>
-                  <p className="mb-0">Photographe de paysages</p>
-                  <p>Sentinelle de la Mer</p>
+                  <p className="mb-0">Sentinelle de la Mer</p>
+                  <p>Photographe de paysages</p>
                 </div>
               </div>
             </Link>
