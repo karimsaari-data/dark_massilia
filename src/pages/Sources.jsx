@@ -7,7 +7,7 @@ const Sources = () => {
     {
       category: "Données Globales et Flux",
       icon: Globe,
-      image: "/images/portfolio/44.webp", // Image illustrative
+      image: "/images/portfolio/10.webp",
       references: [
         {
           authors: "Jambeck, J. R., et al.",
@@ -58,7 +58,7 @@ const Sources = () => {
     {
       category: "Méditerranée : Concentrations et Impacts",
       icon: FileText,
-      image: "/images/portfolio/27.webp",
+      image: "/images/portfolio/33.webp",
       references: [
         {
           authors: "Cózar, A., et al.",
@@ -121,7 +121,7 @@ const Sources = () => {
     {
       category: "Focus Local : Marseille et Calanques",
       icon: BookOpen,
-      image: "/images/portfolio/23.webp",
+      image: "/images/portfolio/54.webp",
       references: [
         {
           authors: "Association MerTerre",
@@ -183,8 +183,8 @@ const Sources = () => {
             variants={FADE_IN_UP}
             className="text-xl text-text-secondary max-w-3xl mx-auto leading-relaxed"
           >
-            Références scientifiques et études sur la pollution plastique en Méditerranée et dans les océans.
-            Toutes les données utilisées sur ce site proviennent de sources vérifiées et reconnues.
+            Études scientifiques et rapports sur la pollution plastique en Méditerranée et dans les océans.
+            Ces ressources permettent de mieux comprendre l'urgence environnementale et les enjeux de préservation marine.
           </motion.p>
         </motion.div>
 
@@ -280,10 +280,10 @@ const Sources = () => {
           className="mt-16 glass-strong rounded-2xl p-8 border border-ocean-teal/20 text-center"
         >
           <p className="text-gray-300 leading-relaxed">
-            Ces sources constituent la base scientifique de notre action. Elles démontrent l'urgence d'agir
-            pour la préservation de la Méditerranée et de ses écosystèmes marins. Les données présentées sur
-            ce site sont issues de publications scientifiques peer-reviewed et de rapports d'organisations
-            internationales reconnues.
+            Ces études et rapports offrent une base solide pour comprendre l'ampleur de la pollution plastique
+            en Méditerranée. Ils permettent d'appréhender les mécanismes de dégradation des écosystèmes marins
+            et l'urgence de mobiliser autour de solutions concrètes. Toutes ces ressources sont librement
+            accessibles pour approfondir vos connaissances.
           </p>
           <p className="text-ocean-teal font-semibold mt-4">
             Dernière mise à jour : Février 2025
