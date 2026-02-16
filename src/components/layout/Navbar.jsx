@@ -88,7 +88,7 @@ const Navbar = () => {
             {/* Logo */}
             <Link to="/" className="group">
               <div className="text-left">
-                <span className="text-2xl md:text-3xl font-bold text-white group-hover:text-ocean-teal transition-colors duration-300 block" style={{ fontFamily: 'serif' }}>
+                <span className="text-2xl md:text-3xl font-bold text-white group-hover:text-ocean-teal transition-colors duration-300 block tracking-tight">
                   Karim Saari
                 </span>
                 <p className="text-xs md:text-sm text-gray-400 uppercase tracking-widest" style={{ letterSpacing: '0.15em' }}>
