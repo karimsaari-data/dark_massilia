@@ -58,7 +58,7 @@ const Sources = () => {
     {
       category: "Méditerranée : Concentrations et Impacts",
       icon: FileText,
-      image: "/images/Marseille-dark-massilia-plastique-pollution-projet-sentinelle-archipel-frioul-barquette-5.webp",
+      image: "/images/Marseille-dark-massilia-plastique-pollution-projet-sentinelle-mer-de-plastique.webp",
       references: [
         {
           authors: "Cózar, A., et al.",
