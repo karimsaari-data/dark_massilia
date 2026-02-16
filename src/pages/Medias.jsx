@@ -10,26 +10,26 @@ const Medias = () => {
       title: 'Ville de Marseille — Reconnaissance Officielle',
       url: 'https://www.facebook.com/marseilleville/photos/a.220707724621813/3697054720320412/?_rdr',
       featured: true,
-      image: '/images/ville de marseille.jpg'
+      image: '/images/ville de marseille.webp'
     },
     {
       title: 'La Provence — Opération Sentinelle',
       url: 'https://www.laprovence.com/article/ecoplanete/1845794554454214/de-montredon-a-cassis-les-apneistes-lancent-leur-operation-sentinelle-des-samedi-et-jusquau-6-octobre',
       featured: true,
-      image: '/images/la provence.jpg'
+      image: '/images/la provence.webp'
     },
     {
       title: 'Documentaire ARTE',
       url: '/arte',
       internal: true,
       featured: true,
-      image: '/images/photo profil Arte.jpg'
+      image: '/images/photo profil Arte.webp'
     },
     {
       title: 'Interview Presse — Tired Earth (EN/FR)',
       url: 'https://www.tiredearth.com/interviews/interview-de-karim-saari-apneiste-et-photographe-sous-marin#',
       featured: false,
-      image: '/images/tiredearth.jpg'
+      image: '/images/tiredearth.webp'
     },
   ];
 

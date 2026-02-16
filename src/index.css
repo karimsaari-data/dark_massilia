@@ -179,7 +179,7 @@
 
   /* Background image optimization */
   .bg-hero-ocean {
-    background-image: url('/assets/hero-bg.jpg');
+    background-image: url('/assets/hero-bg.webp');
     background-size: cover;
     background-position: center;
     background-attachment: fixed;

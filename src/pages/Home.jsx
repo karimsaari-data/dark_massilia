@@ -27,7 +27,7 @@ const Home = () => {
             <motion.div variants={FADE_IN} className="mb-12">
               <div className="w-32 h-32 md:w-40 md:h-40 mx-auto rounded-full bg-white overflow-hidden animate-pulse-glow">
                 <img
-                  src="/assets/dark-massilia-logo.png"
+                  src="/assets/dark-massilia-logo.webp"
                   alt="Logo Dark Massilia - Karim Saari éco-acteur et apnéiste"
                   className="w-full h-full object-contain"
                   loading="eager"
@@ -103,7 +103,7 @@ const Home = () => {
             {/* Image Team Oxygen - Droite */}
             <div className="relative h-64 md:h-auto min-h-[400px] order-1 md:order-2">
               <img
-                src="/images/Marseille-dark-massilia-plastique-pollution-projet-sentinelle-teamoxygen.jpg"
+                src="/images/Marseille-dark-massilia-plastique-pollution-projet-sentinelle-teamoxygen.webp"
                 alt="Team Oxygen - Projet Sentinelle Marseille"
                 className="absolute inset-0 w-full h-full object-cover"
                 style={{ objectPosition: '12% 25%' }}
@@ -160,7 +160,7 @@ const Home = () => {
             {/* Image du groupe Facebook - Droite */}
             <div className="relative h-64 md:h-auto min-h-[400px] order-1 md:order-2">
               <img
-                src="/images/groupe%20des%20amoureux%20des%20calanques.jpg"
+                src="/images/groupe%20des%20amoureux%20des%20calanques.webp"
                 alt="Groupe Facebook Amoureux des Calanques de Marseille à Port-Cros"
                 className="absolute inset-0 w-full h-full object-cover"
                 style={{ objectPosition: '12% 25%' }}

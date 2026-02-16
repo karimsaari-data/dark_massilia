@@ -6,7 +6,7 @@ import { FADE_IN_UP, STAGGER_CONTAINER } from '../utils/constants';
 // Import all portfolio images (1.jpg to 54.jpg)
 const portfolioImages = Array.from({ length: 54 }, (_, i) => ({
   id: i + 1,
-  src: `/images/portfolio/${i + 1}.jpg`,
+  src: `/images/portfolio/${i + 1}.webp`,
   alt: `Photo sous-marine Karim Saari – Calanques de Marseille ${i + 1}`
 }));
 

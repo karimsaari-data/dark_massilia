@@ -76,7 +76,7 @@ const InstagramFeed = ({ limit = 9 }) => {
     return Array.from({ length: count }, (_, i) => ({
       id: `demo_${i + 1}`,
       media_type: i % 3 === 0 ? 'VIDEO' : 'IMAGE',
-      media_url: `/images/Marseille-dark-massilia-plastique-pollution-projet-sentinelle-${['apneiste', 'frioul-1', 'grotte', 'moyades', 'musée', 'poulpe', 'shooting', 'vélo', 'angel'][i] || 'apneiste'}.jpg`,
+      media_url: `/images/Marseille-dark-massilia-plastique-pollution-projet-sentinelle-${['apneiste', 'frioul-1', 'grotte', 'moyades', 'musée', 'poulpe', 'shooting', 'vélo', 'angel'][i] || 'apneiste'}.webp`,
       permalink: 'https://www.instagram.com/karimsaari',
       caption: `Projet Sentinelle - Mission ${i + 1} 🌊 Dépollution des Calanques de Marseille`,
       timestamp: new Date(Date.now() - i * 86400000).toISOString(),
