@@ -88,7 +88,7 @@
 
   /* Glow effect */
   .glow-teal {
-    box-shadow: 0 0 20px rgba(33, 196, 123, 0.3);
+    box-shadow: 0 0 20px rgba(0, 171, 168, 0.3);
   }
 
   .glow-blue {
@@ -195,7 +195,7 @@
   /* Background patterns */
   .bg-ocean-pattern {
     background-image:
-      radial-gradient(circle at 20% 80%, rgba(33, 196, 123, 0.06) 1px, transparent 1.5px),
+      radial-gradient(circle at 20% 80%, rgba(0, 171, 168, 0.06) 1px, transparent 1.5px),
       radial-gradient(circle at 70% 90%, rgba(0, 145, 255, 0.08) 1.2px, transparent 1.8px),
       radial-gradient(circle at 45% 70%, rgba(255, 255, 255, 0.05) 0.8px, transparent 1.2px);
     background-size: 150% 150%;
@@ -229,8 +229,8 @@
 }
 
 .spinner {
-  border: 3px solid rgba(33, 196, 123, 0.1);
-  border-top-color: rgba(33, 196, 123, 1);
+  border: 3px solid rgba(0, 171, 168, 0.1);
+  border-top-color: rgba(0, 171, 168, 1);
   border-radius: 50%;
   width: 40px;
   height: 40px;

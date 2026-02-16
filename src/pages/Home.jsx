@@ -68,7 +68,7 @@ const Home = () => {
               <motion.span
                 className="block relative py-2 cursor-pointer"
                 style={{
-                  background: 'linear-gradient(90deg, #21c47b, #0091ff, #21c47b, #0091ff)',
+                  background: 'linear-gradient(90deg, #00ABA8, #0091ff, #00ABA8, #0091ff)',
                   backgroundSize: '200% 100%',
                   WebkitBackgroundClip: 'text',
                   WebkitTextFillColor: 'transparent',
@@ -97,7 +97,7 @@ const Home = () => {
               <motion.span
                 className="block relative py-2 cursor-pointer"
                 style={{
-                  background: 'linear-gradient(90deg, #0091ff, #21c47b, #00d4ff, #21c47b)',
+                  background: 'linear-gradient(90deg, #0091ff, #00ABA8, #00d4ff, #00ABA8)',
                   backgroundSize: '200% 100%',
                   WebkitBackgroundClip: 'text',
                   WebkitTextFillColor: 'transparent',
@@ -127,20 +127,20 @@ const Home = () => {
               <motion.span
                 className="block relative py-2 cursor-pointer"
                 style={{
-                  background: 'linear-gradient(90deg, #21c47b, #ffd93d, #0091ff, #21c47b)',
+                  background: 'linear-gradient(90deg, #00ABA8, #ffd93d, #0091ff, #00ABA8)',
                   backgroundSize: '200% 100%',
                   WebkitBackgroundClip: 'text',
                   WebkitTextFillColor: 'transparent',
                   backgroundClip: 'text',
-                  filter: 'drop-shadow(0 0 20px rgba(33, 196, 123, 0.4))',
+                  filter: 'drop-shadow(0 0 20px rgba(0, 171, 168, 0.4))',
                   transformStyle: 'preserve-3d',
                 }}
                 animate={{
                   backgroundPosition: ['0% 50%', '100% 50%', '0% 50%'],
                   filter: [
-                    'drop-shadow(0 0 20px rgba(33, 196, 123, 0.4))',
+                    'drop-shadow(0 0 20px rgba(0, 171, 168, 0.4))',
                     'drop-shadow(0 0 40px rgba(0, 145, 255, 0.6))',
-                    'drop-shadow(0 0 20px rgba(33, 196, 123, 0.4))'
+                    'drop-shadow(0 0 20px rgba(0, 171, 168, 0.4))'
                   ]
                 }}
                 transition={{
@@ -160,7 +160,7 @@ const Home = () => {
                   scale: 1.1,
                   rotateZ: 2,
                   y: -8,
-                  filter: 'drop-shadow(0 0 60px rgba(33, 196, 123, 0.9))',
+                  filter: 'drop-shadow(0 0 60px rgba(0, 171, 168, 0.9))',
                   transition: { duration: 0.3, ease: "easeOut" }
                 }}
               >

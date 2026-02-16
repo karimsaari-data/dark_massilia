@@ -8,17 +8,18 @@ export default {
     extend: {
       colors: {
         abyss: {
-          DEFAULT: '#050505',
-          light: '#0a0a0a',
+          DEFAULT: '#0B1C2D', // Deep Blue - océan profond
+          light: '#0f2338',    // Légèrement plus clair
           blue: '#0d1a2d',
         },
         ocean: {
-          teal: '#21c47b',
-          blue: '#0091ff',
+          teal: '#00ABA8',     // Turquoise - accent principal
+          blue: '#0091ff',     // Bleu action (conservé)
         },
       },
       fontFamily: {
         sans: ['Inter', 'system-ui', '-apple-system', 'sans-serif'],
+        display: ['Montserrat', 'Inter', 'system-ui', 'sans-serif'], // Pour les titres
       },
       animation: {
         'fade-in': 'fadeIn 0.8s ease-out',
@@ -36,11 +37,11 @@ export default {
         },
         pulseGlow: {
           '0%': {
-            boxShadow: '0 0 26px rgba(33, 196, 123, 0.6), 0 0 20px rgba(0, 145, 255, 0.3)',
+            boxShadow: '0 0 26px rgba(0, 171, 168, 0.6), 0 0 20px rgba(0, 145, 255, 0.3)',
             transform: 'translateY(0)',
           },
           '100%': {
-            boxShadow: '0 0 46px rgba(33, 196, 123, 1), 0 0 30px rgba(0, 145, 255, 0.6)',
+            boxShadow: '0 0 46px rgba(0, 171, 168, 1), 0 0 30px rgba(0, 145, 255, 0.6)',
             transform: 'translateY(-2px)',
           },
         },
