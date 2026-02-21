@@ -1,14 +1,57 @@
 import { useState, useEffect, useCallback, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { X, ExternalLink, ChevronLeft, ChevronRight } from 'lucide-react';
+import { X, ExternalLink, ChevronLeft, ChevronRight, Waves, TreePine } from 'lucide-react';
 import { FADE_IN_UP, STAGGER_CONTAINER } from '../utils/constants';
 
-// Import all portfolio images (1.jpg to 54.jpg)
-const portfolioImages = Array.from({ length: 54 }, (_, i) => ({
-  id: i + 1,
-  src: `/images/portfolio/${i + 1}.webp`,
-  alt: `Photo sous-marine Karim Saari – Calanques de Marseille ${i + 1}`
+const merIds = [2, 4, 6, 10, 11, 12, 13, 14, 20, 22, 23, 30, 32, 33, 35, 39, 44, 45, 46, 47, 50, 51, 52, 54, 55, 56, 57, 58, 59, 60, 61, 62, 63, 64, 65, 66, 67, 68, 69, 70, 71, 72, 73, 74, 75, 76, 77, 78, 79, 80, 81, 82];
+const terreIds = [1, 3, 5, 7, 8, 9, 15, 16, 17, 18, 19, 21, 24, 25, 26, 27, 28, 29, 31, 34, 36, 37, 38, 40, 41, 42, 43, 48, 49, 53];
+
+const merImages = merIds.map((id, index) => ({
+  uid: `mer-${id}`,
+  src: `/images/portfolio/Mer/${id}.webp`,
+  alt: `Photo mer Karim Saari – Calanques de Marseille ${index + 1}`,
 }));
+
+const terreImages = terreIds.map((id, index) => ({
+  uid: `terre-${id}`,
+  src: `/images/portfolio/Terre/${id}.webp`,
+  alt: `Photo paysage Karim Saari – Provence ${index + 1}`,
+}));
+
+const allImages = [...merImages, ...terreImages];
+
+const SectionTitle = ({ icon: Icon, title, count }) => (
+  <motion.div variants={FADE_IN_UP} className="flex items-center gap-3 mb-8">
+    <div className="flex items-center gap-3">
+      <Icon className="w-6 h-6 text-ocean-teal" />
+      <h2 className="text-2xl font-bold text-white">{title}</h2>
+      <span className="text-sm text-white/40 font-medium">({count})</span>
+    </div>
+    <div className="flex-1 h-px bg-white/10 ml-2" />
+  </motion.div>
+);
+
+const PhotoGrid = ({ images, onOpenLightbox }) => (
+  <div className="columns-1 md:columns-2 lg:columns-3 xl:columns-4 gap-4 space-y-4">
+    {images.map((image, index) => (
+      <motion.div
+        key={image.uid}
+        variants={FADE_IN_UP}
+        className="break-inside-avoid cursor-pointer group relative overflow-hidden rounded-xl"
+        onClick={() => onOpenLightbox(image)}
+      >
+        <img
+          src={image.src}
+          alt={image.alt}
+          className="w-full h-auto object-cover transition-transform duration-500 group-hover:scale-110"
+          loading={index < 4 ? 'eager' : 'lazy'}
+          decoding="async"
+        />
+        <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+      </motion.div>
+    ))}
+  </div>
+);
 
 const Photos = () => {
   const [selectedImage, setSelectedImage] = useState(null);
@@ -30,25 +73,23 @@ const Photos = () => {
   const navigateImage = useCallback((direction) => {
     setSelectedImage((current) => {
       if (!current) return current;
-      const currentIndex = portfolioImages.findIndex(img => img.id === current.id);
+      const currentIndex = allImages.findIndex(img => img.uid === current.uid);
       let newIndex;
       if (direction === 'next') {
-        newIndex = (currentIndex + 1) % portfolioImages.length;
+        newIndex = (currentIndex + 1) % allImages.length;
       } else {
-        newIndex = (currentIndex - 1 + portfolioImages.length) % portfolioImages.length;
+        newIndex = (currentIndex - 1 + allImages.length) % allImages.length;
       }
-      return portfolioImages[newIndex];
+      return allImages[newIndex];
     });
   }, []);
 
-  // Focus trap : déplacer le focus dans la lightbox à l'ouverture
   useEffect(() => {
     if (isLightboxOpen && closeBtnRef.current) {
       closeBtnRef.current.focus();
     }
   }, [isLightboxOpen]);
 
-  // Navigation clavier : flèches + Escape
   useEffect(() => {
     if (!isLightboxOpen) return;
 
@@ -70,10 +111,15 @@ const Photos = () => {
     return () => window.removeEventListener('keydown', handleKeyDown);
   }, [isLightboxOpen, closeLightbox, navigateImage]);
 
+  const currentIndex = selectedImage
+    ? allImages.findIndex(img => img.uid === selectedImage.uid) + 1
+    : 0;
+
   return (
     <div className="min-h-screen py-24">
       <div className="container-custom">
-        {/* Header avec lien */}
+
+        {/* Header */}
         <motion.div
           initial="hidden"
           animate="visible"
@@ -93,31 +139,27 @@ const Photos = () => {
           </motion.div>
         </motion.div>
 
-        {/* Masonry Grid */}
+        {/* Section Côté Mer */}
         <motion.div
           initial="hidden"
           animate="visible"
           variants={STAGGER_CONTAINER}
-          className="columns-1 md:columns-2 lg:columns-3 xl:columns-4 gap-4 space-y-4"
+          className="mb-16"
         >
-          {portfolioImages.map((image, index) => (
-            <motion.div
-              key={image.id}
-              variants={FADE_IN_UP}
-              className="break-inside-avoid cursor-pointer group relative overflow-hidden rounded-xl"
-              onClick={() => openLightbox(image)}
-            >
-              <img
-                src={image.src}
-                alt={image.alt}
-                className="w-full h-auto object-cover transition-transform duration-500 group-hover:scale-110"
-                loading={index < 4 ? 'eager' : 'lazy'}
-                decoding="async"
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-            </motion.div>
-          ))}
+          <SectionTitle icon={Waves} title="Côté Mer" count={merImages.length} />
+          <PhotoGrid images={merImages} onOpenLightbox={openLightbox} />
         </motion.div>
+
+        {/* Section Côté Terre */}
+        <motion.div
+          initial="hidden"
+          animate="visible"
+          variants={STAGGER_CONTAINER}
+        >
+          <SectionTitle icon={TreePine} title="Côté Terre" count={terreImages.length} />
+          <PhotoGrid images={terreImages} onOpenLightbox={openLightbox} />
+        </motion.div>
+
       </div>
 
       {/* Lightbox */}
@@ -129,11 +171,10 @@ const Photos = () => {
             exit={{ opacity: 0 }}
             role="dialog"
             aria-modal="true"
-            aria-label={`Photo ${selectedImage.id} sur ${portfolioImages.length}`}
+            aria-label={`Photo ${currentIndex} sur ${allImages.length}`}
             className="fixed inset-0 z-50 flex items-center justify-center bg-black/95 backdrop-blur-sm p-4"
             onClick={closeLightbox}
           >
-            {/* Close Button */}
             <button
               ref={closeBtnRef}
               onClick={closeLightbox}
@@ -143,12 +184,8 @@ const Photos = () => {
               <X className="w-6 h-6 text-white" />
             </button>
 
-            {/* Navigation Buttons */}
             <button
-              onClick={(e) => {
-                e.stopPropagation();
-                navigateImage('prev');
-              }}
+              onClick={(e) => { e.stopPropagation(); navigateImage('prev'); }}
               className="absolute left-4 z-60 p-3 rounded-full bg-white/10 hover:bg-white/20 transition-colors backdrop-blur-md"
               aria-label="Image précédente"
             >
@@ -156,19 +193,15 @@ const Photos = () => {
             </button>
 
             <button
-              onClick={(e) => {
-                e.stopPropagation();
-                navigateImage('next');
-              }}
+              onClick={(e) => { e.stopPropagation(); navigateImage('next'); }}
               className="absolute right-4 z-60 p-3 rounded-full bg-white/10 hover:bg-white/20 transition-colors backdrop-blur-md"
               aria-label="Image suivante"
             >
               <ChevronRight className="w-6 h-6 text-white" />
             </button>
 
-            {/* Image */}
             <motion.img
-              key={selectedImage.id}
+              key={selectedImage.uid}
               initial={{ scale: 0.9, opacity: 0 }}
               animate={{ scale: 1, opacity: 1 }}
               exit={{ scale: 0.9, opacity: 0 }}
@@ -179,9 +212,8 @@ const Photos = () => {
               onClick={(e) => e.stopPropagation()}
             />
 
-            {/* Image Counter */}
             <div className="absolute bottom-4 left-1/2 -translate-x-1/2 px-4 py-2 rounded-full bg-white/10 backdrop-blur-md text-white text-sm">
-              {selectedImage.id} / {portfolioImages.length}
+              {currentIndex} / {allImages.length}
             </div>
           </motion.div>
         )}

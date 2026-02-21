@@ -11,6 +11,11 @@ const videos = [
     description: 'Reportage sur les actions de dépollution en Méditerranée',
   },
   {
+    id: 'sseo9sf7jow',
+    title: '2025, une année de dépollution en apnée à Marseille',
+    description: 'Rétrospective 2025 des actions de dépollution en apnée à Marseille',
+  },
+  {
     id: 'XHqB603STuw',
     title: 'Projet Sentinelle Frioul',
     description: "Mission de dépollution dans l'archipel du Frioul",
