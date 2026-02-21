@@ -1,22 +1,22 @@
 import { useState } from 'react';
 import { Play } from 'lucide-react';
 import { getYouTubeId, getVimeoId, getVideoThumbnail } from '../../utils/helpers';
+import VideoModal from './VideoModal';
 
 /**
- * VideoPlayer with Facade Pattern
- * Only loads iframe when user clicks to play (performance optimization)
+ * VideoPlayer with Facade Pattern + Modal
+ * Thumbnail shown by default, video opens in a modal overlay on click.
  */
-const VideoPlayer = ({ media, autoplay = false }) => {
-  const [isPlaying, setIsPlaying] = useState(autoplay);
+const VideoPlayer = ({ media }) => {
+  const [isModalOpen, setIsModalOpen] = useState(false);
   const { type, url, embed_id, thumbnail_url, title } = media;
 
   const videoId = embed_id || getYouTubeId(url) || getVimeoId(url);
 
-  // Generate embed URL based on platform
   const getEmbedUrl = () => {
     switch (type) {
       case 'youtube':
-        return `https://www.youtube.com/embed/${videoId}?autoplay=1&rel=0`;
+        return `https://www.youtube.com/embed/${videoId}?autoplay=1&rel=0&modestbranding=1`;
       case 'vimeo':
         return `https://player.vimeo.com/video/${videoId}?autoplay=1&title=0&byline=0&portrait=0`;
       case 'tiktok':
@@ -26,7 +26,6 @@ const VideoPlayer = ({ media, autoplay = false }) => {
     }
   };
 
-  // Generate thumbnail
   const getThumbnail = () => {
     if (thumbnail_url) return thumbnail_url;
     if (type === 'youtube' && videoId) {
@@ -47,49 +46,46 @@ const VideoPlayer = ({ media, autoplay = false }) => {
   }
 
   return (
-    <div className="relative aspect-video rounded-lg overflow-hidden bg-black group">
-      {!isPlaying ? (
-        <>
-          {/* Thumbnail with Play Button (Facade) */}
-          {thumbnail ? (
-            <img
-              src={thumbnail}
-              alt={title || 'Video thumbnail'}
-              className="w-full h-full object-cover"
-            />
-          ) : (
-            <div className="w-full h-full bg-gradient-to-br from-ocean-teal/20 to-ocean-blue/20" />
-          )}
+    <>
+      {/* Thumbnail card — ouvre la modale au clic */}
+      <div className="relative aspect-video rounded-lg overflow-hidden bg-black group">
+        {thumbnail ? (
+          <img
+            src={thumbnail}
+            alt={title || 'Video thumbnail'}
+            className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+          />
+        ) : (
+          <div className="w-full h-full bg-gradient-to-br from-ocean-teal/20 to-ocean-blue/20" />
+        )}
 
-          {/* Play Button Overlay */}
-          <button
-            onClick={() => setIsPlaying(true)}
-            className="absolute inset-0 flex items-center justify-center bg-black/40 hover:bg-black/30 transition-all duration-300 cursor-pointer group"
-            aria-label="Play video"
-          >
-            <div className="w-20 h-20 rounded-full bg-ocean-teal/90 hover:bg-ocean-teal flex items-center justify-center transform group-hover:scale-110 transition-all duration-300 glow-teal">
-              <Play className="w-8 h-8 text-white ml-1" fill="currentColor" />
-            </div>
-          </button>
+        {/* Play Button Overlay */}
+        <button
+          onClick={() => setIsModalOpen(true)}
+          className="absolute inset-0 flex items-center justify-center bg-black/40 hover:bg-black/30 transition-all duration-300 cursor-pointer"
+          aria-label={`Lire : ${title}`}
+        >
+          <div className="w-20 h-20 rounded-full bg-ocean-teal/90 hover:bg-ocean-teal flex items-center justify-center transform group-hover:scale-110 transition-all duration-300 glow-teal">
+            <Play className="w-8 h-8 text-white ml-1" fill="currentColor" />
+          </div>
+        </button>
 
-          {/* Title Overlay */}
-          {title && (
-            <div className="absolute bottom-0 left-0 right-0 p-4 bg-gradient-to-t from-black/80 to-transparent">
-              <p className="text-white font-semibold">{title}</p>
-            </div>
-          )}
-        </>
-      ) : (
-        /* Iframe - Only loaded when playing */
-        <iframe
-          src={embedUrl}
-          title={title || 'Video player'}
-          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-          allowFullScreen
-          className="w-full h-full"
-        />
-      )}
-    </div>
+        {/* Title Overlay */}
+        {title && (
+          <div className="absolute bottom-0 left-0 right-0 p-4 bg-gradient-to-t from-black/80 to-transparent">
+            <p className="text-white font-semibold">{title}</p>
+          </div>
+        )}
+      </div>
+
+      {/* Modal */}
+      <VideoModal
+        isOpen={isModalOpen}
+        onClose={() => setIsModalOpen(false)}
+        embedUrl={embedUrl}
+        title={title}
+      />
+    </>
   );
 };
 
