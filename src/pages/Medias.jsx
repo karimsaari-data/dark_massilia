@@ -1,17 +1,13 @@
 import { motion } from 'framer-motion';
-import { ArrowLeft, ExternalLink } from 'lucide-react';
+import { ArrowLeft, ExternalLink, Play } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { FADE_IN_UP, STAGGER_CONTAINER } from '../utils/constants';
+import SEO from '../components/SEO';
+import { SEO_PAGES } from '../utils/seo';
 
 const Medias = () => {
   // Données extraites de l'ancien site medias.html
   const pressLinks = [
-    {
-      title: 'Ville de Marseille — Reconnaissance Officielle',
-      url: 'https://www.facebook.com/marseilleville/photos/a.220707724621813/3697054720320412/?_rdr',
-      featured: true,
-      image: '/images/ville de marseille.webp'
-    },
     {
       title: 'La Provence — Opération Sentinelle',
       url: 'https://www.laprovence.com/article/ecoplanete/1845794554454214/de-montredon-a-cassis-les-apneistes-lancent-leur-operation-sentinelle-des-samedi-et-jusquau-6-octobre',
@@ -19,24 +15,48 @@ const Medias = () => {
       image: '/images/la provence.webp'
     },
     {
-      title: 'Documentaire ARTE',
-      url: '/arte',
-      internal: true,
-      featured: true,
-      image: '/images/photo profil Arte.webp'
-    },
-    {
       title: 'Interview Presse — Tired Earth (EN/FR)',
       url: 'https://www.tiredearth.com/interviews/interview-de-karim-saari-apneiste-et-photographe-sous-marin#',
       featured: false,
       image: '/images/tiredearth.webp'
     },
+    {
+      title: 'Actu.fr — Dépollution des fonds marins à Marseille',
+      url: 'https://actu.fr/provence-alpes-cote-d-azur/marseille_13055/marseille-ils-depolluent-les-fonds-marins-des-prises-surprenantes-on-a-deja-sorti-des-armes_62552562.html',
+      featured: false,
+      image: '/images/actu marseille.webp'
+    },
+    {
+      title: 'France Bleu — Un rorqual rarissime aperçu près des côtes à Marseille',
+      url: 'https://www.francebleu.fr/provence-alpes-cote-d-azur/bouches-du-rhone-13/marseille/en-images-rarissime-un-rorqual-apercu-pres-des-cotes-a-marseille-2226210',
+      featured: false,
+      image: '/images/france bleu rorqual.webp'
+    },
+    {
+      title: 'Marcelle Média — Dépolluer la mer, apnée après apnée',
+      url: 'https://www.marcelle.media/depolluer-la-mer-apnee-apres-apnee/',
+      featured: false,
+      image: '/images/marcelle media.webp'
+    },
+    {
+      title: 'France Bleu — 328 kg de déchets récoltés aux Goudes',
+      url: 'https://www.francebleu.fr/infos/environnement/328-kilos-de-dechets-recoltes-aux-goudes-par-des-apneistes-marseillais-4335756',
+      featured: false,
+      image: '/images/france bleu.webp'
+    },
+    {
+      title: 'Ville de Marseille — Reconnaissance Officielle',
+      url: 'https://www.facebook.com/marseilleville/photos/a.220707724621813/3697054720320412/?_rdr',
+      featured: true,
+      image: '/images/ville de marseille.webp'
+    },
   ];
 
   return (
     <div className="min-h-screen py-32">
+      <SEO {...SEO_PAGES['/medias']} />
       <div className="container-custom">
-        {/* Description */}
+        {/* Section éditoriale SEO — notoriété médiatique & E-E-A-T */}
         <motion.div
           initial="hidden"
           animate="visible"
@@ -45,16 +65,119 @@ const Medias = () => {
         >
           <motion.div variants={FADE_IN_UP} className="glass-strong rounded-3xl p-8 md:p-12">
             <h2 className="text-2xl md:text-3xl font-bold text-white mb-6">
-              Couverture Médiatique
+              L'écho de notre engagement : Presse et Médias
             </h2>
-            <div className="space-y-4 text-text-secondary leading-relaxed">
-              <p>
-                Du documentaire <strong className="text-ocean-teal">ARTE</strong> diffusé à l'échelle européenne aux articles de <em>La Provence</em>, en passant par la reconnaissance officielle de la Ville de Marseille, le travail de Dark Massilia et du Projet Sentinelle a été relayé par de nombreux médias.
-              </p>
-              <p>
-                Ces couvertures témoignent de l'impact concret de nos missions et contribuent à sensibiliser le grand public à la pollution des fonds marins méditerranéens.
-              </p>
-            </div>
+            <p className="text-text-secondary leading-relaxed text-lg">
+              La lutte contre la pollution plastique en Méditerranée nécessite une visibilité
+              maximale pour éveiller les consciences à grande échelle. Au fil des expéditions en
+              apnée et des actions de dépollution avec{' '}
+              <strong className="text-ocean-teal">Team Oxygen</strong>, notre engagement a franchi
+              les frontières des Calanques pour résonner dans l'espace public. Du documentaire
+              diffusé à l'échelle européenne sur{' '}
+              <strong className="text-white">ARTE</strong> aux reportages d'{' '}
+              <strong className="text-white">Échappées Belles</strong> et de{' '}
+              <strong className="text-white">Green Got</strong>, en passant par les articles de
+              presse locale et nationale comme{' '}
+              <strong className="text-white">La Provence</strong>,{' '}
+              <strong className="text-white">France Bleu</strong>,{' '}
+              <strong className="text-white">Actu.fr</strong> et{' '}
+              <strong className="text-white">Marcelle Média</strong>, le travail de{' '}
+              <strong className="text-ocean-teal">Dark Massilia</strong> bénéficie d'une
+              couverture médiatique forte. Cette reconnaissance s'étend jusqu'aux sphères
+              institutionnelles et éditoriales, avec le soutien officiel de la{' '}
+              <strong className="text-white">Ville de Marseille</strong> et l'attention prestigieuse
+              de <strong className="text-white">National Geographic</strong>. Chaque parution,
+              chaque interview, est une opportunité de mettre la préservation de notre littoral au
+              cœur du débat public.
+            </p>
+          </motion.div>
+        </motion.div>
+
+        {/* Section: Passage TV — ARTE & Échappées Belles */}
+        <motion.div
+          initial="hidden"
+          animate="visible"
+          variants={STAGGER_CONTAINER}
+          className="max-w-5xl mx-auto mb-12"
+        >
+          <motion.h2
+            variants={FADE_IN_UP}
+            className="text-sm uppercase tracking-widest text-text-muted mb-8 font-semibold text-center"
+          >
+            Passage TV
+          </motion.h2>
+
+          <motion.div
+            variants={STAGGER_CONTAINER}
+            className="grid grid-cols-1 md:grid-cols-2 gap-6"
+          >
+            {/* ARTE */}
+            <motion.div variants={FADE_IN_UP}>
+              <Link
+                to="/arte"
+                className="glass-strong rounded-xl overflow-hidden border border-white/10 hover:border-ocean-teal/50 transition-all duration-300 group block h-full"
+              >
+                <div className="relative aspect-video bg-black overflow-hidden">
+                  <img
+                    src="/images/photo profil Arte.webp"
+                    alt="Documentaire ARTE — Karim Saari et Team Oxygen dans les Calanques de Marseille"
+                    className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                    loading="lazy"
+                    decoding="async"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent" />
+                  <div className="absolute inset-0 flex items-center justify-center">
+                    <div className="w-16 h-16 rounded-full bg-white/20 backdrop-blur-sm border border-white/30 flex items-center justify-center group-hover:bg-ocean-teal/40 group-hover:border-ocean-teal/50 transition-all duration-300">
+                      <Play className="w-7 h-7 text-white ml-1" fill="white" />
+                    </div>
+                  </div>
+                </div>
+                <div className="p-6 flex items-center justify-between">
+                  <div>
+                    <p className="text-xs uppercase tracking-widest text-ocean-teal font-semibold mb-1">ARTE / YouTube</p>
+                    <h3 className="text-lg font-bold text-white group-hover:text-ocean-teal transition-colors">
+                      Documentaire ARTE — Marseille contre la pollution
+                    </h3>
+                  </div>
+                  <ArrowLeft className="w-5 h-5 rotate-180 text-gray-400 group-hover:text-ocean-teal group-hover:translate-x-1 transition-all flex-shrink-0 ml-4" />
+                </div>
+              </Link>
+            </motion.div>
+
+            {/* Échappées Belles */}
+            <motion.div variants={FADE_IN_UP}>
+              <a
+                href="https://www.dailymotion.com/video/x8wzsm2"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="glass-strong rounded-xl overflow-hidden border border-white/10 hover:border-ocean-teal/50 transition-all duration-300 group block h-full"
+              >
+                <div className="relative aspect-video bg-black overflow-hidden">
+                  <img
+                    src="/images/%C3%A9chapp%C3%A9es%20belles.webp"
+                    alt="Échappées Belles — Karim Saari et Team Oxygen dans les Calanques de Marseille"
+                    className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                    loading="lazy"
+                    decoding="async"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent" />
+                  <div className="absolute inset-0 flex items-center justify-center">
+                    <div className="w-16 h-16 rounded-full bg-white/20 backdrop-blur-sm border border-white/30 flex items-center justify-center group-hover:bg-ocean-teal/40 group-hover:border-ocean-teal/50 transition-all duration-300">
+                      <Play className="w-7 h-7 text-white ml-1" fill="white" />
+                    </div>
+                  </div>
+                </div>
+                <div className="p-6 flex items-center justify-between">
+                  <div>
+                    <p className="text-xs uppercase tracking-widest text-ocean-teal font-semibold mb-1">France Télévisions</p>
+                    <h3 className="text-lg font-bold text-white group-hover:text-ocean-teal transition-colors">
+                      Échappées Belles — Karim Saari & Team Oxygen dans les Calanques
+                    </h3>
+                  </div>
+                  <ExternalLink className="w-5 h-5 text-gray-400 group-hover:text-ocean-teal group-hover:translate-x-1 group-hover:-translate-y-1 transition-all flex-shrink-0 ml-4" />
+                </div>
+              </a>
+            </motion.div>
           </motion.div>
         </motion.div>
 
@@ -133,6 +256,32 @@ const Medias = () => {
                 )}
               </motion.div>
             ))}
+          </motion.div>
+        </motion.div>
+
+        {/* Description — bas de page */}
+        <motion.div
+          initial="hidden"
+          animate="visible"
+          variants={STAGGER_CONTAINER}
+          className="max-w-4xl mx-auto mt-16 mb-12"
+        >
+          <motion.div variants={FADE_IN_UP} className="glass-strong rounded-3xl p-8 md:p-12">
+            <h2 className="text-2xl md:text-3xl font-bold text-white mb-6">
+              Couverture Médiatique
+            </h2>
+            <div className="space-y-4 text-text-secondary leading-relaxed">
+              <p>
+                Du documentaire <strong className="text-ocean-teal">ARTE</strong> diffusé à l'échelle européenne aux articles de{' '}
+                <strong className="text-white">La Provence</strong>,{' '}
+                <strong className="text-white">France Bleu</strong>,{' '}
+                <strong className="text-white">Actu.fr</strong> et{' '}
+                <strong className="text-white">Marcelle Média</strong>, en passant par la reconnaissance officielle de la Ville de Marseille, le travail de Dark Massilia et du Projet Sentinelle est relayé par de nombreux médias régionaux et nationaux.
+              </p>
+              <p>
+                Ces couvertures témoignent de l'impact concret de nos missions et contribuent à sensibiliser le grand public à la pollution des fonds marins méditerranéens.
+              </p>
+            </div>
           </motion.div>
         </motion.div>
 
