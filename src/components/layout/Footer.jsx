@@ -56,7 +56,7 @@ const Footer = () => {
 
         {/* Website Carbon Badge */}
         <div className="flex justify-center mb-4">
-          <WebsiteCarbonBadge url="karimsaari.com" dark={true} />
+          <WebsiteCarbonBadge url="karimsaari.com/home" dark={true} />
         </div>
 
         {/* Copyright - Centered */}
