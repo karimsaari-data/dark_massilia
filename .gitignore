@@ -42,3 +42,6 @@ coverage
 .turbo
 .vercel
 .netlify
+
+# Claude Code (configs locales, worktrees)
+.claude/
