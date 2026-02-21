@@ -119,23 +119,36 @@ const Photos = () => {
     <div className="min-h-screen py-24">
       <div className="container-custom">
 
-        {/* Header */}
+        {/* Description */}
         <motion.div
           initial="hidden"
           animate="visible"
           variants={STAGGER_CONTAINER}
-          className="mb-12"
+          className="max-w-4xl mx-auto mb-12"
         >
-          <motion.div variants={FADE_IN_UP} className="text-center mb-6">
-            <a
-              href="https://500px.com/p/karimsaari?view=photos"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 text-ocean-teal hover:text-white transition-colors text-lg font-medium"
-            >
-              Voir sur 500px
-              <ExternalLink className="w-5 h-5" />
-            </a>
+          <motion.div variants={FADE_IN_UP} className="glass-strong rounded-3xl p-8 md:p-12">
+            <h2 className="text-2xl md:text-3xl font-bold text-white mb-6">
+              La Galerie
+            </h2>
+            <div className="space-y-4 text-text-secondary leading-relaxed">
+              <p>
+                Deux séries composent cette galerie : <strong className="text-ocean-teal">Côté Mer</strong>, les fonds sous-marins des Calanques documentés en apnée — entre beauté des posidonnies et réalité des déchets — et <strong className="text-ocean-teal">Côté Terre</strong>, les paysages du littoral méditerranéen photographiés en surface.
+              </p>
+              <p>
+                Retrouvez l'ensemble de mes photos en haute résolution sur 500px.
+              </p>
+            </div>
+            <div className="mt-6">
+              <a
+                href="https://500px.com/p/karimsaari?view=photos"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-2 text-ocean-teal hover:text-white transition-colors font-medium"
+              >
+                Voir sur 500px
+                <ExternalLink className="w-4 h-4" />
+              </a>
+            </div>
           </motion.div>
         </motion.div>
 

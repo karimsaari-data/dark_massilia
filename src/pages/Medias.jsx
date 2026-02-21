@@ -36,26 +36,26 @@ const Medias = () => {
   return (
     <div className="min-h-screen py-32">
       <div className="container-custom">
-        {/* Header */}
+        {/* Description */}
         <motion.div
           initial="hidden"
           animate="visible"
           variants={STAGGER_CONTAINER}
-          className="text-center mb-16"
+          className="max-w-4xl mx-auto mb-12"
         >
-          <motion.h1
-            variants={FADE_IN_UP}
-            className="text-4xl md:text-5xl font-bold text-white mb-4"
-          >
-            Ressources Presse & <span className="gradient-text">Médias</span>
-          </motion.h1>
-
-          <motion.p
-            variants={FADE_IN_UP}
-            className="text-text-secondary text-lg max-w-2xl mx-auto"
-          >
-            Retrouvez ici les reportages et articles de presse réalisés sur le Projet Sentinelle et l'action de Dark Massilia.
-          </motion.p>
+          <motion.div variants={FADE_IN_UP} className="glass-strong rounded-3xl p-8 md:p-12">
+            <h2 className="text-2xl md:text-3xl font-bold text-white mb-6">
+              Couverture Médiatique
+            </h2>
+            <div className="space-y-4 text-text-secondary leading-relaxed">
+              <p>
+                Du documentaire <strong className="text-ocean-teal">ARTE</strong> diffusé à l'échelle européenne aux articles de <em>La Provence</em>, en passant par la reconnaissance officielle de la Ville de Marseille, le travail de Dark Massilia et du Projet Sentinelle a été relayé par de nombreux médias.
+              </p>
+              <p>
+                Ces couvertures témoignent de l'impact concret de nos missions et contribuent à sensibiliser le grand public à la pollution des fonds marins méditerranéens.
+              </p>
+            </div>
+          </motion.div>
         </motion.div>
 
         {/* Section: À la une */}

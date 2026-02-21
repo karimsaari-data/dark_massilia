@@ -166,6 +166,28 @@ const Sources = () => {
   return (
     <div className="min-h-screen py-24">
       <div className="container-custom">
+        {/* Description */}
+        <motion.div
+          initial="hidden"
+          animate="visible"
+          variants={STAGGER_CONTAINER}
+          className="max-w-4xl mx-auto mb-12"
+        >
+          <motion.div variants={FADE_IN_UP} className="glass-strong rounded-3xl p-8 md:p-12">
+            <h2 className="text-2xl md:text-3xl font-bold text-white mb-6">
+              Les Références Scientifiques
+            </h2>
+            <div className="space-y-4 text-text-secondary leading-relaxed">
+              <p>
+                Chaque chiffre cité sur ce site, chaque fait avancé lors de nos actions de sensibilisation repose sur une source scientifique vérifiée. Cette page rassemble les études qui documentent l'état réel de la pollution plastique en Méditerranée — et justifient l'urgence d'agir.
+              </p>
+              <p>
+                Sources issues de revues à comité de lecture (<em>Science</em>, <em>Nature</em>, <em>PNAS</em>), d'organismes internationaux (WWF, PNUE) et d'études spécifiques à la Méditerranée et aux Calanques de Marseille.
+              </p>
+            </div>
+          </motion.div>
+        </motion.div>
+
         {/* Header */}
         <motion.div
           initial="hidden"
