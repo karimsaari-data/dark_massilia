@@ -1,6 +1,6 @@
 import { Instagram, Youtube, Linkedin, Facebook, AtSign } from 'lucide-react';
 import { Link } from 'react-router-dom';
-import WebsiteCarbonBadge from 'react-websitecarbon-badge';
+import { WebsiteCarbonBadge } from 'react-websitecarbon-badge';
 import { SOCIAL_LINKS, APP_CONFIG, NAV_LINKS } from '../../utils/constants';
 
 // TikTok icon component (Lucide doesn't have TikTok, so we use a custom SVG)
