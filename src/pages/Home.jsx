@@ -297,6 +297,90 @@ const Home = () => {
         </motion.div>
       </section>
 
+      {/* CTA Vidéos */}
+      <section className="container-custom py-8 md:py-12">
+        <motion.div
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true }}
+          variants={FADE_IN_UP}
+          className="glass-strong rounded-3xl overflow-hidden border border-white/10 mb-16"
+        >
+          <div className="grid md:grid-cols-[1.2fr_1fr] gap-0">
+            {/* Image - Gauche */}
+            <div className="relative h-64 md:h-auto min-h-[400px] order-1">
+              <img
+                src="/images/portfolio/Mer/6.webp"
+                alt="Mission de dépollution en apnée - Dark Massilia"
+                className="absolute inset-0 w-full h-full object-cover"
+                loading="lazy"
+                decoding="async"
+              />
+              <div className="absolute inset-0 bg-gradient-to-r from-transparent to-black/30" />
+            </div>
+
+            {/* Contenu - Droite */}
+            <div className="p-8 md:p-12 flex flex-col justify-center order-2">
+              <h2 className="text-3xl md:text-4xl font-bold text-white mb-6">
+                Les Vidéos des Missions
+              </h2>
+              <p className="text-gray-300 text-lg mb-8 leading-relaxed">
+                Documentaires ARTE, reportages de dépollution en apnée, rétrospectives annuelles… Vivez nos missions depuis les profondeurs des Calanques de Marseille.
+              </p>
+              <Link
+                to="/videos"
+                className="btn-primary inline-flex items-center gap-2 w-fit"
+              >
+                <span>Voir les vidéos</span>
+                <ArrowRight className="w-5 h-5" />
+              </Link>
+            </div>
+          </div>
+        </motion.div>
+      </section>
+
+      {/* CTA Photos */}
+      <section className="container-custom py-8 md:py-12">
+        <motion.div
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true }}
+          variants={FADE_IN_UP}
+          className="glass-strong rounded-3xl overflow-hidden border border-white/10 mb-16"
+        >
+          <div className="grid md:grid-cols-[1fr_1.2fr] gap-0">
+            {/* Contenu - Gauche */}
+            <div className="p-8 md:p-12 flex flex-col justify-center order-2 md:order-1">
+              <h2 className="text-3xl md:text-4xl font-bold text-white mb-6">
+                La Galerie Sous-Marine
+              </h2>
+              <p className="text-gray-300 text-lg mb-8 leading-relaxed">
+                Des dizaines de photos qui témoignent de l'état réel de notre Méditerranée. Entre beauté des fonds et réalité de la pollution, chaque cliché raconte une mission.
+              </p>
+              <Link
+                to="/photos"
+                className="btn-primary inline-flex items-center gap-2 w-fit"
+              >
+                <span>Voir les photos</span>
+                <ArrowRight className="w-5 h-5" />
+              </Link>
+            </div>
+
+            {/* Image - Droite */}
+            <div className="relative h-64 md:h-auto min-h-[400px] order-1 md:order-2">
+              <img
+                src="/images/portfolio/Mer/54.webp"
+                alt="Photographie sous-marine Calanques de Marseille - Dark Massilia"
+                className="absolute inset-0 w-full h-full object-cover"
+                loading="lazy"
+                decoding="async"
+              />
+              <div className="absolute inset-0 bg-gradient-to-l from-transparent to-black/20" />
+            </div>
+          </div>
+        </motion.div>
+      </section>
+
       {/* Call to Action Section - Card moderne */}
       <section className="container-custom pb-8 md:pb-12">
         <motion.div

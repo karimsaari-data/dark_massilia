@@ -23,10 +23,10 @@ export const NAV_LINKS = [
   { name: 'Accueil', path: '/', icon: 'Home' },
   { name: 'Missions', path: '/missions', icon: 'Compass' },
   { name: 'Vidéos', path: '/videos', icon: 'Video' },
+  { name: 'Photos', path: '/photos', icon: 'Camera' },
   { name: 'Références', path: '/sources', icon: 'BookOpen' },
   { name: 'Médias', path: '/medias', icon: 'Film' },
   { name: 'Instagram', path: '/instagram', icon: 'Instagram' },
-  { name: 'Photos', path: '/photos', icon: 'Camera' },
 ];
 
 export const TAGLINE = 'Une Mer · Une Ville · Une Mission';
