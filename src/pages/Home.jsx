@@ -179,11 +179,24 @@ const Home = () => {
               Photographe de paysages basé à Marseille, je documente les calanques et le littoral méditerranéen, en surface comme sous l'eau, pour rendre visible l'impact des pollutions marines et témoigner de l'état réel des écosystèmes.
             </motion.p>
 
-            {/* Signature */}
+            {/* Photo de profil + Signature — style préface */}
             <motion.div
               variants={FADE_IN_UP}
-              className="flex justify-center"
+              className="flex flex-col md:flex-row items-center justify-center gap-6 md:gap-10"
             >
+              {/* Photo profil */}
+              <img
+                src="/photo%20profil%20Arte.jpg"
+                alt="Karim Saari - Apnéiste et photographe à Marseille"
+                className="w-24 h-32 md:w-28 md:h-36 object-cover rounded-xl border border-white/20 shadow-lg shadow-ocean-teal/20"
+                loading="lazy"
+                decoding="async"
+              />
+
+              {/* Séparateur vertical (desktop) */}
+              <div className="hidden md:block w-px h-20 bg-white/15 self-center" />
+
+              {/* Signature */}
               <img
                 src="/images/Karim-SAARI-white-low-res.webp"
                 alt="Signature Karim Saari"
