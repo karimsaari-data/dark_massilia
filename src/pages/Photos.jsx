@@ -132,7 +132,7 @@ const Photos = () => {
             </h2>
             <div className="space-y-4 text-text-secondary leading-relaxed">
               <p>
-                Deux séries composent cette galerie : <strong className="text-ocean-teal">Côté Mer</strong>, les fonds sous-marins des Calanques documentés en apnée — entre beauté des posidonnies et réalité des déchets — et <strong className="text-ocean-teal">Côté Terre</strong>, les paysages du littoral méditerranéen photographiés en surface.
+                Deux séries composent cette galerie : <strong className="text-ocean-teal">Côté Mer</strong>, les fonds sous-marins des Calanques documentés en apnée — entre beauté des posidonnies et réalité des déchets — et <strong className="text-ocean-teal">Côté Terre</strong>, une collection de paysages de voyages, de Marseille à la Provence et au-delà.
               </p>
               <p>
                 Retrouvez l'ensemble de mes photos en haute résolution sur 500px.

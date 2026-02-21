@@ -188,28 +188,6 @@ const Sources = () => {
           </motion.div>
         </motion.div>
 
-        {/* Header */}
-        <motion.div
-          initial="hidden"
-          animate="visible"
-          variants={STAGGER_CONTAINER}
-          className="mb-16 text-center"
-        >
-          <motion.h1
-            variants={FADE_IN_UP}
-            className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 bg-gradient-to-r from-ocean-teal to-blue-400 bg-clip-text text-transparent"
-          >
-            Sources Documentaires
-          </motion.h1>
-          <motion.p
-            variants={FADE_IN_UP}
-            className="text-xl text-text-secondary max-w-3xl mx-auto leading-relaxed"
-          >
-            Études scientifiques et rapports sur la pollution plastique en Méditerranée et dans les océans.
-            Ces ressources permettent de mieux comprendre l'urgence environnementale et les enjeux de préservation marine.
-          </motion.p>
-        </motion.div>
-
         {/* Categories */}
         <div className="space-y-16">
           {sources.map((section, index) => {
