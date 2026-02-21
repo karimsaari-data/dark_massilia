@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import { Instagram, Youtube, Linkedin, Facebook, AtSign } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { SOCIAL_LINKS, APP_CONFIG, NAV_LINKS } from '../../utils/constants';
@@ -18,6 +19,16 @@ const XIcon = ({ className }) => (
 
 const Footer = () => {
   const currentYear = new Date().getFullYear();
+
+  // Chargement du script Website Carbon Badge
+  useEffect(() => {
+    if (document.getElementById('wcb-script')) return;
+    const script = document.createElement('script');
+    script.id = 'wcb-script';
+    script.src = 'https://unpkg.com/website-carbon-badges@1.1.3/b.min.js';
+    script.defer = true;
+    document.body.appendChild(script);
+  }, []);
 
   const socialIcons = [
     { Icon: Instagram, href: SOCIAL_LINKS.instagram, label: 'Instagram' },
@@ -51,6 +62,11 @@ const Footer = () => {
               </Component>
             );
           })}
+        </div>
+
+        {/* Website Carbon Badge */}
+        <div className="flex justify-center mb-4">
+          <div id="wcb" className="carbonbadge wcb-d" />
         </div>
 
         {/* Copyright - Centered */}
