@@ -2,7 +2,22 @@
   RewriteEngine On
   RewriteBase /
 
-  # Redirect all requests to index.html if they're not files or directories
+  # ── Redirections 301 — legacy URLs (ex-site statique) ──────────────────
+  RewriteRule ^home/?$       /  [R=301,L]
+  RewriteRule ^index\.html$  /  [R=301,L]
+  RewriteRule ^photos\.html$ /photos  [R=301,L]
+  RewriteRule ^videos\.html$ /videos  [R=301,L]
+  RewriteRule ^medias\.html$ /medias  [R=301,L]
+  RewriteRule ^arte\.html$   /arte    [R=301,L]
+
+  # ── Prérendu statique — servir {route}/index.html si disponible ────────
+  # Ex : /missions → missions/index.html (prérendu, indexable par les bots)
+  RewriteCond %{REQUEST_FILENAME} !-f
+  RewriteCond %{REQUEST_URI} !/$
+  RewriteCond %{DOCUMENT_ROOT}%{REQUEST_URI}/index.html -f
+  RewriteRule ^(.*)$ $1/index.html [L]
+
+  # ── SPA fallback — toutes les autres routes vers index.html ─────────────
   RewriteCond %{REQUEST_FILENAME} !-f
   RewriteCond %{REQUEST_FILENAME} !-d
   RewriteRule ^ index.html [L]

@@ -2,6 +2,8 @@ import { useState, useEffect, useCallback, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { X, ExternalLink, ChevronLeft, ChevronRight, Waves, TreePine } from 'lucide-react';
 import { FADE_IN_UP, STAGGER_CONTAINER } from '../utils/constants';
+import SEO from '../components/SEO';
+import { SEO_PAGES } from '../utils/seo';
 
 const merIds = [2, 4, 6, 10, 11, 12, 13, 14, 20, 22, 23, 30, 32, 33, 35, 39, 44, 45, 46, 47, 50, 51, 52, 54, 55, 56, 57, 58, 59, 60, 61, 62, 63, 64, 65, 66, 67, 68, 69, 70, 71, 72, 73, 74, 75, 76, 77, 78, 79, 80, 81, 82];
 const terreIds = [1, 3, 5, 7, 8, 9, 15, 16, 17, 18, 19, 21, 24, 25, 26, 27, 28, 29, 31, 34, 36, 37, 38, 40, 41, 42, 43, 48, 49, 53];
@@ -117,14 +119,69 @@ const Photos = () => {
 
   return (
     <div className="min-h-screen py-24">
+      <SEO {...SEO_PAGES['/photos']} />
       <div className="container-custom">
+        {/* H1 SEO — visible, keyword-rich */}
+        <motion.h1
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6 }}
+          className="text-4xl md:text-5xl font-bold text-white text-center mb-12 leading-tight"
+        >
+          Galerie Photo Sous-Marine
+          <span className="block text-xl md:text-2xl font-medium text-ocean-teal mt-3">
+            Calanques de Marseille — Méditerranée
+          </span>
+        </motion.h1>
 
-        {/* Description */}
+        {/* Section éditoriale SEO — photographie & engagement environnemental */}
         <motion.div
           initial="hidden"
           animate="visible"
           variants={STAGGER_CONTAINER}
           className="max-w-4xl mx-auto mb-12"
+        >
+          <motion.div variants={FADE_IN_UP} className="glass-strong rounded-3xl p-8 md:p-12">
+            <h2 className="text-2xl md:text-3xl font-bold text-white mb-6">
+              Témoigner par l'image
+            </h2>
+            <p className="text-text-secondary leading-relaxed text-lg">
+              La photographie sous-marine et la vidéo sont mes armes pour révéler la beauté
+              fragile de la Méditerranée, aujourd'hui considérée comme l'une des mers les plus
+              polluées au monde. Mes images documentent le contraste saisissant entre la richesse
+              de la faune des Calanques et l'invasion silencieuse du plastique. De la surface aux
+              profondeurs, l'objectif est d'éveiller les consciences sur cette mer qui suffoque.
+            </p>
+          </motion.div>
+        </motion.div>
+
+        {/* Section Côté Mer */}
+        <motion.div
+          initial="hidden"
+          animate="visible"
+          variants={STAGGER_CONTAINER}
+          className="mb-16"
+        >
+          <SectionTitle icon={Waves} title="Côté Mer" count={merImages.length} />
+          <PhotoGrid images={merImages} onOpenLightbox={openLightbox} />
+        </motion.div>
+
+        {/* Section Côté Terre */}
+        <motion.div
+          initial="hidden"
+          animate="visible"
+          variants={STAGGER_CONTAINER}
+        >
+          <SectionTitle icon={TreePine} title="Côté Terre" count={terreImages.length} />
+          <PhotoGrid images={terreImages} onOpenLightbox={openLightbox} />
+        </motion.div>
+
+        {/* Description — bas de page */}
+        <motion.div
+          initial="hidden"
+          animate="visible"
+          variants={STAGGER_CONTAINER}
+          className="max-w-4xl mx-auto mt-16"
         >
           <motion.div variants={FADE_IN_UP} className="glass-strong rounded-3xl p-8 md:p-12">
             <h2 className="text-2xl md:text-3xl font-bold text-white mb-6">
@@ -150,27 +207,6 @@ const Photos = () => {
               </a>
             </div>
           </motion.div>
-        </motion.div>
-
-        {/* Section Côté Mer */}
-        <motion.div
-          initial="hidden"
-          animate="visible"
-          variants={STAGGER_CONTAINER}
-          className="mb-16"
-        >
-          <SectionTitle icon={Waves} title="Côté Mer" count={merImages.length} />
-          <PhotoGrid images={merImages} onOpenLightbox={openLightbox} />
-        </motion.div>
-
-        {/* Section Côté Terre */}
-        <motion.div
-          initial="hidden"
-          animate="visible"
-          variants={STAGGER_CONTAINER}
-        >
-          <SectionTitle icon={TreePine} title="Côté Terre" count={terreImages.length} />
-          <PhotoGrid images={terreImages} onOpenLightbox={openLightbox} />
         </motion.div>
 
       </div>

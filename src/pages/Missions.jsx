@@ -3,11 +3,27 @@ import { ArrowLeft, ExternalLink } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import PhotoCarousel from '../components/ui/PhotoCarousel';
 import { FADE_IN_UP, STAGGER_CONTAINER } from '../utils/constants';
+import SEO from '../components/SEO';
+import { SEO_PAGES } from '../utils/seo';
 
 const Missions = () => {
   return (
     <div className="min-h-screen py-24">
+      <SEO {...SEO_PAGES['/missions']} />
       <div className="container-custom">
+        {/* H1 SEO — visible, keyword-rich */}
+        <motion.h1
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6 }}
+          className="text-4xl md:text-5xl font-bold text-white text-center mb-12 leading-tight"
+        >
+          Missions de Dépollution en Apnée
+          <span className="block text-xl md:text-2xl font-medium text-ocean-teal mt-3">
+            Projet Sentinelle — Calanques de Marseille
+          </span>
+        </motion.h1>
+
         {/* Mission Description */}
         <motion.div
           initial="hidden"
@@ -92,6 +108,29 @@ const Missions = () => {
                 </div>
               </div>
             ))}
+          </motion.div>
+        </motion.div>
+
+        {/* Section éditoriale SEO — contexte local Calanques / Côte Bleue */}
+        <motion.div
+          initial="hidden"
+          animate="visible"
+          variants={STAGGER_CONTAINER}
+          className="max-w-4xl mx-auto mb-12"
+        >
+          <motion.div variants={FADE_IN_UP} className="glass-strong rounded-3xl p-8 md:p-12">
+            <h2 className="text-2xl md:text-3xl font-bold text-white mb-6">
+              Agir à la source : Les Calanques et la Côte Bleue
+            </h2>
+            <p className="text-text-secondary leading-relaxed text-lg">
+              L'urgence est à nos portes&nbsp;: 80&nbsp;% des déchets marins proviennent de la terre.
+              L'impact sur notre littoral est massif. À titre d'exemple, lors du bilan 2023 de
+              l'opération Calanques Propres, 119&nbsp;m³ de déchets ont été récoltés sur le seul
+              littoral marseillais. Parmi les polluants les plus présents dans nos filets&nbsp;: les
+              bouteilles en verre, les canettes, les bouteilles en plastique et divers emballages.
+              Avec <strong className="text-ocean-teal">Team Oxygen</strong>, chaque immersion en
+              apnée est une action directe pour soustraire ces polluants de notre biodiversité locale.
+            </p>
           </motion.div>
         </motion.div>
 

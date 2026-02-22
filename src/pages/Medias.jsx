@@ -9,6 +9,12 @@ const Medias = () => {
   // Données extraites de l'ancien site medias.html
   const pressLinks = [
     {
+      title: 'Fondation de la Mer — Projet Sentinelle dans les Calanques',
+      url: 'https://www.fondationdelamer.org/nos-actualites/projet-sentinelle/',
+      featured: true,
+      image: '/images/fondation%20de%20la%20mer.webp'
+    },
+    {
       title: 'La Provence — Opération Sentinelle',
       url: 'https://www.laprovence.com/article/ecoplanete/1845794554454214/de-montredon-a-cassis-les-apneistes-lancent-leur-operation-sentinelle-des-samedi-et-jusquau-6-octobre',
       featured: true,
@@ -56,6 +62,19 @@ const Medias = () => {
     <div className="min-h-screen py-32">
       <SEO {...SEO_PAGES['/medias']} />
       <div className="container-custom">
+        {/* H1 SEO — visible, keyword-rich */}
+        <motion.h1
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6 }}
+          className="text-4xl md:text-5xl font-bold text-white text-center mb-12 leading-tight"
+        >
+          Presse &amp; Médias
+          <span className="block text-xl md:text-2xl font-medium text-ocean-teal mt-3">
+            Couverture médiatique du Projet Sentinelle
+          </span>
+        </motion.h1>
+
         {/* Section éditoriale SEO — notoriété médiatique & E-E-A-T */}
         <motion.div
           initial="hidden"
@@ -84,7 +103,9 @@ const Medias = () => {
               <strong className="text-white">Marcelle Média</strong>, le travail de{' '}
               <strong className="text-ocean-teal">Dark Massilia</strong> bénéficie d'une
               couverture médiatique forte. Cette reconnaissance s'étend jusqu'aux sphères
-              institutionnelles et éditoriales, avec le soutien officiel de la{' '}
+              institutionnelles, avec le soutien de la{' '}
+              <strong className="text-white">Fondation de la Mer</strong> dans le cadre de son
+              Programme Un Geste Pour La Mer, le soutien officiel de la{' '}
               <strong className="text-white">Ville de Marseille</strong> et l'attention prestigieuse
               de <strong className="text-white">National Geographic</strong>. Chaque parution,
               chaque interview, est une opportunité de mettre la préservation de notre littoral au
@@ -276,7 +297,8 @@ const Medias = () => {
                 <strong className="text-white">La Provence</strong>,{' '}
                 <strong className="text-white">France Bleu</strong>,{' '}
                 <strong className="text-white">Actu.fr</strong> et{' '}
-                <strong className="text-white">Marcelle Média</strong>, en passant par la reconnaissance officielle de la Ville de Marseille, le travail de Dark Massilia et du Projet Sentinelle est relayé par de nombreux médias régionaux et nationaux.
+                <strong className="text-white">Marcelle Média</strong>, en passant par la reconnaissance institutionnelle de la{' '}
+                <strong className="text-white">Fondation de la Mer</strong> et de la Ville de Marseille, le travail de Dark Massilia et du Projet Sentinelle est relayé par de nombreux médias régionaux et nationaux.
               </p>
               <p>
                 Ces couvertures témoignent de l'impact concret de nos missions et contribuent à sensibiliser le grand public à la pollution des fonds marins méditerranéens.

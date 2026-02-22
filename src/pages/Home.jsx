@@ -1,9 +1,11 @@
 import { motion, AnimatePresence } from 'framer-motion';
 import { Link } from 'react-router-dom';
-import { ArrowRight, Users, AlertTriangle } from 'lucide-react';
+import { ArrowRight, Users, AlertTriangle, ChevronDown } from 'lucide-react';
 import { useProjects } from '../hooks/useSupabase';
 import ProjectCard from '../components/ui/ProjectCard';
 import { FADE_IN_UP, FADE_IN, STAGGER_CONTAINER, TAGLINE, MISSION_STATEMENT, FACEBOOK_GROUP_MEMBERS } from '../utils/constants';
+import SEO from '../components/SEO';
+import { SEO_PAGES } from '../utils/seo';
 import { useState, useEffect } from 'react';
 
 // Phrases choc sur la pollution marine
@@ -20,6 +22,88 @@ const IMPACT_FACTS = [
   "Une pollution inévitable : Lors d'une vaste campagne d'échantillonnage à travers le bassin méditerranéen, des débris plastiques flottants ont été retrouvés dans 100 % des sites analysés.",
 ];
 
+const FAQ_ITEMS = [
+  {
+    q: "Qu'est-ce que le Projet Sentinelle ?",
+    a: "Le Projet Sentinelle est l'opération annuelle structurante menée par Team Oxygen pour la protection de la Méditerranée. Tout au long de l'année, des actions de veille, de sensibilisation et d'interventions ponctuelles sont organisées sur le littoral marseillais. Chaque automne, le dispositif prend une dimension intensive : une semaine complète de dépollution sous-marine en apnée dans les Calanques de Marseille. Les équipes interviennent entre 0 et 20 mètres de profondeur, avec des sessions quotidiennes de 5 à 6 heures dans l'eau. Les déchets collectés — principalement plastiques et macro-déchets — sont remontés, triés et quantifiés afin de documenter l'état réel des fonds marins.",
+  },
+  {
+    q: "Combien de déchets a collecté le Projet Sentinelle ?",
+    a: "En 4 éditions (2022–2025), le Projet Sentinelle et Team Oxygen ont collecté plus de 5 724 kg de déchets marins : 900 kg sur la Côte Bleue (2022), 1 357 kg à l'Archipel du Frioul (2023), 1 147 kg dans le Parc National des Calanques (2024) et 2 320 kg dans la Rade de Marseille (2025).",
+  },
+  {
+    q: "Comment participer aux missions de dépollution des Calanques ?",
+    a: "Pour participer aux missions de dépollution organisées dans les Calanques de Marseille, vous pouvez contacter Team Oxygen via la page Contact du site karimsaari.com ou rejoindre la communauté à travers le groupe Facebook « Amoureux des Calanques ». Les immersions en apnée nécessitent des compétences techniques et une pratique encadrée. Nous recherchons principalement des bénévoles pour l'appui logistique terrestre (tri, pesée, gestion du matériel, sensibilisation) ainsi que des kayakistes pour l'assistance en surface et la sécurisation des zones d'intervention. Ces rôles sont essentiels au bon déroulement des opérations et accessibles à un plus grand nombre.",
+  },
+  {
+    q: "Pourquoi la mer Méditerranée est-elle l'une des mers les plus polluées au monde par le plastique ?",
+    a: "La Méditerranée agit comme un véritable « piège à plastique » en raison de sa géographie : c'est une mer semi-fermée dont les eaux mettent environ 90 ans à se renouveler, alors que la durée de vie des plastiques dépasse largement un siècle. De plus, ses côtes sont densément peuplées (150 millions d'habitants), le trafic maritime y est très intense (30 % du trafic mondial) et elle subit une pression touristique massive. Conséquence : bien qu'elle ne représente que 1 % de la surface océanique mondiale, elle concentre 7 % de tous les microplastiques de la planète.",
+  },
+  {
+    q: "Quelle quantité de plastique est déversée dans la Méditerranée chaque jour ?",
+    a: "On estime qu'entre 700 et 1 400 tonnes de plastique sont déversées chaque jour dans la mer Méditerranée, ce qui équivaut à un ou deux camions poubelles par heure. À une autre échelle, cela représente l'équivalent de 33 800 bouteilles en plastique jetées à la mer chaque minute. Au total, plus d'un million de tonnes de plastique se trouvent déjà dans le bassin méditerranéen.",
+  },
+  {
+    q: "D'où proviennent ces déchets plastiques ?",
+    a: "Environ 80 % des déchets marins proviennent d'activités terrestres. Ils sont transportés par les fleuves (comme le Rhône, le Pô ou le Nil) qui agissent comme des tapis roulants, par le ruissellement urbain (pluies entraînant les déchets des rues vers la mer), ou sont directement abandonnés sur les littoraux. Les 20 % restants proviennent des activités maritimes telles que la pêche, l'aquaculture et le transport maritime.",
+  },
+  {
+    q: "Quels sont les déchets que l'on retrouve le plus souvent en mer et sur les plages ?",
+    a: "Le plastique représente 95 % des déchets marins en Méditerranée. Les objets les plus fréquemment retrouvés sont les emballages alimentaires, les bouteilles en plastique, les bouchons, les sacs et les équipements de pêche. Les mégots de cigarette (dont le filtre contient du plastique) sont également un fléau majeur, constituant une part très importante des déchets collectés sur les plages.",
+  },
+  {
+    q: "Combien de temps faut-il à un déchet plastique pour se dégrader en mer ?",
+    a: "Les plastiques ne se biodégradent quasiment pas à l'échelle d'une vie humaine ; ils persistent des centaines d'années. Par exemple, un sac plastique met entre 20 et plus de 100 ans à se dégrader, une bouteille en plastique environ 450 ans, et un fil de pêche jusqu'à 600 ans. De plus, la disparition « visuelle » d'un déchet est trompeuse : il ne fait que se fragmenter en millions de microplastiques sous l'effet du soleil et des vagues.",
+  },
+  {
+    q: "Qu'est-ce qu'un microplastique et pourquoi est-ce si dangereux ?",
+    a: "Les microplastiques sont de minuscules fragments de plastique mesurant moins de 5 millimètres, issus de la dégradation de déchets plus gros. Ils sont particulièrement dangereux car leur taille est similaire à celle du plancton. En Méditerranée, le ratio entre microplastiques et zooplancton peut atteindre 1 pour 2, ce qui entraîne une ingestion massive par les poissons et autres prédateurs marins. De plus, ils agissent comme des éponges, concentrant des polluants chimiques et toxiques à leur surface.",
+  },
+  {
+    q: "Le plastique flotte-t-il toujours à la surface de l'eau ?",
+    a: "Non, ce que l'on voit à la surface n'est que la partie émergée de l'iceberg. On estime que 94 % du plastique qui entre en mer Méditerranée finit par couler et sédimenter sur les fonds marins. Les 6 % restants se répartissent entre les plages (5 %) et la surface (1 %). Une fois au fond de l'eau, dans l'obscurité, le froid et le manque d'oxygène, le plastique ne se dégrade quasiment plus.",
+  },
+  {
+    q: "Quel est l'impact de cette pollution sur la faune marine ?",
+    a: "Les conséquences sont catastrophiques : plus de 700 espèces marines sont impactées à l'échelle globale, et toutes les espèces de tortues marines de Méditerranée sont touchées par l'ingestion de plastique. Les tortues confondent souvent les sacs plastiques avec des méduses. Les grands cétacés, comme les rorquals, avalent des microplastiques en filtrant l'eau, tandis que de nombreux oiseaux, poissons et dauphins meurent d'occlusions intestinales ou en s'emmêlant dans des filets fantômes abandonnés.",
+  },
+  {
+    q: "La pollution plastique marine a-t-elle des conséquences sur la santé humaine ?",
+    a: "Oui, la chaîne alimentaire humaine est directement contaminée. En mangeant des produits de la mer (comme les poissons, les moules ou les huîtres) ou même via le sel marin, nous absorbons des plastiques. À l'heure actuelle, on estime qu'un être humain ingère environ 5 grammes de plastiques par semaine, ce qui représente le poids d'une carte de crédit. Ces plastiques contiennent et libèrent des additifs chimiques qui agissent souvent comme des perturbateurs endocriniens, favorisant diverses maladies.",
+  },
+  {
+    q: "Quel est le rôle du tourisme dans cette pollution ?",
+    a: "Le bassin méditerranéen reçoit plus de 200 millions de touristes par an, ce qui exerce une pression gigantesque sur le littoral. Durant les mois d'été, cette affluence saisonnière provoque une augmentation de 40 % de la production de déchets. Les infrastructures locales de gestion des déchets sont souvent saturées, ce qui entraîne des débordements et l'abandon direct de nombreux déchets (bouteilles, emballages, objets de plage) sur les côtes.",
+  },
+];
+
+const FaqItem = ({ question, answer }) => {
+  const [isOpen, setIsOpen] = useState(false);
+  return (
+    <div className="border-b border-white/10 pb-3 last:border-0 last:pb-0">
+      <button
+        onClick={() => setIsOpen(!isOpen)}
+        className="w-full text-left flex items-start justify-between gap-4 group"
+        aria-expanded={isOpen}
+      >
+        <span className="text-white font-semibold text-base md:text-lg group-hover:text-ocean-teal transition-colors">
+          {question}
+        </span>
+        <ChevronDown
+          className={`w-5 h-5 text-ocean-teal flex-shrink-0 mt-1 transition-transform duration-300 ${isOpen ? 'rotate-180' : ''}`}
+        />
+      </button>
+      {/* Contenu toujours dans le DOM pour le SEO — max-h-0 quand fermé */}
+      <div
+        className={`overflow-hidden transition-all duration-300 ${isOpen ? 'max-h-[800px] mt-4' : 'max-h-0'}`}
+        aria-hidden={!isOpen}
+      >
+        <p className="text-text-secondary leading-relaxed">{answer}</p>
+      </div>
+    </div>
+  );
+};
+
 const Home = () => {
   const { projects: featuredProjects, loading } = useProjects({ featured: true, limit: 3 });
   const [currentFactIndex, setCurrentFactIndex] = useState(0);
@@ -35,6 +119,7 @@ const Home = () => {
 
   return (
     <div className="min-h-screen">
+      <SEO {...SEO_PAGES['/']} />
       {/* Hero Section */}
       <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
         {/* Gradient overlay seulement (l'image de fond vient du Layout) */}
@@ -207,6 +292,48 @@ const Home = () => {
           </motion.div>
         </div>
 
+      </section>
+
+      {/* Section éditoriale SEO — contexte Méditerranée */}
+      <section className="container-custom py-8 md:py-12">
+        <motion.div
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true }}
+          variants={FADE_IN_UP}
+          className="glass-strong rounded-3xl overflow-hidden border border-white/10 mb-16"
+        >
+          <div className="grid md:grid-cols-[1fr_1.2fr] gap-0">
+            {/* Contenu — Gauche */}
+            <div className="p-8 md:p-12 flex flex-col justify-center order-2 md:order-1">
+              <h2 className="text-2xl md:text-3xl font-bold text-white mb-6">
+                La Méditerranée : Un écosystème en péril
+              </h2>
+              <p className="text-text-secondary text-lg leading-relaxed">
+                Bien qu'elle ne représente que 1&nbsp;% des eaux mondiales, la mer Méditerranée concentre{' '}
+                <strong className="text-white">7&nbsp;% de tous les microplastiques de la planète</strong>.
+                Mer semi-fermée, le renouvellement de ses eaux prend environ 90&nbsp;ans — emprisonnant
+                durablement les déchets. À Marseille et dans le monde, plus de{' '}
+                <strong className="text-white">600 espèces marines</strong> sont impactées
+                par l'ingestion de plastique ou l'enchevêtrement.
+                À travers mes images et mon engagement en apnée dans les Calanques, je documente cette
+                urgence pour rendre l'invisible, visible.
+              </p>
+            </div>
+
+            {/* Image — Droite */}
+            <div className="relative h-64 md:h-auto min-h-[400px] order-1 md:order-2">
+              <img
+                src="/images/Marseille-dark-massilia-plastique-polluttion-projet-sentinelle-huveaune.webp"
+                alt="Pollution plastique dans l'Huveaune à Marseille - Projet Sentinelle Dark Massilia"
+                className="absolute inset-0 w-full h-full object-cover"
+                loading="lazy"
+                decoding="async"
+              />
+              <div className="absolute inset-0 bg-gradient-to-l from-transparent to-black/30" />
+            </div>
+          </div>
+        </motion.div>
       </section>
 
       {/* Section Phrases choc - Impact environnemental */}
@@ -434,6 +561,26 @@ const Home = () => {
               {/* Overlay subtil */}
               <div className="absolute inset-0 bg-gradient-to-l from-transparent to-black/20" />
             </div>
+          </div>
+        </motion.div>
+      </section>
+
+      {/* Section FAQ — rich results FAQPage + contenu statique pour crawlers */}
+      <section className="container-custom pb-12 md:pb-16">
+        <motion.div
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true }}
+          variants={FADE_IN_UP}
+          className="glass-strong rounded-3xl border border-white/10 p-8 md:p-12"
+        >
+          <h2 className="text-2xl md:text-3xl font-bold text-white mb-8 text-center">
+            Questions Fréquentes
+          </h2>
+          <div className="max-w-3xl mx-auto space-y-3">
+            {FAQ_ITEMS.map((item, index) => (
+              <FaqItem key={index} question={item.q} answer={item.a} />
+            ))}
           </div>
         </motion.div>
       </section>

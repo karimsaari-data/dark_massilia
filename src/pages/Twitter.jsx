@@ -3,6 +3,8 @@ import { motion } from 'framer-motion';
 import { ArrowLeft, ExternalLink } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { FADE_IN_UP, STAGGER_CONTAINER } from '../utils/constants';
+import SEO from '../components/SEO';
+import { SEO_PAGES } from '../utils/seo';
 
 const Twitter = () => {
   useEffect(() => {
@@ -23,7 +25,37 @@ const Twitter = () => {
 
   return (
     <div className="min-h-screen py-24">
+      <SEO {...SEO_PAGES['/twitter']} />
       <div className="container-custom">
+
+        {/* Section éditoriale SEO — veille environnementale & actualité marine */}
+        <motion.div
+          initial="hidden"
+          animate="visible"
+          variants={STAGGER_CONTAINER}
+          className="max-w-4xl mx-auto mb-12"
+        >
+          <motion.div variants={FADE_IN_UP} className="glass-strong rounded-3xl p-8 md:p-12">
+            <h1 className="text-2xl md:text-3xl font-bold text-white mb-6">
+              Actualités du Projet Sentinelle en temps réel
+            </h1>
+            <p className="text-text-secondary leading-relaxed text-lg">
+              Sur <strong className="text-white">X (ex-Twitter)</strong>, le compte{' '}
+              <strong className="text-ocean-teal">@dark_massilia</strong> est le fil direct des
+              actions de terrain du{' '}
+              <strong className="text-ocean-teal">Projet Sentinelle</strong> : annonces de missions,
+              bilans de dépollution, alertes environnementales et partage de données scientifiques
+              sur la pollution plastique en{' '}
+              <strong className="text-white">Méditerranée</strong>. C'est aussi un espace de veille
+              sur les enjeux de protection du littoral marseillais et des{' '}
+              <strong className="text-white">Calanques de Marseille</strong> — un terrain d'action
+              au cœur du Parc National. Chaque post est une prise de parole engagée, relayant les
+              avancées de <strong className="text-ocean-teal">Team Oxygen</strong> et les
+              initiatives citoyennes pour la préservation de notre patrimoine naturel marin.
+            </p>
+          </motion.div>
+        </motion.div>
+
         {/* Header avec lien */}
         <motion.div
           initial="hidden"

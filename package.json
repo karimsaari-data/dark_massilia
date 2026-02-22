@@ -6,6 +6,8 @@
   "scripts": {
     "dev": "vite",
     "build": "vite build",
+    "build:ssr": "node scripts/prerender.js",
+    "build:full": "vite build && node scripts/prerender.js",
     "lint": "eslint .",
     "preview": "vite preview"
   },
@@ -15,8 +17,7 @@
     "lucide-react": "^0.564.0",
     "react": "^19.2.0",
     "react-dom": "^19.2.0",
-    "react-router-dom": "^7.13.0",
-    "react-websitecarbon-badge": "^1.0.6"
+    "react-router-dom": "^7.13.0"
   },
   "devDependencies": {
     "@eslint/js": "^9.39.1",

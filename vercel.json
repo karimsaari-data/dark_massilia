@@ -1,0 +1,14 @@
+{
+  "redirects": [
+    { "source": "/home",         "destination": "/", "permanent": true },
+    { "source": "/home/",        "destination": "/", "permanent": true },
+    { "source": "/index.html",   "destination": "/", "permanent": true },
+    { "source": "/photos.html",  "destination": "/photos", "permanent": true },
+    { "source": "/videos.html",  "destination": "/videos", "permanent": true },
+    { "source": "/medias.html",  "destination": "/medias", "permanent": true },
+    { "source": "/arte.html",    "destination": "/arte", "permanent": true }
+  ],
+  "rewrites": [
+    { "source": "/(.*)", "destination": "/index.html" }
+  ]
+}

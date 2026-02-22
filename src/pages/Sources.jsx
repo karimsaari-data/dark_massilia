@@ -1,6 +1,8 @@
 import { motion } from 'framer-motion';
 import { ExternalLink, BookOpen, Globe, FileText } from 'lucide-react';
 import { FADE_IN_UP, STAGGER_CONTAINER } from '../utils/constants';
+import SEO from '../components/SEO';
+import { SEO_PAGES } from '../utils/seo';
 
 const Sources = () => {
   const sources = [
@@ -165,8 +167,22 @@ const Sources = () => {
 
   return (
     <div className="min-h-screen py-24">
+      <SEO {...SEO_PAGES['/sources']} />
       <div className="container-custom">
-        {/* Description */}
+        {/* H1 SEO — visible, keyword-rich */}
+        <motion.h1
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6 }}
+          className="text-4xl md:text-5xl font-bold text-white text-center mb-12 leading-tight"
+        >
+          Sources Scientifiques
+          <span className="block text-xl md:text-2xl font-medium text-ocean-teal mt-3">
+            Pollution Plastique en Méditerranée
+          </span>
+        </motion.h1>
+
+        {/* Section éditoriale SEO — chiffres de l'urgence */}
         <motion.div
           initial="hidden"
           animate="visible"
@@ -175,16 +191,18 @@ const Sources = () => {
         >
           <motion.div variants={FADE_IN_UP} className="glass-strong rounded-3xl p-8 md:p-12">
             <h2 className="text-2xl md:text-3xl font-bold text-white mb-6">
-              Les Références Scientifiques
+              Les chiffres de l'urgence environnementale
             </h2>
-            <div className="space-y-4 text-text-secondary leading-relaxed">
-              <p>
-                Chaque chiffre cité sur ce site, chaque fait avancé lors de nos actions de sensibilisation repose sur une source scientifique vérifiée. Cette page rassemble les études qui documentent l'état réel de la pollution plastique en Méditerranée — et justifient l'urgence d'agir.
-              </p>
-              <p>
-                Sources issues de revues à comité de lecture (<em>Science</em>, <em>Nature</em>, <em>PNAS</em>), d'organismes internationaux (WWF, PNUE) et d'études spécifiques à la Méditerranée et aux Calanques de Marseille.
-              </p>
-            </div>
+            <p className="text-text-secondary leading-relaxed text-lg">
+              Notre action sur le terrain s'appuie sur une réalité scientifique alarmante. Chaque
+              année, ce sont 570&nbsp;000 tonnes de plastique qui finissent dans les eaux
+              méditerranéennes — l'équivalent de 33&nbsp;800 bouteilles en plastique rejetées à la
+              mer chaque minute. Ces plastiques mettent des siècles à se dégrader et se fragmentent
+              en microplastiques invisibles à l'œil nu. Cette pollution génère une nouvelle menace&nbsp;:
+              la <em>plastisphère</em>, où les débris plastiques servent de radeaux pour transporter
+              des espèces invasives et des agents pathogènes à travers les mers. Face à ces données,
+              l'inaction n'est plus une option.
+            </p>
           </motion.div>
         </motion.div>
 
@@ -270,6 +288,29 @@ const Sources = () => {
             );
           })}
         </div>
+
+        {/* Description — bas de page */}
+        <motion.div
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true }}
+          variants={STAGGER_CONTAINER}
+          className="max-w-4xl mx-auto mt-16"
+        >
+          <motion.div variants={FADE_IN_UP} className="glass-strong rounded-3xl p-8 md:p-12">
+            <h2 className="text-2xl md:text-3xl font-bold text-white mb-6">
+              Les Références Scientifiques
+            </h2>
+            <div className="space-y-4 text-text-secondary leading-relaxed">
+              <p>
+                Chaque chiffre cité sur ce site, chaque fait avancé lors de nos actions de sensibilisation repose sur une source scientifique vérifiée. Cette page rassemble les études qui documentent l'état réel de la pollution plastique en Méditerranée — et justifient l'urgence d'agir.
+              </p>
+              <p>
+                Sources issues de revues à comité de lecture (<em>Science</em>, <em>Nature</em>, <em>PNAS</em>), d'organismes internationaux (WWF, PNUE) et d'études spécifiques à la Méditerranée et aux Calanques de Marseille.
+              </p>
+            </div>
+          </motion.div>
+        </motion.div>
 
       </div>
     </div>

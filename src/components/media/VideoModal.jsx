@@ -18,6 +18,9 @@ const VideoModal = ({ isOpen, onClose, embedUrl, title }) => {
     };
   }, [isOpen, onClose]);
 
+  // SSR guard — document n'existe pas côté serveur
+  if (typeof document === 'undefined') return null;
+
   return createPortal(
     <AnimatePresence>
       {isOpen && (

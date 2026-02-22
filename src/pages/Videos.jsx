@@ -3,6 +3,8 @@ import { ArrowLeft, ExternalLink } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import VideoPlayer from '../components/media/VideoPlayer';
 import { FADE_IN_UP, STAGGER_CONTAINER } from '../utils/constants';
+import SEO from '../components/SEO';
+import { SEO_PAGES } from '../utils/seo';
 
 const videos = [
   {
@@ -60,8 +62,22 @@ const videos = [
 const Videos = () => {
   return (
     <div className="min-h-screen py-24">
+      <SEO {...SEO_PAGES['/videos']} />
       <div className="container-custom">
-        {/* Description */}
+        {/* H1 SEO — visible, keyword-rich */}
+        <motion.h1
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6 }}
+          className="text-4xl md:text-5xl font-bold text-white text-center mb-12 leading-tight"
+        >
+          Vidéos &amp; Documentaires
+          <span className="block text-xl md:text-2xl font-medium text-ocean-teal mt-3">
+            Dépollution en Méditerranée — Calanques de Marseille
+          </span>
+        </motion.h1>
+
+        {/* Section éditoriale SEO — vidéaste engagé & légitimité médiatique */}
         <motion.div
           initial="hidden"
           animate="visible"
@@ -70,27 +86,21 @@ const Videos = () => {
         >
           <motion.div variants={FADE_IN_UP} className="glass-strong rounded-3xl p-8 md:p-12">
             <h2 className="text-2xl md:text-3xl font-bold text-white mb-6">
-              Les Vidéos
+              Documenter l'urgence : L'action en immersion
             </h2>
-            <div className="space-y-4 text-text-secondary leading-relaxed">
-              <p>
-                De l'immersion en apnée dans les Calanques au reportage diffusé sur ARTE, nos vidéos racontent chaque mission de dépollution. Images tournées sous l'eau, témoignages de terrain, rétrospectives annuelles — chaque format documente une réalité que l'œil nu ne peut pas toujours atteindre.
-              </p>
-              <p>
-                Retrouvez l'intégralité de nos productions sur notre chaîne YouTube, mise à jour après chaque mission.
-              </p>
-            </div>
-            <div className="mt-6">
-              <a
-                href="https://www.youtube.com/@dark.massilia"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 text-ocean-teal hover:text-white transition-colors font-medium"
-              >
-                Voir sur YouTube
-                <ExternalLink className="w-4 h-4" />
-              </a>
-            </div>
+            <p className="text-text-secondary leading-relaxed text-lg">
+              Si la photographie d'art sublime nos paysages, la vidéo est le témoin brut de notre
+              combat quotidien. En tant que vidéaste sous-marin, je filme en immersion totale et en
+              direct nos opérations de dépollution avec{' '}
+              <strong className="text-ocean-teal">Team Oxygen</strong>. Ces images d'action
+              documentent l'extraction physique des déchets dans les Calanques et révèlent sans
+              filtre l'état critique de la Méditerranée. Ce travail de terrain, reconnu pour son
+              impact visuel et militant, m'a conduit à être suivi et diffusé par des médias majeurs
+              tels que la chaîne <strong className="text-white">ARTE</strong>, l'émission{' '}
+              <strong className="text-white">Échappées Belles</strong>, ainsi que par{' '}
+              <strong className="text-white">Green Got</strong>. Mon objectif&nbsp;: utiliser la
+              force du reportage pour mobiliser massivement face à l'urgence environnementale.
+            </p>
           </motion.div>
         </motion.div>
 
@@ -127,6 +137,39 @@ const Videos = () => {
               </div>
             </motion.div>
           ))}
+        </motion.div>
+
+        {/* Description — bas de page */}
+        <motion.div
+          initial="hidden"
+          animate="visible"
+          variants={STAGGER_CONTAINER}
+          className="max-w-4xl mx-auto mt-16 mb-12"
+        >
+          <motion.div variants={FADE_IN_UP} className="glass-strong rounded-3xl p-8 md:p-12">
+            <h2 className="text-2xl md:text-3xl font-bold text-white mb-6">
+              Les Vidéos
+            </h2>
+            <div className="space-y-4 text-text-secondary leading-relaxed">
+              <p>
+                De l'immersion en apnée dans les Calanques au reportage diffusé sur ARTE, nos vidéos racontent chaque mission de dépollution. Images tournées sous l'eau, témoignages de terrain, rétrospectives annuelles — chaque format documente une réalité que l'œil nu ne peut pas toujours atteindre.
+              </p>
+              <p>
+                Retrouvez l'intégralité de nos productions sur notre chaîne YouTube, mise à jour après chaque mission.
+              </p>
+            </div>
+            <div className="mt-6">
+              <a
+                href="https://www.youtube.com/@dark.massilia"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-2 text-ocean-teal hover:text-white transition-colors font-medium"
+              >
+                Voir sur YouTube
+                <ExternalLink className="w-4 h-4" />
+              </a>
+            </div>
+          </motion.div>
         </motion.div>
 
         {/* Back to Home */}

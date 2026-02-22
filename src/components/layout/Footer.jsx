@@ -1,6 +1,5 @@
 import { Instagram, Youtube, Linkedin, Facebook, AtSign } from 'lucide-react';
 import { Link } from 'react-router-dom';
-import { WebsiteCarbonBadge } from 'react-websitecarbon-badge';
 import { SOCIAL_LINKS, APP_CONFIG, NAV_LINKS } from '../../utils/constants';
 
 // TikTok icon component (Lucide doesn't have TikTok, so we use a custom SVG)
@@ -22,7 +21,7 @@ const Footer = () => {
 
   const socialIcons = [
     { Icon: Instagram, href: SOCIAL_LINKS.instagram, label: 'Instagram' },
-    { Icon: XIcon, href: SOCIAL_LINKS.twitter, label: 'X (Twitter)' },
+    { Icon: XIcon, href: '/twitter', label: 'X (Twitter)', internal: true },
     { Icon: TikTokIcon, href: SOCIAL_LINKS.tiktok, label: 'TikTok' },
     { Icon: Youtube, href: SOCIAL_LINKS.youtube, label: 'YouTube' },
     { Icon: Facebook, href: SOCIAL_LINKS.facebook, label: 'Facebook' },
@@ -52,11 +51,6 @@ const Footer = () => {
               </Component>
             );
           })}
-        </div>
-
-        {/* Website Carbon Badge */}
-        <div className="flex justify-center mb-4">
-          <WebsiteCarbonBadge url="karimsaari.com/home" dark={true} />
         </div>
 
         {/* Copyright - Centered */}

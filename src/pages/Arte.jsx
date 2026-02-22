@@ -2,11 +2,44 @@ import { motion } from 'framer-motion';
 import { ArrowLeft, Youtube, ExternalLink } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { FADE_IN_UP, STAGGER_CONTAINER } from '../utils/constants';
+import SEO from '../components/SEO';
+import { SEO_PAGES } from '../utils/seo';
 
 const Arte = () => {
   return (
     <div className="min-h-screen py-32">
+      <SEO {...SEO_PAGES['/arte']} />
       <div className="container-custom max-w-4xl">
+
+        {/* Section éditoriale SEO — documentaire ARTE & légitimité médiatique */}
+        <motion.div
+          initial="hidden"
+          animate="visible"
+          variants={STAGGER_CONTAINER}
+          className="mb-12"
+        >
+          <motion.div variants={FADE_IN_UP} className="glass-strong rounded-3xl p-8 md:p-12">
+            <h2 className="text-2xl md:text-3xl font-bold text-white mb-6">
+              ARTE met les Calanques à l'honneur
+            </h2>
+            <p className="text-text-secondary leading-relaxed text-lg">
+              En 2022, la chaîne culturelle européenne{' '}
+              <strong className="text-white">ARTE</strong> a consacré un reportage aux éco-acteurs
+              marseillais qui se battent contre la pollution plastique en Méditerranée. Au cœur du
+              documentaire : <strong className="text-ocean-teal">Karim Saari</strong>, apnéiste et
+              photographe sous-marin, fondateur du{' '}
+              <strong className="text-ocean-teal">Projet Sentinelle</strong> avec{' '}
+              <strong className="text-ocean-teal">Team Oxygen</strong>. Ses plongées en apnée dans
+              les Calanques de Marseille — entre 0 et 20 mètres de profondeur — documentent une
+              réalité brutale : des canettes, des filets, des milliers de détritus englués dans les
+              herbiers de posidonie. Cette diffusion à l'échelle européenne a donné une résonance
+              inédite aux missions de dépollution et contribué à sensibiliser des millions de
+              téléspectateurs à l'urgence de la{' '}
+              <strong className="text-white">pollution marine en Méditerranée</strong>.
+            </p>
+          </motion.div>
+        </motion.div>
+
         {/* Header */}
         <motion.div
           initial="hidden"

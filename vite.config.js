@@ -21,4 +21,8 @@ export default defineConfig({
     // Taille d'avertissement augmentée pour les images
     chunkSizeWarningLimit: 600,
   },
+  // Configuration SSR — utilisé par scripts/prerender.js
+  ssr: {
+    noExternal: ['react-dom'],
+  },
 })
