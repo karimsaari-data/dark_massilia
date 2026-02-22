@@ -18,25 +18,44 @@ const Arte = () => {
           variants={STAGGER_CONTAINER}
           className="mb-12"
         >
-          <motion.div variants={FADE_IN_UP} className="glass-strong rounded-3xl p-8 md:p-12">
-            <h2 className="text-2xl md:text-3xl font-bold text-white mb-6">
-              ARTE met les Calanques à l'honneur
-            </h2>
-            <p className="text-text-secondary leading-relaxed text-lg">
-              En 2022, la chaîne culturelle européenne{' '}
-              <strong className="text-white">ARTE</strong> a consacré un reportage aux éco-acteurs
-              marseillais qui se battent contre la pollution plastique en Méditerranée. Au cœur du
-              documentaire : <strong className="text-ocean-teal">Karim Saari</strong>, apnéiste et
-              photographe sous-marin, fondateur du{' '}
-              <strong className="text-ocean-teal">Projet Sentinelle</strong> avec{' '}
-              <strong className="text-ocean-teal">Team Oxygen</strong>. Ses plongées en apnée dans
-              les Calanques de Marseille — entre 0 et 20 mètres de profondeur — documentent une
-              réalité brutale : des canettes, des filets, des milliers de détritus englués dans les
-              herbiers de posidonie. Cette diffusion à l'échelle européenne a donné une résonance
-              inédite aux missions de dépollution et contribué à sensibiliser des millions de
-              téléspectateurs à l'urgence de la{' '}
-              <strong className="text-white">pollution marine en Méditerranée</strong>.
-            </p>
+          <motion.div variants={FADE_IN_UP} className="glass-strong rounded-3xl overflow-hidden">
+            <div className="flex flex-col md:flex-row">
+              {/* Image */}
+              <div className="relative w-full md:w-64 lg:w-72 flex-shrink-0 aspect-[4/3] md:aspect-auto">
+                <picture>
+                  <source srcSet="/images/arte regard.webp" type="image/webp" />
+                  <img
+                    src="/images/arte regard.jpg"
+                    alt="Karim Saari dans le reportage ARTE Regards — Pollution marine à Marseille"
+                    className="absolute inset-0 w-full h-full object-cover"
+                  />
+                </picture>
+                <div className="absolute inset-0 bg-gradient-to-b md:bg-gradient-to-r from-transparent to-[#0a0f1e]/80 md:to-[#0a0f1e]/60" />
+              </div>
+              {/* Texte */}
+              <div className="p-8 md:p-12">
+                <h2 className="text-2xl md:text-3xl font-bold text-white mb-6">
+                  ARTE met les Calanques à l'honneur
+                </h2>
+                <p className="text-text-secondary leading-relaxed text-lg mb-4">
+                  En 2022, la chaîne culturelle européenne{' '}
+                  <strong className="text-white">ARTE</strong> a consacré un reportage aux éco-acteurs
+                  marseillais mobilisés contre la pollution plastique en Méditerranée. Au cœur du
+                  documentaire : <strong className="text-ocean-teal">Karim Saari</strong>, apnéiste et
+                  photographe sous-marin, engagé au sein de{' '}
+                  <strong className="text-ocean-teal">Team Oxygen</strong> et impliqué dès la première
+                  édition du <strong className="text-ocean-teal">Projet Sentinelle</strong>.
+                </p>
+                <p className="text-text-secondary leading-relaxed text-lg">
+                  Ses plongées en apnée dans les Calanques de Marseille — entre 0 et 20 mètres de
+                  profondeur — documentent une réalité brute : canettes, filets, plastiques et déchets
+                  piégés dans les herbiers de posidonie. Cette diffusion à l'échelle européenne a donné
+                  une visibilité accrue aux missions de dépollution et contribué à sensibiliser un large
+                  public à l'urgence de la{' '}
+                  <strong className="text-white">pollution marine en Méditerranée</strong>.
+                </p>
+              </div>
+            </div>
           </motion.div>
         </motion.div>
 
