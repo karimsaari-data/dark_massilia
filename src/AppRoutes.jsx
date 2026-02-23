@@ -27,6 +27,7 @@ const Arte       = lazy(() => import('./pages/Arte'));
 const Sources    = lazy(() => import('./pages/Sources'));
 const Carte      = lazy(() => import('./pages/Carte'));
 const LocalGuide = lazy(() => import('./pages/LocalGuide'));
+const AdminCarte = lazy(() => import('./pages/AdminCarte'));
 
 const PageLoader = () => (
   <div className="min-h-screen flex items-center justify-center">
@@ -50,6 +51,9 @@ export default function AppRoutes() {
       <ScrollToTop />
       <Suspense fallback={<PageLoader />}>
         <Routes>
+          {/* Route admin — hors Layout (pas de navbar) */}
+          <Route path="admin" element={<AdminCarte />} />
+
           <Route path="/" element={<Layout />}>
             <Route index element={<Home />} />
             <Route path="missions"  element={<Missions />} />
