@@ -11,7 +11,7 @@ export default function CarteSSR() {
       <SEO
         title="Carte des Sites — Dark Massilia | Karim Saari"
         description="Cartographie interactive des sites de plongée, zones polluées et spots naturels des Calanques de Marseille documentés par Dark Massilia."
-        url="https://karimsaari.com/carte"
+        canonical="https://karimsaari.com/carte"
       />
       <div className="min-h-screen pt-20">
         <div className="container-custom py-8">

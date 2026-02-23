@@ -29,6 +29,7 @@ export const NAV_LINKS = [
   { name: 'Réseaux', path: '/reseaux', icon: 'Share2' },
   { name: 'Local Guides', path: '/local-guide', icon: 'Navigation' },
   { name: 'Carte', path: '/carte', icon: 'MapPin' },
+  { name: 'Contact', path: '/contact', icon: 'Mail' },
 ];
 
 export const TAGLINE = 'Une Mer · Une Ville · Une Mission';

@@ -183,14 +183,14 @@ export const SEO_PAGES = {
     },
   },
   '/missions': {
-    title: 'Projet Sentinelle — Dépollution en Apnée | Calanques de Marseille',
+    title: 'Projet Sentinelle — Dépollution en Apnée | Marseille',
     description:
       "Projet Sentinelle : 5 724 kg de déchets extraits des Calanques de Marseille en apnée depuis 2022. Découvrez les missions de dépollution de Team Oxygen.",
     canonical: `${BASE_URL}/missions`,
     schema: breadcrumb('Projet Sentinelle', '/missions'),
   },
   '/videos': {
-    title: 'Documentaires & Vidéos Dépollution Méditerranée | Dark Massilia',
+    title: 'Vidéos & Documentaires Dépollution | Dark Massilia',
     description:
       "Visionnez nos reportages (ARTE) et documentaires immersifs sur l'état des fonds marins à Marseille et nos missions d'extraction de plastique.",
     canonical: `${BASE_URL}/videos`,
@@ -225,7 +225,7 @@ export const SEO_PAGES = {
     noindex: true,
   },
   '/arte': {
-    title: 'Documentaire ARTE — Découverte en Méditerranée | Dark Massilia',
+    title: 'Documentaire ARTE — Fond Marin Marseille | Dark Massilia',
     description:
       "Regardez le documentaire ARTE avec Karim Saari et Team Oxygen lors d'une mission de dépollution dans les Calanques de Marseille.",
     canonical: `${BASE_URL}/arte`,
@@ -239,7 +239,7 @@ export const SEO_PAGES = {
     noindex: true,
   },
   '/local-guide': {
-    title: 'Google Local Guides Niveau 10 — Karim Saari | Marseille & Calanques',
+    title: 'Google Local Guides Niv. 10 — Karim Saari Marseille',
     description:
       'Karim Saari, Local Guide Niveau 10 sur Google Maps — 22 000+ contributions, 118 000+ points, 183 millions de vues. Cartographie des Calanques de Marseille et documentation environnementale.',
     canonical: `${BASE_URL}/local-guide`,
@@ -304,7 +304,7 @@ export const SEO_PAGES = {
     schema: breadcrumb('Contact & Partenariats', '/contact'),
   },
   '/carte': {
-    title: 'Carte Interactive Calanques Marseille — Sites & Spots | Dark Massilia',
+    title: 'Carte des Sites Calanques Marseille | Dark Massilia',
     description:
       'Carte interactive des Calanques de Marseille : sites de plongée, zones de dépollution et spots naturels documentés par Karim Saari (Dark Massilia).',
     canonical: `${BASE_URL}/carte`,
