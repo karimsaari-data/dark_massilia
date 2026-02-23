@@ -55,7 +55,7 @@ const Footer = () => {
 
         {/* Copyright - Centered */}
         <div className="text-center">
-          <p className="text-xs text-gray-500">
+          <p className="text-xs text-gray-400">
             © {currentYear} Dark Massilia · Karim Saari
           </p>
         </div>
