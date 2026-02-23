@@ -51,18 +51,22 @@ export default function Carte() {
           animate={{ opacity: 1 }}
           transition={{ duration: 0.8, delay: 0.2 }}
           className="flex-1 w-full"
-          style={{ minHeight: '520px' }}
+          style={{
+            overflow: 'hidden',
+            minHeight: '520px',
+            height: 'calc(100vh - 160px)',
+          }}
         >
+          {/* marginTop négatif pour masquer la barre grise native de l'embed (~54px) */}
           <iframe
             src={EMBED_URL}
             title="Carte des sites — Dark Massilia Karim Saari"
             width="100%"
-            height="100%"
             style={{
               border: 'none',
               display: 'block',
-              minHeight: '520px',
-              height: 'calc(100vh - 160px)',
+              marginTop: '-54px',
+              height: 'calc(100% + 54px)',
             }}
             allowFullScreen
             loading="lazy"
