@@ -15,7 +15,7 @@ export default function Carte() {
         url="https://karimsaari.com/carte"
       />
 
-      <div className="min-h-screen pt-20 flex flex-col">
+      <div className="h-screen pt-20 flex flex-col overflow-hidden">
 
         {/* Header */}
         <motion.div
@@ -54,7 +54,7 @@ export default function Carte() {
             position: 'relative',
             flex: 1,
             overflow: 'hidden',
-            minHeight: '520px',
+            minHeight: 0,
           }}
         >
           {/* Absolument positionné : top:-54px masque la barre grise, bottom:0 remplit jusqu'en bas */}
