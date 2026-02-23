@@ -58,6 +58,30 @@ export default function Carte() {
         </motion.a>
 
       </div>
+
+      {/* Contenu SEO — section scrollable sous la carte */}
+      <section className="container-custom py-12 max-w-3xl">
+        <div className="space-y-5 text-text-secondary leading-relaxed text-sm md:text-base">
+          <p>
+            Explorez la carte interactive des Calanques de Marseille à Cassis, au cœur du Parc national des Calanques.
+            Cette cartographie référence les principaux sites naturels du littoral marseillais : Sormiou, Morgiou, En-Vau,
+            Sugiton, Callelongue, Cap Croisette, ainsi que plusieurs points de vue et zones emblématiques entre la Côte
+            Bleue et Cassis.
+          </p>
+          <p>
+            Pensée comme un outil de préparation et de découverte, cette carte des Calanques permet de localiser
+            précisément les criques, falaises, grottes et spots côtiers documentés en photo et en vidéo. Elle s'adresse
+            aux passionnés de randonnée, d'apnée, de kayak, de plongée ou simplement aux visiteurs souhaitant mieux
+            comprendre la géographie du massif calcaire méditerranéen.
+          </p>
+          <p>
+            Chaque site référencé s'inscrit dans une démarche de valorisation et de sensibilisation à la préservation
+            de la Méditerranée. Le littoral de Marseille et des Calanques constitue un écosystème fragile, soumis à une
+            forte fréquentation. Cette carte contribue à rendre visibles les espaces naturels majeurs tout en rappelant
+            l'importance du respect des réglementations du Parc national des Calanques.
+          </p>
+        </div>
+      </section>
     </>
   );
 }
