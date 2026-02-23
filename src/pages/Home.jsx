@@ -275,6 +275,8 @@ const Home = () => {
               <img
                 src="/images/photo%20profil%20Arte.webp"
                 alt="Karim Saari - Apnéiste et photographe à Marseille"
+                width="472"
+                height="488"
                 className="h-36 md:h-48 w-auto rounded-xl border border-white/20 shadow-lg shadow-ocean-teal/20"
                 loading="lazy"
                 decoding="async"
@@ -287,6 +289,8 @@ const Home = () => {
               <img
                 src="/images/Karim-SAARI-white-low-res.webp"
                 alt="Signature Karim Saari"
+                width="1200"
+                height="800"
                 className="h-36 md:h-48 lg:h-56 opacity-90"
                 decoding="async"
               />
