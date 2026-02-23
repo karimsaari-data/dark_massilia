@@ -1,15 +1,15 @@
 import { motion } from 'framer-motion';
-import { ExternalLink, Star, MapPin, Camera, ThumbsUp } from 'lucide-react';
+import { ExternalLink, Star, MapPin, Camera, ThumbsUp, Eye } from 'lucide-react';
 import SEO from '../components/SEO';
 
 const STATS = [
-  { label: 'Avis publiés', value: '150+', icon: Star },
-  { label: 'Photos ajoutées', value: '500+', icon: Camera },
-  { label: 'Lieux explorés', value: '80+', icon: MapPin },
-  { label: 'Points obtenus', value: '5 000+', icon: ThumbsUp },
+  { label: 'Contributions', value: '22 000+', icon: Star },
+  { label: 'Points obtenus', value: '118 000+', icon: ThumbsUp },
+  { label: 'Vues générées', value: '183 M', icon: Eye },
+  { label: 'Niveau', value: '10', icon: MapPin },
 ];
 
-const PROFILE_URL = 'https://maps.app.goo.gl/add-google-local-guide-ooodH';
+const PROFILE_URL = 'https://www.google.com/maps/contrib/114912564832630219145/photos';
 
 const FEATURED_PLACES = [
   {
@@ -42,8 +42,8 @@ export default function LocalGuide() {
   return (
     <>
       <SEO
-        title="Local Guides — Dark Massilia | Karim Saari"
-        description="Profil Google Local Guides de Karim Saari — avis et photos des Calanques de Marseille, spots de plongée et lieux emblématiques de la Méditerranée."
+        title="Google Local Guides Niveau 10 — Karim Saari | Marseille & Calanques"
+        description="Karim Saari, Local Guide Niveau 10 sur Google Maps — 22 000+ contributions, 118 000+ points, 183 millions de vues. Cartographie des Calanques de Marseille et documentation environnementale."
         url="https://karimsaari.com/local-guide"
       />
 
@@ -78,10 +78,6 @@ export default function LocalGuide() {
                 />
               </div>
             </div>
-            <p className="text-text-secondary max-w-2xl mt-4">
-              Contributeur actif sur Google Maps, je documente les spots naturels, les plages,
-              les calanques et les lieux liés à la préservation marine autour de Marseille.
-            </p>
           </motion.div>
 
           {/* CTA principal */}
@@ -123,6 +119,67 @@ export default function LocalGuide() {
                 <div className="text-xs text-text-muted">{label}</div>
               </div>
             ))}
+          </motion.div>
+
+          {/* Texte éditorial */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.25 }}
+            className="glass-strong rounded-3xl p-8 md:p-12 mb-12"
+          >
+            <div className="space-y-4 text-text-secondary leading-relaxed text-lg">
+              <p>
+                Mon engagement avec Google a commencé il y a plus de 9 ans, à une période où la
+                plateforme développait activement la cartographie 360° via Street View.
+              </p>
+              <p>
+                À l'époque, Google m'a prêté une caméra 360° pour documenter des zones difficiles
+                d'accès. J'ai couvert les{' '}
+                <strong className="text-white">Calanques de Marseille</strong>, territoire complexe
+                et partiellement inaccessible aux dispositifs classiques de captation.
+              </p>
+              <p>
+                J'ai obtenu la{' '}
+                <strong className="text-ocean-teal">certification Street View Trusted</strong>,
+                reconnaissance accordée aux contributeurs capables de produire des contenus
+                immersifs conformes aux standards techniques de Google. Street View a depuis été
+                intégré pleinement à Google Maps, mais la logique reste identique : documenter le
+                terrain réel.
+              </p>
+
+              <div className="border-l-2 border-ocean-teal/40 pl-6 py-2 space-y-2">
+                <p className="text-white font-semibold mb-3">Aujourd'hui :</p>
+                <ul className="space-y-1.5">
+                  <li className="flex items-center gap-2">
+                    <span className="w-1.5 h-1.5 rounded-full bg-ocean-teal flex-shrink-0" />
+                    Local Guide <strong className="text-white">Niveau 10</strong>
+                  </li>
+                  <li className="flex items-center gap-2">
+                    <span className="w-1.5 h-1.5 rounded-full bg-ocean-teal flex-shrink-0" />
+                    <strong className="text-white">22 000+</strong> contributions
+                  </li>
+                  <li className="flex items-center gap-2">
+                    <span className="w-1.5 h-1.5 rounded-full bg-ocean-teal flex-shrink-0" />
+                    <strong className="text-white">118 000+</strong> points
+                  </li>
+                  <li className="flex items-center gap-2">
+                    <span className="w-1.5 h-1.5 rounded-full bg-ocean-teal flex-shrink-0" />
+                    <strong className="text-white">183 millions</strong> de vues
+                  </li>
+                </ul>
+              </div>
+
+              <p>
+                Mon approche ne se limite pas à la cartographie. Je publie également les actions
+                de dépollution sous-marine, les déchets extraits en mer, les déchets observés sur
+                les sentiers et espaces naturels.
+              </p>
+              <p>
+                L'objectif est double : <strong className="text-white">valoriser le territoire</strong>{' '}
+                et <strong className="text-white">rendre visible son état environnemental réel</strong>.
+              </p>
+            </div>
           </motion.div>
 
           {/* Lieux mis en avant */}
