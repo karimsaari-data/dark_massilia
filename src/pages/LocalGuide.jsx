@@ -76,6 +76,27 @@ export default function LocalGuide() {
             </a>
           </motion.div>
 
+          {/* Carte anniversaire 9 ans */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.15 }}
+            className="glass rounded-2xl p-5 mb-4 flex items-center gap-6 border border-white/5"
+          >
+            <img
+              src="/images/9ans.gif"
+              alt="Google Local Guides — email anniversaire 9 ans"
+              className="w-24 md:w-28 flex-shrink-0 rounded-xl"
+            />
+            <div>
+              <p className="text-xs text-text-muted uppercase tracking-widest mb-1">Anniversaire Google</p>
+              <p className="text-white font-semibold text-lg leading-snug">Ces 9 dernières années</p>
+              <p className="text-text-secondary text-sm mt-1">
+                Email envoyé par Google pour célébrer 9 ans de contributions sur Google Maps.
+              </p>
+            </div>
+          </motion.div>
+
           {/* Stats */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -137,15 +158,6 @@ export default function LocalGuide() {
                 <p className="text-sm text-text-muted italic">
                   Programme Street View Trusted — certification désormais intégrée à Google Maps
                 </p>
-              </div>
-
-              {/* GIF anniversaire 9 ans Google */}
-              <div className="flex justify-center py-4">
-                <img
-                  src="/images/9ans.gif"
-                  alt="Google Local Guides — 9 ans de contributions, email anniversaire Google"
-                  className="w-48 rounded-2xl"
-                />
               </div>
 
               <div className="border-l-2 border-ocean-teal/40 pl-6 py-2 space-y-2">
