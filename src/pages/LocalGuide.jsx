@@ -1,41 +1,20 @@
 import { motion } from 'framer-motion';
-import { ExternalLink, Star, MapPin, Camera, ThumbsUp, Eye } from 'lucide-react';
+import { ExternalLink, Star, MapPin, ThumbsUp, Eye } from 'lucide-react';
 import SEO from '../components/SEO';
 
 const STATS = [
   { label: 'Contributions', value: '22 000+', icon: Star },
   { label: 'Points obtenus', value: '118 000+', icon: ThumbsUp },
   { label: 'Vues générées', value: '183 M', icon: Eye },
-  { label: 'Niveau', value: '10', icon: MapPin },
+  { label: 'Niveau', value: '10', icon: null, badge: true },
 ];
 
 const PROFILE_URL = 'https://www.google.com/maps/contrib/114912564832630219145/photos';
 
-const FEATURED_PLACES = [
-  {
-    name: 'Calanque de Sormiou',
-    description: 'L\'une des plus belles calanques de Marseille. Eau cristalline, faune préservée.',
-    type: 'Calanque',
-    color: '#21c47b',
-  },
-  {
-    name: 'Calanque de Morgiou',
-    description: 'Site exceptionnel avec fond marin riche. Présence de mérous et d\'octopodes.',
-    type: 'Plongée',
-    color: '#0091ff',
-  },
-  {
-    name: 'Île Maïre',
-    description: 'Réserve marine à l\'entrée des Calanques. Biodiversité remarquable.',
-    type: 'Réserve',
-    color: '#21c47b',
-  },
-  {
-    name: 'Port de Callelongue',
-    description: 'Point de départ des missions Projet Sentinelle. Spot de ramassage de déchets.',
-    type: 'Mission',
-    color: '#f59e0b',
-  },
+const GALLERY = [
+  { src: '/images/portfolio/Mer/12.webp', alt: 'Dark Massilia — photographie sous-marine dans les Calanques de Marseille' },
+  { src: '/images/portfolio/Mer/10.webp', alt: 'Dark Massilia — apnée et documentation marine, Méditerranée' },
+  { src: '/images/portfolio/Mer/73.webp', alt: 'Dark Massilia — faune marine des Calanques, plongée en apnée' },
 ];
 
 export default function LocalGuide() {
@@ -61,21 +40,13 @@ export default function LocalGuide() {
               <div className="w-12 h-12 rounded-full bg-[#4285F4]/20 border border-[#4285F4]/30 flex items-center justify-center flex-shrink-0">
                 <MapPin className="w-6 h-6 text-[#4285F4]" />
               </div>
-              <div className="flex-1 flex flex-col md:flex-row md:items-center md:justify-between gap-4">
-                <div>
-                  <h1 className="text-3xl md:text-4xl font-bold text-white mb-1">
-                    Google Local Guides
-                  </h1>
-                  <p className="text-text-secondary text-lg">
-                    Karim Saari — Marseille & Calanques
-                  </p>
-                </div>
-                {/* Badge Niveau 10 */}
-                <img
-                  src="/assets/points-badges_level_ten.png"
-                  alt="Google Local Guides — Niveau 10"
-                  className="w-20 h-20 md:w-24 md:h-24 object-contain"
-                />
+              <div>
+                <h1 className="text-3xl md:text-4xl font-bold text-white mb-1">
+                  Google Local Guides
+                </h1>
+                <p className="text-text-secondary text-lg">
+                  Karim Saari — Marseille & Calanques
+                </p>
               </div>
             </div>
           </motion.div>
@@ -112,9 +83,17 @@ export default function LocalGuide() {
             transition={{ duration: 0.6, delay: 0.2 }}
             className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-12"
           >
-            {STATS.map(({ label, value, icon: Icon }) => (
+            {STATS.map(({ label, value, icon: Icon, badge }) => (
               <div key={label} className="glass rounded-xl p-5 text-center border border-white/5 hover:border-ocean-teal/20 transition-all duration-300">
-                <Icon className="w-6 h-6 text-ocean-teal mx-auto mb-2" />
+                {badge ? (
+                  <img
+                    src="/assets/points-badges_level_ten.png"
+                    alt="Google Local Guides — Niveau 10"
+                    className="w-8 h-8 object-contain mx-auto mb-2"
+                  />
+                ) : (
+                  <Icon className="w-6 h-6 text-ocean-teal mx-auto mb-2" />
+                )}
                 <div className="text-2xl font-bold text-white mb-1">{value}</div>
                 <div className="text-xs text-text-muted">{label}</div>
               </div>
@@ -182,53 +161,30 @@ export default function LocalGuide() {
             </div>
           </motion.div>
 
-          {/* Lieux mis en avant */}
+          {/* Galerie photos */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.3 }}
+            transition={{ duration: 0.6, delay: 0.35 }}
+            className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-12"
           >
-            <h2 className="text-xl font-bold text-white mb-6">
-              Lieux documentés
-            </h2>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              {FEATURED_PLACES.map((place, i) => (
-                <motion.div
-                  key={place.name}
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.5, delay: 0.1 * i }}
-                  className="glass rounded-xl p-5 border border-white/5 hover:border-white/10 transition-all duration-300 group"
-                >
-                  <div className="flex items-start gap-3">
-                    <div
-                      className="w-2 h-2 rounded-full mt-2 flex-shrink-0"
-                      style={{ background: place.color, boxShadow: `0 0 8px ${place.color}88` }}
-                    />
-                    <div>
-                      <div className="flex items-center gap-2 mb-1">
-                        <h3 className="font-semibold text-white group-hover:text-ocean-teal transition-colors">
-                          {place.name}
-                        </h3>
-                        <span
-                          className="text-xs px-2 py-0.5 rounded-full"
-                          style={{
-                            background: `${place.color}22`,
-                            color: place.color,
-                            border: `1px solid ${place.color}44`,
-                          }}
-                        >
-                          {place.type}
-                        </span>
-                      </div>
-                      <p className="text-text-secondary text-sm leading-relaxed">
-                        {place.description}
-                      </p>
-                    </div>
-                  </div>
-                </motion.div>
-              ))}
-            </div>
+            {GALLERY.map(({ src, alt }, i) => (
+              <motion.div
+                key={src}
+                initial={{ opacity: 0, scale: 0.97 }}
+                animate={{ opacity: 1, scale: 1 }}
+                transition={{ duration: 0.5, delay: 0.1 * i }}
+                className="relative aspect-[4/3] rounded-2xl overflow-hidden"
+              >
+                <img
+                  src={src}
+                  alt={alt}
+                  className="absolute inset-0 w-full h-full object-cover transition-transform duration-500 hover:scale-105"
+                  loading="lazy"
+                  decoding="async"
+                />
+              </motion.div>
+            ))}
           </motion.div>
 
           {/* Lien vers la carte */}
@@ -236,7 +192,7 @@ export default function LocalGuide() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 0.6, delay: 0.5 }}
-            className="mt-12 text-center"
+            className="mt-4 text-center"
           >
             <p className="text-text-muted text-sm mb-4">
               Tous ces lieux sont visibles sur la carte interactive

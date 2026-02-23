@@ -24,11 +24,11 @@ export const NAV_LINKS = [
   { name: 'Missions', path: '/missions', icon: 'Compass' },
   { name: 'Vidéos', path: '/videos', icon: 'Video' },
   { name: 'Photos', path: '/photos', icon: 'Camera' },
-  { name: 'Carte', path: '/carte', icon: 'MapPin' },
   { name: 'Références', path: '/sources', icon: 'BookOpen' },
   { name: 'Médias', path: '/medias', icon: 'Film' },
   { name: 'Réseaux', path: '/reseaux', icon: 'Share2' },
   { name: 'Local Guides', path: '/local-guide', icon: 'Navigation' },
+  { name: 'Carte', path: '/carte', icon: 'MapPin' },
 ];
 
 export const TAGLINE = 'Une Mer · Une Ville · Une Mission';
