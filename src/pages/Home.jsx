@@ -1,8 +1,7 @@
 import { motion, AnimatePresence } from 'framer-motion';
 import { Link } from 'react-router-dom';
-import { ArrowRight, Users, AlertTriangle, ChevronDown, Camera } from 'lucide-react';
-import { useProjects } from '../hooks/useSupabase';
-import ProjectCard from '../components/ui/ProjectCard';
+import { ArrowRight, Users, ChevronDown, Camera } from 'lucide-react';
+
 import { FADE_IN_UP, FADE_IN, STAGGER_CONTAINER, TAGLINE, MISSION_STATEMENT, FACEBOOK_GROUP_MEMBERS } from '../utils/constants';
 import SEO from '../components/SEO';
 import { SEO_PAGES } from '../utils/seo';
@@ -105,7 +104,6 @@ const FaqItem = ({ question, answer }) => {
 };
 
 const Home = () => {
-  const { projects: featuredProjects, loading } = useProjects({ featured: true, limit: 3 });
   const [currentFactIndex, setCurrentFactIndex] = useState(0);
 
   // Auto-rotation des phrases choc
