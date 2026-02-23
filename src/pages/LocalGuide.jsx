@@ -14,7 +14,7 @@ const PROFILE_URL = 'https://www.google.com/maps/contrib/114912564832630219145/p
 const GALLERY = [
   { src: '/images/portfolio/Mer/12.webp', alt: 'Dark Massilia — photographie sous-marine dans les Calanques de Marseille' },
   { src: '/images/portfolio/Mer/10.webp', alt: 'Dark Massilia — apnée et documentation marine, Méditerranée' },
-  { src: '/images/portfolio/Mer/73.webp', alt: 'Dark Massilia — faune marine des Calanques, plongée en apnée' },
+  { src: '/images/portfolio/Mer/80.webp', alt: 'Dark Massilia — faune marine des Calanques, plongée en apnée' },
 ];
 
 export default function LocalGuide() {
