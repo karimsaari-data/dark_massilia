@@ -127,6 +127,18 @@ export default function LocalGuide() {
                 terrain réel.
               </p>
 
+              {/* Logo Street View Trusted */}
+              <div className="flex items-center gap-4 py-2">
+                <img
+                  src="/images/logo-trusted.png"
+                  alt="Google Street View Trusted — certification contributeur"
+                  className="h-10 object-contain opacity-80"
+                />
+                <p className="text-sm text-text-muted italic">
+                  Programme Street View Trusted — certification désormais intégrée à Google Maps
+                </p>
+              </div>
+
               <div className="border-l-2 border-ocean-teal/40 pl-6 py-2 space-y-2">
                 <p className="text-white font-semibold mb-3">Aujourd'hui :</p>
                 <ul className="space-y-1.5">
