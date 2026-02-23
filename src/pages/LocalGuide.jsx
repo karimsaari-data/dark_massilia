@@ -48,31 +48,6 @@ export default function LocalGuide() {
             </div>
           </motion.div>
 
-          {/* CTA principal */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.1 }}
-            className="mb-10"
-          >
-            <a
-              href={PROFILE_URL}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center gap-3 px-6 py-3 rounded-full font-semibold text-white transition-all duration-300 hover:scale-105"
-              style={{
-                background: 'linear-gradient(135deg, #4285F4, #34A853)',
-                boxShadow: '0 4px 20px rgba(66,133,244,0.3)',
-              }}
-            >
-              <svg viewBox="0 0 24 24" className="w-5 h-5 fill-white">
-                <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/>
-              </svg>
-              Voir mon profil Local Guides
-              <ExternalLink className="w-4 h-4" />
-            </a>
-          </motion.div>
-
           {/* Carte anniversaire 9 ans */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -217,22 +192,35 @@ export default function LocalGuide() {
             ))}
           </motion.div>
 
-          {/* Lien vers la carte */}
+          {/* Liens bas de page */}
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 0.6, delay: 0.5 }}
-            className="mt-4 text-center"
+            className="mt-4 flex flex-col items-center gap-4"
           >
-            <p className="text-text-muted text-sm mb-4">
-              Tous ces lieux sont visibles sur la carte interactive
-            </p>
+            <a
+              href={PROFILE_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-3 px-6 py-3 rounded-full font-semibold text-white transition-all duration-300 hover:scale-105"
+              style={{
+                background: 'linear-gradient(135deg, #4285F4, #34A853)',
+                boxShadow: '0 4px 20px rgba(66,133,244,0.3)',
+              }}
+            >
+              <svg viewBox="0 0 24 24" className="w-5 h-5 fill-white">
+                <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/>
+              </svg>
+              Voir mon profil Local Guides
+              <ExternalLink className="w-4 h-4" />
+            </a>
             <a
               href="/carte"
               className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full glass border border-ocean-teal/30 text-ocean-teal text-sm font-medium hover:bg-ocean-teal/10 transition-all duration-300"
             >
               <MapPin className="w-4 h-4" />
-              Voir la Carte
+              Voir la Carte interactive
             </a>
           </motion.div>
 
