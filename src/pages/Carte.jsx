@@ -112,7 +112,7 @@ export default function Carte() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
-          className="container-custom py-8"
+          className="container-custom pt-4 pb-4"
         >
           <h1 className="text-3xl md:text-4xl font-bold text-white mb-2">
             Carte des Sites
