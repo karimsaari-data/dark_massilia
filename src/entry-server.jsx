@@ -26,8 +26,10 @@ import Contact    from './pages/Contact';
 import Arte       from './pages/Arte';
 import Sources    from './pages/Sources';
 // CarteSSR = version sans Leaflet (pas de window en Node)
-import CarteSSR   from './pages/CarteSSR';
-import LocalGuide from './pages/LocalGuide';
+import CarteSSR      from './pages/CarteSSR';
+import LocalGuide    from './pages/LocalGuide';
+// AdminCarteSSR = version statique (pas de sessionStorage en Node)
+import AdminCarteSSR from './pages/AdminCarteSSR';
 
 function NotFound() {
   return (
@@ -62,6 +64,7 @@ export function render(url) {
             <Route path="contact"     element={<Contact />} />
             <Route path="carte"       element={<CarteSSR />} />
             <Route path="local-guide" element={<LocalGuide />} />
+            <Route path="admin"       element={<AdminCarteSSR />} />
             <Route path="home"        element={<Navigate to="/" replace />} />
             <Route path="*"         element={<NotFound />} />
           </Route>

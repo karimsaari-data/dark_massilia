@@ -35,6 +35,7 @@ const ROUTES = [
   '/contact',
   '/carte',
   '/local-guide',
+  '/admin',
 ];
 
 async function prerender() {
