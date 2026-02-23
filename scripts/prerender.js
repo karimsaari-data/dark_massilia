@@ -204,8 +204,15 @@ async function prerender() {
         finalTemplate = finalTemplate.replace('</head>', `${schemasBlock}\n  </head>`);
       }
 
+      // 3. Supprimer les blocs JSON-LD du appHtml avant injection dans le body
+      //    (évite le doublon : schema déjà dans <head>, inutile de le répéter dans <body>)
+      let appHtmlClean = appHtml;
+      schemaMatches.forEach(match => {
+        appHtmlClean = appHtmlClean.replace(match, '');
+      });
+
       // Injecter le HTML rendu dans le placeholder <!--app-html-->
-      const pageHtml = finalTemplate.replace('<!--app-html-->', appHtml);
+      const pageHtml = finalTemplate.replace('<!--app-html-->', appHtmlClean);
 
       // Déterminer le chemin de sortie
       // "/" → dist/index.html
