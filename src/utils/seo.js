@@ -303,4 +303,50 @@ export const SEO_PAGES = {
     canonical: `${BASE_URL}/contact`,
     schema: breadcrumb('Contact & Partenariats', '/contact'),
   },
+  '/carte': {
+    title: 'Carte Interactive Calanques Marseille — Sites & Spots | Dark Massilia',
+    description:
+      'Carte interactive des Calanques de Marseille : sites de plongée, zones de dépollution et spots naturels documentés par Karim Saari (Dark Massilia).',
+    canonical: `${BASE_URL}/carte`,
+    schema: {
+      '@context': 'https://schema.org',
+      '@graph': [
+        breadcrumb('Carte des Sites', '/carte'),
+        {
+          '@type': 'Dataset',
+          name: 'Carte des Sites — Calanques de Marseille',
+          description:
+            'Cartographie des sites de plongée, zones polluées et spots naturels des Calanques de Marseille et de la rade, documentés par Dark Massilia (Karim Saari) dans le cadre du Projet Sentinelle.',
+          url: `${BASE_URL}/carte`,
+          creator: {
+            '@type': 'Person',
+            name: 'Karim Saari',
+            alternateName: 'Dark Massilia',
+            url: BASE_URL,
+          },
+          spatialCoverage: {
+            '@type': 'Place',
+            name: 'Calanques de Marseille',
+            geo: {
+              '@type': 'GeoCoordinates',
+              latitude: 43.2148,
+              longitude: 5.4197,
+            },
+            containedInPlace: {
+              '@type': 'AdministrativeArea',
+              name: 'Marseille',
+              addressCountry: 'FR',
+            },
+          },
+          keywords: [
+            'calanques de Marseille',
+            'sites de plongée',
+            'dépollution marine',
+            'pollution plastique',
+            'fonds marins Marseille',
+          ],
+        },
+      ],
+    },
+  },
 };

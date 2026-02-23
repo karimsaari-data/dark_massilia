@@ -1,6 +1,7 @@
 import { motion } from 'framer-motion';
 import { ExternalLink, MapPin } from 'lucide-react';
 import SEO from '../components/SEO';
+import { SEO_PAGES } from '../utils/seo';
 
 const MAP_ID = '1fu2q9DRyD80m11ejdp8Ivuj5vn2aguM';
 const EMBED_URL = `https://www.google.com/maps/d/embed?mid=${MAP_ID}&ehbc=2E312F`;
@@ -9,11 +10,7 @@ const FULL_URL  = `https://www.google.com/maps/d/viewer?mid=${MAP_ID}`;
 export default function Carte() {
   return (
     <>
-      <SEO
-        title="Carte des Sites — Dark Massilia | Karim Saari"
-        description="Cartographie interactive des sites de plongée, zones polluées et spots naturels des Calanques de Marseille documentés par Dark Massilia."
-        url="https://karimsaari.com/carte"
-      />
+      <SEO {...SEO_PAGES['/carte']} />
 
       <div className="h-screen pt-20 flex flex-col overflow-hidden">
 
