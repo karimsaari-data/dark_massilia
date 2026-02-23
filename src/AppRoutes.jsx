@@ -16,15 +16,17 @@ import ScrollToTop from './components/ScrollToTop';
 import Home from './pages/Home';
 
 // Lazy-loaded pages — code splitting pour le client
-const Missions  = lazy(() => import('./pages/Missions'));
-const Medias    = lazy(() => import('./pages/Medias'));
-const Photos    = lazy(() => import('./pages/Photos'));
-const Videos    = lazy(() => import('./pages/Videos'));
-const Instagram = lazy(() => import('./pages/Instagram'));
-const Twitter   = lazy(() => import('./pages/Twitter'));
-const Contact   = lazy(() => import('./pages/Contact'));
-const Arte      = lazy(() => import('./pages/Arte'));
-const Sources   = lazy(() => import('./pages/Sources'));
+const Missions   = lazy(() => import('./pages/Missions'));
+const Medias     = lazy(() => import('./pages/Medias'));
+const Photos     = lazy(() => import('./pages/Photos'));
+const Videos     = lazy(() => import('./pages/Videos'));
+const Instagram  = lazy(() => import('./pages/Instagram'));
+const Twitter    = lazy(() => import('./pages/Twitter'));
+const Contact    = lazy(() => import('./pages/Contact'));
+const Arte       = lazy(() => import('./pages/Arte'));
+const Sources    = lazy(() => import('./pages/Sources'));
+const Carte      = lazy(() => import('./pages/Carte'));
+const LocalGuide = lazy(() => import('./pages/LocalGuide'));
 
 const PageLoader = () => (
   <div className="min-h-screen flex items-center justify-center">
@@ -54,11 +56,13 @@ export default function AppRoutes() {
             <Route path="medias"    element={<Medias />} />
             <Route path="photos"    element={<Photos />} />
             <Route path="videos"    element={<Videos />} />
-            <Route path="instagram" element={<Instagram />} />
+            <Route path="reseaux" element={<Instagram />} />
             <Route path="twitter"   element={<Twitter />} />
             <Route path="arte"      element={<Arte />} />
             <Route path="sources"   element={<Sources />} />
-            <Route path="contact"   element={<Contact />} />
+            <Route path="contact"    element={<Contact />} />
+            <Route path="carte"      element={<Carte />} />
+            <Route path="local-guide" element={<LocalGuide />} />
             {/* Redirections legacy — anciennes URLs de l'ex-site statique */}
             <Route path="home" element={<Navigate to="/" replace />} />
             <Route path="*"    element={<NotFound />} />

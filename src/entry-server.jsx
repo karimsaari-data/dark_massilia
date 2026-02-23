@@ -15,16 +15,19 @@ import ErrorBoundary from './components/ErrorBoundary';
 import Layout from './components/layout/Layout';
 
 // Imports EAGERLY (pas de lazy — nécessaire pour renderToString)
-import Home      from './pages/Home';
-import Missions  from './pages/Missions';
-import Medias    from './pages/Medias';
-import Photos    from './pages/Photos';
-import Videos    from './pages/Videos';
-import Instagram from './pages/Instagram';
-import Twitter   from './pages/Twitter';
-import Contact   from './pages/Contact';
-import Arte      from './pages/Arte';
-import Sources   from './pages/Sources';
+import Home       from './pages/Home';
+import Missions   from './pages/Missions';
+import Medias     from './pages/Medias';
+import Photos     from './pages/Photos';
+import Videos     from './pages/Videos';
+import Instagram  from './pages/Instagram';
+import Twitter    from './pages/Twitter';
+import Contact    from './pages/Contact';
+import Arte       from './pages/Arte';
+import Sources    from './pages/Sources';
+// CarteSSR = version sans Leaflet (pas de window en Node)
+import CarteSSR   from './pages/CarteSSR';
+import LocalGuide from './pages/LocalGuide';
 
 function NotFound() {
   return (
@@ -52,12 +55,14 @@ export function render(url) {
             <Route path="medias"    element={<Medias />} />
             <Route path="photos"    element={<Photos />} />
             <Route path="videos"    element={<Videos />} />
-            <Route path="instagram" element={<Instagram />} />
+            <Route path="reseaux" element={<Instagram />} />
             <Route path="twitter"   element={<Twitter />} />
             <Route path="arte"      element={<Arte />} />
             <Route path="sources"   element={<Sources />} />
-            <Route path="contact"   element={<Contact />} />
-            <Route path="home"      element={<Navigate to="/" replace />} />
+            <Route path="contact"     element={<Contact />} />
+            <Route path="carte"       element={<CarteSSR />} />
+            <Route path="local-guide" element={<LocalGuide />} />
+            <Route path="home"        element={<Navigate to="/" replace />} />
             <Route path="*"         element={<NotFound />} />
           </Route>
         </Routes>

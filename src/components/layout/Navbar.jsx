@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Home, Compass, Film, Camera, Video, Instagram, Mail, Menu, X as XIcon, BookOpen } from 'lucide-react';
+import { Home, Compass, Film, Camera, Video, Instagram, Mail, Menu, X as XIcon, BookOpen, Share2, MapPin, Navigation } from 'lucide-react';
 import { NAV_LINKS } from '../../utils/constants';
 
 const iconMap = {
@@ -12,7 +12,10 @@ const iconMap = {
   Video,
   Instagram,
   BookOpen,
+  Share2,
   Mail,
+  MapPin,
+  Navigation,
 };
 
 const Navbar = () => {
@@ -91,8 +94,8 @@ const Navbar = () => {
               </div>
             </Link>
 
-            {/* Desktop Navigation */}
-            <div className="hidden md:flex items-center space-x-2">
+            {/* Desktop Navigation — scrollable horizontal si trop d'onglets */}
+            <div className="hidden md:flex items-center gap-0.5 overflow-x-auto scrollbar-hide flex-1 justify-end ml-4">
               {NAV_LINKS.map((link) => {
                 const Icon = iconMap[link.icon];
                 const isActive = location.pathname === link.path;
@@ -101,13 +104,13 @@ const Navbar = () => {
                   <Link
                     key={link.path}
                     to={link.path}
-                    className={`flex items-center space-x-2 px-4 py-2 rounded-full transition-all duration-300 relative ${
+                    className={`flex items-center gap-1.5 px-3 py-1.5 rounded-full transition-all duration-300 relative whitespace-nowrap flex-shrink-0 text-sm ${
                       isActive
                         ? 'bg-ocean-teal/20 text-ocean-teal border border-ocean-teal/30 shadow-lg shadow-ocean-teal/20'
                         : 'text-text-secondary hover:text-white hover:bg-white/5'
                     }`}
                   >
-                    <Icon className="w-4 h-4" />
+                    <Icon className="w-3.5 h-3.5 flex-shrink-0" />
                     <span className="font-medium">{link.name}</span>
                     {isActive && (
                       <motion.div

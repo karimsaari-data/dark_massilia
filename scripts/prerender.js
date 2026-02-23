@@ -28,11 +28,13 @@ const ROUTES = [
   '/medias',
   '/photos',
   '/videos',
-  '/instagram',
+  '/reseaux',
   '/twitter',
   '/arte',
   '/sources',
   '/contact',
+  '/carte',
+  '/local-guide',
 ];
 
 async function prerender() {
@@ -143,6 +145,62 @@ async function prerender() {
           /<meta property="og:url" content="[^"]*"/,
           `<meta property="og:url" content="${renderedOgUrl[1]}"`
         );
+      }
+
+      // Extraire l'og:image page-spécifique
+      const renderedOgImage = appHtml.match(/<meta property="og:image" content="([^"]+)"/);
+      if (renderedOgImage) {
+        finalTemplate = finalTemplate.replace(
+          /<meta property="og:image" content="[^"]*"/,
+          `<meta property="og:image" content="${renderedOgImage[1]}"`
+        );
+      }
+
+      // Synchroniser les Twitter Card avec le title/description de la page
+      // (twitter:title et twitter:description mirrorent og:title/og:description)
+      if (renderedTitle) {
+        finalTemplate = finalTemplate.replace(
+          /<meta name="twitter:title" content="[^"]*"/,
+          `<meta name="twitter:title" content="${renderedTitle[1]}"`
+        );
+      }
+      if (renderedDesc) {
+        finalTemplate = finalTemplate.replace(
+          /<meta name="twitter:description" content="[^"]*"/,
+          `<meta name="twitter:description" content="${renderedDesc[1]}"`
+        );
+      }
+
+      // Extraire le twitter:image page-spécifique
+      const renderedTwitterImage = appHtml.match(/<meta name="twitter:image" content="([^"]+)"/);
+      if (renderedTwitterImage) {
+        finalTemplate = finalTemplate.replace(
+          /<meta name="twitter:image" content="[^"]*"/,
+          `<meta name="twitter:image" content="${renderedTwitterImage[1]}"`
+        );
+      }
+
+      // Injecter la directive robots si la page est noindex
+      const renderedRobots = appHtml.match(/<meta name="robots" content="([^"]+)"/);
+      if (renderedRobots) {
+        finalTemplate = finalTemplate.replace(
+          '</head>',
+          `  <meta name="robots" content="${renderedRobots[1]}">\n  </head>`
+        );
+      }
+
+      // ── JSON-LD Schema.org ──────────────────────────────────────────────────
+      // 1. Supprimer les blocs JSON-LD statiques du template (remplacés ci-dessous
+      //    par les schemas rendus par le composant SEO React, toujours plus complets)
+      finalTemplate = finalTemplate.replace(
+        /[ \t]*(?:<!--[^\n]*-->\n[ \t]*)?<script type="application\/ld\+json">[\s\S]*?<\/script>\n?/g,
+        ''
+      );
+      // 2. Extraire tous les JSON-LD rendus par React et les injecter dans <head>
+      const schemaMatches = appHtml.match(/<script type="application\/ld\+json">[\s\S]*?<\/script>/g) || [];
+      if (schemaMatches.length > 0) {
+        const schemasBlock = schemaMatches.map(s => `    ${s}`).join('\n');
+        finalTemplate = finalTemplate.replace('</head>', `${schemasBlock}\n  </head>`);
       }
 
       // Injecter le HTML rendu dans le placeholder <!--app-html-->
