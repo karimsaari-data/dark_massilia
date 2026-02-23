@@ -5,7 +5,7 @@
 // ============================================================
 
 const BASE_URL = 'https://karimsaari.com';
-const DEFAULT_IMAGE = `${BASE_URL}/assets/dark-massilia-logo.png`;
+const DEFAULT_IMAGE = `${BASE_URL}/assets/og-social-card.jpg`;
 const SITE_NAME = 'Dark Massilia';
 const TWITTER_HANDLE = '@dark_massilia';
 
@@ -213,11 +213,11 @@ export const SEO_PAGES = {
     canonical: `${BASE_URL}/medias`,
     schema: breadcrumb('Presse & Médias', '/medias'),
   },
-  '/instagram': {
-    title: 'Coulisses des Missions en Apnée | Instagram @karimsaari',
+  '/reseaux': {
+    title: 'Réseaux Sociaux — Dark Massilia & Projet Sentinelle | 130 000 sentinelles',
     description:
-      'Suivez le quotidien du Projet Sentinelle, les nettoyages en direct et la faune des Calanques. Une communauté de plus de 130 000 sentinelles engagées.',
-    canonical: `${BASE_URL}/instagram`,
+      'Suivez Dark Massilia sur Instagram, TikTok, YouTube, Facebook et X. Une communauté de plus de 130 000 citoyens engagés pour la protection de la Méditerranée.',
+    canonical: `${BASE_URL}/reseaux`,
     noindex: true,
   },
   '/arte': {

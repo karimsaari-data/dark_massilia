@@ -9,6 +9,13 @@ const Medias = () => {
   // Données extraites de l'ancien site medias.html
   const pressLinks = [
     {
+      title: 'Yann Arthus-Bertrand — « Les Français », Marseille 2024',
+      url: 'https://www.yabstudio.fr/portfolio/marseille-2024/',
+      featured: true,
+      image: '/images/Marseille-2024-342-Les-Francais-copyright-Yann-Arthus-Bertrand.webp',
+      credit: '© Yann Arthus-Bertrand'
+    },
+    {
       title: 'Fondation de la Mer — Projet Sentinelle dans les Calanques',
       url: 'https://www.fondationdelamer.org/nos-actualites/projet-sentinelle/',
       featured: true,
@@ -55,6 +62,12 @@ const Medias = () => {
       url: 'https://www.facebook.com/marseilleville/photos/a.220707724621813/3697054720320412/?_rdr',
       featured: true,
       image: '/images/ville de marseille.webp'
+    },
+    {
+      title: 'Made in Marseille — Provence, top tourisme France',
+      url: 'https://madeinmarseille.net/environnement/3753-region-provence-top-tourisme-france/',
+      featured: false,
+      image: '/images/made in marseille provence.webp'
     },
   ];
 
@@ -264,6 +277,9 @@ const Medias = () => {
                         decoding="async"
                       />
                       <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
+                      {link.credit && (
+                        <p className="absolute bottom-2 right-3 text-white/40 text-xs font-medium">{link.credit}</p>
+                      )}
                     </div>
 
                     {/* Content */}

@@ -18,44 +18,27 @@ const Arte = () => {
           variants={STAGGER_CONTAINER}
           className="mb-12"
         >
-          <motion.div variants={FADE_IN_UP} className="glass-strong rounded-3xl overflow-hidden">
-            <div className="flex flex-col md:flex-row">
-              {/* Image */}
-              <div className="relative w-full md:w-64 lg:w-72 flex-shrink-0 aspect-[4/3] md:aspect-auto">
-                <picture>
-                  <source srcSet="/images/arte regard.webp" type="image/webp" />
-                  <img
-                    src="/images/arte regard.jpg"
-                    alt="Karim Saari dans le reportage ARTE Regards — Pollution marine à Marseille"
-                    className="absolute inset-0 w-full h-full object-cover"
-                  />
-                </picture>
-                <div className="absolute inset-0 bg-gradient-to-b md:bg-gradient-to-r from-transparent to-[#0a0f1e]/80 md:to-[#0a0f1e]/60" />
-              </div>
-              {/* Texte */}
-              <div className="p-8 md:p-12">
-                <h2 className="text-2xl md:text-3xl font-bold text-white mb-6">
-                  ARTE met les Calanques à l'honneur
-                </h2>
-                <p className="text-text-secondary leading-relaxed text-lg mb-4">
-                  En 2022, la chaîne culturelle européenne{' '}
-                  <strong className="text-white">ARTE</strong> a consacré un reportage aux éco-acteurs
-                  marseillais mobilisés contre la pollution plastique en Méditerranée. Au cœur du
-                  documentaire : <strong className="text-ocean-teal">Karim Saari</strong>, apnéiste et
-                  photographe sous-marin, engagé au sein de{' '}
-                  <strong className="text-ocean-teal">Team Oxygen</strong> et impliqué dès la première
-                  édition du <strong className="text-ocean-teal">Projet Sentinelle</strong>.
-                </p>
-                <p className="text-text-secondary leading-relaxed text-lg">
-                  Ses plongées en apnée dans les Calanques de Marseille — entre 0 et 20 mètres de
-                  profondeur — documentent une réalité brute : canettes, filets, plastiques et déchets
-                  piégés dans les herbiers de posidonie. Cette diffusion à l'échelle européenne a donné
-                  une visibilité accrue aux missions de dépollution et contribué à sensibiliser un large
-                  public à l'urgence de la{' '}
-                  <strong className="text-white">pollution marine en Méditerranée</strong>.
-                </p>
-              </div>
-            </div>
+          <motion.div variants={FADE_IN_UP} className="glass-strong rounded-3xl p-8 md:p-12">
+            <h2 className="text-2xl md:text-3xl font-bold text-white mb-6">
+              ARTE met les Calanques à l'honneur
+            </h2>
+            <p className="text-text-secondary leading-relaxed text-lg mb-4">
+              En 2022, la chaîne culturelle européenne{' '}
+              <strong className="text-white">ARTE</strong> a consacré un reportage aux éco-acteurs
+              marseillais mobilisés contre la pollution plastique en Méditerranée. Au cœur du
+              documentaire : <strong className="text-ocean-teal">Karim Saari</strong>, apnéiste et
+              photographe sous-marin, engagé au sein de{' '}
+              <strong className="text-ocean-teal">Team Oxygen</strong> et impliqué dès la première
+              édition du <strong className="text-ocean-teal">Projet Sentinelle</strong>.
+            </p>
+            <p className="text-text-secondary leading-relaxed text-lg">
+              Ses plongées en apnée dans les Calanques de Marseille — entre 0 et 20 mètres de
+              profondeur — documentent une réalité brute : canettes, filets, plastiques et déchets
+              piégés dans les herbiers de posidonie. Cette diffusion à l'échelle européenne a donné
+              une visibilité accrue aux missions de dépollution et contribué à sensibiliser un large
+              public à l'urgence de la{' '}
+              <strong className="text-white">pollution marine en Méditerranée</strong>.
+            </p>
           </motion.div>
         </motion.div>
 
@@ -102,9 +85,9 @@ const Arte = () => {
           initial="hidden"
           animate="visible"
           variants={STAGGER_CONTAINER}
-          className="glass-strong rounded-3xl p-8 md:p-12 mb-12"
+          className="glass-strong rounded-3xl overflow-hidden mb-12"
         >
-          <motion.div variants={FADE_IN_UP} className="space-y-6 text-text-secondary leading-relaxed">
+          <motion.div variants={FADE_IN_UP} className="space-y-6 text-text-secondary leading-relaxed p-8 md:p-12">
             <p>
               Marseille, deuxième ville de France, mais en bas du classement pour sa gestion des déchets. Des ordures qui finissent souvent... en mer. Face à l'ampleur du problème, des habitants ont décidé de s'attaquer eux-mêmes au problème.
             </p>
@@ -121,6 +104,18 @@ const Arte = () => {
               En complément de ces méthodes, Isabelle a choisi la science. Lorsqu'elle arrive à Marseille en 2000, elle est jeune chercheuse en biologie marine. Atterrée par ce qu'elle voit, elle constate que les déchets sauvages ne sont alors pas considérés comme une pollution. Elle s'engouffre dans le sujet, écrit une thèse, et développe une méthodologie de caractérisation pour tenter d'identifier sources et responsables. Un long chemin pour cette écologue, comme pour Eric et Karim. Mais ensemble et grâce aux centaines de citoyens qui les accompagnent, <strong className="text-ocean-teal font-semibold">ils sont déterminés. Marseille doit être sauvée !</strong>
             </p>
           </motion.div>
+          {/* Image pleine largeur */}
+          <div className="relative w-full aspect-[4/5]">
+            <picture>
+              <source srcSet="/images/arte regard.webp" type="image/webp" />
+              <img
+                src="/images/arte regard.jpg"
+                alt="Karim Saari dans le reportage ARTE Regards — Pollution marine à Marseille"
+                className="absolute inset-0 w-full h-full object-cover object-center"
+              />
+            </picture>
+            <div className="absolute inset-0 bg-gradient-to-t from-transparent via-transparent to-[#0a0f1e]/40" />
+          </div>
         </motion.div>
 
         {/* Additional Content */}

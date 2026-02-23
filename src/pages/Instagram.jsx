@@ -9,43 +9,63 @@ import { SEO_PAGES } from '../utils/seo';
 const Instagram = () => {
   return (
     <div className="min-h-screen py-24">
-      <SEO {...SEO_PAGES['/instagram']} />
+      <SEO {...SEO_PAGES['/reseaux']} />
       <div className="container-custom">
         {/* Section éditoriale SEO — autorité communautaire & engagement citoyen */}
         <motion.div
           initial="hidden"
           animate="visible"
           variants={STAGGER_CONTAINER}
-          className="max-w-4xl mx-auto mb-12"
+          className="mb-6"
         >
           <motion.div variants={FADE_IN_UP} className="glass-strong rounded-3xl p-8 md:p-12">
             <h2 className="text-2xl md:text-3xl font-bold text-white mb-6">
               Une communauté de plus de 130&nbsp;000 sentinelles
             </h2>
-            <p className="text-text-secondary leading-relaxed text-lg">
-              La protection de la Méditerranée ne se fait pas seul&nbsp;: elle nécessite une
-              mobilisation collective et quotidienne. Aujourd'hui, les actions de{' '}
-              <strong className="text-ocean-teal">Dark Massilia</strong> et du{' '}
-              <strong className="text-ocean-teal">Projet Sentinelle</strong> fédèrent une
-              communauté de plus de <strong className="text-white">130&nbsp;000 citoyens
-              engagés</strong> à travers les réseaux sociaux. De nos reportages en immersion sur{' '}
-              <strong className="text-white">YouTube</strong> à nos alertes environnementales sur{' '}
-              <strong className="text-white">Instagram</strong> (24,2K) et{' '}
-              <strong className="text-white">TikTok</strong> (21,9K), notre écho numérique se
-              traduit par des actes concrets sur le terrain. À travers l'animation du groupe
-              incontournable des{' '}
-              <strong className="text-white">Amoureux des Calanques</strong> (plus de
-              64&nbsp;000&nbsp;membres) et notre présence sur{' '}
-              <strong className="text-white">Facebook</strong> (près de 18&nbsp;000 abonnés
-              cumulés) ou <strong className="text-white">X</strong>, nous interpellons et informons
-              en temps réel. Cette audience massive n'est pas qu'une statistique&nbsp;: c'est une
-              véritable force d'action citoyenne, vitale pour la préservation de notre littoral
-              marseillais.
-            </p>
+            <div className="space-y-4 text-text-secondary leading-relaxed text-lg">
+              <p>
+                La protection de la Méditerranée repose sur une mobilisation collective et
+                continue. À travers mes réseaux sociaux, je fédère aujourd'hui une communauté de
+                plus de <strong className="text-white">130&nbsp;000 personnes</strong> sensibilisées
+                aux enjeux environnementaux du littoral marseillais.
+              </p>
+              <p>
+                De mes reportages en immersion sur{' '}
+                <strong className="text-white">YouTube</strong> à mes alertes environnementales sur{' '}
+                <strong className="text-white">Instagram</strong> (24,2K) et{' '}
+                <strong className="text-white">TikTok</strong> (21,9K), cette audience numérique
+                prolonge le travail de terrain en donnant de la visibilité aux réalités observées
+                sous la surface.
+              </p>
+              <p>
+                À travers l'animation du groupe incontournable des{' '}
+                <strong className="text-ocean-teal">Amoureux des Calanques</strong> (plus de
+                64&nbsp;000 membres) et ma présence sur{' '}
+                <strong className="text-white">Facebook</strong> (près de 18&nbsp;000 abonnés
+                cumulés) ou <strong className="text-white">X</strong>, j'informe, documente et
+                interpelle en temps réel.
+              </p>
+              <p>
+                Cette audience n'est pas un indicateur abstrait&nbsp;: elle représente une capacité
+                concrète de sensibilisation et de mobilisation au service de la préservation de la
+                Méditerranée et du littoral marseillais.
+              </p>
+            </div>
+
+            {/* Photo panoramique dans le bloc */}
+            <div className="mt-8 w-full overflow-hidden rounded-2xl">
+              <img
+                src="/images/130000_sentinelles_Marseille.jpg"
+                alt="La communauté Dark Massilia — 130 000 sentinelles de la Méditerranée à Marseille"
+                className="w-full object-cover object-top"
+                style={{ aspectRatio: '21/9' }}
+                loading="lazy"
+              />
+            </div>
           </motion.div>
         </motion.div>
 
-        {/* Statistiques Instagram */}
+        {/* Statistiques réseaux sociaux */}
         <motion.div
           initial="hidden"
           animate="visible"
@@ -73,28 +93,49 @@ const Instagram = () => {
           initial="hidden"
           animate="visible"
           variants={STAGGER_CONTAINER}
-          className="max-w-4xl mx-auto mt-12 mb-12"
+          className="mt-12 mb-12"
         >
           <motion.div variants={FADE_IN_UP} className="glass-strong rounded-3xl p-8 md:p-12">
             <h2 className="text-2xl md:text-3xl font-bold text-white mb-6">
-              Instagram
+              Nos Réseaux Sociaux
             </h2>
             <div className="space-y-4 text-text-secondary leading-relaxed">
               <p>
-                Sur Instagram, je partage les coulisses de chaque mission : les plongées en apnée, les déchets remontés, la faune des Calanques et les paysages du littoral marseillais. Un fil qui documente au plus près la réalité de notre Méditerranée.
+                Sur <strong className="text-white">Instagram</strong> (<strong className="text-ocean-teal">@karimsaari</strong>) et <strong className="text-white">TikTok</strong> (<strong className="text-ocean-teal">@dark.massilia</strong>), je partage les coulisses de chaque mission : plongées en apnée, déchets remontés, faune des Calanques et paysages du littoral marseillais.
               </p>
               <p>
-                Suivez les actions du Projet Sentinelle au quotidien sur <strong className="text-ocean-teal">@karimsaari</strong>.
+                Le groupe Facebook <strong className="text-white">Amoureux des Calanques de Marseille à Port-Cros</strong> rassemble plus de <strong className="text-ocean-teal">64 000 membres</strong> passionnés par la protection du littoral. Sur <strong className="text-white">YouTube</strong>, retrouvez nos documentaires, rétrospectives et reportages de missions.
+              </p>
+              <p>
+                Au total, plus de <strong className="text-ocean-teal">130 000 citoyens engagés</strong> suivent et relaient notre combat pour la Méditerranée.
               </p>
             </div>
-            <div className="mt-6">
+            <div className="mt-6 flex flex-wrap gap-4">
               <a
                 href="https://www.instagram.com/karimsaari"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="inline-flex items-center gap-2 text-ocean-teal hover:text-white transition-colors font-medium"
               >
-                Voir sur Instagram
+                Instagram
+                <ExternalLink className="w-4 h-4" />
+              </a>
+              <a
+                href="https://www.tiktok.com/@dark.massilia"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-2 text-ocean-teal hover:text-white transition-colors font-medium"
+              >
+                TikTok
+                <ExternalLink className="w-4 h-4" />
+              </a>
+              <a
+                href="https://www.youtube.com/@dark.massilia"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-2 text-ocean-teal hover:text-white transition-colors font-medium"
+              >
+                YouTube
                 <ExternalLink className="w-4 h-4" />
               </a>
             </div>

@@ -33,7 +33,7 @@
     <meta property="og:url" content="https://karimsaari.com/" />
     <meta property="og:title" content="Dark Massilia · Karim Saari · Sentinelle de la Méditerranée" />
     <meta property="og:description" content="Éco-acteur basé à Marseille, apnéiste engagé pour la préservation de la Méditerranée. Documentation et dépollution des fonds marins des Calanques avec Team Oxygen." />
-    <meta property="og:image" content="https://karimsaari.com/assets/dark-massilia-logo.png" />
+    <meta property="og:image" content="https://karimsaari.com/assets/og-social-card.jpg" />
     <meta property="og:locale" content="fr_FR" />
 
     <!-- Twitter Card -->
@@ -41,7 +41,7 @@
     <meta name="twitter:site" content="@dark_massilia" />
     <meta name="twitter:title" content="Dark Massilia · Karim Saari · Sentinelle de la Méditerranée" />
     <meta name="twitter:description" content="Éco-acteur basé à Marseille, apnéiste engagé pour la préservation de la Méditerranée." />
-    <meta name="twitter:image" content="https://karimsaari.com/assets/dark-massilia-logo.png" />
+    <meta name="twitter:image" content="https://karimsaari.com/assets/og-social-card.jpg" />
 
     <!-- Canonical -->
     <link rel="canonical" href="https://karimsaari.com/" />
@@ -49,88 +49,8 @@
     <!-- Theme -->
     <meta name="theme-color" content="#0B1C2D" />
 
-    <!-- JSON-LD Structured Data - Person -->
-    <script type="application/ld+json">
-    {
-      "@context": "https://schema.org",
-      "@type": "Person",
-      "name": "Karim Saari",
-      "alternateName": "Dark Massilia",
-      "url": "https://karimsaari.com",
-      "image": "https://karimsaari.com/assets/dark-massilia-logo.png",
-      "jobTitle": "Photographe sous-marin & Éco-acteur",
-      "description": "Apnéiste engagé pour la préservation de la Méditerranée. Documente et nettoie les fonds marins des Calanques de Marseille avec Team Oxygen.",
-      "address": {
-        "@type": "PostalAddress",
-        "addressLocality": "Marseille",
-        "addressCountry": "FR"
-      },
-      "sameAs": [
-        "https://www.instagram.com/karimsaari/",
-        "https://x.com/dark_massilia",
-        "https://www.tiktok.com/@dark.massilia",
-        "https://www.youtube.com/@dark.massilia",
-        "https://500px.com/p/karimsaari",
-        "https://www.linkedin.com/in/karimsaari/",
-        "https://www.facebook.com/Photographie.Marseille"
-      ],
-      "memberOf": {
-        "@type": "Organization",
-        "name": "Team Oxygen",
-        "url": "https://www.team-oxygen.com/"
-      }
-    }
-    </script>
-
-    <!-- JSON-LD Structured Data - FAQ Schema pour SEO pollution marine -->
-    <script type="application/ld+json">
-    {
-      "@context": "https://schema.org",
-      "@type": "FAQPage",
-      "mainEntity": [
-        {
-          "@type": "Question",
-          "name": "Quelle quantité de plastique est déversée dans l'océan chaque année ?",
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": "8 millions de tonnes de plastique sont déversées chaque année dans l'océan. 80% des déchets marins proviennent d'activités terrestres."
-          }
-        },
-        {
-          "@type": "Question",
-          "name": "La Méditerranée est-elle polluée par les microplastiques ?",
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": "Oui, la Méditerranée est l'une des mers les plus polluées au monde en concentration de microplastiques. Elle concentre près de 7% des microplastiques mondiaux pour moins de 1% de la surface océanique. 95% des déchets flottants en Méditerranée sont des plastiques."
-          }
-        },
-        {
-          "@type": "Question",
-          "name": "Combien de temps un sac plastique persiste-t-il en mer ?",
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": "Un sac plastique peut persister plusieurs centaines d'années en mer. Les plastiques fragmentés contaminent les fonds marins, y compris entre 0 et 20 mètres de profondeur."
-          }
-        },
-        {
-          "@type": "Question",
-          "name": "Les oiseaux marins sont-ils affectés par le plastique ?",
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": "Plus de 90% des oiseaux marins ont déjà ingéré du plastique. Les microplastiques sont désormais présents dans toute la chaîne alimentaire marine. Plus de 600 espèces marines méditerranéennes sont affectées par l'ingestion ou l'enchevêtrement dans des déchets plastiques."
-          }
-        },
-        {
-          "@type": "Question",
-          "name": "Quelle action est menée dans les Calanques de Marseille ?",
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": "Chaque année, des centaines de tonnes de déchets sont collectées sur le littoral des Calanques. Dark Massilia et Team Oxygen documentent et nettoient les fonds marins entre 0 et 20 mètres de profondeur pour préserver la Méditerranée."
-          }
-        }
-      ]
-    }
-    </script>
+    <!-- JSON-LD : injecté dynamiquement par scripts/prerender.js au build -->
+    <!-- En dev (Vite), React 19 hoise les schemas dans <head> côté client -->
   </head>
   <body>
     <div id="root"><!--app-html--></div>

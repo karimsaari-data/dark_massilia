@@ -1,6 +1,6 @@
 import { motion, AnimatePresence } from 'framer-motion';
 import { Link } from 'react-router-dom';
-import { ArrowRight, Users, AlertTriangle, ChevronDown } from 'lucide-react';
+import { ArrowRight, Users, AlertTriangle, ChevronDown, Camera } from 'lucide-react';
 import { useProjects } from '../hooks/useSupabase';
 import ProjectCard from '../components/ui/ProjectCard';
 import { FADE_IN_UP, FADE_IN, STAGGER_CONTAINER, TAGLINE, MISSION_STATEMENT, FACEBOOK_GROUP_MEMBERS } from '../utils/constants';
@@ -503,6 +503,68 @@ const Home = () => {
                 decoding="async"
               />
               <div className="absolute inset-0 bg-gradient-to-l from-transparent to-black/20" />
+            </div>
+          </div>
+        </motion.div>
+      </section>
+
+      {/* Card Yann Arthus-Bertrand — Les Français */}
+      <section className="container-custom pb-8 md:pb-12">
+        <motion.div
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true }}
+          variants={FADE_IN_UP}
+          className="glass-strong rounded-3xl overflow-hidden border border-white/10"
+        >
+          <div className="grid md:grid-cols-[1.2fr_1fr] gap-0">
+            {/* Photo YAB - Gauche */}
+            <div className="relative h-64 md:h-auto min-h-[400px] order-1">
+              <img
+                src="/images/Marseille-2024-342-Les-Francais-copyright-Yann-Arthus-Bertrand.webp"
+                alt="Team Oxygen photographié par Yann Arthus-Bertrand — projet Les Français, Marseille 2024"
+                className="absolute inset-0 w-full h-full object-cover"
+                style={{ objectPosition: 'center 20%' }}
+                loading="lazy"
+                decoding="async"
+                width="1365"
+                height="910"
+              />
+              <div className="absolute inset-0 bg-gradient-to-r from-transparent to-black/20" />
+              {/* Copyright watermark */}
+              <p className="absolute bottom-3 right-3 text-white/40 text-xs font-medium">
+                © Yann Arthus-Bertrand
+              </p>
+            </div>
+
+            {/* Contenu - Droite */}
+            <div className="p-8 md:p-12 flex flex-col justify-center order-2">
+
+              {/* Badge photographe */}
+              <div className="mb-6 inline-flex items-center gap-2 px-4 py-2 bg-ocean-teal/10 rounded-full border border-ocean-teal/30 w-fit">
+                <Camera className="w-5 h-5 text-ocean-teal" />
+                <span className="text-sm font-semibold text-ocean-teal">
+                  Les Français — Yann Arthus-Bertrand
+                </span>
+              </div>
+
+              <h2 className="text-3xl md:text-4xl font-bold text-white mb-6">
+                Photographiés par Yann Arthus-Bertrand
+              </h2>
+
+              <p className="text-gray-300 text-lg mb-8 leading-relaxed">
+                Team Oxygen et Dark Massilia ont été sélectionnés par Yann Arthus-Bertrand pour son projet <strong className="text-white">« Les Français »</strong> — une galerie photographique portrait de celles et ceux qui font la France, à Marseille en 2024.
+              </p>
+
+              <a
+                href="https://www.yabstudio.fr/portfolio/marseille-2024/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="btn-primary inline-flex items-center gap-2 w-fit"
+              >
+                <span>Voir le projet</span>
+                <ArrowRight className="w-5 h-5" />
+              </a>
             </div>
           </div>
         </motion.div>

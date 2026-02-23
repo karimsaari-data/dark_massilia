@@ -9,6 +9,8 @@ const STATS = [
   { label: 'Points obtenus', value: '5 000+', icon: ThumbsUp },
 ];
 
+const PROFILE_URL = 'https://maps.app.goo.gl/add-google-local-guide-ooodH';
+
 const FEATURED_PLACES = [
   {
     name: 'Calanque de Sormiou',
@@ -59,13 +61,21 @@ export default function LocalGuide() {
               <div className="w-12 h-12 rounded-full bg-[#4285F4]/20 border border-[#4285F4]/30 flex items-center justify-center flex-shrink-0">
                 <MapPin className="w-6 h-6 text-[#4285F4]" />
               </div>
-              <div>
-                <h1 className="text-3xl md:text-4xl font-bold text-white mb-1">
-                  Google Local Guides
-                </h1>
-                <p className="text-text-secondary text-lg">
-                  Karim Saari — Marseille & Calanques
-                </p>
+              <div className="flex-1 flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+                <div>
+                  <h1 className="text-3xl md:text-4xl font-bold text-white mb-1">
+                    Google Local Guides
+                  </h1>
+                  <p className="text-text-secondary text-lg">
+                    Karim Saari — Marseille & Calanques
+                  </p>
+                </div>
+                {/* Badge Niveau 10 */}
+                <img
+                  src="/assets/points-badges_level_ten.png"
+                  alt="Google Local Guides — Niveau 10"
+                  className="w-20 h-20 md:w-24 md:h-24 object-contain"
+                />
               </div>
             </div>
             <p className="text-text-secondary max-w-2xl mt-4">
@@ -82,7 +92,7 @@ export default function LocalGuide() {
             className="mb-10"
           >
             <a
-              href="https://maps.app.goo.gl/YourLocalGuideProfileLink"
+              href={PROFILE_URL}
               target="_blank"
               rel="noopener noreferrer"
               className="inline-flex items-center gap-3 px-6 py-3 rounded-full font-semibold text-white transition-all duration-300 hover:scale-105"
