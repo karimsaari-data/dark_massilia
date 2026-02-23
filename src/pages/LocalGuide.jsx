@@ -1,6 +1,7 @@
 import { motion } from 'framer-motion';
 import { ExternalLink, Star, MapPin, ThumbsUp, Eye } from 'lucide-react';
 import SEO from '../components/SEO';
+import { SEO_PAGES } from '../utils/seo';
 
 const STATS = [
   { label: 'Contributions', value: '22 000+', icon: Star },
@@ -20,11 +21,7 @@ const GALLERY = [
 export default function LocalGuide() {
   return (
     <>
-      <SEO
-        title="Google Local Guides Niveau 10 — Karim Saari | Marseille & Calanques"
-        description="Karim Saari, Local Guide Niveau 10 sur Google Maps — 22 000+ contributions, 118 000+ points, 183 millions de vues. Cartographie des Calanques de Marseille et documentation environnementale."
-        url="https://karimsaari.com/local-guide"
-      />
+      <SEO {...SEO_PAGES['/local-guide']} />
 
       <div className="min-h-screen pt-20 pb-16">
         <div className="container-custom">

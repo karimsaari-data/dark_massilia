@@ -54,9 +54,13 @@ export const SEO_PAGES = {
             addressCountry: 'FR',
           },
           sameAs: [
+            'https://www.google.com/maps/contrib/114912564832630219145/photos',
             'https://www.instagram.com/karimsaari',
             'https://twitter.com/dark_massilia',
+            'https://www.tiktok.com/@dark.massilia',
             'https://www.youtube.com/@dark.massilia',
+            'https://www.facebook.com/Photographie.Marseille',
+            'https://www.facebook.com/groups/calanque/',
             'https://500px.com/p/karimsaari',
             'https://www.linkedin.com/in/karimsaari',
           ],
@@ -233,6 +237,64 @@ export const SEO_PAGES = {
       'Suivez en temps réel les actualités du Projet Sentinelle et les missions de dépollution marine dans les Calanques. Dark Massilia sur X.',
     canonical: `${BASE_URL}/twitter`,
     noindex: true,
+  },
+  '/local-guide': {
+    title: 'Google Local Guides Niveau 10 — Karim Saari | Marseille & Calanques',
+    description:
+      'Karim Saari, Local Guide Niveau 10 sur Google Maps — 22 000+ contributions, 118 000+ points, 183 millions de vues. Cartographie des Calanques de Marseille et documentation environnementale.',
+    canonical: `${BASE_URL}/local-guide`,
+    schema: {
+      '@context': 'https://schema.org',
+      '@graph': [
+        breadcrumb('Google Local Guides', '/local-guide'),
+        {
+          '@type': 'ProfilePage',
+          name: 'Google Local Guides — Karim Saari',
+          url: `${BASE_URL}/local-guide`,
+          description:
+            'Profil Google Local Guides Niveau 10 de Karim Saari — contributeur actif depuis 9 ans, certifié Street View Trusted, 22 000+ contributions sur les Calanques de Marseille.',
+          mainEntity: {
+            '@type': 'Person',
+            name: 'Karim Saari',
+            alternateName: 'Dark Massilia',
+            url: BASE_URL,
+            sameAs: [
+              'https://www.google.com/maps/contrib/114912564832630219145/photos',
+              'https://www.instagram.com/karimsaari',
+              'https://www.linkedin.com/in/karimsaari',
+            ],
+            hasCredential: [
+              {
+                '@type': 'EducationalOccupationalCredential',
+                name: 'Google Street View Trusted',
+                credentialCategory: 'certification',
+                recognizedBy: {
+                  '@type': 'Organization',
+                  name: 'Google',
+                  url: 'https://www.google.com',
+                },
+              },
+              {
+                '@type': 'EducationalOccupationalCredential',
+                name: 'Google Local Guides — Niveau 10',
+                credentialCategory: 'badge',
+                recognizedBy: {
+                  '@type': 'Organization',
+                  name: 'Google Maps',
+                  url: 'https://maps.google.com',
+                },
+              },
+            ],
+            knowsAbout: [
+              'Cartographie 360° Calanques de Marseille',
+              'Street View Trusted',
+              'Google Maps contribution',
+              'Documentation environnementale méditerranéenne',
+            ],
+          },
+        },
+      ],
+    },
   },
   '/contact': {
     title: 'Contact & Partenariats | Dark Massilia · Team Oxygen',
