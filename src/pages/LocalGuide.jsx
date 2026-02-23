@@ -139,6 +139,15 @@ export default function LocalGuide() {
                 </p>
               </div>
 
+              {/* GIF anniversaire 9 ans Google */}
+              <div className="flex justify-center py-4">
+                <img
+                  src="/images/9ans.gif"
+                  alt="Google Local Guides — 9 ans de contributions, email anniversaire Google"
+                  className="w-48 rounded-2xl"
+                />
+              </div>
+
               <div className="border-l-2 border-ocean-teal/40 pl-6 py-2 space-y-2">
                 <p className="text-white font-semibold mb-3">Aujourd'hui :</p>
                 <ul className="space-y-1.5">
