@@ -29,7 +29,7 @@ export default function Carte() {
               Carte des Sites
             </h1>
             <p className="text-text-secondary">
-              Marseille &amp; Calanques — 133 lieux documentés
+              Marseille &amp; Calanques — Calanques, spots &amp; sites documentés
             </p>
           </div>
 
