@@ -131,6 +131,15 @@ const Missions = () => {
               Avec <strong className="text-ocean-teal">Team Oxygen</strong>, chaque immersion en
               apnée est une action directe pour soustraire ces polluants de notre biodiversité locale.
             </p>
+            <div className="mt-6">
+              <Link
+                to="/sources"
+                className="inline-flex items-center gap-2 text-ocean-teal hover:text-white transition-colors text-sm font-medium"
+              >
+                Sources scientifiques
+                <ExternalLink className="w-4 h-4" />
+              </Link>
+            </div>
           </motion.div>
         </motion.div>
 

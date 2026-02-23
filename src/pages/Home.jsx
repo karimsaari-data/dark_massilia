@@ -151,6 +151,8 @@ const Home = () => {
               variants={FADE_IN_UP}
               className="text-4xl md:text-6xl lg:text-7xl font-bold mb-6 leading-tight perspective-1000"
             >
+              {/* Texte invisible pour les moteurs de recherche — keywords cibles */}
+              <span className="sr-only">Karim Saari — Photographe Sous-Marin &amp; Apnéiste Engagé à Marseille</span>
               {/* Une Mer - Gradient animé bleu océan */}
               <motion.span
                 className="block relative py-2 cursor-pointer"
@@ -319,6 +321,15 @@ const Home = () => {
                 À travers mes images et mon engagement en apnée dans les Calanques, je documente cette
                 urgence pour rendre l'invisible, visible.
               </p>
+              <div className="mt-6">
+                <Link
+                  to="/sources"
+                  className="inline-flex items-center gap-2 text-ocean-teal hover:text-white transition-colors text-sm font-medium"
+                >
+                  Consulter les sources scientifiques
+                  <ArrowRight className="w-4 h-4" />
+                </Link>
+              </div>
             </div>
 
             {/* Image — Droite */}

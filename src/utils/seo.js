@@ -194,7 +194,42 @@ export const SEO_PAGES = {
     description:
       "Visionnez nos reportages (ARTE) et documentaires immersifs sur l'état des fonds marins à Marseille et nos missions d'extraction de plastique.",
     canonical: `${BASE_URL}/videos`,
-    schema: breadcrumb('Vidéos & Documentaires', '/videos'),
+    schema: {
+      '@context': 'https://schema.org',
+      '@graph': [
+        breadcrumb('Vidéos & Documentaires', '/videos'),
+        {
+          '@type': 'VideoObject',
+          name: 'Documentaire ARTE — Pollution Marine Marseille',
+          description:
+            "Reportage ARTE 2022 sur les éco-acteurs marseillais mobilisés contre la pollution plastique en Méditerranée, avec Karim Saari (Dark Massilia) et Team Oxygen.",
+          thumbnailUrl: 'https://img.youtube.com/vi/cxjAQtSHHyI/maxresdefault.jpg',
+          uploadDate: '2022-06-15',
+          embedUrl: 'https://www.youtube.com/embed/cxjAQtSHHyI',
+          url: 'https://www.youtube.com/watch?v=cxjAQtSHHyI',
+        },
+        {
+          '@type': 'VideoObject',
+          name: '2025, une année de dépollution en apnée à Marseille',
+          description:
+            "Rétrospective 2025 des actions de dépollution en apnée dans les Calanques de Marseille par Dark Massilia et Team Oxygen.",
+          thumbnailUrl: 'https://img.youtube.com/vi/sseo9sf7jow/maxresdefault.jpg',
+          uploadDate: '2026-01-15',
+          embedUrl: 'https://www.youtube.com/embed/sseo9sf7jow',
+          url: 'https://www.youtube.com/watch?v=sseo9sf7jow',
+        },
+        {
+          '@type': 'VideoObject',
+          name: 'Projet Sentinelle Frioul — Mission de Dépollution 2023',
+          description:
+            "Mission de dépollution sous-marine en apnée dans l'archipel du Frioul à Marseille — Projet Sentinelle 2023 par Team Oxygen.",
+          thumbnailUrl: 'https://img.youtube.com/vi/XHqB603STuw/maxresdefault.jpg',
+          uploadDate: '2023-11-01',
+          embedUrl: 'https://www.youtube.com/embed/XHqB603STuw',
+          url: 'https://www.youtube.com/watch?v=XHqB603STuw',
+        },
+      ],
+    },
   },
   '/photos': {
     title: 'Galerie Photo Sous-Marine & Paysages | Karim Saari Marseille',
@@ -229,7 +264,27 @@ export const SEO_PAGES = {
     description:
       "Regardez le documentaire ARTE avec Karim Saari et Team Oxygen lors d'une mission de dépollution dans les Calanques de Marseille.",
     canonical: `${BASE_URL}/arte`,
-    schema: breadcrumb('Documentaire ARTE', '/arte'),
+    schema: {
+      '@context': 'https://schema.org',
+      '@graph': [
+        breadcrumb('Documentaire ARTE', '/arte'),
+        {
+          '@type': 'VideoObject',
+          name: 'Documentaire ARTE — Karim Saari, sentinelle de la Méditerranée',
+          description:
+            "Reportage ARTE 2022 : Karim Saari, apnéiste et photographe sous-marin marseillais, documente et nettoie les fonds des Calanques avec Team Oxygen contre la pollution plastique en Méditerranée.",
+          thumbnailUrl: 'https://img.youtube.com/vi/cxjAQtSHHyI/maxresdefault.jpg',
+          uploadDate: '2022-06-15',
+          embedUrl: 'https://www.youtube.com/embed/cxjAQtSHHyI',
+          url: 'https://www.youtube.com/watch?v=cxjAQtSHHyI',
+          publisher: {
+            '@type': 'Organization',
+            name: 'ARTE',
+            url: 'https://www.arte.tv',
+          },
+        },
+      ],
+    },
   },
   '/twitter': {
     title: 'Actualités & Actions en Direct | @dark_massilia',

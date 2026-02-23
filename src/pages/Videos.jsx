@@ -172,6 +172,36 @@ const Videos = () => {
           </motion.div>
         </motion.div>
 
+        {/* Callout ARTE */}
+        <motion.div
+          initial="hidden"
+          animate="visible"
+          variants={STAGGER_CONTAINER}
+          className="max-w-4xl mx-auto mb-12"
+        >
+          <motion.div
+            variants={FADE_IN_UP}
+            className="glass-strong rounded-3xl p-8 md:p-10 border border-ocean-teal/20 flex flex-col md:flex-row items-center gap-6"
+          >
+            <div className="flex-1">
+              <p className="text-xs font-semibold text-ocean-teal uppercase tracking-widest mb-2">Documentaire</p>
+              <h2 className="text-xl md:text-2xl font-bold text-white mb-3">
+                Karim Saari sur ARTE
+              </h2>
+              <p className="text-text-secondary leading-relaxed">
+                En 2022, la chaîne ARTE a consacré un reportage à l'engagement de Karim Saari pour la protection de la Méditerranée — apnéiste, photographe et sentinelle des fonds marins des Calanques.
+              </p>
+            </div>
+            <Link
+              to="/arte"
+              className="btn-primary inline-flex items-center gap-2 flex-shrink-0"
+            >
+              Voir le documentaire
+              <ExternalLink className="w-4 h-4" />
+            </Link>
+          </motion.div>
+        </motion.div>
+
         {/* Back to Home */}
         <motion.div
           initial={{ opacity: 0 }}
