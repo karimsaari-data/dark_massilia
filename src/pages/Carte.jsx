@@ -12,49 +12,16 @@ export default function Carte() {
     <>
       <SEO {...SEO_PAGES['/carte']} />
 
-      <div className="h-screen pt-20 flex flex-col overflow-hidden">
-
-        {/* Header */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6 }}
-          className="container-custom pt-4 pb-3 flex items-center justify-between flex-wrap gap-3"
-        >
-          <div>
-            <h1 className="text-3xl md:text-4xl font-bold text-white mb-1">
-              Carte des Sites
-            </h1>
-            <p className="text-text-secondary">
-              Marseille &amp; Calanques — Calanques, spots &amp; sites documentés
-            </p>
-          </div>
-
-          <a
-            href={FULL_URL}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-flex items-center gap-2 px-4 py-2 rounded-full glass border border-white/10 text-text-secondary text-sm hover:text-white hover:border-white/30 transition-all duration-200"
-          >
-            <MapPin className="w-4 h-4" />
-            Ouvrir dans Maps
-            <ExternalLink className="w-3 h-3 opacity-60" />
-          </a>
-        </motion.div>
+      {/* Carte plein écran — mode immersif */}
+      <div style={{ position: 'relative', height: '100vh', paddingTop: '80px', overflow: 'hidden' }}>
 
         {/* Carte Google My Maps */}
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
-          transition={{ duration: 0.8, delay: 0.2 }}
-          style={{
-            position: 'relative',
-            flex: 1,
-            overflow: 'hidden',
-            minHeight: 0,
-          }}
+          transition={{ duration: 0.8 }}
+          style={{ position: 'relative', height: '100%', overflow: 'hidden' }}
         >
-          {/* Absolument positionné : top:-54px masque la barre grise, bottom:0 remplit jusqu'en bas */}
           <iframe
             src={EMBED_URL}
             title="Carte des sites — Dark Massilia Karim Saari"
@@ -73,6 +40,22 @@ export default function Carte() {
             referrerPolicy="no-referrer-when-downgrade"
           />
         </motion.div>
+
+        {/* Bouton flottant — bas droite */}
+        <motion.a
+          href={FULL_URL}
+          target="_blank"
+          rel="noopener noreferrer"
+          initial={{ opacity: 0, y: 10 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, delay: 0.4 }}
+          style={{ position: 'absolute', bottom: '1.5rem', right: '1.5rem', zIndex: 10 }}
+          className="inline-flex items-center gap-2 px-4 py-2 rounded-full glass border border-white/10 text-text-secondary text-sm hover:text-white hover:border-white/30 transition-all duration-200"
+        >
+          <MapPin className="w-4 h-4" />
+          Ouvrir dans Maps
+          <ExternalLink className="w-3 h-3 opacity-60" />
+        </motion.a>
 
       </div>
     </>
