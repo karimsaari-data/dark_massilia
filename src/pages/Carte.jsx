@@ -117,16 +117,16 @@ export default function Carte() {
           <h1 className="text-3xl md:text-4xl font-bold text-white mb-2">
             Carte des Sites
           </h1>
-          <p className="text-text-secondary text-lg mb-6">
-            Calanques de Marseille — zones documentées en apnée
+          <p className="text-text-secondary text-lg mb-4">
+            Marseille & Calanques — paysages, faune et zones polluées
           </p>
 
-          {/* Filtres */}
-          <div className="flex flex-wrap gap-3 mb-6">
+          {/* Filtres + Légende inline */}
+          <div className="flex flex-wrap items-center gap-3 mb-4">
             {[
-              { key: 'all', label: 'Tous les sites', color: 'ocean-teal' },
-              { key: 'landscape', label: '🟢 Paysages', color: 'green' },
-              { key: 'waste', label: '🔴 Pollution', color: 'red' },
+              { key: 'all', label: 'Tous les sites' },
+              { key: 'landscape', label: '🟢 Paysages' },
+              { key: 'waste', label: '🔴 Pollution' },
             ].map(({ key, label }) => (
               <button
                 key={key}
@@ -141,16 +141,13 @@ export default function Carte() {
                 <span className="ml-2 text-xs opacity-60">({counts[key]})</span>
               </button>
             ))}
-          </div>
-
-          {/* Légende */}
-          <div className="flex flex-wrap gap-4 text-sm text-text-secondary mb-4">
-            <span className="flex items-center gap-2">
-              <span className="w-3 h-3 rounded-full bg-[#21c47b] shadow-[0_0_6px_rgba(33,196,123,0.8)] inline-block"></span>
+            <span className="hidden sm:block w-px h-5 bg-white/10 mx-1" />
+            <span className="flex items-center gap-1.5 text-xs text-text-muted">
+              <span className="w-2.5 h-2.5 rounded-full bg-[#21c47b] shadow-[0_0_5px_rgba(33,196,123,0.8)] flex-shrink-0"></span>
               Paysage / Faune
             </span>
-            <span className="flex items-center gap-2">
-              <span className="w-3 h-3 rounded-full bg-red-500 shadow-[0_0_6px_rgba(239,68,68,0.8)] inline-block"></span>
+            <span className="flex items-center gap-1.5 text-xs text-text-muted">
+              <span className="w-2.5 h-2.5 rounded-full bg-red-500 shadow-[0_0_5px_rgba(239,68,68,0.8)] flex-shrink-0"></span>
               Zone polluée / Déchet
             </span>
           </div>
@@ -162,7 +159,7 @@ export default function Carte() {
           animate={{ opacity: 1 }}
           transition={{ duration: 0.8, delay: 0.2 }}
           className="w-full"
-          style={{ height: 'calc(100vh - 320px)', minHeight: '420px' }}
+          style={{ height: 'calc(100vh - 265px)', minHeight: '420px' }}
         >
           {loading ? (
             <div className="h-full flex items-center justify-center">
