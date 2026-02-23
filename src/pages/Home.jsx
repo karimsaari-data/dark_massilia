@@ -289,7 +289,7 @@ const Home = () => {
                 alt="Signature Karim Saari"
                 width="1200"
                 height="800"
-                className="h-36 md:h-48 lg:h-56 opacity-90"
+                className="h-36 md:h-48 lg:h-56 w-auto opacity-90"
                 decoding="async"
               />
             </motion.div>

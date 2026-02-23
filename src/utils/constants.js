@@ -20,7 +20,6 @@ export const SOCIAL_LINKS = {
 };
 
 export const NAV_LINKS = [
-  { name: 'Accueil', path: '/', icon: 'Home' },
   { name: 'Missions', path: '/missions', icon: 'Compass' },
   { name: 'Vidéos', path: '/videos', icon: 'Video' },
   { name: 'Photos', path: '/photos', icon: 'Camera' },
