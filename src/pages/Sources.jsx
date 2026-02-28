@@ -505,12 +505,29 @@ const Sources = () => {
             <h2 className="text-2xl md:text-3xl font-bold text-white mb-6">
               Les Références Scientifiques
             </h2>
-            <div className="space-y-4 text-text-secondary leading-relaxed">
+            <div className="space-y-4 text-text-secondary leading-relaxed text-lg">
               <p>
-                Chaque chiffre cité sur ce site, chaque fait avancé lors de nos actions de sensibilisation repose sur une source scientifique vérifiée. Cette page rassemble les études qui documentent l'état réel de la pollution plastique en Méditerranée — et justifient l'urgence d'agir.
+                Chaque donnée présentée sur ce site, qu'elle concerne la pollution plastique, la{' '}
+                <em className="text-white">plastisphère</em> ou les espèces invasives comme{' '}
+                <em className="text-ocean-teal">Rugulopteryx okamurae</em>, s'appuie sur des publications
+                scientifiques vérifiées.
               </p>
               <p>
-                Sources issues de revues à comité de lecture (<em>Science</em>, <em>Nature</em>, <em>PNAS</em>), d'organismes internationaux (WWF, PNUE) et d'études spécifiques à la Méditerranée et aux Calanques de Marseille.
+                Cette page regroupe les études qui documentent l'état réel des écosystèmes méditerranéens&nbsp;:
+                concentration de macro- et microplastiques, impacts écotoxicologiques, dynamiques d'introduction
+                d'espèces exotiques, modifications des habitats benthiques et interactions avec le réchauffement
+                climatique.
+              </p>
+              <p>
+                Les sources citées proviennent de revues à comité de lecture (
+                <em>Science</em>, <em>Nature</em>, <em>PNAS</em>, <em>Marine Pollution Bulletin</em>,{' '}
+                <em>Frontiers in Marine Science</em>), d'organismes internationaux (WWF, PNUE, FAO, Commission
+                européenne), ainsi que de travaux académiques et institutionnels spécifiquement consacrés à la
+                Méditerranée et au littoral marseillais.
+              </p>
+              <p className="text-white font-medium border-l-2 border-ocean-teal pl-4">
+                L'objectif est double&nbsp;: garantir la traçabilité des informations diffusées et fonder
+                l'action de terrain sur un socle scientifique robuste.
               </p>
             </div>
           </motion.div>
