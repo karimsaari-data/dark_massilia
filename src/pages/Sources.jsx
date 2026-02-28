@@ -194,16 +194,43 @@ const Sources = () => {
             <h2 className="text-2xl md:text-3xl font-bold text-white mb-6">
               Les chiffres de l'urgence environnementale
             </h2>
-            <p className="text-text-secondary leading-relaxed text-lg">
-              Notre action sur le terrain s'appuie sur une réalité scientifique alarmante. Chaque
-              année, ce sont 570&nbsp;000 tonnes de plastique qui finissent dans les eaux
-              méditerranéennes — l'équivalent de 33&nbsp;800 bouteilles en plastique rejetées à la
-              mer chaque minute. Ces plastiques mettent des siècles à se dégrader et se fragmentent
-              en microplastiques invisibles à l'œil nu. Cette pollution génère une nouvelle menace&nbsp;:
-              la <em>plastisphère</em>, où les débris plastiques servent de radeaux pour transporter
-              des espèces invasives et des agents pathogènes à travers les mers. Face à ces données,
-              l'inaction n'est plus une option.
-            </p>
+            <div className="space-y-4 text-text-secondary leading-relaxed text-lg">
+              <p>
+                Notre action de terrain repose sur des données scientifiques solides et convergentes.
+                Chaque année, environ <strong className="text-white">570&nbsp;000 tonnes de plastique</strong> sont
+                déversées en Méditerranée, soit l'équivalent de <strong className="text-white">33&nbsp;800 bouteilles par minute</strong>.
+                Mer semi-fermée représentant moins de 1&nbsp;% de la surface océanique mondiale, la Méditerranée
+                concentre près de <strong className="text-white">7&nbsp;% des microplastiques marins</strong>.
+              </p>
+              <p>
+                Ces plastiques se fragmentent en micro- et nanoplastiques persistants, intégrés à la colonne
+                d'eau, aux sédiments et aux chaînes trophiques. Ils constituent également un support biologique&nbsp;:
+                la <em className="text-white">plastisphère</em>, écosystème microbien colonisant les débris flottants,
+                favorise la dispersion d'agents pathogènes et d'espèces exotiques.
+              </p>
+              <p>
+                Parallèlement, la Méditerranée subit une pression croissante liée aux <strong className="text-white">espèces invasives</strong>.
+                Plus de <strong className="text-white">1&nbsp;000 espèces non indigènes</strong> y ont été recensées,
+                introduites principalement via le transport maritime et le canal de Suez.
+              </p>
+              <p>
+                Parmi elles, <em className="text-ocean-teal">Rugulopteryx okamurae</em>, algue brune originaire du
+                Pacifique nord-ouest, connaît depuis 2015 une expansion rapide en Méditerranée occidentale. Elle
+                colonise les fonds rocheux jusqu'à 30 mètres de profondeur, forme des tapis denses, modifie les
+                habitats benthiques et entre en compétition avec les espèces locales. Son accumulation massive sur
+                les côtes perturbe également les écosystèmes littoraux et les usages humains.
+              </p>
+              <p>
+                Pollution plastique et invasions biologiques sont liées&nbsp;: les déchets flottants facilitent le
+                transport d'organismes exotiques, tandis que le réchauffement climatique accroît leur capacité
+                d'implantation.
+              </p>
+              <p className="text-white font-medium border-l-2 border-ocean-teal pl-4">
+                Face à ces dynamiques combinées — pollution, artificialisation du littoral, surpêche,
+                réchauffement — la Méditerranée devient un laboratoire avancé des déséquilibres globaux.
+                Documenter, alerter et agir ne relève plus du militantisme, mais de la nécessité écologique.
+              </p>
+            </div>
           </motion.div>
         </motion.div>
 
