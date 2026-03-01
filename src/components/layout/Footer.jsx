@@ -60,6 +60,7 @@ const navColumns = [
     label: 'Contact',
     links: [
       { to: '/contact', text: 'Collaborer avec nous' },
+      { to: '/#newsletter', text: 'Newsletter', anchor: true },
     ],
   },
 ];
@@ -94,12 +95,21 @@ const Footer = () => {
                 <ul className="space-y-2">
                   {col.links.map((link) => (
                     <li key={link.to}>
-                      <Link
-                        to={link.to}
-                        className="text-sm text-gray-400 hover:text-ocean-teal transition-colors duration-200"
-                      >
-                        {link.text}
-                      </Link>
+                      {link.anchor ? (
+                        <a
+                          href={link.to}
+                          className="text-sm text-gray-400 hover:text-ocean-teal transition-colors duration-200"
+                        >
+                          {link.text}
+                        </a>
+                      ) : (
+                        <Link
+                          to={link.to}
+                          className="text-sm text-gray-400 hover:text-ocean-teal transition-colors duration-200"
+                        >
+                          {link.text}
+                        </Link>
+                      )}
                     </li>
                   ))}
                 </ul>

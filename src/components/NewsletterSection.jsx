@@ -32,7 +32,7 @@ const NewsletterSection = () => {
   };
 
   return (
-    <section className="container-custom py-8 md:py-12">
+    <section id="newsletter" className="container-custom py-8 md:py-12">
       <motion.div
         initial="hidden"
         whileInView="visible"
