@@ -6,7 +6,7 @@ import { FADE_IN_UP } from '../utils/constants';
 
 const NewsletterSection = () => {
   const [email, setEmail] = useState('');
-  const [status, setStatus] = useState('idle'); // idle | loading | success | error
+  const [status, setStatus] = useState('idle'); // idle | loading | success | already | error
   const [errorMsg, setErrorMsg] = useState('');
 
   const handleSubmit = async (e) => {
@@ -24,7 +24,7 @@ const NewsletterSection = () => {
       if (error) throw new Error(error.message);
       if (data?.error) throw new Error(data.error);
 
-      setStatus('success');
+      setStatus(data?.alreadySubscribed ? 'already' : 'success');
     } catch (err) {
       setErrorMsg(err.message || 'Une erreur est survenue, réessaie.');
       setStatus('error');
@@ -78,7 +78,7 @@ const NewsletterSection = () => {
           <div className="w-full max-w-md">
             <AnimatePresence mode="wait">
 
-              {(status === 'idle' || status === 'error' || status === 'loading') && (
+              {(status === 'idle' || status === 'error' || status === 'loading' || status === 'already') && (
                 <motion.form
                   key="form"
                   initial={{ opacity: 0, y: 10 }}
@@ -134,6 +134,27 @@ const NewsletterSection = () => {
                 </motion.div>
               )}
 
+              {status === 'already' && (
+                <motion.div
+                  key="already"
+                  initial={{ opacity: 0, scale: 0.95 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  className="flex items-center justify-center gap-4"
+                >
+                  <div className="inline-flex items-center justify-center w-14 h-14 rounded-full bg-ocean-teal/20 border border-ocean-teal/40 flex-shrink-0">
+                    <CheckCircle className="w-7 h-7 text-ocean-teal" />
+                  </div>
+                  <div className="text-left">
+                    <p className="text-white font-semibold text-lg mb-1">
+                      Tu fais déjà partie de la communauté ! 🌊
+                    </p>
+                    <p className="text-white/60 text-sm">
+                      Tu es déjà inscrit(e) à la newsletter Dark Massilia.
+                    </p>
+                  </div>
+                </motion.div>
+              )}
+
             </AnimatePresence>
 
             {/* Message d'erreur */}
@@ -150,7 +171,7 @@ const NewsletterSection = () => {
           </div>
 
           {/* Mention RGPD */}
-          {status !== 'success' && (
+          {status !== 'success' && status !== 'already' && (
             <p className="text-white/30 text-xs mt-5">
               Pas de spam · Désinscription à tout moment · Conforme RGPD
             </p>
