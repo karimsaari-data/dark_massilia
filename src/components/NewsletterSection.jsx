@@ -78,7 +78,7 @@ const NewsletterSection = () => {
           <div className="w-full max-w-md">
             <AnimatePresence mode="wait">
 
-              {(status === 'idle' || status === 'error' || status === 'loading' || status === 'already') && (
+              {(status === 'idle' || status === 'error' || status === 'loading') && (
                 <motion.form
                   key="form"
                   initial={{ opacity: 0, y: 10 }}
