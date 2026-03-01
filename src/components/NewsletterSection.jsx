@@ -46,7 +46,10 @@ const NewsletterSection = () => {
             src="/images/Marseille-dark-massilia-plastique-pollution-projet-sentinelle-pos%C3%A9idon.webp"
             alt="Cliché exclusif des fonds marins marseillais — Dark Massilia"
             className="w-full h-full object-cover"
-            style={{ objectPosition: '75% center' }}
+            style={{
+              transform: 'scale(1.5) translateX(-12%)',
+              transformOrigin: 'center center',
+            }}
           />
           {/* Overlay : sombre en bas (form), lumineux en haut (image) */}
           <div className="absolute inset-0 bg-gradient-to-b from-[#0B1C2D]/30 via-[#0B1C2D]/60 to-[#0B1C2D]/90" />
