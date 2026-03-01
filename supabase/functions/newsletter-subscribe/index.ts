@@ -3,7 +3,7 @@ import "jsr:@supabase/functions-js/edge-runtime.d.ts";
 const BREVO_API_KEY = Deno.env.get("BREVO_API_KEY") ?? "";
 const BREVO_LIST_ID = Deno.env.get("BREVO_LIST_ID");
 const PHOTO_URL = "https://karimsaari.com/home/Welcome%20Pack.jpg";
-const SENDER_EMAIL = "email@karimsaari.com";
+const SENDER_EMAIL = "karimsaari.com@gmail.com";
 const SENDER_NAME = "Karim Saari — Dark Massilia";
 
 const corsHeaders = {

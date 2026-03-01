@@ -59,15 +59,30 @@ const NewsletterSection = () => {
           </div>
 
           {/* Titre */}
-          <h2 className="text-2xl md:text-3xl font-bold text-white mb-4 leading-tight">
+          <h2 className="text-2xl md:text-3xl font-bold text-white mb-6 leading-tight">
             Un cliché des profondeurs,{' '}
             <span className="text-ocean-teal">rien que pour toi</span>
           </h2>
 
+          {/* Photo Poséidon */}
+          <div className="relative mx-auto mb-6 max-w-sm rounded-2xl overflow-hidden border border-ocean-teal/20 shadow-lg">
+            <img
+              src="/images/portfolio/Mer/12.webp"
+              alt="Cliché exclusif des fonds marins marseillais — Dark Massilia"
+              className="w-full object-cover"
+              style={{ maxHeight: '260px' }}
+            />
+            <div className="absolute inset-0 bg-gradient-to-t from-[#0B1C2D]/60 to-transparent pointer-events-none" />
+            <span className="absolute bottom-3 left-1/2 -translate-x-1/2 text-xs text-white/60 whitespace-nowrap">
+              Cliché offert aux abonnés
+            </span>
+          </div>
+
           {/* Sous-titre */}
           <p className="text-text-secondary text-base md:text-lg leading-relaxed mb-8 max-w-xl mx-auto">
-            Inscris-toi à la newsletter et reçois en cadeau une photo exclusive des fonds de la Méditerranée.
-            Missions, coulisses des Calanques, actualités Team Oxygen — directement dans ta boîte.
+            Pour remercier celles et ceux qui soutiennent mon travail, j'offre un cliché exclusif issu des fonds marins marseillais.
+            Un fragment du royaume de Poséidon, saisi en apnée, là où la lumière se dissout dans le silence.
+            Inscris-toi à la newsletter et reçois cette image des profondeurs, réservée aux abonnés.
           </p>
 
           {/* Formulaire / États */}
