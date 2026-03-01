@@ -47,7 +47,7 @@ const NewsletterSection = () => {
             alt="Cliché exclusif des fonds marins marseillais — Dark Massilia"
             className="w-full h-full object-cover"
             style={{
-              transform: 'scale(1.5) translateX(-12%)',
+              transform: 'scale(1.3) translateX(-9%)',
               transformOrigin: 'center center',
             }}
           />
@@ -56,7 +56,7 @@ const NewsletterSection = () => {
         </div>
 
         {/* Contenu centré */}
-        <div className="relative z-10 flex flex-col items-center text-center px-6 py-16 md:py-20 w-full max-w-2xl mx-auto">
+        <div className="relative z-10 flex flex-col items-center text-center px-8 py-16 md:py-20 w-full md:max-w-lg md:ml-auto md:pr-16 md:text-left md:items-start">
 
           {/* Badge */}
           <span className="inline-flex items-center gap-1.5 px-4 py-1.5 rounded-full bg-ocean-teal/20 border border-ocean-teal/40 text-ocean-teal text-xs font-semibold mb-6 backdrop-blur-sm">
