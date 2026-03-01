@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Mail, CheckCircle, AlertCircle, Loader2 } from 'lucide-react';
+import { CheckCircle, AlertCircle, Loader2 } from 'lucide-react';
 import { supabase } from '../lib/supabase';
 import { FADE_IN_UP } from '../utils/constants';
 
@@ -38,43 +38,40 @@ const NewsletterSection = () => {
         whileInView="visible"
         viewport={{ once: true }}
         variants={FADE_IN_UP}
-        className="relative rounded-3xl overflow-hidden border border-ocean-teal/30 mb-16"
-        style={{
-          background: 'linear-gradient(135deg, rgba(0,171,168,0.12) 0%, rgba(0,145,255,0.08) 50%, rgba(11,28,45,0.95) 100%)',
-        }}
+        className="relative rounded-3xl overflow-hidden border border-ocean-teal/30 mb-16 min-h-[420px] md:min-h-[480px] flex items-center justify-center"
       >
-        {/* Glow décoratif */}
-        <div
-          className="absolute -top-24 -right-24 w-96 h-96 rounded-full pointer-events-none"
-          style={{
-            background: 'radial-gradient(circle, rgba(0,171,168,0.15) 0%, transparent 70%)',
-          }}
-        />
+        {/* Image plein fond */}
+        <div className="absolute inset-0">
+          <img
+            src="/images/Marseille-dark-massilia-plastique-pollution-projet-sentinelle-pos%C3%A9idon.webp"
+            alt="Cliché exclusif des fonds marins marseillais — Dark Massilia"
+            className="w-full h-full object-cover object-center"
+          />
+          {/* Overlay : sombre en bas (form), lumineux en haut (image) */}
+          <div className="absolute inset-0 bg-gradient-to-b from-[#0B1C2D]/30 via-[#0B1C2D]/60 to-[#0B1C2D]/90" />
+        </div>
 
-        <div className="relative z-10 grid md:grid-cols-[1.4fr_1fr] min-h-[380px]">
+        {/* Contenu centré */}
+        <div className="relative z-10 flex flex-col items-center text-center px-6 py-16 md:py-20 w-full max-w-2xl mx-auto">
 
-          {/* Contenu — colonne gauche */}
-          <div className="flex flex-col justify-center p-8 md:p-10 text-center md:text-left">
+          {/* Badge */}
+          <span className="inline-flex items-center gap-1.5 px-4 py-1.5 rounded-full bg-ocean-teal/20 border border-ocean-teal/40 text-ocean-teal text-xs font-semibold mb-6 backdrop-blur-sm">
+            🎁 Offert à l'inscription
+          </span>
 
-            {/* Icône */}
-            <div className="inline-flex items-center justify-center w-12 h-12 rounded-full bg-ocean-teal/15 border border-ocean-teal/30 mb-5 mx-auto md:mx-0">
-              <Mail className="w-5 h-5 text-ocean-teal" />
-            </div>
+          {/* Titre */}
+          <h2 className="text-3xl md:text-4xl font-bold text-white mb-4 leading-tight">
+            Un cliché des profondeurs,{' '}
+            <span className="text-ocean-teal">rien que pour toi</span>
+          </h2>
 
-            {/* Titre */}
-            <h2 className="text-2xl md:text-3xl font-bold text-white mb-4 leading-tight">
-              Un cliché des profondeurs,{' '}
-              <span className="text-ocean-teal">rien que pour toi</span>
-            </h2>
+          {/* Sous-titre */}
+          <p className="text-white/70 text-base md:text-lg leading-relaxed mb-8 max-w-lg">
+            Un fragment du royaume de Poséidon, capturé en apnée dans les fonds marins marseillais.
+          </p>
 
-            {/* Sous-titre */}
-            <p className="text-text-secondary text-sm md:text-base leading-relaxed mb-6">
-              Pour remercier celles et ceux qui soutiennent mon travail, j'offre un cliché exclusif issu des fonds marins marseillais.
-              Un fragment du royaume de Poséidon, saisi en apnée, là où la lumière se dissout dans le silence.
-              Inscris-toi à la newsletter et reçois cette image des profondeurs, réservée aux abonnés.
-            </p>
-
-            {/* Formulaire / États */}
+          {/* Formulaire / États */}
+          <div className="w-full max-w-md">
             <AnimatePresence mode="wait">
 
               {(status === 'idle' || status === 'error' || status === 'loading') && (
@@ -93,7 +90,7 @@ const NewsletterSection = () => {
                     placeholder="ton@email.com"
                     required
                     disabled={status === 'loading'}
-                    className="flex-1 px-5 py-3.5 rounded-full bg-white/10 border border-white/20 text-white placeholder-white/40 focus:outline-none focus:border-ocean-teal focus:bg-white/15 transition-all text-base disabled:opacity-60"
+                    className="flex-1 px-5 py-3.5 rounded-full bg-white/10 border border-white/25 text-white placeholder-white/40 focus:outline-none focus:border-ocean-teal focus:bg-white/15 transition-all text-base disabled:opacity-60 backdrop-blur-sm"
                   />
                   <button
                     type="submit"
@@ -117,16 +114,16 @@ const NewsletterSection = () => {
                   key="success"
                   initial={{ opacity: 0, scale: 0.95 }}
                   animate={{ opacity: 1, scale: 1 }}
-                  className="flex items-center gap-4"
+                  className="flex items-center justify-center gap-4"
                 >
                   <div className="inline-flex items-center justify-center w-14 h-14 rounded-full bg-ocean-teal/20 border border-ocean-teal/40 flex-shrink-0">
                     <CheckCircle className="w-7 h-7 text-ocean-teal" />
                   </div>
-                  <div>
+                  <div className="text-left">
                     <p className="text-white font-semibold text-lg mb-1">
                       Vérifie ta boîte mail 🌊
                     </p>
-                    <p className="text-text-secondary text-sm">
+                    <p className="text-white/60 text-sm">
                       Ton cliché arrive dans quelques secondes. Pense à vérifier tes spams si besoin.
                     </p>
                   </div>
@@ -140,38 +137,21 @@ const NewsletterSection = () => {
               <motion.p
                 initial={{ opacity: 0, y: 4 }}
                 animate={{ opacity: 1, y: 0 }}
-                className="flex items-center gap-2 text-red-400 text-sm mt-3"
+                className="flex items-center justify-center gap-2 text-red-400 text-sm mt-3"
               >
                 <AlertCircle className="w-4 h-4 flex-shrink-0" />
                 {errorMsg}
               </motion.p>
             )}
-
-            {/* Mention RGPD */}
-            {status !== 'success' && (
-              <p className="text-white/30 text-xs mt-4">
-                Pas de spam. Désinscription à tout moment. Conforme RGPD.
-              </p>
-            )}
-
           </div>
 
-          {/* Image Poséidon — colonne droite */}
-          <div className="relative h-56 md:h-auto order-first md:order-last">
-            <img
-              src="/images/Marseille-dark-massilia-plastique-pollution-projet-sentinelle-pos%C3%A9idon.webp"
-              alt="Cliché exclusif des fonds marins marseillais — Dark Massilia"
-              className="absolute inset-0 w-full h-full object-cover"
-            />
-            {/* Gradient desktop : fondu depuis le bord gauche (côté contenu) */}
-            <div className="absolute inset-0 bg-gradient-to-r from-[#0B1C2D]/80 to-transparent pointer-events-none hidden md:block" />
-            {/* Gradient mobile : fondu bas → transparent */}
-            <div className="absolute inset-0 bg-gradient-to-t from-[#0B1C2D]/80 to-transparent pointer-events-none md:hidden" />
-            {/* Badge offert — centré, hors des bords */}
-            <span className="absolute bottom-4 left-1/2 -translate-x-1/2 inline-flex items-center gap-1 px-3 py-1 rounded-full bg-ocean-teal/20 border border-ocean-teal/40 text-ocean-teal text-xs font-semibold whitespace-nowrap backdrop-blur-sm">
-              🎁 Offert à l'inscription
-            </span>
-          </div>
+          {/* Mention RGPD */}
+          {status !== 'success' && (
+            <p className="text-white/30 text-xs mt-5">
+              Pas de spam · Désinscription à tout moment · Conforme RGPD
+            </p>
+          )}
+
         </div>
       </motion.div>
     </section>
