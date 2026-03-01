@@ -533,7 +533,7 @@ const Home = () => {
             {/* Image - Gauche */}
             <div className="relative h-64 md:h-auto min-h-[400px] order-1">
               <img
-                src="/images/Marseille-dark-massilia-plastique-pollution-projet-sentinelle-pos%C3%A9idon.webp"
+                src="/images/portfolio/Mer/12.webp"
                 alt="Carte interactive des Calanques de Marseille — Dark Massilia Projet Sentinelle"
                 className="absolute inset-0 w-full h-full object-cover"
                 loading="lazy"
