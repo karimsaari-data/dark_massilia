@@ -10,7 +10,8 @@ const Medias = () => {
   const pressLinks = [
     {
       title: 'Yann Arthus-Bertrand — « Les Français », Marseille 2024',
-      url: 'https://www.yabstudio.fr/portfolio/marseille-2024/',
+      url: '/les-francais-yann-arthus-bertrand',
+      internal: true,
       featured: true,
       image: '/images/Marseille-2024-342-Les-Francais-copyright-Yann-Arthus-Bertrand.webp',
       credit: '© Yann Arthus-Bertrand'
@@ -73,14 +74,14 @@ const Medias = () => {
 
   return (
     <div className="min-h-screen py-32">
-      <SEO {...SEO_PAGES['/medias']} />
+      <SEO {...SEO_PAGES['/presse']} />
       <div className="container-custom">
         {/* H1 SEO — visible, keyword-rich */}
         <motion.h1
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
-          className="text-4xl md:text-5xl font-bold text-white text-center mb-12 leading-tight"
+          className="text-3xl md:text-4xl font-bold text-white text-center mb-12 leading-tight"
         >
           Presse &amp; Médias
           <span className="block text-xl md:text-2xl font-medium text-ocean-teal mt-3">
@@ -143,12 +144,12 @@ const Medias = () => {
 
           <motion.div
             variants={STAGGER_CONTAINER}
-            className="grid grid-cols-1 md:grid-cols-2 gap-6"
+            className="grid grid-cols-1 md:grid-cols-3 gap-6"
           >
-            {/* ARTE */}
+            {/* ARTE — Marseille */}
             <motion.div variants={FADE_IN_UP}>
               <Link
-                to="/arte"
+                to="/sauver-marseille-documentaire-arte"
                 className="glass-strong rounded-xl overflow-hidden border border-white/10 hover:border-ocean-teal/50 transition-all duration-300 group block h-full"
               >
                 <div className="relative aspect-video bg-black overflow-hidden">
@@ -171,6 +172,42 @@ const Medias = () => {
                     <p className="text-xs uppercase tracking-widest text-ocean-teal font-semibold mb-1">ARTE / YouTube</p>
                     <h3 className="text-lg font-bold text-white group-hover:text-ocean-teal transition-colors">
                       Documentaire ARTE — Marseille contre la pollution
+                    </h3>
+                  </div>
+                  <ArrowLeft className="w-5 h-5 rotate-180 text-gray-400 group-hover:text-ocean-teal group-hover:translate-x-1 transition-all flex-shrink-0 ml-4" />
+                </div>
+              </Link>
+            </motion.div>
+
+            {/* ARTE Évasion — Méduses */}
+            <motion.div variants={FADE_IN_UP}>
+              <Link
+                to="/meduses-souveraines-oceans-documentaire-arte"
+                className="glass-strong rounded-xl overflow-hidden border border-white/10 hover:border-ocean-teal/50 transition-all duration-300 group block h-full"
+              >
+                <div className="relative aspect-video bg-black overflow-hidden">
+                  <picture>
+                    <source srcSet="/images/M%C3%A9duses%20les%20souveraines%20des%20oc%C3%A9ans%20-%20arte%20-%202.webp" type="image/webp" />
+                    <img
+                      src="/images/M%C3%A9duses%20les%20souveraines%20des%20oc%C3%A9ans%20-%20arte%20-%202.jpg"
+                      alt="Méduses en Méditerranée — Documentaire ARTE Évasion avec Karim Saari"
+                      className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                      loading="lazy"
+                      decoding="async"
+                    />
+                  </picture>
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent" />
+                  <div className="absolute inset-0 flex items-center justify-center">
+                    <div className="w-16 h-16 rounded-full bg-white/20 backdrop-blur-sm border border-white/30 flex items-center justify-center group-hover:bg-ocean-teal/40 group-hover:border-ocean-teal/50 transition-all duration-300">
+                      <Play className="w-7 h-7 text-white ml-1" fill="white" />
+                    </div>
+                  </div>
+                </div>
+                <div className="p-6 flex items-center justify-between">
+                  <div>
+                    <p className="text-xs uppercase tracking-widest text-ocean-teal font-semibold mb-1">ARTE Évasion</p>
+                    <h3 className="text-lg font-bold text-white group-hover:text-ocean-teal transition-colors">
+                      Méduses | Les souveraines des océans
                     </h3>
                   </div>
                   <ArrowLeft className="w-5 h-5 rotate-180 text-gray-400 group-hover:text-ocean-teal group-hover:translate-x-1 transition-all flex-shrink-0 ml-4" />
@@ -318,6 +355,11 @@ const Medias = () => {
               </p>
               <p>
                 Ces couvertures témoignent de l'impact concret de nos missions et contribuent à sensibiliser le grand public à la pollution des fonds marins méditerranéens.
+                Le reportage phare reste le{' '}
+                <Link to="/sauver-marseille-documentaire-arte" className="text-ocean-teal hover:text-white transition-colors font-medium">
+                  documentaire ARTE « Pollution : il faut sauver Marseille ! »
+                </Link>
+                , diffusé à l'échelle européenne.
               </p>
             </div>
           </motion.div>

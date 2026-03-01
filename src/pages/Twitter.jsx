@@ -25,7 +25,7 @@ const Twitter = () => {
 
   return (
     <div className="min-h-screen py-24">
-      <SEO {...SEO_PAGES['/twitter']} />
+      <SEO {...SEO_PAGES['/actualites']} />
       <div className="container-custom">
 
         {/* Section éditoriale SEO — veille environnementale & actualité marine */}

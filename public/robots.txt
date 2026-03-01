@@ -1,4 +1,6 @@
 User-agent: *
 Allow: /
+Disallow: /admin
 
 Sitemap: https://karimsaari.com/sitemap.xml
+Sitemap: https://karimsaari.com/sitemap-images.xml

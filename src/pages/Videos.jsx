@@ -13,6 +13,11 @@ const videos = [
     description: 'Reportage sur les actions de dépollution en Méditerranée',
   },
   {
+    id: 'yfebiTFOq7E',
+    title: 'Méduses | Les souveraines des océans — ARTE Évasion',
+    description: 'Documentaire de Sébastien Lafont (2024, 43 min) — images Méditerranée fournies par Karim Saari',
+  },
+  {
     id: 'sseo9sf7jow',
     title: '2025, une année de dépollution en apnée à Marseille',
     description: 'Rétrospective 2025 des actions de dépollution en apnée à Marseille',
@@ -69,7 +74,7 @@ const Videos = () => {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
-          className="text-4xl md:text-5xl font-bold text-white text-center mb-12 leading-tight"
+          className="text-3xl md:text-4xl font-bold text-white text-center mb-12 leading-tight"
         >
           Vidéos &amp; Documentaires
           <span className="block text-xl md:text-2xl font-medium text-ocean-teal mt-3">
@@ -172,29 +177,53 @@ const Videos = () => {
           </motion.div>
         </motion.div>
 
-        {/* Callout ARTE */}
+        {/* Callouts ARTE */}
         <motion.div
           initial="hidden"
           animate="visible"
           variants={STAGGER_CONTAINER}
-          className="max-w-4xl mx-auto mb-12"
+          className="max-w-4xl mx-auto mb-12 grid grid-cols-1 md:grid-cols-2 gap-6"
         >
+          {/* Sauver Marseille */}
           <motion.div
             variants={FADE_IN_UP}
-            className="glass-strong rounded-3xl p-8 md:p-10 border border-ocean-teal/20 flex flex-col md:flex-row items-center gap-6"
+            className="glass-strong rounded-3xl p-8 border border-ocean-teal/20 flex flex-col gap-4"
           >
             <div className="flex-1">
-              <p className="text-xs font-semibold text-ocean-teal uppercase tracking-widest mb-2">Documentaire</p>
-              <h2 className="text-xl md:text-2xl font-bold text-white mb-3">
+              <p className="text-xs font-semibold text-ocean-teal uppercase tracking-widest mb-2">Documentaire · ARTE</p>
+              <h2 className="text-xl font-bold text-white mb-3">
                 Karim Saari sur ARTE
               </h2>
-              <p className="text-text-secondary leading-relaxed">
-                En 2022, la chaîne ARTE a consacré un reportage à l'engagement de Karim Saari pour la protection de la Méditerranée — apnéiste, photographe et sentinelle des fonds marins des Calanques.
+              <p className="text-text-secondary leading-relaxed text-sm">
+                En 2024, la chaîne ARTE a consacré un reportage à l'engagement de Karim Saari pour la protection de la Méditerranée — apnéiste, photographe et sentinelle des fonds marins des Calanques.
               </p>
             </div>
             <Link
-              to="/arte"
-              className="btn-primary inline-flex items-center gap-2 flex-shrink-0"
+              to="/sauver-marseille-documentaire-arte"
+              className="btn-primary inline-flex items-center gap-2 self-start"
+            >
+              Voir le documentaire
+              <ExternalLink className="w-4 h-4" />
+            </Link>
+          </motion.div>
+
+          {/* Méduses */}
+          <motion.div
+            variants={FADE_IN_UP}
+            className="glass-strong rounded-3xl p-8 border border-ocean-teal/20 flex flex-col gap-4"
+          >
+            <div className="flex-1">
+              <p className="text-xs font-semibold text-ocean-teal uppercase tracking-widest mb-2">Documentaire · ARTE Évasion</p>
+              <h2 className="text-xl font-bold text-white mb-3">
+                Méduses | Les souveraines des océans
+              </h2>
+              <p className="text-text-secondary leading-relaxed text-sm">
+                Film de Sébastien Lafont (2024, 43 min). Karim Saari a fourni des images tournées en Méditerranée pour ce documentaire sur la prolifération des méduses et la transformation des écosystèmes marins.
+              </p>
+            </div>
+            <Link
+              to="/meduses-souveraines-oceans-documentaire-arte"
+              className="btn-primary inline-flex items-center gap-2 self-start"
             >
               Voir le documentaire
               <ExternalLink className="w-4 h-4" />

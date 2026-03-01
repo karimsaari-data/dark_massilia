@@ -12,23 +12,25 @@ export const SOCIAL_LINKS = {
   twitter: import.meta.env.VITE_TWITTER_URL || 'https://x.com/dark_massilia',
   tiktok: import.meta.env.VITE_TIKTOK_URL || 'https://www.tiktok.com/@dark.massilia',
   youtube: import.meta.env.VITE_YOUTUBE_URL || 'https://www.youtube.com/@dark.massilia',
-  px500: import.meta.env.VITE_500PX_URL || 'https://500px.com/p/karimsaari',
+  px500: import.meta.env.VITE_500PX_URL || 'https://500px.com/p/karimsaari?view=photos',
   linkedin: import.meta.env.VITE_LINKEDIN_URL || 'https://www.linkedin.com/in/karimsaari/',
   facebook: import.meta.env.VITE_FACEBOOK_URL || 'https://www.facebook.com/Photographie.Marseille',
   facebookPerso: import.meta.env.VITE_FACEBOOK_PERSO_URL || 'https://www.facebook.com/EcoPlongeur',
   facebookGroup: import.meta.env.VITE_FACEBOOK_GROUP_URL || 'https://www.facebook.com/groups/calanque/',
+  pinterest: import.meta.env.VITE_PINTEREST_URL || 'https://fr.pinterest.com/Photographie_Marseille/',
+  localGuide: import.meta.env.VITE_LOCAL_GUIDE_URL || 'https://www.google.com/maps/contrib/114912564832630219145/photos/',
 };
 
 export const NAV_LINKS = [
-  { name: 'Missions', path: '/missions', icon: 'Compass' },
+  { name: 'Missions', path: '/depollution-marine', icon: 'Compass' },
   { name: 'Vidéos', path: '/videos', icon: 'Video' },
-  { name: 'Photos', path: '/photos', icon: 'Camera' },
-  { name: 'Références', path: '/sources', icon: 'BookOpen' },
-  { name: 'Médias', path: '/medias', icon: 'Film' },
-  { name: 'Réseaux', path: '/reseaux', icon: 'Share2' },
-  { name: 'Local Guides', path: '/local-guide', icon: 'Navigation' },
-  { name: 'Carte', path: '/carte', icon: 'MapPin' },
+  { name: 'Photos', path: '/photographie-paysage-mer', icon: 'Camera' },
+  { name: 'Médias', path: '/presse', icon: 'Film' },
+  { name: 'Réseaux', path: '/communaute', icon: 'Share2' },
+  { name: 'Local Guides', path: '/local-guide-marseille', icon: 'Navigation' },
+  { name: 'Carte', path: '/carte-calanques', icon: 'MapPin' },
   { name: 'Contact', path: '/contact', icon: 'Mail' },
+  { name: 'Références', path: '/donnees-scientifiques', icon: 'BookOpen' },
 ];
 
 export const TAGLINE = 'Une Mer · Une Ville · Une Mission';

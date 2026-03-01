@@ -8,7 +8,7 @@ import { SEO_PAGES } from '../utils/seo';
 const Arte = () => {
   return (
     <div className="min-h-screen py-32">
-      <SEO {...SEO_PAGES['/arte']} />
+      <SEO {...SEO_PAGES['/sauver-marseille-documentaire-arte']} />
       <div className="container-custom max-w-4xl">
 
         {/* Section éditoriale SEO — documentaire ARTE & légitimité médiatique */}
@@ -23,7 +23,7 @@ const Arte = () => {
               ARTE met les Calanques à l'honneur
             </h2>
             <p className="text-text-secondary leading-relaxed text-lg mb-4">
-              En 2022, la chaîne culturelle européenne{' '}
+              En 2024, la chaîne culturelle européenne{' '}
               <strong className="text-white">ARTE</strong> a consacré un reportage aux éco-acteurs
               marseillais mobilisés contre la pollution plastique en Méditerranée. Au cœur du
               documentaire : <strong className="text-ocean-teal">Karim Saari</strong>, apnéiste et
@@ -51,7 +51,7 @@ const Arte = () => {
         >
           <motion.h1
             variants={FADE_IN_UP}
-            className="text-4xl md:text-5xl font-bold text-white mb-4"
+            className="text-3xl md:text-4xl font-bold text-white mb-4"
           >
             Documentaire <span className="gradient-text">ARTE</span>
           </motion.h1>
@@ -152,7 +152,7 @@ const Arte = () => {
           className="text-center mt-16"
         >
           <Link
-            to="/medias"
+            to="/presse"
             className="btn-secondary inline-flex items-center gap-2 group"
           >
             <ArrowLeft className="w-4 h-4 group-hover:-translate-x-1 transition-transform" />

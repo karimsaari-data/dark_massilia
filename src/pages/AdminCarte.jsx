@@ -184,7 +184,7 @@ export default function AdminCarte() {
         </div>
         <div className="flex items-center gap-3">
           <a
-            href="/carte"
+            href="/carte-calanques"
             target="_blank"
             className="flex items-center gap-1.5 text-sm text-text-secondary hover:text-ocean-teal transition-colors"
           >

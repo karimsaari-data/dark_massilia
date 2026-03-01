@@ -1,22 +1,21 @@
-import { useState, useEffect, useCallback, useRef } from 'react';
+import { useState, useEffect, useCallback, useRef, useMemo } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { X, ExternalLink, ChevronLeft, ChevronRight, Waves, TreePine } from 'lucide-react';
 import { FADE_IN_UP, STAGGER_CONTAINER } from '../utils/constants';
 import SEO from '../components/SEO';
 import { SEO_PAGES } from '../utils/seo';
 
-const merIds = [2, 4, 6, 10, 11, 12, 13, 14, 20, 22, 23, 30, 32, 33, 35, 39, 44, 45, 46, 47, 50, 51, 52, 54, 55, 56, 57, 58, 59, 60, 61, 62, 63, 64, 65, 66, 67, 68, 69, 70, 71, 72, 73, 74, 75, 76, 77, 78, 79, 80, 81, 82];
-const terreIds = [1, 3, 5, 7, 8, 9, 15, 16, 17, 18, 19, 21, 24, 25, 26, 27, 28, 29, 31, 34, 36, 37, 38, 40, 41, 42, 43, 48, 49, 53];
+const merIds = [2, 4, 6, 10, 12, 13, 14, 20, 22, 23, 30, 32, 33, 35, 39, 44, 45, 46, 47, 50, 51, 52, 54, 55, 56, 57, 58, 59, 60, 61, 62, 63, 64, 65, 66, 67, 68, 69, 70, 71, 72, 73, 74, 75, 76, 77, 78, 79, 80, 81, 82, 83, 85, 86, 87, 88, 89, 90, 91, 92, 93, 94, 95, 96, 97, 98];
+const terreIds = [1, 3, 5, 7, 8, 9, 15, 16, 17, 18, 19, 21, 24, 25, 26, 27, 28, 29, 31, 34, 36, 37, 38, 40, 41, 42, 43, 48, 49, 53, 54];
 
-const merDims = { 2:[1920,1312], 4:[1920,1498], 6:[1920,1498], 10:[1920,2400], 11:[1920,1312], 12:[1920,1920], 13:[1920,1312], 14:[1920,1498], 20:[1920,1280], 22:[1920,1312], 23:[1920,1920], 30:[1920,1408], 32:[1920,1440], 33:[1000,700], 35:[1920,1312], 39:[1920,1080], 44:[1920,1312], 45:[1920,1440], 46:[1920,1440], 47:[1920,1491], 50:[1920,1498], 51:[1920,1498], 52:[1500,1200], 54:[1920,1279], 55:[4000,3000], 56:[3000,4000], 57:[4096,2731], 58:[3000,2050], 59:[3000,1750], 60:[4096,2728], 61:[3000,1900], 62:[3000,2020], 63:[3000,2050], 64:[3000,2050], 65:[3000,1750], 66:[3000,2340], 67:[3000,2050], 68:[5315,3543], 69:[3000,1970], 70:[4096,2728], 71:[3000,1750], 72:[3000,1750], 73:[3000,2050], 74:[3000,2050], 75:[3000,4000], 76:[3000,2050], 77:[3000,1750], 78:[3000,2050], 79:[3000,2300], 80:[2895,3620], 81:[3000,2050], 82:[3000,1750] };
-const terreDims = { 1:[1920,1312], 3:[1920,1124], 5:[1920,1312], 7:[1080,1143], 8:[1920,1312], 9:[1920,1312], 15:[1920,1280], 16:[1920,1280], 17:[1920,1279], 18:[1920,1279], 19:[1920,1080], 21:[1920,1280], 24:[1920,1440], 25:[1920,2866], 26:[1920,1279], 27:[1920,1312], 28:[1920,1251], 29:[1920,1279], 31:[1920,1279], 34:[1920,1312], 36:[1920,2850], 37:[1920,1312], 38:[1920,1312], 40:[1920,1312], 41:[1920,1312], 42:[1920,1080], 43:[1920,1312], 48:[1920,1216], 49:[1920,1280], 53:[1500,1050] };
+const merDims = { 2:[1920,1312], 4:[1920,1498], 6:[1920,1498], 10:[1920,2400], 12:[1920,1920], 13:[1920,1312], 14:[1920,1498], 20:[1920,1280], 22:[1920,1312], 23:[1920,1920], 30:[1920,1408], 32:[1920,1440], 33:[1000,700], 35:[1920,1312], 39:[1920,1080], 44:[1920,1312], 45:[1920,1440], 46:[1920,1440], 47:[1920,1491], 50:[1920,1498], 51:[1920,1498], 52:[1500,1200], 54:[1920,1279], 55:[4000,3000], 56:[3000,4000], 57:[4096,2731], 58:[3000,2050], 59:[3000,1750], 60:[4096,2728], 61:[3000,1900], 62:[3000,2020], 63:[3000,2050], 64:[3000,2050], 65:[3000,1750], 66:[3000,2340], 67:[3000,2050], 68:[5315,3543], 69:[3000,1970], 70:[4096,2728], 71:[3000,1750], 72:[3000,1750], 73:[3000,2050], 74:[3000,2050], 75:[3000,4000], 76:[3000,2050], 77:[3000,1750], 78:[3000,2050], 79:[3000,2300], 80:[2895,3620], 81:[3000,2050], 82:[3000,1750], 83:[1920,1498], 85:[1920,1248], 86:[1920,1312], 87:[1920,1312], 88:[1920,1440], 89:[1920,1440], 90:[1920,1440], 91:[1920,1440], 92:[1920,1440], 93:[1920,1440], 94:[1920,1440], 95:[1920,1440], 96:[1920,1440], 97:[1920,1312], 98:[1500,1050] };
+const terreDims = { 1:[1920,1312], 3:[1920,1124], 5:[1920,1312], 7:[1080,1143], 8:[1920,1312], 9:[1920,1312], 15:[1920,1280], 16:[1920,1280], 17:[1920,1279], 18:[1920,1279], 19:[1920,1080], 21:[1920,1280], 24:[1920,1440], 25:[1920,2866], 26:[1920,1279], 27:[1920,1312], 28:[1920,1251], 29:[1920,1279], 31:[1920,1279], 34:[1920,1312], 36:[1920,2850], 37:[1920,1312], 38:[1920,1312], 40:[1920,1312], 41:[1920,1312], 42:[1920,1080], 43:[1920,1312], 48:[1920,1216], 49:[1920,1280], 53:[1500,1050], 54:[1920,1280] };
 
 const merAlts = {
   2: "Petit bateau de pêche blanc ancré sur l'eau turquoise cristalline d'une calanque — photographie aérienne Marseille",
   4: "Vue mi-eau mi-ciel d'une calanque turquoise, fonds clairs et galets sous l'eau, falaises calcaires et pin — Calanques Marseille",
   6: "Exploration en apnée d'une grotte marine dans les Calanques de Marseille — vue subjective, mains en néoprène, eau turquoise et parois calcaires",
   10: "Kayakistes sur l'eau turquoise d'une calanque encadrée de hautes falaises calcaires et de pins — Calanques de Marseille",
-  11: "Vague spectaculaire avec arc-en-ciel se brisant sur le quai sous le mistral — Méditerranée Marseille",
   12: "Vue depuis une grotte calcaire sur une calanque turquoise encadrée de pins et de falaises — Calanques de Marseille",
   13: "Coucher de soleil sur une plage de calanque entre deux falaises, ciel dramatique, reflets dorés sur le sable mouillé",
   14: "Silhouettes de deux personnes sur un banc et leur reflet parfait dans une flaque, Notre-Dame de la Garde en arrière-plan — Marseille",
@@ -64,6 +63,21 @@ const merAlts = {
   80: "Petit bateau de pêche blanc naviguant dans les eaux turquoise d'une calanque encadrée de hautes falaises calcaires",
   81: "Vue aérienne plongeante sur un nageur solitaire dans les eaux turquoise d'une calanque entre rochers calcaires",
   82: "Main tenant une petite étoile de mer rouge sous l'eau — faune marine Méditerranée par Karim Saari",
+  83: "Mer turquoise azuréenne vue depuis la calanque de Sormiou — Marseille, Calanques de Marseille",
+  85: "Vue panoramique sur le littoral et le stade de Marseille — Méditerranée, lumière du sud",
+  86: "Archipel du Frioul vu de la mer — îles sauvages de Marseille en Méditerranée 2020",
+  87: "Marseille vue depuis la mer — panorama du littoral méditerranéen, Vieux-Port et Notre-Dame de la Garde",
+  88: "Fonds marins des Calanques de Marseille — photographie sous-marine en apnée par Karim Saari",
+  89: "Plongée en apnée dans les Calanques — exploration des fonds méditerranéens par Dark Massilia",
+  90: "Vie marine en Méditerranée — faune et flore sous-marines des Calanques de Marseille",
+  91: "Posidonie et roches calcaires sous-marines — Calanques de Marseille — photographie subaquatique",
+  92: "Lumière filtrée sous l'eau dans les Calanques de Marseille — photographie en apnée",
+  93: "Apnéiste explorant les fonds marins des Calanques — photographie subaquatique Méditerranée",
+  94: "Biodiversité des fonds marins méditerranéens — Calanques de Marseille — Dark Massilia",
+  95: "Fonds marins du Frioul — Marseille — exploration en apnée et photographie subaquatique",
+  96: "Mission de plongée et dépollution sous-marine — Projet Sentinelle — Dark Massilia Marseille",
+  97: "Archipel du Frioul — Marseille — falaises calcaires et eau turquoise méditerranéenne",
+  98: "Îlots des Gabian près de Marseille — végétation méditerranéenne sur roches calcaires en Méditerranée",
 };
 
 const terreAlts = {
@@ -97,6 +111,7 @@ const terreAlts = {
   48: "Vue plongeante sur des rangées de lavande violette et dorée — géométrie des champs de Provence",
   49: "Champ de lavande violet au coucher de soleil avec personnage discret parmi les rangées, montagnes en arrière-plan",
   53: "Champ de lavande violette au premier plan et champ de tournesols jaunes — contraste de couleurs, Provence",
+  54: "Paysage méditerranéen de Provence — nature sauvage et lumière dorée du sud de la France",
 };
 
 const merImages = merIds.map((id, index) => ({
@@ -115,7 +130,14 @@ const terreImages = terreIds.map((id, index) => ({
   height: terreDims[id][1],
 }));
 
-const allImages = [...merImages, ...terreImages];
+const shuffle = (arr) => {
+  const a = [...arr];
+  for (let i = a.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [a[i], a[j]] = [a[j], a[i]];
+  }
+  return a;
+};
 
 const SectionTitle = ({ icon: Icon, title, count }) => (
   <motion.div variants={FADE_IN_UP} className="flex items-center gap-3 mb-8">
@@ -157,6 +179,16 @@ const Photos = () => {
   const [isLightboxOpen, setIsLightboxOpen] = useState(false);
   const closeBtnRef = useRef(null);
 
+  const [shuffledMer, setShuffledMer] = useState(merImages);
+  const [shuffledTerre, setShuffledTerre] = useState(terreImages);
+  const shuffledAll = useMemo(() => [...shuffledMer, ...shuffledTerre], [shuffledMer, shuffledTerre]);
+
+  // Shuffle côté client uniquement (après hydration SSR)
+  useEffect(() => {
+    setShuffledMer(shuffle(merImages));
+    setShuffledTerre(shuffle(terreImages));
+  }, []);
+
   const openLightbox = (image) => {
     setSelectedImage(image);
     setIsLightboxOpen(true);
@@ -172,16 +204,16 @@ const Photos = () => {
   const navigateImage = useCallback((direction) => {
     setSelectedImage((current) => {
       if (!current) return current;
-      const currentIndex = allImages.findIndex(img => img.uid === current.uid);
+      const currentIndex = shuffledAll.findIndex(img => img.uid === current.uid);
       let newIndex;
       if (direction === 'next') {
-        newIndex = (currentIndex + 1) % allImages.length;
+        newIndex = (currentIndex + 1) % shuffledAll.length;
       } else {
-        newIndex = (currentIndex - 1 + allImages.length) % allImages.length;
+        newIndex = (currentIndex - 1 + shuffledAll.length) % shuffledAll.length;
       }
-      return allImages[newIndex];
+      return shuffledAll[newIndex];
     });
-  }, []);
+  }, [shuffledAll]);
 
   useEffect(() => {
     if (isLightboxOpen && closeBtnRef.current) {
@@ -211,23 +243,23 @@ const Photos = () => {
   }, [isLightboxOpen, closeLightbox, navigateImage]);
 
   const currentIndex = selectedImage
-    ? allImages.findIndex(img => img.uid === selectedImage.uid) + 1
+    ? shuffledAll.findIndex(img => img.uid === selectedImage.uid) + 1
     : 0;
 
   return (
     <div className="min-h-screen py-24">
-      <SEO {...SEO_PAGES['/photos']} />
+      <SEO {...SEO_PAGES['/photographie-paysage-mer']} />
       <div className="container-custom">
         {/* H1 SEO — visible, keyword-rich */}
         <motion.h1
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
-          className="text-4xl md:text-5xl font-bold text-white text-center mb-12 leading-tight"
+          className="text-3xl md:text-4xl font-bold text-white text-center mb-12 leading-tight"
         >
-          Galerie Photo Sous-Marine
+          Photographe Sous-Marin & Paysages<br />Marseille & Provence
           <span className="block text-xl md:text-2xl font-medium text-ocean-teal mt-3">
-            Calanques de Marseille — Méditerranée
+            Calanques, Méditerranée et paysages de Provence
           </span>
         </motion.h1>
 
@@ -236,19 +268,28 @@ const Photos = () => {
           initial="hidden"
           animate="visible"
           variants={STAGGER_CONTAINER}
-          className="max-w-4xl mx-auto mb-12"
+          className="mb-12"
         >
           <motion.div variants={FADE_IN_UP} className="glass-strong rounded-3xl p-8 md:p-12">
             <h2 className="text-2xl md:text-3xl font-bold text-white mb-6">
               Témoigner par l'image
             </h2>
-            <p className="text-text-secondary leading-relaxed text-lg">
-              La photographie sous-marine et la vidéo sont mes armes pour révéler la beauté
-              fragile de la Méditerranée, aujourd'hui considérée comme l'une des mers les plus
-              polluées au monde. Mes images documentent le contraste saisissant entre la richesse
-              de la faune des Calanques et l'invasion silencieuse du plastique. De la surface aux
-              profondeurs, l'objectif est d'éveiller les consciences sur cette mer qui suffoque.
-            </p>
+            <div className="space-y-4 text-text-secondary leading-relaxed text-lg">
+              <p>
+                Photographe sous-marin à Marseille et photographe de paysages en Provence, j'explore
+                la Méditerranée de la surface aux profondeurs comme les reliefs des Calanques et les
+                horizons provençaux.
+              </p>
+              <p>
+                Sous l'eau, mes images révèlent la biodiversité des fonds marins méditerranéens et
+                leurs fragilités. À terre, je capture les lumières, les falaises calcaires, les champs
+                de lavande et les paysages emblématiques du Sud.
+              </p>
+              <p>
+                Mon travail documente un territoire — la Méditerranée et la Provence — entre beauté
+                naturelle et enjeux contemporains.
+              </p>
+            </div>
           </motion.div>
         </motion.div>
 
@@ -259,8 +300,8 @@ const Photos = () => {
           variants={STAGGER_CONTAINER}
           className="mb-16"
         >
-          <SectionTitle icon={Waves} title="Côté Mer" count={merImages.length} />
-          <PhotoGrid images={merImages} onOpenLightbox={openLightbox} />
+          <SectionTitle icon={Waves} title="Côté Mer" count={shuffledMer.length} />
+          <PhotoGrid images={shuffledMer} onOpenLightbox={openLightbox} />
         </motion.div>
 
         {/* Section Côté Terre */}
@@ -269,8 +310,8 @@ const Photos = () => {
           animate="visible"
           variants={STAGGER_CONTAINER}
         >
-          <SectionTitle icon={TreePine} title="Côté Terre" count={terreImages.length} />
-          <PhotoGrid images={terreImages} onOpenLightbox={openLightbox} />
+          <SectionTitle icon={TreePine} title="Côté Terre" count={shuffledTerre.length} />
+          <PhotoGrid images={shuffledTerre} onOpenLightbox={openLightbox} />
         </motion.div>
 
         {/* Description — bas de page */}
@@ -278,7 +319,7 @@ const Photos = () => {
           initial="hidden"
           animate="visible"
           variants={STAGGER_CONTAINER}
-          className="max-w-4xl mx-auto mt-16"
+          className="mt-16"
         >
           <motion.div variants={FADE_IN_UP} className="glass-strong rounded-3xl p-8 md:p-12">
             <h2 className="text-2xl md:text-3xl font-bold text-white mb-6">
@@ -286,10 +327,16 @@ const Photos = () => {
             </h2>
             <div className="space-y-4 text-text-secondary leading-relaxed">
               <p>
-                Deux séries composent cette galerie : <strong className="text-ocean-teal">Côté Mer</strong>, les fonds sous-marins des Calanques documentés en apnée — entre beauté des posidonnies et réalité des déchets — et <strong className="text-ocean-teal">Côté Terre</strong>, une collection de paysages de voyages, de Marseille à la Provence et au-delà.
+                Deux univers structurent mon travail photographique :
               </p>
               <p>
-                Retrouvez l'ensemble de mes photos en haute résolution sur 500px.
+                <strong className="text-ocean-teal">Côté Mer</strong> — Photographe sous-marin à Marseille, je documente les fonds des Calanques et la biodiversité méditerranéenne en apnée. De la faune aux paysages subaquatiques, mes images témoignent de la beauté et des fragilités de la Méditerranée.
+              </p>
+              <p>
+                <strong className="text-ocean-teal">Côté Terre</strong> — Photographe de paysages en Provence, je capture les reliefs des Calanques, les champs de lavande, les lumières marseillaises et les horizons méditerranéens. Une approche naturaliste et immersive du territoire.
+              </p>
+              <p>
+                Retrouvez l'ensemble de mes photographies en haute résolution sur 500px.
               </p>
             </div>
             <div className="mt-6">
@@ -317,7 +364,7 @@ const Photos = () => {
             exit={{ opacity: 0 }}
             role="dialog"
             aria-modal="true"
-            aria-label={`Photo ${currentIndex} sur ${allImages.length}`}
+            aria-label={`Photo ${currentIndex} sur ${shuffledAll.length}`}
             className="fixed inset-0 z-50 flex items-center justify-center bg-black/95 backdrop-blur-sm p-4"
             onClick={closeLightbox}
           >
@@ -359,7 +406,7 @@ const Photos = () => {
             />
 
             <div className="absolute bottom-4 left-1/2 -translate-x-1/2 px-4 py-2 rounded-full bg-white/10 backdrop-blur-md text-white text-sm">
-              {currentIndex} / {allImages.length}
+              {currentIndex} / {shuffledAll.length}
             </div>
           </motion.div>
         )}

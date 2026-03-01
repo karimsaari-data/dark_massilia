@@ -24,12 +24,14 @@ import Instagram  from './pages/Instagram';
 import Twitter    from './pages/Twitter';
 import Contact    from './pages/Contact';
 import Arte       from './pages/Arte';
+import Meduses    from './pages/Meduses';
 import Sources    from './pages/Sources';
 // CarteSSR = version sans Leaflet (pas de window en Node)
 import CarteSSR      from './pages/CarteSSR';
 import LocalGuide    from './pages/LocalGuide';
 // AdminCarteSSR = version statique (pas de sessionStorage en Node)
 import AdminCarteSSR from './pages/AdminCarteSSR';
+import Yab          from './pages/Yab';
 
 function NotFound() {
   return (
@@ -53,19 +55,21 @@ export function render(url) {
         <Routes>
           <Route path="/" element={<Layout />}>
             <Route index element={<Home />} />
-            <Route path="missions"  element={<Missions />} />
-            <Route path="medias"    element={<Medias />} />
-            <Route path="photos"    element={<Photos />} />
-            <Route path="videos"    element={<Videos />} />
-            <Route path="reseaux" element={<Instagram />} />
-            <Route path="twitter"   element={<Twitter />} />
-            <Route path="arte"      element={<Arte />} />
-            <Route path="sources"   element={<Sources />} />
-            <Route path="contact"     element={<Contact />} />
-            <Route path="carte"       element={<CarteSSR />} />
-            <Route path="local-guide" element={<LocalGuide />} />
-            <Route path="admin"       element={<AdminCarteSSR />} />
-            <Route path="home"        element={<Navigate to="/" replace />} />
+            <Route path="depollution-marine"                 element={<Missions />} />
+            <Route path="presse"                             element={<Medias />} />
+            <Route path="photographie-paysage-mer"           element={<Photos />} />
+            <Route path="videos"                             element={<Videos />} />
+            <Route path="communaute"                         element={<Instagram />} />
+            <Route path="actualites"                         element={<Twitter />} />
+            <Route path="sauver-marseille-documentaire-arte" element={<Arte />} />
+            <Route path="meduses-souveraines-oceans-documentaire-arte" element={<Meduses />} />
+            <Route path="donnees-scientifiques"              element={<Sources />} />
+            <Route path="contact"                            element={<Contact />} />
+            <Route path="carte-calanques"                    element={<CarteSSR />} />
+            <Route path="local-guide-marseille"              element={<LocalGuide />} />
+            <Route path="admin"                              element={<AdminCarteSSR />} />
+            <Route path="les-francais-yann-arthus-bertrand" element={<Yab />} />
+            <Route path="home"                               element={<Navigate to="/" replace />} />
             <Route path="*"         element={<NotFound />} />
           </Route>
         </Routes>

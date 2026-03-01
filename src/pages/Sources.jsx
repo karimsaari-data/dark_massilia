@@ -1,5 +1,6 @@
 import { motion } from 'framer-motion';
 import { ExternalLink, BookOpen, Globe, FileText } from 'lucide-react';
+import { Link } from 'react-router-dom';
 import { FADE_IN_UP, STAGGER_CONTAINER } from '../utils/constants';
 import SEO from '../components/SEO';
 import { SEO_PAGES } from '../utils/seo';
@@ -168,7 +169,7 @@ const Sources = () => {
 
   return (
     <div className="min-h-screen py-24">
-      <SEO {...SEO_PAGES['/sources']} />
+      <SEO {...SEO_PAGES['/donnees-scientifiques']} />
       <div className="container-custom">
         {/* H1 SEO — visible, keyword-rich */}
         <motion.h1
@@ -527,7 +528,11 @@ const Sources = () => {
               </p>
               <p className="text-white font-medium border-l-2 border-ocean-teal pl-4">
                 L'objectif est double&nbsp;: garantir la traçabilité des informations diffusées et fonder
-                l'action de terrain sur un socle scientifique robuste.
+                l'action de terrain sur un socle scientifique robuste. Découvrez comment ces données guident
+                nos opérations concrètes sur nos{' '}
+                <Link to="/depollution-marine" className="text-ocean-teal hover:text-white transition-colors">
+                  missions de dépollution marine
+                </Link>.
               </p>
             </div>
           </motion.div>

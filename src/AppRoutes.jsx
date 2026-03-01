@@ -24,10 +24,12 @@ const Instagram  = lazy(() => import('./pages/Instagram'));
 const Twitter    = lazy(() => import('./pages/Twitter'));
 const Contact    = lazy(() => import('./pages/Contact'));
 const Arte       = lazy(() => import('./pages/Arte'));
+const Meduses    = lazy(() => import('./pages/Meduses'));
 const Sources    = lazy(() => import('./pages/Sources'));
 const Carte      = lazy(() => import('./pages/Carte'));
 const LocalGuide = lazy(() => import('./pages/LocalGuide'));
 const AdminCarte = lazy(() => import('./pages/AdminCarte'));
+const Yab        = lazy(() => import('./pages/Yab'));
 
 const PageLoader = () => (
   <div className="min-h-screen flex items-center justify-center">
@@ -56,19 +58,30 @@ export default function AppRoutes() {
 
           <Route path="/" element={<Layout />}>
             <Route index element={<Home />} />
-            <Route path="missions"  element={<Missions />} />
-            <Route path="medias"    element={<Medias />} />
-            <Route path="photos"    element={<Photos />} />
-            <Route path="videos"    element={<Videos />} />
-            <Route path="reseaux" element={<Instagram />} />
-            <Route path="twitter"   element={<Twitter />} />
-            <Route path="arte"      element={<Arte />} />
-            <Route path="sources"   element={<Sources />} />
-            <Route path="contact"    element={<Contact />} />
-            <Route path="carte"      element={<Carte />} />
-            <Route path="local-guide" element={<LocalGuide />} />
-            {/* Redirections legacy — anciennes URLs de l'ex-site statique */}
-            <Route path="home" element={<Navigate to="/" replace />} />
+            <Route path="depollution-marine"              element={<Missions />} />
+            <Route path="presse"                         element={<Medias />} />
+            <Route path="photographie-paysage-mer"       element={<Photos />} />
+            <Route path="videos"                         element={<Videos />} />
+            <Route path="communaute"                     element={<Instagram />} />
+            <Route path="actualites"                     element={<Twitter />} />
+            <Route path="sauver-marseille-documentaire-arte" element={<Arte />} />
+            <Route path="meduses-souveraines-oceans-documentaire-arte" element={<Meduses />} />
+            <Route path="donnees-scientifiques"          element={<Sources />} />
+            <Route path="contact"                        element={<Contact />} />
+            <Route path="carte-calanques"                element={<Carte />} />
+            <Route path="local-guide-marseille"          element={<LocalGuide />} />
+            <Route path="les-francais-yann-arthus-bertrand" element={<Yab />} />
+            {/* Redirections legacy — anciennes URLs */}
+            <Route path="home"        element={<Navigate to="/" replace />} />
+            <Route path="missions"    element={<Navigate to="/depollution-marine" replace />} />
+            <Route path="medias"      element={<Navigate to="/presse" replace />} />
+            <Route path="photos"      element={<Navigate to="/photographie-paysage-mer" replace />} />
+            <Route path="reseaux"     element={<Navigate to="/communaute" replace />} />
+            <Route path="twitter"     element={<Navigate to="/actualites" replace />} />
+            <Route path="arte"        element={<Navigate to="/sauver-marseille-documentaire-arte" replace />} />
+            <Route path="sources"     element={<Navigate to="/donnees-scientifiques" replace />} />
+            <Route path="carte"       element={<Navigate to="/carte-calanques" replace />} />
+            <Route path="local-guide" element={<Navigate to="/local-guide-marseille" replace />} />
             <Route path="*"    element={<NotFound />} />
           </Route>
         </Routes>

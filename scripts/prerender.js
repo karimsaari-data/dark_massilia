@@ -24,17 +24,19 @@ const distDir   = path.resolve(rootDir, 'dist');
 // ── Routes à prérendrer ─────────────────────────────────────────────────────
 const ROUTES = [
   '/',
-  '/missions',
-  '/medias',
-  '/photos',
+  '/depollution-marine',
+  '/presse',
+  '/photographie-paysage-mer',
   '/videos',
-  '/reseaux',
-  '/twitter',
-  '/arte',
-  '/sources',
+  '/communaute',
+  '/actualites',
+  '/sauver-marseille-documentaire-arte',
+  '/meduses-souveraines-oceans-documentaire-arte',
+  '/donnees-scientifiques',
   '/contact',
-  '/carte',
-  '/local-guide',
+  '/carte-calanques',
+  '/local-guide-marseille',
+  '/les-francais-yann-arthus-bertrand',
   '/admin',
 ];
 

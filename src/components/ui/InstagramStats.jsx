@@ -40,7 +40,30 @@ const YouTubeIcon = () => (
   </svg>
 );
 
+const PinterestIcon = () => (
+  <svg viewBox="0 0 24 24" className="w-7 h-7" fill="#E60023">
+    <path d="M12 0C5.373 0 0 5.373 0 12c0 5.084 3.163 9.426 7.627 11.174-.105-.949-.2-2.405.042-3.441.218-.937 1.407-5.965 1.407-5.965s-.359-.719-.359-1.782c0-1.668.967-2.914 2.171-2.914 1.023 0 1.518.769 1.518 1.69 0 1.029-.655 2.568-.994 3.995-.283 1.194.599 2.169 1.777 2.169 2.133 0 3.772-2.249 3.772-5.495 0-2.873-2.064-4.882-5.012-4.882-3.414 0-5.418 2.561-5.418 5.207 0 1.031.397 2.138.893 2.738a.36.36 0 0 1 .083.345l-.333 1.36c-.053.22-.174.267-.402.161-1.499-.698-2.436-2.889-2.436-4.649 0-3.785 2.75-7.262 7.929-7.262 4.163 0 7.398 2.967 7.398 6.931 0 4.136-2.607 7.464-6.227 7.464-1.216 0-2.359-.632-2.75-1.378l-.748 2.853c-.271 1.043-1.002 2.35-1.492 3.146C9.57 23.812 10.763 24 12 24c6.627 0 12-5.373 12-12S18.627 0 12 0z" />
+  </svg>
+);
+
+const LocalGuideIcon = () => (
+  <svg viewBox="0 0 24 24" className="w-7 h-7">
+    <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z" fill="#4285F4" />
+  </svg>
+);
+
+// Ordre : ligne 1 → Amoureux, Instagram, TikTok, Facebook
+//          ligne 2 → Pinterest, YouTube, X, Local Guide
 const SOCIAL_NETWORKS = [
+  {
+    name: 'Amoureux des Calanques',
+    handle: 'Groupe Facebook',
+    followers: '64,3K',
+    url: 'https://www.facebook.com/groups/calanque/',
+    bg: 'from-blue-600/20 to-cyan-600/20',
+    border: 'border-blue-400/20',
+    icon: <FacebookIcon />,
+  },
   {
     name: 'Instagram',
     handle: '@karimsaari',
@@ -60,15 +83,6 @@ const SOCIAL_NETWORKS = [
     icon: <TikTokIcon />,
   },
   {
-    name: 'X',
-    handle: '@dark_massilia',
-    followers: '1,6K',
-    url: 'https://x.com/dark_massilia',
-    bg: 'from-gray-900/60 to-black/60',
-    border: 'border-white/10',
-    icon: <XIcon />,
-  },
-  {
     name: 'Facebook',
     handle: 'Pages perso & pro',
     followers: '17,8K',
@@ -79,13 +93,14 @@ const SOCIAL_NETWORKS = [
     icon: <FacebookIcon />,
   },
   {
-    name: 'Amoureux des Calanques',
-    handle: 'Groupe Facebook',
-    followers: '64,3K',
-    url: 'https://www.facebook.com/groups/calanque/',
-    bg: 'from-blue-600/20 to-cyan-600/20',
-    border: 'border-blue-400/20',
-    icon: <FacebookIcon />,
+    name: 'Pinterest',
+    handle: 'Photographie_Marseille',
+    followers: '50K',
+    unit: 'vues / mois',
+    url: 'https://fr.pinterest.com/Photographie_Marseille/',
+    bg: 'from-red-600/20 to-rose-600/20',
+    border: 'border-red-500/20',
+    icon: <PinterestIcon />,
   },
   {
     name: 'YouTube',
@@ -93,15 +108,34 @@ const SOCIAL_NETWORKS = [
     followers: '1,33K',
     url: 'https://www.youtube.com/@dark.massilia',
     bg: 'from-red-700/20 to-red-600/20',
-    border: 'border-red-500/20',
+    border: 'border-red-700/20',
     icon: <YouTubeIcon />,
+  },
+  {
+    name: 'X',
+    handle: '@dark_massilia',
+    followers: '1,6K',
+    url: 'https://x.com/dark_massilia',
+    bg: 'from-gray-900/60 to-black/60',
+    border: 'border-white/10',
+    icon: <XIcon />,
+  },
+  {
+    name: 'Local Guides',
+    handle: 'Google Maps · Marseille',
+    followers: '183M',
+    unit: 'vues',
+    url: 'https://www.google.com/maps/contrib/114912564832630219145/photos/',
+    bg: 'from-blue-500/20 to-green-500/20',
+    border: 'border-green-500/20',
+    icon: <LocalGuideIcon />,
   },
 ];
 
 const SocialStats = () => {
   return (
     <div className="mb-8">
-      <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
+      <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
         {SOCIAL_NETWORKS.map((network) => (
           <a
             key={network.name}
@@ -115,7 +149,7 @@ const SocialStats = () => {
               {network.icon}
             </div>
 
-            {/* Followers */}
+            {/* Stat */}
             <div>
               <p className="text-2xl md:text-3xl font-bold text-white leading-none">
                 {network.followers}
@@ -123,7 +157,7 @@ const SocialStats = () => {
               {network.note && (
                 <p className="text-xs text-gray-500 mt-0.5">{network.note}</p>
               )}
-              <p className="text-xs text-gray-400 mt-1">abonnés</p>
+              <p className="text-xs text-gray-400 mt-1">{network.unit ?? 'abonnés'}</p>
             </div>
 
             {/* Name + handle */}

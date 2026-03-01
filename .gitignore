@@ -45,3 +45,5 @@ coverage
 
 # Claude Code (configs locales, worktrees)
 .claude/
+backup/
+nul

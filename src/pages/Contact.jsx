@@ -16,12 +16,12 @@ const Contact = () => {
           variants={STAGGER_CONTAINER}
           className="text-center mb-16"
         >
-          <motion.h1 variants={FADE_IN_UP} className="text-4xl md:text-5xl font-bold text-white mb-4">
-            <span className="gradient-text">Contact</span>
+          <motion.h1 variants={FADE_IN_UP} className="text-3xl md:text-4xl font-bold text-white mb-4">
+            Contact
+            <span className="block text-xl md:text-2xl font-medium text-ocean-teal mt-3">
+              Une question, un projet de collaboration ou envie de participer à nos missions ?
+            </span>
           </motion.h1>
-          <motion.p variants={FADE_IN_UP} className="text-gray-400 text-lg max-w-2xl mx-auto">
-            Une question, un projet de collaboration ou envie de participer à nos missions ? Contactez-nous !
-          </motion.p>
         </motion.div>
 
         {/* Section éditoriale SEO — intentions de contact & mots-clés transactionnels */}
@@ -140,6 +140,22 @@ const Contact = () => {
               <span>→</span>
             </a>
           </div>
+        </motion.div>
+
+        {/* Carte de visite */}
+        <motion.div
+          initial="hidden"
+          animate="visible"
+          variants={FADE_IN_UP}
+          className="max-w-4xl mx-auto mt-12"
+        >
+          <img
+            src="/assets/og-social-card.jpg"
+            alt="Dark Massilia — Karim Saari, Sentinelle de la Méditerranée. Apnée, dépollution et documentation des pollutions sous-marines sur le littoral marseillais."
+            width="1200"
+            height="630"
+            className="w-full rounded-2xl shadow-2xl"
+          />
         </motion.div>
       </div>
     </div>

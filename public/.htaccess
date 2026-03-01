@@ -2,13 +2,24 @@
   RewriteEngine On
   RewriteBase /
 
-  # ── Redirections 301 — legacy URLs (ex-site statique) ──────────────────
+  # ── Redirections 301 — nouvelles URLs SEO ───────────────────────────────
+  RewriteRule ^missions/?$    /depollution-marine              [R=301,L]
+  RewriteRule ^photos/?$      /photographie-paysage-mer        [R=301,L]
+  RewriteRule ^sources/?$     /donnees-scientifiques           [R=301,L]
+  RewriteRule ^medias/?$      /presse                          [R=301,L]
+  RewriteRule ^reseaux/?$     /communaute                      [R=301,L]
+  RewriteRule ^local-guide/?$ /local-guide-marseille           [R=301,L]
+  RewriteRule ^carte/?$       /carte-calanques                 [R=301,L]
+  RewriteRule ^arte/?$        /sauver-marseille-documentaire-arte [R=301,L]
+  RewriteRule ^twitter/?$     /actualites                      [R=301,L]
+
+  # ── Redirections 301 — legacy URLs (ex-site statique .html) ─────────────
   RewriteRule ^home/?$       /  [R=301,L]
   RewriteRule ^index\.html$  /  [R=301,L]
-  RewriteRule ^photos\.html$ /photos  [R=301,L]
-  RewriteRule ^videos\.html$ /videos  [R=301,L]
-  RewriteRule ^medias\.html$ /medias  [R=301,L]
-  RewriteRule ^arte\.html$   /arte    [R=301,L]
+  RewriteRule ^photos\.html$ /photographie-paysage-mer        [R=301,L]
+  RewriteRule ^videos\.html$ /videos                          [R=301,L]
+  RewriteRule ^medias\.html$ /presse                          [R=301,L]
+  RewriteRule ^arte\.html$   /sauver-marseille-documentaire-arte [R=301,L]
 
   # ── Prérendu statique — servir {route}/index.html si disponible ────────
   # Ex : /missions → missions/index.html (prérendu, indexable par les bots)

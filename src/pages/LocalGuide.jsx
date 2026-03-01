@@ -21,7 +21,7 @@ const GALLERY = [
 export default function LocalGuide() {
   return (
     <>
-      <SEO {...SEO_PAGES['/local-guide']} />
+      <SEO {...SEO_PAGES['/local-guide-marseille']} />
 
       <div className="min-h-screen pt-20 pb-16">
         <div className="container-custom">
@@ -216,7 +216,7 @@ export default function LocalGuide() {
               <ExternalLink className="w-4 h-4" />
             </a>
             <a
-              href="/carte"
+              href="/carte-calanques"
               className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full glass border border-ocean-teal/30 text-ocean-teal text-sm font-medium hover:bg-ocean-teal/10 transition-all duration-300"
             >
               <MapPin className="w-4 h-4" />

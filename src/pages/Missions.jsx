@@ -9,18 +9,18 @@ import { SEO_PAGES } from '../utils/seo';
 const Missions = () => {
   return (
     <div className="min-h-screen py-24">
-      <SEO {...SEO_PAGES['/missions']} />
+      <SEO {...SEO_PAGES['/depollution-marine']} />
       <div className="container-custom">
         {/* H1 SEO — visible, keyword-rich */}
         <motion.h1
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
-          className="text-4xl md:text-5xl font-bold text-white text-center mb-12 leading-tight"
+          className="text-3xl md:text-4xl font-bold text-white text-center mb-12 leading-tight"
         >
-          Missions de Dépollution en Apnée
+          Team Oxygen — Dépollution en apnée à Marseille
           <span className="block text-xl md:text-2xl font-medium text-ocean-teal mt-3">
-            Projet Sentinelle — Calanques de Marseille
+            Littoral marseillais · Côte Bleue · Calanques · Frioul · La Ciotat · Méditerranée
           </span>
         </motion.h1>
 
@@ -32,17 +32,19 @@ const Missions = () => {
           className="max-w-4xl mx-auto mb-12"
         >
           <motion.div variants={FADE_IN_UP} className="glass-strong rounded-3xl p-8 md:p-12">
-            <h2 className="text-2xl md:text-3xl font-bold text-white mb-6">
-              La Mission
+            <h2 className="text-2xl md:text-3xl font-bold text-white mb-2">
+              Notre mission sur le littoral méditerranéen
             </h2>
 
-            <div className="space-y-6 text-text-secondary leading-relaxed">
-              <p>
-                De la surface à 20 mètres de profondeur, nous intervenons en Méditerranée, sur l'ensemble du littoral de Marseille, de la Côte Bleue à La Ciotat, pour observer, documenter et extraire les déchets présents sur les fonds marins. Chaque immersion est structurée comme une opération de dépollution sous-marine et de collecte de données environnementales dans les calanques de Marseille.
+            <div className="space-y-4 text-text-secondary leading-relaxed">
+              <p className="font-medium text-white/80">
+                Association d'apnéistes éco-engagés basée à Marseille et intervenant sur l'ensemble du littoral marseillais : plages, ports, îles du Frioul, Calanques, Côte Bleue et jusqu'à La Ciotat.
               </p>
-
               <p>
-                Avec <strong className="text-ocean-teal">Team Oxygen</strong>, nous mobilisons l'apnée comme outil d'action écologique en Méditerranée. Notre engagement à Marseille vise à documenter l'état réel des fonds marins, sensibiliser à la pollution marine et agir concrètement pour la protection du littoral méditerranéen.
+                De la surface à 20 mètres de profondeur, <strong className="text-ocean-teal">Team Oxygen</strong> conduit des opérations structurées de dépollution sous-marine en apnée, combinant extraction de déchets, documentation visuelle et collecte de données environnementales sur les fonds marins de Méditerranée.
+              </p>
+              <p>
+                L'association est aujourd'hui présidée par <strong className="text-white">Karim Saari</strong>, apnéiste et photographe engagé à Marseille, impliqué dans les actions de dépollution du littoral méditerranéen depuis 10 ans.
               </p>
             </div>
           </motion.div>
@@ -133,7 +135,7 @@ const Missions = () => {
             </p>
             <div className="mt-6">
               <Link
-                to="/sources"
+                to="/donnees-scientifiques"
                 className="inline-flex items-center gap-2 text-ocean-teal hover:text-white transition-colors text-sm font-medium"
               >
                 Sources scientifiques
@@ -185,12 +187,29 @@ const Missions = () => {
           </p>
         </motion.div>
 
+        {/* Voir aussi — maillage interne */}
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 0.7 }}
+          className="text-center mb-8"
+        >
+          <p className="text-text-secondary text-sm mb-3">Nos missions en images et en vidéo</p>
+          <Link
+            to="/videos"
+            className="inline-flex items-center gap-2 text-ocean-teal hover:text-white transition-colors font-medium"
+          >
+            <span>Voir nos documentaires & vidéos de mission</span>
+            <ArrowLeft className="w-4 h-4 rotate-180" />
+          </Link>
+        </motion.div>
+
         {/* Back to Home */}
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 0.8 }}
-          className="text-center mt-16"
+          className="text-center mt-8"
         >
           <Link
             to="/"

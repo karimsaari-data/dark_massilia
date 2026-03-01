@@ -55,7 +55,9 @@ const SEO = ({ title, description, canonical, image, noindex = false, schema = n
       {/* ── JSON-LD Schema.org ── */}
       {schema && (
         <script
+          id="json-ld-schema"
           type="application/ld+json"
+          suppressHydrationWarning
           dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }}
         />
       )}

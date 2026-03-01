@@ -9,7 +9,7 @@ import { SEO_PAGES } from '../utils/seo';
 const Instagram = () => {
   return (
     <div className="min-h-screen py-24">
-      <SEO {...SEO_PAGES['/reseaux']} />
+      <SEO {...SEO_PAGES['/communaute']} />
       <div className="container-custom">
         {/* Section éditoriale SEO — autorité communautaire & engagement citoyen */}
         <motion.div
@@ -32,18 +32,20 @@ const Instagram = () => {
               <p>
                 De mes reportages en immersion sur{' '}
                 <strong className="text-white">YouTube</strong> à mes alertes environnementales sur{' '}
-                <strong className="text-white">Instagram</strong> (24,2K) et{' '}
-                <strong className="text-white">TikTok</strong> (21,9K), cette audience numérique
+                <strong className="text-white">Instagram</strong> (24,2K),{' '}
+                <strong className="text-white">TikTok</strong> (21,9K) et mes fiches thématiques
+                sur <strong className="text-white">Pinterest</strong>, cette audience numérique
                 prolonge le travail de terrain en donnant de la visibilité aux réalités observées
                 sous la surface.
               </p>
               <p>
                 À travers l'animation du groupe incontournable des{' '}
                 <strong className="text-ocean-teal">Amoureux des Calanques</strong> (plus de
-                64&nbsp;000 membres) et ma présence sur{' '}
+                64&nbsp;000 membres), ma présence sur{' '}
                 <strong className="text-white">Facebook</strong> (près de 18&nbsp;000 abonnés
-                cumulés) ou <strong className="text-white">X</strong>, j'informe, documente et
-                interpelle en temps réel.
+                cumulés), sur <strong className="text-white">X</strong> et en tant que{' '}
+                <strong className="text-white">Local Guide Google Maps</strong> à Marseille,
+                j'informe, documente et interpelle en temps réel.
               </p>
               <p>
                 Cette audience n'est pas un indicateur abstrait&nbsp;: elle représente une capacité
@@ -104,10 +106,10 @@ const Instagram = () => {
                 Sur <strong className="text-white">Instagram</strong> (<strong className="text-ocean-teal">@karimsaari</strong>) et <strong className="text-white">TikTok</strong> (<strong className="text-ocean-teal">@dark.massilia</strong>), je partage les coulisses de chaque mission : plongées en apnée, déchets remontés, faune des Calanques et paysages du littoral marseillais.
               </p>
               <p>
-                Le groupe Facebook <strong className="text-white">Amoureux des Calanques de Marseille à Port-Cros</strong> rassemble plus de <strong className="text-ocean-teal">64 000 membres</strong> passionnés par la protection du littoral. Sur <strong className="text-white">YouTube</strong>, retrouvez nos documentaires, rétrospectives et reportages de missions.
+                Le groupe Facebook <strong className="text-white">Amoureux des Calanques de Marseille à Port-Cros</strong> rassemble plus de <strong className="text-ocean-teal">64 000 membres</strong> passionnés par la protection du littoral. Sur <strong className="text-white">YouTube</strong>, retrouvez nos documentaires, rétrospectives et reportages de missions. Sur <strong className="text-white">Pinterest</strong>, des fiches thématiques sur la photographie et la nature marseillaise génèrent un trafic SEO naturel tout au long de l'année.
               </p>
               <p>
-                Au total, plus de <strong className="text-ocean-teal">130 000 citoyens engagés</strong> suivent et relaient notre combat pour la Méditerranée.
+                Au total, plus de <strong className="text-ocean-teal">130 000 citoyens engagés</strong> suivent et relaient notre combat pour la Méditerranée. Mon profil <strong className="text-white">Local Guide Google Maps</strong> complète cette présence en valorisant les lieux emblématiques du littoral.
               </p>
             </div>
             <div className="mt-6 flex flex-wrap gap-4">
@@ -136,6 +138,24 @@ const Instagram = () => {
                 className="inline-flex items-center gap-2 text-ocean-teal hover:text-white transition-colors font-medium"
               >
                 YouTube
+                <ExternalLink className="w-4 h-4" />
+              </a>
+              <a
+                href="https://fr.pinterest.com/Photographie_Marseille/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-2 text-ocean-teal hover:text-white transition-colors font-medium"
+              >
+                Pinterest
+                <ExternalLink className="w-4 h-4" />
+              </a>
+              <a
+                href="https://www.google.com/maps/contrib/114912564832630219145/photos/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-2 text-ocean-teal hover:text-white transition-colors font-medium"
+              >
+                Local Guide Google Maps
                 <ExternalLink className="w-4 h-4" />
               </a>
             </div>
