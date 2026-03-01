@@ -68,7 +68,7 @@ const NewsletterSection = () => {
           <div className="inline-flex flex-col items-center gap-2 mb-6">
             <div className="relative w-28 h-28 rounded-2xl overflow-hidden border border-ocean-teal/30 shadow-lg shadow-ocean-teal/10">
               <img
-                src="/images/portfolio/Mer/12.webp"
+                src="/images/Marseille-dark-massilia-plastique-pollution-projet-sentinelle-pos%C3%A9idon.webp"
                 alt="Cliché exclusif des fonds marins marseillais — Dark Massilia"
                 className="w-full h-full object-cover"
               />
