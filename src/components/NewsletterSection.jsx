@@ -51,24 +51,9 @@ const NewsletterSection = () => {
           }}
         />
 
-        <div className="relative z-10 grid md:grid-cols-[1fr_1.4fr] min-h-[380px]">
+        <div className="relative z-10 grid md:grid-cols-[1.4fr_1fr] min-h-[380px]">
 
-          {/* Image Poséidon — colonne gauche */}
-          <div className="relative h-56 md:h-auto">
-            <img
-              src="/images/Marseille-dark-massilia-plastique-pollution-projet-sentinelle-pos%C3%A9idon.webp"
-              alt="Cliché exclusif des fonds marins marseillais — Dark Massilia"
-              className="absolute inset-0 w-full h-full object-cover"
-            />
-            <div className="absolute inset-0 bg-gradient-to-r from-transparent to-[#0B1C2D]/80 pointer-events-none hidden md:block" />
-            <div className="absolute inset-0 bg-gradient-to-t from-[#0B1C2D]/80 to-transparent pointer-events-none md:hidden" />
-            {/* Badge offert */}
-            <span className="absolute bottom-4 left-1/2 -translate-x-1/2 md:left-4 md:translate-x-0 inline-flex items-center gap-1 px-3 py-1 rounded-full bg-ocean-teal/20 border border-ocean-teal/40 text-ocean-teal text-xs font-semibold whitespace-nowrap backdrop-blur-sm">
-              🎁 Offert à l'inscription
-            </span>
-          </div>
-
-          {/* Contenu — colonne droite */}
+          {/* Contenu — colonne gauche */}
           <div className="flex flex-col justify-center p-8 md:p-10 text-center md:text-left">
 
             {/* Icône */}
@@ -169,6 +154,23 @@ const NewsletterSection = () => {
               </p>
             )}
 
+          </div>
+
+          {/* Image Poséidon — colonne droite */}
+          <div className="relative h-56 md:h-auto order-first md:order-last">
+            <img
+              src="/images/Marseille-dark-massilia-plastique-pollution-projet-sentinelle-pos%C3%A9idon.webp"
+              alt="Cliché exclusif des fonds marins marseillais — Dark Massilia"
+              className="absolute inset-0 w-full h-full object-cover"
+            />
+            {/* Gradient desktop : fondu depuis le bord gauche (côté contenu) */}
+            <div className="absolute inset-0 bg-gradient-to-r from-[#0B1C2D]/80 to-transparent pointer-events-none hidden md:block" />
+            {/* Gradient mobile : fondu bas → transparent */}
+            <div className="absolute inset-0 bg-gradient-to-t from-[#0B1C2D]/80 to-transparent pointer-events-none md:hidden" />
+            {/* Badge offert — centré, hors des bords */}
+            <span className="absolute bottom-4 left-1/2 -translate-x-1/2 inline-flex items-center gap-1 px-3 py-1 rounded-full bg-ocean-teal/20 border border-ocean-teal/40 text-ocean-teal text-xs font-semibold whitespace-nowrap backdrop-blur-sm">
+              🎁 Offert à l'inscription
+            </span>
           </div>
         </div>
       </motion.div>
