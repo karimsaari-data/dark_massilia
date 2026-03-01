@@ -5,6 +5,7 @@ import { ArrowRight, Users, ChevronDown, Camera, MapPin } from 'lucide-react';
 import { FADE_IN_UP, FADE_IN, STAGGER_CONTAINER, TAGLINE, MISSION_STATEMENT, FACEBOOK_GROUP_MEMBERS } from '../utils/constants';
 import SEO from '../components/SEO';
 import { SEO_PAGES } from '../utils/seo';
+import NewsletterSection from '../components/NewsletterSection';
 import { useState, useEffect } from 'react';
 
 // Phrases choc sur la pollution marine
@@ -684,6 +685,9 @@ const Home = () => {
           </div>
         </motion.div>
       </section>
+
+      {/* Section Newsletter */}
+      <NewsletterSection />
 
       {/* Section FAQ — rich results FAQPage + contenu statique pour crawlers */}
       <section className="container-custom pb-12 md:pb-16">
