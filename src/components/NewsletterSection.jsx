@@ -59,7 +59,7 @@ const NewsletterSection = () => {
         <div className="relative z-10 flex flex-col items-center text-center px-8 py-16 md:py-20 w-full md:max-w-lg md:ml-auto md:pr-16 md:text-left md:items-start">
 
           {/* Badge */}
-          <span className="inline-flex items-center gap-1.5 px-4 py-1.5 rounded-full bg-ocean-teal/20 border border-ocean-teal/40 text-ocean-teal text-xs font-semibold mb-6 backdrop-blur-sm">
+          <span className="inline-flex items-center gap-1.5 px-4 py-1.5 rounded-full bg-white/15 border border-white/30 text-white text-xs font-semibold mb-6 backdrop-blur-sm">
             🎁 Offert à l'inscription
           </span>
 
@@ -107,7 +107,7 @@ const NewsletterSection = () => {
                         <span>Envoi…</span>
                       </>
                     ) : (
-                      <span>Recevoir mon cliché</span>
+                      <span>OK →</span>
                     )}
                   </button>
                 </motion.form>
