@@ -85,17 +85,73 @@ export default function Confidentialite() {
 
           {/* 3. Cookies */}
           <Section title="3. Cookies et traceurs">
-            <p>
-              Ce site <strong className="text-white">n'utilise pas de cookies de tracking, de publicité
-              ou d'analyse comportementale</strong>. Aucun service d'analytics tiers (Google Analytics,
-              Matomo…) n'est actif.
-            </p>
-            <p>
-              Des cookies techniques strictement nécessaires peuvent être créés par Supabase pour
-              la gestion des sessions lors de l'inscription à la newsletter.
-              Ces cookies ne nécessitent pas de consentement préalable (art. 82 de la loi
-              Informatique et Libertés).
-            </p>
+
+            <SubSection title="a. Cookies techniques strictement nécessaires">
+              <p>
+                Des cookies techniques peuvent être créés par{' '}
+                <strong className="text-white">Supabase</strong> pour la gestion des sessions
+                lors de l'inscription à la newsletter. Ces cookies ne nécessitent pas de
+                consentement préalable (art. 82 de la loi Informatique et Libertés).
+              </p>
+            </SubSection>
+
+            <SubSection title="b. Mesure d'audience — Google Analytics 4 (GA4)">
+              <p>
+                Ce site utilise <strong className="text-white">Google Analytics 4</strong> via
+                Google Tag Manager (GTM), déployé avec le{' '}
+                <strong className="text-white">Consent Mode v2 Advanced</strong>.
+              </p>
+              <p><Tag>Base légale</Tag> Consentement (art. 6.1.a RGPD) — recueilli via la bannière de cookies.</p>
+              <p>
+                <Tag>Sans consentement</Tag> GA4 opère en mode cookieless : aucun cookie de mesure
+                n'est déposé, aucun identifiant persistant n'est créé. Des pings anonymisés non
+                rattachables à un individu peuvent être transmis à des fins de modélisation statistique
+                agrégée par Google.
+              </p>
+              <p>
+                <Tag>Avec consentement</Tag> Collecte standard activée via les 4 signaux suivants :
+              </p>
+              <ul className="list-none pl-2 space-y-0.5">
+                {[
+                  ['analytics_storage', "Cookies d'analyse de navigation"],
+                  ['ad_storage', 'Cookies publicitaires'],
+                  ['ad_user_data', 'Données utilisateur à des fins publicitaires'],
+                  ['ad_personalization', 'Personnalisation publicitaire'],
+                ].map(([signal, desc]) => (
+                  <li key={signal} className="flex gap-2 items-baseline">
+                    <code className="text-ocean-teal/80 text-xs font-mono shrink-0">{signal}</code>
+                    <span className="text-gray-400 text-xs">— {desc}</span>
+                  </li>
+                ))}
+              </ul>
+              <p>
+                <Tag>Stockage du consentement</Tag> Vos choix sont enregistrés dans le{' '}
+                <code className="text-xs font-mono text-ocean-teal/80">localStorage</code> de votre
+                navigateur (clé{' '}
+                <code className="text-xs font-mono text-ocean-teal/80">dm_consent</code>), valable 13 mois.
+              </p>
+            </SubSection>
+
+            <SubSection title="c. Gestion de vos préférences cookies">
+              <p>
+                Une bannière de consentement s'affiche lors de votre première visite. Vous pouvez à
+                tout moment modifier vos choix via le lien{' '}
+                <strong className="text-white">"Gérer les cookies"</strong> en bas de page, ou en
+                cliquant sur{' '}
+                <button
+                  type="button"
+                  onClick={() => {
+                    if (typeof window !== 'undefined') {
+                      window.dispatchEvent(new CustomEvent('dm:open-consent-banner'));
+                    }
+                  }}
+                  className="text-ocean-teal/80 hover:text-ocean-teal underline underline-offset-2 transition-colors cursor-pointer"
+                >
+                  ce lien
+                </button>.
+              </p>
+            </SubSection>
+
           </Section>
 
           {/* 4. Droits */}
@@ -149,6 +205,7 @@ export default function Confidentialite() {
                     ['Supabase', 'Stockage des formulaires et de la newsletter', 'supabase.com/privacy'],
                     ['Brevo (Sendinblue)', "Routage et envoi des emails newsletter", 'brevo.com/fr/mentions-legales'],
                     ['Easy Hébergement', 'Hébergement du site web', 'easy-hebergement.fr'],
+                    ['Google LLC', "Mesure d'audience (Google Analytics 4) via Google Tag Manager", 'policies.google.com/privacy'],
                   ].map(([name, role, url]) => (
                     <tr key={name}>
                       <td className="py-2 pr-4 text-white/80 font-medium">{name}</td>
@@ -165,8 +222,9 @@ export default function Confidentialite() {
               </table>
             </div>
             <p className="text-xs text-gray-500 mt-2">
-              Supabase est hébergé sur AWS (eu-west-3 — Paris). Les données ne sont pas transférées hors UE.
-              Brevo est une société française dont les serveurs sont en Europe.
+              Supabase est hébergé sur AWS (eu-west-3 — Paris). Les données Supabase et Brevo restent en Europe.
+              Google LLC est établi aux États-Unis ; le transfert est encadré par les Clauses Contractuelles
+              Types (CCT) de la Commission européenne et le cadre EU-US Data Privacy Framework.
             </p>
           </Section>
 

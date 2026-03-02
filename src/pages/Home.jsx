@@ -593,6 +593,48 @@ const Home = () => {
         </motion.div>
       </section>
 
+      {/* CTA Photos */}
+      <section className="container-custom py-8 md:py-12">
+        <motion.div
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true }}
+          variants={FADE_IN_UP}
+          className="glass-strong rounded-3xl overflow-hidden border border-white/10 mb-16"
+        >
+          <div className="grid md:grid-cols-[1fr_1.2fr] gap-0">
+            {/* Contenu - Gauche */}
+            <div className="p-8 md:p-12 flex flex-col justify-center order-2 md:order-1">
+              <h2 className="text-3xl md:text-4xl font-bold text-white mb-6">
+                Explorer la galerie
+              </h2>
+              <p className="text-gray-300 text-lg mb-8 leading-relaxed">
+                Des dizaines de photos qui témoignent d'un territoire : la Méditerranée, les Calanques et la Provence. Des fonds marins aux falaises calcaires, entre beauté naturelle et réalités environnementales, chaque image raconte un lieu et son équilibre fragile.
+              </p>
+              <Link
+                to="/photographie-paysage-mer"
+                className="btn-primary inline-flex items-center gap-2 w-fit"
+              >
+                <span>Voir les photos</span>
+                <ArrowRight className="w-5 h-5" />
+              </Link>
+            </div>
+
+            {/* Image - Droite */}
+            <div className="relative h-64 md:h-auto min-h-[400px] order-1 md:order-2">
+              <img
+                src="/images/portfolio/Mer/54.webp"
+                alt="Photographie sous-marine Calanques de Marseille - Dark Massilia"
+                className="absolute inset-0 w-full h-full object-cover"
+                loading="lazy"
+                decoding="async"
+              />
+              <div className="absolute inset-0 bg-gradient-to-l from-transparent to-black/20" />
+            </div>
+          </div>
+        </motion.div>
+      </section>
+
       {/* ── CHIFFRES CLÉS ── */}
       <section className="py-16 md:py-24 relative overflow-hidden">
         {/* Fond distinct : gradient radial teal */}
@@ -683,47 +725,8 @@ const Home = () => {
         </div>
       </section>
 
-      {/* CTA Photos */}
-      <section className="container-custom py-8 md:py-12">
-        <motion.div
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true }}
-          variants={FADE_IN_UP}
-          className="glass-strong rounded-3xl overflow-hidden border border-white/10 mb-16"
-        >
-          <div className="grid md:grid-cols-[1fr_1.2fr] gap-0">
-            {/* Contenu - Gauche */}
-            <div className="p-8 md:p-12 flex flex-col justify-center order-2 md:order-1">
-              <h2 className="text-3xl md:text-4xl font-bold text-white mb-6">
-                Explorer la galerie
-              </h2>
-              <p className="text-gray-300 text-lg mb-8 leading-relaxed">
-                Des dizaines de photos qui témoignent d'un territoire : la Méditerranée, les Calanques et la Provence. Des fonds marins aux falaises calcaires, entre beauté naturelle et réalités environnementales, chaque image raconte un lieu et son équilibre fragile.
-              </p>
-              <Link
-                to="/photographie-paysage-mer"
-                className="btn-primary inline-flex items-center gap-2 w-fit"
-              >
-                <span>Voir les photos</span>
-                <ArrowRight className="w-5 h-5" />
-              </Link>
-            </div>
-
-            {/* Image - Droite */}
-            <div className="relative h-64 md:h-auto min-h-[400px] order-1 md:order-2">
-              <img
-                src="/images/portfolio/Mer/54.webp"
-                alt="Photographie sous-marine Calanques de Marseille - Dark Massilia"
-                className="absolute inset-0 w-full h-full object-cover"
-                loading="lazy"
-                decoding="async"
-              />
-              <div className="absolute inset-0 bg-gradient-to-l from-transparent to-black/20" />
-            </div>
-          </div>
-        </motion.div>
-      </section>
+      {/* Section Newsletter */}
+      <NewsletterSection />
 
       {/* CTA Carte Interactive */}
       <section className="container-custom py-8 md:py-12">
@@ -890,9 +893,6 @@ const Home = () => {
           </div>
         </motion.div>
       </section>
-
-      {/* Section Newsletter */}
-      <NewsletterSection />
 
       {/* Section FAQ — rich results FAQPage + contenu statique pour crawlers */}
       <section className="container-custom pb-12 md:pb-16">
