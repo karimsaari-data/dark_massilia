@@ -164,27 +164,14 @@ export default function LocalGuide() {
                 </p>
               </div>
 
-              <div className="border-l-2 border-ocean-teal/40 pl-6 py-2 space-y-2">
-                <p className="text-white font-semibold mb-3">Aujourd'hui :</p>
-                <ul className="space-y-1.5">
-                  <li className="flex items-center gap-2">
-                    <span className="w-1.5 h-1.5 rounded-full bg-ocean-teal flex-shrink-0" />
-                    Local Guide <strong className="text-white">Niveau 10</strong>
-                  </li>
-                  <li className="flex items-center gap-2">
-                    <span className="w-1.5 h-1.5 rounded-full bg-ocean-teal flex-shrink-0" />
-                    <strong className="text-white">22 000+</strong> contributions
-                  </li>
-                  <li className="flex items-center gap-2">
-                    <span className="w-1.5 h-1.5 rounded-full bg-ocean-teal flex-shrink-0" />
-                    <strong className="text-white">118 000+</strong> points
-                  </li>
-                  <li className="flex items-center gap-2">
-                    <span className="w-1.5 h-1.5 rounded-full bg-ocean-teal flex-shrink-0" />
-                    <strong className="text-white">183 millions</strong> de vues
-                  </li>
-                </ul>
-              </div>
+              <p>
+                Neuf ans plus tard, ces contributions ont généré plus de{' '}
+                <strong className="text-white">183 millions de vues</strong> sur Google Maps. Ce
+                chiffre signifie concrètement que des millions de personnes ont découvert les
+                Calanques, les sentiers du Parc National ou les criques du littoral à travers mes
+                photos et avis — avant même de les avoir visitées. Une portée que je n'aurais pas
+                imaginée en acceptant la caméra 360° au départ.
+              </p>
 
               <p>
                 Mon approche ne se limite pas à la cartographie. Je publie également les actions

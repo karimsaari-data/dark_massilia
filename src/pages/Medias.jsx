@@ -342,24 +342,24 @@ const Medias = () => {
         >
           <motion.div variants={FADE_IN_UP} className="glass-strong rounded-3xl p-8 md:p-12">
             <h2 className="text-2xl md:text-3xl font-bold text-white mb-6">
-              Couverture Médiatique
+              Ce que chaque parution change
             </h2>
             <div className="space-y-4 text-text-secondary leading-relaxed">
               <p>
-                Du documentaire <strong className="text-ocean-teal">ARTE</strong> diffusé à l'échelle européenne aux articles de{' '}
-                <strong className="text-white">La Provence</strong>,{' '}
-                <strong className="text-white">France Bleu</strong>,{' '}
-                <strong className="text-white">Actu.fr</strong> et{' '}
-                <strong className="text-white">Marcelle Média</strong>, en passant par la reconnaissance institutionnelle de la{' '}
-                <strong className="text-white">Fondation de la Mer</strong> et de la Ville de Marseille, le travail de Dark Massilia et du Projet Sentinelle est relayé par de nombreux médias régionaux et nationaux.
+                Un article dans <strong className="text-white">La Provence</strong>, une diffusion
+                sur <strong className="text-ocean-teal">ARTE</strong>, un passage sur{' '}
+                <strong className="text-white">France Bleu</strong>... Chaque parution n'est pas
+                une fin en soi. Elle ouvre des portes : de nouveaux bénévoles pour les missions,
+                des partenaires institutionnels, et un rappel constant que la pollution des fonds
+                marins méditerranéens n'est pas un problème abstrait.
               </p>
               <p>
-                Ces couvertures témoignent de l'impact concret de nos missions et contribuent à sensibiliser le grand public à la pollution des fonds marins méditerranéens.
-                Le reportage phare reste le{' '}
+                Le reportage qui a eu le plus d'impact reste le{' '}
                 <Link to="/sauver-marseille-documentaire-arte" className="text-ocean-teal hover:text-white transition-colors font-medium">
                   documentaire ARTE « Pollution : il faut sauver Marseille ! »
-                </Link>
-                , diffusé à l'échelle européenne.
+                </Link>{' '}
+                — diffusé à l'échelle européenne en 2024, il a donné une visibilité inattendue aux
+                Calanques et aux équipes qui s'y engagent au quotidien.
               </p>
             </div>
           </motion.div>

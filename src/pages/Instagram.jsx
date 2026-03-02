@@ -103,17 +103,28 @@ const Instagram = () => {
         >
           <motion.div variants={FADE_IN_UP} className="glass-strong rounded-3xl p-8 md:p-12">
             <h2 className="text-2xl md:text-3xl font-bold text-white mb-6">
-              Nos Réseaux Sociaux
+              Rejoindre les sentinelles
             </h2>
             <div className="space-y-4 text-text-secondary leading-relaxed">
               <p>
-                Sur <strong className="text-white">Instagram</strong> (<strong className="text-ocean-teal">@karimsaari</strong>) et <strong className="text-white">TikTok</strong> (<strong className="text-ocean-teal">@dark.massilia</strong>), je partage les coulisses de chaque mission : plongées en apnée, déchets remontés, faune des Calanques et paysages du littoral marseillais.
+                Suivre les missions, c'est déjà choisir son camp. Sur{' '}
+                <strong className="text-white">Instagram</strong> et{' '}
+                <strong className="text-white">TikTok</strong>, je publie les coulisses brutes :
+                kilos de déchets remontés, posidonie et faune des Calanques, et parfois des rorquals
+                au large de Marseille.
               </p>
               <p>
-                Le groupe Facebook <strong className="text-white">Amoureux des Calanques de Marseille à Port-Cros</strong> rassemble plus de <strong className="text-ocean-teal">64 000 membres</strong> passionnés par la protection du littoral. Sur <strong className="text-white">YouTube</strong>, retrouvez nos documentaires, rétrospectives et reportages de missions. Sur <strong className="text-white">Pinterest</strong>, des fiches thématiques sur la photographie et la nature marseillaise génèrent un trafic SEO naturel tout au long de l'année.
+                Rejoindre les{' '}
+                <strong className="text-ocean-teal">Amoureux des Calanques</strong> sur Facebook,
+                c'est intégrer une communauté de plus de{' '}
+                <strong className="text-white">64 000 personnes</strong> qui partagent, alertent et
+                défendent le même littoral. Sur <strong className="text-white">YouTube</strong>,
+                les archives de missions et les documentaires. Sur{' '}
+                <strong className="text-white">Pinterest</strong>, l'encyclopédie visuelle du
+                territoire.
               </p>
               <p>
-                Au total, plus de <strong className="text-ocean-teal">130 000 citoyens engagés</strong> suivent et relaient notre combat pour la Méditerranée. Mon profil <strong className="text-white">Local Guide Google Maps</strong> complète cette présence en valorisant les lieux emblématiques du littoral.
+                Toutes les portes sont ouvertes — choisissez la plateforme qui vous correspond.
               </p>
             </div>
             <div className="mt-6 flex flex-wrap gap-4">
