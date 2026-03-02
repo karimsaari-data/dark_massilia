@@ -29,7 +29,9 @@ const Sources    = lazy(() => import('./pages/Sources'));
 const Carte      = lazy(() => import('./pages/Carte'));
 const LocalGuide = lazy(() => import('./pages/LocalGuide'));
 const AdminCarte = lazy(() => import('./pages/AdminCarte'));
-const Yab        = lazy(() => import('./pages/Yab'));
+const Yab             = lazy(() => import('./pages/Yab'));
+const MentionsLegales = lazy(() => import('./pages/MentionsLegales'));
+const Confidentialite = lazy(() => import('./pages/Confidentialite'));
 
 const PageLoader = () => (
   <div className="min-h-screen flex items-center justify-center">
@@ -39,10 +41,18 @@ const PageLoader = () => (
 
 function NotFound() {
   return (
-    <div className="min-h-screen flex flex-col items-center justify-center text-center px-4">
-      <h1 className="text-6xl font-bold gradient-text mb-4">404</h1>
-      <p className="text-xl text-gray-300 mb-8">Cette page n'existe pas</p>
-      <a href="/" className="btn-primary">Retour à l'accueil</a>
+    <div className="min-h-[80vh] flex flex-col items-center justify-center text-center px-4 py-20">
+      <div className="glass-strong rounded-3xl border border-white/10 p-12 md:p-16 max-w-lg w-full">
+        <p className="text-ocean-teal text-sm font-semibold uppercase tracking-widest mb-4">Erreur</p>
+        <h1 className="text-8xl font-bold gradient-text mb-4">404</h1>
+        <p className="text-xl text-white font-semibold mb-3">Page introuvable</p>
+        <p className="text-gray-400 mb-10 leading-relaxed">
+          Cette page n'existe pas ou a été déplacée. Les fonds marins sont mieux cartographiés que ça.
+        </p>
+        <a href="/" className="btn-primary inline-flex items-center gap-2">
+          ← Retour à l'accueil
+        </a>
+      </div>
     </div>
   );
 }
@@ -71,6 +81,8 @@ export default function AppRoutes() {
             <Route path="carte-calanques"                element={<Carte />} />
             <Route path="local-guide-marseille"          element={<LocalGuide />} />
             <Route path="les-francais-yann-arthus-bertrand" element={<Yab />} />
+            <Route path="mentions-legales"                element={<MentionsLegales />} />
+            <Route path="confidentialite"                 element={<Confidentialite />} />
             {/* Redirections legacy — anciennes URLs */}
             <Route path="home"        element={<Navigate to="/" replace />} />
             <Route path="missions"    element={<Navigate to="/depollution-marine" replace />} />

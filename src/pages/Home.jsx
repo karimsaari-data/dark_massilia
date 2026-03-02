@@ -617,7 +617,7 @@ const Home = () => {
                   style={{ boxShadow: 'inset 0 0 30px rgba(0,171,168,0.06)' }} />
 
                 {/* Valeur animée */}
-                <div className="text-3xl md:text-4xl lg:text-5xl font-bold gradient-text mb-1 tabular-nums">
+                <div className="text-3xl md:text-4xl lg:text-5xl font-bold gradient-text mb-1 tabular-nums pb-1">
                   <StatCounter
                     end={stat.end}
                     suffix={stat.suffix}

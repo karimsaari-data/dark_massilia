@@ -61,6 +61,8 @@ const navColumns = [
     links: [
       { to: '/contact', text: 'Collaborer avec nous' },
       { to: '/#newsletter', text: 'Newsletter', anchor: true },
+      { to: '/mentions-legales', text: 'Mentions légales' },
+      { to: '/confidentialite', text: 'Confidentialité' },
     ],
   },
 ];
@@ -140,9 +142,28 @@ const Footer = () => {
         </div>
 
         {/* Copyright - Centered */}
-        <div className="text-center">
+        <div className="text-center space-y-1">
           <p className="text-xs text-gray-400">
             © {currentYear} Dark Massilia · Karim Saari
+          </p>
+          <p className="text-xs text-gray-500">
+            Président de{' '}
+            <a
+              href="https://www.team-oxygen.com/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="hover:text-ocean-teal transition-colors duration-200"
+            >
+              Team Oxygen
+            </a>
+          </p>
+          <p className="text-xs text-gray-500">
+            <a
+              href="mailto:email@karimsaari.com"
+              className="hover:text-ocean-teal transition-colors duration-200"
+            >
+              email@karimsaari.com
+            </a>
           </p>
         </div>
       </div>

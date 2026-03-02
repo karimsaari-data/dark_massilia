@@ -37,6 +37,8 @@ const ROUTES = [
   '/carte-calanques',
   '/local-guide-marseille',
   '/les-francais-yann-arthus-bertrand',
+  '/mentions-legales',
+  '/confidentialite',
   '/admin',
 ];
 
