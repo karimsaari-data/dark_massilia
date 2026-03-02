@@ -56,13 +56,16 @@ const Instagram = () => {
 
             {/* Photo panoramique dans le bloc */}
             <div className="mt-8 w-full overflow-hidden rounded-2xl">
-              <img
-                src="/images/130000_sentinelles_Marseille.jpg"
-                alt="La communauté Dark Massilia — 130 000 sentinelles de la Méditerranée à Marseille"
-                className="w-full object-cover object-top"
-                style={{ aspectRatio: '21/9' }}
-                loading="lazy"
-              />
+              <picture>
+                <source srcSet="/images/130000_sentinelles_Marseille.webp" type="image/webp" />
+                <img
+                  src="/images/130000_sentinelles_Marseille.jpg"
+                  alt="La communauté Dark Massilia — 130 000 sentinelles de la Méditerranée à Marseille"
+                  className="w-full object-cover object-top"
+                  style={{ aspectRatio: '21/9' }}
+                  loading="lazy"
+                />
+              </picture>
             </div>
           </motion.div>
         </motion.div>

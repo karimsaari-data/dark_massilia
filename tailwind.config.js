@@ -16,6 +16,12 @@ export default {
           teal: '#00ABA8',     // Turquoise - accent principal
           blue: '#0091ff',     // Bleu action (conservé)
         },
+        // Palette de texte — WCAG AA sur fonds sombres (#0B1C2D)
+        text: {
+          primary:   '#f8fafc', // slate-50  — titres, ratio ≈ 19:1
+          secondary: '#cbd5e1', // slate-300 — corps de texte, ratio ≈ 10:1
+          muted:     '#94a3b8', // slate-400 — labels / captions, ratio ≈ 6:1
+        },
       },
       fontFamily: {
         sans: ['Inter', 'system-ui', '-apple-system', 'sans-serif'],

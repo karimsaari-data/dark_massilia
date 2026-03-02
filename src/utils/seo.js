@@ -317,14 +317,56 @@ export const SEO_PAGES = {
     description:
       'Retrouvez mes passages presse et documentaires diffusés à la télévision (ARTE, Échappées Belles). Les médias s\'engagent pour la Méditerranée.',
     canonical: `${BASE_URL}/presse`,
-    schema: breadcrumb('Presse & Médias', '/presse'),
+    schema: {
+      '@context': 'https://schema.org',
+      '@graph': [
+        breadcrumb('Presse & Médias', '/presse'),
+        {
+          '@type': 'CollectionPage',
+          name: 'Presse & Médias — Karim Saari',
+          description:
+            'Couvertures presse et passages TV (ARTE, Échappées Belles, Yann Arthus-Bertrand, Fondation de la Mer) de Karim Saari, apnéiste et défenseur de la Méditerranée.',
+          url: `${BASE_URL}/presse`,
+          author: {
+            '@type': 'Person',
+            name: 'Karim Saari',
+            alternateName: 'Dark Massilia',
+            url: BASE_URL,
+          },
+        },
+      ],
+    },
   },
   '/communaute': {
     title: 'Rejoignez notre Communauté de 130 000 Sentinelles',
     description:
       'La protection de la Méditerranée repose sur une mobilisation collective. Rejoignez nos 130 000 sentinelles pour suivre nos actions en direct.',
     canonical: `${BASE_URL}/communaute`,
-    schema: breadcrumb('Communauté de 130 000 Sentinelles', '/communaute'),
+    schema: {
+      '@context': 'https://schema.org',
+      '@graph': [
+        breadcrumb('Communauté de 130 000 Sentinelles', '/communaute'),
+        {
+          '@type': 'ProfilePage',
+          name: 'Communauté Dark Massilia — 130 000 Sentinelles',
+          description:
+            'La communauté engagée de Karim Saari pour la protection de la Méditerranée. 130 000 sentinelles réunies sur Facebook, Instagram, TikTok et YouTube.',
+          url: `${BASE_URL}/communaute`,
+          mainEntity: {
+            '@type': 'Person',
+            name: 'Karim Saari',
+            alternateName: 'Dark Massilia',
+            url: BASE_URL,
+            sameAs: [
+              'https://www.facebook.com/groups/calanque/',
+              'https://www.instagram.com/karimsaari/',
+              'https://www.tiktok.com/@dark.massilia',
+              'https://www.youtube.com/@dark.massilia',
+            ],
+          },
+        },
+      ],
+    },
   },
   '/sauver-marseille-documentaire-arte': {
     title: 'Pollution : il faut sauver Marseille ! — Documentaire ARTE',

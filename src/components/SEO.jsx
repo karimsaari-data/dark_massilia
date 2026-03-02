@@ -30,6 +30,7 @@ const SEO = ({ title, description, canonical, image, noindex = false, schema = n
       {/* ── Balises fondamentales ── */}
       <title>{metaTitle}</title>
       <meta name="description" content={metaDescription} />
+      <meta name="author"      content="Karim Saari" />
       <link rel="canonical" href={metaCanonical} />
 
       {/* ── Open Graph (Facebook, LinkedIn, WhatsApp…) ── */}

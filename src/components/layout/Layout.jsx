@@ -5,6 +5,13 @@ import Footer from './Footer';
 const Layout = () => {
   return (
     <div className="min-h-screen flex flex-col">
+      {/* Skip link — accessibilité clavier / lecteurs d'écran (WCAG 2.1 AA) */}
+      <a
+        href="#main-content"
+        className="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-[100] focus:px-4 focus:py-2 focus:rounded-lg focus:bg-ocean-teal focus:text-black focus:font-semibold focus:shadow-lg"
+      >
+        Aller au contenu principal
+      </a>
       {/* Fixed background image - Calanques de Marseille */}
       <div className="fixed inset-0 pointer-events-none z-0">
         {/* Background image with parallax effect */}
@@ -28,7 +35,7 @@ const Layout = () => {
       {/* Content */}
       <div className="relative z-10 flex flex-col min-h-screen">
         <Navbar />
-        <main className="flex-grow pt-16 md:pt-20">
+        <main id="main-content" className="flex-grow pt-16 md:pt-20">
           <Outlet />
         </main>
         <Footer />

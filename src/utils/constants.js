@@ -27,10 +27,11 @@ export const NAV_LINKS = [
   { name: 'Photos', path: '/photographie-paysage-mer', icon: 'Camera' },
   { name: 'Médias', path: '/presse', icon: 'Film' },
   { name: 'Réseaux', path: '/communaute', icon: 'Share2' },
-  { name: 'Local Guides', path: '/local-guide-marseille', icon: 'Navigation' },
   { name: 'Carte', path: '/carte-calanques', icon: 'MapPin' },
   { name: 'Contact', path: '/contact', icon: 'Mail' },
-  { name: 'Références', path: '/donnees-scientifiques', icon: 'BookOpen' },
+  // Menu mobile uniquement — pages secondaires
+  { name: 'Local Guides', path: '/local-guide-marseille', icon: 'Navigation', mobileOnly: true },
+  { name: 'Références', path: '/donnees-scientifiques', icon: 'BookOpen', mobileOnly: true },
 ];
 
 export const TAGLINE = 'Une Mer · Une Ville · Une Mission';

@@ -94,9 +94,9 @@ const Navbar = () => {
               </div>
             </Link>
 
-            {/* Desktop Navigation — scrollable horizontal si trop d'onglets */}
-            <div className="hidden md:flex items-center gap-0.5 overflow-x-auto scrollbar-hide flex-1 justify-end ml-4">
-              {NAV_LINKS.map((link) => {
+            {/* Desktop Navigation — 6 items max, pages secondaires en mobile uniquement */}
+            <div className="hidden md:flex items-center gap-0.5 flex-1 justify-end ml-4">
+              {NAV_LINKS.filter(link => !link.mobileOnly).map((link) => {
                 const Icon = iconMap[link.icon];
                 const isActive = location.pathname === link.path;
 

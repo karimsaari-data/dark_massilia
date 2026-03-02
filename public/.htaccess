@@ -21,6 +21,14 @@
   RewriteRule ^medias\.html$ /presse                          [R=301,L]
   RewriteRule ^arte\.html$   /sauver-marseille-documentaire-arte [R=301,L]
 
+  # ── Redirections 301 — legacy URLs avec préfixe /home/ (ex-site statique) ──
+  RewriteRule ^home/photos/?$   /photographie-paysage-mer           [R=301,L]
+  RewriteRule ^home/videos/?$   /videos                             [R=301,L]
+  RewriteRule ^home/medias/?$   /presse                             [R=301,L]
+  RewriteRule ^home/arte/?$     /sauver-marseille-documentaire-arte [R=301,L]
+  RewriteRule ^home/carte/?$    /carte-calanques                    [R=301,L]
+  RewriteRule ^home/twitter/?$  /actualites                         [R=301,L]
+
   # ── Prérendu statique — servir {route}/index.html si disponible ────────
   # Ex : /missions → missions/index.html (prérendu, indexable par les bots)
   RewriteCond %{REQUEST_FILENAME} !-f

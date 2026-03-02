@@ -55,11 +55,14 @@ export default function LocalGuide() {
             transition={{ duration: 0.6, delay: 0.15 }}
             className="glass rounded-2xl p-5 mb-4 flex items-center gap-6 border border-white/5"
           >
-            <img
-              src="/images/9ans.gif"
-              alt="Google Local Guides — email anniversaire 9 ans"
-              className="w-24 md:w-28 flex-shrink-0 rounded-xl"
-            />
+            <picture>
+              <source srcSet="/images/9ans.webp" type="image/webp" />
+              <img
+                src="/images/9ans.gif"
+                alt="Google Local Guides — email anniversaire 9 ans"
+                className="w-24 md:w-28 flex-shrink-0 rounded-xl"
+              />
+            </picture>
             <div>
               <p className="text-xs text-text-muted uppercase tracking-widest mb-1">Anniversaire Google</p>
               <p className="text-white font-semibold text-lg leading-snug">Ces 9 dernières années</p>
@@ -123,7 +126,7 @@ export default function LocalGuide() {
               {/* Logo Street View Trusted */}
               <div className="flex items-center gap-4 py-2">
                 <img
-                  src="/images/logo-trusted.png"
+                  src="/images/logo-trusted.webp"
                   alt="Google Street View Trusted — certification contributeur"
                   className="h-10 object-contain opacity-80"
                 />
