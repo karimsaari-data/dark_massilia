@@ -1,10 +1,9 @@
 import { motion } from 'framer-motion';
-import { ArrowLeft, ExternalLink, Play } from 'lucide-react';
+import { ArrowLeft, ArrowRight, ExternalLink, Play } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { FADE_IN_UP, STAGGER_CONTAINER } from '../utils/constants';
 import SEO from '../components/SEO';
 import { SEO_PAGES } from '../utils/seo';
-import NewsletterSection from '../components/NewsletterSection';
 
 const Medias = () => {
   // Données extraites de l'ancien site medias.html
@@ -366,21 +365,26 @@ const Medias = () => {
           </motion.div>
         </motion.div>
 
-        {/* Newsletter */}
-        <NewsletterSection />
-
-        {/* Back to Home */}
+        {/* CTAs finaux */}
         <motion.div
           initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 0.8 }}
-          className="text-center mt-16"
+          whileInView={{ opacity: 1 }}
+          viewport={{ once: true }}
+          transition={{ delay: 0.2 }}
+          className="flex flex-col sm:flex-row items-center justify-center gap-4 mt-16 mb-8"
         >
+          <Link
+            to="/#newsletter"
+            className="btn-primary inline-flex items-center gap-2"
+          >
+            <span>S'inscrire à la newsletter</span>
+            <ArrowRight className="w-4 h-4" aria-hidden="true" />
+          </Link>
           <Link
             to="/"
             className="btn-secondary inline-flex items-center gap-2 group"
           >
-            <ArrowLeft className="w-4 h-4 group-hover:-translate-x-1 transition-transform" />
+            <ArrowLeft className="w-4 h-4 group-hover:-translate-x-1 transition-transform" aria-hidden="true" />
             <span>Retour à l'Accueil</span>
           </Link>
         </motion.div>
