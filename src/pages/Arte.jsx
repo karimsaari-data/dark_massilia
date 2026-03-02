@@ -144,18 +144,25 @@ const Arte = () => {
           </motion.a>
         </motion.div>
 
-        {/* Back to Medias */}
+        {/* CTAs — Continuer la navigation */}
         <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.8 }}
-          className="text-center mt-16"
+          className="mt-16 flex flex-col sm:flex-row items-center justify-center gap-4"
         >
+          <Link
+            to="/donnees-scientifiques"
+            className="btn-primary inline-flex items-center gap-2"
+          >
+            <span>Données scientifiques</span>
+            <ArrowLeft className="w-4 h-4 rotate-180" aria-hidden="true" />
+          </Link>
           <Link
             to="/presse"
             className="btn-secondary inline-flex items-center gap-2 group"
           >
-            <ArrowLeft className="w-4 h-4 group-hover:-translate-x-1 transition-transform" />
+            <ArrowLeft className="w-4 h-4 group-hover:-translate-x-1 transition-transform" aria-hidden="true" />
             <span>Retour aux Médias</span>
           </Link>
         </motion.div>

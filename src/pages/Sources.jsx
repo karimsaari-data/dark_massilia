@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion';
-import { ExternalLink, BookOpen, Globe, FileText } from 'lucide-react';
+import { ExternalLink, BookOpen, Globe, FileText, ArrowLeft } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { FADE_IN_UP, STAGGER_CONTAINER } from '../utils/constants';
 import SEO from '../components/SEO';
@@ -536,6 +536,29 @@ const Sources = () => {
               </p>
             </div>
           </motion.div>
+        </motion.div>
+
+        {/* CTAs — Continuer la navigation */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.4 }}
+          className="mt-12 mb-8 flex flex-col sm:flex-row items-center justify-center gap-4"
+        >
+          <Link
+            to="/sauver-marseille-documentaire-arte"
+            className="btn-primary inline-flex items-center gap-2"
+          >
+            <span>Documentaire ARTE</span>
+            <ArrowLeft className="w-4 h-4 rotate-180" aria-hidden="true" />
+          </Link>
+          <Link
+            to="/videos"
+            className="btn-secondary inline-flex items-center gap-2 group"
+          >
+            <span>Voir nos vidéos</span>
+            <ArrowLeft className="w-4 h-4 rotate-180 group-hover:translate-x-1 transition-transform" aria-hidden="true" />
+          </Link>
         </motion.div>
 
       </div>

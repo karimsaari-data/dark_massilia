@@ -363,6 +363,27 @@ const Home = () => {
                 decoding="async"
               />
             </motion.div>
+
+            {/* Hero CTAs */}
+            <motion.div
+              variants={FADE_IN_UP}
+              className="flex flex-col sm:flex-row items-center justify-center gap-4 mt-4"
+            >
+              <Link
+                to="/depollution-marine"
+                className="btn-primary inline-flex items-center gap-2"
+              >
+                <span>Nos missions de dépollution</span>
+                <ArrowRight className="w-4 h-4" aria-hidden="true" />
+              </Link>
+              <a
+                href="#newsletter"
+                className="btn-secondary inline-flex items-center gap-2"
+              >
+                <span>Rejoindre la newsletter</span>
+                <ArrowRight className="w-4 h-4" aria-hidden="true" />
+              </a>
+            </motion.div>
           </motion.div>
         </div>
 
