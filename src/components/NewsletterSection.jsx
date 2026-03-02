@@ -52,7 +52,7 @@ const NewsletterSection = () => {
             }}
           />
           {/* Overlay : sombre en bas (form), lumineux en haut (image) */}
-          <div className="absolute inset-0 bg-gradient-to-b from-[#0B1C2D]/30 via-[#0B1C2D]/60 to-[#0B1C2D]/90" />
+          <div className="absolute inset-0 bg-gradient-to-b from-[#0B1C2D]/30 via-[#0B1C2D]/60 to-[#0B1C2D]/90" aria-hidden="true" />
         </div>
 
         {/* Contenu centré */}
@@ -87,23 +87,29 @@ const NewsletterSection = () => {
                   onSubmit={handleSubmit}
                   className="flex flex-col sm:flex-row gap-3"
                 >
+                  <label htmlFor="newsletter-email" className="sr-only">
+                    Adresse email
+                  </label>
                   <input
+                    id="newsletter-email"
                     type="email"
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
                     placeholder="ton@email.com"
                     required
                     disabled={status === 'loading'}
+                    aria-describedby={status === 'error' ? 'newsletter-error' : undefined}
                     className="flex-1 px-5 py-3.5 rounded-full bg-white/10 border border-white/25 text-white placeholder-white/40 focus:outline-none focus:border-ocean-teal focus:bg-white/15 transition-all text-base disabled:opacity-60 backdrop-blur-sm"
                   />
                   <button
                     type="submit"
                     disabled={status === 'loading'}
+                    aria-busy={status === 'loading'}
                     className="btn-primary flex items-center justify-center gap-2 px-7 py-3.5 whitespace-nowrap disabled:opacity-60 disabled:cursor-not-allowed"
                   >
                     {status === 'loading' ? (
                       <>
-                        <Loader2 className="w-4 h-4 animate-spin" />
+                        <Loader2 className="w-4 h-4 animate-spin" aria-hidden="true" />
                         <span>Envoi…</span>
                       </>
                     ) : (
@@ -116,11 +122,14 @@ const NewsletterSection = () => {
               {status === 'success' && (
                 <motion.div
                   key="success"
+                  role="status"
+                  aria-live="polite"
+                  aria-atomic="true"
                   initial={{ opacity: 0, scale: 0.95 }}
                   animate={{ opacity: 1, scale: 1 }}
                   className="flex items-center justify-center gap-4"
                 >
-                  <div className="inline-flex items-center justify-center w-14 h-14 rounded-full bg-ocean-teal/20 border border-ocean-teal/40 flex-shrink-0">
+                  <div className="inline-flex items-center justify-center w-14 h-14 rounded-full bg-ocean-teal/20 border border-ocean-teal/40 flex-shrink-0" aria-hidden="true">
                     <CheckCircle className="w-7 h-7 text-ocean-teal" />
                   </div>
                   <div className="text-left">
@@ -137,11 +146,14 @@ const NewsletterSection = () => {
               {status === 'already' && (
                 <motion.div
                   key="already"
+                  role="status"
+                  aria-live="polite"
+                  aria-atomic="true"
                   initial={{ opacity: 0, scale: 0.95 }}
                   animate={{ opacity: 1, scale: 1 }}
                   className="flex items-center justify-center gap-4"
                 >
-                  <div className="inline-flex items-center justify-center w-14 h-14 rounded-full bg-ocean-teal/20 border border-ocean-teal/40 flex-shrink-0">
+                  <div className="inline-flex items-center justify-center w-14 h-14 rounded-full bg-ocean-teal/20 border border-ocean-teal/40 flex-shrink-0" aria-hidden="true">
                     <CheckCircle className="w-7 h-7 text-ocean-teal" />
                   </div>
                   <div className="text-left">
@@ -160,11 +172,13 @@ const NewsletterSection = () => {
             {/* Message d'erreur */}
             {status === 'error' && errorMsg && (
               <motion.p
+                id="newsletter-error"
+                role="alert"
                 initial={{ opacity: 0, y: 4 }}
                 animate={{ opacity: 1, y: 0 }}
                 className="flex items-center justify-center gap-2 text-red-400 text-sm mt-3"
               >
-                <AlertCircle className="w-4 h-4 flex-shrink-0" />
+                <AlertCircle className="w-4 h-4 flex-shrink-0" aria-hidden="true" />
                 {errorMsg}
               </motion.p>
             )}

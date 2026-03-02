@@ -30,7 +30,6 @@
   RewriteRule ^home/twitter/?$  /actualites                         [R=301,L]
 
   # ── Prérendu statique — servir {route}/index.html si disponible ────────
-  # Ex : /missions → missions/index.html (prérendu, indexable par les bots)
   RewriteCond %{REQUEST_FILENAME} !-f
   RewriteCond %{REQUEST_URI} !/$
   RewriteCond %{DOCUMENT_ROOT}%{REQUEST_URI}/index.html -f
@@ -42,62 +41,28 @@
   RewriteRule ^ index.html [L]
 </IfModule>
 
-# ── Servir les assets pré-compressés Brotli / Gzip (générés par Vite) ──────
-# Priorité : Brotli (.br) > Gzip (.gz) > fichier brut
-<IfModule mod_rewrite.c>
-  RewriteEngine On
-
-  # Brotli — si le navigateur l'accepte et que le .br existe
-  RewriteCond %{HTTP:Accept-Encoding} br
-  RewriteCond %{REQUEST_FILENAME}\.br -f
-  RewriteRule ^(.+)\.(js|css|html|json|svg|woff2?)$ $1.$2.br [L]
-
-  # Gzip — fallback si pas de Brotli et que le .gz existe
-  RewriteCond %{HTTP:Accept-Encoding} gzip
-  RewriteCond %{REQUEST_FILENAME}\.gz -f
-  RewriteRule ^(.+)\.(js|css|html|json|svg|woff2?)$ $1.$2.gz [L]
-</IfModule>
-
-# Headers Content-Encoding + Content-Type corrects pour les fichiers compressés
-<IfModule mod_headers.c>
-  <FilesMatch "\.js\.br$">
-    Header set Content-Encoding br
-    Header set Content-Type "application/javascript"
-  </FilesMatch>
-  <FilesMatch "\.css\.br$">
-    Header set Content-Encoding br
-    Header set Content-Type "text/css"
-  </FilesMatch>
-  <FilesMatch "\.js\.gz$">
-    Header set Content-Encoding gzip
-    Header set Content-Type "application/javascript"
-  </FilesMatch>
-  <FilesMatch "\.css\.gz$">
-    Header set Content-Encoding gzip
-    Header set Content-Type "text/css"
-  </FilesMatch>
-</IfModule>
-
-# Enable GZIP compression (dynamique — fallback si fichiers .gz absents)
+# ── Compression GZIP dynamique ──────────────────────────────────────────────
 <IfModule mod_deflate.c>
-  AddOutputFilterByType DEFLATE text/html text/plain text/xml text/css text/javascript application/javascript application/json
+  AddOutputFilterByType DEFLATE text/html text/plain text/xml text/css text/javascript application/javascript application/json image/svg+xml
 </IfModule>
 
-# Browser caching
+# ── Cache navigateur ────────────────────────────────────────────────────────
 <IfModule mod_expires.c>
   ExpiresActive On
   ExpiresByType image/webp "access plus 1 year"
   ExpiresByType image/jpg "access plus 1 year"
   ExpiresByType image/jpeg "access plus 1 year"
   ExpiresByType image/png "access plus 1 year"
+  ExpiresByType font/woff2 "access plus 1 year"
   ExpiresByType text/css "access plus 1 month"
   ExpiresByType application/javascript "access plus 1 month"
   ExpiresByType text/html "access plus 0 seconds"
 </IfModule>
 
-# Security headers
+# ── Security headers ────────────────────────────────────────────────────────
 <IfModule mod_headers.c>
   Header set X-Content-Type-Options "nosniff"
   Header set X-Frame-Options "SAMEORIGIN"
   Header set X-XSS-Protection "1; mode=block"
+  Header append Vary Accept-Encoding
 </IfModule>

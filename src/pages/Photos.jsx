@@ -4,6 +4,7 @@ import { X, ExternalLink, ChevronLeft, ChevronRight, Waves, TreePine } from 'luc
 import { FADE_IN_UP, STAGGER_CONTAINER } from '../utils/constants';
 import SEO from '../components/SEO';
 import { SEO_PAGES } from '../utils/seo';
+import useFocusTrap from '../hooks/useFocusTrap';
 
 const merIds = [2, 4, 6, 10, 12, 13, 14, 20, 22, 23, 30, 32, 33, 35, 39, 44, 45, 46, 47, 50, 51, 52, 54, 55, 56, 57, 58, 59, 60, 61, 62, 63, 64, 65, 66, 67, 68, 69, 70, 71, 72, 73, 74, 75, 76, 77, 78, 79, 80, 81, 82, 83, 85, 86, 87, 88, 89, 90, 91, 92, 93, 94, 95, 96, 97, 98];
 const terreIds = [1, 3, 5, 7, 8, 9, 15, 16, 17, 18, 19, 21, 24, 25, 26, 27, 28, 29, 31, 34, 36, 37, 38, 40, 41, 42, 43, 48, 49, 53, 54];
@@ -142,7 +143,7 @@ const shuffle = (arr) => {
 const SectionTitle = ({ icon: Icon, title, count }) => (
   <motion.div variants={FADE_IN_UP} className="flex items-center gap-3 mb-8">
     <div className="flex items-center gap-3">
-      <Icon className="w-6 h-6 text-ocean-teal" />
+      <Icon className="w-6 h-6 text-ocean-teal" aria-hidden="true" />
       <h2 className="text-2xl font-bold text-white">{title}</h2>
       <span className="text-sm text-white/40 font-medium">({count})</span>
     </div>
@@ -153,11 +154,13 @@ const SectionTitle = ({ icon: Icon, title, count }) => (
 const PhotoGrid = ({ images, onOpenLightbox }) => (
   <div className="columns-1 md:columns-2 lg:columns-3 xl:columns-4 gap-4 space-y-4">
     {images.map((image, index) => (
-      <motion.div
+      <motion.button
         key={image.uid}
+        type="button"
         variants={FADE_IN_UP}
-        className="break-inside-avoid cursor-pointer group relative overflow-hidden rounded-xl"
+        className="block w-full break-inside-avoid cursor-pointer group relative overflow-hidden rounded-xl focus-ring"
         onClick={() => onOpenLightbox(image)}
+        aria-label={`Ouvrir la photo : ${image.alt}`}
       >
         <img
           src={image.src}
@@ -168,8 +171,11 @@ const PhotoGrid = ({ images, onOpenLightbox }) => (
           loading={index < 4 ? 'eager' : 'lazy'}
           decoding="async"
         />
-        <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-      </motion.div>
+        <div
+          className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+          aria-hidden="true"
+        />
+      </motion.button>
     ))}
   </div>
 );
@@ -182,6 +188,9 @@ const Photos = () => {
   const [shuffledMer, setShuffledMer] = useState(merImages);
   const [shuffledTerre, setShuffledTerre] = useState(terreImages);
   const shuffledAll = useMemo(() => [...shuffledMer, ...shuffledTerre], [shuffledMer, shuffledTerre]);
+
+  // Focus trap pour le lightbox
+  const lightboxRef = useFocusTrap(isLightboxOpen);
 
   // Shuffle côté client uniquement (après hydration SSR)
   useEffect(() => {
@@ -215,15 +224,16 @@ const Photos = () => {
     });
   }, [shuffledAll]);
 
+  // Focus sur le bouton fermer à l'ouverture
   useEffect(() => {
     if (isLightboxOpen && closeBtnRef.current) {
-      closeBtnRef.current.focus();
+      setTimeout(() => closeBtnRef.current?.focus(), 100);
     }
   }, [isLightboxOpen]);
 
+  // Navigation clavier
   useEffect(() => {
     if (!isLightboxOpen) return;
-
     const handleKeyDown = (e) => {
       switch (e.key) {
         case 'Escape':
@@ -237,7 +247,6 @@ const Photos = () => {
           break;
       }
     };
-
     window.addEventListener('keydown', handleKeyDown);
     return () => window.removeEventListener('keydown', handleKeyDown);
   }, [isLightboxOpen, closeLightbox, navigateImage]);
@@ -263,7 +272,7 @@ const Photos = () => {
           </span>
         </motion.h1>
 
-        {/* Section éditoriale SEO — photographie & engagement environnemental */}
+        {/* Section éditoriale SEO */}
         <motion.div
           initial="hidden"
           animate="visible"
@@ -326,71 +335,68 @@ const Photos = () => {
               La Galerie
             </h2>
             <div className="space-y-4 text-text-secondary leading-relaxed">
-              <p>
-                Deux univers structurent mon travail photographique :
-              </p>
+              <p>Deux univers structurent mon travail photographique :</p>
               <p>
                 <strong className="text-ocean-teal">Côté Mer</strong> — Photographe sous-marin à Marseille, je documente les fonds des Calanques et la biodiversité méditerranéenne en apnée. De la faune aux paysages subaquatiques, mes images témoignent de la beauté et des fragilités de la Méditerranée.
               </p>
               <p>
                 <strong className="text-ocean-teal">Côté Terre</strong> — Photographe de paysages en Provence, je capture les reliefs des Calanques, les champs de lavande, les lumières marseillaises et les horizons méditerranéens. Une approche naturaliste et immersive du territoire.
               </p>
-              <p>
-                Retrouvez l'ensemble de mes photographies en haute résolution sur 500px.
-              </p>
+              <p>Retrouvez l'ensemble de mes photographies en haute résolution sur 500px.</p>
             </div>
             <div className="mt-6">
               <a
                 href="https://500px.com/p/karimsaari?view=photos"
                 target="_blank"
                 rel="noopener noreferrer"
+                aria-label="Voir la galerie complète sur 500px (ouvre dans un nouvel onglet)"
                 className="inline-flex items-center gap-2 text-ocean-teal hover:text-white transition-colors font-medium"
               >
                 Voir sur 500px
-                <ExternalLink className="w-4 h-4" />
+                <ExternalLink className="w-4 h-4" aria-hidden="true" />
               </a>
             </div>
           </motion.div>
         </motion.div>
-
       </div>
 
       {/* Lightbox */}
       <AnimatePresence>
         {isLightboxOpen && selectedImage && (
           <motion.div
+            ref={lightboxRef}
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             role="dialog"
             aria-modal="true"
-            aria-label={`Photo ${currentIndex} sur ${shuffledAll.length}`}
+            aria-labelledby="lightbox-counter"
             className="fixed inset-0 z-50 flex items-center justify-center bg-black/95 backdrop-blur-sm p-4"
             onClick={closeLightbox}
           >
             <button
               ref={closeBtnRef}
               onClick={closeLightbox}
-              className="absolute top-4 right-4 z-60 p-2 rounded-full bg-white/10 hover:bg-white/20 transition-colors backdrop-blur-md"
+              className="absolute top-4 right-4 z-60 p-2 rounded-full bg-white/10 hover:bg-white/20 transition-colors backdrop-blur-md focus-ring"
               aria-label="Fermer la galerie"
             >
-              <X className="w-6 h-6 text-white" />
+              <X className="w-6 h-6 text-white" aria-hidden="true" />
             </button>
 
             <button
               onClick={(e) => { e.stopPropagation(); navigateImage('prev'); }}
-              className="absolute left-4 z-60 p-3 rounded-full bg-white/10 hover:bg-white/20 transition-colors backdrop-blur-md"
+              className="absolute left-4 z-60 p-3 rounded-full bg-white/10 hover:bg-white/20 transition-colors backdrop-blur-md focus-ring"
               aria-label="Image précédente"
             >
-              <ChevronLeft className="w-6 h-6 text-white" />
+              <ChevronLeft className="w-6 h-6 text-white" aria-hidden="true" />
             </button>
 
             <button
               onClick={(e) => { e.stopPropagation(); navigateImage('next'); }}
-              className="absolute right-4 z-60 p-3 rounded-full bg-white/10 hover:bg-white/20 transition-colors backdrop-blur-md"
+              className="absolute right-4 z-60 p-3 rounded-full bg-white/10 hover:bg-white/20 transition-colors backdrop-blur-md focus-ring"
               aria-label="Image suivante"
             >
-              <ChevronRight className="w-6 h-6 text-white" />
+              <ChevronRight className="w-6 h-6 text-white" aria-hidden="true" />
             </button>
 
             <motion.img
@@ -405,7 +411,12 @@ const Photos = () => {
               onClick={(e) => e.stopPropagation()}
             />
 
-            <div className="absolute bottom-4 left-1/2 -translate-x-1/2 px-4 py-2 rounded-full bg-white/10 backdrop-blur-md text-white text-sm">
+            <div
+              id="lightbox-counter"
+              className="absolute bottom-4 left-1/2 -translate-x-1/2 px-4 py-2 rounded-full bg-white/10 backdrop-blur-md text-white text-sm"
+              aria-live="polite"
+              aria-atomic="true"
+            >
               {currentIndex} / {shuffledAll.length}
             </div>
           </motion.div>

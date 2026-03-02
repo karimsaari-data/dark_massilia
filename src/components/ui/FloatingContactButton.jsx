@@ -17,6 +17,18 @@ const FloatingContactButton = () => {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
+  // Fermer le menu à la touche Escape
+  useEffect(() => {
+    if (!isExpanded) return;
+    const handleKeyDown = (e) => {
+      if (e.key === 'Escape') {
+        setIsExpanded(false);
+      }
+    };
+    document.addEventListener('keydown', handleKeyDown);
+    return () => document.removeEventListener('keydown', handleKeyDown);
+  }, [isExpanded]);
+
   return (
     <AnimatePresence>
       {isVisible && (
@@ -33,16 +45,20 @@ const FloatingContactButton = () => {
                 initial={{ opacity: 0, y: 10 }}
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: 10 }}
+                role="menu"
+                aria-label="Menu de contact"
                 className="absolute bottom-16 right-0 mb-2 space-y-2"
               >
                 {/* Email */}
                 <motion.a
                   href={`mailto:${APP_CONFIG.contactEmail}`}
+                  role="menuitem"
+                  onClick={() => setIsExpanded(false)}
                   className="flex items-center gap-3 glass-strong rounded-full pl-4 pr-5 py-3 hover:bg-ocean-teal/20 hover:border-ocean-teal/30 transition-all duration-300 group whitespace-nowrap"
                   whileHover={{ scale: 1.05, x: -5 }}
                   whileTap={{ scale: 0.95 }}
                 >
-                  <div className="w-10 h-10 rounded-full bg-gradient-to-br from-ocean-teal to-ocean-blue flex items-center justify-center group-hover:shadow-lg group-hover:shadow-ocean-teal/50 transition-all">
+                  <div className="w-10 h-10 rounded-full bg-gradient-to-br from-ocean-teal to-ocean-blue flex items-center justify-center group-hover:shadow-lg group-hover:shadow-ocean-teal/50 transition-all" aria-hidden="true">
                     <Mail className="w-5 h-5 text-white" />
                   </div>
                   <span className="text-sm font-medium text-white">Email</span>
@@ -53,11 +69,14 @@ const FloatingContactButton = () => {
                   href={`https://wa.me/${APP_CONFIG.contactWhatsApp.replace(/\s/g, '')}`}
                   target="_blank"
                   rel="noopener noreferrer"
+                  role="menuitem"
+                  onClick={() => setIsExpanded(false)}
+                  aria-label="Contacter par WhatsApp (ouvre dans un nouvel onglet)"
                   className="flex items-center gap-3 glass-strong rounded-full pl-4 pr-5 py-3 hover:bg-ocean-blue/20 hover:border-ocean-blue/30 transition-all duration-300 group whitespace-nowrap"
                   whileHover={{ scale: 1.05, x: -5 }}
                   whileTap={{ scale: 0.95 }}
                 >
-                  <div className="w-10 h-10 rounded-full bg-gradient-to-br from-ocean-blue to-ocean-teal flex items-center justify-center group-hover:shadow-lg group-hover:shadow-ocean-blue/50 transition-all">
+                  <div className="w-10 h-10 rounded-full bg-gradient-to-br from-ocean-blue to-ocean-teal flex items-center justify-center group-hover:shadow-lg group-hover:shadow-ocean-blue/50 transition-all" aria-hidden="true">
                     <Phone className="w-5 h-5 text-white" />
                   </div>
                   <span className="text-sm font-medium text-white">WhatsApp</span>
@@ -77,6 +96,8 @@ const FloatingContactButton = () => {
             whileHover={{ scale: 1.1 }}
             whileTap={{ scale: 0.9 }}
             aria-label={isExpanded ? 'Fermer le menu de contact' : 'Ouvrir le menu de contact'}
+            aria-expanded={isExpanded}
+            aria-haspopup="menu"
           >
             <AnimatePresence mode="wait">
               {isExpanded ? (
@@ -86,6 +107,7 @@ const FloatingContactButton = () => {
                   animate={{ rotate: 0, opacity: 1 }}
                   exit={{ rotate: 90, opacity: 0 }}
                   transition={{ duration: 0.2 }}
+                  aria-hidden="true"
                 >
                   <X className="w-6 h-6 text-white" />
                 </motion.div>
@@ -96,6 +118,7 @@ const FloatingContactButton = () => {
                   animate={{ rotate: 0, opacity: 1 }}
                   exit={{ rotate: 90, opacity: 0 }}
                   transition={{ duration: 0.2 }}
+                  aria-hidden="true"
                 >
                   <Mail className="w-6 h-6 text-white" />
                 </motion.div>
@@ -106,6 +129,7 @@ const FloatingContactButton = () => {
           {/* Pulse indicator */}
           {!isExpanded && (
             <motion.div
+              aria-hidden="true"
               className="absolute inset-0 rounded-full bg-ocean-teal"
               animate={{
                 scale: [1, 1.3, 1],

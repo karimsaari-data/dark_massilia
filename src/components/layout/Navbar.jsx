@@ -1,8 +1,9 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Home, Compass, Film, Camera, Video, Instagram, Mail, Menu, X as XIcon, BookOpen, Share2, MapPin, Navigation } from 'lucide-react';
 import { NAV_LINKS } from '../../utils/constants';
+import useFocusTrap from '../../hooks/useFocusTrap';
 
 const iconMap = {
   Home,
@@ -22,6 +23,10 @@ const Navbar = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const location = useLocation();
+  const menuButtonRef = useRef(null);
+
+  // Focus trap pour le menu mobile
+  const menuPanelRef = useFocusTrap(isMobileMenuOpen);
 
   // Scroll listener throttlé avec requestAnimationFrame
   useEffect(() => {
@@ -44,6 +49,31 @@ const Navbar = () => {
   useEffect(() => {
     setIsMobileMenuOpen(false);
   }, [location]);
+
+  // Fermer le menu au touche Escape
+  useEffect(() => {
+    if (!isMobileMenuOpen) return;
+    const handleKeyDown = (e) => {
+      if (e.key === 'Escape') {
+        setIsMobileMenuOpen(false);
+        menuButtonRef.current?.focus();
+      }
+    };
+    document.addEventListener('keydown', handleKeyDown);
+    return () => document.removeEventListener('keydown', handleKeyDown);
+  }, [isMobileMenuOpen]);
+
+  // Bloquer le scroll de la page quand le menu est ouvert
+  useEffect(() => {
+    document.body.style.overflow = isMobileMenuOpen ? 'hidden' : '';
+    return () => { document.body.style.overflow = ''; };
+  }, [isMobileMenuOpen]);
+
+  const openMobileMenu = () => setIsMobileMenuOpen(true);
+  const closeMobileMenu = () => {
+    setIsMobileMenuOpen(false);
+    menuButtonRef.current?.focus();
+  };
 
   const navVariants = {
     hidden: { y: -100, opacity: 0 },
@@ -73,6 +103,7 @@ const Navbar = () => {
         initial="hidden"
         animate="visible"
         variants={navVariants}
+        aria-label="Navigation principale"
         className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
           isScrolled
             ? 'glass-strong shadow-lg shadow-black/20'
@@ -82,7 +113,7 @@ const Navbar = () => {
         <div className="container-custom">
           <div className="flex items-center justify-between h-16 md:h-20">
             {/* Logo */}
-            <Link to="/" className="group">
+            <Link to="/" className="group" aria-label="Karim Saari — Accueil">
               <div className="text-left">
                 <span className="text-2xl md:text-3xl font-bold text-white group-hover:text-ocean-teal transition-colors duration-300 block tracking-tight">
                   Karim Saari
@@ -104,13 +135,14 @@ const Navbar = () => {
                   <Link
                     key={link.path}
                     to={link.path}
-                    className={`flex items-center gap-1.5 px-3 py-1.5 rounded-full transition-all duration-300 relative whitespace-nowrap flex-shrink-0 text-sm ${
+                    aria-current={isActive ? 'page' : undefined}
+                    className={`flex items-center gap-1.5 px-3 py-1.5 rounded-full transition-all duration-300 relative whitespace-nowrap flex-shrink-0 text-sm focus-ring ${
                       isActive
                         ? 'bg-ocean-teal/20 text-ocean-teal border border-ocean-teal/30 shadow-lg shadow-ocean-teal/20'
                         : 'text-text-secondary hover:text-white hover:bg-white/5'
                     }`}
                   >
-                    <Icon className="w-3.5 h-3.5 flex-shrink-0" />
+                    <Icon className="w-3.5 h-3.5 flex-shrink-0" aria-hidden="true" />
                     <span className="font-medium">{link.name}</span>
                     {isActive && (
                       <motion.div
@@ -126,15 +158,14 @@ const Navbar = () => {
 
             {/* Mobile Menu Button */}
             <button
-              onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+              ref={menuButtonRef}
+              onClick={openMobileMenu}
               className="md:hidden p-2 rounded-lg glass hover:bg-white/10 transition-colors focus-ring"
-              aria-label="Ouvrir le menu"
+              aria-label="Ouvrir le menu de navigation"
+              aria-expanded={isMobileMenuOpen}
+              aria-controls="mobile-menu-panel"
             >
-              {isMobileMenuOpen ? (
-                <XIcon className="w-6 h-6" />
-              ) : (
-                <Menu className="w-6 h-6" />
-              )}
+              <Menu className="w-6 h-6" aria-hidden="true" />
             </button>
           </div>
         </div>
@@ -144,17 +175,23 @@ const Navbar = () => {
       <AnimatePresence>
         {isMobileMenuOpen && (
           <>
-            {/* Backdrop */}
+            {/* Backdrop — cliquable pour fermer */}
             <motion.div
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
               className="fixed inset-0 bg-black/60 backdrop-blur-sm z-40 md:hidden"
-              onClick={() => setIsMobileMenuOpen(false)}
+              onClick={closeMobileMenu}
+              aria-hidden="true"
             />
 
-            {/* Menu Panel */}
+            {/* Menu Panel — dialog modal */}
             <motion.div
+              ref={menuPanelRef}
+              id="mobile-menu-panel"
+              role="dialog"
+              aria-modal="true"
+              aria-label="Menu de navigation"
               initial="closed"
               animate="open"
               exit="closed"
@@ -164,11 +201,11 @@ const Navbar = () => {
               <div className="p-6">
                 {/* Close Button */}
                 <button
-                  onClick={() => setIsMobileMenuOpen(false)}
-                  className="absolute top-4 right-4 p-2 rounded-lg hover:bg-white/10 transition-colors"
+                  onClick={closeMobileMenu}
+                  className="absolute top-4 right-4 p-2 rounded-lg hover:bg-white/10 transition-colors focus-ring"
                   aria-label="Fermer le menu"
                 >
-                  <XIcon className="w-6 h-6" />
+                  <XIcon className="w-6 h-6" aria-hidden="true" />
                 </button>
 
                 {/* Logo */}
@@ -178,42 +215,47 @@ const Navbar = () => {
                 </div>
 
                 {/* Navigation Links */}
-                <nav className="space-y-2">
-                  {NAV_LINKS.map((link) => {
-                    const Icon = iconMap[link.icon];
-                    const isActive = location.pathname === link.path;
+                <nav aria-label="Menu principal">
+                  <ul className="space-y-2 list-none p-0 m-0">
+                    {NAV_LINKS.map((link) => {
+                      const Icon = iconMap[link.icon];
+                      const isActive = location.pathname === link.path;
 
-                    return (
-                      <Link
-                        key={link.path}
-                        to={link.path}
-                        className={`flex items-center space-x-3 px-4 py-3 rounded-lg transition-all duration-300 relative ${
-                          isActive
-                            ? 'bg-ocean-teal/20 text-ocean-teal border border-ocean-teal/30 shadow-lg shadow-ocean-teal/20'
-                            : 'text-text-secondary hover:text-white hover:bg-white/5'
-                        }`}
-                      >
-                        <Icon className="w-5 h-5" />
-                        <span className="font-medium">{link.name}</span>
-                        {isActive && (
-                          <div className="absolute left-0 top-1/2 -translate-y-1/2 w-1 h-3/4 bg-ocean-teal rounded-r-full" />
-                        )}
-                      </Link>
-                    );
-                  })}
+                      return (
+                        <li key={link.path}>
+                          <Link
+                            to={link.path}
+                            aria-current={isActive ? 'page' : undefined}
+                            className={`flex items-center space-x-3 px-4 py-3 rounded-lg transition-all duration-300 relative focus-ring ${
+                              isActive
+                                ? 'bg-ocean-teal/20 text-ocean-teal border border-ocean-teal/30 shadow-lg shadow-ocean-teal/20'
+                                : 'text-text-secondary hover:text-white hover:bg-white/5'
+                            }`}
+                          >
+                            <Icon className="w-5 h-5 flex-shrink-0" aria-hidden="true" />
+                            <span className="font-medium">{link.name}</span>
+                            {isActive && (
+                              <div className="absolute left-0 top-1/2 -translate-y-1/2 w-1 h-3/4 bg-ocean-teal rounded-r-full" aria-hidden="true" />
+                            )}
+                          </Link>
+                        </li>
+                      );
+                    })}
+                  </ul>
                 </nav>
 
                 {/* Social Links in Mobile Menu */}
                 <div className="mt-8 pt-6 border-t border-white/10">
-                  <p className="text-xs text-text-muted uppercase tracking-wider mb-3">
+                  <p className="text-xs text-text-muted uppercase tracking-wider mb-3" id="social-links-label">
                     Suivez-nous
                   </p>
-                  <div className="flex flex-wrap gap-2">
+                  <div className="flex flex-wrap gap-2" aria-labelledby="social-links-label">
                     <a
                       href="https://www.instagram.com/karimsaari"
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="px-3 py-1.5 text-xs glass rounded-full hover:bg-ocean-teal/20 hover:border-ocean-teal/30 transition-all"
+                      aria-label="Instagram de Karim Saari (ouvre dans un nouvel onglet)"
+                      className="px-3 py-1.5 text-xs glass rounded-full hover:bg-ocean-teal/20 hover:border-ocean-teal/30 transition-all focus-ring"
                     >
                       Instagram
                     </a>
@@ -221,7 +263,8 @@ const Navbar = () => {
                       href="https://www.tiktok.com/@dark.massilia"
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="px-3 py-1.5 text-xs glass rounded-full hover:bg-ocean-teal/20 hover:border-ocean-teal/30 transition-all"
+                      aria-label="TikTok Dark Massilia (ouvre dans un nouvel onglet)"
+                      className="px-3 py-1.5 text-xs glass rounded-full hover:bg-ocean-teal/20 hover:border-ocean-teal/30 transition-all focus-ring"
                     >
                       TikTok
                     </a>
@@ -229,7 +272,8 @@ const Navbar = () => {
                       href="https://www.youtube.com/@dark.massilia"
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="px-3 py-1.5 text-xs glass rounded-full hover:bg-ocean-teal/20 hover:border-ocean-teal/30 transition-all"
+                      aria-label="YouTube Dark Massilia (ouvre dans un nouvel onglet)"
+                      className="px-3 py-1.5 text-xs glass rounded-full hover:bg-ocean-teal/20 hover:border-ocean-teal/30 transition-all focus-ring"
                     >
                       YouTube
                     </a>

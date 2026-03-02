@@ -153,19 +153,34 @@ const PhotoCarousel = () => {
   };
 
   const currentCategory = getCategoryFromFilename(shuffledImages[currentIndex]);
+  const currentAlt = getAltText(shuffledImages[currentIndex]);
 
   return (
-    <div className="relative w-full max-w-6xl mx-auto">
+    <div
+      role="region"
+      aria-label="Carrousel de photos — Projet Sentinelle"
+      aria-roledescription="carrousel"
+      className="relative w-full max-w-6xl mx-auto"
+    >
+      {/* Annonce live pour lecteurs d'écran */}
+      <div
+        aria-live="polite"
+        aria-atomic="true"
+        className="sr-only"
+      >
+        Photo {currentIndex + 1} sur {shuffledImages.length} : {currentAlt}
+      </div>
+
       {/* Main Carousel Container - Format cinématique */}
       <div className="relative aspect-[16/9] rounded-3xl overflow-hidden shadow-2xl shadow-black/40 ring-1 ring-white/10">
         {/* Background blur effect */}
-        <div className="absolute inset-0 bg-gradient-to-b from-black/30 via-transparent to-black/70 z-10 pointer-events-none" />
+        <div className="absolute inset-0 bg-gradient-to-b from-black/30 via-transparent to-black/70 z-10 pointer-events-none" aria-hidden="true" />
 
         <AnimatePresence initial={false} custom={direction} mode="wait">
           <motion.img
             key={currentIndex}
             src={shuffledImages[currentIndex]}
-            alt={getAltText(shuffledImages[currentIndex])}
+            alt={currentAlt}
             custom={direction}
             variants={variants}
             initial="enter"
@@ -184,18 +199,18 @@ const PhotoCarousel = () => {
         {/* Navigation Buttons - Design moderne */}
         <button
           onClick={prevSlide}
-          className="absolute left-6 top-1/2 -translate-y-1/2 w-14 h-14 bg-black/40 backdrop-blur-xl border border-white/20 rounded-full flex items-center justify-center hover:bg-ocean-teal/40 hover:border-ocean-teal/60 transition-all duration-300 z-20 group hover:scale-110 active:scale-95"
+          className="absolute left-6 top-1/2 -translate-y-1/2 w-14 h-14 bg-black/40 backdrop-blur-xl border border-white/20 rounded-full flex items-center justify-center hover:bg-ocean-teal/40 hover:border-ocean-teal/60 transition-all duration-300 z-20 group hover:scale-110 active:scale-95 focus-ring"
           aria-label="Photo précédente"
         >
-          <ChevronLeft className="w-7 h-7 text-white group-hover:-translate-x-0.5 transition-transform" strokeWidth={2.5} />
+          <ChevronLeft className="w-7 h-7 text-white group-hover:-translate-x-0.5 transition-transform" strokeWidth={2.5} aria-hidden="true" />
         </button>
 
         <button
           onClick={nextSlide}
-          className="absolute right-6 top-1/2 -translate-y-1/2 w-14 h-14 bg-black/40 backdrop-blur-xl border border-white/20 rounded-full flex items-center justify-center hover:bg-ocean-teal/40 hover:border-ocean-teal/60 transition-all duration-300 z-20 group hover:scale-110 active:scale-95"
+          className="absolute right-6 top-1/2 -translate-y-1/2 w-14 h-14 bg-black/40 backdrop-blur-xl border border-white/20 rounded-full flex items-center justify-center hover:bg-ocean-teal/40 hover:border-ocean-teal/60 transition-all duration-300 z-20 group hover:scale-110 active:scale-95 focus-ring"
           aria-label="Photo suivante"
         >
-          <ChevronRight className="w-7 h-7 text-white group-hover:translate-x-0.5 transition-transform" strokeWidth={2.5} />
+          <ChevronRight className="w-7 h-7 text-white group-hover:translate-x-0.5 transition-transform" strokeWidth={2.5} aria-hidden="true" />
         </button>
 
         {/* Category Badge - Design élégant */}
@@ -204,6 +219,7 @@ const PhotoCarousel = () => {
           initial={{ opacity: 0, y: -10 }}
           animate={{ opacity: 1, y: 0 }}
           className="absolute top-6 left-6 z-20"
+          aria-hidden="true"
         >
           <div
             className="px-5 py-2.5 rounded-full backdrop-blur-xl font-semibold text-sm shadow-lg"
@@ -219,7 +235,7 @@ const PhotoCarousel = () => {
         </motion.div>
 
         {/* Bottom Info Bar */}
-        <div className="absolute bottom-0 left-0 right-0 z-20">
+        <div className="absolute bottom-0 left-0 right-0 z-20" aria-hidden="true">
           <div className="bg-gradient-to-t from-black/90 via-black/70 to-transparent px-6 pt-16 pb-6">
             <div className="flex items-end justify-between gap-4">
               {/* Caption */}
@@ -246,7 +262,7 @@ const PhotoCarousel = () => {
         </div>
 
         {/* Progress bar */}
-        <div className="absolute bottom-0 left-0 right-0 h-1 bg-white/10 z-30">
+        <div className="absolute bottom-0 left-0 right-0 h-1 bg-white/10 z-30" aria-hidden="true">
           <motion.div
             className="h-full bg-gradient-to-r from-ocean-teal via-ocean-blue to-ocean-teal"
             initial={{ width: 0 }}
@@ -257,17 +273,24 @@ const PhotoCarousel = () => {
       </div>
 
       {/* Thumbnails Navigation - Grid moderne */}
-      <div className="mt-8 grid grid-cols-5 md:grid-cols-10 gap-2 md:gap-3">
+      <div
+        className="mt-8 grid grid-cols-5 md:grid-cols-10 gap-2 md:gap-3"
+        role="group"
+        aria-label="Vignettes de navigation"
+      >
         {shuffledImages.slice(0, 10).map((img, idx) => (
           <motion.button
             key={idx}
+            type="button"
             onClick={() => {
               setDirection(idx > currentIndex ? 1 : -1);
               setCurrentIndex(idx);
             }}
             whileHover={{ scale: 1.08, y: -4 }}
             whileTap={{ scale: 0.95 }}
-            className={`relative aspect-square rounded-xl overflow-hidden transition-all duration-300 ${
+            aria-label={`Photo ${idx + 1} : ${getAltText(img).split(' ').slice(5, 9).join(' ')}`}
+            aria-pressed={idx === currentIndex}
+            className={`relative aspect-square rounded-xl overflow-hidden transition-all duration-300 focus-ring ${
               idx === currentIndex
                 ? 'ring-3 ring-ocean-teal shadow-lg shadow-ocean-teal/50'
                 : 'opacity-50 hover:opacity-100 ring-1 ring-white/10 hover:ring-white/30'
@@ -284,6 +307,7 @@ const PhotoCarousel = () => {
               <motion.div
                 layoutId="thumbnail-active"
                 className="absolute inset-0 bg-gradient-to-t from-ocean-teal/40 to-transparent"
+                aria-hidden="true"
               />
             )}
           </motion.button>
