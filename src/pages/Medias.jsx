@@ -9,6 +9,34 @@ const Medias = () => {
   // Données extraites de l'ancien site medias.html
   const pressLinks = [
     {
+      title: 'Interview Presse — Tired Earth (EN/FR)',
+      url: 'https://www.tiredearth.com/interviews/interview-de-karim-saari-apneiste-et-photographe-sous-marin#',
+      featured: false,
+      date: '11 nov. 2025',
+      image: '/images/tiredearth.webp'
+    },
+    {
+      title: 'Marcelle Média — Dépolluer la mer, apnée après apnée',
+      url: 'https://www.marcelle.media/depolluer-la-mer-apnee-apres-apnee/',
+      featured: false,
+      date: '20 oct. 2025',
+      image: '/images/marcelle media.webp'
+    },
+    {
+      title: 'France Bleu — Un rorqual rarissime aperçu près des côtes à Marseille',
+      url: 'https://www.francebleu.fr/provence-alpes-cote-d-azur/bouches-du-rhone-13/marseille/en-images-rarissime-un-rorqual-apercu-pres-des-cotes-a-marseille-2226210',
+      featured: false,
+      date: '10 août 2025',
+      image: '/images/france bleu rorqual.webp'
+    },
+    {
+      title: 'Actu.fr — Dépollution des fonds marins à Marseille',
+      url: 'https://actu.fr/provence-alpes-cote-d-azur/marseille_13055/marseille-ils-depolluent-les-fonds-marins-des-prises-surprenantes-on-a-deja-sorti-des-armes_62552562.html',
+      featured: false,
+      date: '25 avr. 2025',
+      image: '/images/actu marseille.webp'
+    },
+    {
       title: 'Yann Arthus-Bertrand — « Les Français », Marseille 2024',
       url: '/les-francais-yann-arthus-bertrand',
       internal: true,
@@ -20,54 +48,35 @@ const Medias = () => {
       title: 'Fondation de la Mer — Projet Sentinelle dans les Calanques',
       url: 'https://www.fondationdelamer.org/nos-actualites/projet-sentinelle/',
       featured: true,
+      date: '21 nov. 2024',
       image: '/images/fondation%20de%20la%20mer.webp'
     },
     {
       title: 'La Provence — Opération Sentinelle',
       url: 'https://www.laprovence.com/article/ecoplanete/1845794554454214/de-montredon-a-cassis-les-apneistes-lancent-leur-operation-sentinelle-des-samedi-et-jusquau-6-octobre',
       featured: true,
+      date: '21 nov. 2024',
       image: '/images/la provence.webp'
-    },
-    {
-      title: 'Interview Presse — Tired Earth (EN/FR)',
-      url: 'https://www.tiredearth.com/interviews/interview-de-karim-saari-apneiste-et-photographe-sous-marin#',
-      featured: false,
-      image: '/images/tiredearth.webp'
-    },
-    {
-      title: 'Actu.fr — Dépollution des fonds marins à Marseille',
-      url: 'https://actu.fr/provence-alpes-cote-d-azur/marseille_13055/marseille-ils-depolluent-les-fonds-marins-des-prises-surprenantes-on-a-deja-sorti-des-armes_62552562.html',
-      featured: false,
-      image: '/images/actu marseille.webp'
-    },
-    {
-      title: 'France Bleu — Un rorqual rarissime aperçu près des côtes à Marseille',
-      url: 'https://www.francebleu.fr/provence-alpes-cote-d-azur/bouches-du-rhone-13/marseille/en-images-rarissime-un-rorqual-apercu-pres-des-cotes-a-marseille-2226210',
-      featured: false,
-      image: '/images/france bleu rorqual.webp'
-    },
-    {
-      title: 'Marcelle Média — Dépolluer la mer, apnée après apnée',
-      url: 'https://www.marcelle.media/depolluer-la-mer-apnee-apres-apnee/',
-      featured: false,
-      image: '/images/marcelle media.webp'
     },
     {
       title: 'France Bleu — 328 kg de déchets récoltés aux Goudes',
       url: 'https://www.francebleu.fr/infos/environnement/328-kilos-de-dechets-recoltes-aux-goudes-par-des-apneistes-marseillais-4335756',
       featured: false,
+      date: '28 sept. 2024',
       image: '/images/france bleu.webp'
     },
     {
       title: 'Ville de Marseille — Reconnaissance Officielle',
       url: 'https://www.facebook.com/marseilleville/photos/a.220707724621813/3697054720320412/?_rdr',
       featured: true,
+      date: '23 nov. 2019',
       image: '/images/ville de marseille.webp'
     },
     {
       title: 'Made in Marseille — Provence, top tourisme France',
       url: 'https://madeinmarseille.net/environnement/3753-region-provence-top-tourisme-france/',
       featured: false,
+      date: '18 mai 2015',
       image: '/images/made in marseille provence.webp'
     },
   ];
@@ -291,6 +300,9 @@ const Medias = () => {
 
                     {/* Content */}
                     <div className="p-6">
+                      {link.date && (
+                        <p className="text-xs text-text-muted mb-2">{link.date}</p>
+                      )}
                       <h3 className="text-lg font-bold text-white mb-2 group-hover:text-ocean-teal transition-colors flex items-center justify-between">
                         <span>{link.title}</span>
                         <ArrowLeft className="w-5 h-5 rotate-180 group-hover:translate-x-1 transition-transform flex-shrink-0 ml-2" />
@@ -321,6 +333,9 @@ const Medias = () => {
 
                     {/* Content */}
                     <div className="p-6">
+                      {link.date && (
+                        <p className="text-xs text-text-muted mb-2">{link.date}</p>
+                      )}
                       <h3 className="text-lg font-bold text-white mb-2 group-hover:text-ocean-teal transition-colors flex items-center justify-between">
                         <span>{link.title}</span>
                         <ExternalLink className="w-5 h-5 group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform flex-shrink-0 ml-2" />
