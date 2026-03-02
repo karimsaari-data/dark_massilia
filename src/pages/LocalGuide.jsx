@@ -106,7 +106,7 @@ export default function LocalGuide() {
             transition={{ duration: 0.6, delay: 0.2 }}
             className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-12"
           >
-            {STATS.map(({ label, value, icon: Icon, badge }) => (
+            {STATS.map(({ label, end, suffix, decimals = 0, icon: Icon, badge }) => (
               <div key={label} className="glass rounded-xl p-5 text-center border border-white/5 hover:border-ocean-teal/20 transition-all duration-300">
                 {badge ? (
                   <img
