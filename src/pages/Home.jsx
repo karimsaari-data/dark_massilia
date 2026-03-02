@@ -21,8 +21,8 @@ const KEY_STATS = [
     end: 10,
     suffix: ' ans',
     label: 'D\'engagement terrain',
-    sub: 'pour la préservation de la Méditerranée',
-    detail: 'Missions Projet Sentinelle avec Team Oxygen',
+    sub: 'd\'actions de dépollution en mer',
+    detail: 'dont 4 ans avec Team Oxygen · Projet Sentinelle',
   },
   {
     end: 130000,
