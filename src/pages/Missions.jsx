@@ -222,13 +222,13 @@ const Missions = () => {
           </Link>
         </motion.div>
 
-        {/* CTA Newsletter */}
+        {/* CTAs finaux */}
         <motion.div
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
           viewport={{ once: true }}
           transition={{ delay: 0.2 }}
-          className="text-center mb-12"
+          className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-12"
         >
           <Link
             to="/#newsletter"
@@ -237,15 +237,6 @@ const Missions = () => {
             <span>S'inscrire à la newsletter</span>
             <ArrowRight className="w-4 h-4" aria-hidden="true" />
           </Link>
-        </motion.div>
-
-        {/* Back to Home */}
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 0.8 }}
-          className="text-center"
-        >
           <Link
             to="/"
             className="btn-secondary inline-flex items-center gap-2 group"

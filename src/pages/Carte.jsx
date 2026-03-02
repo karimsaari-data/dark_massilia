@@ -1,5 +1,6 @@
 import { motion } from 'framer-motion';
-import { ExternalLink, MapPin, FileText, Map } from 'lucide-react';
+import { Link } from 'react-router-dom';
+import { ExternalLink, MapPin, FileText, Map, ArrowRight } from 'lucide-react';
 
 const CARTES_TERRESTRES = [
   { label: 'Carte générale du Parc national des Calanques', url: 'https://www.calanques-parcnational.fr/sites/calanques-parcnational.fr/files/thumbnails/image/carte-calanques-marseille-cassis-la-ciotat-3000x1733.jpg' },
@@ -232,6 +233,30 @@ export default function Carte() {
               Toutes les cartes — calanques-parcnational.fr
             </a>
           </div>
+        </motion.div>
+
+        {/* CTAs */}
+        <motion.div
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          viewport={{ once: true }}
+          transition={{ delay: 0.2 }}
+          className="flex flex-col sm:flex-row items-center justify-center gap-4 mt-10 mb-8"
+        >
+          <Link
+            to="/local-guide-marseille"
+            className="btn-primary inline-flex items-center gap-2"
+          >
+            <span>Local Guide Marseille</span>
+            <ArrowRight className="w-4 h-4" aria-hidden="true" />
+          </Link>
+          <Link
+            to="/#newsletter"
+            className="btn-secondary inline-flex items-center gap-2"
+          >
+            <span>S'inscrire à la newsletter</span>
+            <ArrowRight className="w-4 h-4" aria-hidden="true" />
+          </Link>
         </motion.div>
       </section>
     </>
