@@ -1,6 +1,7 @@
 import { Instagram, Youtube, Linkedin, Facebook, AtSign } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { SOCIAL_LINKS, APP_CONFIG, NAV_LINKS } from '../../utils/constants';
+import { openConsentBanner } from '../../utils/consent';
 
 // TikTok icon component (Lucide doesn't have TikTok, so we use a custom SVG)
 const TikTokIcon = ({ className }) => (
@@ -63,6 +64,7 @@ const navColumns = [
       { to: '/#newsletter', text: 'Newsletter', anchor: true },
       { to: '/mentions-legales', text: 'Mentions légales' },
       { to: '/confidentialite', text: 'Confidentialité' },
+      { to: '#cookies', text: 'Gérer les cookies', action: openConsentBanner },
     ],
   },
 ];
@@ -97,7 +99,15 @@ const Footer = () => {
                 <ul className="space-y-2">
                   {col.links.map((link) => (
                     <li key={link.to}>
-                      {link.anchor ? (
+                      {link.action ? (
+                        <button
+                          type="button"
+                          onClick={link.action}
+                          className="text-sm text-gray-400 hover:text-ocean-teal transition-colors duration-200 cursor-pointer"
+                        >
+                          {link.text}
+                        </button>
+                      ) : link.anchor ? (
                         <a
                           href={link.to}
                           className="text-sm text-gray-400 hover:text-ocean-teal transition-colors duration-200"

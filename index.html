@@ -3,6 +3,65 @@
   <head>
     <meta charset="UTF-8" />
 
+    <!--
+      ┌─────────────────────────────────────────────────────────────────┐
+      │  Google Consent Mode v2 — Advanced                              │
+      │  CE BLOC DOIT IMPÉRATIVEMENT PRÉCÉDER GTM                      │
+      │                                                                 │
+      │  Signaux gérés :                                                │
+      │    analytics_storage    → GA4 cookies                          │
+      │    ad_storage           → Google Ads cookies                   │
+      │    ad_user_data         → Envoi données utilisateur à Google   │
+      │    ad_personalization   → Personnalisation publicitaire        │
+      │                                                                 │
+      │  Mode Advanced : GTM se charge toujours (même sans consentement│
+      │  accordé) et envoie des pings sans cookies. Google modélise    │
+      │  les données manquantes pour conserver la valeur analytique.   │
+      └─────────────────────────────────────────────────────────────────┘
+    -->
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){window.dataLayer.push(arguments);}
+
+      // Redaction des identifiants publicitaires quand ad_storage est denied
+      gtag('set', 'ads_data_redaction', true);
+
+      (function() {
+        // État par défaut : tout refusé, GTM attend 500ms la réponse de la bannière
+        var denied = {
+          analytics_storage:  'denied',
+          ad_storage:         'denied',
+          ad_user_data:       'denied',
+          ad_personalization: 'denied',
+          wait_for_update:    500
+        };
+
+        try {
+          var raw = localStorage.getItem('dm_consent');
+          if (raw) {
+            var c = JSON.parse(raw);
+            // Consentement déjà enregistré (visite de retour) → appliquer sans attente
+            if (c && c.version === '1') {
+              gtag('consent', 'default', {
+                analytics_storage:  c.analytics ? 'granted' : 'denied',
+                ad_storage:         c.ads       ? 'granted' : 'denied',
+                ad_user_data:       c.ads       ? 'granted' : 'denied',
+                ad_personalization: c.ads       ? 'granted' : 'denied',
+                wait_for_update:    0
+              });
+              return;
+            }
+          }
+        } catch(e) {
+          // localStorage indisponible → tomber sur le défaut
+        }
+
+        // Première visite ou consentement invalide → défaut denied
+        gtag('consent', 'default', denied);
+      })();
+    </script>
+    <!-- End Google Consent Mode v2 -->
+
     <!-- Google Tag Manager -->
     <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
     new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
