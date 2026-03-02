@@ -42,7 +42,43 @@
   RewriteRule ^ index.html [L]
 </IfModule>
 
-# Enable GZIP compression
+# ── Servir les assets pré-compressés Brotli / Gzip (générés par Vite) ──────
+# Priorité : Brotli (.br) > Gzip (.gz) > fichier brut
+<IfModule mod_rewrite.c>
+  RewriteEngine On
+
+  # Brotli — si le navigateur l'accepte et que le .br existe
+  RewriteCond %{HTTP:Accept-Encoding} br
+  RewriteCond %{REQUEST_FILENAME}\.br -f
+  RewriteRule ^(.+)\.(js|css|html|json|svg|woff2?)$ $1.$2.br [L]
+
+  # Gzip — fallback si pas de Brotli et que le .gz existe
+  RewriteCond %{HTTP:Accept-Encoding} gzip
+  RewriteCond %{REQUEST_FILENAME}\.gz -f
+  RewriteRule ^(.+)\.(js|css|html|json|svg|woff2?)$ $1.$2.gz [L]
+</IfModule>
+
+# Headers Content-Encoding + Content-Type corrects pour les fichiers compressés
+<IfModule mod_headers.c>
+  <FilesMatch "\.js\.br$">
+    Header set Content-Encoding br
+    Header set Content-Type "application/javascript"
+  </FilesMatch>
+  <FilesMatch "\.css\.br$">
+    Header set Content-Encoding br
+    Header set Content-Type "text/css"
+  </FilesMatch>
+  <FilesMatch "\.js\.gz$">
+    Header set Content-Encoding gzip
+    Header set Content-Type "application/javascript"
+  </FilesMatch>
+  <FilesMatch "\.css\.gz$">
+    Header set Content-Encoding gzip
+    Header set Content-Type "text/css"
+  </FilesMatch>
+</IfModule>
+
+# Enable GZIP compression (dynamique — fallback si fichiers .gz absents)
 <IfModule mod_deflate.c>
   AddOutputFilterByType DEFLATE text/html text/plain text/xml text/css text/javascript application/javascript application/json
 </IfModule>
