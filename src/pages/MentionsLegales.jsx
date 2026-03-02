@@ -65,14 +65,9 @@ export default function MentionsLegales() {
           {/* 3. Hébergeur */}
           <Section title="3. Hébergeur">
             <Row label="Société"  value="Easy Hébergement" />
-            <Row label="Site web" value="https://www.easy-hebergement.fr" />
-            <p className="text-gray-400 text-xs mt-2">
-              Les coordonnées complètes de l'hébergeur sont disponibles sur{' '}
-              <a href="https://www.easy-hebergement.fr" target="_blank" rel="noopener noreferrer"
-                className="text-ocean-teal/80 hover:text-ocean-teal transition-colors">
-                easy-hebergement.fr
-              </a>.
-            </p>
+            <Row label="Raison sociale" value="SWIIPTEL SAS" />
+            <Row label="Adresse"        value="35 Rue Paule Raymondis, 31200 Toulouse, France" />
+            <Row label="Site web"       value="https://www.easy-hebergement.fr" />
           </Section>
 
           {/* 4. Propriété intellectuelle */}
