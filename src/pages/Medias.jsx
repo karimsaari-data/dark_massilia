@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import { FADE_IN_UP, STAGGER_CONTAINER } from '../utils/constants';
 import SEO from '../components/SEO';
 import { SEO_PAGES } from '../utils/seo';
+import NewsletterSection from '../components/NewsletterSection';
 
 const Medias = () => {
   // Données extraites de l'ancien site medias.html
@@ -364,6 +365,9 @@ const Medias = () => {
             </div>
           </motion.div>
         </motion.div>
+
+        {/* Newsletter */}
+        <NewsletterSection />
 
         {/* Back to Home */}
         <motion.div

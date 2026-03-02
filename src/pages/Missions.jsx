@@ -5,6 +5,7 @@ import PhotoCarousel from '../components/ui/PhotoCarousel';
 import { FADE_IN_UP, STAGGER_CONTAINER } from '../utils/constants';
 import SEO from '../components/SEO';
 import { SEO_PAGES } from '../utils/seo';
+import NewsletterSection from '../components/NewsletterSection';
 
 const Missions = () => {
   return (
@@ -113,6 +114,26 @@ const Missions = () => {
           </motion.div>
         </motion.div>
 
+        {/* 5ème édition — Annonce octobre 2026 */}
+        <motion.div
+          initial="hidden"
+          animate="visible"
+          variants={STAGGER_CONTAINER}
+          className="max-w-4xl mx-auto mb-12"
+        >
+          <motion.div variants={FADE_IN_UP} className="glass-strong rounded-3xl p-8 md:p-12 border border-ocean-teal/30 text-center">
+            <span className="inline-flex items-center gap-1.5 px-4 py-1.5 rounded-full bg-ocean-teal/15 border border-ocean-teal/30 text-ocean-teal text-xs font-semibold mb-6">
+              📅 Prochaine édition
+            </span>
+            <h3 className="text-2xl md:text-3xl font-bold text-white mb-4">
+              5ème édition — Octobre 2026
+            </h3>
+            <p className="text-text-secondary text-lg max-w-xl mx-auto">
+              La prochaine grande mission de dépollution se prépare. Inscris-toi à la newsletter pour être informé en avant-première du lancement.
+            </p>
+          </motion.div>
+        </motion.div>
+
         {/* Section éditoriale SEO — contexte local Calanques / Côte Bleue */}
         <motion.div
           initial="hidden"
@@ -203,6 +224,9 @@ const Missions = () => {
             <ArrowLeft className="w-4 h-4 rotate-180" />
           </Link>
         </motion.div>
+
+        {/* Newsletter — Restez informé des prochaines missions */}
+        <NewsletterSection />
 
         {/* Back to Home */}
         <motion.div

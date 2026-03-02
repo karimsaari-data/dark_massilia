@@ -1,9 +1,10 @@
 import { useState, useEffect, useCallback, useRef, useMemo } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { X, ExternalLink, ChevronLeft, ChevronRight, Waves, TreePine } from 'lucide-react';
+import { X, ExternalLink, ChevronLeft, ChevronRight, Waves, TreePine, ArrowLeft } from 'lucide-react';
 import { FADE_IN_UP, STAGGER_CONTAINER } from '../utils/constants';
 import SEO from '../components/SEO';
 import { SEO_PAGES } from '../utils/seo';
+import { Link } from 'react-router-dom';
 import useFocusTrap from '../hooks/useFocusTrap';
 
 const merIds = [2, 4, 6, 10, 12, 13, 14, 20, 22, 23, 30, 32, 33, 35, 39, 44, 45, 46, 47, 50, 51, 52, 54, 55, 56, 57, 58, 59, 60, 61, 62, 63, 64, 65, 66, 67, 68, 69, 70, 71, 72, 73, 74, 75, 76, 77, 78, 79, 80, 81, 82, 83, 85, 86, 87, 88, 89, 90, 91, 92, 93, 94, 95, 96, 97, 98];
@@ -357,6 +358,29 @@ const Photos = () => {
               </a>
             </div>
           </motion.div>
+        </motion.div>
+
+        {/* CTAs — Continuer la navigation */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.4 }}
+          className="mt-12 mb-8 flex flex-col sm:flex-row items-center justify-center gap-4"
+        >
+          <Link
+            to="/depollution-marine"
+            className="btn-primary inline-flex items-center gap-2"
+          >
+            <span>Nos missions de dépollution</span>
+            <ArrowLeft className="w-4 h-4 rotate-180" aria-hidden="true" />
+          </Link>
+          <Link
+            to="/contact"
+            className="btn-secondary inline-flex items-center gap-2 group"
+          >
+            <span>Nous contacter</span>
+            <ArrowLeft className="w-4 h-4 rotate-180 group-hover:translate-x-1 transition-transform" aria-hidden="true" />
+          </Link>
         </motion.div>
       </div>
 
