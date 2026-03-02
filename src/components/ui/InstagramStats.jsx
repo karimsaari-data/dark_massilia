@@ -1,3 +1,32 @@
+import { useRef, useState, useEffect } from 'react';
+import { useInView, useReducedMotion } from 'framer-motion';
+
+const StatCounter = ({ end, suffix = '', decimals = 0, duration = 2000 }) => {
+  const prefersReducedMotion = useReducedMotion();
+  const ref = useRef(null);
+  const isInView = useInView(ref, { once: true, amount: 0.5 });
+  const [count, setCount] = useState(0);
+  useEffect(() => {
+    if (!isInView) return;
+    if (prefersReducedMotion) { setCount(end); return; }
+    let startTime = null;
+    let raf;
+    const step = (ts) => {
+      if (!startTime) startTime = ts;
+      const progress = Math.min((ts - startTime) / duration, 1);
+      const eased = 1 - (1 - progress) ** 3;
+      setCount(parseFloat((eased * end).toFixed(decimals)));
+      if (progress < 1) raf = requestAnimationFrame(step);
+    };
+    raf = requestAnimationFrame(step);
+    return () => cancelAnimationFrame(raf);
+  }, [isInView, end, duration, decimals, prefersReducedMotion]);
+  const display = decimals > 0
+    ? count.toFixed(decimals).replace('.', ',')
+    : count.toLocaleString('fr-FR');
+  return <span ref={ref}>{display}{suffix}</span>;
+};
+
 // SVG icons pour les réseaux sociaux
 const InstagramIcon = () => (
   <svg viewBox="0 0 24 24" className="w-7 h-7" fill="none">
@@ -58,7 +87,7 @@ const SOCIAL_NETWORKS = [
   {
     name: 'Amoureux des Calanques',
     handle: 'Groupe Facebook',
-    followers: '64,3K',
+    end: 64.3, suffix: 'K', decimals: 1,
     url: 'https://www.facebook.com/groups/calanque/',
     bg: 'from-blue-600/20 to-cyan-600/20',
     border: 'border-blue-400/20',
@@ -67,7 +96,7 @@ const SOCIAL_NETWORKS = [
   {
     name: 'Instagram',
     handle: '@karimsaari',
-    followers: '24,2K',
+    end: 24.2, suffix: 'K', decimals: 1,
     url: 'https://www.instagram.com/karimsaari',
     bg: 'from-purple-600/20 to-pink-600/20',
     border: 'border-pink-500/20',
@@ -76,7 +105,7 @@ const SOCIAL_NETWORKS = [
   {
     name: 'TikTok',
     handle: '@dark.massilia',
-    followers: '21,9K',
+    end: 21.9, suffix: 'K', decimals: 1,
     url: 'https://www.tiktok.com/@dark.massilia',
     bg: 'from-gray-800/60 to-gray-900/60',
     border: 'border-white/10',
@@ -85,7 +114,7 @@ const SOCIAL_NETWORKS = [
   {
     name: 'Facebook',
     handle: 'Pages perso & pro',
-    followers: '17,8K',
+    end: 17.8, suffix: 'K', decimals: 1,
     note: '13K + 4,8K',
     url: 'https://www.facebook.com/Photographie.Marseille',
     bg: 'from-blue-700/20 to-blue-600/20',
@@ -95,7 +124,7 @@ const SOCIAL_NETWORKS = [
   {
     name: 'Pinterest',
     handle: 'Photographie_Marseille',
-    followers: '50K',
+    end: 50, suffix: 'K', decimals: 0,
     unit: 'vues / mois',
     url: 'https://fr.pinterest.com/Photographie_Marseille/',
     bg: 'from-red-600/20 to-rose-600/20',
@@ -105,7 +134,7 @@ const SOCIAL_NETWORKS = [
   {
     name: 'YouTube',
     handle: '@dark.massilia',
-    followers: '1,33K',
+    end: 1.33, suffix: 'K', decimals: 2,
     url: 'https://www.youtube.com/@dark.massilia',
     bg: 'from-red-700/20 to-red-600/20',
     border: 'border-red-700/20',
@@ -114,7 +143,7 @@ const SOCIAL_NETWORKS = [
   {
     name: 'X',
     handle: '@dark_massilia',
-    followers: '1,6K',
+    end: 1.6, suffix: 'K', decimals: 1,
     url: 'https://x.com/dark_massilia',
     bg: 'from-gray-900/60 to-black/60',
     border: 'border-white/10',
@@ -123,7 +152,7 @@ const SOCIAL_NETWORKS = [
   {
     name: 'Local Guides',
     handle: 'Google Maps · Marseille',
-    followers: '183M',
+    end: 183, suffix: 'M', decimals: 0,
     unit: 'vues',
     url: 'https://www.google.com/maps/contrib/114912564832630219145/photos/',
     bg: 'from-blue-500/20 to-green-500/20',
@@ -152,7 +181,7 @@ const SocialStats = () => {
             {/* Stat */}
             <div>
               <p className="text-2xl md:text-3xl font-bold text-white leading-none">
-                {network.followers}
+                <StatCounter end={network.end} suffix={network.suffix} decimals={network.decimals} />
               </p>
               {network.note && (
                 <p className="text-xs text-gray-500 mt-0.5">{network.note}</p>

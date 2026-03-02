@@ -1,13 +1,40 @@
-import { motion } from 'framer-motion';
+import { motion, useInView, useReducedMotion } from 'framer-motion';
+import { useRef, useState, useEffect } from 'react';
 import { ExternalLink, Star, MapPin, ThumbsUp, Eye } from 'lucide-react';
 import SEO from '../components/SEO';
 import { SEO_PAGES } from '../utils/seo';
 
+const StatCounter = ({ end, suffix = '', decimals = 0, duration = 2000 }) => {
+  const prefersReducedMotion = useReducedMotion();
+  const ref = useRef(null);
+  const isInView = useInView(ref, { once: true, amount: 0.5 });
+  const [count, setCount] = useState(0);
+  useEffect(() => {
+    if (!isInView) return;
+    if (prefersReducedMotion) { setCount(end); return; }
+    let startTime = null;
+    let raf;
+    const step = (ts) => {
+      if (!startTime) startTime = ts;
+      const progress = Math.min((ts - startTime) / duration, 1);
+      const eased = 1 - (1 - progress) ** 3;
+      setCount(parseFloat((eased * end).toFixed(decimals)));
+      if (progress < 1) raf = requestAnimationFrame(step);
+    };
+    raf = requestAnimationFrame(step);
+    return () => cancelAnimationFrame(raf);
+  }, [isInView, end, duration, decimals, prefersReducedMotion]);
+  const display = decimals > 0
+    ? count.toFixed(decimals).replace('.', ',')
+    : count.toLocaleString('fr-FR');
+  return <span ref={ref}>{display}{suffix}</span>;
+};
+
 const STATS = [
-  { label: 'Contributions', value: '22 000+', icon: Star },
-  { label: 'Points obtenus', value: '118 000+', icon: ThumbsUp },
-  { label: 'Vues générées', value: '183 M', icon: Eye },
-  { label: 'Niveau', value: '10', icon: null, badge: true },
+  { label: 'Contributions', end: 22000, suffix: '+', icon: Star },
+  { label: 'Points obtenus', end: 118000, suffix: '+', icon: ThumbsUp },
+  { label: 'Vues générées', end: 183, suffix: ' M', icon: Eye },
+  { label: 'Niveau', end: 10, suffix: '', icon: null, badge: true },
 ];
 
 const PROFILE_URL = 'https://www.google.com/maps/contrib/114912564832630219145/photos';
@@ -90,7 +117,9 @@ export default function LocalGuide() {
                 ) : (
                   <Icon className="w-6 h-6 text-ocean-teal mx-auto mb-2" />
                 )}
-                <div className="text-2xl font-bold text-white mb-1">{value}</div>
+                <div className="text-2xl font-bold text-white mb-1">
+                  <StatCounter end={end} suffix={suffix} />
+                </div>
                 <div className="text-xs text-text-muted">{label}</div>
               </div>
             ))}
