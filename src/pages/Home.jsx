@@ -1,4 +1,4 @@
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion, AnimatePresence, useReducedMotion, useInView } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import { ArrowRight, Users, ChevronDown, Camera, MapPin } from 'lucide-react';
 
@@ -6,7 +6,68 @@ import { FADE_IN_UP, FADE_IN, STAGGER_CONTAINER, TAGLINE, MISSION_STATEMENT, FAC
 import SEO from '../components/SEO';
 import { SEO_PAGES } from '../utils/seo';
 import NewsletterSection from '../components/NewsletterSection';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
+
+// Chiffres clés — impact terrain
+const KEY_STATS = [
+  {
+    end: 5724,
+    suffix: ' kg',
+    label: 'Déchets collectés',
+    sub: '4 éditions · jusqu\'à 20 m de profondeur',
+    detail: '900 + 1 357 + 1 147 + 2 320 kg',
+  },
+  {
+    end: 10,
+    suffix: ' ans',
+    label: 'D\'engagement terrain',
+    sub: 'pour la préservation de la Méditerranée',
+    detail: 'Missions Projet Sentinelle avec Team Oxygen',
+  },
+  {
+    end: 130000,
+    suffix: '',
+    label: 'Abonnés',
+    sub: 'dont 64 000 membres sur le groupe Facebook',
+    detail: 'sur l\'ensemble des réseaux sociaux',
+  },
+  {
+    end: 183,
+    suffix: ' M',
+    label: 'Vues Google Maps',
+    sub: '9 ans de contributions Local Guide',
+    detail: 'Photos et avis sur les Calanques de Marseille',
+  },
+];
+
+// Composant compteur animé — s'active à l'entrée dans le viewport
+const StatCounter = ({ end, suffix = '', duration = 2000, prefersReduced }) => {
+  const ref = useRef(null);
+  const isInView = useInView(ref, { once: true, amount: 0.5 });
+  const [count, setCount] = useState(0);
+
+  useEffect(() => {
+    if (!isInView) return;
+    if (prefersReduced) { setCount(end); return; }
+    let startTime = null;
+    let raf;
+    const step = (ts) => {
+      if (!startTime) startTime = ts;
+      const progress = Math.min((ts - startTime) / duration, 1);
+      const eased = 1 - (1 - progress) ** 3; // ease-out cubic
+      setCount(Math.round(eased * end));
+      if (progress < 1) raf = requestAnimationFrame(step);
+    };
+    raf = requestAnimationFrame(step);
+    return () => cancelAnimationFrame(raf);
+  }, [isInView, end, duration, prefersReduced]);
+
+  return (
+    <span ref={ref}>
+      {count.toLocaleString('fr-FR')}{suffix}
+    </span>
+  );
+};
 
 // Phrases choc sur la pollution marine
 const IMPACT_FACTS = [
@@ -105,16 +166,24 @@ const FaqItem = ({ question, answer }) => {
 };
 
 const Home = () => {
+  const prefersReducedMotion = useReducedMotion();
   const [currentFactIndex, setCurrentFactIndex] = useState(0);
+  const [factsPaused, setFactsPaused] = useState(false);
+  const [factsTimerKey, setFactsTimerKey] = useState(0);
 
-  // Auto-rotation des phrases choc
+  // Auto-rotation des phrases choc — pause au hover, reset au clic
   useEffect(() => {
+    if (factsPaused) return;
     const interval = setInterval(() => {
       setCurrentFactIndex((prev) => (prev + 1) % IMPACT_FACTS.length);
-    }, 10000); // Change toutes les 10 secondes (phrases plus longues)
-
+    }, 10000);
     return () => clearInterval(interval);
-  }, []);
+  }, [factsPaused, factsTimerKey]);
+
+  const goToFact = (index) => {
+    setCurrentFactIndex(index);
+    setFactsTimerKey((k) => k + 1); // reset le timer
+  };
 
   return (
     <div className="min-h-screen">
@@ -169,7 +238,7 @@ const Home = () => {
                   repeat: Infinity,
                   ease: "linear"
                 }}
-                whileHover={{
+                whileHover={prefersReducedMotion ? {} : {
                   scale: 1.05,
                   rotateX: 8,
                   y: -5,
@@ -199,7 +268,7 @@ const Home = () => {
                   ease: "linear",
                   delay: 0.5
                 }}
-                whileHover={{
+                whileHover={prefersReducedMotion ? {} : {
                   scale: 1.08,
                   rotateY: 8,
                   x: 10,
@@ -242,7 +311,7 @@ const Home = () => {
                     ease: "easeInOut"
                   }
                 }}
-                whileHover={{
+                whileHover={prefersReducedMotion ? {} : {
                   scale: 1.1,
                   rotateZ: 2,
                   y: -8,
@@ -275,7 +344,8 @@ const Home = () => {
                 width="472"
                 height="488"
                 className="h-36 md:h-48 w-auto rounded-xl border border-white/20 shadow-lg shadow-ocean-teal/20"
-                loading="lazy"
+                loading="eager"
+                fetchpriority="high"
                 decoding="async"
               />
 
@@ -289,6 +359,7 @@ const Home = () => {
                 width="1200"
                 height="800"
                 className="h-36 md:h-48 lg:h-56 w-auto opacity-90"
+                loading="eager"
                 decoding="async"
               />
             </motion.div>
@@ -350,13 +421,33 @@ const Home = () => {
 
       {/* Section Phrases choc - Impact environnemental */}
       <section className="container-custom py-8 md:py-12">
+        {/* Label de section */}
+        <motion.div
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true }}
+          variants={FADE_IN_UP}
+          className="text-center mb-6"
+        >
+          <span className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-ocean-teal/30 bg-ocean-teal/10 text-ocean-teal text-xs font-semibold uppercase tracking-widest">
+            <span>🌊</span> Le saviez-vous ?
+          </span>
+        </motion.div>
+
         <motion.div
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true }}
           variants={FADE_IN_UP}
           className="glass-strong rounded-3xl border border-ocean-teal/20 p-8 md:p-12 shadow-lg shadow-ocean-teal/10 mb-16"
+          onMouseEnter={() => setFactsPaused(true)}
+          onMouseLeave={() => setFactsPaused(false)}
         >
+          {/* Compteur discret */}
+          <p className="text-center text-xs text-text-muted mb-6 tabular-nums">
+            {currentFactIndex + 1} / {IMPACT_FACTS.length}
+          </p>
+
           <div className="min-h-[180px] md:min-h-[140px] flex items-center justify-center text-center">
             <AnimatePresence mode="wait">
               <motion.p
@@ -372,20 +463,23 @@ const Home = () => {
             </AnimatePresence>
           </div>
 
-          {/* Indicateurs de progression */}
-          <div className="flex justify-center gap-2 mt-8">
+          {/* Indicateurs de progression — dots plus grands + pause indicator */}
+          <div className="flex justify-center items-center gap-2 mt-8">
             {IMPACT_FACTS.map((_, index) => (
               <button
                 key={index}
-                onClick={() => setCurrentFactIndex(index)}
-                className={`h-1.5 rounded-full transition-all duration-300 ${
+                onClick={() => goToFact(index)}
+                className={`rounded-full transition-all duration-300 ${
                   index === currentFactIndex
-                    ? 'w-8 bg-ocean-teal'
-                    : 'w-1.5 bg-gray-600 hover:bg-gray-500'
+                    ? 'w-8 h-2.5 bg-ocean-teal'
+                    : 'w-2.5 h-2.5 bg-white/20 hover:bg-white/40'
                 }`}
                 aria-label={`Afficher le fait ${index + 1}`}
               />
             ))}
+            {factsPaused && (
+              <span className="ml-3 text-xs text-text-muted italic">En pause</span>
+            )}
           </div>
         </motion.div>
       </section>
@@ -476,6 +570,96 @@ const Home = () => {
             </div>
           </div>
         </motion.div>
+      </section>
+
+      {/* ── CHIFFRES CLÉS ── */}
+      <section className="py-16 md:py-24 relative overflow-hidden">
+        {/* Fond distinct : gradient radial teal */}
+        <div className="absolute inset-0 bg-gradient-to-b from-abyss via-abyss-light to-abyss pointer-events-none" />
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_80%_60%_at_50%_50%,rgba(0,171,168,0.08),transparent)] pointer-events-none" />
+
+        <div className="container-custom relative">
+          {/* Titre */}
+          <motion.div
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true }}
+            variants={FADE_IN_UP}
+            className="text-center mb-14"
+          >
+            <span className="inline-block px-4 py-1.5 rounded-full text-xs font-semibold tracking-widest uppercase bg-ocean-teal/10 text-ocean-teal border border-ocean-teal/20 mb-4">
+              Impact
+            </span>
+            <h2 className="text-3xl md:text-4xl font-bold text-white">
+              10 ans d'engagement en chiffres
+            </h2>
+          </motion.div>
+
+          {/* Grille 4 chiffres */}
+          <motion.div
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true }}
+            variants={{
+              hidden: { opacity: 0 },
+              visible: { opacity: 1, transition: { staggerChildren: 0.15, delayChildren: 0.1 } },
+            }}
+            className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6"
+          >
+            {KEY_STATS.map((stat) => (
+              <motion.div
+                key={stat.label}
+                variants={FADE_IN_UP}
+                className="relative rounded-2xl border border-ocean-teal/20 bg-white/[0.04] p-6 md:p-8 text-center group hover:border-ocean-teal/40 hover:bg-white/[0.07] transition-all duration-300"
+              >
+                {/* Glow on hover */}
+                <div className="absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none"
+                  style={{ boxShadow: 'inset 0 0 30px rgba(0,171,168,0.06)' }} />
+
+                {/* Valeur animée */}
+                <div className="text-3xl md:text-4xl lg:text-5xl font-bold gradient-text mb-1 tabular-nums">
+                  <StatCounter
+                    end={stat.end}
+                    suffix={stat.suffix}
+                    prefersReduced={prefersReducedMotion}
+                  />
+                </div>
+
+                {/* Label principal */}
+                <p className="text-sm md:text-base font-semibold text-white/90 mt-2 mb-1">
+                  {stat.label}
+                </p>
+
+                {/* Sous-titre */}
+                <p className="text-xs text-gray-400 leading-snug">
+                  {stat.sub}
+                </p>
+
+                {/* Détail au survol (desktop) */}
+                <p className="hidden md:block text-xs text-ocean-teal/70 mt-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                  {stat.detail}
+                </p>
+              </motion.div>
+            ))}
+          </motion.div>
+
+          {/* Lien discret vers la page missions */}
+          <motion.div
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true }}
+            variants={FADE_IN_UP}
+            className="text-center mt-10"
+          >
+            <Link
+              to="/depollution-marine"
+              className="inline-flex items-center gap-2 text-sm text-ocean-teal/80 hover:text-ocean-teal transition-colors duration-200"
+            >
+              <span>Voir toutes nos missions Projet Sentinelle</span>
+              <ArrowRight className="w-4 h-4" />
+            </Link>
+          </motion.div>
+        </div>
       </section>
 
       {/* CTA Photos */}
