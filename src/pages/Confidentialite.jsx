@@ -67,15 +67,7 @@ export default function Confidentialite() {
           {/* 2. Données collectées */}
           <Section title="2. Données collectées et finalités">
 
-            <SubSection title="a. Formulaire de contact">
-              <p><Tag>Données</Tag> Nom ou prénom, adresse email, message libre.</p>
-              <p><Tag>Finalité</Tag> Répondre aux demandes de contact, collaboration ou information.</p>
-              <p><Tag>Base légale</Tag> Intérêt légitime (art. 6.1.f RGPD) — répondre à une demande initiée par la personne concernée.</p>
-              <p><Tag>Conservation</Tag> 3 ans à compter du dernier contact.</p>
-              <p><Tag>Destinataires</Tag> Karim Saari uniquement. Données hébergées par Supabase (voir §5).</p>
-            </SubSection>
-
-            <SubSection title="b. Newsletter Dark Massilia">
+            <SubSection title="a. Newsletter Dark Massilia">
               <p><Tag>Données</Tag> Adresse email.</p>
               <p><Tag>Finalité</Tag> Envoi de la lettre d'information sur les missions, photos et actualités.</p>
               <p><Tag>Base légale</Tag> Consentement explicite (art. 6.1.a RGPD) — case à cocher lors de l'inscription.</p>
@@ -83,7 +75,7 @@ export default function Confidentialite() {
               <p><Tag>Destinataires</Tag> Supabase (stockage), Brevo ex-Sendinblue (routage des emails).</p>
             </SubSection>
 
-            <SubSection title="c. Carte interactive des Calanques">
+            <SubSection title="b. Carte interactive des Calanques">
               <p><Tag>Données</Tag> Photographies géolocalisées, coordonnées GPS des points de plongée.</p>
               <p><Tag>Finalité</Tag> Affichage de la carte publique des missions de dépollution.</p>
               <p>Aucune donnée personnelle de l'utilisateur n'est collectée lors de la consultation de la carte.</p>
@@ -100,7 +92,7 @@ export default function Confidentialite() {
             </p>
             <p>
               Des cookies techniques strictement nécessaires peuvent être créés par Supabase pour
-              la gestion des sessions lors de l'utilisation du formulaire de contact ou de la newsletter.
+              la gestion des sessions lors de l'inscription à la newsletter.
               Ces cookies ne nécessitent pas de consentement préalable (art. 82 de la loi
               Informatique et Libertés).
             </p>
