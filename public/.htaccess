@@ -59,10 +59,30 @@
   ExpiresByType text/html "access plus 0 seconds"
 </IfModule>
 
+# ── Cache-Control explicite (complète mod_expires pour PageSpeed) ───────────
+<IfModule mod_headers.c>
+  # Images — 1 an (noms sémantiques stables, immutable pour les assets hashés Vite)
+  <FilesMatch "\.(webp|jpg|jpeg|png|gif|svg|ico|woff2?)$">
+    Header set Cache-Control "public, max-age=31536000"
+  </FilesMatch>
+  # JS/CSS buildés par Vite — noms hashés → immutable
+  <FilesMatch "^(assets/)[^/]+\.(js|css)$">
+    Header set Cache-Control "public, max-age=31536000, immutable"
+  </FilesMatch>
+  # HTML — toujours revalidé (SPA + pages prérendues)
+  <FilesMatch "\.html$">
+    Header set Cache-Control "no-cache, must-revalidate"
+  </FilesMatch>
+</IfModule>
+
 # ── Security headers ────────────────────────────────────────────────────────
 <IfModule mod_headers.c>
   Header set X-Content-Type-Options "nosniff"
   Header set X-Frame-Options "SAMEORIGIN"
   Header set X-XSS-Protection "1; mode=block"
   Header append Vary Accept-Encoding
+  # HSTS — force HTTPS pendant 1 an
+  Header always set Strict-Transport-Security "max-age=31536000; includeSubDomains"
+  # Isolation cross-origin (COOP)
+  Header set Cross-Origin-Opener-Policy "same-origin-allow-popups"
 </IfModule>

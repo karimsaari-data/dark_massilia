@@ -2,7 +2,7 @@ import { motion, AnimatePresence, useReducedMotion, useInView } from 'framer-mot
 import { Link } from 'react-router-dom';
 import { ArrowRight, Users, ChevronDown, Camera, MapPin } from 'lucide-react';
 
-import { FADE_IN_UP, FADE_IN, STAGGER_CONTAINER, TAGLINE, MISSION_STATEMENT, FACEBOOK_GROUP_MEMBERS } from '../utils/constants';
+import { FADE_IN_UP, STAGGER_CONTAINER, FACEBOOK_GROUP_MEMBERS } from '../utils/constants';
 import SEO from '../components/SEO';
 import { SEO_PAGES } from '../utils/seo';
 import NewsletterSection from '../components/NewsletterSection';
@@ -190,152 +190,73 @@ const Home = () => {
       <SEO {...SEO_PAGES['/']} />
       {/* Hero Section */}
       <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
-        {/* Gradient overlay seulement (l'image de fond vient du Layout) */}
-        <div className="absolute inset-0 bg-gradient-to-b from-transparent via-black/20 to-transparent" />
+        {/* Pas d'overlay supplémentaire ici — géré dans Layout.jsx */}
 
         {/* Hero Content */}
-        <div className="container-custom relative z-10 text-center px-4">
+        <div className="container-custom relative z-10 text-center md:text-left px-4">
           <motion.div
             initial="hidden"
             animate="visible"
             variants={STAGGER_CONTAINER}
-            className="max-w-4xl mx-auto"
+            className="max-w-4xl mx-auto md:mx-0 md:max-w-3xl"
           >
-            {/* Logo */}
-            <motion.div variants={FADE_IN} className="mb-12">
-              <div className="w-32 h-32 md:w-40 md:h-40 mx-auto rounded-full bg-white overflow-hidden animate-pulse-glow">
-                <img
-                  src="/assets/dark-massilia-logo.webp"
-                  alt="Logo Dark Massilia - Karim Saari éco-acteur et apnéiste"
-                  className="w-full h-full object-contain"
-                  loading="eager"
-                  fetchpriority="high"
-                />
-              </div>
-            </motion.div>
-
-            {/* Tagline - Accroche principale avec animations modernes */}
-            <motion.h1
-              variants={FADE_IN_UP}
-              className="text-4xl md:text-6xl lg:text-7xl font-bold mb-6 leading-tight perspective-1000"
-            >
-                {/* Une Mer - Gradient animé bleu océan */}
-              <motion.span
-                className="block relative py-2 cursor-pointer"
-                style={{
-                  background: 'linear-gradient(90deg, #00ABA8, #0091ff, #00ABA8, #0091ff)',
-                  backgroundSize: '200% 100%',
-                  WebkitBackgroundClip: 'text',
-                  WebkitTextFillColor: 'transparent',
-                  backgroundClip: 'text',
-                  transformStyle: 'preserve-3d',
-                }}
-                animate={{
-                  backgroundPosition: ['0% 50%', '100% 50%', '0% 50%'],
-                }}
-                transition={{
-                  duration: 5,
-                  repeat: Infinity,
-                  ease: "linear"
-                }}
-                whileHover={prefersReducedMotion ? {} : {
-                  scale: 1.05,
-                  rotateX: 8,
-                  y: -5,
-                  transition: { duration: 0.3, ease: "easeOut" }
-                }}
+            {/* ── H1 — Hiérarchie typographique Premium / Galerie d'art ── */}
+            {/*   Nom : uppercase fort (800) — Métier : fin italic (300)    */}
+            <motion.h1 variants={FADE_IN_UP} className="mb-6 md:mb-8">
+              {/* Nom — fort, compact, signature visuelle */}
+              <span
+                className="block text-4xl md:text-5xl lg:text-6xl font-extrabold text-white uppercase tracking-[0.12em] leading-none mb-3"
+                style={{ textShadow: '0 2px 24px rgba(0,0,0,0.85)' }}
               >
-                Une Mer
-              </motion.span>
-
-              {/* Une Ville - Gradient animé vert/cyan */}
-              <motion.span
-                className="block relative py-2 cursor-pointer"
-                style={{
-                  background: 'linear-gradient(90deg, #0091ff, #00ABA8, #00d4ff, #00ABA8)',
-                  backgroundSize: '200% 100%',
-                  WebkitBackgroundClip: 'text',
-                  WebkitTextFillColor: 'transparent',
-                  backgroundClip: 'text',
-                  transformStyle: 'preserve-3d',
-                }}
-                animate={{
-                  backgroundPosition: ['0% 50%', '100% 50%', '0% 50%'],
-                }}
-                transition={{
-                  duration: 6,
-                  repeat: Infinity,
-                  ease: "linear",
-                  delay: 0.5
-                }}
-                whileHover={prefersReducedMotion ? {} : {
-                  scale: 1.08,
-                  rotateY: 8,
-                  x: 10,
-                  transition: { duration: 0.3, ease: "easeOut" }
-                }}
+                Karim Saari
+              </span>
+              {/* Métier — fin et élégant, contraste de graisse */}
+              <span
+                className="block text-lg md:text-2xl lg:text-3xl font-light italic text-white/85 tracking-wide leading-snug"
+                style={{ textShadow: '0 1px 14px rgba(0,0,0,0.75)' }}
               >
-                Une Ville
-              </motion.span>
-
-              {/* Une Mission - Gradient animé avec effet glow */}
-              <motion.span
-                className="block relative py-2 cursor-pointer"
-                style={{
-                  background: 'linear-gradient(90deg, #00ABA8, #ffd93d, #0091ff, #00ABA8)',
-                  backgroundSize: '200% 100%',
-                  WebkitBackgroundClip: 'text',
-                  WebkitTextFillColor: 'transparent',
-                  backgroundClip: 'text',
-                  filter: 'drop-shadow(0 0 20px rgba(0, 171, 168, 0.4))',
-                  transformStyle: 'preserve-3d',
-                }}
-                animate={{
-                  backgroundPosition: ['0% 50%', '100% 50%', '0% 50%'],
-                  filter: [
-                    'drop-shadow(0 0 20px rgba(0, 171, 168, 0.4))',
-                    'drop-shadow(0 0 40px rgba(0, 145, 255, 0.6))',
-                    'drop-shadow(0 0 20px rgba(0, 171, 168, 0.4))'
-                  ]
-                }}
-                transition={{
-                  backgroundPosition: {
-                    duration: 7,
-                    repeat: Infinity,
-                    ease: "linear",
-                    delay: 1
-                  },
-                  filter: {
-                    duration: 3,
-                    repeat: Infinity,
-                    ease: "easeInOut"
-                  }
-                }}
-                whileHover={prefersReducedMotion ? {} : {
-                  scale: 1.1,
-                  rotateZ: 2,
-                  y: -8,
-                  filter: 'drop-shadow(0 0 60px rgba(0, 171, 168, 0.9))',
-                  transition: { duration: 0.3, ease: "easeOut" }
-                }}
-              >
-                Une Mission
-              </motion.span>
+                Photographe de paysages<br />
+                &amp; sentinelle du littoral marseillais
+              </span>
             </motion.h1>
 
-            {/* Bio / Mission Statement */}
+            {/* Lead — sous-titre accroche, max 600px */}
             <motion.p
               variants={FADE_IN_UP}
-              className="text-lg md:text-xl text-text-secondary max-w-3xl mx-auto leading-relaxed mb-8"
+              className="text-base md:text-lg text-text-secondary leading-[1.6] mb-10"
+              style={{ textShadow: '0 1px 10px rgba(0,0,0,0.65)' }}
             >
-              Une Mer. Une Ville. Une Mission. De la photographie de paysages aux documentaires engagés, j'utilise l'image pour porter la voix de Marseille, de son littoral et de celles et ceux qui le protègent.
-              Apnéiste engagé depuis plus de 10 ans pour la préservation de la Méditerranée, président de l'association éco-engagée <strong className="text-ocean-teal">Team Oxygen</strong>, je documente les calanques et le littoral méditerranéen, en surface comme sous l'eau, pour rendre visible l'impact des pollutions marines et témoigner de l'état réel des écosystèmes.
+              Photographe et sentinelle engagée, je documente la beauté brute du littoral, des sentiers de randonnée aux profondeurs des Calanques de Marseille à Port-Cros. Entre photographie d'art et actions de dépollution avec{' '}
+              <strong className="text-ocean-teal font-semibold">Team Oxygen</strong>, découvrez un regard tourné vers la préservation de la Méditerranée.
             </motion.p>
+
+            {/* Hero CTAs */}
+            <motion.div
+              variants={FADE_IN_UP}
+              className="flex flex-col sm:flex-row items-center justify-center md:justify-start gap-4 mb-12"
+            >
+              <Link
+                to="/photographie-paysage-mer"
+                className="btn-primary inline-flex items-center gap-2"
+                title="Voir les photographies des Calanques de Marseille par Karim Saari"
+              >
+                <span>Découvrir les Calanques</span>
+                <ArrowRight className="w-4 h-4" aria-hidden="true" />
+              </Link>
+              <Link
+                to="/depollution-marine"
+                className="btn-ghost inline-flex items-center gap-2"
+                title="En savoir plus sur mes actions de dépollution et mon engagement écologique"
+              >
+                <span>Engagement &amp; Dépollution</span>
+                <ArrowRight className="w-4 h-4" aria-hidden="true" />
+              </Link>
+            </motion.div>
 
             {/* Photo de profil + Signature — style préface */}
             <motion.div
               variants={FADE_IN_UP}
-              className="flex flex-col md:flex-row items-center justify-center gap-6 md:gap-10"
+              className="flex flex-col md:flex-row items-center justify-center md:justify-start gap-6 md:gap-10"
             >
               {/* Photo profil */}
               <img
@@ -343,7 +264,7 @@ const Home = () => {
                 alt="Karim Saari - Apnéiste et photographe à Marseille"
                 width="472"
                 height="488"
-                className="h-36 md:h-48 w-auto rounded-xl border border-white/20 shadow-lg shadow-ocean-teal/20"
+                className="h-40 md:h-56 w-auto rounded-xl border border-white/20 shadow-lg shadow-ocean-teal/20"
                 loading="eager"
                 fetchpriority="high"
                 decoding="async"
@@ -358,38 +279,17 @@ const Home = () => {
                 alt="Signature Karim Saari"
                 width="1200"
                 height="800"
-                className="h-36 md:h-48 lg:h-56 w-auto opacity-90"
+                className="h-40 md:h-56 lg:h-64 w-auto opacity-90"
                 loading="eager"
                 decoding="async"
               />
-            </motion.div>
-
-            {/* Hero CTAs */}
-            <motion.div
-              variants={FADE_IN_UP}
-              className="flex flex-col sm:flex-row items-center justify-center gap-4 mt-4"
-            >
-              <Link
-                to="/depollution-marine"
-                className="btn-primary inline-flex items-center gap-2"
-              >
-                <span>Nos missions de dépollution</span>
-                <ArrowRight className="w-4 h-4" aria-hidden="true" />
-              </Link>
-              <a
-                href="#newsletter"
-                className="btn-secondary inline-flex items-center gap-2"
-              >
-                <span>Rejoindre la newsletter</span>
-                <ArrowRight className="w-4 h-4" aria-hidden="true" />
-              </a>
             </motion.div>
           </motion.div>
         </div>
 
       </section>
 
-      {/* Section éditoriale SEO — contexte Méditerranée */}
+      {/* Section bio — identité & engagement */}
       <section className="container-custom py-8 md:py-12">
         <motion.div
           initial="hidden"
@@ -401,6 +301,68 @@ const Home = () => {
           <div className="grid md:grid-cols-[1fr_1.2fr] gap-0">
             {/* Contenu — Gauche */}
             <div className="p-8 md:p-12 flex flex-col justify-center order-2 md:order-1">
+              <h2 className="text-2xl md:text-3xl font-bold text-white mb-6">
+                Karim Saari — Photographe environnemental &amp; Apnéiste
+              </h2>
+              <div className="text-lg text-text-secondary leading-relaxed space-y-4">
+                <p>
+                  De la photographie de paysages littoraux aux images sous-marines, j'utilise l'objectif pour porter la voix de Marseille, des Calanques et de ceux qui les protègent.
+                </p>
+                <p>
+                  En tant que photographe environnemental en Méditerranée, je capture la beauté de nos côtes, en surface comme en apnée, pour témoigner de l'état réel de nos écosystèmes.
+                </p>
+                <p>
+                  Apnéiste engagé depuis plus de 10 ans et président de <strong className="text-ocean-teal">Team Oxygen</strong>, ma mission se vit sur le terrain et à l'écran.
+                </p>
+                <p>
+                  Pour rendre visible l'impact de la pollution plastique, je participe à des documentaires et reportages sur l'environnement marin, je conçois des expositions photos engagées et je mène des missions de dépollution sous-marine avec mon association.
+                </p>
+              </div>
+            </div>
+
+            {/* Image — Droite */}
+            <div className="relative h-64 md:h-auto min-h-[400px] order-1 md:order-2">
+              <img
+                src="/images/portfolio/Mer/95.webp"
+                srcSet="/images/portfolio/Mer/95_400w.webp 400w, /images/portfolio/Mer/95_800w.webp 800w, /images/portfolio/Mer/95_1200w.webp 1200w, /images/portfolio/Mer/95.webp 1920w"
+                sizes="(max-width: 768px) 100vw, 50vw"
+                alt="Karim Saari - Apnéiste en mission de dépollution dans les Calanques de Marseille"
+                className="absolute inset-0 w-full h-full object-cover"
+                loading="lazy"
+                decoding="async"
+              />
+              <div className="absolute inset-0 bg-gradient-to-l from-transparent to-black/30" />
+            </div>
+          </div>
+        </motion.div>
+      </section>
+
+      {/* Section éditoriale SEO — contexte Méditerranée */}
+      <section className="container-custom py-8 md:py-12">
+        <motion.div
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true }}
+          variants={FADE_IN_UP}
+          className="glass-strong rounded-3xl overflow-hidden border border-white/10 mb-16"
+        >
+          <div className="grid md:grid-cols-[1.2fr_1fr] gap-0">
+            {/* Image — Gauche */}
+            <div className="relative h-64 md:h-auto min-h-[400px] order-1 md:order-1">
+              <img
+                src="/images/Marseille-dark-massilia-plastique-polluttion-projet-sentinelle-huveaune.webp"
+                srcSet="/images/Marseille-dark-massilia-plastique-polluttion-projet-sentinelle-huveaune_400w.webp 400w, /images/Marseille-dark-massilia-plastique-polluttion-projet-sentinelle-huveaune_800w.webp 800w, /images/Marseille-dark-massilia-plastique-polluttion-projet-sentinelle-huveaune_1200w.webp 1200w, /images/Marseille-dark-massilia-plastique-polluttion-projet-sentinelle-huveaune.webp 1920w"
+                sizes="(max-width: 768px) 100vw, 50vw"
+                alt="Pollution plastique dans l'Huveaune à Marseille - Projet Sentinelle Dark Massilia"
+                className="absolute inset-0 w-full h-full object-cover"
+                loading="lazy"
+                decoding="async"
+              />
+              <div className="absolute inset-0 bg-gradient-to-r from-transparent to-black/30" />
+            </div>
+
+            {/* Contenu — Droite */}
+            <div className="p-8 md:p-12 flex flex-col justify-center order-2 md:order-2">
               <h2 className="text-2xl md:text-3xl font-bold text-white mb-6">
                 La Méditerranée : Un écosystème en péril
               </h2>
@@ -423,18 +385,6 @@ const Home = () => {
                   <ArrowRight className="w-4 h-4" />
                 </Link>
               </div>
-            </div>
-
-            {/* Image — Droite */}
-            <div className="relative h-64 md:h-auto min-h-[400px] order-1 md:order-2">
-              <img
-                src="/images/Marseille-dark-massilia-plastique-polluttion-projet-sentinelle-huveaune.webp"
-                alt="Pollution plastique dans l'Huveaune à Marseille - Projet Sentinelle Dark Massilia"
-                className="absolute inset-0 w-full h-full object-cover"
-                loading="lazy"
-                decoding="async"
-              />
-              <div className="absolute inset-0 bg-gradient-to-l from-transparent to-black/30" />
             </div>
           </div>
         </motion.div>
@@ -538,6 +488,8 @@ const Home = () => {
             <div className="relative h-64 md:h-auto min-h-[400px] order-1 md:order-2">
               <img
                 src="/images/Marseille-dark-massilia-plastique-pollution-projet-sentinelle-teamoxygen.webp"
+                srcSet="/images/Marseille-dark-massilia-plastique-pollution-projet-sentinelle-teamoxygen_400w.webp 400w, /images/Marseille-dark-massilia-plastique-pollution-projet-sentinelle-teamoxygen_800w.webp 800w, /images/Marseille-dark-massilia-plastique-pollution-projet-sentinelle-teamoxygen_1200w.webp 1200w, /images/Marseille-dark-massilia-plastique-pollution-projet-sentinelle-teamoxygen.webp 1920w"
+                sizes="(max-width: 768px) 100vw, 50vw"
                 alt="Team Oxygen - Projet Sentinelle Marseille"
                 className="absolute inset-0 w-full h-full object-cover"
                 style={{ objectPosition: '12% 25%' }}
@@ -565,6 +517,8 @@ const Home = () => {
             <div className="relative h-64 md:h-auto min-h-[400px] order-1">
               <img
                 src="/images/portfolio/Mer/6.webp"
+                srcSet="/images/portfolio/Mer/6_400w.webp 400w, /images/portfolio/Mer/6_800w.webp 800w, /images/portfolio/Mer/6_1200w.webp 1200w, /images/portfolio/Mer/6.webp 1920w"
+                sizes="(max-width: 768px) 100vw, 50vw"
                 alt="Mission de dépollution en apnée - Dark Massilia"
                 className="absolute inset-0 w-full h-full object-cover"
                 loading="lazy"
@@ -624,6 +578,8 @@ const Home = () => {
             <div className="relative h-64 md:h-auto min-h-[400px] order-1 md:order-2">
               <img
                 src="/images/portfolio/Mer/54.webp"
+                srcSet="/images/portfolio/Mer/54_400w.webp 400w, /images/portfolio/Mer/54_800w.webp 800w, /images/portfolio/Mer/54_1200w.webp 1200w, /images/portfolio/Mer/54.webp 1920w"
+                sizes="(max-width: 768px) 100vw, 50vw"
                 alt="Photographie sous-marine Calanques de Marseille - Dark Massilia"
                 className="absolute inset-0 w-full h-full object-cover"
                 loading="lazy"
@@ -742,6 +698,8 @@ const Home = () => {
             <div className="relative h-64 md:h-auto min-h-[400px] order-1">
               <img
                 src="/images/portfolio/Mer/12.webp"
+                srcSet="/images/portfolio/Mer/12_400w.webp 400w, /images/portfolio/Mer/12_800w.webp 800w, /images/portfolio/Mer/12_1200w.webp 1200w, /images/portfolio/Mer/12.webp 1920w"
+                sizes="(max-width: 768px) 100vw, 50vw"
                 alt="Carte interactive des Calanques de Marseille — Dark Massilia Projet Sentinelle"
                 className="absolute inset-0 w-full h-full object-cover"
                 loading="lazy"
@@ -821,6 +779,8 @@ const Home = () => {
             <div className="relative h-64 md:h-auto min-h-[400px] order-1 md:order-2">
               <img
                 src="/images/groupe%20des%20amoureux%20des%20calanques.webp"
+                srcSet="/images/groupe%20des%20amoureux%20des%20calanques_400w.webp 400w, /images/groupe%20des%20amoureux%20des%20calanques_800w.webp 800w, /images/groupe%20des%20amoureux%20des%20calanques_1200w.webp 1200w, /images/groupe%20des%20amoureux%20des%20calanques.webp 1920w"
+                sizes="(max-width: 768px) 100vw, 50vw"
                 alt="Groupe Facebook Amoureux des Calanques de Marseille à Port-Cros"
                 className="absolute inset-0 w-full h-full object-cover"
                 style={{ objectPosition: '12% 25%' }}
@@ -848,6 +808,8 @@ const Home = () => {
             <div className="relative h-64 md:h-auto min-h-[400px] order-1">
               <img
                 src="/images/Marseille-2024-342-Les-Francais-copyright-Yann-Arthus-Bertrand.webp"
+                srcSet="/images/Marseille-2024-342-Les-Francais-copyright-Yann-Arthus-Bertrand_400w.webp 400w, /images/Marseille-2024-342-Les-Francais-copyright-Yann-Arthus-Bertrand_800w.webp 800w, /images/Marseille-2024-342-Les-Francais-copyright-Yann-Arthus-Bertrand_1200w.webp 1200w, /images/Marseille-2024-342-Les-Francais-copyright-Yann-Arthus-Bertrand.webp 1920w"
+                sizes="(max-width: 768px) 100vw, 50vw"
                 alt="Team Oxygen photographié par Yann Arthus-Bertrand — projet Les Français, Marseille 2024"
                 className="absolute inset-0 w-full h-full object-cover"
                 style={{ objectPosition: 'center 20%' }}

@@ -1,4 +1,4 @@
-import { Instagram, Youtube, Linkedin, Facebook, AtSign } from 'lucide-react';
+import { Instagram, Linkedin, Facebook, AtSign, Send } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { SOCIAL_LINKS, APP_CONFIG, NAV_LINKS } from '../../utils/constants';
 import { openConsentBanner } from '../../utils/consent';
@@ -10,24 +10,10 @@ const TikTokIcon = ({ className }) => (
   </svg>
 );
 
-// X/Twitter icon component
-const XIcon = ({ className }) => (
-  <svg className={className} viewBox="0 0 24 24" fill="currentColor">
-    <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
-  </svg>
-);
-
 // 500px icon component
 const Px500Icon = ({ className }) => (
   <svg className={className} viewBox="0 0 24 24" fill="currentColor">
     <path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm0 2.4c5.302 0 9.6 4.298 9.6 9.6s-4.298 9.6-9.6 9.6S2.4 17.302 2.4 12 6.698 2.4 12 2.4zm0 2.4c-3.977 0-7.2 3.223-7.2 7.2s3.223 7.2 7.2 7.2 7.2-3.223 7.2-7.2-3.223-7.2-7.2-7.2zm0 2.4c2.651 0 4.8 2.149 4.8 4.8S14.651 16.8 12 16.8 7.2 14.651 7.2 12s2.149-4.8 4.8-4.8zm0 2.4c-1.326 0-2.4 1.074-2.4 2.4s1.074 2.4 2.4 2.4 2.4-1.074 2.4-2.4-1.074-2.4-2.4-2.4z"/>
-  </svg>
-);
-
-// Pinterest icon component
-const PinterestIcon = ({ className }) => (
-  <svg className={className} viewBox="0 0 24 24" fill="currentColor">
-    <path d="M12 0C5.373 0 0 5.373 0 12c0 5.084 3.163 9.426 7.627 11.174-.105-.949-.2-2.405.042-3.441.218-.937 1.407-5.965 1.407-5.965s-.359-.719-.359-1.782c0-1.668.967-2.914 2.171-2.914 1.023 0 1.518.769 1.518 1.69 0 1.029-.655 2.568-.994 3.995-.283 1.194.599 2.169 1.777 2.169 2.133 0 3.772-2.249 3.772-5.495 0-2.873-2.064-4.882-5.012-4.882-3.414 0-5.418 2.561-5.418 5.207 0 1.031.397 2.138.893 2.738a.36.36 0 0 1 .083.345l-.333 1.36c-.053.22-.174.267-.402.161-1.499-.698-2.436-2.889-2.436-4.649 0-3.785 2.75-7.262 7.929-7.262 4.163 0 7.398 2.967 7.398 6.931 0 4.136-2.607 7.464-6.227 7.464-1.216 0-2.359-.632-2.75-1.378l-.748 2.853c-.271 1.043-1.002 2.35-1.492 3.146C9.57 23.812 10.763 24 12 24c6.627 0 12-5.373 12-12S18.627 0 12 0z"/>
   </svg>
 );
 
@@ -55,6 +41,7 @@ const navColumns = [
       { to: '/photographie-paysage-mer', text: 'Photographies' },
       { to: '/carte-calanques', text: 'Carte des Calanques' },
       { to: '/local-guide-marseille', text: 'Google Local Guide' },
+      { to: '/blog', text: 'Actualités' },
     ],
   },
   {
@@ -62,9 +49,7 @@ const navColumns = [
     links: [
       { to: '/contact', text: 'Collaborer avec nous' },
       { to: '/#newsletter', text: 'Newsletter', anchor: true },
-      { to: '/mentions-legales', text: 'Mentions légales' },
-      { to: '/confidentialite', text: 'Confidentialité' },
-      { to: '#cookies', text: 'Gérer les cookies', action: openConsentBanner },
+      { to: 'mailto:contact@karimsaari.com', text: 'Envoyer un mail', external: true },
     ],
   },
 ];
@@ -73,19 +58,17 @@ const Footer = () => {
   const currentYear = new Date().getFullYear();
 
   const socialIcons = [
+    { Icon: Send, href: '/#newsletter', label: 'Newsletter', anchor: true },
     { Icon: Instagram, href: SOCIAL_LINKS.instagram, label: 'Instagram' },
-    { Icon: XIcon, href: '/twitter', label: 'X (Twitter)', internal: true },
     { Icon: TikTokIcon, href: SOCIAL_LINKS.tiktok, label: 'TikTok' },
-    { Icon: Youtube, href: SOCIAL_LINKS.youtube, label: 'YouTube' },
     { Icon: Facebook, href: SOCIAL_LINKS.facebook, label: 'Facebook' },
-    { Icon: Px500Icon, href: SOCIAL_LINKS.px500, label: '500px' },
-    { Icon: PinterestIcon, href: SOCIAL_LINKS.pinterest, label: 'Pinterest' },
     { Icon: Linkedin, href: SOCIAL_LINKS.linkedin, label: 'LinkedIn' },
+    { Icon: Px500Icon, href: SOCIAL_LINKS.px500, label: '500px' },
     { Icon: AtSign, href: '/contact', label: 'Contact', internal: true },
   ];
 
   return (
-    <footer className="relative border-t border-white/5 bg-abyss-light/30 mt-20">
+    <footer className="relative border-t border-white/5 mt-20" style={{ background: 'rgba(0, 0, 0, 0.4)' }}>
       <div className="container-custom py-12">
 
         {/* Navigation secondaire — maillage interne SEO */}
@@ -93,31 +76,31 @@ const Footer = () => {
           <div className="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
             {navColumns.map((col) => (
               <div key={col.label}>
-                <p className="text-xs font-semibold text-gray-500 uppercase tracking-widest mb-4">
+                <p className="text-xs font-semibold text-gray-400 uppercase tracking-widest mb-4">
                   {col.label}
                 </p>
-                <ul className="space-y-2">
+                <ul className="space-y-1">
                   {col.links.map((link) => (
                     <li key={link.to}>
                       {link.action ? (
                         <button
                           type="button"
                           onClick={link.action}
-                          className="text-sm text-gray-400 hover:text-ocean-teal transition-colors duration-200 cursor-pointer"
+                          className="text-sm text-gray-300 hover:text-ocean-teal transition-colors duration-200 cursor-pointer py-1.5 block w-full"
                         >
                           {link.text}
                         </button>
-                      ) : link.anchor ? (
+                      ) : link.anchor || link.external ? (
                         <a
                           href={link.to}
-                          className="text-sm text-gray-400 hover:text-ocean-teal transition-colors duration-200"
+                          className="text-sm text-gray-300 hover:text-ocean-teal transition-colors duration-200 py-1.5 block"
                         >
                           {link.text}
                         </a>
                       ) : (
                         <Link
                           to={link.to}
-                          className="text-sm text-gray-400 hover:text-ocean-teal transition-colors duration-200"
+                          className="text-sm text-gray-300 hover:text-ocean-teal transition-colors duration-200 py-1.5 block"
                         >
                           {link.text}
                         </Link>
@@ -130,51 +113,82 @@ const Footer = () => {
           </div>
         </nav>
 
-        {/* Social Icons - Centered */}
-        <div className="flex justify-center items-center space-x-4 mb-6">
-          {socialIcons.map(({ Icon, href, label, internal }) => {
-            const Component = internal ? Link : 'a';
-            const linkProps = internal
-              ? { to: href }
-              : { href, target: '_blank', rel: 'noopener noreferrer' };
+        {/* Logo circulaire Dark Massilia — ancrage marque, au-dessus des icônes */}
+        <div className="flex justify-center mb-5">
+          <div
+            className="w-20 h-20 rounded-full bg-white overflow-hidden hover:scale-105 transition-all duration-300"
+            style={{ boxShadow: '0 0 0 2px rgba(255,255,255,0.3), 0 0 16px rgba(33,196,123,0.2)' }}
+          >
+            <img
+              src="/assets/dark-massilia-logo.webp"
+              alt="Dark Massilia — logo de Karim Saari, photographe à Marseille"
+              width="80"
+              height="80"
+              className="w-full h-full object-contain p-1"
+              loading="lazy"
+            />
+          </div>
+        </div>
 
+        {/* Social Icons - Centered */}
+        <div className="flex justify-center items-center gap-5 mb-8">
+          {socialIcons.map(({ Icon, href, label, anchor, internal }) => {
+            const iconClass = "w-10 h-10 rounded-full border border-white/10 flex items-center justify-center hover:border-ocean-teal/50 hover:bg-ocean-teal/10 transition-all duration-300 group";
+            const innerIcon = <Icon className="w-5 h-5 text-gray-400 group-hover:text-ocean-teal transition-colors" />;
+
+            if (anchor || internal) {
+              return (
+                <Link key={label} to={href} aria-label={label} className={iconClass}>
+                  {innerIcon}
+                </Link>
+              );
+            }
             return (
-              <Component
-                key={label}
-                {...linkProps}
-                aria-label={label}
-                className="w-10 h-10 rounded-full border border-white/10 flex items-center justify-center hover:border-ocean-teal/50 hover:bg-ocean-teal/10 transition-all duration-300 group"
-              >
-                <Icon className="w-5 h-5 text-gray-400 group-hover:text-ocean-teal transition-colors" />
-              </Component>
+              <a key={label} href={href} target="_blank" rel="noopener noreferrer" aria-label={label} className={iconClass}>
+                {innerIcon}
+              </a>
             );
           })}
         </div>
 
-        {/* Copyright - Centered */}
-        <div className="text-center space-y-1">
-          <p className="text-xs text-gray-400">
-            © {currentYear} Dark Massilia · Karim Saari
-          </p>
-          <p className="text-xs text-gray-500">
-            Président de{' '}
+        {/* Copyright + liens légaux — SEO optimisé */}
+        <div className="text-center">
+          <p className="text-xs text-gray-400 leading-relaxed mb-3">
+            © {currentYear}{' '}
+            <span className="text-gray-300 font-medium">Karim Saari</span>
+            {' '}| Photographe de paysages &amp; Sentinelle des calanques — Fondateur de{' '}
+            <span className="text-gray-300">Dark Massilia</span>
+            {' '}&amp; Président de{' '}
             <a
               href="https://www.team-oxygen.com/"
               target="_blank"
               rel="noopener noreferrer"
-              className="hover:text-ocean-teal transition-colors duration-200"
+              className="text-gray-300 hover:text-ocean-teal transition-colors duration-200"
             >
               Team Oxygen
             </a>
           </p>
-          <p className="text-xs text-gray-500">
-            <a
-              href="mailto:email@karimsaari.com"
-              className="hover:text-ocean-teal transition-colors duration-200"
+          <div className="flex flex-wrap justify-center gap-x-4 gap-y-1">
+            <Link
+              to="/mentions-legales"
+              className="text-xs text-gray-400 hover:text-ocean-teal transition-colors duration-200 py-1.5 px-1"
             >
-              email@karimsaari.com
-            </a>
-          </p>
+              Mentions légales
+            </Link>
+            <Link
+              to="/confidentialite"
+              className="text-xs text-gray-400 hover:text-ocean-teal transition-colors duration-200 py-1.5 px-1"
+            >
+              Politique de confidentialité
+            </Link>
+            <button
+              type="button"
+              onClick={openConsentBanner}
+              className="text-xs text-gray-400 hover:text-ocean-teal transition-colors duration-200 cursor-pointer py-1.5 px-1"
+            >
+              Gérer les cookies
+            </button>
+          </div>
         </div>
       </div>
     </footer>

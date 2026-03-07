@@ -7,7 +7,10 @@
     "dev": "vite",
     "build": "vite build",
     "build:ssr": "node scripts/prerender.js",
-    "build:full": "vite build && node scripts/prerender.js",
+    "build:sitemap": "node scripts/generate-sitemap.js",
+    "build:sitemap-images": "node scripts/generate-sitemap-images.js",
+    "images:responsive": "node scripts/generate-responsive-images.js",
+    "build:full": "node scripts/generate-sitemap.js && node scripts/generate-sitemap-images.js && vite build && node scripts/prerender.js",
     "lint": "eslint .",
     "preview": "vite preview"
   },
