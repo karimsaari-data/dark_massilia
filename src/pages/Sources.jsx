@@ -373,7 +373,7 @@ const Sources = () => {
                   </div>
                   <div className="rounded-xl overflow-hidden aspect-[4/3]">
                     <img
-                      src="/images/Marseilleveyre%20avant%20rugulopterix.webp"
+                      src="/images/marseille-marseilleveyre-avant-rugulopteryx-fonds-marins.webp"
                       alt="Marseilleveyre avant l'invasion de Rugulopteryx okamurae — fonds rocheux naturels"
                       className="w-full h-full object-cover"
                       loading="lazy"
@@ -381,7 +381,7 @@ const Sources = () => {
                   </div>
                   <div className="rounded-xl overflow-hidden aspect-[4/3]">
                     <img
-                      src="/images/Marseilleveyre%20avant%20rugulopterix%202.webp"
+                      src="/images/marseille-marseilleveyre-avant-rugulopteryx-biodiversite-2.webp"
                       alt="Marseilleveyre avant l'invasion de Rugulopteryx okamurae — biodiversité locale"
                       className="w-full h-full object-cover"
                       loading="lazy"
@@ -395,7 +395,7 @@ const Sources = () => {
                   </div>
                   <div className="rounded-xl overflow-hidden aspect-[4/3]">
                     <img
-                      src="/images/Marseilleveyre%20apr%C3%A8s%20rugulopterix.webp"
+                      src="/images/marseille-marseilleveyre-apres-rugulopteryx-algue-invasive.webp"
                       alt="Marseilleveyre après l'invasion de Rugulopteryx okamurae — fonds recouverts par l'algue"
                       className="w-full h-full object-cover"
                       loading="lazy"
@@ -403,7 +403,7 @@ const Sources = () => {
                   </div>
                   <div className="rounded-xl overflow-hidden aspect-[4/3]">
                     <img
-                      src="/images/Marseilleveyre%20apr%C3%A8s%20rugulopterix%202.webp"
+                      src="/images/marseille-marseilleveyre-apres-rugulopteryx-tapis-algues-2.webp"
                       alt="Marseilleveyre après l'invasion de Rugulopteryx okamurae — tapis d'algues invasives"
                       className="w-full h-full object-cover"
                       loading="lazy"

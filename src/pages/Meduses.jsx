@@ -6,7 +6,7 @@ import SEO from '../components/SEO';
 import { SEO_PAGES } from '../utils/seo';
 
 const img = (n) =>
-  `/images/M%C3%A9duses%20les%20souveraines%20des%20oc%C3%A9ans%20-%20arte%20-%20${n}`;
+  `/images/arte-meduses-souveraines-oceans-documentaire-marseille-${n}`;
 
 const Meduses = () => {
   return (

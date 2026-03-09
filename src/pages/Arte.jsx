@@ -115,9 +115,9 @@ const Arte = () => {
           {/* Image pleine largeur */}
           <div className="relative w-full aspect-[4/5]">
             <picture>
-              <source srcSet="/images/arte regard.webp" type="image/webp" />
+              <source srcSet="/images/karim-saari-arte-regard-documentaire-calanques-marseille.webp" type="image/webp" />
               <img
-                src="/images/arte regard.jpg"
+                src="/images/karim-saari-arte-regard-documentaire-calanques-marseille.jpg"
                 alt="Karim Saari dans le reportage ARTE Regards — Pollution marine à Marseille"
                 className="absolute inset-0 w-full h-full object-cover object-center"
               />

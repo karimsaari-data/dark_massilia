@@ -165,4 +165,74 @@ if (existsSync(MISSIONS)) {
   console.log(`⚠  Dossier introuvable : ${MISSIONS}`);
 }
 
+// ── Images médias/presse + profil + divers (racine /images, hors Marseille-dark-massilia-*) ─────
+const KW_PRESSE = [
+  'karim saari', 'dark massilia', 'marseille', 'calanques',
+  'photographe sous-marin', 'dépollution marine', 'projet sentinelle',
+];
+const KW_ARTE = [
+  'karim saari', 'dark massilia', 'marseille', 'arte',
+  'documentaire', 'méditerranée', 'photographe sous-marin',
+];
+const KW_RUGULOPTERYX = [
+  'marseille', 'calanques', 'marseilleveyre', 'rugulopteryx okamurae',
+  'algue invasive', 'karim saari', 'dark massilia', 'biodiversité marine',
+];
+const KW_DIVERS = [
+  'karim saari', 'dark massilia', 'marseille', 'calanques',
+  'photographe sous-marin', 'méditerranée', 'méditerranée',
+];
+
+const MISC_FILES = [
+  // Presse / médias
+  { file: 'karim-saari-interview-presse-tiredearth-photographe-sous-marin.webp', title: 'Interview Tired Earth — Karim Saari photographe sous-marin', description: 'Interview presse Tired Earth — Karim Saari apnéiste et photographe sous-marin Marseille (Dark Massilia)', keywords: KW_PRESSE },
+  { file: 'karim-saari-marseille-marcelle-media-depollution-mer-apnee.webp', title: 'Marcelle Média — Dépolluer la mer en apnée', description: 'Reportage Marcelle Média sur la dépollution marine en apnée par Karim Saari — Projet Sentinelle Marseille', keywords: KW_PRESSE },
+  { file: 'karim-saari-marseille-france-bleu-rorqual-cotes-marseille.webp', title: 'France Bleu — Rorqual au large de Marseille', description: 'France Bleu Provence — Rorqual rarissime aperçu près des côtes de Marseille, témoignage Karim Saari (Dark Massilia)', keywords: [...KW_PRESSE, 'rorqual', 'grand cétacé'] },
+  { file: 'karim-saari-marseille-actu-depollution-fonds-marins.webp', title: 'Actu.fr — Dépollution fonds marins Marseille', description: 'Reportage Actu.fr sur la dépollution des fonds marins de Marseille par Karim Saari et Team Oxygen — Calanques', keywords: KW_PRESSE },
+  { file: 'karim-saari-marseille-fondation-mer-projet-sentinelle-calanques.webp', title: 'Fondation de la Mer — Projet Sentinelle Calanques', description: 'La Fondation de la Mer soutient le Projet Sentinelle de dépollution sous-marine dans les Calanques de Marseille', keywords: [...KW_PRESSE, 'fondation de la mer'] },
+  { file: 'karim-saari-marseille-la-provence-operation-sentinelle-apnee.webp', title: 'La Provence — Opération Sentinelle Marseille', description: 'La Provence couvre l\'Opération Sentinelle de dépollution en apnée dans les Calanques de Marseille — Karim Saari', keywords: KW_PRESSE },
+  { file: 'karim-saari-marseille-france-bleu-goudes-dechets-apneistes.webp', title: 'France Bleu — 328 kg déchets aux Goudes', description: 'France Bleu Provence — 328 kg de déchets récoltés aux Goudes par les apnéistes de Team Oxygen Marseille', keywords: KW_PRESSE },
+  { file: 'karim-saari-marseille-ville-reconnaissance-officielle-dark-massilia.webp', title: 'Ville de Marseille — Reconnaissance officielle Dark Massilia', description: 'La Ville de Marseille reconnaît officiellement l\'engagement de Dark Massilia pour la dépollution marine des Calanques', keywords: KW_PRESSE },
+  { file: 'karim-saari-marseille-made-in-marseille-provence-tourisme.webp', title: 'Made in Marseille — Provence tourisme France', description: 'Made in Marseille — Provence classée top destination touristique France, Calanques et Méditerranée', keywords: [...KW_PRESSE, 'tourisme marseille', 'provence'] },
+  { file: 'karim-saari-marseille-echappees-belles-reportage-television.webp', title: 'Échappées Belles — Karim Saari France Télévisions', description: 'Reportage Échappées Belles avec Karim Saari (Dark Massilia) au Vallon des Auffes — Marseille, France Télévisions', keywords: [...KW_PRESSE, 'échappées belles', 'france télévisions', 'vallon des auffes'] },
+  // ARTE
+  { file: 'karim-saari-arte-regard-documentaire-calanques-marseille.webp', title: 'ARTE Regards — Karim Saari Calanques Marseille', description: 'Documentaire ARTE Regards — Karim Saari et Team Oxygen contre la pollution plastique dans les Calanques de Marseille', keywords: KW_ARTE },
+  { file: 'karim-saari-photo-profil-arte-regard-marseille.webp', title: 'Portrait Karim Saari — Documentaire ARTE', description: 'Portrait de Karim Saari photographe sous-marin pour le documentaire ARTE Regards — Marseille, Dark Massilia', keywords: KW_ARTE },
+  { file: 'karim-saari-photo-profil-arte-regard-marseille_300w.webp', title: 'Portrait Karim Saari — ARTE (300w)', description: 'Portrait de Karim Saari photographe sous-marin pour le documentaire ARTE Regards — Marseille, Dark Massilia', keywords: KW_ARTE },
+  // Méduses ARTE
+  { file: 'arte-meduses-souveraines-oceans-documentaire-marseille-2.webp', title: 'Méduses — Les souveraines des océans (ARTE) 2', description: 'Documentaire ARTE — Méduses les souveraines des océans, contribution Karim Saari Dark Massilia Marseille', keywords: [...KW_ARTE, 'méduses', 'faune marine'] },
+  { file: 'arte-meduses-souveraines-oceans-documentaire-marseille-3.webp', title: 'Méduses — Les souveraines des océans (ARTE) 3', description: 'Documentaire ARTE — Méduses les souveraines des océans, apnée et photographie sous-marine Méditerranée', keywords: [...KW_ARTE, 'méduses', 'faune marine'] },
+  { file: 'arte-meduses-souveraines-oceans-documentaire-marseille-4.webp', title: 'Méduses — Les souveraines des océans (ARTE) 4', description: 'Documentaire ARTE — Méduses les souveraines des océans, Méditerranée et Calanques de Marseille', keywords: [...KW_ARTE, 'méduses', 'faune marine'] },
+  { file: 'arte-meduses-souveraines-oceans-documentaire-marseille-5.webp', title: 'Méduses — Les souveraines des océans (ARTE) 5', description: 'Documentaire ARTE — Méduses les souveraines des océans, photographe sous-marin Karim Saari', keywords: [...KW_ARTE, 'méduses', 'faune marine'] },
+  // Ruguloptérix / Marseilleveyre
+  { file: 'marseille-marseilleveyre-avant-rugulopteryx-fonds-marins.webp', title: 'Marseilleveyre avant Rugulopteryx okamurae', description: 'Fonds marins de Marseilleveyre avant l\'invasion de Rugulopteryx okamurae — Calanques de Marseille', keywords: KW_RUGULOPTERYX },
+  { file: 'marseille-marseilleveyre-avant-rugulopteryx-biodiversite-2.webp', title: 'Marseilleveyre — biodiversité avant algue invasive', description: 'Biodiversité marine de Marseilleveyre avant l\'invasion de Rugulopteryx okamurae — fonds rocheux naturels', keywords: KW_RUGULOPTERYX },
+  { file: 'marseille-marseilleveyre-apres-rugulopteryx-algue-invasive.webp', title: 'Marseilleveyre après Rugulopteryx okamurae', description: 'Fonds marins de Marseilleveyre après l\'invasion de Rugulopteryx okamurae — algue invasive recouvrant tout', keywords: [...KW_RUGULOPTERYX, 'espèce invasive', 'alerte environnementale'] },
+  { file: 'marseille-marseilleveyre-apres-rugulopteryx-tapis-algues-2.webp', title: 'Marseilleveyre — tapis algues invasives Rugulopteryx', description: 'Tapis d\'algues invasives Rugulopteryx okamurae sur les fonds de Marseilleveyre — Calanques de Marseille', keywords: [...KW_RUGULOPTERYX, 'espèce invasive', 'alerte environnementale'] },
+  // Profil / portrait
+  { file: 'karim-saari-photographe-sous-marin-marseille-dark-massilia.webp', title: 'Karim Saari — Photographe sous-marin Marseille', description: 'Portrait de Karim Saari, photographe sous-marin et activiste environnemental à Marseille — Dark Massilia', keywords: KW_DIVERS },
+  { file: 'karim-saari-photographe-sous-marin-marseille-dark-massilia_480w.webp', title: 'Karim Saari — Photographe sous-marin Marseille (480w)', description: 'Portrait de Karim Saari, photographe sous-marin et activiste environnemental à Marseille — Dark Massilia', keywords: KW_DIVERS },
+  // Célébration 9 ans
+  { file: 'karim-saari-marseille-dark-massilia-9ans-celebration-projet-sentinelle.webp', title: '9 ans de Dark Massilia — Projet Sentinelle Marseille', description: '9 années d\'engagement de Dark Massilia pour la dépollution marine et la sensibilisation environnementale à Marseille', keywords: KW_DIVERS },
+  // Orphans indexables
+  { file: 'karim-saari-marseille-130000-sentinelles-calanques-depollution.webp', title: '130 000 Sentinelles — Marseille Calanques', description: 'Mobilisation de 130 000 citoyens sentinelles pour la protection des Calanques de Marseille — Dark Massilia', keywords: KW_MISSIONS },
+  { file: 'karim-saari-marseille-echappees-belles-reportage-television.webp', title: 'Échappées Belles — Karim Saari Marseille', description: 'Reportage Échappées Belles avec Karim Saari (Dark Massilia) au Vallon des Auffes — Marseille', keywords: KW_PRESSE },
+];
+
+console.log('\n📁 Images médias / presse / divers');
+let okMisc = 0, errMisc = 0;
+for (const { file, title, description, keywords } of MISC_FILES) {
+  const filePath = path.join(MISSIONS, file);
+  if (!existsSync(filePath)) { console.log(`  ⚠  Introuvable : ${file}`); continue; }
+  try {
+    runExiftool(filePath, title, description, keywords);
+    console.log(`  ✓  ${file}`);
+    okMisc++;
+  } catch (e) {
+    console.log(`  ✗  ${file} → ${e.message}`);
+    errMisc++;
+  }
+}
+console.log(`  → ${okMisc} OK, ${errMisc} erreurs`);
+
 console.log('\n✅  Terminé — relance npm run build:full + FTP');

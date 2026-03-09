@@ -133,7 +133,7 @@ const Contact = () => {
               <picture>
                 <source srcSet="/images/contact-karim-saari.webp" type="image/webp" />
                 <img
-                  src="/images/contact karim saari.png"
+                  src="/images/contact-karim-saari.png"
                   alt="Karim Saari en action lors d'une mission de dépollution sous-marine dans les Calanques de Marseille avec Team Oxygen"
                   width="1440"
                   height="1212"

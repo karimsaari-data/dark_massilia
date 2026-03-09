@@ -83,9 +83,9 @@ export default function LocalGuide() {
             className="glass rounded-2xl p-5 mb-4 flex items-center gap-6 border border-white/5"
           >
             <picture>
-              <source srcSet="/images/9ans.webp" type="image/webp" />
+              <source srcSet="/images/karim-saari-marseille-dark-massilia-9ans-celebration-projet-sentinelle.webp" type="image/webp" />
               <img
-                src="/images/9ans.gif"
+                src="/images/karim-saari-marseille-dark-massilia-9ans-celebration-projet-sentinelle.gif"
                 alt="Google Local Guides — email anniversaire 9 ans"
                 className="w-24 md:w-28 flex-shrink-0 rounded-xl"
               />

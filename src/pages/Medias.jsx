@@ -13,28 +13,28 @@ const Medias = () => {
       url: 'https://www.tiredearth.com/interviews/interview-de-karim-saari-apneiste-et-photographe-sous-marin#',
       featured: false,
       date: '11 nov. 2025',
-      image: '/images/tiredearth.webp'
+      image: '/images/karim-saari-interview-presse-tiredearth-photographe-sous-marin.webp'
     },
     {
       title: 'Marcelle Média — Dépolluer la mer, apnée après apnée',
       url: 'https://www.marcelle.media/depolluer-la-mer-apnee-apres-apnee/',
       featured: false,
       date: '20 oct. 2025',
-      image: '/images/marcelle media.webp'
+      image: '/images/karim-saari-marseille-marcelle-media-depollution-mer-apnee.webp'
     },
     {
       title: 'France Bleu — Un rorqual rarissime aperçu près des côtes à Marseille',
       url: 'https://www.francebleu.fr/provence-alpes-cote-d-azur/bouches-du-rhone-13/marseille/en-images-rarissime-un-rorqual-apercu-pres-des-cotes-a-marseille-2226210',
       featured: false,
       date: '10 août 2025',
-      image: '/images/france bleu rorqual.webp'
+      image: '/images/karim-saari-marseille-france-bleu-rorqual-cotes-marseille.webp'
     },
     {
       title: 'Actu.fr — Dépollution des fonds marins à Marseille',
       url: 'https://actu.fr/provence-alpes-cote-d-azur/marseille_13055/marseille-ils-depolluent-les-fonds-marins-des-prises-surprenantes-on-a-deja-sorti-des-armes_62552562.html',
       featured: false,
       date: '25 avr. 2025',
-      image: '/images/actu marseille.webp'
+      image: '/images/karim-saari-marseille-actu-depollution-fonds-marins.webp'
     },
     {
       title: 'Yann Arthus-Bertrand — « Les Français », Marseille 2024',
@@ -49,35 +49,35 @@ const Medias = () => {
       url: 'https://www.fondationdelamer.org/nos-actualites/projet-sentinelle/',
       featured: true,
       date: '21 nov. 2024',
-      image: '/images/fondation%20de%20la%20mer.webp'
+      image: '/images/karim-saari-marseille-fondation-mer-projet-sentinelle-calanques.webp'
     },
     {
       title: 'La Provence — Opération Sentinelle',
       url: 'https://www.laprovence.com/article/ecoplanete/1845794554454214/de-montredon-a-cassis-les-apneistes-lancent-leur-operation-sentinelle-des-samedi-et-jusquau-6-octobre',
       featured: true,
       date: '21 nov. 2024',
-      image: '/images/la provence.webp'
+      image: '/images/karim-saari-marseille-la-provence-operation-sentinelle-apnee.webp'
     },
     {
       title: 'France Bleu — 328 kg de déchets récoltés aux Goudes',
       url: 'https://www.francebleu.fr/infos/environnement/328-kilos-de-dechets-recoltes-aux-goudes-par-des-apneistes-marseillais-4335756',
       featured: false,
       date: '28 sept. 2024',
-      image: '/images/france bleu.webp'
+      image: '/images/karim-saari-marseille-france-bleu-goudes-dechets-apneistes.webp'
     },
     {
       title: 'Ville de Marseille — Reconnaissance Officielle',
       url: 'https://www.facebook.com/marseilleville/photos/a.220707724621813/3697054720320412/?_rdr',
       featured: true,
       date: '23 nov. 2019',
-      image: '/images/ville de marseille.webp'
+      image: '/images/karim-saari-marseille-ville-reconnaissance-officielle-dark-massilia.webp'
     },
     {
       title: 'Made in Marseille — Provence, top tourisme France',
       url: 'https://madeinmarseille.net/environnement/3753-region-provence-top-tourisme-france/',
       featured: false,
       date: '18 mai 2015',
-      image: '/images/made in marseille provence.webp'
+      image: '/images/karim-saari-marseille-made-in-marseille-provence-tourisme.webp'
     },
   ];
 
@@ -160,7 +160,7 @@ const Medias = () => {
               >
                 <div className="relative aspect-video bg-black overflow-hidden">
                   <img
-                    src="/images/photo profil Arte.webp"
+                    src="/images/karim-saari-photo-profil-arte-regard-marseille.webp"
                     alt="Documentaire ARTE — Karim Saari et Team Oxygen dans les Calanques de Marseille"
                     className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                     loading="lazy"
@@ -193,9 +193,9 @@ const Medias = () => {
               >
                 <div className="relative aspect-video bg-black overflow-hidden">
                   <picture>
-                    <source srcSet="/images/M%C3%A9duses%20les%20souveraines%20des%20oc%C3%A9ans%20-%20arte%20-%202.webp" type="image/webp" />
+                    <source srcSet="/images/arte-meduses-souveraines-oceans-documentaire-marseille-2.webp" type="image/webp" />
                     <img
-                      src="/images/M%C3%A9duses%20les%20souveraines%20des%20oc%C3%A9ans%20-%20arte%20-%202.jpg"
+                      src="/images/arte-meduses-souveraines-oceans-documentaire-marseille-2.jpg"
                       alt="Méduses en Méditerranée — Documentaire ARTE Évasion avec Karim Saari"
                       className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                       loading="lazy"
@@ -231,7 +231,7 @@ const Medias = () => {
               >
                 <div className="relative aspect-video bg-black overflow-hidden">
                   <img
-                    src="/images/%C3%A9chapp%C3%A9es%20belles.webp"
+                    src="/images/karim-saari-marseille-echappees-belles-reportage-television.webp"
                     alt="Échappées Belles — Karim Saari avec Ismaël Khelifa et Matthieu Witvoet au Vallon des Auffes, Marseille"
                     className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                     loading="lazy"

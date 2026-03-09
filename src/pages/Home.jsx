@@ -268,8 +268,8 @@ const Home = () => {
 
               {/* Signature */}
               <img
-                src="/images/Karim-SAARI-white-low-res.webp"
-                srcSet="/images/Karim-SAARI-white-low-res_480w.webp 480w, /images/Karim-SAARI-white-low-res.webp 1200w"
+                src="/images/karim-saari-photographe-sous-marin-marseille-dark-massilia.webp"
+                srcSet="/images/karim-saari-photographe-sous-marin-marseille-dark-massilia_480w.webp 480w, /images/karim-saari-photographe-sous-marin-marseille-dark-massilia.webp 1200w"
                 sizes="(max-width: 768px) 240px, (max-width: 1024px) 280px, 320px"
                 alt="Signature Karim Saari"
                 width="1200"
