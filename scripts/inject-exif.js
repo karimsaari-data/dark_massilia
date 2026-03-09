@@ -5,9 +5,14 @@
  * Prérequis: dossier exiftool/ à la racine du projet
  */
 
-const { execSync } = require('child_process');
-const { readdirSync, existsSync } = require('fs');
-const path = require('path');
+import { execSync } from 'child_process';
+import { readdirSync, existsSync } from 'fs';
+import { join, dirname } from 'path';
+import { fileURLToPath } from 'url';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname  = dirname(__filename);
+const path = { join };
 
 // ── Config ───────────────────────────────────────────────────────────────────
 const ROOT       = path.join(__dirname, '..');
