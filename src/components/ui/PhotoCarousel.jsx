@@ -51,17 +51,17 @@ const allImages = [
   "/images/Marseille-dark-massilia-plastique-pollution-projet-sentinelle-teamoxygen.webp",
   "/images/Marseille-dark-massilia-plastique-pollution-projet-sentinelle-vélo-métropole.webp",
   "/images/Marseille-dark-massilia-plastique-pollution-projet-sentinelle-vélo.webp",
-  "/images/Marseille-dark-massilia-plastique-polluttion-projet-sentinelle-angel.webp",
-  "/images/Marseille-dark-massilia-plastique-polluttion-projet-sentinelle-archipel-frioul-barquette-7.webp",
-  "/images/Marseille-dark-massilia-plastique-polluttion-projet-sentinelle-diving.webp",
-  "/images/Marseille-dark-massilia-plastique-polluttion-projet-sentinelle-frioul-7.webp",
-  "/images/Marseille-dark-massilia-plastique-polluttion-projet-sentinelle-frioul-9.webp",
-  "/images/Marseille-dark-massilia-plastique-polluttion-projet-sentinelle-huveaune.webp",
-  "/images/Marseille-dark-massilia-plastique-polluttion-projet-sentinelle-mer-goudes.webp",
-  "/images/Marseille-dark-massilia-plastique-polluttion-projet-sentinelle-musée-subaquatique.webp",
-  "/images/Marseille-dark-massilia-plastique-polluttion-projet-sentinelle-musée_subaquatique-3.webp",
-  "/images/Marseille-dark-massilia-plastique-polluttion-projet-sentinelle-octopus.webp",
-  "/images/Marseille-dark-massilia-plastique-polluttion-projet-sentinelle-paysage-sous-marin.webp"
+  "/images/Marseille-dark-massilia-plastique-pollution-projet-sentinelle-angel.webp",
+  "/images/Marseille-dark-massilia-plastique-pollution-projet-sentinelle-archipel-frioul-barquette-7.webp",
+  "/images/Marseille-dark-massilia-plastique-pollution-projet-sentinelle-diving.webp",
+  "/images/Marseille-dark-massilia-plastique-pollution-projet-sentinelle-frioul-7.webp",
+  "/images/Marseille-dark-massilia-plastique-pollution-projet-sentinelle-frioul-9.webp",
+  "/images/Marseille-dark-massilia-plastique-pollution-projet-sentinelle-huveaune.webp",
+  "/images/Marseille-dark-massilia-plastique-pollution-projet-sentinelle-mer-goudes.webp",
+  "/images/Marseille-dark-massilia-plastique-pollution-projet-sentinelle-musée-subaquatique.webp",
+  "/images/Marseille-dark-massilia-plastique-pollution-projet-sentinelle-musée_subaquatique-3.webp",
+  "/images/Marseille-dark-massilia-plastique-pollution-projet-sentinelle-octopus.webp",
+  "/images/Marseille-dark-massilia-plastique-pollution-projet-sentinelle-paysage-sous-marin.webp"
 ];
 
 // Algorithme de mélange Fisher-Yates
@@ -76,14 +76,26 @@ const shuffleArray = (array) => {
 
 // Générer alt text depuis le nom de fichier
 const getAltText = (imgSrc) => {
-  return imgSrc
-    .split('/').pop()
-    .replace('.webp', '')
+  const filename = imgSrc.split('/').pop().replace('.webp', '');
+  const base = filename
     .replace(/-/g, ' ')
     .replace(/%C3%A8re/g, 'ière')
     .replace(/%C3%A9/g, 'é')
     .replace(/%C3%A0/g, 'à')
     .replace(/%20/g, ' ');
+
+  // Images sous-marines : attribution + keyword dépollution sous-marine
+  const underwaterKeywords = [
+    'fonds-marins', 'nage', 'grotte', 'poulpe', 'spirographe',
+    'museum', 'musée', 'diving', 'apneiste', 'shooting', 'soupe',
+    'poséidon', 'poseidon', 'angel', 'octopus', 'paysage-sous-marin',
+    'teamoxygen-freediving', 'mer-de-plastique', 'moyades', 'mer-goudes',
+    'frioul', 'freediving',
+  ];
+  const isUnderwater = underwaterKeywords.some(kw => filename.toLowerCase().includes(kw));
+  return isUnderwater
+    ? `${base} — dépollution sous-marine Marseille © Karim Saari`
+    : `${base} — Projet Sentinelle Marseille © Dark Massilia`;
 };
 
 // Catégoriser les images par mot-clé
