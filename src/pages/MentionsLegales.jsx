@@ -25,7 +25,7 @@ export default function MentionsLegales() {
         title="Mentions légales · Dark Massilia"
         description="Mentions légales du site karimsaari.com — éditeur, hébergeur, propriété intellectuelle et responsabilité."
         canonical="https://karimsaari.com/mentions-legales"
-        noindex={true}
+        robots="noindex, nofollow"
       />
 
       <div className="container-custom py-16 md:py-24 max-w-3xl">

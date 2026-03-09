@@ -53,7 +53,7 @@ const Arte = () => {
             variants={FADE_IN_UP}
             className="text-3xl md:text-4xl font-bold text-white mb-4"
           >
-            Documentaire <span className="gradient-text">ARTE</span>
+            Documentaire ARTE — Pollution : Il faut sauver Marseille et ses Calanques
           </motion.h1>
 
           <motion.p

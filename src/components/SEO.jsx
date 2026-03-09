@@ -19,7 +19,7 @@
 
 import { DEFAULT_SEO } from '../utils/seo';
 
-const SEO = ({ title, description, canonical, image, noindex = false, schema = null }) => {
+const SEO = ({ title, description, canonical, image, noindex = false, robots = null, schema = null }) => {
   const metaTitle       = title       || DEFAULT_SEO.title;
   const metaDescription = description || DEFAULT_SEO.description;
   const metaCanonical   = canonical   || DEFAULT_SEO.canonical;
@@ -50,8 +50,9 @@ const SEO = ({ title, description, canonical, image, noindex = false, schema = n
       <meta name="twitter:description" content={metaDescription} />
       <meta name="twitter:image"       content={metaImage} />
 
-      {/* ── Robots (noindex pour pages thin content) ── */}
-      {noindex && <meta name="robots" content="noindex, follow" />}
+      {/* ── Robots (crawl budget / indexation) ── */}
+      {robots  && <meta name="robots" content={robots} />}
+      {!robots && noindex && <meta name="robots" content="noindex, follow" />}
 
       {/* ── JSON-LD Schema.org ── */}
       {schema && (

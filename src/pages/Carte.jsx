@@ -82,57 +82,58 @@ export default function Carte() {
       </div>
 
       {/* Contenu SEO — section scrollable sous la carte */}
-      <section className="container-custom py-12 max-w-5xl">
+      <section className="container-custom py-12 max-w-5xl space-y-10">
+
+        {/* ── BLOC ÉDITORIAL PRINCIPAL ── */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.2 }}
-          className="glass rounded-2xl border border-white/10 p-6 md:p-8 space-y-5 text-text-secondary leading-relaxed text-sm md:text-base"
+          className="glass-strong rounded-3xl p-8 md:p-12"
         >
-          <p>
-            Explorez la carte interactive des Calanques de Marseille à Cassis, au cœur du Parc national des Calanques.
-            Cette cartographie couvre l'ensemble du littoral marseillais : Sormiou, Morgiou, En-Vau, Sugiton, Callelongue,
-            Cap Croisette, la Côte Bleue et les abords de Cassis.
+          <h1 className="text-2xl md:text-3xl font-bold text-white mb-3">
+            Carte des Calanques de Marseille : Nos actions environnementales sur le terrain
+          </h1>
+          <p className="text-ocean-teal font-semibold mb-6">
+            Cartographie interactive des spots de dépollution et des photographies du littoral marseillais
           </p>
-          <p>
-            Cette carte ne se limite pas à une simple localisation géographique. Elle met en évidence un contraste structurant :
-          </p>
+          <div className="space-y-4 text-text-secondary leading-relaxed">
+            <p>
+              Explorez la carte interactive des Calanques de Marseille à Cassis, au cœur du{' '}
+              <strong className="text-white">Parc national des Calanques</strong>. Cette cartographie
+              couvre l'ensemble du littoral marseillais&nbsp;: Sormiou, Morgiou, En-Vau, Sugiton,
+              Callelongue, Cap Croisette, la Côte Bleue et les abords de Cassis.
+            </p>
+            <p>
+              Chaque point inscrit sur cette carte correspond à une intervention réelle ou à une
+              photographie documentaire. Loin d'une simple carte de randonnée, cet outil met en
+              évidence un contraste structurant&nbsp;: la beauté préservée du massif calcaire et les
+              zones où la pollution s'accumule, parfois invisibles depuis le bord mais révélées par
+              les plongées en apnée.
+            </p>
+          </div>
 
           {/* Légende */}
-          <div className="space-y-3 pl-2">
+          <div className="mt-6 space-y-3 pl-2">
             <div className="flex items-start gap-3">
               <span className="mt-1.5 w-3 h-3 rounded-full bg-green-500 flex-shrink-0 shadow-[0_0_6px_2px_rgba(34,197,94,0.5)]" />
-              <p className="m-0">
-                <strong className="text-white">Points verts</strong> — photographies de paysage documentant la beauté brute
-                du massif calcaire méditerranéen, ses falaises, criques, grottes et reliefs côtiers.
+              <p className="m-0 text-text-secondary text-sm leading-relaxed">
+                <strong className="text-white">Points verts</strong> — photographies de paysage
+                documentant la beauté brute du massif calcaire méditerranéen&nbsp;: falaises, criques,
+                grottes sous-marines et reliefs côtiers uniques.
               </p>
             </div>
             <div className="flex items-start gap-3">
               <span className="mt-1.5 w-3 h-3 rounded-full bg-red-500 flex-shrink-0 shadow-[0_0_6px_2px_rgba(239,68,68,0.5)]" />
-              <p className="m-0">
-                <strong className="text-white">Points rouges</strong> — actions de dépollution menées avec Team Oxygen,
-                illustrant les zones impactées par les déchets et les interventions réalisées en mer et sur le littoral.
+              <p className="m-0 text-text-secondary text-sm leading-relaxed">
+                <strong className="text-white">Points rouges</strong> — actions de dépollution
+                marine menées avec <strong className="text-white">Team Oxygen</strong>&nbsp;:
+                plastiques, filets abandonnés et déchets immergés retirés des fonds des Calanques.
               </p>
             </div>
           </div>
 
-          <p>
-            L'objectif est double : montrer la puissance esthétique des Calanques et rendre visible leur vulnérabilité.
-            Chaque point rouge inscrit sur la carte correspond à une réalité de terrain : plastiques, filets, déchets
-            immergés ou abandonnés dans des espaces naturels à haute fréquentation.
-          </p>
-          <p>
-            Pensée comme un outil de découverte et de sensibilisation, cette cartographie s'adresse aux randonneurs,
-            apnéistes, kayakistes, plongeurs et visiteurs souhaitant comprendre la géographie du territoire, mais aussi
-            les enjeux environnementaux associés.
-          </p>
-          <p>
-            Le littoral marseillais constitue un écosystème d'exception soumis à une pression humaine importante.
-            En juxtaposant images de paysage et actions de dépollution, cette carte met en perspective la beauté des
-            Calanques et la nécessité de les préserver durablement, dans le respect des réglementations du Parc national
-            des Calanques.
-          </p>
-          <div className="pt-2">
+          <div className="mt-6 pt-4 border-t border-white/10">
             <a
               href={FULL_URL}
               target="_blank"
@@ -140,11 +141,130 @@ export default function Carte() {
               className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-white/20 text-text-secondary text-sm hover:text-white hover:border-white/40 transition-all duration-200"
             >
               <MapPin className="w-4 h-4" />
-              Ouvrir dans Google Maps
+              Ouvrir la carte en plein écran
               <ExternalLink className="w-3 h-3 opacity-60" />
             </a>
           </div>
         </motion.div>
+
+        {/* ── SPOTS CLÉS — Guide des Calanques ── */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6 }}
+          className="glass rounded-3xl p-8 md:p-10"
+        >
+          <h2 className="text-xl md:text-2xl font-bold text-white mb-2">
+            Les spots des Calanques&nbsp;: de Marseille à Cassis
+          </h2>
+          <p className="text-text-secondary mb-8 leading-relaxed">
+            Le Parc national des Calanques s'étend sur plus de{' '}
+            <strong className="text-white">20 km de côte</strong>, de Marseille à La Ciotat. Voici
+            les principaux secteurs documentés sur la carte&nbsp;:
+          </p>
+          <div className="grid sm:grid-cols-2 gap-6">
+            {[
+              {
+                name: 'Sormiou & Morgiou',
+                desc: "Les deux calanques habitées du massif. Fond de baie sableux, posidonie dense, accès à pied ou bateau. Zones régulièrement dépollluées par Team Oxygen.",
+              },
+              {
+                name: 'Sugiton & Pierres-Tombées',
+                desc: "Accessible uniquement à pied depuis Luminy (45 min). Eaux turquoise, falaises verticales, biodiversité marine exceptionnelle. Zone à fréquentation régulée.",
+              },
+              {
+                name: 'En-Vau & Port-Pin',
+                desc: "Parmi les plus belles calanques de France. Fond sableux blanc, parois calcaires à pic, eau cristalline. Accès limité en été pour préserver l'écosystème.",
+              },
+              {
+                name: 'Callelongue & Cap Croisette',
+                desc: "Porte sud de Marseille. Zone de départ de nombreuses missions Team Oxygen. Fonds rocheux richement habités, plongées en apnée récurrentes.",
+              },
+              {
+                name: 'Archipel du Frioul',
+                desc: "Quatre îles face à Marseille. Eaux claires, posidonie protégée, gorgones. Zone de surveillance prioritaire contre le mouillage illégal et les déchets.",
+              },
+              {
+                name: 'Côte Bleue & Carry-le-Rouet',
+                desc: "Au nord-ouest de Marseille. Réserve marine de Carry, zone de reproduction pour le mérou et la denti. Plongées pédagogiques régulières.",
+              },
+            ].map(({ name, desc }) => (
+              <div key={name} className="border border-white/10 rounded-2xl p-5 hover:border-ocean-teal/30 transition-colors">
+                <div className="flex items-center gap-2 mb-2">
+                  <MapPin className="w-4 h-4 text-ocean-teal flex-shrink-0" />
+                  <h3 className="text-white font-semibold">{name}</h3>
+                </div>
+                <p className="text-text-secondary text-sm leading-relaxed">{desc}</p>
+              </div>
+            ))}
+          </div>
+        </motion.div>
+
+        {/* ── BIODIVERSITÉ & URGENCE ── */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6 }}
+          className="glass-strong rounded-3xl p-8 md:p-10"
+        >
+          <h2 className="text-xl md:text-2xl font-bold text-white mb-2">
+            Biodiversité des Calanques&nbsp;: un écosystème menacé à protéger
+          </h2>
+          <p className="text-text-secondary mb-6 leading-relaxed">
+            Les fonds marins des Calanques de Marseille abritent l'une des biodiversités les plus
+            riches de Méditerranée — et l'une des plus fragilisées. Chaque plongée en apnée révèle
+            à la fois leur richesse et leur vulnérabilité.
+          </p>
+          <div className="grid sm:grid-cols-3 gap-4 mb-6">
+            {[
+              { stat: '30 000 ha', label: "de zone maritime protégée" },
+              { stat: '140+', label: "espèces de poissons recensées" },
+              { stat: '1 000+', label: "espèces marines inventoriées" },
+            ].map(({ stat, label }) => (
+              <div key={stat} className="text-center py-4 border border-white/10 rounded-2xl">
+                <div className="text-2xl font-bold text-ocean-teal mb-1">{stat}</div>
+                <div className="text-text-secondary text-sm">{label}</div>
+              </div>
+            ))}
+          </div>
+          <div className="space-y-4 text-text-secondary leading-relaxed text-sm">
+            <p>
+              On y trouve des herbiers de{' '}
+              <strong className="text-white">posidonie</strong> (Posidonia oceanica), véritables
+              poumons de la Méditerranée classés espèce protégée, des{' '}
+              <strong className="text-white">gorgones rouges</strong> et ventaglio, des{' '}
+              <strong className="text-white">mérous bruns</strong>, des sars, des barracudas et
+              ponctuellement des grands cétacés — rorquals communs et dauphins — dans les eaux du
+              large.
+            </p>
+            <p>
+              Cette richesse est directement menacée par la pollution plastique, les ancres qui
+              arrachent la posidonie, les filets de pêche abandonnés et l'augmentation de la
+              fréquentation estivale. Les interventions de{' '}
+              <strong className="text-white">Team Oxygen</strong> dans ces zones visent à documenter
+              et à retirer physiquement ces menaces, mission après mission.
+            </p>
+          </div>
+          <div className="mt-6 flex flex-wrap gap-4">
+            <Link
+              to="/depollution-marine"
+              className="inline-flex items-center gap-2 text-ocean-teal hover:text-white transition-colors font-medium text-sm"
+            >
+              Découvrir nos missions de dépollution
+              <ArrowRight className="w-4 h-4" />
+            </Link>
+            <Link
+              to="/communaute"
+              className="inline-flex items-center gap-2 text-ocean-teal hover:text-white transition-colors font-medium text-sm"
+            >
+              Rejoindre l'équipe en tant que bénévole
+              <ArrowRight className="w-4 h-4" />
+            </Link>
+          </div>
+        </motion.div>
+
       </section>
 
       {/* CTA — Cartes officielles du Parc national des Calanques */}

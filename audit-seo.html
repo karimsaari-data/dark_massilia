@@ -1,0 +1,1020 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Audit SEO Technique — karimsaari.com — Mars 2026</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --teal:   #00ABA8;
+      --blue:   #0091ff;
+      --dark:   #0d1117;
+      --card:   #161b22;
+      --border: #30363d;
+      --text:   #e6edf3;
+      --muted:  #8b949e;
+      --green:  #3fb950;
+      --orange: #d29922;
+      --red:    #f85149;
+      --purple: #bc8cff;
+    }
+
+    body {
+      font-family: 'Inter', system-ui, sans-serif;
+      background: var(--dark);
+      color: var(--text);
+      line-height: 1.6;
+      font-size: 13px;
+    }
+
+    /* ── COUVERTURE ── */
+    .cover {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: flex-start;
+      padding: 80px 80px;
+      background: linear-gradient(135deg, #0d1117 0%, #0a1929 50%, #061020 100%);
+      position: relative;
+      overflow: hidden;
+      page-break-after: always;
+    }
+
+    .cover::before {
+      content: '';
+      position: absolute;
+      top: -200px; right: -200px;
+      width: 600px; height: 600px;
+      background: radial-gradient(circle, rgba(0,171,168,0.12) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    .cover::after {
+      content: '';
+      position: absolute;
+      bottom: -150px; left: 200px;
+      width: 400px; height: 400px;
+      background: radial-gradient(circle, rgba(0,145,255,0.08) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    .cover-label {
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--teal);
+      margin-bottom: 24px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .cover-label::before {
+      content: '';
+      display: inline-block;
+      width: 32px; height: 2px;
+      background: var(--teal);
+    }
+
+    .cover h1 {
+      font-size: 52px;
+      font-weight: 800;
+      line-height: 1.1;
+      letter-spacing: -0.02em;
+      margin-bottom: 16px;
+      background: linear-gradient(90deg, #ffffff 0%, #00ABA8 50%, #0091ff 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .cover-sub {
+      font-size: 20px;
+      font-weight: 300;
+      color: var(--muted);
+      margin-bottom: 56px;
+    }
+
+    .cover-meta {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .cover-meta-item {
+      display: flex;
+      gap: 16px;
+      font-size: 12px;
+    }
+
+    .cover-meta-label {
+      color: var(--muted);
+      width: 100px;
+      flex-shrink: 0;
+    }
+
+    .cover-meta-value {
+      color: var(--text);
+      font-weight: 500;
+    }
+
+    .cover-divider {
+      width: 64px;
+      height: 3px;
+      background: linear-gradient(90deg, var(--teal), var(--blue));
+      margin-bottom: 48px;
+      border-radius: 2px;
+    }
+
+    .cover-footer {
+      position: absolute;
+      bottom: 40px;
+      right: 80px;
+      font-size: 11px;
+      color: var(--muted);
+      text-align: right;
+    }
+
+    /* ── LAYOUT ── */
+    .page {
+      padding: 60px 72px;
+      max-width: 100%;
+    }
+
+    /* ── SOMMAIRE ── */
+    .toc {
+      page-break-after: always;
+    }
+
+    .toc-list {
+      list-style: none;
+      margin-top: 32px;
+    }
+
+    .toc-list li {
+      display: flex;
+      align-items: baseline;
+      gap: 0;
+      padding: 10px 0;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .toc-list li:last-child { border-bottom: none; }
+
+    .toc-num {
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--teal);
+      width: 32px;
+      flex-shrink: 0;
+    }
+
+    .toc-title {
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--text);
+      flex: 1;
+    }
+
+    .toc-sub {
+      font-size: 11px;
+      color: var(--muted);
+      margin-left: 32px;
+      margin-top: 2px;
+    }
+
+    /* ── SECTION HEADERS ── */
+    .section-header {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      margin-bottom: 32px;
+      padding-bottom: 16px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .section-num {
+      width: 40px; height: 40px;
+      border-radius: 10px;
+      background: linear-gradient(135deg, var(--teal), var(--blue));
+      display: flex; align-items: center; justify-content: center;
+      font-size: 16px; font-weight: 800; color: #fff;
+      flex-shrink: 0;
+    }
+
+    .section-title {
+      font-size: 22px;
+      font-weight: 700;
+      letter-spacing: -0.01em;
+    }
+
+    .section-title span {
+      display: block;
+      font-size: 12px;
+      font-weight: 400;
+      color: var(--muted);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      margin-bottom: 2px;
+    }
+
+    /* ── TYPOGRAPHY ── */
+    h2 {
+      font-size: 16px;
+      font-weight: 700;
+      color: var(--text);
+      margin: 32px 0 12px;
+    }
+
+    h3 {
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--teal);
+      margin: 24px 0 10px;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+
+    p { margin-bottom: 12px; color: var(--muted); }
+    p strong { color: var(--text); font-weight: 600; }
+
+    /* ── VERDICT BOX ── */
+    .verdict {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      padding: 18px 24px;
+      border-radius: 12px;
+      margin-bottom: 28px;
+    }
+
+    .verdict.ok {
+      background: rgba(63, 185, 80, 0.08);
+      border: 1px solid rgba(63, 185, 80, 0.25);
+    }
+
+    .verdict.warn {
+      background: rgba(210, 153, 34, 0.08);
+      border: 1px solid rgba(210, 153, 34, 0.25);
+    }
+
+    .verdict.error {
+      background: rgba(248, 81, 73, 0.08);
+      border: 1px solid rgba(248, 81, 73, 0.25);
+    }
+
+    .verdict-icon {
+      font-size: 24px;
+      flex-shrink: 0;
+    }
+
+    .verdict-text strong {
+      font-size: 14px;
+      font-weight: 700;
+      display: block;
+      margin-bottom: 2px;
+    }
+
+    .verdict.ok .verdict-text strong { color: var(--green); }
+    .verdict.warn .verdict-text strong { color: var(--orange); }
+    .verdict.error .verdict-text strong { color: var(--red); }
+
+    .verdict-text p {
+      font-size: 12px;
+      color: var(--muted);
+      margin: 0;
+    }
+
+    /* ── TABLES ── */
+    .table-wrap {
+      width: 100%;
+      overflow-x: auto;
+      margin-bottom: 28px;
+      border-radius: 12px;
+      border: 1px solid var(--border);
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 11.5px;
+    }
+
+    thead tr {
+      background: var(--card);
+    }
+
+    thead th {
+      padding: 12px 14px;
+      text-align: left;
+      font-size: 10px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--muted);
+      border-bottom: 1px solid var(--border);
+      white-space: nowrap;
+    }
+
+    tbody tr {
+      border-bottom: 1px solid var(--border);
+      transition: background 0.15s;
+    }
+
+    tbody tr:last-child { border-bottom: none; }
+    tbody tr:nth-child(even) { background: rgba(255,255,255,0.015); }
+
+    td {
+      padding: 11px 14px;
+      vertical-align: top;
+      color: var(--text);
+      line-height: 1.5;
+    }
+
+    td code {
+      font-family: 'Courier New', monospace;
+      font-size: 10.5px;
+      color: var(--teal);
+      background: rgba(0,171,168,0.08);
+      padding: 2px 6px;
+      border-radius: 4px;
+    }
+
+    td .muted { color: var(--muted); font-style: italic; }
+    td .missing { color: var(--red); font-weight: 600; }
+    td .warn-text { color: var(--orange); }
+
+    /* ── SILO BADGES ── */
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      padding: 3px 10px;
+      border-radius: 100px;
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.05em;
+      white-space: nowrap;
+    }
+
+    .badge-s1 {
+      background: rgba(188, 140, 255, 0.15);
+      border: 1px solid rgba(188, 140, 255, 0.3);
+      color: var(--purple);
+    }
+
+    .badge-s2 {
+      background: rgba(0, 171, 168, 0.12);
+      border: 1px solid rgba(0, 171, 168, 0.3);
+      color: var(--teal);
+    }
+
+    .badge-hub {
+      background: rgba(0, 145, 255, 0.12);
+      border: 1px solid rgba(0, 145, 255, 0.3);
+      color: var(--blue);
+    }
+
+    .badge-noindex {
+      background: rgba(139, 148, 158, 0.12);
+      border: 1px solid rgba(139, 148, 158, 0.3);
+      color: var(--muted);
+    }
+
+    .badge-perif {
+      background: rgba(210, 153, 34, 0.12);
+      border: 1px solid rgba(210, 153, 34, 0.3);
+      color: var(--orange);
+    }
+
+    /* ── CHECKLIST TABLE (Mission 1) ── */
+    .check-table td:first-child { width: 220px; }
+    .check-table td:nth-child(2) { width: 200px; }
+    .ok-cell { color: var(--green); font-weight: 600; }
+    .warn-cell { color: var(--orange); font-weight: 600; }
+
+    /* ── DIAGNOSTIC CARDS ── */
+    .diag-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+      margin-bottom: 24px;
+    }
+
+    .diag-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 18px 20px;
+    }
+
+    .diag-card.critical {
+      border-color: rgba(248, 81, 73, 0.4);
+      background: rgba(248, 81, 73, 0.04);
+    }
+
+    .diag-card.warn {
+      border-color: rgba(210, 153, 34, 0.4);
+      background: rgba(210, 153, 34, 0.04);
+    }
+
+    .diag-card.fix {
+      border-color: rgba(0, 171, 168, 0.4);
+      background: rgba(0, 171, 168, 0.04);
+    }
+
+    .diag-card-url {
+      font-size: 11px;
+      font-family: 'Courier New', monospace;
+      color: var(--teal);
+      margin-bottom: 8px;
+      font-weight: 600;
+    }
+
+    .diag-card.critical .diag-card-url { color: var(--red); }
+    .diag-card.warn .diag-card-url { color: var(--orange); }
+
+    .diag-card-title {
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--text);
+      margin-bottom: 8px;
+    }
+
+    .diag-card-body {
+      font-size: 11.5px;
+      color: var(--muted);
+      line-height: 1.55;
+    }
+
+    .diag-card-label {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      font-size: 10px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      padding: 2px 8px;
+      border-radius: 4px;
+      margin-bottom: 10px;
+    }
+
+    .label-critical {
+      background: rgba(248, 81, 73, 0.15);
+      color: var(--red);
+    }
+
+    .label-warn {
+      background: rgba(210, 153, 34, 0.15);
+      color: var(--orange);
+    }
+
+    .label-fix {
+      background: rgba(0, 171, 168, 0.15);
+      color: var(--teal);
+    }
+
+    /* ── ANOMALIES ── */
+    .anomaly-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .anomaly-item {
+      display: flex;
+      gap: 12px;
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 14px 16px;
+      align-items: flex-start;
+    }
+
+    .anomaly-icon {
+      font-size: 16px;
+      flex-shrink: 0;
+      margin-top: 1px;
+    }
+
+    .anomaly-content strong {
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--text);
+      display: block;
+      margin-bottom: 3px;
+    }
+
+    .anomaly-content p {
+      font-size: 11.5px;
+      margin: 0;
+    }
+
+    /* ── PAGE BREAKS ── */
+    .page-break { page-break-before: always; }
+
+    /* ── PRINT ── */
+    @media print {
+      body { background: #fff; color: #111; font-size: 11px; }
+      :root {
+        --dark: #fff;
+        --card: #f6f8fa;
+        --border: #d0d7de;
+        --text: #1f2328;
+        --muted: #57606a;
+        --teal: #0969da;
+        --blue: #0969da;
+        --green: #1a7f37;
+        --orange: #9a6700;
+        --red: #cf222e;
+        --purple: #8250df;
+      }
+      .cover {
+        background: linear-gradient(135deg, #0d1117 0%, #0a1929 50%, #061020 100%);
+        color: #fff;
+        print-color-adjust: exact;
+        -webkit-print-color-adjust: exact;
+      }
+      .cover h1 {
+        -webkit-text-fill-color: white;
+        background: none;
+        color: white;
+      }
+      .cover-label, .cover-meta-value, .cover-sub { color: #ccc; }
+      table { font-size: 10px; }
+      .badge { print-color-adjust: exact; -webkit-print-color-adjust: exact; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ════════════════════════ COUVERTURE ════════════════════════ -->
+<div class="cover">
+  <div class="cover-label">Audit Technique & SEO</div>
+  <h1>Audit SEO<br>karimsaari.com</h1>
+  <p class="cover-sub">Rapport complet — Pivot stratégique Méditerranée</p>
+  <div class="cover-divider"></div>
+  <div class="cover-meta">
+    <div class="cover-meta-item">
+      <span class="cover-meta-label">Site</span>
+      <span class="cover-meta-value">karimsaari.com/home</span>
+    </div>
+    <div class="cover-meta-item">
+      <span class="cover-meta-label">Stack</span>
+      <span class="cover-meta-value">React + Vite + SSR Prerender</span>
+    </div>
+    <div class="cover-meta-item">
+      <span class="cover-meta-label">Date</span>
+      <span class="cover-meta-value">Mars 2026</span>
+    </div>
+    <div class="cover-meta-item">
+      <span class="cover-meta-label">Contexte</span>
+      <span class="cover-meta-value">Pivot SEO — Positionnement Méditerranée / Apnée / Dépollution</span>
+    </div>
+    <div class="cover-meta-item">
+      <span class="cover-meta-label">Pages auditées</span>
+      <span class="cover-meta-value">14 routes publiques</span>
+    </div>
+  </div>
+  <div class="cover-footer">
+    Dark Massilia · Karim Saari<br>Confidentiel — Usage interne
+  </div>
+</div>
+
+<!-- ════════════════════════ SOMMAIRE ════════════════════════ -->
+<div class="page toc">
+  <div class="section-header">
+    <div class="section-num" style="background: var(--card); border: 1px solid var(--border); color: var(--muted);">≡</div>
+    <div class="section-title"><span>Navigation</span>Sommaire</div>
+  </div>
+  <ul class="toc-list">
+    <li>
+      <span class="toc-num">01</span>
+      <div>
+        <div class="toc-title">Audit Technique — Navigation &amp; Crawlabilité</div>
+        <div class="toc-sub">React Router · Balises &lt;a href&gt; · SSR Prerender · Redirections legacy</div>
+      </div>
+    </li>
+    <li>
+      <span class="toc-num">02</span>
+      <div>
+        <div class="toc-title">Extraction des Balises SEO — Tableau de Mapping</div>
+        <div class="toc-sub">Title · Meta description · H1 · Affectation par silo pour 14 routes</div>
+      </div>
+    </li>
+    <li>
+      <span class="toc-num">03</span>
+      <div>
+        <div class="toc-title">Diagnostic de Désalignement</div>
+        <div class="toc-sub">Pages hors-sujet · Anomalies critiques · Recommandations prioritaires</div>
+      </div>
+    </li>
+  </ul>
+
+  <div style="margin-top: 40px; padding: 20px 24px; background: var(--card); border: 1px solid var(--border); border-radius: 12px;">
+    <h3 style="margin-top: 0;">Légende des Silos</h3>
+    <div style="display: flex; gap: 12px; flex-wrap: wrap; margin-top: 12px;">
+      <span class="badge badge-s1">■ Silo 1 — Art &amp; Image</span>
+      <span class="badge badge-s2">■ Silo 2 — Engagement &amp; Action</span>
+      <span class="badge badge-hub">■ Hub / Accueil</span>
+      <span class="badge badge-noindex">■ Noindex</span>
+      <span class="badge badge-perif">■ Périphérique</span>
+    </div>
+    <p style="margin-top: 14px; font-size: 11.5px;">
+      <strong>Silo 1</strong> cible : Photographe apnée Calanques · Photographe environnemental Méditerranée · Tirages d'art littoraux<br>
+      <strong>Silo 2</strong> cible : Association dépollution marine Marseille · Documentaire environnement marin · Exposition photo pollution plastique
+    </p>
+  </div>
+</div>
+
+<!-- ════════════════════ MISSION 1 ════════════════════ -->
+<div class="page page-break">
+  <div class="section-header">
+    <div class="section-num">1</div>
+    <div class="section-title"><span>Mission 01</span>Audit Technique — Navigation &amp; Crawlabilité</div>
+  </div>
+
+  <div class="verdict ok">
+    <div class="verdict-icon">✅</div>
+    <div class="verdict-text">
+      <strong>CONFORME — Aucun blocage de crawl détecté</strong>
+      <p>La navigation utilise &lt;Link to="..."&gt; de React Router, qui génère des balises &lt;a href&gt; standards dans le DOM. Le SSR prerender garantit la livraison de HTML statique à Googlebot.</p>
+    </div>
+  </div>
+
+  <h2>Analyse des points de navigation</h2>
+  <div class="table-wrap">
+    <table class="check-table">
+      <thead>
+        <tr>
+          <th>Élément</th>
+          <th>Implémentation source</th>
+          <th>DOM généré</th>
+          <th>Statut</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Liens navbar desktop</td>
+          <td><code>&lt;Link to={link.path}&gt;</code></td>
+          <td><code>&lt;a href="..."&gt;</code> natif</td>
+          <td class="ok-cell">✓ Crawlable</td>
+        </tr>
+        <tr>
+          <td>Liens navbar mobile</td>
+          <td><code>&lt;Link to={link.path}&gt;</code></td>
+          <td><code>&lt;a href="..."&gt;</code> natif</td>
+          <td class="ok-cell">✓ Crawlable</td>
+        </tr>
+        <tr>
+          <td>Logo — lien accueil</td>
+          <td><code>&lt;Link to="/"&gt;</code></td>
+          <td><code>&lt;a href="/"&gt;</code></td>
+          <td class="ok-cell">✓ Crawlable</td>
+        </tr>
+        <tr>
+          <td>Lien 404 → accueil</td>
+          <td><code>&lt;a href="/"&gt;</code> natif</td>
+          <td><code>&lt;a href="/"&gt;</code></td>
+          <td class="ok-cell">✓ Crawlable</td>
+        </tr>
+        <tr>
+          <td>Liens réseaux sociaux</td>
+          <td><code>&lt;a href="..." rel="noopener"&gt;</code></td>
+          <td><code>&lt;a href="..."&gt;</code> natif</td>
+          <td class="ok-cell">✓ Crawlable</td>
+        </tr>
+        <tr>
+          <td>Gestion SEO (title, meta)</td>
+          <td>React 19 head hoisting natif</td>
+          <td>Injecté dans <code>&lt;head&gt;</code></td>
+          <td class="ok-cell">✓ Sans React Helmet</td>
+        </tr>
+        <tr>
+          <td>Redirections legacy</td>
+          <td><code>&lt;Navigate to="..." replace&gt;</code></td>
+          <td>Client-side uniquement</td>
+          <td class="warn-cell">⚠ Vérifier .htaccess</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="verdict warn">
+    <div class="verdict-icon">⚠️</div>
+    <div class="verdict-text">
+      <strong>Point d'attention — Redirections legacy</strong>
+      <p>Les routes <code>/missions</code>, <code>/medias</code>, <code>/photos</code>, <code>/reseaux</code>, <code>/twitter</code>, <code>/arte</code>, <code>/sources</code>, <code>/carte</code>, <code>/local-guide</code> sont redirigées côté client via &lt;Navigate replace&gt;. Si Googlebot indexait ces URLs sans exécuter JS, il ne verrait pas le redirect. Vérifier que le <strong>.htaccess</strong> du serveur Apache contient les 301 côté serveur correspondants.</p>
+    </div>
+  </div>
+
+  <h2>Architecture de rendu (SSR Prerender)</h2>
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th>Étape</th>
+          <th>Outil</th>
+          <th>Impact SEO</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>Build client</strong></td>
+          <td>Vite — bundle JS/CSS</td>
+          <td>Code-splitting par route (lazy loading)</td>
+        </tr>
+        <tr>
+          <td><strong>Prerender SSR</strong></td>
+          <td><code>entry-server.jsx</code> + StaticRouter</td>
+          <td>HTML statique généré par route → indexable sans JS</td>
+        </tr>
+        <tr>
+          <td><strong>Déploiement</strong></td>
+          <td>FTP → <code>dist/</code></td>
+          <td>Fichiers HTML livrés tels quels à Googlebot</td>
+        </tr>
+        <tr>
+          <td><strong>SEO Metadata</strong></td>
+          <td>React 19 native head hoisting</td>
+          <td>&lt;title&gt; et &lt;meta&gt; présents dans le HTML initial</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<!-- ════════════════════ MISSION 2 ════════════════════ -->
+<div class="page page-break">
+  <div class="section-header">
+    <div class="section-num">2</div>
+    <div class="section-title"><span>Mission 02</span>Extraction des Balises SEO — Mapping Complet</div>
+  </div>
+
+  <p>Toutes les balises sont gérées via <code>src/utils/seo.js</code> (objet <code>SEO_PAGES</code>) et injectées par le composant <code>src/components/SEO.jsx</code>. Le hoisting natif React 19 garantit leur présence dans le <code>&lt;head&gt;</code> du HTML prérendu.</p>
+
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th style="width:130px;">URL</th>
+          <th style="width:200px;">&lt;title&gt; actuel</th>
+          <th style="width:220px;">&lt;meta description&gt; actuelle</th>
+          <th style="width:170px;">&lt;h1&gt; actuel</th>
+          <th style="width:80px;">Silo</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><code>/</code></td>
+          <td>Karim Saari | Photographe &amp; Sentinelle de la Méditerranée</td>
+          <td>Photographe sous-marin et apnéiste à Marseille. Découvrez mon engagement pour la protection de la Méditerranée et la dépollution des Calanques.</td>
+          <td><span class="warn-text">« Une Mer / Une Ville / Une Mission »</span> (tagline animée — 3 spans, valeur SEO faible)</td>
+          <td><span class="badge badge-hub">Hub</span></td>
+        </tr>
+        <tr>
+          <td><code>/depollution-marine</code></td>
+          <td>Missions de Dépollution Marine | Team Oxygen &amp; Karim Saari</td>
+          <td>Découvrez le Projet Sentinelle et les actions de l'association Team Oxygen. Ensemble, nous nettoyons les fonds marins de la Côte Bleue aux Calanques.</td>
+          <td>Team Oxygen — Dépollution en apnée à Marseille</td>
+          <td><span class="badge badge-s2">Silo 2</span></td>
+        </tr>
+        <tr>
+          <td><code>/presse</code></td>
+          <td>Presse &amp; Médias | Couverture du Projet Sentinelle</td>
+          <td>Retrouvez mes passages presse et documentaires diffusés à la télévision (ARTE, Échappées Belles). Les médias s'engagent pour la Méditerranée.</td>
+          <td>Presse &amp; Médias <span class="muted">(sous-titre : Couverture médiatique du Projet Sentinelle)</span></td>
+          <td><span class="badge badge-s2">Silo 2</span></td>
+        </tr>
+        <tr>
+          <td><code>/photographie-paysage-mer</code></td>
+          <td>Galerie Photographie : Paysages &amp; Fonds Marins | Karim Saari</td>
+          <td>Explorez ma galerie photo sous-marine et terrestre. La beauté fragile des Calanques de Marseille capturée pour éveiller les consciences.</td>
+          <td>Photographe Sous-Marin &amp; Paysages — Marseille &amp; Provence</td>
+          <td><span class="badge badge-s1">Silo 1</span></td>
+        </tr>
+        <tr>
+          <td><code>/videos</code></td>
+          <td>Vidéos &amp; Documentaires : Dépollution en Méditerranée</td>
+          <td>Visionnez mes documentaires et reportages d'action en immersion. Plongez au cœur des missions de dépollution marine en Méditerranée.</td>
+          <td>Vidéos &amp; Documentaires <span class="muted">(sous-titre : Dépollution en Méditerranée — Calanques)</span></td>
+          <td><span class="badge badge-s2">Silo 2</span></td>
+        </tr>
+        <tr>
+          <td><code>/communaute</code></td>
+          <td>Rejoignez notre Communauté de 130 000 Sentinelles</td>
+          <td>La protection de la Méditerranée repose sur une mobilisation collective. Rejoignez nos 130 000 sentinelles pour suivre nos actions en direct.</td>
+          <td><span class="missing">ABSENT</span> <span class="muted">(page démarre en &lt;h2&gt;)</span></td>
+          <td><span class="badge badge-hub">Hub</span></td>
+        </tr>
+        <tr>
+          <td><code>/actualites</code></td>
+          <td>Actualités et Alertes Environnementales | Projet Sentinelle</td>
+          <td>Suivez en temps réel les actions de dépollution marine de Team Oxygen. Alertes environnementales et actualités des Calanques en direct.</td>
+          <td>Actualités du Projet Sentinelle en temps réel</td>
+          <td><span class="badge badge-noindex">noindex</span></td>
+        </tr>
+        <tr>
+          <td><code>/sauver-marseille-documentaire-arte</code></td>
+          <td>Pollution : il faut sauver Marseille ! — Documentaire ARTE</td>
+          <td>Visionnez "Pollution : il faut sauver Marseille !", le documentaire ARTE Regards. Plongez avec Karim Saari et Team Oxygen pour nettoyer les Calanques.</td>
+          <td><span class="missing">« Documentaire ARTE »</span> <span class="muted">(2 mots — sous-optimisé)</span></td>
+          <td><span class="badge badge-s2">Silo 2</span></td>
+        </tr>
+        <tr>
+          <td><code>/meduses-souveraines-oceans-documentaire-arte</code></td>
+          <td>Méduses | Les souveraines des océans — Documentaire ARTE Évasion</td>
+          <td>Documentaire ARTE Évasion réalisé par Sébastien Lafont (2024, 43 min). Karim Saari a fourni des images Méditerranée pour ce film sur la prolifération des méduses.</td>
+          <td>Méduses | Les souveraines des océans <span class="muted">(sous-titre : Documentaire ARTE Évasion — Sébastien Lafont, 2024)</span></td>
+          <td><span class="badge badge-s2">Silo 2</span></td>
+        </tr>
+        <tr>
+          <td><code>/donnees-scientifiques</code></td>
+          <td>Données Scientifiques : Pollution Plastique en Méditerranée</td>
+          <td>Consultez les données scientifiques sur la pollution plastique en Méditerranée. Comprendre l'urgence écologique pour mieux agir.</td>
+          <td>Sources Scientifiques <span class="muted">(sous-titre : Pollution Plastique en Méditerranée &amp; espèces invasives)</span></td>
+          <td><span class="badge badge-s2">Silo 2</span></td>
+        </tr>
+        <tr>
+          <td><code>/contact</code></td>
+          <td>Contactez Karim Saari | Expositions, Reportages &amp; Collabs</td>
+          <td>Contactez Karim Saari pour un projet de reportage, une exposition ou une collaboration avec Team Oxygen à Marseille. Échangeons par Email ou WhatsApp.</td>
+          <td>Contact <span class="muted">(sous-titre : Une question, un projet de collaboration ou envie de participer ?)</span></td>
+          <td><span class="badge badge-hub">Hub</span></td>
+        </tr>
+        <tr>
+          <td><code>/carte-calanques</code></td>
+          <td>Carte Interactive des Calanques : Dépollution &amp; Paysages</td>
+          <td>Naviguez sur notre carte interactive des Calanques de Marseille. Découvrez nos sites d'action environnementale et mes plus beaux spots photo.</td>
+          <td><span class="missing">ABSENT</span> <span class="muted">(iframe Google My Maps + contenu SEO sans &lt;h1&gt;)</span></td>
+          <td><span class="badge badge-s2">Silo 2</span></td>
+        </tr>
+        <tr>
+          <td><code>/local-guide-marseille</code></td>
+          <td>Google Local Guide à Marseille | Karim Saari</td>
+          <td>Suivez mes contributions en tant que Google Local Guide à Marseille. Plus de 183 millions de vues pour valoriser notre patrimoine naturel.</td>
+          <td><span class="warn-text">« Google Local Guides »</span> <span class="muted">(3 mots — générique)</span></td>
+          <td><span class="badge badge-perif">Périph.</span></td>
+        </tr>
+        <tr>
+          <td><code>/les-francais-yann-arthus-bertrand</code></td>
+          <td>« Les Français » de Yann Arthus-Bertrand — Team Oxygen à Marseille</td>
+          <td>En 2024, Yann Arthus-Bertrand a photographié Team Oxygen pour son projet « Les Français ». Un portrait fort de l'engagement de Karim Saari pour la dépollution.</td>
+          <td>« Les Français » — Yann Arthus-Bertrand</td>
+          <td><span class="badge badge-s2">Silo 2</span></td>
+        </tr>
+        <tr>
+          <td><code>/mentions-legales</code></td>
+          <td><span class="muted">DEFAULT_SEO fallback</span></td>
+          <td><span class="muted">DEFAULT_SEO fallback</span></td>
+          <td><span class="muted">Non audité — page légale</span></td>
+          <td><span class="badge badge-noindex">légal</span></td>
+        </tr>
+        <tr>
+          <td><code>/confidentialite</code></td>
+          <td><span class="muted">DEFAULT_SEO fallback</span></td>
+          <td><span class="muted">DEFAULT_SEO fallback</span></td>
+          <td><span class="muted">Non audité — page légale</span></td>
+          <td><span class="badge badge-noindex">légal</span></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<!-- ════════════════════ MISSION 3 ════════════════════ -->
+<div class="page page-break">
+  <div class="section-header">
+    <div class="section-num">3</div>
+    <div class="section-title"><span>Mission 03</span>Diagnostic de Désalignement</div>
+  </div>
+
+  <h2>Pages à refonte profonde (3 pages)</h2>
+  <p>Ces pages sont actuellement <strong>hors-sujet par rapport au positionnement Méditerranée / Apnée / Dépollution</strong> ou présentent des problèmes structurels bloquants.</p>
+
+  <div class="diag-grid">
+    <div class="diag-card critical">
+      <div class="diag-card-label label-critical">🔴 Refonte urgente</div>
+      <div class="diag-card-url">/communaute</div>
+      <div class="diag-card-title">Page Communauté sans H1</div>
+      <div class="diag-card-body">
+        La page agrège des stats de réseaux sociaux (Instagram 24k, TikTok 21k, Facebook 64k) dans une logique de "preuve sociale". Aucune requête transactionnelle ne cible "communauté environnementale marseille". <strong>Le H1 est totalement absent</strong> — erreur critique pour le signal sémantique. À transformer en landing "Rejoindre le mouvement / Bénévolat" ancrée sur le Silo 2.
+      </div>
+    </div>
+
+    <div class="diag-card warn">
+      <div class="diag-card-label label-warn">🟡 Hors scope</div>
+      <div class="diag-card-url">/local-guide-marseille</div>
+      <div class="diag-card-title">Google Local Guide — Orthogonal aux silos</div>
+      <div class="diag-card-body">
+        Page entièrement dédiée au statut "Local Guide Niveau 10". Positionnement <strong>orthogonal aux deux silos</strong> : ni photographie artistique, ni dépollution. H1 générique ("Google Local Guides" — 3 mots). Peut fonctionner comme page E-E-A-T de crédibilité, mais doit recevoir un <strong>noindex</strong> ou être recentrée sur la valeur documentaire pour la Méditerranée.
+      </div>
+    </div>
+  </div>
+
+  <div class="diag-card critical" style="margin-bottom: 24px;">
+    <div class="diag-card-label label-critical">🔴 Thin content + H1 absent</div>
+    <div class="diag-card-url">/carte-calanques</div>
+    <div class="diag-card-title">Carte Interactive — Page sans H1 et contenu indexable insuffisant</div>
+    <div class="diag-card-body">
+      Page techniquement bien structurée (iframe Google My Maps + contenu éditorial) mais <strong>sans H1</strong> — erreur critique. Le title est bon, mais le contenu indexable se résume à une légende de carte et des liens externes. Google perçoit une page de "thin content". Nécessite un H1 explicite + un bloc éditorial enrichi (contexte des sites de dépollution, biodiversité observée) pour exister pleinement dans le Silo 2.
+    </div>
+  </div>
+
+  <h2>Anomalies de structure à corriger sans attendre (3 points)</h2>
+
+  <ul class="anomaly-list">
+    <li class="anomaly-item">
+      <div class="anomaly-icon">⚡</div>
+      <div class="anomaly-content">
+        <strong>H1 sous-optimisé — /sauver-marseille-documentaire-arte</strong>
+        <p>H1 actuel = "Documentaire ARTE" (2 mots). Perd tout le potentiel de la requête navigationnelle "Sauver Marseille ARTE pollution". Le titre de la page est excellent, mais le H1 doit reprendre les mots-clés cibles : ex. <em>"Pollution : il faut sauver Marseille ! — Documentaire ARTE avec Karim Saari"</em>.</p>
+      </div>
+    </li>
+    <li class="anomaly-item">
+      <div class="anomaly-icon">🔒</div>
+      <div class="anomaly-content">
+        <strong>noindex non documenté — /actualites</strong>
+        <p>La page est intentionnellement en <code>noindex: true</code> dans seo.js (flux X/Twitter = thin content dynamique). Correct techniquement, mais ce paramètre doit être commenté explicitement dans le code pour ne pas être supprimé par erreur lors d'une future refonte.</p>
+      </div>
+    </li>
+    <li class="anomaly-item">
+      <div class="anomaly-icon">📄</div>
+      <div class="anomaly-content">
+        <strong>Pages légales sans noindex explicite — /mentions-legales &amp; /confidentialite</strong>
+        <p>Ces pages utilisent le <code>DEFAULT_SEO</code> fallback (title et description génériques de l'accueil). Elles doivent être déclarées dans <code>SEO_PAGES</code> avec <code>noindex: true, nofollow: true</code> pour éviter toute indexation parasite et dilution du budget de crawl.</p>
+      </div>
+    </li>
+  </ul>
+
+  <div style="margin-top: 40px; padding: 20px 24px; background: var(--card); border: 1px solid rgba(0,171,168,0.3); border-radius: 12px;">
+    <h3 style="margin-top: 0; color: var(--teal);">Récapitulatif des priorités pour le consultant SEO</h3>
+    <div class="table-wrap" style="margin-bottom: 0; border: none; border-radius: 0;">
+      <table>
+        <thead>
+          <tr>
+            <th>Priorité</th>
+            <th>Page</th>
+            <th>Action requise</th>
+            <th>Silo cible</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><span style="color: var(--red); font-weight: 700;">P0 — Critique</span></td>
+            <td><code>/communaute</code></td>
+            <td>Ajouter H1 + recentrer contenu sur recrutement bénévoles / engagement citoyen</td>
+            <td><span class="badge badge-s2">Silo 2</span></td>
+          </tr>
+          <tr>
+            <td><span style="color: var(--red); font-weight: 700;">P0 — Critique</span></td>
+            <td><code>/carte-calanques</code></td>
+            <td>Ajouter H1 + enrichir contenu éditorial indexable (150+ mots minimum)</td>
+            <td><span class="badge badge-s2">Silo 2</span></td>
+          </tr>
+          <tr>
+            <td><span style="color: var(--orange); font-weight: 700;">P1 — Haute</span></td>
+            <td><code>/sauver-marseille-documentaire-arte</code></td>
+            <td>Réécrire le H1 avec les mots-clés cibles (titre complet du documentaire)</td>
+            <td><span class="badge badge-s2">Silo 2</span></td>
+          </tr>
+          <tr>
+            <td><span style="color: var(--orange); font-weight: 700;">P1 — Haute</span></td>
+            <td><code>/</code> (accueil)</td>
+            <td>H1 = tagline animée "Une Mer / Une Ville / Une Mission" — valeur SEO faible, à compenser par balises secondaires fortes</td>
+            <td><span class="badge badge-hub">Hub</span></td>
+          </tr>
+          <tr>
+            <td><span style="color: var(--blue); font-weight: 700;">P2 — Normale</span></td>
+            <td><code>/mentions-legales</code> &amp; <code>/confidentialite</code></td>
+            <td>Ajouter noindex: true + title dédié dans SEO_PAGES</td>
+            <td><span class="badge badge-noindex">légal</span></td>
+          </tr>
+          <tr>
+            <td><span style="color: var(--blue); font-weight: 700;">P2 — Normale</span></td>
+            <td><code>/local-guide-marseille</code></td>
+            <td>Décision : noindex ou recentrage éditorial sur la valeur documentaire Méditerranée</td>
+            <td><span class="badge badge-perif">Périph.</span></td>
+          </tr>
+          <tr>
+            <td><span style="color: var(--muted); font-weight: 700;">P3 — Basse</span></td>
+            <td>Redirections legacy</td>
+            <td>Vérifier présence des 301 côté .htaccess serveur (hors client-side React Router)</td>
+            <td>—</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+</body>
+</html>

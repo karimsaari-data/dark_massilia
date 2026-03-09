@@ -267,10 +267,7 @@ const Photos = () => {
           transition={{ duration: 0.6 }}
           className="text-3xl md:text-4xl font-bold text-white text-center mb-12 leading-tight"
         >
-          Photographe Sous-Marin & Paysages<br />Marseille & Provence
-          <span className="block text-xl md:text-2xl font-medium text-ocean-teal mt-3">
-            Calanques, Méditerranée et paysages de Provence
-          </span>
+          Photographie environnementale : Les paysages littoraux et sous-marins des Calanques
         </motion.h1>
 
         {/* Section éditoriale SEO */}

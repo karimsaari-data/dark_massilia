@@ -85,9 +85,13 @@
     <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Montserrat:wght@400;500;600;700;800&display=swap" />
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Montserrat:wght@400;500;600;700;800&display=swap" media="print" onload="this.media='all'" />
 
-    <!-- Preload hero background (LCP optimization) -->
-    <link rel="preload" as="image" href="/assets/hero-bg.webp" type="image/webp" />
-    <link rel="preload" as="image" href="/assets/dark-massilia-logo.webp" type="image/webp" />
+    <!-- Preload LCP critical image — photo profil (candidat LCP au-dessus du fold) -->
+    <!-- hero-bg.webp (177 KiB background CSS) délibérément non-préchargé : n'est pas candidat LCP -->
+    <link rel="preload" as="image" fetchpriority="high"
+          href="/images/photo%20profil%20Arte_300w.webp"
+          imagesrcset="/images/photo%20profil%20Arte_300w.webp 300w, /images/photo%20profil%20Arte.webp 472w"
+          imagesizes="(max-width: 640px) 300px, 472px"
+          type="image/webp" />
 
     <!-- Open Graph / Facebook -->
     <meta property="og:type" content="website" />

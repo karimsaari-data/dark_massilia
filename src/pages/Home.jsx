@@ -13,28 +13,28 @@ const KEY_STATS = [
   {
     end: 5724,
     suffix: ' kg',
-    label: 'Déchets collectés',
-    sub: '4 éditions · jusqu\'à 20 m de profondeur',
-    detail: '900 + 1 357 + 1 147 + 2 320 kg',
+    label: 'Déchets collectés dans les fonds marins marseillais',
+    sub: 'jusqu\'à 20 m de profondeur',
+    detail: '900 + 1 357 + 1 147 + 2 320 kg · 4 éditions',
   },
   {
     end: 10,
     suffix: ' ans',
     label: 'D\'engagement terrain',
-    sub: 'd\'actions de dépollution en mer',
+    sub: 'pour la protection du littoral',
     detail: 'dont 4 ans avec Team Oxygen · Projet Sentinelle',
   },
   {
     end: 130000,
     suffix: '',
-    label: 'Abonnés',
-    sub: 'dont 64 000 membres sur le groupe Facebook',
-    detail: 'sur l\'ensemble des réseaux sociaux',
+    label: 'Abonnés passionnés par les Calanques',
+    sub: 'sur l\'ensemble des réseaux sociaux',
+    detail: 'dont 64 000 sur le groupe Facebook',
   },
   {
     end: 183,
     suffix: ' M',
-    label: 'Vues Google Maps',
+    label: 'Vues Google Maps sur Marseille et ses environs',
     sub: '9 ans de contributions Local Guide',
     detail: 'Photos et avis sur les Calanques de Marseille',
   },
@@ -198,37 +198,28 @@ const Home = () => {
             initial="hidden"
             animate="visible"
             variants={STAGGER_CONTAINER}
-            className="max-w-4xl mx-auto md:mx-0 md:max-w-3xl"
+            className="max-w-[800px] mx-auto md:mx-0"
           >
-            {/* ── H1 — Hiérarchie typographique Premium / Galerie d'art ── */}
-            {/*   Nom : uppercase fort (800) — Métier : fin italic (300)    */}
-            <motion.h1 variants={FADE_IN_UP} className="mb-6 md:mb-8">
-              {/* Nom — fort, compact, signature visuelle */}
-              <span
-                className="block text-4xl md:text-5xl lg:text-6xl font-extrabold text-white uppercase tracking-[0.12em] leading-none mb-3"
+            {/* ── Bloc accroche — trait vertical + H1 + lead ── */}
+            <motion.div
+              variants={FADE_IN_UP}
+              className="mb-8"
+              style={{ borderLeft: '2px solid white', paddingLeft: '30px' }}
+            >
+              <h1
+                className="text-3xl md:text-4xl lg:text-5xl font-extrabold text-white uppercase tracking-[0.08em] leading-tight mb-5"
                 style={{ textShadow: '0 2px 24px rgba(0,0,0,0.85)' }}
               >
-                Karim Saari
-              </span>
-              {/* Métier — fin et élégant, contraste de graisse */}
-              <span
-                className="block text-lg md:text-2xl lg:text-3xl font-light italic text-white/85 tracking-wide leading-snug"
-                style={{ textShadow: '0 1px 14px rgba(0,0,0,0.75)' }}
+                Ensemble, révélons et protégeons les Calanques
+              </h1>
+              <p
+                className="text-base md:text-lg text-text-secondary leading-[1.7]"
+                style={{ textShadow: '0 1px 10px rgba(0,0,0,0.65)' }}
               >
-                Photographe de paysages<br />
-                &amp; sentinelle du littoral marseillais
-              </span>
-            </motion.h1>
-
-            {/* Lead — sous-titre accroche, max 600px */}
-            <motion.p
-              variants={FADE_IN_UP}
-              className="text-base md:text-lg text-text-secondary leading-[1.6] mb-10"
-              style={{ textShadow: '0 1px 10px rgba(0,0,0,0.65)' }}
-            >
-              Photographe et sentinelle engagée, je documente la beauté brute du littoral, des sentiers de randonnée aux profondeurs des Calanques de Marseille à Port-Cros. Entre photographie d'art et actions de dépollution avec{' '}
-              <strong className="text-ocean-teal font-semibold">Team Oxygen</strong>, découvrez un regard tourné vers la préservation de la Méditerranée.
-            </motion.p>
+                Exploration et documentation de la beauté brute du littoral, des sentiers de randonnée aux profondeurs des Calanques de Marseille à Port-Cros. Entre photographie d'art et actions de dépollution avec{' '}
+                <strong className="text-ocean-teal font-semibold">Team Oxygen</strong>, découvrez un regard tourné vers la préservation de la Méditerranée.
+              </p>
+            </motion.div>
 
             {/* Hero CTAs */}
             <motion.div
@@ -261,6 +252,8 @@ const Home = () => {
               {/* Photo profil */}
               <img
                 src="/images/photo%20profil%20Arte.webp"
+                srcSet="/images/photo%20profil%20Arte_300w.webp 300w, /images/photo%20profil%20Arte.webp 472w"
+                sizes="(max-width: 768px) 160px, 224px"
                 alt="Karim Saari - Apnéiste et photographe à Marseille"
                 width="472"
                 height="488"
@@ -276,6 +269,8 @@ const Home = () => {
               {/* Signature */}
               <img
                 src="/images/Karim-SAARI-white-low-res.webp"
+                srcSet="/images/Karim-SAARI-white-low-res_480w.webp 480w, /images/Karim-SAARI-white-low-res.webp 1200w"
+                sizes="(max-width: 768px) 240px, (max-width: 1024px) 280px, 320px"
                 alt="Signature Karim Saari"
                 width="1200"
                 height="800"
@@ -435,18 +430,20 @@ const Home = () => {
           </div>
 
           {/* Indicateurs de progression — dots plus grands + pause indicator */}
-          <div className="flex justify-center items-center gap-2 mt-8">
+          <div className="flex justify-center items-center gap-0 mt-8">
             {IMPACT_FACTS.map((_, index) => (
               <button
                 key={index}
                 onClick={() => goToFact(index)}
-                className={`rounded-full transition-all duration-300 ${
+                className="inline-flex items-center justify-center p-2"
+                aria-label={`Afficher le fait ${index + 1}`}
+              >
+                <span className={`rounded-full transition-all duration-300 ${
                   index === currentFactIndex
                     ? 'w-8 h-2.5 bg-ocean-teal'
                     : 'w-2.5 h-2.5 bg-white/20 hover:bg-white/40'
-                }`}
-                aria-label={`Afficher le fait ${index + 1}`}
-              />
+                }`} />
+              </button>
             ))}
             {factsPaused && (
               <span className="ml-3 text-xs text-text-muted italic">En pause</span>

@@ -31,7 +31,7 @@ export default function Confidentialite() {
         title="Politique de confidentialité · Dark Massilia"
         description="Politique de confidentialité et protection des données personnelles du site karimsaari.com — RGPD."
         canonical="https://karimsaari.com/confidentialite"
-        noindex={true}
+        robots="noindex, nofollow"
       />
 
       <div className="container-custom py-16 md:py-24 max-w-3xl">

@@ -21,9 +21,10 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const rootDir   = path.resolve(__dirname, '..');
 const distDir   = path.resolve(rootDir, 'dist');
 
-// ── Routes à prérendrer ─────────────────────────────────────────────────────
-const ROUTES = [
+// ── Routes statiques à prérendrer ────────────────────────────────────────────
+const STATIC_ROUTES = [
   '/',
+  '/blog',
   '/depollution-marine',
   '/presse',
   '/photographie-paysage-mer',
@@ -42,8 +43,101 @@ const ROUTES = [
   '/admin',
 ];
 
+// ── Récupération des slugs WordPress (pour routes dynamiques /blog/:slug) ────
+async function fetchWPSlugs() {
+  const WP_BASE = 'https://cms.karimsaari.com/wp-json/wp/v2';
+  const slugs = [];
+  let page = 1;
+  let totalPages = 1;
+
+  try {
+    do {
+      const controller = new AbortController();
+      const timer = setTimeout(() => controller.abort(), 8000); // timeout 8s par page
+      let res;
+      try {
+        res = await fetch(
+          `${WP_BASE}/posts?per_page=100&page=${page}&_fields=slug&status=publish`,
+          { signal: controller.signal }
+        );
+      } finally {
+        clearTimeout(timer);
+      }
+      if (!res.ok) {
+        console.warn(`  ⚠️  WP API ${res.status} — les routes /blog/:slug seront ignorées.`);
+        return [];
+      }
+      const posts = await res.json();
+      posts.forEach(p => slugs.push(p.slug));
+      totalPages = parseInt(res.headers.get('X-WP-TotalPages') ?? '1', 10);
+      page++;
+    } while (page <= totalPages);
+  } catch (err) {
+    console.warn(`  ⚠️  Impossible de contacter le CMS WP : ${err.message}`);
+    console.warn('      Les routes /blog/:slug seront ignorées pour ce build.');
+    return [];
+  }
+
+  return slugs;
+}
+
+// ── Récupération d'un article WP pour injection SSR ──────────────────────────
+async function fetchWPPost(slug) {
+  const WP_BASE = 'https://cms.karimsaari.com/wp-json/wp/v2';
+  try {
+    const res = await fetch(`${WP_BASE}/posts?slug=${encodeURIComponent(slug)}&_embed`);
+    if (!res.ok) return null;
+    const posts = await res.json();
+    if (!posts[0]) return null;
+
+    const post   = posts[0];
+    const media  = post._embedded?.['wp:featuredmedia']?.[0];
+    const author = post._embedded?.author?.[0];
+
+    return {
+      id:            post.id,
+      slug:          post.slug,
+      title:         stripEntities(post.title?.rendered ?? ''),
+      excerpt:       stripHtml(post.excerpt?.rendered ?? ''),
+      content:       post.content?.rendered ?? '',
+      date:          post.date,
+      modified:      post.modified,
+      dateFormatted: new Date(post.date).toLocaleDateString('fr-FR', {
+        year: 'numeric', month: 'long', day: 'numeric',
+      }),
+      image:    media?.source_url ?? null,
+      imageAlt: media?.alt_text   || stripEntities(post.title?.rendered ?? ''),
+      author:   author?.name      ?? 'Dark Massilia',
+    };
+  } catch (_) {
+    return null;
+  }
+}
+
+function stripHtml(html) {
+  return html.replace(/<[^>]*>/g, '').replace(/\s+/g, ' ').trim();
+}
+function stripEntities(str) {
+  return str
+    .replace(/&amp;/g,'&').replace(/&lt;/g,'<').replace(/&gt;/g,'>')
+    .replace(/&quot;/g,'"').replace(/&#039;/g,"'").replace(/&hellip;/g,'…')
+    .replace(/&laquo;/g,'«').replace(/&raquo;/g,'»').replace(/&nbsp;/g,' ');
+}
+
 async function prerender() {
   console.log('\n🏗  Prérendu statique — Dark Massilia\n');
+
+  // ── 0. Récupérer les slugs WP pour les routes dynamiques ────────────────
+  console.log('  🌐 Récupération des slugs WordPress…');
+  const wpSlugs = await fetchWPSlugs();
+  const BLOG_ROUTES = wpSlugs.map(slug => `/blog/${slug}`);
+  const ROUTES = [...STATIC_ROUTES, ...BLOG_ROUTES];
+
+  if (wpSlugs.length > 0) {
+    console.log(`  ✅ ${wpSlugs.length} article(s) WP trouvé(s)\n`);
+  } else {
+    console.log('  ℹ️  Aucun article WP — seul /blog (index) sera prérendu\n');
+  }
 
   // ── 1. Build SSR bundle ─────────────────────────────────────────────────
   console.log('  📦 Build du bundle SSR…');
@@ -78,7 +172,30 @@ async function prerender() {
       `Utilisez "npm run build:full" pour tout builder d'un coup.`
     );
   }
-  const template = fs.readFileSync(templatePath, 'utf-8');
+  let template = fs.readFileSync(templatePath, 'utf-8');
+
+  // ── 2b. Injecter les preloads critiques très tôt dans <head> ────────────
+  // Vite génère <link rel="stylesheet"> et <script type="module"> en fin de <head>
+  // (après GTM, meta tags, favicons…). En ajoutant modulepreload + preload juste
+  // après <meta charset>, le navigateur mobile démarre le téléchargement PENDANT
+  // qu'il parse le reste du head — gain ~150–300 ms sur connexion 4G lente.
+  {
+    const cssHref = template.match(/<link rel="stylesheet" crossorigin href="([^"]+\.css)"/)?.[1];
+    const jsHref  = template.match(/<script type="module" crossorigin src="([^"]+\.js)"/)?.[1];
+
+    let earlyHints = '';
+    // preload as="style" : démarre le téléchargement CSS avant le parser-blocking
+    if (cssHref) earlyHints += `    <link rel="preload" as="style" crossorigin href="${cssHref}">\n`;
+    // modulepreload : pré-fetch + pré-parse le bundle JS principal
+    if (jsHref)  earlyHints += `    <link rel="modulepreload" crossorigin href="${jsHref}">\n`;
+
+    if (earlyHints) {
+      template = template.replace(
+        /(<meta charset="[^"]*"\s*\/>)/,
+        `$1\n${earlyHints.trimEnd()}`
+      );
+    }
+  }
 
   // ── 3. Importer le module SSR compilé ───────────────────────────────────
   const ssrModulePath = path.resolve(rootDir, 'dist-ssr/entry-server.js');
@@ -87,9 +204,19 @@ async function prerender() {
 
   // ── 4. Rendre chaque route ───────────────────────────────────────────────
   for (const route of ROUTES) {
-    process.stdout.write(`  🔧 ${route.padEnd(15)}`);
+    process.stdout.write(`  🔧 ${route.padEnd(60)}`);
 
     try {
+      // Pour les routes /blog/:slug, pré-injecter les données WP dans globalThis
+      // BlogPost.jsx lit globalThis.__WP_SSR_DATA__ de façon synchrone lors du render()
+      if (route.startsWith('/blog/')) {
+        const slug = route.slice('/blog/'.length);
+        const postData = await fetchWPPost(slug);
+        globalThis.__WP_SSR_DATA__ = postData;
+      } else {
+        globalThis.__WP_SSR_DATA__ = null;
+      }
+
       const { html: appHtml } = render(route);
 
       // ── Extraire les meta tags du rendu SSR et les hisser dans <head> ──
@@ -235,6 +362,9 @@ async function prerender() {
     } catch (err) {
       console.log(`→ ❌ ERREUR`);
       console.error(`    ${err.message}`);
+    } finally {
+      // Toujours nettoyer les données SSR après chaque route
+      globalThis.__WP_SSR_DATA__ = null;
     }
   }
 
@@ -246,7 +376,9 @@ async function prerender() {
   console.log('\n✅ Prérendu terminé — tous les fichiers dans dist/\n');
 }
 
-prerender().catch((err) => {
-  console.error('\n❌ Erreur de prérendu :', err);
-  process.exit(1);
-});
+prerender()
+  .then(() => process.exit(0))   // ← force la sortie même si Vite laisse des handles ouverts
+  .catch((err) => {
+    console.error('\n❌ Erreur de prérendu :', err);
+    process.exit(1);
+  });

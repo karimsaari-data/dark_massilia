@@ -1,11 +1,13 @@
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { CheckCircle, AlertCircle, Loader2 } from 'lucide-react';
+import { Link } from 'react-router-dom';
 import { supabase } from '../lib/supabase';
 import { FADE_IN_UP } from '../utils/constants';
 
 const NewsletterSection = () => {
   const [email, setEmail] = useState('');
+  const [consent, setConsent] = useState(false);
   const [status, setStatus] = useState('idle'); // idle | loading | success | already | error
   const [errorMsg, setErrorMsg] = useState('');
 
@@ -85,37 +87,57 @@ const NewsletterSection = () => {
                   animate={{ opacity: 1, y: 0 }}
                   exit={{ opacity: 0, y: -10 }}
                   onSubmit={handleSubmit}
-                  className="flex flex-col sm:flex-row gap-3"
+                  className="flex flex-col gap-3"
                 >
-                  <label htmlFor="newsletter-email" className="sr-only">
-                    Adresse email
+                  {/* Champ email + bouton */}
+                  <div className="flex flex-col sm:flex-row gap-3">
+                    <label htmlFor="newsletter-email" className="sr-only">
+                      Adresse email
+                    </label>
+                    <input
+                      id="newsletter-email"
+                      type="email"
+                      value={email}
+                      onChange={(e) => setEmail(e.target.value)}
+                      placeholder="ton@email.com"
+                      required
+                      disabled={status === 'loading'}
+                      aria-describedby={status === 'error' ? 'newsletter-error' : undefined}
+                      className="flex-1 px-5 py-3.5 rounded-full bg-white/10 border border-white/25 text-white placeholder-white/40 focus:outline-none focus:border-ocean-teal focus:bg-white/15 transition-all text-base disabled:opacity-60 backdrop-blur-sm"
+                    />
+                    <button
+                      type="submit"
+                      disabled={!consent || status === 'loading'}
+                      aria-busy={status === 'loading'}
+                      className="btn-primary flex items-center justify-center gap-2 px-7 py-3.5 whitespace-nowrap disabled:opacity-50 disabled:cursor-not-allowed"
+                    >
+                      {status === 'loading' ? (
+                        <>
+                          <Loader2 className="w-4 h-4 animate-spin" aria-hidden="true" />
+                          <span>Envoi…</span>
+                        </>
+                      ) : (
+                        <span>OK →</span>
+                      )}
+                    </button>
+                  </div>
+
+                  {/* Consentement RGPD */}
+                  <label className="flex items-start gap-2.5 cursor-pointer group">
+                    <input
+                      type="checkbox"
+                      checked={consent}
+                      onChange={(e) => setConsent(e.target.checked)}
+                      className="mt-0.5 w-4 h-4 flex-shrink-0 rounded border border-white/30 bg-white/10 accent-ocean-teal cursor-pointer"
+                    />
+                    <span className="text-white/45 text-xs leading-relaxed group-hover:text-white/60 transition-colors">
+                      J'accepte de recevoir la newsletter Dark Massilia et les actualités de Karim Saari.{' '}
+                      <Link to="/confidentialite" className="underline underline-offset-2 hover:text-ocean-teal transition-colors">
+                        Politique de confidentialité
+                      </Link>
+                      . Désinscription à tout moment.
+                    </span>
                   </label>
-                  <input
-                    id="newsletter-email"
-                    type="email"
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
-                    placeholder="ton@email.com"
-                    required
-                    disabled={status === 'loading'}
-                    aria-describedby={status === 'error' ? 'newsletter-error' : undefined}
-                    className="flex-1 px-5 py-3.5 rounded-full bg-white/10 border border-white/25 text-white placeholder-white/40 focus:outline-none focus:border-ocean-teal focus:bg-white/15 transition-all text-base disabled:opacity-60 backdrop-blur-sm"
-                  />
-                  <button
-                    type="submit"
-                    disabled={status === 'loading'}
-                    aria-busy={status === 'loading'}
-                    className="btn-primary flex items-center justify-center gap-2 px-7 py-3.5 whitespace-nowrap disabled:opacity-60 disabled:cursor-not-allowed"
-                  >
-                    {status === 'loading' ? (
-                      <>
-                        <Loader2 className="w-4 h-4 animate-spin" aria-hidden="true" />
-                        <span>Envoi…</span>
-                      </>
-                    ) : (
-                      <span>OK →</span>
-                    )}
-                  </button>
                 </motion.form>
               )}
 
@@ -184,12 +206,6 @@ const NewsletterSection = () => {
             )}
           </div>
 
-          {/* Mention RGPD */}
-          {status !== 'success' && status !== 'already' && (
-            <p className="text-white/30 text-xs mt-5">
-              Pas de spam · Désinscription à tout moment · Conforme RGPD
-            </p>
-          )}
 
         </div>
       </motion.div>

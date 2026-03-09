@@ -163,7 +163,7 @@ const Footer = () => {
               href="https://www.team-oxygen.com/"
               target="_blank"
               rel="noopener noreferrer"
-              className="text-gray-300 hover:text-ocean-teal transition-colors duration-200"
+              className="text-gray-300 hover:text-ocean-teal underline decoration-white/40 hover:decoration-ocean-teal/60 underline-offset-2 transition-colors duration-200"
             >
               Team Oxygen
             </a>

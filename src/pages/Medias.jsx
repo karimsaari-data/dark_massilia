@@ -92,10 +92,7 @@ const Medias = () => {
           transition={{ duration: 0.6 }}
           className="text-3xl md:text-4xl font-bold text-white text-center mb-12 leading-tight"
         >
-          Presse &amp; Médias
-          <span className="block text-xl md:text-2xl font-medium text-ocean-teal mt-3">
-            Couverture médiatique du Projet Sentinelle
-          </span>
+          Documentaires et Reportages : Témoigner de l'urgence écologique en Méditerranée
         </motion.h1>
 
         {/* Section éditoriale SEO — notoriété médiatique & E-E-A-T */}
@@ -235,7 +232,7 @@ const Medias = () => {
                 <div className="relative aspect-video bg-black overflow-hidden">
                   <img
                     src="/images/%C3%A9chapp%C3%A9es%20belles.webp"
-                    alt="Échappées Belles — Karim Saari et Team Oxygen dans les Calanques de Marseille"
+                    alt="Échappées Belles — Karim Saari avec Ismaël Khelifa et Matthieu Witvoet au Vallon des Auffes, Marseille"
                     className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                     loading="lazy"
                     decoding="async"
@@ -251,7 +248,7 @@ const Medias = () => {
                   <div>
                     <p className="text-xs uppercase tracking-widest text-ocean-teal font-semibold mb-1">France Télévisions</p>
                     <h3 className="text-lg font-bold text-white group-hover:text-ocean-teal transition-colors">
-                      Échappées Belles — Karim Saari & Team Oxygen dans les Calanques
+                      Échappées Belles — Karim Saari avec Ismaël Khelifa & Matthieu Witvoet
                     </h3>
                   </div>
                   <ExternalLink className="w-5 h-5 text-gray-400 group-hover:text-ocean-teal group-hover:translate-x-1 group-hover:-translate-y-1 transition-all flex-shrink-0 ml-4" />

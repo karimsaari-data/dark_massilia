@@ -31,9 +31,9 @@ const breadcrumb = (name, path) => ({
 
 export const SEO_PAGES = {
   '/': {
-    title: 'Karim Saari | Photographe & Sentinelle de la Méditerranée',
+    title: 'Karim Saari | Photographe de paysages Marseille | Sentinelle du littoral',
     description:
-      'Photographe sous-marin et apnéiste à Marseille. Découvrez mon engagement pour la protection de la Méditerranée et la dépollution des Calanques.',
+      "Découvrez le travail de Karim Saari, photographe de paysages à Marseille. Entre photographie d'art sous-marine et terrestre, découvrez un regard engagé pour la protection de la Méditerranée.",
     canonical: `${BASE_URL}/`,
     schema: {
       '@context': 'https://schema.org',
@@ -183,9 +183,9 @@ export const SEO_PAGES = {
     },
   },
   '/depollution-marine': {
-    title: 'Missions de Dépollution Marine | Team Oxygen & Karim Saari',
+    title: 'Association Dépollution Marine à Marseille | Team Oxygen',
     description:
-      "Découvrez le Projet Sentinelle et les actions de l'association Team Oxygen. Ensemble, nous nettoyons les fonds marins de la Côte Bleue aux Calanques.",
+      'Rejoignez Team Oxygen, association de dépollution marine à Marseille. Découvrez nos missions de nettoyage sous-marin en apnée dans les Calanques.',
     canonical: `${BASE_URL}/depollution-marine`,
     schema: breadcrumb('Missions de Dépollution Marine', '/depollution-marine'),
   },
@@ -238,9 +238,9 @@ export const SEO_PAGES = {
     },
   },
   '/photographie-paysage-mer': {
-    title: 'Galerie Photographie : Paysages & Fonds Marins | Karim Saari',
+    title: 'Photographe Apnée Calanques & Paysages Littoraux | Karim Saari',
     description:
-      "Explorez ma galerie photo sous-marine et terrestre. La beauté fragile des Calanques de Marseille capturée pour éveiller les consciences.",
+      'Plongez dans la Méditerranée. Karim Saari, photographe environnemental, capture la beauté des paysages littoraux et des fonds marins de Marseille en apnée.',
     canonical: `${BASE_URL}/photographie-paysage-mer`,
     schema: {
       '@context': 'https://schema.org',
@@ -257,6 +257,9 @@ export const SEO_PAGES = {
           copyrightHolder: { '@type': 'Person', name: 'Karim Saari' },
           copyrightYear: 2024,
           creditText: '© Karim Saari / Dark Massilia',
+          copyrightNotice: '© Karim Saari / Dark Massilia — Tous droits réservés',
+          license: `${BASE_URL}/mentions-legales`,
+          acquireLicensePage: `${BASE_URL}/contact`,
         },
         {
           '@type': 'ImageObject',
@@ -268,6 +271,9 @@ export const SEO_PAGES = {
           copyrightHolder: { '@type': 'Person', name: 'Karim Saari' },
           copyrightYear: 2023,
           creditText: '© Karim Saari / Dark Massilia',
+          copyrightNotice: '© Karim Saari / Dark Massilia — Tous droits réservés',
+          license: `${BASE_URL}/mentions-legales`,
+          acquireLicensePage: `${BASE_URL}/contact`,
         },
         {
           '@type': 'ImageObject',
@@ -279,6 +285,9 @@ export const SEO_PAGES = {
           copyrightHolder: { '@type': 'Person', name: 'Karim Saari' },
           copyrightYear: 2024,
           creditText: '© Karim Saari / Dark Massilia',
+          copyrightNotice: '© Karim Saari / Dark Massilia — Tous droits réservés',
+          license: `${BASE_URL}/mentions-legales`,
+          acquireLicensePage: `${BASE_URL}/contact`,
         },
         {
           '@type': 'ImageObject',
@@ -290,6 +299,9 @@ export const SEO_PAGES = {
           copyrightHolder: { '@type': 'Person', name: 'Karim Saari' },
           copyrightYear: 2023,
           creditText: '© Karim Saari / Dark Massilia',
+          copyrightNotice: '© Karim Saari / Dark Massilia — Tous droits réservés',
+          license: `${BASE_URL}/mentions-legales`,
+          acquireLicensePage: `${BASE_URL}/contact`,
         },
         {
           '@type': 'ImageObject',
@@ -301,6 +313,9 @@ export const SEO_PAGES = {
           copyrightHolder: { '@type': 'Person', name: 'Karim Saari' },
           copyrightYear: 2023,
           creditText: '© Karim Saari / Dark Massilia',
+          copyrightNotice: '© Karim Saari / Dark Massilia — Tous droits réservés',
+          license: `${BASE_URL}/mentions-legales`,
+          acquireLicensePage: `${BASE_URL}/contact`,
         },
       ],
     },
@@ -313,9 +328,9 @@ export const SEO_PAGES = {
     schema: breadcrumb('Données Scientifiques', '/donnees-scientifiques'),
   },
   '/presse': {
-    title: 'Presse & Médias | Couverture du Projet Sentinelle',
+    title: 'Documentaires & Reportages Environnement Marin | Karim Saari',
     description:
-      'Retrouvez mes passages presse et documentaires diffusés à la télévision (ARTE, Échappées Belles). Les médias s\'engagent pour la Méditerranée.',
+      "Retrouvez les reportages et documentaires (ARTE, France TV) témoignant de nos missions de dépollution et de l'urgence écologique en mer Méditerranée.",
     canonical: `${BASE_URL}/presse`,
     schema: {
       '@context': 'https://schema.org',
@@ -338,40 +353,96 @@ export const SEO_PAGES = {
     },
   },
   '/communaute': {
-    title: 'Rejoignez notre Communauté de 130 000 Sentinelles',
+    title: 'Bénévolat Dépollution Marseille : Rejoignez Team Oxygen',
     description:
-      'La protection de la Méditerranée repose sur une mobilisation collective. Rejoignez nos 130 000 sentinelles pour suivre nos actions en direct.',
+      "Envie d'agir pour la Méditerranée ? Rejoignez notre communauté de 130 000 sentinelles et participez à nos missions de bénévolat écologique à Marseille.",
     canonical: `${BASE_URL}/communaute`,
     schema: {
       '@context': 'https://schema.org',
       '@graph': [
-        breadcrumb('Communauté de 130 000 Sentinelles', '/communaute'),
+        breadcrumb('Bénévolat Dépollution Marine Marseille', '/communaute'),
         {
-          '@type': 'ProfilePage',
-          name: 'Communauté Dark Massilia — 130 000 Sentinelles',
+          '@type': 'Organization',
+          '@id': `${BASE_URL}/#team-oxygen`,
+          name: 'Team Oxygen',
+          url: 'https://www.team-oxygen.com/',
           description:
-            'La communauté engagée de Karim Saari pour la protection de la Méditerranée. 130 000 sentinelles réunies sur Facebook, Instagram, TikTok et YouTube.',
-          url: `${BASE_URL}/communaute`,
-          mainEntity: {
+            'Association loi 1901 de dépollution marine en apnée à Marseille. Missions de nettoyage sous-marin dans les Calanques avec des bénévoles de tous niveaux.',
+          foundingLocation: {
+            '@type': 'Place',
+            name: 'Marseille',
+            address: {
+              '@type': 'PostalAddress',
+              addressLocality: 'Marseille',
+              addressRegion: 'Bouches-du-Rhône',
+              addressCountry: 'FR',
+            },
+          },
+          member: {
             '@type': 'Person',
             name: 'Karim Saari',
             alternateName: 'Dark Massilia',
             url: BASE_URL,
-            sameAs: [
-              'https://www.facebook.com/groups/calanque/',
-              'https://www.instagram.com/karimsaari/',
-              'https://www.tiktok.com/@dark.massilia',
-              'https://www.youtube.com/@dark.massilia',
-            ],
           },
+          sameAs: [
+            'https://www.facebook.com/groups/calanque/',
+            'https://www.instagram.com/karimsaari/',
+            'https://www.tiktok.com/@dark.massilia',
+            'https://www.youtube.com/@dark.massilia',
+          ],
+        },
+        {
+          '@type': 'FAQPage',
+          mainEntity: [
+            {
+              '@type': 'Question',
+              name: "Puis-je plonger ou faire de l'apnée lors des missions de dépollution ?",
+              acceptedAnswer: {
+                '@type': 'Answer',
+                text: "Non. Pour des raisons de sécurité et d'assurance, les plongées et l'apnée sont strictement réservées aux membres certifiés de l'association Team Oxygen. Les bénévoles extérieurs interviennent exclusivement depuis la surface, en kayak ou depuis le rivage.",
+              },
+            },
+            {
+              '@type': 'Question',
+              name: "Comment aider concrètement lors d'une mission sans être plongeur ?",
+              acceptedAnswer: {
+                '@type': 'Answer',
+                text: "Plusieurs formes d'aide sont possibles : mettre un kayak ou un bateau à disposition pour accéder aux zones isolées, participer au tri et à la caractérisation des déchets à terre, assurer le transport des sacs vers les filières de recyclage, ou documenter la mission depuis le bord.",
+              },
+            },
+            {
+              '@type': 'Question',
+              name: 'Comment être prévenu de la prochaine mission de dépollution à Marseille ?',
+              acceptedAnswer: {
+                '@type': 'Answer',
+                text: "Rejoignez le groupe Facebook « Amoureux des Calanques » et suivez @karimsaari sur Instagram. Toutes les dates y sont annoncées en priorité. Vous pouvez aussi nous contacter via la page Contact pour être ajouté à la liste de diffusion.",
+              },
+            },
+            {
+              '@type': 'Question',
+              name: 'Team Oxygen est-elle une association officielle ?',
+              acceptedAnswer: {
+                '@type': 'Answer',
+                text: "Oui. Team Oxygen est une association loi 1901 dont Karim Saari est président. Les plongées sont encadrées par des membres certifiés couverts par l'assurance associative. Les bénévoles extérieurs interviennent uniquement en surface ou à terre.",
+              },
+            },
+            {
+              '@type': 'Question',
+              name: "Comment soutenir le mouvement sans pouvoir venir physiquement à une mission ?",
+              acceptedAnswer: {
+                '@type': 'Answer',
+                text: "Le soutien digital est tout aussi précieux : suivez nos comptes, partagez nos posts et réels, commentez, tagguez vos proches sensibles à la cause. Chaque partage touche de nouveaux publics. Vous pouvez aussi soutenir l'association directement sur team-oxygen.com.",
+              },
+            },
+          ],
         },
       ],
     },
   },
   '/sauver-marseille-documentaire-arte': {
-    title: 'Pollution : il faut sauver Marseille ! — Documentaire ARTE',
+    title: 'Documentaire ARTE : Pollution, il faut sauver Marseille !',
     description:
-      'Visionnez "Pollution : il faut sauver Marseille !", le documentaire ARTE Regards. Plongez avec Karim Saari et Team Oxygen pour nettoyer les Calanques.',
+      'Découvrez le documentaire ARTE Regards sur la pollution à Marseille. Une immersion choc avec Karim Saari et Team Oxygen pour sauver les Calanques.',
     canonical: `${BASE_URL}/sauver-marseille-documentaire-arte`,
     schema: {
       '@context': 'https://schema.org',
@@ -430,15 +501,53 @@ export const SEO_PAGES = {
       ],
     },
   },
+  '/blog': {
+    title: 'Blog Actualités — Missions de Dépollution Marine | Dark Massilia',
+    description:
+      'Suivez les dernières actions de dépollution de Team Oxygen en Méditerranée. Reportages, rencontres et coups de cœur depuis les Calanques de Marseille.',
+    canonical: `${BASE_URL}/blog`,
+    schema: {
+      '@context': 'https://schema.org',
+      '@graph': [
+        breadcrumb('Actualités', '/blog'),
+        {
+          '@type': 'Blog',
+          name: 'Blog Dark Massilia — Actualités Méditerranée',
+          description:
+            'Journal de bord des missions de dépollution marine menées par Karim Saari et Team Oxygen dans les Calanques de Marseille.',
+          url: `${BASE_URL}/blog`,
+          author: {
+            '@type': 'Person',
+            name: 'Karim Saari',
+            alternateName: 'Dark Massilia',
+            url: BASE_URL,
+          },
+          publisher: {
+            '@type': 'Organization',
+            name: 'Dark Massilia',
+            url: BASE_URL,
+          },
+          inLanguage: 'fr-FR',
+        },
+      ],
+    },
+  },
+  // ⚠️  /actualites = flux Twitter embed — noindex intentionnel.
+  // Page thin content (contenu tiers, pas de valeur SEO propre).
+  // Conserver noindex pour préserver le crawl budget et le siloing thématique.
+  // Ne PAS supprimer sans arbitrage SEO préalable.
   '/actualites': {
     title: 'Actualités et Alertes Environnementales | Projet Sentinelle',
     description:
       'Suivez en temps réel les actions de dépollution marine de Team Oxygen. Alertes environnementales et actualités des Calanques de Marseille en direct.',
     canonical: `${BASE_URL}/actualites`,
-    noindex: true,
+    noindex: true, // noindex, follow — liens suivis mais page exclue de l'index
   },
+  // noindex, follow — page satellite (profil Google Maps), liens suivis.
+  // Exclue de l'index pour éviter la dilution du siloing "dépollution".
   '/local-guide-marseille': {
     title: 'Google Local Guide à Marseille | Karim Saari',
+    noindex: true, // noindex, follow
     description:
       'Suivez mes contributions en tant que Google Local Guide à Marseille. Plus de 183 millions de vues pour valoriser notre patrimoine naturel.',
     canonical: `${BASE_URL}/local-guide-marseille`,
@@ -496,11 +605,51 @@ export const SEO_PAGES = {
     },
   },
   '/contact': {
-    title: 'Contactez Karim Saari | Expositions, Reportages & Collabs',
+    title: 'Contact Karim Saari | Reportages, Expositions & Dépollution',
     description:
-      'Contactez Karim Saari pour un projet de reportage, une exposition ou une collaboration avec Team Oxygen à Marseille. Échangeons par Email ou WhatsApp.',
+      'Contactez Karim Saari pour une intervention dans un documentaire, une exposition photo engagée ou une mission de dépollution à Marseille.',
     canonical: `${BASE_URL}/contact`,
-    schema: breadcrumb('Contact & Partenariats', '/contact'),
+    schema: {
+      '@context': 'https://schema.org',
+      '@graph': [
+        breadcrumb('Contact & Partenariats', '/contact'),
+        {
+          '@type': 'PhotographyBusiness',
+          '@id': `${BASE_URL}/#business`,
+          name: 'Karim SAARI - Photographe Calanques & Marseille',
+          url: `${BASE_URL}/`,
+          email: 'email@karimsaari.com',
+          telephone: '+33695331301',
+          address: {
+            '@type': 'PostalAddress',
+            streetAddress: '168 CHE DE MORGIOU',
+            addressLocality: 'MARSEILLE',
+            postalCode: '13009',
+            addressCountry: 'FR',
+          },
+          geo: {
+            '@type': 'GeoCoordinates',
+            latitude: 43.2965,
+            longitude: 5.3698,
+          },
+          hasMap: 'https://maps.app.goo.gl/UaF5o6sM2xS5Gaxr6',
+          sameAs: [
+            'https://maps.app.goo.gl/UaF5o6sM2xS5Gaxr6',
+            'https://share.google/VAnA0t89Jy0AaR0zC',
+            'https://www.instagram.com/karimsaari',
+            'https://www.facebook.com/groups/calanque/',
+            'https://www.tiktok.com/@dark.massilia',
+            'https://www.youtube.com/@dark.massilia',
+            'https://www.team-oxygen.com/',
+          ],
+          founder: {
+            '@type': 'Person',
+            name: 'Karim Saari',
+            url: `${BASE_URL}/`,
+          },
+        },
+      ],
+    },
   },
   '/les-francais-yann-arthus-bertrand': {
     title: '« Les Français » de Yann Arthus-Bertrand — Team Oxygen à Marseille',
@@ -536,19 +685,19 @@ export const SEO_PAGES = {
     },
   },
   '/carte-calanques': {
-    title: 'Carte Interactive des Calanques : Dépollution & Paysages',
+    title: 'Carte Interactive des Calanques : Spots de Dépollution & Biodiversité',
     description:
-      'Naviguez sur notre carte interactive des Calanques de Marseille. Découvrez nos sites d\'action environnementale et mes plus beaux spots photo.',
+      "Explorez la carte interactive des Calanques de Marseille. Localisez nos zones de dépollution marine avec Team Oxygen et découvrez la biodiversité des fonds méditerranéens à protéger.",
     canonical: `${BASE_URL}/carte-calanques`,
     schema: {
       '@context': 'https://schema.org',
       '@graph': [
-        breadcrumb('Carte des Sites', '/carte-calanques'),
+        breadcrumb('Carte Interactive des Calanques', '/carte-calanques'),
         {
           '@type': 'Dataset',
-          name: 'Carte des Sites — Calanques de Marseille',
+          name: 'Carte interactive — Calanques de Marseille : Dépollution & Photographie',
           description:
-            'Cartographie des sites de plongée, zones polluées et spots naturels des Calanques de Marseille et de la rade, documentés par Dark Massilia (Karim Saari) dans le cadre du Projet Sentinelle.',
+            "Cartographie des zones de dépollution marine menées par Team Oxygen et des sites de photographie documentaire dans les Calanques de Marseille. Spots couverts : Sormiou, Morgiou, Sugiton, En-Vau, Callelongue, Cap Croisette, Archipel du Frioul.",
           url: `${BASE_URL}/carte-calanques`,
           creator: {
             '@type': 'Person',
@@ -558,7 +707,7 @@ export const SEO_PAGES = {
           },
           spatialCoverage: {
             '@type': 'Place',
-            name: 'Calanques de Marseille',
+            name: 'Parc national des Calanques',
             geo: {
               '@type': 'GeoCoordinates',
               latitude: 43.2148,
@@ -567,16 +716,41 @@ export const SEO_PAGES = {
             containedInPlace: {
               '@type': 'AdministrativeArea',
               name: 'Marseille',
+              addressRegion: 'Bouches-du-Rhône',
               addressCountry: 'FR',
             },
           },
           keywords: [
-            'calanques de Marseille',
-            'sites de plongée',
-            'dépollution marine',
-            'pollution plastique',
-            'fonds marins Marseille',
+            'carte calanques Marseille',
+            'spots dépollution marine',
+            'biodiversité Calanques',
+            'Team Oxygen missions',
+            'posidonie Méditerranée',
+            'photographie sous-marine Marseille',
           ],
+        },
+        {
+          '@type': 'LandmarksOrHistoricalBuildings',
+          name: 'Parc national des Calanques',
+          description:
+            "Parc national français créé en 2012, couvrant 20 km de côte entre Marseille et La Ciotat. Abrite plus de 140 espèces de poissons et des herbiers de posidonie protégés.",
+          url: 'https://www.calanques-parcnational.fr',
+          geo: {
+            '@type': 'GeoCoordinates',
+            latitude: 43.2148,
+            longitude: 5.4197,
+          },
+          address: {
+            '@type': 'PostalAddress',
+            addressLocality: 'Marseille',
+            addressRegion: 'Bouches-du-Rhône',
+            addressCountry: 'FR',
+          },
+          containedInPlace: {
+            '@type': 'AdministrativeArea',
+            name: 'Marseille',
+            addressCountry: 'FR',
+          },
         },
       ],
     },

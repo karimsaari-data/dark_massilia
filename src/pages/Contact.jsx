@@ -1,6 +1,6 @@
 import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
-import { Mail, Phone, MapPin, ArrowLeft } from 'lucide-react';
+import { Mail, Phone, MapPin } from 'lucide-react';
 import { FADE_IN_UP, STAGGER_CONTAINER, APP_CONFIG } from '../utils/constants';
 import SEO from '../components/SEO';
 import { SEO_PAGES } from '../utils/seo';
@@ -18,10 +18,7 @@ const Contact = () => {
           className="text-center mb-16"
         >
           <motion.h1 variants={FADE_IN_UP} className="text-3xl md:text-4xl font-bold text-white mb-4">
-            Contact
-            <span className="block text-xl md:text-2xl font-medium text-ocean-teal mt-3">
-              Une question, un projet de collaboration ou envie de participer à nos missions ?
-            </span>
+            Collaborons pour la Méditerranée : Reportages, Expositions et Actions sur le terrain
           </motion.h1>
         </motion.div>
 
@@ -60,6 +57,7 @@ const Contact = () => {
           initial="hidden"
           animate="visible"
           variants={STAGGER_CONTAINER}
+          id="contact-buttons"
           className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-4xl mx-auto"
         >
           {/* Email */}
@@ -103,84 +101,85 @@ const Contact = () => {
           </motion.a>
 
           {/* Localisation */}
-          <motion.div
+          <motion.a
+            href="https://maps.app.goo.gl/UaF5o6sM2xS5Gaxr6"
+            target="_blank"
+            rel="noopener noreferrer"
             variants={FADE_IN_UP}
-            className="card"
+            className="card hover:border-ocean-teal/30 hover:bg-ocean-teal/5 transition-all duration-300 group"
           >
             <div className="flex flex-col items-center text-center gap-4">
-              <div className="w-16 h-16 rounded-full bg-gradient-to-br from-ocean-teal to-ocean-blue flex items-center justify-center">
+              <div className="w-16 h-16 rounded-full bg-gradient-to-br from-ocean-teal to-ocean-blue flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
                 <MapPin className="w-8 h-8 text-white" />
               </div>
               <div>
                 <h3 className="font-semibold text-white mb-2 text-lg">Localisation</h3>
-                <p className="text-sm text-gray-400">Marseille, France</p>
+                <p className="text-sm text-gray-400 group-hover:text-ocean-teal transition-colors">Marseille, France</p>
               </div>
             </div>
-          </motion.div>
+          </motion.a>
         </motion.div>
 
-        {/* Team Oxygen - Full width at bottom */}
+        {/* Split Layout — Photo + Texte engagement */}
         <motion.div
           initial="hidden"
           animate="visible"
           variants={FADE_IN_UP}
-          className="max-w-4xl mx-auto mt-12"
+          className="max-w-5xl mx-auto mt-16"
         >
-          <div className="card bg-ocean-teal/10 border-ocean-teal/20 text-center">
-            <h3 className="font-semibold text-ocean-teal mb-3 text-xl">Team Oxygen</h3>
-            <p className="text-gray-300 mb-4">
-              Président de l'association Team Oxygen
-            </p>
-            <a
-              href="https://www.team-oxygen.com/"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 text-ocean-teal hover:underline"
-            >
-              Découvrir Team Oxygen
-              <span>→</span>
-            </a>
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-center">
+            {/* Colonne 1 — Photo */}
+            <div className="rounded-2xl overflow-hidden shadow-2xl">
+              <picture>
+                <source srcSet="/images/contact-karim-saari.webp" type="image/webp" />
+                <img
+                  src="/images/contact karim saari.png"
+                  alt="Karim Saari en action lors d'une mission de dépollution sous-marine dans les Calanques de Marseille avec Team Oxygen"
+                  width="1440"
+                  height="1212"
+                  className="w-full h-full object-cover"
+                  loading="lazy"
+                />
+              </picture>
+            </div>
+
+            {/* Colonne 2 — Texte */}
+            <div className="flex flex-col gap-6">
+              <p className="text-ocean-teal text-sm font-semibold uppercase tracking-widest">
+                Un engagement à 360°
+              </p>
+              <h2 className="text-2xl md:text-3xl font-bold text-white leading-tight">
+                La Méditerranée pour bureau, l'action pour moteur
+              </h2>
+              <p className="text-text-secondary leading-relaxed">
+                Apnéiste, photographe et président de{' '}
+                <strong className="text-ocean-teal">Team Oxygen</strong>, Karim Saari documente et
+                combat la pollution marine depuis plus de dix ans sur le littoral marseillais. Chaque
+                plongée est une mission : collecter les données, ramener les déchets, alerter le public.
+                Que vous soyez journaliste, institution, marque engagée ou simple passionné de la mer —
+                il y a une place pour vous dans ce combat.
+              </p>
+              <div className="flex flex-col sm:flex-row gap-3">
+                <Link
+                  to="/depollution-marine"
+                  className="btn-secondary inline-flex items-center justify-center gap-2"
+                >
+                  Nos missions de dépollution
+                </Link>
+                <a
+                  href="https://www.team-oxygen.com/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="btn-primary inline-flex items-center justify-center gap-2"
+                >
+                  Soutenir Team Oxygen
+                  <span aria-hidden="true">↗</span>
+                </a>
+              </div>
+            </div>
           </div>
         </motion.div>
 
-        {/* Carte de visite */}
-        <motion.div
-          initial="hidden"
-          animate="visible"
-          variants={FADE_IN_UP}
-          className="max-w-4xl mx-auto mt-12"
-        >
-          <img
-            src="/assets/og-social-card.jpg"
-            alt="Dark Massilia — Karim Saari, Sentinelle de la Méditerranée. Apnée, dépollution et documentation des pollutions sous-marines sur le littoral marseillais."
-            width="1200"
-            height="630"
-            className="w-full rounded-2xl shadow-2xl"
-          />
-        </motion.div>
-
-        {/* CTAs — Continuer la navigation */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.4 }}
-          className="mt-12 mb-8 flex flex-col sm:flex-row items-center justify-center gap-4"
-        >
-          <Link
-            to="/depollution-marine"
-            className="btn-primary inline-flex items-center gap-2"
-          >
-            <span>Nos missions de dépollution</span>
-            <ArrowLeft className="w-4 h-4 rotate-180" aria-hidden="true" />
-          </Link>
-          <Link
-            to="/videos"
-            className="btn-secondary inline-flex items-center gap-2 group"
-          >
-            <span>Voir nos vidéos</span>
-            <ArrowLeft className="w-4 h-4 rotate-180 group-hover:translate-x-1 transition-transform" aria-hidden="true" />
-          </Link>
-        </motion.div>
       </div>
     </div>
   );

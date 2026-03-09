@@ -76,10 +76,9 @@ const Navbar = () => {
   };
 
   const navVariants = {
-    hidden: { y: -100, opacity: 0 },
+    hidden: { y: -100 },
     visible: {
       y: 0,
-      opacity: 1,
       transition: { duration: 0.6, ease: 'easeOut' }
     }
   };
@@ -119,16 +118,15 @@ const Navbar = () => {
                   Karim Saari
                 </span>
                 <div className="text-xs md:text-sm text-gray-400 uppercase tracking-widest leading-tight" style={{ letterSpacing: '0.15em' }}>
-                  <p className="mb-0">Sentinelle de la Mer</p>
+                  <p className="mb-0">Sentinelle des Calanques</p>
                   <p>Photographe de paysages</p>
                 </div>
               </div>
             </Link>
 
             {/* Desktop Navigation — 6 items max, pages secondaires en mobile uniquement */}
-            <div className="hidden md:flex items-center gap-0.5 flex-1 justify-end ml-4">
+            <div className="hidden md:flex items-center gap-3 flex-1 justify-end ml-4">
               {NAV_LINKS.filter(link => !link.mobileOnly).map((link) => {
-                const Icon = iconMap[link.icon];
                 const isActive = location.pathname === link.path;
 
                 return (
@@ -136,13 +134,12 @@ const Navbar = () => {
                     key={link.path}
                     to={link.path}
                     aria-current={isActive ? 'page' : undefined}
-                    className={`flex items-center gap-1.5 px-3 py-1.5 rounded-full transition-all duration-300 relative whitespace-nowrap flex-shrink-0 text-sm focus-ring ${
+                    className={`flex items-center px-3 py-1.5 rounded-full transition-all duration-300 relative whitespace-nowrap flex-shrink-0 text-sm focus-ring ${
                       isActive
                         ? 'bg-ocean-teal/20 text-ocean-teal border border-ocean-teal/30 shadow-lg shadow-ocean-teal/20'
                         : 'text-text-secondary hover:text-white hover:bg-white/5'
                     }`}
                   >
-                    <Icon className="w-3.5 h-3.5 flex-shrink-0" aria-hidden="true" />
                     <span className="font-medium">{link.name}</span>
                     {isActive && (
                       <motion.div
@@ -211,7 +208,7 @@ const Navbar = () => {
                 {/* Logo */}
                 <div className="mb-8 mt-4">
                   <h2 className="text-xl font-bold text-white" style={{ fontFamily: 'serif' }}>Karim Saari</h2>
-                  <p className="text-xs text-gray-400 mt-1 uppercase tracking-widest">Photographe / Sentinelle de la Mer</p>
+                  <p className="text-xs text-gray-400 mt-1 uppercase tracking-widest">Photographe / Sentinelle des Calanques</p>
                 </div>
 
                 {/* Navigation Links */}

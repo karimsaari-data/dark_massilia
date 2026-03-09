@@ -30,6 +30,7 @@ export const NAV_LINKS = [
   { name: 'Carte', path: '/carte-calanques', icon: 'MapPin' },
   { name: 'Contact', path: '/contact', icon: 'Mail' },
   // Menu mobile uniquement — pages secondaires
+  { name: 'Blog', path: '/blog', icon: 'BookOpen', mobileOnly: true },
   { name: 'Local Guides', path: '/local-guide-marseille', icon: 'Navigation', mobileOnly: true },
   { name: 'Références', path: '/donnees-scientifiques', icon: 'BookOpen', mobileOnly: true },
 ];
@@ -53,9 +54,8 @@ export const MEDIA_TYPES = {
 
 // Animation variants for Framer Motion
 export const FADE_IN_UP = {
-  hidden: { opacity: 0, y: 30 },
+  hidden: { y: 30 },
   visible: {
-    opacity: 1,
     y: 0,
     transition: { duration: 0.6, ease: 'easeOut' }
   }
@@ -70,9 +70,8 @@ export const FADE_IN = {
 };
 
 export const STAGGER_CONTAINER = {
-  hidden: { opacity: 0 },
+  hidden: {},
   visible: {
-    opacity: 1,
     transition: {
       staggerChildren: 0.1,
       delayChildren: 0.2

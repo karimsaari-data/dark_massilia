@@ -53,10 +53,7 @@ const Missions = () => {
           transition={{ duration: 0.6 }}
           className="text-3xl md:text-4xl font-bold text-white text-center mb-12 leading-tight"
         >
-          Team Oxygen — Dépollution en apnée à Marseille
-          <span className="block text-xl md:text-2xl font-medium text-ocean-teal mt-3">
-            Littoral marseillais · Côte Bleue · Calanques · Frioul · La Ciotat · Méditerranée
-          </span>
+          Team Oxygen : Association de dépollution marine et nettoyage sous-marin à Marseille
         </motion.h1>
 
         {/* Mission Description */}

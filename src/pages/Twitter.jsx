@@ -37,21 +37,22 @@ const Twitter = () => {
         >
           <motion.div variants={FADE_IN_UP} className="glass-strong rounded-3xl p-8 md:p-12">
             <h1 className="text-2xl md:text-3xl font-bold text-white mb-6">
-              Actualités du Projet Sentinelle en temps réel
+              Veille environnementale & alertes marines en temps réel
             </h1>
             <p className="text-text-secondary leading-relaxed text-lg">
               Sur <strong className="text-white">X (ex-Twitter)</strong>, le compte{' '}
-              <strong className="text-ocean-teal">@dark_massilia</strong> est le fil direct des
-              actions de terrain du{' '}
-              <strong className="text-ocean-teal">Projet Sentinelle</strong> : annonces de missions,
-              bilans de dépollution, alertes environnementales et partage de données scientifiques
-              sur la pollution plastique en{' '}
-              <strong className="text-white">Méditerranée</strong>. C'est aussi un espace de veille
-              sur les enjeux de protection du littoral marseillais et des{' '}
-              <strong className="text-white">Calanques de Marseille</strong> — un terrain d'action
-              au cœur du Parc National. Chaque post est une prise de parole engagée, relayant les
-              avancées de <strong className="text-ocean-teal">Team Oxygen</strong> et les
-              initiatives citoyennes pour la préservation de notre patrimoine naturel marin.
+              <strong className="text-ocean-teal">@dark_massilia</strong> suit en direct les enjeux
+              environnementaux du littoral marseillais — bien au-delà des seules missions
+              organisées. Alertes terrain lors de randonnées, observations sous-marines, signalement
+              de déchets croisés au hasard d'une plongée ou d'un sentier dans les{' '}
+              <strong className="text-white">Calanques</strong>, actualités sur la biodiversité
+              marine... Chaque post est un témoignage brut du réel :{' '}
+              <strong className="text-white">un rorqual aperçu au large de Marseille</strong>, une
+              nappe de plastique dérivant vers une crique, ou une prise de position sur les enjeux
+              de protection du{' '}
+              <strong className="text-white">Parc National des Calanques</strong>. Un fil
+              d'information engagé, ancré dans la{' '}
+              <strong className="text-white">Méditerranée</strong>.
             </p>
           </motion.div>
         </motion.div>

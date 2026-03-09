@@ -107,7 +107,7 @@ const Yab = () => {
 
           <motion.a
             variants={FADE_IN_UP}
-            href="https://karimsaari.com/les-francais-yann-arthus-bertrand"
+            href="https://www.yabstudio.fr/portfolio/marseille-2024/"
             target="_blank"
             rel="noopener noreferrer"
             className="btn inline-flex items-center justify-between group max-w-md mx-auto hover:scale-105 transition-all duration-300"

@@ -34,9 +34,32 @@ const ScrollToTop = () => {
   );
 };
 
+// ── Entité Person globale — présente sur toutes les pages ────────────────────
+// Déclare l'identité de Karim Saari à Google via JSON-LD Schema.org.
+// Injecté dans <head> via le hoisting React 19 + extraction prerender.js.
+const GLOBAL_PERSON_SCHEMA = {
+  '@context': 'https://schema.org',
+  '@type':    'Person',
+  name:       'Karim Saari',
+  jobTitle:   'Photographe environnemental & Apnéiste',
+  url:        'https://karimsaari.com',
+  description: 'Photographe environnemental et apnéiste engagé en Méditerranée.',
+  affiliation: {
+    '@type': 'NGO',
+    name:    'Team Oxygen',
+    url:     'https://www.team-oxygen.com/',
+  },
+};
+
 const Layout = () => {
   return (
     <div className="min-h-screen flex flex-col">
+      {/* ── Schema.org global — entité Person (toutes les pages) ── */}
+      <script
+        type="application/ld+json"
+        suppressHydrationWarning
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(GLOBAL_PERSON_SCHEMA) }}
+      />
       {/* Skip link — accessibilité clavier / lecteurs d'écran (WCAG 2.1 AA) */}
       <a
         href="#main-content"
@@ -47,18 +70,28 @@ const Layout = () => {
       {/* Fixed background image - Calanques de Marseille */}
       <div className="fixed inset-0 pointer-events-none z-0">
         {/* Background image with parallax effect */}
-        <div className="absolute inset-0 bg-hero-ocean" />
-
-        {/* Overlay sombre pour lisibilité du contenu */}
-        <div className="absolute inset-0 bg-gradient-to-b from-black/70 via-black/60 to-abyss/95" />
-
-        {/* Gradient radial pour effet de profondeur */}
         <div
-          className="absolute inset-0 opacity-30"
+          className="absolute inset-0 bg-hero-ocean"
+          role="img"
+          aria-label="Photographie d'art sous-marine méduses littoral Marseille — Karim Saari"
+        />
+
+        {/* ── Overlays Premium — 3 couches pour laisser l'image respirer ── */}
+
+        {/* Couche 1 : Voile haut — lisibilité navbar uniquement */}
+        <div className="absolute inset-x-0 top-0 h-2/5 bg-gradient-to-b from-black/55 to-transparent pointer-events-none" />
+
+        {/* Couche 2 : Voile bas — lisibilité du texte Hero */}
+        <div className="absolute inset-x-0 bottom-0 h-3/5 bg-gradient-to-t from-abyss via-abyss/65 to-transparent pointer-events-none" />
+
+        {/* Couche 3 : Radial center + accents chromatiques — profondeur & identité */}
+        <div
+          className="absolute inset-0 pointer-events-none"
           style={{
             backgroundImage: `
-              radial-gradient(circle at 10% 0%, rgba(33, 196, 123, 0.15), transparent 50%),
-              radial-gradient(circle at 90% 100%, rgba(0, 145, 255, 0.15), transparent 50%)
+              radial-gradient(ellipse 70% 60% at 60% 38%, rgba(0,0,0,0.18) 0%, transparent 100%),
+              radial-gradient(circle at 8% 0%, rgba(33, 196, 123, 0.10), transparent 42%),
+              radial-gradient(circle at 92% 98%, rgba(0, 145, 255, 0.10), transparent 42%)
             `,
           }}
         />

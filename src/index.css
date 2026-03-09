@@ -137,6 +137,13 @@
     @apply hover:bg-white/10 hover:border-ocean-teal/50;
   }
 
+  .btn-ghost {
+    @apply px-6 py-3 bg-transparent border border-white/30 rounded-full;
+    @apply text-white font-semibold;
+    @apply transition-all duration-300;
+    @apply hover:bg-white/10 hover:border-white/60;
+  }
+
   /* Card styles */
   .card {
     @apply glass-strong rounded-2xl p-6;
@@ -247,6 +254,36 @@
   @apply bg-white/5 rounded;
   animation: pulse-subtle 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
 }
+
+/* ── Prose Blog — styles du contenu WordPress ─────────────────────────────── */
+.prose-blog {
+  @apply text-gray-300 leading-relaxed text-base;
+}
+.prose-blog h2 { @apply text-2xl md:text-3xl font-bold text-text-primary mt-10 mb-4 leading-snug; }
+.prose-blog h3 { @apply text-xl md:text-2xl font-bold text-text-primary mt-8 mb-3 leading-snug; }
+.prose-blog h4 { @apply text-lg md:text-xl font-semibold text-text-primary mt-6 mb-3; }
+.prose-blog p  { @apply mb-5; }
+.prose-blog a  { @apply text-ocean-teal underline underline-offset-2 hover:text-white transition-colors; }
+.prose-blog strong, .prose-blog b { @apply text-text-primary font-semibold; }
+.prose-blog em, .prose-blog i     { @apply italic text-gray-200; }
+.prose-blog ul { @apply list-disc list-outside pl-6 mb-5 space-y-2; }
+.prose-blog ol { @apply list-decimal list-outside pl-6 mb-5 space-y-2; }
+.prose-blog li { @apply text-gray-300; }
+.prose-blog blockquote {
+  @apply border-l-4 border-ocean-teal pl-5 my-8 italic text-gray-400;
+}
+.prose-blog img {
+  @apply rounded-xl max-w-full h-auto my-8 mx-auto block;
+}
+.prose-blog figure     { @apply my-8; }
+.prose-blog figcaption { @apply text-center text-xs text-gray-500 mt-2 italic; }
+.prose-blog hr         { @apply border-white/10 my-10; }
+.prose-blog pre        { @apply bg-black/40 rounded-xl p-5 mb-6 overflow-x-auto text-sm font-mono; }
+.prose-blog code       { @apply bg-black/30 rounded px-1.5 py-0.5 text-sm font-mono text-ocean-teal; }
+.prose-blog pre code   { @apply bg-transparent p-0 text-gray-300; }
+.prose-blog table      { @apply w-full border-collapse text-sm mb-6; }
+.prose-blog th { @apply bg-white/5 text-text-primary font-semibold px-4 py-2 text-left border border-white/10; }
+.prose-blog td { @apply px-4 py-2 border border-white/10 text-gray-300; }
 
 /* Hide scrollbar but keep functionality */
 .scrollbar-hide::-webkit-scrollbar {

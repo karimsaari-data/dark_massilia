@@ -16,6 +16,8 @@ import ScrollToTop from './components/ScrollToTop';
 import Home from './pages/Home';
 
 // Lazy-loaded pages — code splitting pour le client
+const Blog       = lazy(() => import('./pages/Blog'));
+const BlogPost   = lazy(() => import('./pages/BlogPost'));
 const Missions   = lazy(() => import('./pages/Missions'));
 const Medias     = lazy(() => import('./pages/Medias'));
 const Photos     = lazy(() => import('./pages/Photos'));
@@ -68,6 +70,9 @@ export default function AppRoutes() {
 
           <Route path="/" element={<Layout />}>
             <Route index element={<Home />} />
+            {/* Blog WordPress Headless */}
+            <Route path="blog"         element={<Blog />} />
+            <Route path="blog/:slug"   element={<BlogPost />} />
             <Route path="depollution-marine"              element={<Missions />} />
             <Route path="presse"                         element={<Medias />} />
             <Route path="photographie-paysage-mer"       element={<Photos />} />
