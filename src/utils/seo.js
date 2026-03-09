@@ -238,9 +238,9 @@ export const SEO_PAGES = {
     },
   },
   '/photographie-paysage-mer': {
-    title: 'Photographe Apnée Calanques & Paysages Littoraux | Karim Saari',
+    title: 'Photographe Sous-Marin Marseille | Calanques & Apnée — Karim Saari',
     description:
-      'Plongez dans la Méditerranée. Karim Saari, photographe environnemental, capture la beauté des paysages littoraux et des fonds marins de Marseille en apnée.',
+      'Karim Saari, photographe sous-marin à Marseille, capture la biodiversité des fonds marins des Calanques en apnée. Découvrez ses photos sous-marines et paysages méditerranéens.',
     canonical: `${BASE_URL}/photographie-paysage-mer`,
     schema: {
       '@context': 'https://schema.org',
@@ -249,9 +249,9 @@ export const SEO_PAGES = {
         // ImageObjects représentatifs — déclenchent les rich results Google Images
         {
           '@type': 'ImageObject',
-          name: 'Dépollution en apnée — Calanques de Marseille',
-          description: "Karim Saari (Dark Massilia) en action de dépollution dans les eaux des Calanques de Marseille. Mission Projet Sentinelle, Team Oxygen.",
-          contentUrl: `${BASE_URL}/images/portfolio/Mer/6.webp`,
+          name: 'Photographe sous-marin Marseille — Apnée grotte marine Calanques — Karim Saari',
+          description: "Karim Saari, photographe sous-marin à Marseille, explore en apnée une grotte marine dans les Calanques. Vue subjective, mains en néoprène, eau turquoise.",
+          contentUrl: `${BASE_URL}/images/portfolio/Mer/photographe-sous-marin-marseille-apnee-grotte-marine-calanques.webp`,
           url: `${BASE_URL}/photographie-paysage-mer`,
           creator: { '@type': 'Person', name: 'Karim Saari', alternateName: 'Dark Massilia', url: BASE_URL },
           copyrightHolder: { '@type': 'Person', name: 'Karim Saari' },
@@ -263,9 +263,9 @@ export const SEO_PAGES = {
         },
         {
           '@type': 'ImageObject',
-          name: 'Faune marine sous-marine — Fonds des Calanques de Marseille',
-          description: "Biodiversité sous-marine dans les Calanques de Marseille. Photographie immersive en apnée par Karim Saari (Dark Massilia).",
-          contentUrl: `${BASE_URL}/images/portfolio/Mer/22.webp`,
+          name: 'Photographe sous-marin Marseille — Dépollution apnée Projet Sentinelle — Karim Saari',
+          description: "Karim Saari, photographe sous-marin marseillais, documente la dépollution en apnée dans les Calanques. Mission Projet Sentinelle, Team Oxygen.",
+          contentUrl: `${BASE_URL}/images/portfolio/Mer/photographe-sous-marin-marseille-depollution-apnee-pneu-projet-sentinelle.webp`,
           url: `${BASE_URL}/photographie-paysage-mer`,
           creator: { '@type': 'Person', name: 'Karim Saari', alternateName: 'Dark Massilia', url: BASE_URL },
           copyrightHolder: { '@type': 'Person', name: 'Karim Saari' },
@@ -277,9 +277,9 @@ export const SEO_PAGES = {
         },
         {
           '@type': 'ImageObject',
-          name: 'Pollution plastique sur les fonds marins — Méditerranée',
-          description: "Déchets plastiques sur les fonds marins des Calanques de Marseille, documentés lors du Projet Sentinelle par Karim Saari (Dark Massilia).",
-          contentUrl: `${BASE_URL}/images/portfolio/Mer/54.webp`,
+          name: 'Photographe sous-marin Marseille — Pollution plastique fonds marins Méditerranée — Karim Saari',
+          description: "Photographe sous-marin à Marseille, Karim Saari documente la pollution plastique sur les fonds marins lors du Projet Sentinelle dans les Calanques.",
+          contentUrl: `${BASE_URL}/images/portfolio/Mer/photographe-sous-marin-marseille-pollution-plastique-fond-marin.webp`,
           url: `${BASE_URL}/photographie-paysage-mer`,
           creator: { '@type': 'Person', name: 'Karim Saari', alternateName: 'Dark Massilia', url: BASE_URL },
           copyrightHolder: { '@type': 'Person', name: 'Karim Saari' },
@@ -291,9 +291,9 @@ export const SEO_PAGES = {
         },
         {
           '@type': 'ImageObject',
-          name: 'Apnée dans les Calanques — Vue sous-marine',
-          description: "Plongée en apnée dans les eaux claires des Calanques de Marseille. Karim Saari, photographe sous-marin et sentinelle de la Méditerranée.",
-          contentUrl: `${BASE_URL}/images/portfolio/Mer/66.webp`,
+          name: 'Photographe sous-marin Marseille — Biodiversité fonds marins Calanques — Karim Saari',
+          description: "Karim Saari, photographe sous-marin à Marseille, capture la biodiversité des fonds marins des Calanques en apnée — posidonie, faune méditerranéenne.",
+          contentUrl: `${BASE_URL}/images/portfolio/Mer/photographe-sous-marin-marseille-biodiversite-fonds-marins-calanques.webp`,
           url: `${BASE_URL}/photographie-paysage-mer`,
           creator: { '@type': 'Person', name: 'Karim Saari', alternateName: 'Dark Massilia', url: BASE_URL },
           copyrightHolder: { '@type': 'Person', name: 'Karim Saari' },
@@ -305,9 +305,9 @@ export const SEO_PAGES = {
         },
         {
           '@type': 'ImageObject',
-          name: 'Paysage Côte Bleue — Marseille Provence',
-          description: "Paysage photographique de la Côte Bleue près de Marseille. Collection Côté Terre par Karim Saari (Dark Massilia).",
-          contentUrl: `${BASE_URL}/images/portfolio/Terre/5.webp`,
+          name: 'Photographe Marseille — Calanque En-Vau vue aérienne — Karim Saari',
+          description: "Karim Saari, photographe à Marseille, capture la calanque d'En-Vau depuis les airs — eaux turquoise et falaises calcaires blanches des Calanques.",
+          contentUrl: `${BASE_URL}/images/portfolio/Mer/karim-saari-marseille-en-vau-aerien-calanque-falaises.webp`,
           url: `${BASE_URL}/photographie-paysage-mer`,
           creator: { '@type': 'Person', name: 'Karim Saari', alternateName: 'Dark Massilia', url: BASE_URL },
           copyrightHolder: { '@type': 'Person', name: 'Karim Saari' },
