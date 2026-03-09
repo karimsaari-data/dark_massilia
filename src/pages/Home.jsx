@@ -318,10 +318,10 @@ const Home = () => {
             {/* Image — Droite */}
             <div className="relative h-64 md:h-auto min-h-[400px] order-1 md:order-2">
               <img
-                src="/images/portfolio/Mer/95.webp"
-                srcSet="/images/portfolio/Mer/95_400w.webp 400w, /images/portfolio/Mer/95_800w.webp 800w, /images/portfolio/Mer/95_1200w.webp 1200w, /images/portfolio/Mer/95.webp 1920w"
+                src="/images/portfolio/Mer/photographe-sous-marin-marseille-frioul-exploration-subaquatique.webp"
+                srcSet="/images/portfolio/Mer/photographe-sous-marin-marseille-frioul-exploration-subaquatique_400w.webp 400w, /images/portfolio/Mer/photographe-sous-marin-marseille-frioul-exploration-subaquatique_800w.webp 800w, /images/portfolio/Mer/photographe-sous-marin-marseille-frioul-exploration-subaquatique_1200w.webp 1200w, /images/portfolio/Mer/photographe-sous-marin-marseille-frioul-exploration-subaquatique.webp 1920w"
                 sizes="(max-width: 768px) 100vw, 50vw"
-                alt="Karim Saari - Apnéiste en mission de dépollution dans les Calanques de Marseille"
+                alt="Karim Saari, photographe sous-marin Marseille — apnéiste en exploration subaquatique au Frioul © Karim Saari"
                 className="absolute inset-0 w-full h-full object-cover"
                 loading="lazy"
                 decoding="async"
@@ -513,10 +513,10 @@ const Home = () => {
             {/* Image - Gauche */}
             <div className="relative h-64 md:h-auto min-h-[400px] order-1">
               <img
-                src="/images/portfolio/Mer/6.webp"
-                srcSet="/images/portfolio/Mer/6_400w.webp 400w, /images/portfolio/Mer/6_800w.webp 800w, /images/portfolio/Mer/6_1200w.webp 1200w, /images/portfolio/Mer/6.webp 1920w"
+                src="/images/portfolio/Mer/photographe-sous-marin-marseille-apnee-grotte-marine-calanques.webp"
+                srcSet="/images/portfolio/Mer/photographe-sous-marin-marseille-apnee-grotte-marine-calanques_400w.webp 400w, /images/portfolio/Mer/photographe-sous-marin-marseille-apnee-grotte-marine-calanques_800w.webp 800w, /images/portfolio/Mer/photographe-sous-marin-marseille-apnee-grotte-marine-calanques_1200w.webp 1200w, /images/portfolio/Mer/photographe-sous-marin-marseille-apnee-grotte-marine-calanques.webp 1920w"
                 sizes="(max-width: 768px) 100vw, 50vw"
-                alt="Mission de dépollution en apnée - Dark Massilia"
+                alt="Photographe sous-marin Marseille — apnée en grotte marine Calanques de Marseille © Karim Saari"
                 className="absolute inset-0 w-full h-full object-cover"
                 loading="lazy"
                 decoding="async"
@@ -574,10 +574,10 @@ const Home = () => {
             {/* Image - Droite */}
             <div className="relative h-64 md:h-auto min-h-[400px] order-1 md:order-2">
               <img
-                src="/images/portfolio/Mer/54.webp"
-                srcSet="/images/portfolio/Mer/54_400w.webp 400w, /images/portfolio/Mer/54_800w.webp 800w, /images/portfolio/Mer/54_1200w.webp 1200w, /images/portfolio/Mer/54.webp 1920w"
+                src="/images/portfolio/Mer/karim-saari-marseille-en-vau-aerien-calanque-falaises.webp"
+                srcSet="/images/portfolio/Mer/karim-saari-marseille-en-vau-aerien-calanque-falaises_400w.webp 400w, /images/portfolio/Mer/karim-saari-marseille-en-vau-aerien-calanque-falaises_800w.webp 800w, /images/portfolio/Mer/karim-saari-marseille-en-vau-aerien-calanque-falaises_1200w.webp 1200w, /images/portfolio/Mer/karim-saari-marseille-en-vau-aerien-calanque-falaises.webp 1920w"
                 sizes="(max-width: 768px) 100vw, 50vw"
-                alt="Photographie sous-marine Calanques de Marseille - Dark Massilia"
+                alt="Karim Saari photographe Marseille — vue aérienne Calanque d'En-Vau falaises calcaires Calanques"
                 className="absolute inset-0 w-full h-full object-cover"
                 loading="lazy"
                 decoding="async"
@@ -694,10 +694,10 @@ const Home = () => {
             {/* Image - Gauche */}
             <div className="relative h-64 md:h-auto min-h-[400px] order-1">
               <img
-                src="/images/portfolio/Mer/12.webp"
-                srcSet="/images/portfolio/Mer/12_400w.webp 400w, /images/portfolio/Mer/12_800w.webp 800w, /images/portfolio/Mer/12_1200w.webp 1200w, /images/portfolio/Mer/12.webp 1920w"
+                src="/images/portfolio/Mer/karim-saari-marseille-grotte-calanque-turquoise-pins-falaises.webp"
+                srcSet="/images/portfolio/Mer/karim-saari-marseille-grotte-calanque-turquoise-pins-falaises_400w.webp 400w, /images/portfolio/Mer/karim-saari-marseille-grotte-calanque-turquoise-pins-falaises_800w.webp 800w, /images/portfolio/Mer/karim-saari-marseille-grotte-calanque-turquoise-pins-falaises_1200w.webp 1200w, /images/portfolio/Mer/karim-saari-marseille-grotte-calanque-turquoise-pins-falaises.webp 1920w"
                 sizes="(max-width: 768px) 100vw, 50vw"
-                alt="Carte interactive des Calanques de Marseille — Dark Massilia Projet Sentinelle"
+                alt="Karim Saari photographe Marseille — grotte calanque eau turquoise pins et falaises calcaires"
                 className="absolute inset-0 w-full h-full object-cover"
                 loading="lazy"
                 decoding="async"
