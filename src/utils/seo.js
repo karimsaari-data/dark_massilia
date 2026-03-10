@@ -10,7 +10,7 @@ const SITE_NAME = 'Dark Massilia';
 const TWITTER_HANDLE = '@dark_massilia';
 
 export const DEFAULT_SEO = {
-  title: 'Dark Massilia · Karim Saari · Sentinelle de la Méditerranée',
+  title: 'Dark Massilia · Karim Saari · Sentinelle des Calanques',
   description:
     'Karim Saari, photographe et apnéiste marseillais, documente et nettoie les fonds marins des Calanques avec Team Oxygen.',
   canonical: BASE_URL,
@@ -31,7 +31,7 @@ const breadcrumb = (name, path) => ({
 
 export const SEO_PAGES = {
   '/': {
-    title: 'Karim Saari | Photographe & Apnéiste | Sentinelle de la Méditerranée',
+    title: 'Karim Saari | Photographe Paysages & Sous-Marin | Sentinelle des Calanques',
     description:
       "Karim Saari, sentinelle de la Méditerranée. Photographe de paysages et sous-marin, apnéiste engagé depuis 10 ans contre la pollution plastique dans les Calanques de Marseille.",
     canonical: `${BASE_URL}/`,
