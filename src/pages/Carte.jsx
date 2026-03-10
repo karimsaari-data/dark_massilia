@@ -58,7 +58,23 @@ export default function Carte() {
           />
         </motion.div>
 
-        {/* Légende flottante — bas gauche */}
+        {/* Titre flottant — haut centré */}
+        <motion.div
+          initial={{ opacity: 0, y: -10 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5, delay: 0.3 }}
+          style={{ position: 'absolute', top: '1.5rem', left: '50%', transform: 'translateX(-50%)', zIndex: 10 }}
+          className="glass rounded-xl border border-white/10 px-5 py-2.5 text-center pointer-events-none"
+        >
+          <p className="text-white font-bold text-sm md:text-base leading-tight">
+            Carte des Calanques de Marseille
+          </p>
+          <p className="text-ocean-teal text-xs font-medium mt-0.5">
+            Spots photographiés & actions de dépollution
+          </p>
+        </motion.div>
+
+        {/* Légende flottante — haut gauche */}
         <motion.div
           initial={{ opacity: 0, x: -10 }}
           animate={{ opacity: 1, x: 0 }}
