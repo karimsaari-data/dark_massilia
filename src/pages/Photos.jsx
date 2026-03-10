@@ -7,7 +7,7 @@ import { SEO_PAGES } from '../utils/seo';
 import { Link } from 'react-router-dom';
 import useFocusTrap from '../hooks/useFocusTrap';
 
-const merIds = [2, 4, 6, 10, 12, 13, 14, 20, 22, 23, 30, 32, 33, 35, 39, 44, 45, 46, 47, 50, 51, 52, 54, 55, 56, 57, 58, 59, 60, 61, 62, 63, 64, 65, 66, 67, 68, 69, 70, 71, 72, 73, 74, 75, 76, 77, 78, 79, 80, 81, 82, 83, 85, 86, 87, 88, 89, 90, 91, 92, 93, 94, 95, 96, 97, 98];
+const merIds = [2, 4, 6, 10, 12, 13, 14, 20, 22, 23, 30, 32, 33, 35, 39, 44, 45, 46, 47, 50, 51, 52, 54, 55, 56, 57, 58, 59, 60, 61, 62, 63, 64, 65, 66, 67, 68, 70, 72, 73, 74, 75, 76, 78, 79, 80, 81, 82, 83, 85, 86, 87, 89, 90, 91, 92, 93, 94, 95, 97, 98];
 const terreIds = [1, 3, 5, 7, 8, 9, 15, 16, 17, 18, 19, 21, 24, 25, 26, 27, 28, 29, 31, 34, 36, 37, 38, 40, 41, 42, 43, 48, 49, 53, 54];
 
 const terreFilenames = {
@@ -44,7 +44,7 @@ const terreFilenames = {
   54: 'karim-saari-photographe-provence-paysage-mediterraneen-lumiere-doree',
 };
 
-const merDims = { 2:[1920,1312], 4:[1920,1498], 6:[1920,1498], 10:[1920,2400], 12:[1920,1920], 13:[1920,1312], 14:[1920,1498], 20:[1920,1280], 22:[1920,1312], 23:[1920,1920], 30:[1920,1408], 32:[1920,1440], 33:[1000,700], 35:[1920,1312], 39:[1920,1080], 44:[1920,1312], 45:[1920,1440], 46:[1920,1440], 47:[1920,1491], 50:[1920,1498], 51:[1920,1498], 52:[1500,1200], 54:[1920,1279], 55:[4000,3000], 56:[3000,4000], 57:[4096,2731], 58:[3000,2050], 59:[3000,1750], 60:[4096,2728], 61:[3000,1900], 62:[3000,2020], 63:[3000,2050], 64:[3000,2050], 65:[3000,1750], 66:[3000,2340], 67:[3000,2050], 68:[5315,3543], 69:[3000,1970], 70:[4096,2728], 71:[3000,1750], 72:[3000,1750], 73:[3000,2050], 74:[3000,2050], 75:[3000,4000], 76:[3000,2050], 77:[3000,1750], 78:[3000,2050], 79:[3000,2300], 80:[2895,3620], 81:[3000,2050], 82:[3000,1750], 83:[1920,1498], 85:[1920,1248], 86:[1920,1312], 87:[1920,1312], 88:[1920,1440], 89:[1920,1440], 90:[1920,1440], 91:[1920,1440], 92:[1920,1440], 93:[1920,1440], 94:[1920,1440], 95:[1920,1440], 96:[1920,1440], 97:[1920,1312], 98:[1500,1050] };
+const merDims = { 2:[1920,1312], 4:[1920,1498], 6:[1920,1498], 10:[1920,2400], 12:[1920,1920], 13:[1920,1312], 14:[1920,1498], 20:[1920,1280], 22:[1920,1312], 23:[1920,1920], 30:[1920,1408], 32:[1920,1440], 33:[1000,700], 35:[1920,1312], 39:[1920,1080], 44:[1920,1312], 45:[1920,1440], 46:[1920,1440], 47:[1920,1491], 50:[1920,1498], 51:[1920,1498], 52:[1500,1200], 54:[1920,1279], 55:[4000,3000], 56:[3000,4000], 57:[4096,2731], 58:[3000,2050], 59:[3000,1750], 60:[4096,2728], 61:[3000,1900], 62:[3000,2020], 63:[3000,2050], 64:[3000,2050], 65:[3000,1750], 66:[3000,2340], 67:[3000,2050], 68:[5315,3543], 70:[4096,2728], 72:[3000,1750], 73:[3000,2050], 74:[3000,2050], 75:[3000,4000], 76:[3000,2050], 78:[3000,2050], 79:[3000,2300], 80:[2895,3620], 81:[3000,2050], 82:[3000,1750], 83:[1920,1498], 85:[1920,1248], 86:[1920,1312], 87:[1920,1312], 89:[1920,1440], 90:[1920,1440], 91:[1920,1440], 92:[1920,1440], 93:[1920,1440], 94:[1920,1440], 95:[1920,1440], 97:[1920,1312], 98:[1500,1050] };
 
 const merFilenames = {
   2: 'karim-saari-marseille-bateau-peche-calanque-turquoise-aerien',
@@ -84,15 +84,12 @@ const merFilenames = {
   66: 'karim-saari-marseille-vague-mistral-tempete-mediterranee',
   67: 'karim-saari-marseille-veliplanchiste-calanques-fort',
   68: 'karim-saari-marseille-coucher-soleil-voiliers-silhouettes',
-  69: 'photographe-sous-marin-marseille-depollution-apnee-pneu-projet-sentinelle',
   70: 'karim-saari-marseille-panoramique-calanques-notre-dame-garde',
-  71: 'photographe-sous-marin-marseille-apneiste-competition-certification',
   72: 'photographe-sous-marin-marseille-meduse-pelagie-faune-marine',
   73: 'karim-saari-marseille-goeland-bollard-port-turquoise',
   74: 'karim-saari-marseille-barques-peche-calanque-falaises',
   75: 'karim-saari-marseille-calanque-maisons-pecheurs-turquoise',
   76: 'karim-saari-marseille-dechets-plastiques-calanques-projet-sentinelle',
-  77: 'photographe-sous-marin-marseille-depollution-posidonie-apnee-projet-sentinelle',
   78: 'karim-saari-marseille-port-calanque-reflets-eau-cristalline',
   79: 'karim-saari-marseille-pointu-reflet-calanque-hdr',
   80: 'karim-saari-marseille-bateau-calanque-turquoise-falaises',
@@ -102,7 +99,6 @@ const merFilenames = {
   85: 'karim-saari-marseille-littoral-stade-panoramique',
   86: 'karim-saari-marseille-frioul-iles-sauvages-mediterranee',
   87: 'karim-saari-marseille-vue-mer-vieux-port-notre-dame-panorama',
-  88: 'photographe-sous-marin-marseille-fonds-marins-calanques-apnee',
   89: 'photographe-sous-marin-marseille-plongee-apnee-calanques-dark-massilia',
   90: 'photographe-sous-marin-marseille-faune-flore-marine-mediterranee',
   91: 'photographe-sous-marin-marseille-posidonie-roches-calcaires-calanques',
@@ -110,7 +106,6 @@ const merFilenames = {
   93: 'photographe-sous-marin-marseille-apneiste-exploration-fonds-marins',
   94: 'photographe-sous-marin-marseille-biodiversite-fonds-marins-calanques',
   95: 'photographe-sous-marin-marseille-frioul-exploration-subaquatique',
-  96: 'photographe-sous-marin-marseille-mission-depollution-projet-sentinelle',
   97: 'karim-saari-marseille-frioul-falaises-eau-turquoise',
   98: 'karim-saari-marseille-gabian-ilots-roches-calcaires',
 };
@@ -154,15 +149,12 @@ const merAlts = {
   66: "Vague du mistral s'écrasant sur le quai en Méditerranée — photographie de tempête à Marseille par Karim Saari",
   67: "Véliplanchiste sur la mer agitée avec les Calanques de Marseille et le fort en arrière-plan",
   68: "Coucher de soleil rouge sur la mer avec trois voiliers en silhouette — Méditerranée",
-  69: "Deux apnéistes remontant un pneu du fond marin — dépollution Projet Sentinelle — © Karim Saari, photographe sous-marin Marseille",
   70: "Vue panoramique sur Marseille depuis les hauteurs des Calanques, route sinueuse, Notre-Dame de la Garde visible",
-  71: "Apnéiste sous l'eau tenant un panneau de certification — compétition d'apnée en Méditerranée — © Karim Saari, photographe sous-marin Marseille",
   72: "Méduse Pélagie (Pelagia noctiluca) rose en pleine eau turquoise — faune marine Méditerranée — © Karim Saari, photographe sous-marin Marseille",
   73: "Goéland leucophée posé sur un bollard de port devant l'eau turquoise — Marseille",
   74: "Barques de pêche traditionnelles amarrées dans un port de calanque sous les falaises calcaires — Marseille",
   75: "Calanque sauvage aux eaux turquoise avec pin en premier plan, maisons de pêcheurs et mouette en vol",
   76: "Amas de déchets plastiques collectés dans les Calanques — bouteilles, canettes, emballages — Projet Sentinelle Dark Massilia",
-  77: "Apnéiste remontant un pneu sur herbier de posidonie — dépollution Projet Sentinelle Méditerranée — © Karim Saari, photographe sous-marin Marseille",
   78: "Petit port de calanque avec bateaux amarrés se reflétant dans l'eau cristalline, falaises calcaires et ciel bleu — HDR Marseille",
   79: "Proue d'un pointu marseillais se reflétant dans l'eau cristalline d'une calanque, cordages et fond marin visible — HDR",
   80: "Petit bateau de pêche blanc naviguant dans les eaux turquoise d'une calanque encadrée de hautes falaises calcaires",
@@ -172,7 +164,6 @@ const merAlts = {
   85: "Vue panoramique sur le littoral et le stade de Marseille — Méditerranée, lumière du sud",
   86: "Archipel du Frioul vu de la mer — îles sauvages de Marseille en Méditerranée 2020",
   87: "Marseille vue depuis la mer — panorama du littoral méditerranéen, Vieux-Port et Notre-Dame de la Garde",
-  88: "Fonds marins des Calanques de Marseille — © Karim Saari, photographe sous-marin Marseille — apnée subaquatique",
   89: "Plongée en apnée dans les Calanques — exploration des fonds méditerranéens — © Karim Saari, photographe sous-marin Marseille",
   90: "Faune et flore sous-marines des Calanques de Marseille — © Karim Saari, photographe sous-marin Marseille",
   91: "Posidonie et roches calcaires sous-marines — Calanques de Marseille — © Karim Saari, photographe sous-marin Marseille",
@@ -180,7 +171,6 @@ const merAlts = {
   93: "Apnéiste explorant les fonds marins des Calanques — © Karim Saari, photographe sous-marin Marseille",
   94: "Biodiversité des fonds marins méditerranéens — Calanques de Marseille — © Karim Saari, photographe sous-marin Marseille",
   95: "Fonds marins du Frioul — exploration en apnée — © Karim Saari, photographe sous-marin Marseille",
-  96: "Mission de dépollution sous-marine — Projet Sentinelle — © Karim Saari, photographe sous-marin Marseille",
   97: "Archipel du Frioul — Marseille — falaises calcaires et eau turquoise méditerranéenne",
   98: "Îlots des Gabian près de Marseille — végétation méditerranéenne sur roches calcaires en Méditerranée",
 };

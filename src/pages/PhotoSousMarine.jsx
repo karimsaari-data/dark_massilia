@@ -65,6 +65,11 @@ const allImagePaths = [
   "/images/Marseille-dark-massilia-plastique-pollution-projet-sentinelle-musée_subaquatique-3.webp",
   "/images/Marseille-dark-massilia-plastique-pollution-projet-sentinelle-octopus.webp",
   "/images/Marseille-dark-massilia-plastique-pollution-projet-sentinelle-paysage-sous-marin.webp",
+  "/images/photographe-sous-marin-marseille-depollution-posidonie-apnee-projet-sentinelle.webp",
+  "/images/photographe-sous-marin-marseille-mission-depollution-projet-sentinelle.webp",
+  "/images/photographe-sous-marin-marseille-fonds-marins-calanques-apnee.webp",
+  "/images/photographe-sous-marin-marseille-apneiste-competition-certification.webp",
+  "/images/photographe-sous-marin-marseille-morgan-bourchis-triple-champion-monde-apnee-depollution-sentinelle.webp",
 ];
 
 const getAltText = (src) => {
@@ -251,10 +256,10 @@ const PhotoSousMarine = () => {
           whileInView="visible"
           viewport={{ once: true }}
           variants={STAGGER_CONTAINER}
-          className="max-w-4xl mx-auto mb-12"
+          className="max-w-3xl mx-auto mb-12"
         >
-          <motion.div variants={FADE_IN_UP} className="glass-strong rounded-3xl p-8 md:p-12">
-            <h2 className="text-2xl md:text-3xl font-bold text-white mb-6">
+          <motion.div variants={FADE_IN_UP} className="glass rounded-2xl p-6 md:p-8">
+            <h2 className="text-xl md:text-2xl font-bold text-white mb-4">
               Rendre visible l'invisible — une photographie engagée au cœur des Calanques
             </h2>
             <div className="space-y-4 text-text-secondary leading-relaxed">
