@@ -191,6 +191,97 @@ export const SEO_PAGES = {
       '@context': 'https://schema.org',
       '@graph': [
         breadcrumb('Missions de Dépollution Marine', '/depollution-marine'),
+        // ── Organisation NGO — signal principal "association dépollution" ──
+        {
+          '@type': ['Organization', 'NGO'],
+          '@id': 'https://www.team-oxygen.com/#organization',
+          name: 'Team Oxygen',
+          alternateName: 'Association de dépollution marine Marseille',
+          url: 'https://www.team-oxygen.com/',
+          description:
+            'Association loi 1901 de dépollution marine en apnée basée à Marseille. Depuis 2018, Team Oxygen organise des missions de nettoyage sous-marin dans les Calanques, l\'Archipel du Frioul et la Côte Bleue. Plus de 5 700 kg de déchets collectés en 4 éditions du Projet Sentinelle.',
+          foundingDate: '2018',
+          foundingLocation: {
+            '@type': 'Place',
+            name: 'Marseille',
+            address: {
+              '@type': 'PostalAddress',
+              addressLocality: 'Marseille',
+              addressRegion: 'Bouches-du-Rhône',
+              addressCountry: 'FR',
+            },
+          },
+          areaServed: {
+            '@type': 'Place',
+            name: 'Littoral méditerranéen — Calanques, Frioul, Côte Bleue, Marseille',
+          },
+          knowsAbout: [
+            'dépollution marine',
+            'association dépollution',
+            'nettoyage sous-marin',
+            'apnée dépollution',
+            'dépollution Calanques Marseille',
+            'collecte déchets fonds marins',
+            'protection Méditerranée',
+          ],
+          member: {
+            '@type': 'Person',
+            name: 'Karim Saari',
+            alternateName: 'Dark Massilia',
+            url: BASE_URL,
+            jobTitle: 'Président — Apnéiste & Photographe engagé',
+          },
+          sameAs: [
+            'https://www.instagram.com/karimsaari/',
+            'https://www.facebook.com/groups/calanque/',
+            'https://www.tiktok.com/@dark.massilia',
+            'https://www.youtube.com/@dark.massilia',
+          ],
+          subjectOf: {
+            '@type': 'WebPage',
+            url: `${BASE_URL}/depollution-marine`,
+            name: 'Association Dépollution Marine à Marseille | Team Oxygen',
+          },
+        },
+        // ── FAQPage — boite de réponses Google ──
+        {
+          '@type': 'FAQPage',
+          mainEntity: [
+            {
+              '@type': 'Question',
+              name: 'Qu\'est-ce que Team Oxygen, l\'association de dépollution marine de Marseille ?',
+              acceptedAnswer: {
+                '@type': 'Answer',
+                text: 'Team Oxygen est une association loi 1901 de dépollution marine basée à Marseille, fondée en 2018 et présidée par Karim Saari. Elle organise des missions de nettoyage sous-marin en apnée dans les Calanques, l\'Archipel du Frioul et la Côte Bleue. En 4 éditions du Projet Sentinelle (2022–2025), l\'association a collecté plus de 5 724 kg de déchets sur les fonds marins de Méditerranée.',
+              },
+            },
+            {
+              '@type': 'Question',
+              name: 'Comment rejoindre l\'association de dépollution Team Oxygen à Marseille ?',
+              acceptedAnswer: {
+                '@type': 'Answer',
+                text: 'Pour rejoindre Team Oxygen et participer aux missions de dépollution, suivez @karimsaari sur Instagram ou rejoignez le groupe Facebook « Amoureux des Calanques ». Les plongées en apnée sont réservées aux membres certifiés ; les bénévoles sans certification peuvent participer en surface (kayak, logistique, tri des déchets). Contactez-nous via karimsaari.com/contact.',
+              },
+            },
+            {
+              '@type': 'Question',
+              name: 'Où intervient l\'association de dépollution Team Oxygen ?',
+              acceptedAnswer: {
+                '@type': 'Answer',
+                text: 'L\'association de dépollution Team Oxygen intervient sur l\'ensemble du littoral marseillais : Parc National des Calanques (Sormiou, Morgiou, Sugiton, En-Vau), Archipel du Frioul, Côte Bleue (de Martigues à L\'Estaque) et Rade de Marseille. Les équipes opèrent entre 0 et 20 mètres de profondeur en apnée.',
+              },
+            },
+            {
+              '@type': 'Question',
+              name: 'Combien de déchets l\'association de dépollution a-t-elle collectés ?',
+              acceptedAnswer: {
+                '@type': 'Answer',
+                text: 'En 4 éditions du Projet Sentinelle, l\'association Team Oxygen a collecté plus de 5 724 kg de déchets marins : 900 kg sur la Côte Bleue (2022), 1 357 kg à l\'Archipel du Frioul (2023), 1 147 kg dans le Parc National des Calanques (2024) et 2 320 kg dans la Rade de Marseille (2025).',
+              },
+            },
+          ],
+        },
+        // ── ImageObjects — documentation visuelle des missions ──
         {
           '@type': 'ImageObject',
           'name': 'Dépollution sous-marine en apnée — Team Oxygen Marseille',
