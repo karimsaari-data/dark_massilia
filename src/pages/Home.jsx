@@ -219,8 +219,8 @@ const Home = () => {
                 className="text-base md:text-lg text-text-secondary leading-[1.7]"
                 style={{ textShadow: '0 1px 10px rgba(0,0,0,0.65)' }}
               >
-                Exploration et documentation de la beauté brute du littoral, des sentiers de randonnée aux profondeurs des Calanques de Marseille à Port-Cros. Entre photographie d'art et actions de dépollution avec{' '}
-                <strong className="text-ocean-teal font-semibold">Team Oxygen</strong>, découvrez un regard tourné vers la préservation de la Méditerranée.
+                Rendre visible l'invisible : exploration et documentation de la beauté brute du littoral, des sentiers de randonnée aux profondeurs des Calanques de Marseille à Port-Cros. Entre photographie d'art et actions de dépollution avec{' '}
+                <strong className="text-ocean-teal font-semibold">Team Oxygen</strong>, un regard engagé pour la préservation de la Méditerranée.
               </p>
             </motion.div>
 

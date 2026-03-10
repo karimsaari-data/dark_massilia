@@ -164,10 +164,10 @@ const Missions = () => {
               <div className="absolute bottom-0 left-0 right-0 p-6 md:p-10">
                 <p className="text-ocean-teal text-sm font-semibold uppercase tracking-widest mb-2">Galerie photographique</p>
                 <h2 className="text-2xl md:text-3xl font-bold text-white mb-3 leading-tight">
-                  58 photos de missions sous-marines
+                  Une décennie de missions sous-marines en images
                 </h2>
                 <p className="text-white/70 text-base mb-4 max-w-xl">
-                  Quatre années de dépollution documentées en apnée — fonds marins, vie marine et déchets collectés dans les Calanques.
+                  Dépollution documentée en apnée — fonds marins, vie marine et déchets collectés dans les Calanques.
                 </p>
                 <span className="inline-flex items-center gap-2 text-ocean-teal font-medium group-hover:gap-3 transition-all">
                   <Camera className="w-4 h-4" aria-hidden="true" />

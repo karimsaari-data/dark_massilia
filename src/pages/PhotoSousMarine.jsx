@@ -254,25 +254,33 @@ const PhotoSousMarine = () => {
         >
           <motion.div variants={FADE_IN_UP} className="glass-strong rounded-3xl p-8 md:p-12">
             <h2 className="text-2xl md:text-3xl font-bold text-white mb-6">
-              Photographie sous-marine en apnée — une galerie documentaire
+              Rendre visible l'invisible — une photographie engagée au cœur des Calanques
             </h2>
             <div className="space-y-4 text-text-secondary leading-relaxed">
               <p>
-                Ce qui distingue ces images : elles sont toutes prises en{' '}
-                <strong className="text-white">apnée</strong>, en rétention de souffle —
-                contrairement à la majorité des photographes sous-marins qui travaillent en bouteille.
-                Chaque photo a été prise en conditions réelles de mission, avec le matériel de
-                dépollution dans les mains, au milieu des déchets, entre 0 et 20 mètres de profondeur.
+                Karim Saari plonge en{' '}
+                <strong className="text-white">apnée</strong> dans les eaux de Marseille avec un
+                double impératif&nbsp;: extraire les déchets <em>et</em> documenter l'agonie comme
+                la beauté des fonds marins. Contrairement à la majorité des photographes
+                sous-marins qui travaillent en bouteille, chaque image est prise en rétention de
+                souffle, le matériel de dépollution dans les mains, au milieu des déchets, entre 0
+                et 20 mètres de profondeur.
+              </p>
+              <p>
+                Chaque photo est un témoignage brut — un{' '}
+                <strong className="text-white">électrochoc visuel</strong> pour alerter le public
+                et convaincre les institutions. Ce regard sans filtre a trouvé un écho auprès de{' '}
+                <strong className="text-white">ARTE, M6, France Télévisions</strong> et d'autres
+                médias qui ont relayé le combat pour la Méditerranée.
               </p>
               <p>
                 Cette galerie rassemble des images de missions{' '}
                 <strong className="text-white">Team Oxygen</strong> et de l'
                 <strong className="text-white">Opération Sentinelle</strong>, et s'enrichit au fil
-                des éditions. Les sujets couverts vont de la{' '}
-                <strong className="text-ocean-teal">pollution plastique sous-marine</strong> aux{' '}
-                <strong className="text-white">espèces marines des Calanques</strong>
-                &nbsp;: poulpes, spirographes, méduses, fonds rocheux. Des images qui montrent à la
-                fois l'urgence et la beauté de ce qui reste à protéger.
+                des éditions. Des{' '}
+                <strong className="text-ocean-teal">abysses pollués</strong> à la résilience de la
+                vie sauvage — poulpes, spirographes, méduses, fonds rocheux — des images qui
+                témoignent à la fois de l'urgence et de la beauté de ce qui reste à protéger.
               </p>
             </div>
           </motion.div>
