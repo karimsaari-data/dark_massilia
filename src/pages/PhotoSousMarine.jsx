@@ -195,10 +195,21 @@ const PhotoSousMarine = () => {
           Photographe sous-marin à Marseille — Documenter pour alerter
         </motion.h1>
 
-        {/* Bloc éditorial — "documenter pour alerter" */}
+        {/* Galerie mur d'images */}
         <motion.div
           initial="hidden"
           animate="visible"
+          variants={STAGGER_CONTAINER}
+          className="mb-16"
+        >
+          <PhotoGrid images={images} onOpenLightbox={openLightbox} />
+        </motion.div>
+
+        {/* Bloc éditorial — "documenter pour alerter" */}
+        <motion.div
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true }}
           variants={STAGGER_CONTAINER}
           className="max-w-4xl mx-auto mb-12"
         >
@@ -208,8 +219,8 @@ const PhotoSousMarine = () => {
             </h2>
             <div className="space-y-4 text-text-secondary leading-relaxed">
               <p>
-                Depuis 10 ans, Karim Saari plonge en apnée dans les Calanques de Marseille avec un
-                double objectif : extraire les déchets des fonds marins et les{' '}
+                Karim Saari plonge en apnée dans les Calanques de Marseille avec un double objectif :
+                extraire les déchets des fonds marins et les{' '}
                 <strong className="text-white">documenter par la photographie sous-marine</strong>.
                 Chaque image est un témoignage direct, capturé entre 0 et 20 mètres de profondeur,
                 là où personne ne voit ce que la mer cache.
@@ -219,11 +230,11 @@ const PhotoSousMarine = () => {
                 <strong className="text-ocean-teal">photographie sous-marine engagée</strong> est
                 indissociable des missions de dépollution&nbsp;: les images servent à alerter le
                 grand public, à convaincre les partenaires institutionnels et à nourrir les médias
-                — ARTE, M6, France Télévisions, La Provence, Fondation de la Mer et bien d'autres — qui ont relayé ces actions sur
-                le terrain.
+                — ARTE, M6, France Télévisions, La Provence, Fondation de la Mer et bien d'autres —
+                qui ont relayé ces actions sur le terrain.
               </p>
               <p>
-                La galerie ci-dessous retrace les moments clés de l'
+                Cette galerie retrace les moments clés de l'
                 <strong className="text-white">Opération Sentinelle</strong> à travers le regard
                 du{' '}
                 <strong className="text-white">photographe sous-marin</strong>&nbsp;:
@@ -232,16 +243,6 @@ const PhotoSousMarine = () => {
               </p>
             </div>
           </motion.div>
-        </motion.div>
-
-        {/* Galerie mur d'images */}
-        <motion.div
-          initial="hidden"
-          animate="visible"
-          variants={STAGGER_CONTAINER}
-          className="mb-16"
-        >
-          <PhotoGrid images={images} onOpenLightbox={openLightbox} />
         </motion.div>
 
         {/* Bloc éditorial bas — contexte SEO */}
