@@ -7,7 +7,7 @@ import { SEO_PAGES } from '../utils/seo';
 import { Link } from 'react-router-dom';
 import useFocusTrap from '../hooks/useFocusTrap';
 
-const merIds = [2, 4, 6, 10, 12, 13, 14, 20, 22, 23, 30, 32, 33, 35, 39, 44, 45, 46, 47, 50, 51, 52, 54, 55, 56, 57, 58, 59, 60, 61, 62, 63, 64, 65, 66, 67, 68, 70, 72, 73, 74, 75, 76, 78, 79, 80, 81, 82, 83, 85, 86, 87, 89, 90, 91, 92, 93, 94, 95, 97, 98];
+const merIds = [2, 4, 6, 10, 12, 13, 14, 20, 22, 23, 30, 32, 33, 35, 39, 44, 45, 46, 47, 50, 51, 52, 54, 55, 56, 57, 58, 59, 60, 61, 62, 63, 64, 66, 67, 68, 70, 72, 73, 74, 75, 76, 78, 79, 80, 81, 82, 83, 85, 86, 87, 89, 90, 91, 92, 94, 95, 97, 98];
 const terreIds = [1, 3, 5, 7, 8, 9, 15, 16, 17, 18, 19, 21, 24, 25, 26, 27, 28, 29, 31, 34, 36, 37, 38, 40, 41, 42, 43, 48, 49, 53, 54];
 
 const terreFilenames = {
@@ -44,7 +44,7 @@ const terreFilenames = {
   54: 'karim-saari-photographe-provence-paysage-mediterraneen-lumiere-doree',
 };
 
-const merDims = { 2:[1920,1312], 4:[1920,1498], 6:[1920,1498], 10:[1920,2400], 12:[1920,1920], 13:[1920,1312], 14:[1920,1498], 20:[1920,1280], 22:[1920,1312], 23:[1920,1920], 30:[1920,1408], 32:[1920,1440], 33:[1000,700], 35:[1920,1312], 39:[1920,1080], 44:[1920,1312], 45:[1920,1440], 46:[1920,1440], 47:[1920,1491], 50:[1920,1498], 51:[1920,1498], 52:[1500,1200], 54:[1920,1279], 55:[4000,3000], 56:[3000,4000], 57:[4096,2731], 58:[3000,2050], 59:[3000,1750], 60:[4096,2728], 61:[3000,1900], 62:[3000,2020], 63:[3000,2050], 64:[3000,2050], 65:[3000,1750], 66:[3000,2340], 67:[3000,2050], 68:[5315,3543], 70:[4096,2728], 72:[3000,1750], 73:[3000,2050], 74:[3000,2050], 75:[3000,4000], 76:[3000,2050], 78:[3000,2050], 79:[3000,2300], 80:[2895,3620], 81:[3000,2050], 82:[3000,1750], 83:[1920,1498], 85:[1920,1248], 86:[1920,1312], 87:[1920,1312], 89:[1920,1440], 90:[1920,1440], 91:[1920,1440], 92:[1920,1440], 93:[1920,1440], 94:[1920,1440], 95:[1920,1440], 97:[1920,1312], 98:[1500,1050] };
+const merDims = { 2:[1920,1312], 4:[1920,1498], 6:[1920,1498], 10:[1920,2400], 12:[1920,1920], 13:[1920,1312], 14:[1920,1498], 20:[1920,1280], 22:[1920,1312], 23:[1920,1920], 30:[1920,1408], 32:[1920,1440], 33:[1000,700], 35:[1920,1312], 39:[1920,1080], 44:[1920,1312], 45:[1920,1440], 46:[1920,1440], 47:[1920,1491], 50:[1920,1498], 51:[1920,1498], 52:[1500,1200], 54:[1920,1279], 55:[4000,3000], 56:[3000,4000], 57:[4096,2731], 58:[3000,2050], 59:[3000,1750], 60:[4096,2728], 61:[3000,1900], 62:[3000,2020], 63:[3000,2050], 64:[3000,2050], 66:[3000,2340], 67:[3000,2050], 68:[5315,3543], 70:[4096,2728], 72:[3000,1750], 73:[3000,2050], 74:[3000,2050], 75:[3000,4000], 76:[3000,2050], 78:[3000,2050], 79:[3000,2300], 80:[2895,3620], 81:[3000,2050], 82:[3000,1750], 83:[1920,1498], 85:[1920,1248], 86:[1920,1312], 87:[1920,1312], 89:[1920,1440], 90:[1920,1440], 91:[1920,1440], 92:[1920,1440], 94:[1920,1440], 95:[1920,1440], 97:[1920,1312], 98:[1500,1050] };
 
 const merFilenames = {
   2: 'karim-saari-marseille-bateau-peche-calanque-turquoise-aerien',
@@ -80,7 +80,6 @@ const merFilenames = {
   62: 'karim-saari-marseille-pointu-voile-rouge-notre-dame',
   63: 'karim-saari-marseille-bouee-bateau-notre-dame-garde',
   64: 'karim-saari-marseille-pointu-kraken-calanques',
-  65: 'photographe-sous-marin-marseille-plongeurs-fonds-marins-mediterranee',
   66: 'karim-saari-marseille-vague-mistral-tempete-mediterranee',
   67: 'karim-saari-marseille-veliplanchiste-calanques-fort',
   68: 'karim-saari-marseille-coucher-soleil-voiliers-silhouettes',
@@ -103,7 +102,6 @@ const merFilenames = {
   90: 'photographe-sous-marin-marseille-faune-flore-marine-mediterranee',
   91: 'photographe-sous-marin-marseille-posidonie-roches-calcaires-calanques',
   92: 'photographe-sous-marin-marseille-lumiere-filtree-eau-apnee',
-  93: 'photographe-sous-marin-marseille-apneiste-exploration-fonds-marins',
   94: 'photographe-sous-marin-marseille-biodiversite-fonds-marins-calanques',
   95: 'photographe-sous-marin-marseille-frioul-exploration-subaquatique',
   97: 'karim-saari-marseille-frioul-falaises-eau-turquoise',
@@ -145,7 +143,6 @@ const merAlts = {
   62: "Pointu marseillais à voile rouge naviguant devant Marseille avec Notre-Dame de la Garde en arrière-plan",
   63: "Bouée de sauvetage sur la proue d'un bateau bleu, Notre-Dame de la Garde floue en arrière-plan — Marseille",
   64: "Pointu marseillais à voile rouge et blanc croisant le grand voilier Kraken dans les Calanques de Marseille",
-  65: "Deux plongeurs en combinaison noire explorant les fonds marins de Méditerranée entre algues et rochers — © Karim Saari, photographe sous-marin Marseille",
   66: "Vague du mistral s'écrasant sur le quai en Méditerranée — photographie de tempête à Marseille par Karim Saari",
   67: "Véliplanchiste sur la mer agitée avec les Calanques de Marseille et le fort en arrière-plan",
   68: "Coucher de soleil rouge sur la mer avec trois voiliers en silhouette — Méditerranée",
@@ -168,7 +165,6 @@ const merAlts = {
   90: "Faune et flore sous-marines des Calanques de Marseille — © Karim Saari, photographe sous-marin Marseille",
   91: "Posidonie et roches calcaires sous-marines — Calanques de Marseille — © Karim Saari, photographe sous-marin Marseille",
   92: "Lumière filtrée sous l'eau dans les Calanques de Marseille — © Karim Saari, photographe sous-marin Marseille",
-  93: "Apnéiste explorant les fonds marins des Calanques — © Karim Saari, photographe sous-marin Marseille",
   94: "Biodiversité des fonds marins méditerranéens — Calanques de Marseille — © Karim Saari, photographe sous-marin Marseille",
   95: "Fonds marins du Frioul — exploration en apnée — © Karim Saari, photographe sous-marin Marseille",
   97: "Archipel du Frioul — Marseille — falaises calcaires et eau turquoise méditerranéenne",

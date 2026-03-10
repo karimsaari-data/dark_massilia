@@ -70,6 +70,8 @@ const allImagePaths = [
   "/images/photographe-sous-marin-marseille-fonds-marins-calanques-apnee.webp",
   "/images/photographe-sous-marin-marseille-apneiste-competition-certification.webp",
   "/images/photographe-sous-marin-marseille-morgan-bourchis-triple-champion-monde-apnee-depollution-sentinelle.webp",
+  "/images/photographe-sous-marin-marseille-plongeurs-fonds-marins-mediterranee.webp",
+  "/images/photographe-sous-marin-marseille-apneiste-exploration-fonds-marins.webp",
 ];
 
 const getAltText = (src) => {
