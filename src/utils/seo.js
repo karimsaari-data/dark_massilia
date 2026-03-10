@@ -31,9 +31,9 @@ const breadcrumb = (name, path) => ({
 
 export const SEO_PAGES = {
   '/': {
-    title: 'Karim Saari | Photographe de paysages Marseille | Sentinelle du littoral',
+    title: 'Karim Saari | Sentinelle de la Méditerranée | Dépollution & Apnée Marseille',
     description:
-      "Découvrez le travail de Karim Saari, photographe de paysages à Marseille. Entre photographie d'art sous-marine et terrestre, découvrez un regard engagé pour la protection de la Méditerranée.",
+      "Karim Saari, sentinelle de la Méditerranée à Marseille. Apnéiste engagé, co-fondateur de Team Oxygen, il documente et combat la pollution plastique dans les Calanques.",
     canonical: `${BASE_URL}/`,
     schema: {
       '@context': 'https://schema.org',
