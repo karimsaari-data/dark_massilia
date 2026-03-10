@@ -119,7 +119,7 @@ const Navbar = () => {
                 </span>
                 <div className="text-xs md:text-sm text-gray-400 uppercase tracking-widest leading-tight" style={{ letterSpacing: '0.15em' }}>
                   <p className="mb-0">Sentinelle des Calanques</p>
-                  <p>Photographe de paysages</p>
+                  <p>Photographe · Paysages & Sous-Marin</p>
                 </div>
               </div>
             </Link>
