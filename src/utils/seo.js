@@ -31,9 +31,9 @@ const breadcrumb = (name, path) => ({
 
 export const SEO_PAGES = {
   '/': {
-    title: 'Karim Saari | Photographe & Apnéiste à Marseille | Président Team Oxygen',
+    title: 'Karim Saari | Photographe & Apnéiste | Sentinelle de la Méditerranée',
     description:
-      "Karim Saari : photographe de paysages et sous-marin, apnéiste engagé depuis 10 ans et président de Team Oxygen. Il documente et nettoie les fonds marins des Calanques de Marseille.",
+      "Karim Saari, sentinelle de la Méditerranée. Photographe de paysages et sous-marin, apnéiste engagé depuis 10 ans contre la pollution plastique dans les Calanques de Marseille.",
     canonical: `${BASE_URL}/`,
     schema: {
       '@context': 'https://schema.org',
