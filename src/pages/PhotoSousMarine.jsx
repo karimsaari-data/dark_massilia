@@ -269,7 +269,7 @@ const PhotoSousMarine = () => {
         >
           <motion.div variants={FADE_IN_UP} className="glass rounded-2xl p-6 md:p-8">
             <h2 className="text-xl md:text-2xl font-bold text-white mb-4">
-              Rendre visible l'invisible — une photographie engagée au cœur des Calanques
+              Apnée et photographie engagée — au cœur des Calanques de Marseille
             </h2>
             <div className="space-y-4 text-text-secondary leading-relaxed">
               <p>

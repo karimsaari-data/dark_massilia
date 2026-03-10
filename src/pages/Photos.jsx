@@ -7,8 +7,8 @@ import { SEO_PAGES } from '../utils/seo';
 import { Link } from 'react-router-dom';
 import useFocusTrap from '../hooks/useFocusTrap';
 
-const merIds = [2, 4, 6, 10, 12, 13, 14, 20, 22, 23, 30, 32, 33, 35, 39, 44, 45, 46, 47, 50, 51, 52, 54, 55, 56, 57, 58, 59, 60, 61, 62, 63, 64, 66, 67, 68, 70, 72, 73, 74, 75, 76, 78, 79, 80, 81, 82, 83, 85, 86, 87, 89, 90, 91, 92, 94, 95, 97, 98, 99, 100];
-const terreIds = [1, 3, 5, 7, 8, 9, 15, 16, 17, 18, 19, 21, 24, 25, 26, 27, 28, 29, 31, 34, 36, 37, 38, 40, 41, 42, 43, 48, 49, 53, 54];
+const merIds = [2, 4, 6, 10, 12, 13, 14, 20, 22, 23, 30, 32, 33, 35, 39, 44, 45, 46, 47, 50, 51, 52, 54, 55, 56, 57, 58, 59, 60, 61, 62, 63, 64, 66, 67, 68, 70, 72, 73, 74, 75, 76, 78, 79, 80, 81, 82, 83, 86, 87, 89, 90, 91, 92, 94, 95, 97, 98, 99, 100];
+const terreIds = [1, 3, 5, 7, 8, 9, 15, 16, 17, 18, 19, 21, 24, 25, 26, 27, 28, 29, 31, 34, 36, 37, 38, 40, 41, 42, 43, 48, 49, 53, 54, 85];
 
 const terreFilenames = {
   1:  'karim-saari-photographe-provence-femme-chapeau-champ-lavande-lumiere-doree',
@@ -42,9 +42,10 @@ const terreFilenames = {
   49: 'karim-saari-photographe-provence-lavande-coucher-soleil-montagnes',
   53: 'karim-saari-photographe-provence-lavande-tournesols-contraste-couleurs',
   54: 'karim-saari-photographe-provence-paysage-mediterraneen-lumiere-doree',
+  85: 'karim-saari-marseille-littoral-stade-panoramique',
 };
 
-const merDims = { 2:[1920,1312], 4:[1920,1498], 6:[1920,1498], 10:[1920,2400], 12:[1920,1920], 13:[1920,1312], 14:[1920,1498], 20:[1920,1280], 22:[1920,1312], 23:[1920,1920], 30:[1920,1408], 32:[1920,1440], 33:[1000,700], 35:[1920,1312], 39:[1920,1080], 44:[1920,1312], 45:[1920,1440], 46:[1920,1440], 47:[1920,1491], 50:[1920,1498], 51:[1920,1498], 52:[1500,1200], 54:[1920,1279], 55:[4000,3000], 56:[3000,4000], 57:[4096,2731], 58:[3000,2050], 59:[3000,1750], 60:[4096,2728], 61:[3000,1900], 62:[3000,2020], 63:[3000,2050], 64:[3000,2050], 66:[3000,2340], 67:[3000,2050], 68:[5315,3543], 70:[4096,2728], 72:[3000,1750], 73:[3000,2050], 74:[3000,2050], 75:[3000,4000], 76:[3000,2050], 78:[3000,2050], 79:[3000,2300], 80:[2895,3620], 81:[3000,2050], 82:[3000,1750], 83:[1920,1498], 85:[1920,1248], 86:[1920,1312], 87:[1920,1312], 89:[1920,1440], 90:[1920,1440], 91:[1920,1440], 92:[1920,1440], 94:[1920,1440], 95:[1920,1440], 97:[1920,1312], 98:[1500,1050], 99:[1440,1800], 100:[2048,1400] };
+const merDims = { 2:[1920,1312], 4:[1920,1498], 6:[1920,1498], 10:[1920,2400], 12:[1920,1920], 13:[1920,1312], 14:[1920,1498], 20:[1920,1280], 22:[1920,1312], 23:[1920,1920], 30:[1920,1408], 32:[1920,1440], 33:[1000,700], 35:[1920,1312], 39:[1920,1080], 44:[1920,1312], 45:[1920,1440], 46:[1920,1440], 47:[1920,1491], 50:[1920,1498], 51:[1920,1498], 52:[1500,1200], 54:[1920,1279], 55:[4000,3000], 56:[3000,4000], 57:[4096,2731], 58:[3000,2050], 59:[3000,1750], 60:[4096,2728], 61:[3000,1900], 62:[3000,2020], 63:[3000,2050], 64:[3000,2050], 66:[3000,2340], 67:[3000,2050], 68:[5315,3543], 70:[4096,2728], 72:[3000,1750], 73:[3000,2050], 74:[3000,2050], 75:[3000,4000], 76:[3000,2050], 78:[3000,2050], 79:[3000,2300], 80:[2895,3620], 81:[3000,2050], 82:[3000,1750], 83:[1920,1498], 86:[1920,1312], 87:[1920,1312], 89:[1920,1440], 90:[1920,1440], 91:[1920,1440], 92:[1920,1440], 94:[1920,1440], 95:[1920,1440], 97:[1920,1312], 98:[1500,1050], 99:[1440,1800], 100:[2048,1400] };
 
 const merFilenames = {
   2: 'karim-saari-marseille-bateau-peche-calanque-turquoise-aerien',
@@ -95,7 +96,6 @@ const merFilenames = {
   81: 'karim-saari-marseille-aerien-nageur-calanque-rochers',
   82: 'photographe-sous-marin-marseille-etoile-mer-faune-marine',
   83: 'karim-saari-marseille-sormiou-calanque-mer-turquoise',
-  85: 'karim-saari-marseille-littoral-stade-panoramique',
   86: 'karim-saari-marseille-frioul-iles-sauvages-mediterranee',
   87: 'karim-saari-marseille-vue-mer-vieux-port-notre-dame-panorama',
   89: 'photographe-sous-marin-marseille-plongee-apnee-calanques-dark-massilia',
@@ -109,7 +109,7 @@ const merFilenames = {
   99: 'karim-saari-marseille-paysage-calanque-sormiou-eau-turquoise',
   100: 'karim-saari-capbreton-cote-landaise-ocean-atlantique-paysage',
 };
-const terreDims = { 1:[1920,1312], 3:[1920,1124], 5:[1920,1312], 7:[1080,1143], 8:[1920,1312], 9:[1920,1312], 15:[1920,1280], 16:[1920,1280], 17:[1920,1279], 18:[1920,1279], 19:[1920,1080], 21:[1920,1280], 24:[1920,1440], 25:[1920,2866], 26:[1920,1279], 27:[1920,1312], 28:[1920,1251], 29:[1920,1279], 31:[1920,1279], 34:[1920,1312], 36:[1920,2850], 37:[1920,1312], 38:[1920,1312], 40:[1920,1312], 41:[1920,1312], 42:[1920,1080], 43:[1920,1312], 48:[1920,1216], 49:[1920,1280], 53:[1500,1050], 54:[1920,1280] };
+const terreDims = { 1:[1920,1312], 3:[1920,1124], 5:[1920,1312], 7:[1080,1143], 8:[1920,1312], 9:[1920,1312], 15:[1920,1280], 16:[1920,1280], 17:[1920,1279], 18:[1920,1279], 19:[1920,1080], 21:[1920,1280], 24:[1920,1440], 25:[1920,2866], 26:[1920,1279], 27:[1920,1312], 28:[1920,1251], 29:[1920,1279], 31:[1920,1279], 34:[1920,1312], 36:[1920,2850], 37:[1920,1312], 38:[1920,1312], 40:[1920,1312], 41:[1920,1312], 42:[1920,1080], 43:[1920,1312], 48:[1920,1216], 49:[1920,1280], 53:[1500,1050], 54:[1920,1280], 85:[1920,1248] };
 
 const merAlts = {
   2: "Petit bateau de pêche blanc ancré sur l'eau turquoise cristalline d'une calanque — photographie aérienne Marseille",
@@ -160,7 +160,6 @@ const merAlts = {
   81: "Vue aérienne plongeante sur un nageur solitaire dans les eaux turquoise d'une calanque entre rochers calcaires",
   82: "Main tenant une étoile de mer rouge sous l'eau — faune marine Méditerranée — © Karim Saari, photographe sous-marin Marseille",
   83: "Mer turquoise azuréenne vue depuis la calanque de Sormiou — Marseille, Calanques de Marseille",
-  85: "Vue panoramique sur le littoral et le stade de Marseille — Méditerranée, lumière du sud",
   86: "Archipel du Frioul vu de la mer — îles sauvages de Marseille en Méditerranée 2020",
   87: "Marseille vue depuis la mer — panorama du littoral méditerranéen, Vieux-Port et Notre-Dame de la Garde",
   89: "Plongée en apnée dans les Calanques — exploration des fonds méditerranéens — © Karim Saari, photographe sous-marin Marseille",
@@ -207,6 +206,7 @@ const terreAlts = {
   49: "Lavande de Provence au coucher de soleil avec montagnes en arrière-plan — photographe Karim Saari",
   53: "Champ de lavande et champ de tournesols, contraste de couleurs, Provence — photographe Karim Saari",
   54: "Paysage méditerranéen de Provence, nature sauvage et lumière dorée — photographe Karim Saari",
+  85: "Vue panoramique sur le littoral méditerranéen et le stade de Marseille — © Karim Saari",
 };
 
 const merImages = merIds.map((id, index) => ({
