@@ -38,7 +38,7 @@ const SEO = ({ title, description, canonical, image, noindex = false, robots = n
       <meta property="og:description" content={metaDescription} />
       <meta property="og:url"         content={metaCanonical} />
       <meta property="og:image"       content={metaImage} />
-      <meta property="og:image:alt"   content="Dark Massilia · Karim Saari — Sentinelle de la Méditerranée" />
+      <meta property="og:image:alt"   content="Dark Massilia · Karim Saari — Sentinelle des Calanques" />
       <meta property="og:type"        content="website" />
       <meta property="og:locale"      content="fr_FR" />
       <meta property="og:site_name"   content={DEFAULT_SEO.siteName} />

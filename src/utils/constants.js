@@ -38,7 +38,7 @@ export const NAV_LINKS = [
 export const TAGLINE = 'Une Mer · Une Ville · Une Mission';
 
 export const MISSION_STATEMENT =
-  "Sentinelle de la Méditerranée, je documente et nettoie les fonds marins des Calanques de Marseille en apnée. Avec Team Oxygen, chaque plongée devient une mission de dépollution.";
+  "Sentinelle des Calanques, je documente et nettoie les fonds marins de Marseille en apnée. Avec Team Oxygen, chaque plongée devient une mission de dépollution.";
 
 // Facebook Group Stats
 export const FACEBOOK_GROUP_MEMBERS = 64300;

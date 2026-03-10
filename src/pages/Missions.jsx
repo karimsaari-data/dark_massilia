@@ -201,6 +201,71 @@ const Missions = () => {
           </motion.div>
         </motion.div>
 
+        {/* À propos de l'association — section sémantique SEO */}
+        <motion.div
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true }}
+          variants={STAGGER_CONTAINER}
+          className="max-w-4xl mx-auto mb-12"
+        >
+          <motion.div variants={FADE_IN_UP} className="glass-strong rounded-3xl p-8 md:p-12">
+            <h2 className="text-2xl md:text-3xl font-bold text-white mb-6">
+              Team Oxygen — association de dépollution loi 1901
+            </h2>
+            <div className="space-y-4 text-text-secondary leading-relaxed">
+              <p>
+                <strong className="text-ocean-teal">Team Oxygen</strong> est une{' '}
+                <strong className="text-white">association de dépollution marine</strong> déclarée
+                sous la loi 1901, fondée en 2018 à Marseille. En tant qu'association à but non
+                lucratif, elle mobilise des bénévoles et des apnéistes certifiés autour d'un
+                objectif commun&nbsp;: extraire les déchets des fonds marins méditerranéens et
+                documenter l'état de la pollution sous-marine.
+              </p>
+              <p>
+                L'association intervient sur des zones inaccessibles aux ramassages de surface&nbsp;:
+                entre 0 et 20 mètres de profondeur, là où 94&nbsp;% du plastique marin se dépose et
+                ne se dégrade plus. Chaque mission de l'<strong className="text-white">association
+                dépollution</strong> associe extraction physique des déchets, tri et caractérisation
+                scientifique, et production d'images documentaires diffusées pour sensibiliser le
+                grand public.
+              </p>
+              <p>
+                Présidée par Karim Saari, l'association dépollution Team Oxygen est également
+                partenaire du <strong className="text-white">Parc National des Calanques</strong> et
+                travaille en lien avec la{' '}
+                <strong className="text-white">Fondation de la Mer</strong>. Ses missions sont
+                couvertes par ARTE, France Télévisions et Yann Arthus-Bertrand.
+              </p>
+            </div>
+
+            {/* Chiffres clés association */}
+            <div className="mt-8 grid grid-cols-2 md:grid-cols-4 gap-4">
+              {[
+                { value: '2018', label: 'Année de fondation' },
+                { value: '5 724 kg', label: 'Déchets collectés' },
+                { value: '4', label: 'Éditions du Projet Sentinelle' },
+                { value: '130 000', label: 'Sentinelles en ligne' },
+              ].map((stat) => (
+                <div key={stat.label} className="text-center p-4 rounded-2xl bg-white/5 border border-white/10">
+                  <p className="text-xl md:text-2xl font-bold text-ocean-teal">{stat.value}</p>
+                  <p className="text-xs text-text-muted mt-1">{stat.label}</p>
+                </div>
+              ))}
+            </div>
+
+            <div className="mt-6">
+              <Link
+                to="/communaute"
+                className="inline-flex items-center gap-2 text-ocean-teal hover:text-white transition-colors text-sm font-medium"
+              >
+                Rejoindre l'association
+                <ArrowRight className="w-4 h-4" />
+              </Link>
+            </div>
+          </motion.div>
+        </motion.div>
+
         {/* Voir aussi — maillage interne vidéos */}
         <motion.div
           initial={{ opacity: 0 }}

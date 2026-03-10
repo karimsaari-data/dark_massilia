@@ -156,7 +156,7 @@ const Footer = () => {
           <p className="text-xs text-gray-400 leading-relaxed mb-3">
             © {currentYear}{' '}
             <span className="text-gray-300 font-medium">Karim Saari</span>
-            {' '}| Photographe de paysages &amp; Sentinelle des calanques — Fondateur de{' '}
+            {' '}| Photographe paysages &amp; sous-marin · Sentinelle des Calanques — Fondateur de{' '}
             <span className="text-gray-300">Dark Massilia</span>
             {' '}&amp; Président de{' '}
             <a
