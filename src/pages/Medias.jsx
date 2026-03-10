@@ -66,6 +66,13 @@ const Medias = () => {
       image: '/images/karim-saari-marseille-france-bleu-goudes-dechets-apneistes.webp'
     },
     {
+      title: 'France 3 Régions — Invasion de vélelles sur le littoral marseillais',
+      url: 'https://france3-regions.franceinfo.fr/provence-alpes-cote-d-azur/bouches-du-rhone/marseille/images-surprenantes-du-littoral-apres-une-invasion-de-velelles-cousines-des-meduses-2948873.html',
+      featured: false,
+      date: '2 avr. 2024',
+      image: '/images/karim-saari-marseille-france3-velelles-invasion-littoral-mediterranee.webp'
+    },
+    {
       title: 'Ville de Marseille — Reconnaissance Officielle',
       url: 'https://www.facebook.com/marseilleville/photos/a.220707724621813/3697054720320412/?_rdr',
       featured: true,
