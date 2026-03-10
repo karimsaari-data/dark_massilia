@@ -389,9 +389,9 @@ export const SEO_PAGES = {
     },
   },
   '/photographie-paysage-mer': {
-    title: 'Photographe Sous-Marin Marseille | Calanques & Apnée — Karim Saari',
+    title: 'Karim Saari | Photographe Paysage & Sous-Marin à Marseille',
     description:
-      'Karim Saari, photographe sous-marin à Marseille, capture la biodiversité des fonds marins des Calanques en apnée. Découvrez ses photos sous-marines et paysages méditerranéens.',
+      'Karim Saari, photographe de paysages et sous-marin à Marseille. Calanques, Méditerranée, Provence, Maroc — des images entre deux mondes, capturées en apnée et en lumière naturelle.',
     canonical: `${BASE_URL}/photographie-paysage-mer`,
     schema: {
       '@context': 'https://schema.org',
