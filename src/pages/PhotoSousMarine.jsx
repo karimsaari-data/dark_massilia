@@ -72,6 +72,13 @@ const allImagePaths = [
   "/images/photographe-sous-marin-marseille-morgan-bourchis-triple-champion-monde-apnee-depollution-sentinelle.webp",
   "/images/photographe-sous-marin-marseille-plongeurs-fonds-marins-mediterranee.webp",
   "/images/photographe-sous-marin-marseille-apneiste-exploration-fonds-marins.webp",
+  "/images/marseille-dark-massilia-depollution-maritime-calanques-projet-sentinelle.webp",
+  "/images/marseille-dark-massilia-depollution-pneu-port-goudes-projet-sentinelle.webp",
+  "/images/marseille-dark-massilia-operation-sentinelle-kayak-dechets-calanques.webp",
+  "/images/marseille-dark-massilia-photo-sous-marine-depollution-team-oxygen.webp",
+  "/images/marseille-dark-massilia-port-goudes-depollution-apnee-projet-sentinelle.webp",
+  "/images/marseille-dark-massilia-projet-sentinelle-caracterisation-dechets.webp",
+  "/images/marseille-dark-massilia-tf1-reportage-projet-sentinelle-depollution.webp",
 ];
 
 const getAltText = (src) => {
