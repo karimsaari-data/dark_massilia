@@ -23,13 +23,14 @@ export const SOCIAL_LINKS = {
 
 export const NAV_LINKS = [
   { name: 'Missions', path: '/depollution-marine', icon: 'Compass' },
+  { name: 'Paysages', path: '/photographie-paysage-mer', icon: 'Camera' },
+  { name: 'Sous-marin', path: '/photographie-sous-marine', icon: 'Camera' },
   { name: 'Vidéos', path: '/videos', icon: 'Video' },
-  { name: 'Photos', path: '/photographie-paysage-mer', icon: 'Camera' },
   { name: 'Médias', path: '/presse', icon: 'Film' },
   { name: 'Réseaux', path: '/communaute', icon: 'Share2' },
   { name: 'Carte', path: '/carte-calanques', icon: 'MapPin' },
-  { name: 'Contact', path: '/contact', icon: 'Mail' },
   // Menu mobile uniquement — pages secondaires
+  { name: 'Contact', path: '/contact', icon: 'Mail', mobileOnly: true },
   { name: 'Blog', path: '/blog', icon: 'BookOpen', mobileOnly: true },
   { name: 'Local Guides', path: '/local-guide-marseille', icon: 'Navigation', mobileOnly: true },
   { name: 'Références', path: '/donnees-scientifiques', icon: 'BookOpen', mobileOnly: true },

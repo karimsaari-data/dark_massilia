@@ -22,6 +22,7 @@ const navColumns = [
     label: 'Missions',
     links: [
       { to: '/depollution-marine', text: 'Dépollution marine' },
+      { to: '/photographie-sous-marine', text: 'Photos sous-marines' },
       { to: '/donnees-scientifiques', text: 'Données scientifiques' },
       { to: '/communaute', text: 'Communauté' },
     ],
@@ -38,10 +39,10 @@ const navColumns = [
   {
     label: 'Explorer',
     links: [
-      { to: '/photographie-paysage-mer', text: 'Photographies' },
+      { to: '/photographie-paysage-mer', text: 'Photos de paysages' },
       { to: '/carte-calanques', text: 'Carte des Calanques' },
       { to: '/local-guide-marseille', text: 'Google Local Guide' },
-      { to: '/blog', text: 'Actualités' },
+      { to: '/blog', text: 'Blog', paired: { to: '/actualites', text: 'Actualités' } },
     ],
   },
   {
@@ -80,33 +81,32 @@ const Footer = () => {
                   {col.label}
                 </p>
                 <ul className="space-y-1">
-                  {col.links.map((link) => (
-                    <li key={link.to}>
-                      {link.action ? (
-                        <button
-                          type="button"
-                          onClick={link.action}
-                          className="text-sm text-gray-300 hover:text-ocean-teal transition-colors duration-200 cursor-pointer py-1.5 block w-full"
-                        >
-                          {link.text}
-                        </button>
-                      ) : link.anchor || link.external ? (
-                        <a
-                          href={link.to}
-                          className="text-sm text-gray-300 hover:text-ocean-teal transition-colors duration-200 py-1.5 block"
-                        >
-                          {link.text}
-                        </a>
-                      ) : (
-                        <Link
-                          to={link.to}
-                          className="text-sm text-gray-300 hover:text-ocean-teal transition-colors duration-200 py-1.5 block"
-                        >
-                          {link.text}
-                        </Link>
-                      )}
-                    </li>
-                  ))}
+                  {col.links.map((link) => {
+                    const renderSingle = (l) => l.action ? (
+                      <button type="button" onClick={l.action} className="text-sm text-gray-300 hover:text-ocean-teal transition-colors duration-200 cursor-pointer py-1.5">
+                        {l.text}
+                      </button>
+                    ) : l.anchor || l.external ? (
+                      <a href={l.to} className="text-sm text-gray-300 hover:text-ocean-teal transition-colors duration-200 py-1.5">
+                        {l.text}
+                      </a>
+                    ) : (
+                      <Link to={l.to} className="text-sm text-gray-300 hover:text-ocean-teal transition-colors duration-200 py-1.5">
+                        {l.text}
+                      </Link>
+                    );
+                    return (
+                      <li key={link.to}>
+                        {link.paired ? (
+                          <span className="flex items-center justify-center gap-2">
+                            {renderSingle(link)}
+                            <span className="text-gray-600 text-xs select-none">|</span>
+                            {renderSingle(link.paired)}
+                          </span>
+                        ) : renderSingle(link)}
+                      </li>
+                    );
+                  })}
                 </ul>
               </div>
             ))}

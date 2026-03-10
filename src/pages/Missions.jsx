@@ -1,8 +1,7 @@
 import { motion, useInView, useReducedMotion } from 'framer-motion';
 import { useState, useEffect, useRef } from 'react';
-import { ArrowLeft, ArrowRight, ExternalLink } from 'lucide-react';
+import { ArrowLeft, ArrowRight, ExternalLink, Camera } from 'lucide-react';
 import { Link } from 'react-router-dom';
-import PhotoCarousel from '../components/ui/PhotoCarousel';
 import { FADE_IN_UP, STAGGER_CONTAINER } from '../utils/constants';
 import SEO from '../components/SEO';
 import { SEO_PAGES } from '../utils/seo';
@@ -51,7 +50,7 @@ const Missions = () => {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
-          className="text-3xl md:text-4xl font-bold text-white text-center mb-12 leading-tight"
+          className="text-xl md:text-2xl font-bold text-white text-center mb-8 leading-tight"
         >
           Team Oxygen : Association de dépollution marine et nettoyage sous-marin à Marseille
         </motion.h1>
@@ -146,29 +145,41 @@ const Missions = () => {
           </motion.div>
         </motion.div>
 
-        {/* Intro galerie — avant le carousel */}
+        {/* Photo hero — lien vers /photographie-sous-marine */}
         <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 0.3 }}
-          className="text-center mb-6"
-        >
-          <p className="text-text-secondary">
-            Cette galerie retrace nos actions terrain dans le Parc National des Calanques de Marseille.
-          </p>
-        </motion.div>
-
-        {/* Photo Carousel */}
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
+          initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.3 }}
-          className="mb-16"
+          transition={{ duration: 0.7, delay: 0.2 }}
+          className="max-w-4xl mx-auto mb-12"
         >
-          <PhotoCarousel />
+          <Link to="/photographie-sous-marine" className="group block relative rounded-3xl overflow-hidden shadow-2xl shadow-black/40 ring-1 ring-white/10">
+            <div className="aspect-[16/7] relative">
+              <img
+                src="/images/Marseille-dark-massilia-plastique-pollution-projet-sentinelle-teamoxygen_1200w.webp"
+                alt="Team Oxygen en apnée lors d'une mission de dépollution sous-marine dans les Calanques de Marseille — Karim Saari photographe sous-marin"
+                className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
+                loading="lazy"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" aria-hidden="true" />
+              <div className="absolute bottom-0 left-0 right-0 p-6 md:p-10">
+                <p className="text-ocean-teal text-sm font-semibold uppercase tracking-widest mb-2">Galerie photographique</p>
+                <h2 className="text-2xl md:text-3xl font-bold text-white mb-3 leading-tight">
+                  58 photos de missions sous-marines
+                </h2>
+                <p className="text-white/70 text-base mb-4 max-w-xl">
+                  Quatre années de dépollution documentées en apnée — fonds marins, vie marine et déchets collectés dans les Calanques.
+                </p>
+                <span className="inline-flex items-center gap-2 text-ocean-teal font-medium group-hover:gap-3 transition-all">
+                  <Camera className="w-4 h-4" aria-hidden="true" />
+                  Voir la galerie sous-marine
+                  <ArrowRight className="w-4 h-4" aria-hidden="true" />
+                </span>
+              </div>
+            </div>
+          </Link>
         </motion.div>
 
-        {/* Section éditoriale SEO — après la galerie */}
+        {/* Section éditoriale SEO — après le hero photo */}
         <motion.div
           initial="hidden"
           whileInView="visible"
@@ -235,7 +246,7 @@ const Missions = () => {
                 partenaire du <strong className="text-white">Parc National des Calanques</strong> et
                 travaille en lien avec la{' '}
                 <strong className="text-white">Fondation de la Mer</strong>. Ses missions sont
-                couvertes par ARTE, France Télévisions et Yann Arthus-Bertrand.
+                couvertes par ARTE, M6, France Télévisions, La Provence, la Fondation de la Mer et bien d'autres médias.
               </p>
             </div>
 

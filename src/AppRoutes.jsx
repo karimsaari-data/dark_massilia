@@ -33,7 +33,8 @@ const LocalGuide = lazy(() => import('./pages/LocalGuide'));
 const AdminCarte = lazy(() => import('./pages/AdminCarte'));
 const Yab             = lazy(() => import('./pages/Yab'));
 const MentionsLegales = lazy(() => import('./pages/MentionsLegales'));
-const Confidentialite = lazy(() => import('./pages/Confidentialite'));
+const Confidentialite    = lazy(() => import('./pages/Confidentialite'));
+const PhotoSousMarine    = lazy(() => import('./pages/PhotoSousMarine'));
 
 const PageLoader = () => (
   <div className="min-h-screen flex items-center justify-center">
@@ -76,6 +77,7 @@ export default function AppRoutes() {
             <Route path="depollution-marine"              element={<Missions />} />
             <Route path="presse"                         element={<Medias />} />
             <Route path="photographie-paysage-mer"       element={<Photos />} />
+            <Route path="photographie-sous-marine"       element={<PhotoSousMarine />} />
             <Route path="videos"                         element={<Videos />} />
             <Route path="communaute"                     element={<Instagram />} />
             <Route path="actualites"                     element={<Twitter />} />

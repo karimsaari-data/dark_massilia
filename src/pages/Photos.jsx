@@ -368,40 +368,10 @@ const Photos = () => {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
-          className="text-3xl md:text-4xl font-bold text-white text-center mb-12 leading-tight"
+          className="text-xl md:text-2xl font-bold text-white text-center mb-8 leading-tight"
         >
           Photographie environnementale : Les paysages littoraux et sous-marins des Calanques
         </motion.h1>
-
-        {/* Section éditoriale SEO */}
-        <motion.div
-          initial="hidden"
-          animate="visible"
-          variants={STAGGER_CONTAINER}
-          className="mb-12"
-        >
-          <motion.div variants={FADE_IN_UP} className="glass-strong rounded-3xl p-8 md:p-12">
-            <h2 className="text-2xl md:text-3xl font-bold text-white mb-6">
-              Témoigner par l'image
-            </h2>
-            <div className="space-y-4 text-text-secondary leading-relaxed text-lg">
-              <p>
-                Photographe sous-marin à Marseille et photographe de paysages en Provence, j'explore
-                la Méditerranée de la surface aux profondeurs comme les reliefs des Calanques et les
-                horizons provençaux.
-              </p>
-              <p>
-                Sous l'eau, mes images révèlent la biodiversité des fonds marins méditerranéens et
-                leurs fragilités. À terre, je capture les lumières, les falaises calcaires, les champs
-                de lavande et les paysages emblématiques du Sud.
-              </p>
-              <p>
-                Mon travail documente un territoire — la Méditerranée et la Provence — entre beauté
-                naturelle et enjeux contemporains.
-              </p>
-            </div>
-          </motion.div>
-        </motion.div>
 
         {/* Section Côté Mer */}
         <motion.div
@@ -456,6 +426,34 @@ const Photos = () => {
                 Voir sur 500px
                 <ExternalLink className="w-4 h-4" aria-hidden="true" />
               </a>
+            </div>
+          </motion.div>
+        </motion.div>
+
+        {/* Section éditoriale SEO — déplacée en bas */}
+        <motion.div
+          initial="hidden"
+          animate="visible"
+          variants={STAGGER_CONTAINER}
+          className="mt-12 mb-0"
+        >
+          <motion.div variants={FADE_IN_UP} className="glass rounded-3xl p-8 md:p-10">
+            <h2 className="text-lg md:text-xl font-bold text-white mb-4">
+              Témoigner par l'image
+            </h2>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 text-text-secondary leading-relaxed text-sm">
+              <p>
+                Photographe sous-marin à Marseille et photographe de paysages en Provence, j'explore
+                la Méditerranée de la surface aux profondeurs.
+              </p>
+              <p>
+                Sous l'eau, mes images révèlent la biodiversité des fonds marins méditerranéens et
+                leurs fragilités.
+              </p>
+              <p>
+                Mon travail documente un territoire — la Méditerranée et la Provence — entre beauté
+                naturelle et enjeux contemporains.
+              </p>
             </div>
           </motion.div>
         </motion.div>

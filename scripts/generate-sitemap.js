@@ -41,7 +41,7 @@ const STATIC_PAGES = [
   { path: '/carte-calanques',                         priority: '0.8', changefreq: 'weekly'  },
   { path: '/presse',                                  priority: '0.7', changefreq: 'monthly' },
   { path: '/donnees-scientifiques',                   priority: '0.7', changefreq: 'monthly' },
-  { path: '/local-guide-marseille',                   priority: '0.7', changefreq: 'monthly' },
+  // /local-guide-marseille : noindex intentionnel — exclu du sitemap
   { path: '/les-francais-yann-arthus-bertrand',       priority: '0.7', changefreq: 'yearly'  },
   { path: '/sauver-marseille-documentaire-arte',      priority: '0.6', changefreq: 'yearly'  },
   { path: '/meduses-souveraines-oceans-documentaire-arte', priority: '0.6', changefreq: 'yearly' },

@@ -90,49 +90,10 @@ const Medias = () => {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
-          className="text-3xl md:text-4xl font-bold text-white text-center mb-12 leading-tight"
+          className="text-xl md:text-2xl font-bold text-white text-center mb-8 leading-tight"
         >
           Documentaires et Reportages : Témoigner de l'urgence écologique en Méditerranée
         </motion.h1>
-
-        {/* Section éditoriale SEO — notoriété médiatique & E-E-A-T */}
-        <motion.div
-          initial="hidden"
-          animate="visible"
-          variants={STAGGER_CONTAINER}
-          className="max-w-4xl mx-auto mb-12"
-        >
-          <motion.div variants={FADE_IN_UP} className="glass-strong rounded-3xl p-8 md:p-12">
-            <h2 className="text-2xl md:text-3xl font-bold text-white mb-6">
-              L'écho de notre engagement : Presse et Médias
-            </h2>
-            <p className="text-text-secondary leading-relaxed text-lg">
-              La lutte contre la pollution plastique en Méditerranée nécessite une visibilité
-              maximale pour éveiller les consciences à grande échelle. Au fil des expéditions en
-              apnée et des actions de dépollution avec{' '}
-              <strong className="text-ocean-teal">Team Oxygen</strong>, notre engagement a franchi
-              les frontières des Calanques pour résonner dans l'espace public. Du documentaire
-              diffusé à l'échelle européenne sur{' '}
-              <strong className="text-white">ARTE</strong> aux reportages d'{' '}
-              <strong className="text-white">Échappées Belles</strong> et de{' '}
-              <strong className="text-white">Green Got</strong>, en passant par les articles de
-              presse locale et nationale comme{' '}
-              <strong className="text-white">La Provence</strong>,{' '}
-              <strong className="text-white">France Bleu</strong>,{' '}
-              <strong className="text-white">Actu.fr</strong> et{' '}
-              <strong className="text-white">Marcelle Média</strong>, le travail de{' '}
-              <strong className="text-ocean-teal">Dark Massilia</strong> bénéficie d'une
-              couverture médiatique forte. Cette reconnaissance s'étend jusqu'aux sphères
-              institutionnelles, avec le soutien de la{' '}
-              <strong className="text-white">Fondation de la Mer</strong> dans le cadre de son
-              Programme Un Geste Pour La Mer, le soutien officiel de la{' '}
-              <strong className="text-white">Ville de Marseille</strong> et l'attention prestigieuse
-              de <strong className="text-white">National Geographic</strong>. Chaque parution,
-              chaque interview, est une opportunité de mettre la préservation de notre littoral au
-              cœur du débat public.
-            </p>
-          </motion.div>
-        </motion.div>
 
         {/* Section: Passage TV — ARTE & Échappées Belles */}
         <motion.div
@@ -372,6 +333,38 @@ const Medias = () => {
                 </Link>{' '}
                 — diffusé à l'échelle européenne en 2024, il a donné une visibilité inattendue aux
                 Calanques et aux équipes qui s'y engagent au quotidien.
+              </p>
+            </div>
+          </motion.div>
+        </motion.div>
+
+        {/* Section éditoriale SEO — déplacée en bas */}
+        <motion.div
+          initial="hidden"
+          animate="visible"
+          variants={STAGGER_CONTAINER}
+          className="max-w-4xl mx-auto mt-12 mb-0"
+        >
+          <motion.div variants={FADE_IN_UP} className="glass rounded-3xl p-8 md:p-10">
+            <h2 className="text-lg md:text-xl font-bold text-white mb-4">
+              L'écho de notre engagement : Presse et Médias
+            </h2>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 text-text-secondary leading-relaxed text-sm">
+              <p>
+                Au fil des expéditions en apnée avec{' '}
+                <strong className="text-ocean-teal">Team Oxygen</strong>, notre engagement a franchi
+                les frontières des Calanques pour résonner dans l'espace public — sur{' '}
+                <strong className="text-white">ARTE</strong>,{' '}
+                <strong className="text-white">Échappées Belles</strong>,{' '}
+                <strong className="text-white">La Provence</strong>,{' '}
+                <strong className="text-white">France Bleu</strong> et{' '}
+                <strong className="text-white">National Geographic</strong>.
+              </p>
+              <p>
+                Soutenu par la{' '}
+                <strong className="text-white">Fondation de la Mer</strong> et la{' '}
+                <strong className="text-white">Ville de Marseille</strong>, chaque parution est une
+                opportunité de mettre la préservation du littoral méditerranéen au cœur du débat public.
               </p>
             </div>
           </motion.div>

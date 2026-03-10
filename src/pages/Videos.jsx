@@ -74,40 +74,13 @@ const Videos = () => {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
-          className="text-3xl md:text-4xl font-bold text-white text-center mb-12 leading-tight"
+          className="text-xl md:text-2xl font-bold text-white text-center mb-8 leading-tight"
         >
           Vidéos &amp; Documentaires
-          <span className="block text-xl md:text-2xl font-medium text-ocean-teal mt-3">
+          <span className="block text-sm md:text-base font-medium text-ocean-teal mt-2">
             Dépollution en Méditerranée — Calanques de Marseille
           </span>
         </motion.h1>
-
-        {/* Section éditoriale SEO — vidéaste engagé & légitimité médiatique */}
-        <motion.div
-          initial="hidden"
-          animate="visible"
-          variants={STAGGER_CONTAINER}
-          className="max-w-4xl mx-auto mb-12"
-        >
-          <motion.div variants={FADE_IN_UP} className="glass-strong rounded-3xl p-8 md:p-12">
-            <h2 className="text-2xl md:text-3xl font-bold text-white mb-6">
-              Documenter l'urgence : L'action en immersion
-            </h2>
-            <p className="text-text-secondary leading-relaxed text-lg">
-              Si la photographie d'art sublime nos paysages, la vidéo est le témoin brut de notre
-              combat quotidien. En tant que vidéaste sous-marin, je filme en immersion totale et en
-              direct nos opérations de dépollution avec{' '}
-              <strong className="text-ocean-teal">Team Oxygen</strong>. Ces images d'action
-              documentent l'extraction physique des déchets dans les Calanques et révèlent sans
-              filtre l'état critique de la Méditerranée. Ce travail de terrain, reconnu pour son
-              impact visuel et militant, m'a conduit à être suivi et diffusé par des médias majeurs
-              tels que la chaîne <strong className="text-white">ARTE</strong>, l'émission{' '}
-              <strong className="text-white">Échappées Belles</strong>, ainsi que par{' '}
-              <strong className="text-white">Green Got</strong>. Mon objectif&nbsp;: utiliser la
-              force du reportage pour mobiliser massivement face à l'urgence environnementale.
-            </p>
-          </motion.div>
-        </motion.div>
 
         {/* Video Grid — Facade pattern : iframe chargée uniquement au clic */}
         <motion.div
@@ -228,6 +201,36 @@ const Videos = () => {
               Voir le documentaire
               <ExternalLink className="w-4 h-4" />
             </Link>
+          </motion.div>
+        </motion.div>
+
+        {/* Section éditoriale SEO — vidéaste engagé & légitimité médiatique */}
+        <motion.div
+          initial="hidden"
+          animate="visible"
+          variants={STAGGER_CONTAINER}
+          className="max-w-4xl mx-auto mb-12"
+        >
+          <motion.div variants={FADE_IN_UP} className="glass rounded-3xl p-8 md:p-10">
+            <h2 className="text-lg md:text-xl font-bold text-white mb-4">
+              Documenter l'urgence : L'action en immersion
+            </h2>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 text-text-secondary leading-relaxed text-sm">
+              <p>
+                Si la photographie d'art sublime nos paysages, la vidéo est le témoin brut de notre
+                combat quotidien. En tant que vidéaste sous-marin, je filme en immersion totale et en
+                direct nos opérations de dépollution avec{' '}
+                <strong className="text-ocean-teal">Team Oxygen</strong>.
+              </p>
+              <p>
+                Ces images d'action, reconnues pour leur impact visuel et militant, m'ont conduit à
+                être diffusé par des médias majeurs : la chaîne{' '}
+                <strong className="text-white">ARTE</strong>, l'émission{' '}
+                <strong className="text-white">Échappées Belles</strong> et{' '}
+                <strong className="text-white">Green Got</strong>. Mon objectif&nbsp;: mobiliser
+                massivement face à l'urgence environnementale.
+              </p>
+            </div>
           </motion.div>
         </motion.div>
 

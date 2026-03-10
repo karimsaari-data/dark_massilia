@@ -28,6 +28,7 @@ const STATIC_ROUTES = [
   '/depollution-marine',
   '/presse',
   '/photographie-paysage-mer',
+  '/photographie-sous-marine',
   '/videos',
   '/communaute',
   '/actualites',

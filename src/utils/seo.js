@@ -183,9 +183,9 @@ export const SEO_PAGES = {
     },
   },
   '/depollution-marine': {
-    title: 'Association Dépollution Marine à Marseille | Team Oxygen',
+    title: 'Association Dépollution Marine Marseille — Team Oxygen | Karim Saari',
     description:
-      'Rejoignez Team Oxygen, association de dépollution marine à Marseille. Découvrez nos missions de nettoyage sous-marin en apnée dans les Calanques.',
+      'Team Oxygen, association de dépollution marine à Marseille. Depuis 2022, 5 724 kg de déchets extraits des Calanques en apnée — Opération Sentinelle.',
     canonical: `${BASE_URL}/depollution-marine`,
     schema: {
       '@context': 'https://schema.org',
@@ -285,57 +285,57 @@ export const SEO_PAGES = {
         {
           '@type': 'ImageObject',
           'name': 'Dépollution sous-marine en apnée — Team Oxygen Marseille',
-          'contentUrl': `${BASE_URL}/home/images/Marseille-dark-massilia-plastique-pollution-projet-sentinelle-teamoxygen-freediving.webp`,
+          'contentUrl': `${BASE_URL}/images/Marseille-dark-massilia-plastique-pollution-projet-sentinelle-teamoxygen-freediving.webp`,
           'description': 'Équipe Team Oxygen en apnée lors d\'une mission de dépollution sous-marine dans les Calanques de Marseille — Projet Sentinelle',
           'creator': { '@type': 'Person', 'name': 'Karim Saari' },
           'encodingFormat': 'image/webp',
           'creditText': '© Karim Saari — Dark Massilia',
           'copyrightNotice': '© Karim Saari',
-          'acquireLicensePage': `${BASE_URL}/home/contact`,
+          'acquireLicensePage': `${BASE_URL}/contact`,
         },
         {
           '@type': 'ImageObject',
           'name': 'Fonds marins pollués en Méditerranée — Projet Sentinelle Marseille',
-          'contentUrl': `${BASE_URL}/home/images/Marseille-dark-massilia-plastique-pollution-projet-sentinelle-fonds-marins.webp`,
+          'contentUrl': `${BASE_URL}/images/Marseille-dark-massilia-plastique-pollution-projet-sentinelle-fonds-marins.webp`,
           'description': 'Fonds marins des Calanques de Marseille documentés lors d\'une mission de dépollution en apnée par Team Oxygen',
           'creator': { '@type': 'Person', 'name': 'Karim Saari' },
           'encodingFormat': 'image/webp',
           'creditText': '© Karim Saari — Dark Massilia',
           'copyrightNotice': '© Karim Saari',
-          'acquireLicensePage': `${BASE_URL}/home/contact`,
+          'acquireLicensePage': `${BASE_URL}/contact`,
         },
         {
           '@type': 'ImageObject',
           'name': 'Mer de plastique sous-marine — Dépollution apnée Marseille',
-          'contentUrl': `${BASE_URL}/home/images/Marseille-dark-massilia-plastique-pollution-projet-sentinelle-mer-de-plastique.webp`,
+          'contentUrl': `${BASE_URL}/images/Marseille-dark-massilia-plastique-pollution-projet-sentinelle-mer-de-plastique.webp`,
           'description': 'Accumulation de plastiques sur les fonds marins de Marseille documentée en apnée lors du Projet Sentinelle',
           'creator': { '@type': 'Person', 'name': 'Karim Saari' },
           'encodingFormat': 'image/webp',
           'creditText': '© Karim Saari — Dark Massilia',
           'copyrightNotice': '© Karim Saari',
-          'acquireLicensePage': `${BASE_URL}/home/contact`,
+          'acquireLicensePage': `${BASE_URL}/contact`,
         },
         {
           '@type': 'ImageObject',
           'name': 'Grotte marine Calanques — Photographie sous-marine Marseille',
-          'contentUrl': `${BASE_URL}/home/images/Marseille-dark-massilia-plastique-pollution-projet-sentinelle-grotte.webp`,
+          'contentUrl': `${BASE_URL}/images/Marseille-dark-massilia-plastique-pollution-projet-sentinelle-grotte.webp`,
           'description': 'Plongeur en apnée dans une grotte marine des Calanques de Marseille lors d\'une mission de dépollution sous-marine',
           'creator': { '@type': 'Person', 'name': 'Karim Saari' },
           'encodingFormat': 'image/webp',
           'creditText': '© Karim Saari — Dark Massilia',
           'copyrightNotice': '© Karim Saari',
-          'acquireLicensePage': `${BASE_URL}/home/contact`,
+          'acquireLicensePage': `${BASE_URL}/contact`,
         },
         {
           '@type': 'ImageObject',
           'name': 'Apnéiste dépollution Marseille — Mission Projet Sentinelle',
-          'contentUrl': `${BASE_URL}/home/images/Marseille-dark-massilia-plastique-pollution-projet-sentinelle-apneiste.webp`,
+          'contentUrl': `${BASE_URL}/images/Marseille-dark-massilia-plastique-pollution-projet-sentinelle-apneiste.webp`,
           'description': 'Apnéiste de Team Oxygen en mission de dépollution sous-marine dans les Calanques de Marseille',
           'creator': { '@type': 'Person', 'name': 'Karim Saari' },
           'encodingFormat': 'image/webp',
           'creditText': '© Karim Saari — Dark Massilia',
           'copyrightNotice': '© Karim Saari',
-          'acquireLicensePage': `${BASE_URL}/home/contact`,
+          'acquireLicensePage': `${BASE_URL}/contact`,
         },
       ],
     },
@@ -384,6 +384,66 @@ export const SEO_PAGES = {
           embedUrl: 'https://www.youtube.com/embed/XHqB603STuw',
           contentUrl: 'https://www.youtube.com/watch?v=XHqB603STuw',
           url: 'https://www.youtube.com/watch?v=XHqB603STuw',
+        },
+      ],
+    },
+  },
+  '/photographie-sous-marine': {
+    title: 'Photographe Sous-Marin à Marseille — 58 Photos de Missions | Karim Saari',
+    description:
+      'Galerie de 58 photographies sous-marines de missions de dépollution en apnée dans les Calanques de Marseille — Projet Sentinelle, Team Oxygen.',
+    canonical: `${BASE_URL}/photographie-sous-marine`,
+    schema: {
+      '@context': 'https://schema.org',
+      '@graph': [
+        breadcrumb('Photographe Sous-Marin — Galerie', '/photographie-sous-marine'),
+        {
+          '@type': 'ImageGallery',
+          name: '58 Photos de Missions Sous-Marines — Projet Sentinelle',
+          description:
+            'Galerie de 58 photographies sous-marines prises lors des missions de dépollution en apnée de Team Oxygen dans les Calanques de Marseille (2022-2025).',
+          url: `${BASE_URL}/photographie-sous-marine`,
+          creator: {
+            '@type': 'Person',
+            name: 'Karim Saari',
+            alternateName: 'Dark Massilia',
+            url: BASE_URL,
+          },
+          about: [
+            { '@type': 'Thing', name: 'Dépollution marine' },
+            { '@type': 'Thing', name: 'Photographie sous-marine' },
+            { '@type': 'Thing', name: 'Calanques de Marseille' },
+          ],
+        },
+        {
+          '@type': 'ImageObject',
+          name: 'Apnéiste en mission de dépollution — Projet Sentinelle Marseille',
+          description:
+            "Apnéiste de Team Oxygen en pleine extraction de déchets sur les fonds marins des Calanques — Projet Sentinelle.",
+          contentUrl: `${BASE_URL}/images/Marseille-dark-massilia-plastique-pollution-projet-sentinelle-apneiste.webp`,
+          url: `${BASE_URL}/photographie-sous-marine`,
+          creator: { '@type': 'Person', name: 'Karim Saari', alternateName: 'Dark Massilia', url: BASE_URL },
+          copyrightHolder: { '@type': 'Person', name: 'Karim Saari' },
+          copyrightYear: 2023,
+          creditText: '© Karim Saari / Dark Massilia',
+          copyrightNotice: '© Karim Saari / Dark Massilia — Tous droits réservés',
+          license: `${BASE_URL}/mentions-legales`,
+          acquireLicensePage: `${BASE_URL}/contact`,
+        },
+        {
+          '@type': 'ImageObject',
+          name: 'Poulpe sur fonds marins des Calanques — Projet Sentinelle',
+          description:
+            "Poulpe observé en apnée lors d'une mission de dépollution de Team Oxygen dans les Calanques de Marseille.",
+          contentUrl: `${BASE_URL}/images/Marseille-dark-massilia-plastique-pollution-projet-sentinelle-poulpe.webp`,
+          url: `${BASE_URL}/photographie-sous-marine`,
+          creator: { '@type': 'Person', name: 'Karim Saari', alternateName: 'Dark Massilia', url: BASE_URL },
+          copyrightHolder: { '@type': 'Person', name: 'Karim Saari' },
+          copyrightYear: 2024,
+          creditText: '© Karim Saari / Dark Massilia',
+          copyrightNotice: '© Karim Saari / Dark Massilia — Tous droits réservés',
+          license: `${BASE_URL}/mentions-legales`,
+          acquireLicensePage: `${BASE_URL}/contact`,
         },
       ],
     },
@@ -620,9 +680,9 @@ export const SEO_PAGES = {
     },
   },
   '/meduses-souveraines-oceans-documentaire-arte': {
-    title: 'Méduses | Les souveraines des océans — Documentaire ARTE Évasion',
+    title: 'Méduses Souveraines des Océans — Documentaire ARTE',
     description:
-      'Documentaire ARTE Évasion réalisé par Sébastien Lafont (2024, 43 min). Karim Saari a fourni des images tournées en Méditerranée pour ce film sur la prolifération des méduses.',
+      'Documentaire ARTE Évasion (2024, 43 min) de Sébastien Lafont. Karim Saari a fourni des images de Méditerranée sur la prolifération des méduses.',
     canonical: `${BASE_URL}/meduses-souveraines-oceans-documentaire-arte`,
     schema: {
       '@context': 'https://schema.org',
@@ -653,7 +713,7 @@ export const SEO_PAGES = {
     },
   },
   '/blog': {
-    title: 'Blog Actualités — Missions de Dépollution Marine | Dark Massilia',
+    title: 'Blog — Missions Dépollution Marine · Dark Massilia',
     description:
       'Suivez les dernières actions de dépollution de Team Oxygen en Méditerranée. Reportages, rencontres et coups de cœur depuis les Calanques de Marseille.',
     canonical: `${BASE_URL}/blog`,
@@ -683,16 +743,13 @@ export const SEO_PAGES = {
       ],
     },
   },
-  // ⚠️  /actualites = flux Twitter embed — noindex intentionnel.
-  // Page thin content (contenu tiers, pas de valeur SEO propre).
-  // Conserver noindex pour préserver le crawl budget et le siloing thématique.
-  // Ne PAS supprimer sans arbitrage SEO préalable.
+  // ✅  /actualites — page enrichie : fil @dark_massilia + RSS officiel Parc National des Calanques
+  // Contenu substantiel double source → indexable.
   '/actualites': {
-    title: 'Actualités et Alertes Environnementales | Projet Sentinelle',
+    title: 'Actualités Calanques — Parc National & Dark Massilia',
     description:
-      'Suivez en temps réel les actions de dépollution marine de Team Oxygen. Alertes environnementales et actualités des Calanques de Marseille en direct.',
+      'Actualités officielles du Parc National des Calanques et alertes terrain de @dark_massilia. Dépollution marine, biodiversité et protection de la Méditerranée.',
     canonical: `${BASE_URL}/actualites`,
-    noindex: true, // noindex, follow — liens suivis mais page exclue de l'index
   },
   // noindex, follow — page satellite (profil Google Maps), liens suivis.
   // Exclue de l'index pour éviter la dilution du siloing "dépollution".
@@ -803,9 +860,9 @@ export const SEO_PAGES = {
     },
   },
   '/les-francais-yann-arthus-bertrand': {
-    title: '« Les Français » de Yann Arthus-Bertrand — Team Oxygen à Marseille',
+    title: 'Les Français de Yann Arthus-Bertrand — Marseille',
     description:
-      'En 2024, Yann Arthus-Bertrand a photographié Team Oxygen pour son projet « Les Français ». Un portrait fort de l\'engagement de Karim Saari pour la dépollution de la Méditerranée.',
+      'En 2024, Yann Arthus-Bertrand a photographié Team Oxygen pour son projet « Les Français ». Portrait de l\'engagement de Karim Saari pour la Méditerranée.',
     canonical: `${BASE_URL}/les-francais-yann-arthus-bertrand`,
     schema: {
       '@context': 'https://schema.org',
@@ -836,9 +893,9 @@ export const SEO_PAGES = {
     },
   },
   '/carte-calanques': {
-    title: 'Carte Interactive des Calanques : Spots de Dépollution & Biodiversité',
+    title: 'Carte des Calanques : Dépollution & Biodiversité',
     description:
-      "Explorez la carte interactive des Calanques de Marseille. Localisez nos zones de dépollution marine avec Team Oxygen et découvrez la biodiversité des fonds méditerranéens à protéger.",
+      'Explorez la carte interactive des Calanques de Marseille. Localisez nos zones de dépollution avec Team Oxygen et découvrez la biodiversité à protéger.',
     canonical: `${BASE_URL}/carte-calanques`,
     schema: {
       '@context': 'https://schema.org',
