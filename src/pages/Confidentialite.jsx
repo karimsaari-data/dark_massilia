@@ -58,8 +58,8 @@ export default function Confidentialite() {
               <span className="text-white font-medium">SAARI KARIM</span> — Entrepreneur individuel (EI)
               <br />168 chemin de Morgiou, 13009 Marseille
               <br />
-              <a href="mailto:email@karimsaari.com" className="text-ocean-teal/80 hover:text-ocean-teal transition-colors">
-                email@karimsaari.com
+              <a href="mailto:contact@karimsaari.com" className="text-ocean-teal/80 hover:text-ocean-teal transition-colors">
+                contact@karimsaari.com
               </a>
             </p>
           </Section>
@@ -174,8 +174,8 @@ export default function Confidentialite() {
             </ul>
             <p>
               Pour exercer ces droits, adressez votre demande par email à{' '}
-              <a href="mailto:email@karimsaari.com" className="text-ocean-teal/80 hover:text-ocean-teal transition-colors">
-                email@karimsaari.com
+              <a href="mailto:contact@karimsaari.com" className="text-ocean-teal/80 hover:text-ocean-teal transition-colors">
+                contact@karimsaari.com
               </a>.
               Délai de réponse : 1 mois maximum.
             </p>

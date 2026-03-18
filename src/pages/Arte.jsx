@@ -9,38 +9,7 @@ const Arte = () => {
   return (
     <div className="min-h-screen py-32">
       <SEO {...SEO_PAGES['/sauver-marseille-documentaire-arte']} />
-      <div className="container-custom max-w-4xl">
-
-        {/* Section éditoriale SEO — documentaire ARTE & légitimité médiatique */}
-        <motion.div
-          initial="hidden"
-          animate="visible"
-          variants={STAGGER_CONTAINER}
-          className="mb-12"
-        >
-          <motion.div variants={FADE_IN_UP} className="glass-strong rounded-3xl p-8 md:p-12">
-            <h2 className="text-2xl md:text-3xl font-bold text-white mb-6">
-              ARTE met les Calanques à l'honneur
-            </h2>
-            <p className="text-text-secondary leading-relaxed text-lg mb-4">
-              En 2024, la chaîne culturelle européenne{' '}
-              <strong className="text-white">ARTE</strong> a consacré un reportage aux éco-acteurs
-              marseillais mobilisés contre la pollution plastique en Méditerranée. Au cœur du
-              documentaire : <strong className="text-ocean-teal">Karim Saari</strong>, apnéiste et
-              photographe sous-marin, engagé au sein de{' '}
-              <strong className="text-ocean-teal">Team Oxygen</strong> et impliqué dès la première
-              édition du <strong className="text-ocean-teal">Projet Sentinelle</strong>.
-            </p>
-            <p className="text-text-secondary leading-relaxed text-lg">
-              Ses plongées en apnée dans les Calanques de Marseille — entre 0 et 20 mètres de
-              profondeur — documentent une réalité brute : canettes, filets, plastiques et déchets
-              piégés dans les herbiers de posidonie. Cette diffusion à l'échelle européenne a donné
-              une visibilité accrue aux missions de dépollution et contribué à sensibiliser un large
-              public à l'urgence de la{' '}
-              <strong className="text-white">pollution marine en Méditerranée</strong>.
-            </p>
-          </motion.div>
-        </motion.div>
+      <div className="container-custom">
 
         {/* Header */}
         <motion.div
@@ -71,9 +40,10 @@ const Arte = () => {
             <div className="relative aspect-video bg-black">
               <iframe
                 src="https://www.youtube.com/embed/cxjAQtSHHyI"
-                title="Documentaire ARTE"
+                title="Documentaire ARTE — Pollution : Il faut sauver Marseille et ses Calanques"
                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                 allowFullScreen
+                loading="lazy"
                 className="absolute inset-0 w-full h-full"
               />
             </div>
@@ -112,18 +82,6 @@ const Arte = () => {
               — Extrait du commentaire du documentaire <em>ARTE Regards</em>, diffusé en 2024
             </p>
           </motion.div>
-          {/* Image pleine largeur */}
-          <div className="relative w-full aspect-[4/5]">
-            <picture>
-              <source srcSet="/images/karim-saari-arte-regard-documentaire-calanques-marseille.webp" type="image/webp" />
-              <img
-                src="/images/karim-saari-arte-regard-documentaire-calanques-marseille.jpg"
-                alt="Karim Saari dans le reportage ARTE Regards — Pollution marine à Marseille"
-                className="absolute inset-0 w-full h-full object-cover object-center"
-              />
-            </picture>
-            <div className="absolute inset-0 bg-gradient-to-t from-transparent via-transparent to-[#0a0f1e]/40" />
-          </div>
         </motion.div>
 
         {/* Additional Content */}
@@ -150,6 +108,52 @@ const Arte = () => {
             <span>Chaîne YouTube ARTE</span>
             <ExternalLink className="w-4 h-4 group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform" />
           </motion.a>
+        </motion.div>
+
+        {/* Bloc éditorial + photo — bas de page */}
+        <motion.div
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true }}
+          variants={STAGGER_CONTAINER}
+          className="mt-12 mb-12"
+        >
+          <motion.div variants={FADE_IN_UP} className="glass-strong rounded-3xl overflow-hidden flex flex-col lg:flex-row">
+            {/* Texte */}
+            <div className="p-8 md:p-12 lg:flex-1 flex flex-col justify-center">
+              <h2 className="text-2xl md:text-3xl font-bold text-white mb-6">
+                ARTE met les Calanques à l'honneur
+              </h2>
+              <p className="text-text-secondary leading-[1.8] text-lg mb-4">
+                En 2024, la chaîne culturelle européenne{' '}
+                <strong className="text-white">ARTE</strong> a consacré un reportage aux éco-acteurs
+                marseillais mobilisés contre la pollution plastique en Méditerranée. Au cœur du
+                documentaire : <strong className="text-ocean-teal">Karim Saari</strong>, apnéiste et
+                photographe sous-marin, engagé au sein de{' '}
+                <strong className="text-ocean-teal">Team Oxygen</strong> et impliqué dès la première
+                édition du <strong className="text-ocean-teal">Projet Sentinelle</strong>.
+              </p>
+              <p className="text-text-secondary leading-[1.8] text-lg">
+                Ses plongées en apnée dans les Calanques de Marseille — entre 0 et 20 mètres de
+                profondeur — documentent une réalité brute : canettes, filets, plastiques et déchets
+                piégés dans les herbiers de posidonie. Cette diffusion à l'échelle européenne a donné
+                une visibilité accrue aux missions de dépollution et contribué à sensibiliser un large
+                public à l'urgence de la{' '}
+                <strong className="text-white">pollution marine en Méditerranée</strong>.
+              </p>
+            </div>
+            {/* Photo */}
+            <div className="lg:w-[42%] flex-shrink-0 min-h-[300px] lg:min-h-0 overflow-hidden">
+              <picture>
+                <source srcSet="/images/karim-saari-arte-regard-documentaire-calanques-marseille.webp" type="image/webp" />
+                <img
+                  src="/images/karim-saari-arte-regard-documentaire-calanques-marseille.jpg"
+                  alt="Karim Saari dans le reportage ARTE Regards — Pollution marine à Marseille"
+                  className="w-full h-full object-cover object-center"
+                />
+              </picture>
+            </div>
+          </motion.div>
         </motion.div>
 
         {/* CTAs — Continuer la navigation */}

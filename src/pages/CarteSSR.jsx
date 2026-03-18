@@ -9,11 +9,11 @@ export default function CarteSSR() {
   return (
     <>
       <SEO
-        title="Carte des Sites — Dark Massilia | Karim Saari"
-        description="Cartographie interactive des sites de plongée, zones polluées et spots naturels des Calanques de Marseille documentés par Dark Massilia."
-        canonical="https://karimsaari.com/carte"
+        title="Carte des Calanques : Dépollution & Biodiversité | Karim Saari"
+        description="Explorez la carte interactive des Calanques de Marseille. Localisez nos zones de dépollution avec Team Oxygen et découvrez la biodiversité à protéger."
+        canonical="https://karimsaari.com/carte-calanques"
       />
-      <div className="min-h-screen pt-20">
+      <div className="min-h-screen pt-[70px] md:pt-[128px]">
         <div className="container-custom py-8">
           <h1 className="text-3xl md:text-4xl font-bold text-white mb-2">Carte des Sites</h1>
           <p className="text-text-secondary text-lg">Calanques de Marseille — zones documentées en apnée</p>

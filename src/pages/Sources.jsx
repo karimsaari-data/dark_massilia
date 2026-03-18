@@ -62,7 +62,7 @@ const Sources = () => {
     {
       category: "Méditerranée : Concentrations et Impacts",
       icon: FileText,
-      image: "/images/portfolio/New/h%203%20Vallon%20d%C3%A9poll.jpg",
+      image: "/images/portfolio/Mer/photographe-sous-marin-marseille-depollution-posidonie-apnee-projet-sentinelle.webp",
       references: [
         {
           authors: "Cózar, A., et al.",
@@ -195,42 +195,46 @@ const Sources = () => {
             <h2 className="text-2xl md:text-3xl font-bold text-white mb-6">
               Les chiffres de l'urgence environnementale
             </h2>
-            <div className="space-y-4 text-text-secondary leading-relaxed text-lg">
-              <p>
-                Notre action de terrain repose sur des données scientifiques solides et convergentes.
-                Chaque année, environ <strong className="text-white">570&nbsp;000 tonnes de plastique</strong> sont
-                déversées en Méditerranée, soit l'équivalent de <strong className="text-white">33&nbsp;800 bouteilles par minute</strong>.
-                Mer semi-fermée représentant moins de 1&nbsp;% de la surface océanique mondiale, la Méditerranée
-                concentre près de <strong className="text-white">7&nbsp;% des microplastiques marins</strong>.
-              </p>
-              <p>
-                Ces plastiques se fragmentent en micro- et nanoplastiques persistants, intégrés à la colonne
-                d'eau, aux sédiments et aux chaînes trophiques. Ils constituent également un support biologique&nbsp;:
-                la <em className="text-white">plastisphère</em>, écosystème microbien colonisant les débris flottants,
-                favorise la dispersion d'agents pathogènes et d'espèces exotiques.
-              </p>
-              <p>
-                Parallèlement, la Méditerranée subit une pression croissante liée aux <strong className="text-white">espèces invasives</strong>.
-                Plus de <strong className="text-white">1&nbsp;000 espèces non indigènes</strong> y ont été recensées,
-                introduites principalement via le transport maritime et le canal de Suez.
-              </p>
-              <p>
-                Parmi elles, <em className="text-ocean-teal">Rugulopteryx okamurae</em>, algue brune originaire du
-                Pacifique nord-ouest, connaît depuis 2015 une expansion rapide en Méditerranée occidentale. Elle
-                colonise les fonds rocheux jusqu'à 30 mètres de profondeur, forme des tapis denses, modifie les
-                habitats benthiques et entre en compétition avec les espèces locales. Son accumulation massive sur
-                les côtes perturbe également les écosystèmes littoraux et les usages humains.
-              </p>
-              <p>
-                Pollution plastique et invasions biologiques sont liées&nbsp;: les déchets flottants facilitent le
-                transport d'organismes exotiques, tandis que le réchauffement climatique accroît leur capacité
-                d'implantation.
-              </p>
-              <p className="text-white font-medium border-l-2 border-ocean-teal pl-4">
-                Face à ces dynamiques combinées — pollution, artificialisation du littoral, surpêche,
-                réchauffement — la Méditerranée devient un laboratoire avancé des déséquilibres globaux.
-                Documenter, alerter et agir ne relève plus du militantisme, mais de la nécessité écologique.
-              </p>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-8 text-text-secondary leading-[1.8] text-lg">
+              <div className="space-y-4">
+                <p>
+                  Notre action de terrain repose sur des données scientifiques solides et convergentes.
+                  Chaque année, environ <strong className="text-white">570&nbsp;000 tonnes de plastique</strong> sont
+                  déversées en Méditerranée, soit l'équivalent de <strong className="text-white">33&nbsp;800 bouteilles par minute</strong>.
+                  Mer semi-fermée représentant moins de 1&nbsp;% de la surface océanique mondiale, la Méditerranée
+                  concentre près de <strong className="text-white">7&nbsp;% des microplastiques marins</strong>.
+                </p>
+                <p>
+                  Ces plastiques se fragmentent en micro- et nanoplastiques persistants, intégrés à la colonne
+                  d'eau, aux sédiments et aux chaînes trophiques. Ils constituent également un support biologique&nbsp;:
+                  la <em className="text-white">plastisphère</em>, écosystème microbien colonisant les débris flottants,
+                  favorise la dispersion d'agents pathogènes et d'espèces exotiques.
+                </p>
+                <p>
+                  Parallèlement, la Méditerranée subit une pression croissante liée aux <strong className="text-white">espèces invasives</strong>.
+                  Plus de <strong className="text-white">1&nbsp;000 espèces non indigènes</strong> y ont été recensées,
+                  introduites principalement via le transport maritime et le canal de Suez.
+                </p>
+              </div>
+              <div className="space-y-4">
+                <p>
+                  Parmi elles, <em className="text-ocean-teal">Rugulopteryx okamurae</em>, algue brune originaire du
+                  Pacifique nord-ouest, connaît depuis 2015 une expansion rapide en Méditerranée occidentale. Elle
+                  colonise les fonds rocheux jusqu'à 30 mètres de profondeur, forme des tapis denses, modifie les
+                  habitats benthiques et entre en compétition avec les espèces locales. Son accumulation massive sur
+                  les côtes perturbe également les écosystèmes littoraux et les usages humains.
+                </p>
+                <p>
+                  Pollution plastique et invasions biologiques sont liées&nbsp;: les déchets flottants facilitent le
+                  transport d'organismes exotiques, tandis que le réchauffement climatique accroît leur capacité
+                  d'implantation.
+                </p>
+                <p className="text-white font-medium border-l-2 border-ocean-teal pl-4">
+                  Face à ces dynamiques combinées — pollution, artificialisation du littoral, surpêche,
+                  réchauffement — la Méditerranée devient un laboratoire avancé des déséquilibres globaux.
+                  Documenter, alerter et agir ne relève plus du militantisme, mais de la nécessité écologique.
+                </p>
+              </div>
             </div>
           </motion.div>
         </motion.div>
@@ -249,7 +253,7 @@ const Sources = () => {
                 className="glass-strong rounded-3xl overflow-hidden border border-white/10"
               >
                 {/* Category Header with Image */}
-                <div className="grid md:grid-cols-[1fr_300px] gap-0">
+                <div className="grid md:grid-cols-[1fr_420px] gap-0">
                   <div className="p-8 md:p-10">
                     <motion.div variants={FADE_IN_UP} className="flex items-center gap-4 mb-8">
                       <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-ocean-teal to-blue-500 flex items-center justify-center shadow-lg shadow-ocean-teal/30">
@@ -340,27 +344,29 @@ const Sources = () => {
 
           <div className="p-8 md:p-10 space-y-8">
             {/* Description */}
-            <motion.div variants={FADE_IN_UP} className="space-y-4 text-text-secondary leading-relaxed text-lg">
-              <p>
-                Le Parc national des Calanques à Marseille fait face à une crise biologique sans précédent : la prolifération foudroyante d'une macroalgue brune exotique originaire d'Asie, <em className="text-white">Rugulopteryx okamurae</em>.
-              </p>
-              <ul className="space-y-4 mt-4">
-                <li className="flex gap-3">
+            <motion.div variants={FADE_IN_UP} className="grid grid-cols-1 md:grid-cols-2 gap-8 text-text-secondary leading-[1.8] text-lg">
+              <div className="space-y-4">
+                <p>
+                  Le Parc national des Calanques à Marseille fait face à une crise biologique sans précédent : la prolifération foudroyante d'une macroalgue brune exotique originaire d'Asie, <em className="text-white">Rugulopteryx okamurae</em>.
+                </p>
+                <div className="flex gap-3">
                   <span className="text-ocean-teal font-bold shrink-0 mt-1">▸</span>
                   <span><strong className="text-white">Une colonisation éclair :</strong> Introduite accidentellement via le commerce des produits de la mer, cette algue a rapidement tapissé plus de 9,5 km de côtes dans le parc depuis 2018. Elle domine aujourd'hui massivement les fonds rocheux entre 0 et 20 mètres de profondeur, y compris dans les zones de protection stricte où tout prélèvement est interdit.</span>
-                </li>
-                <li className="flex gap-3">
+                </div>
+                <div className="flex gap-3">
                   <span className="text-ocean-teal font-bold shrink-0 mt-1">▸</span>
                   <span><strong className="text-white">Un désastre écologique :</strong> En formant d'épais tapis continus, elle monopolise l'espace, étouffe la flore locale et provoque le déclin des invertébrés benthiques. Cette altération profonde des habitats menace les herbiers, les récifs coralligènes et toute la chaîne alimentaire locale.</span>
-                </li>
-                <li className="flex gap-3">
+                </div>
+              </div>
+              <div className="space-y-4">
+                <div className="flex gap-3">
                   <span className="text-ocean-teal font-bold shrink-0 mt-1">▸</span>
                   <span><strong className="text-white">Des impacts socio-économiques et sanitaires lourds :</strong> Les fragments d'algues s'accrochent massivement dans les filets, paralysant l'activité des pêcheurs artisans. Sur le littoral, les énormes quantités d'algues qui s'échouent (notamment à la calanque de Callelongue) dégagent en pourrissant des gaz toxiques (H₂S), générant de graves nuisances olfactives et des risques pour la santé publique.</span>
-                </li>
-              </ul>
-              <p>
-                Cette invasion foudroyante complexifie grandement la gestion du Parc national, dont les écosystèmes marins sont par ailleurs déjà fortement mis à l'épreuve par le réchauffement climatique et une fréquentation touristique massive.
-              </p>
+                </div>
+                <p>
+                  Cette invasion foudroyante complexifie grandement la gestion du Parc national, dont les écosystèmes marins sont par ailleurs déjà fortement mis à l'épreuve par le réchauffement climatique et une fréquentation touristique massive.
+                </p>
+              </div>
             </motion.div>
 
             {/* Avant / Après */}
@@ -506,59 +512,56 @@ const Sources = () => {
             <h2 className="text-2xl md:text-3xl font-bold text-white mb-6">
               Les Références Scientifiques
             </h2>
-            <div className="space-y-4 text-text-secondary leading-relaxed text-lg">
-              <p>
-                Chaque donnée présentée sur ce site, qu'elle concerne la pollution plastique, la{' '}
-                <em className="text-white">plastisphère</em> ou les espèces invasives comme{' '}
-                <em className="text-ocean-teal">Rugulopteryx okamurae</em>, s'appuie sur des publications
-                scientifiques vérifiées.
-              </p>
-              <p>
-                Cette page regroupe les études qui documentent l'état réel des écosystèmes méditerranéens&nbsp;:
-                concentration de macro- et microplastiques, impacts écotoxicologiques, dynamiques d'introduction
-                d'espèces exotiques, modifications des habitats benthiques et interactions avec le réchauffement
-                climatique.
-              </p>
-              <p>
-                Les sources citées proviennent de revues à comité de lecture (
-                <em>Science</em>, <em>Nature</em>, <em>PNAS</em>, <em>Marine Pollution Bulletin</em>,{' '}
-                <em>Frontiers in Marine Science</em>), d'organismes internationaux (WWF, PNUE, FAO, Commission
-                européenne), ainsi que de travaux académiques et institutionnels spécifiquement consacrés à la
-                Méditerranée et au littoral marseillais.
-              </p>
-              <p className="text-white font-medium border-l-2 border-ocean-teal pl-4">
-                L'objectif est double&nbsp;: garantir la traçabilité des informations diffusées et fonder
-                l'action de terrain sur un socle scientifique robuste. Découvrez comment ces données guident
-                nos opérations concrètes sur nos{' '}
-                <Link to="/depollution-marine" className="text-ocean-teal hover:text-white transition-colors">
-                  missions de dépollution marine
-                </Link>.
-              </p>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-8 text-text-secondary leading-[1.8] text-lg">
+              <div className="space-y-4">
+                <p>
+                  Chaque donnée présentée sur ce site, qu'elle concerne la pollution plastique, la{' '}
+                  <em className="text-white">plastisphère</em> ou les espèces invasives comme{' '}
+                  <em className="text-ocean-teal">Rugulopteryx okamurae</em>, s'appuie sur des publications
+                  scientifiques vérifiées.
+                </p>
+                <p>
+                  Cette page regroupe les études qui documentent l'état réel des écosystèmes méditerranéens&nbsp;:
+                  concentration de macro- et microplastiques, impacts écotoxicologiques, dynamiques d'introduction
+                  d'espèces exotiques, modifications des habitats benthiques et interactions avec le réchauffement
+                  climatique.
+                </p>
+              </div>
+              <div className="space-y-4">
+                <p>
+                  Les sources citées proviennent de revues à comité de lecture (
+                  <em>Science</em>, <em>Nature</em>, <em>PNAS</em>, <em>Marine Pollution Bulletin</em>,{' '}
+                  <em>Frontiers in Marine Science</em>), d'organismes internationaux (WWF, PNUE, FAO, Commission
+                  européenne), ainsi que de travaux académiques et institutionnels spécifiquement consacrés à la
+                  Méditerranée et au littoral marseillais.
+                </p>
+                <p className="text-white font-medium border-l-2 border-ocean-teal pl-4">
+                  L'objectif est double&nbsp;: garantir la traçabilité des informations diffusées et fonder
+                  l'action de terrain sur un socle scientifique robuste. Découvrez comment ces données guident
+                  nos opérations concrètes sur nos{' '}
+                  <Link to="/depollution-marine" className="text-ocean-teal hover:text-white transition-colors">
+                    missions de dépollution marine
+                  </Link>.
+                </p>
+              </div>
+            </div>
+            <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mt-8 pt-6 border-t border-white/8">
+              <Link
+                to="/sauver-marseille-documentaire-arte"
+                className="btn-primary inline-flex items-center gap-2"
+              >
+                <span>Documentaire ARTE</span>
+                <ArrowLeft className="w-4 h-4 rotate-180" aria-hidden="true" />
+              </Link>
+              <Link
+                to="/videos"
+                className="btn-secondary inline-flex items-center gap-2 group"
+              >
+                <span>Voir nos vidéos</span>
+                <ArrowLeft className="w-4 h-4 rotate-180 group-hover:translate-x-1 transition-transform" aria-hidden="true" />
+              </Link>
             </div>
           </motion.div>
-        </motion.div>
-
-        {/* CTAs — Continuer la navigation */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.4 }}
-          className="mt-12 mb-8 flex flex-col sm:flex-row items-center justify-center gap-4"
-        >
-          <Link
-            to="/sauver-marseille-documentaire-arte"
-            className="btn-primary inline-flex items-center gap-2"
-          >
-            <span>Documentaire ARTE</span>
-            <ArrowLeft className="w-4 h-4 rotate-180" aria-hidden="true" />
-          </Link>
-          <Link
-            to="/videos"
-            className="btn-secondary inline-flex items-center gap-2 group"
-          >
-            <span>Voir nos vidéos</span>
-            <ArrowLeft className="w-4 h-4 rotate-180 group-hover:translate-x-1 transition-transform" aria-hidden="true" />
-          </Link>
         </motion.div>
 
       </div>

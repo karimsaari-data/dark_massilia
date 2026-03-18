@@ -19,6 +19,61 @@ export const DEFAULT_SEO = {
   twitterHandle: TWITTER_HANDLE,
 };
 
+// ── Schéma Person — Karim Saari (ancre unique, réutilisé sur / et /presse) ──
+const PERSON_SCHEMA = {
+  '@type': 'Person',
+  '@id': 'https://karimsaari.com/#person',
+  name: 'Karim Saari',
+  alternateName: 'Dark Massilia',
+  url: 'https://karimsaari.com',
+  image: DEFAULT_IMAGE,
+  jobTitle: ['Photographe de paysage', 'Apnéiste', 'Expert environnemental'],
+  description:
+    'Expert environnemental et apnéiste engagé, photographe de paysage salué par National Geographic. Interventions sur TF1, ARTE et Échappées Belles.',
+  address: {
+    '@type': 'PostalAddress',
+    addressLocality: 'Marseille',
+    addressRegion: 'Bouches-du-Rhône',
+    addressCountry: 'FR',
+  },
+  sameAs: [
+    'https://www.instagram.com/karimsaari',
+    'https://twitter.com/dark_massilia',
+    'https://www.tiktok.com/@dark.massilia',
+    'https://www.youtube.com/@dark.massilia',
+    'https://www.youtube.com/watch?v=cxjAQtSHHyI',
+    'https://www.dailymotion.com/video/x8wzsm2',
+    'https://www.facebook.com/Photographie.Marseille',
+    'https://www.facebook.com/groups/calanque/',
+    'https://www.linkedin.com/in/karimsaari/',
+    'https://500px.com/p/karimsaari?view=photos',
+    'https://fr.pinterest.com/Photographie_Marseille/',
+    'https://www.google.com/maps/contrib/114953930403565163435',
+    'https://www.tf1info.fr/environnement-ecologie/video-greve-des-eboueurs-a-marseille-des-craintes-pour-l-environnement-2208213.html',
+    'https://www.tf1info.fr/environnement-ecologie/video-le-scandale-des-decharges-sauvages-dans-les-calanques-marseillaises-2258525.html',
+    'https://www.laprovence.com/video/marseille-14-tonne-de-dechets-sortie-des-eaux-du-frioul-par-des-apneistes/14871',
+    'https://www.laprovence.com/article/region/1865431/le-vieux-port-de-marseille-nettoye-par-des-apneistes',
+    'https://www.midilibre.fr/2024/04/02/une-maree-bleue-pourquoi-des-milliers-de-meduses-recouvrent-elles-le-littoral-a-marseille-11865324.php',
+  ],
+  knowsAbout: [
+    'Protection de l\'environnement',
+    'Photographie sous-marine',
+    'Dépollution marine',
+    'Calanques de Marseille',
+  ],
+  memberOf: {
+    '@type': 'Organization',
+    name: 'Team Oxygen',
+    url: 'https://www.team-oxygen.com/',
+  },
+  sponsor: [
+    { '@type': 'GovernmentOrganization', name: 'Parc national des Calanques' },
+    { '@type': 'Organization', name: 'Fondation de la Mer' },
+    { '@type': 'Organization', name: 'Citeo' },
+    { '@type': 'GovernmentOrganization', name: 'Ville de Marseille' },
+  ],
+};
+
 // ── Helper : BreadcrumbList Schema.org ──────────────────────
 const breadcrumb = (name, path) => ({
   '@context': 'https://schema.org',
@@ -33,43 +88,12 @@ export const SEO_PAGES = {
   '/': {
     title: 'Karim Saari | Photographe Paysages & Sous-Marin | Sentinelle des Calanques',
     description:
-      "Karim Saari, sentinelle de la Méditerranée. Photographe de paysages et sous-marin, apnéiste engagé depuis 10 ans contre la pollution plastique dans les Calanques de Marseille.",
+      "Karim Saari, photographe et Sentinelle des Calanques de Marseille. Découvrez mes clichés sous-marins et mon engagement pour protéger la Méditerranée.",
     canonical: `${BASE_URL}/`,
     schema: {
       '@context': 'https://schema.org',
       '@graph': [
-        {
-          '@type': 'Person',
-          name: 'Karim Saari',
-          alternateName: 'Dark Massilia',
-          url: 'https://karimsaari.com',
-          image: DEFAULT_IMAGE,
-          jobTitle: 'Photographe sous-marin & Apnéiste engagé',
-          description:
-            'Karim Saari, photographe et apnéiste marseillais, documente et nettoie les fonds marins des Calanques avec Team Oxygen.',
-          address: {
-            '@type': 'PostalAddress',
-            addressLocality: 'Marseille',
-            addressRegion: 'Bouches-du-Rhône',
-            addressCountry: 'FR',
-          },
-          sameAs: [
-            'https://www.google.com/maps/contrib/114912564832630219145/photos',
-            'https://www.instagram.com/karimsaari',
-            'https://twitter.com/dark_massilia',
-            'https://www.tiktok.com/@dark.massilia',
-            'https://www.youtube.com/@dark.massilia',
-            'https://www.facebook.com/Photographie.Marseille',
-            'https://www.facebook.com/groups/calanque/',
-            'https://500px.com/p/karimsaari',
-            'https://www.linkedin.com/in/karimsaari',
-          ],
-          memberOf: {
-            '@type': 'Organization',
-            name: 'Team Oxygen',
-            url: 'https://www.team-oxygen.com/',
-          },
-        },
+        PERSON_SCHEMA,
         {
           '@type': 'FAQPage',
           mainEntity: [
@@ -186,7 +210,7 @@ export const SEO_PAGES = {
     title: 'Association Dépollution Marine Marseille — Team Oxygen | Karim Saari',
     description:
       'Team Oxygen, association de dépollution marine à Marseille. Depuis 2022, 5 724 kg de déchets extraits des Calanques en apnée — Opération Sentinelle.',
-    canonical: `${BASE_URL}/depollution-marine`,
+    canonical: `${BASE_URL}/depollution-marine/`,
     schema: {
       '@context': 'https://schema.org',
       '@graph': [
@@ -239,7 +263,7 @@ export const SEO_PAGES = {
           ],
           subjectOf: {
             '@type': 'WebPage',
-            url: `${BASE_URL}/depollution-marine`,
+            url: `${BASE_URL}/depollution-marine/`,
             name: 'Association Dépollution Marine à Marseille | Team Oxygen',
           },
         },
@@ -291,7 +315,7 @@ export const SEO_PAGES = {
           'encodingFormat': 'image/webp',
           'creditText': '© Karim Saari — Dark Massilia',
           'copyrightNotice': '© Karim Saari',
-          'acquireLicensePage': `${BASE_URL}/contact`,
+          'acquireLicensePage': `${BASE_URL}/contact/`,
         },
         {
           '@type': 'ImageObject',
@@ -302,7 +326,7 @@ export const SEO_PAGES = {
           'encodingFormat': 'image/webp',
           'creditText': '© Karim Saari — Dark Massilia',
           'copyrightNotice': '© Karim Saari',
-          'acquireLicensePage': `${BASE_URL}/contact`,
+          'acquireLicensePage': `${BASE_URL}/contact/`,
         },
         {
           '@type': 'ImageObject',
@@ -313,7 +337,7 @@ export const SEO_PAGES = {
           'encodingFormat': 'image/webp',
           'creditText': '© Karim Saari — Dark Massilia',
           'copyrightNotice': '© Karim Saari',
-          'acquireLicensePage': `${BASE_URL}/contact`,
+          'acquireLicensePage': `${BASE_URL}/contact/`,
         },
         {
           '@type': 'ImageObject',
@@ -324,7 +348,7 @@ export const SEO_PAGES = {
           'encodingFormat': 'image/webp',
           'creditText': '© Karim Saari — Dark Massilia',
           'copyrightNotice': '© Karim Saari',
-          'acquireLicensePage': `${BASE_URL}/contact`,
+          'acquireLicensePage': `${BASE_URL}/contact/`,
         },
         {
           '@type': 'ImageObject',
@@ -335,7 +359,7 @@ export const SEO_PAGES = {
           'encodingFormat': 'image/webp',
           'creditText': '© Karim Saari — Dark Massilia',
           'copyrightNotice': '© Karim Saari',
-          'acquireLicensePage': `${BASE_URL}/contact`,
+          'acquireLicensePage': `${BASE_URL}/contact/`,
         },
       ],
     },
@@ -344,7 +368,7 @@ export const SEO_PAGES = {
     title: 'Vidéos & Documentaires : Dépollution en Méditerranée',
     description:
       "Visionnez mes documentaires et reportages d'action en immersion. Plongez au cœur des missions de dépollution marine en Méditerranée.",
-    canonical: `${BASE_URL}/videos`,
+    canonical: `${BASE_URL}/videos/`,
     schema: {
       '@context': 'https://schema.org',
       '@graph': [
@@ -392,7 +416,7 @@ export const SEO_PAGES = {
     title: 'Photographe Sous-Marin à Marseille — 58 Photos de Missions | Karim Saari',
     description:
       'Galerie de 58 photographies sous-marines de missions de dépollution en apnée dans les Calanques de Marseille — Projet Sentinelle, Team Oxygen.',
-    canonical: `${BASE_URL}/photographie-sous-marine`,
+    canonical: `${BASE_URL}/photographie-sous-marine/`,
     schema: {
       '@context': 'https://schema.org',
       '@graph': [
@@ -402,7 +426,7 @@ export const SEO_PAGES = {
           name: '58 Photos de Missions Sous-Marines — Projet Sentinelle',
           description:
             'Galerie de 58 photographies sous-marines prises lors des missions de dépollution en apnée de Team Oxygen dans les Calanques de Marseille (2022-2025).',
-          url: `${BASE_URL}/photographie-sous-marine`,
+          url: `${BASE_URL}/photographie-sous-marine/`,
           creator: {
             '@type': 'Person',
             name: 'Karim Saari',
@@ -421,14 +445,14 @@ export const SEO_PAGES = {
           description:
             "Apnéiste de Team Oxygen en pleine extraction de déchets sur les fonds marins des Calanques — Projet Sentinelle.",
           contentUrl: `${BASE_URL}/images/Marseille-dark-massilia-plastique-pollution-projet-sentinelle-apneiste.webp`,
-          url: `${BASE_URL}/photographie-sous-marine`,
+          url: `${BASE_URL}/photographie-sous-marine/`,
           creator: { '@type': 'Person', name: 'Karim Saari', alternateName: 'Dark Massilia', url: BASE_URL },
           copyrightHolder: { '@type': 'Person', name: 'Karim Saari' },
           copyrightYear: 2023,
           creditText: '© Karim Saari / Dark Massilia',
           copyrightNotice: '© Karim Saari / Dark Massilia — Tous droits réservés',
-          license: `${BASE_URL}/mentions-legales`,
-          acquireLicensePage: `${BASE_URL}/contact`,
+          license: `${BASE_URL}/mentions-legales/`,
+          acquireLicensePage: `${BASE_URL}/contact/`,
         },
         {
           '@type': 'ImageObject',
@@ -436,14 +460,14 @@ export const SEO_PAGES = {
           description:
             "Poulpe observé en apnée lors d'une mission de dépollution de Team Oxygen dans les Calanques de Marseille.",
           contentUrl: `${BASE_URL}/images/Marseille-dark-massilia-plastique-pollution-projet-sentinelle-poulpe.webp`,
-          url: `${BASE_URL}/photographie-sous-marine`,
+          url: `${BASE_URL}/photographie-sous-marine/`,
           creator: { '@type': 'Person', name: 'Karim Saari', alternateName: 'Dark Massilia', url: BASE_URL },
           copyrightHolder: { '@type': 'Person', name: 'Karim Saari' },
           copyrightYear: 2024,
           creditText: '© Karim Saari / Dark Massilia',
           copyrightNotice: '© Karim Saari / Dark Massilia — Tous droits réservés',
-          license: `${BASE_URL}/mentions-legales`,
-          acquireLicensePage: `${BASE_URL}/contact`,
+          license: `${BASE_URL}/mentions-legales/`,
+          acquireLicensePage: `${BASE_URL}/contact/`,
         },
       ],
     },
@@ -451,8 +475,8 @@ export const SEO_PAGES = {
   '/photographie-paysage-mer': {
     title: 'Karim Saari | Photographe Paysage & Sous-Marin à Marseille',
     description:
-      'Karim Saari, photographe de paysages et sous-marin à Marseille. Calanques, Méditerranée, Provence, Maroc — des images entre deux mondes, capturées en apnée et en lumière naturelle.',
-    canonical: `${BASE_URL}/photographie-paysage-mer`,
+      'Karim Saari, photographe de paysages et sous-marin à Marseille. Calanques, Méditerranée, Provence, Maroc — images capturées en apnée et lumière naturelle.',
+    canonical: `${BASE_URL}/photographie-paysage-mer/`,
     schema: {
       '@context': 'https://schema.org',
       '@graph': [
@@ -463,70 +487,70 @@ export const SEO_PAGES = {
           name: 'Photographe sous-marin Marseille — Apnée grotte marine Calanques — Karim Saari',
           description: "Karim Saari, photographe sous-marin à Marseille, explore en apnée une grotte marine dans les Calanques. Vue subjective, mains en néoprène, eau turquoise.",
           contentUrl: `${BASE_URL}/images/portfolio/Mer/photographe-sous-marin-marseille-apnee-grotte-marine-calanques.webp`,
-          url: `${BASE_URL}/photographie-paysage-mer`,
+          url: `${BASE_URL}/photographie-paysage-mer/`,
           creator: { '@type': 'Person', name: 'Karim Saari', alternateName: 'Dark Massilia', url: BASE_URL },
           copyrightHolder: { '@type': 'Person', name: 'Karim Saari' },
           copyrightYear: 2024,
           creditText: '© Karim Saari / Dark Massilia',
           copyrightNotice: '© Karim Saari / Dark Massilia — Tous droits réservés',
-          license: `${BASE_URL}/mentions-legales`,
-          acquireLicensePage: `${BASE_URL}/contact`,
+          license: `${BASE_URL}/mentions-legales/`,
+          acquireLicensePage: `${BASE_URL}/contact/`,
         },
         {
           '@type': 'ImageObject',
           name: 'Photographe sous-marin Marseille — Dépollution apnée Projet Sentinelle — Karim Saari',
           description: "Karim Saari, photographe sous-marin marseillais, documente la dépollution en apnée dans les Calanques. Mission Projet Sentinelle, Team Oxygen.",
           contentUrl: `${BASE_URL}/images/portfolio/Mer/photographe-sous-marin-marseille-depollution-apnee-pneu-projet-sentinelle.webp`,
-          url: `${BASE_URL}/photographie-paysage-mer`,
+          url: `${BASE_URL}/photographie-paysage-mer/`,
           creator: { '@type': 'Person', name: 'Karim Saari', alternateName: 'Dark Massilia', url: BASE_URL },
           copyrightHolder: { '@type': 'Person', name: 'Karim Saari' },
           copyrightYear: 2023,
           creditText: '© Karim Saari / Dark Massilia',
           copyrightNotice: '© Karim Saari / Dark Massilia — Tous droits réservés',
-          license: `${BASE_URL}/mentions-legales`,
-          acquireLicensePage: `${BASE_URL}/contact`,
+          license: `${BASE_URL}/mentions-legales/`,
+          acquireLicensePage: `${BASE_URL}/contact/`,
         },
         {
           '@type': 'ImageObject',
           name: 'Photographe sous-marin Marseille — Pollution plastique fonds marins Méditerranée — Karim Saari',
           description: "Photographe sous-marin à Marseille, Karim Saari documente la pollution plastique sur les fonds marins lors du Projet Sentinelle dans les Calanques.",
           contentUrl: `${BASE_URL}/images/portfolio/Mer/photographe-sous-marin-marseille-pollution-plastique-fond-marin.webp`,
-          url: `${BASE_URL}/photographie-paysage-mer`,
+          url: `${BASE_URL}/photographie-paysage-mer/`,
           creator: { '@type': 'Person', name: 'Karim Saari', alternateName: 'Dark Massilia', url: BASE_URL },
           copyrightHolder: { '@type': 'Person', name: 'Karim Saari' },
           copyrightYear: 2024,
           creditText: '© Karim Saari / Dark Massilia',
           copyrightNotice: '© Karim Saari / Dark Massilia — Tous droits réservés',
-          license: `${BASE_URL}/mentions-legales`,
-          acquireLicensePage: `${BASE_URL}/contact`,
+          license: `${BASE_URL}/mentions-legales/`,
+          acquireLicensePage: `${BASE_URL}/contact/`,
         },
         {
           '@type': 'ImageObject',
           name: 'Photographe sous-marin Marseille — Biodiversité fonds marins Calanques — Karim Saari',
           description: "Karim Saari, photographe sous-marin à Marseille, capture la biodiversité des fonds marins des Calanques en apnée — posidonie, faune méditerranéenne.",
           contentUrl: `${BASE_URL}/images/portfolio/Mer/photographe-sous-marin-marseille-biodiversite-fonds-marins-calanques.webp`,
-          url: `${BASE_URL}/photographie-paysage-mer`,
+          url: `${BASE_URL}/photographie-paysage-mer/`,
           creator: { '@type': 'Person', name: 'Karim Saari', alternateName: 'Dark Massilia', url: BASE_URL },
           copyrightHolder: { '@type': 'Person', name: 'Karim Saari' },
           copyrightYear: 2023,
           creditText: '© Karim Saari / Dark Massilia',
           copyrightNotice: '© Karim Saari / Dark Massilia — Tous droits réservés',
-          license: `${BASE_URL}/mentions-legales`,
-          acquireLicensePage: `${BASE_URL}/contact`,
+          license: `${BASE_URL}/mentions-legales/`,
+          acquireLicensePage: `${BASE_URL}/contact/`,
         },
         {
           '@type': 'ImageObject',
           name: 'Photographe Marseille — Calanque En-Vau vue aérienne — Karim Saari',
           description: "Karim Saari, photographe à Marseille, capture la calanque d'En-Vau depuis les airs — eaux turquoise et falaises calcaires blanches des Calanques.",
           contentUrl: `${BASE_URL}/images/portfolio/Mer/karim-saari-marseille-en-vau-aerien-calanque-falaises.webp`,
-          url: `${BASE_URL}/photographie-paysage-mer`,
+          url: `${BASE_URL}/photographie-paysage-mer/`,
           creator: { '@type': 'Person', name: 'Karim Saari', alternateName: 'Dark Massilia', url: BASE_URL },
           copyrightHolder: { '@type': 'Person', name: 'Karim Saari' },
           copyrightYear: 2023,
           creditText: '© Karim Saari / Dark Massilia',
           copyrightNotice: '© Karim Saari / Dark Massilia — Tous droits réservés',
-          license: `${BASE_URL}/mentions-legales`,
-          acquireLicensePage: `${BASE_URL}/contact`,
+          license: `${BASE_URL}/mentions-legales/`,
+          acquireLicensePage: `${BASE_URL}/contact/`,
         },
       ],
     },
@@ -535,30 +559,125 @@ export const SEO_PAGES = {
     title: 'Données Scientifiques : Pollution Plastique en Méditerranée',
     description:
       "Consultez les données scientifiques sur la pollution plastique en Méditerranée. Comprendre l'urgence écologique pour mieux agir.",
-    canonical: `${BASE_URL}/donnees-scientifiques`,
+    canonical: `${BASE_URL}/donnees-scientifiques/`,
     schema: breadcrumb('Données Scientifiques', '/donnees-scientifiques'),
   },
   '/presse': {
     title: 'Documentaires & Reportages Environnement Marin | Karim Saari',
     description:
       "Retrouvez les reportages et documentaires (ARTE, France TV) témoignant de nos missions de dépollution et de l'urgence écologique en mer Méditerranée.",
-    canonical: `${BASE_URL}/presse`,
+    canonical: `${BASE_URL}/presse/`,
     schema: {
       '@context': 'https://schema.org',
       '@graph': [
+        PERSON_SCHEMA,
         breadcrumb('Presse & Médias', '/presse'),
         {
           '@type': 'CollectionPage',
           name: 'Presse & Médias — Karim Saari',
           description:
             'Couvertures presse et passages TV (ARTE, Échappées Belles, Yann Arthus-Bertrand, Fondation de la Mer) de Karim Saari, apnéiste et défenseur de la Méditerranée.',
-          url: `${BASE_URL}/presse`,
-          author: {
-            '@type': 'Person',
-            name: 'Karim Saari',
-            alternateName: 'Dark Massilia',
-            url: BASE_URL,
-          },
+          url: `${BASE_URL}/presse/`,
+          author: { '@id': 'https://karimsaari.com/#person' },
+        },
+        // ── ItemList : passages TV & documentaires ───────────────────────────
+        // Lie chaque VideoObject à l'entité Karim Saari via mentions/@id
+        // → renforce le Knowledge Graph Google (entity linking)
+        {
+          '@type': 'ItemList',
+          name: 'Passages TV & Documentaires — Karim Saari',
+          itemListElement: [
+            {
+              '@type': 'ListItem',
+              position: 1,
+              item: {
+                '@type': 'VideoObject',
+                name: 'Documentaire ARTE — Sauver Marseille (pollution marine)',
+                description:
+                  'Documentaire ARTE sur la pollution plastique dans les Calanques de Marseille. Karim Saari et Team Oxygen documentent et nettoient les fonds marins.',
+                thumbnailUrl: `${BASE_URL}/images/karim-saari-photo-profil-arte-regard-marseille.webp`,
+                uploadDate: '2022-01-17',
+                url: `${BASE_URL}/sauver-marseille-documentaire-arte/`,
+                publisher: { '@type': 'Organization', name: 'ARTE' },
+                mentions: { '@id': `${BASE_URL}/#person` },
+              },
+            },
+            {
+              '@type': 'ListItem',
+              position: 2,
+              item: {
+                '@type': 'VideoObject',
+                name: 'Méduses : les souveraines des océans — ARTE Évasion',
+                description:
+                  'Documentaire ARTE Évasion sur les méduses en Méditerranée. Karim Saari, apnéiste marseillais, témoigne de leur prolifération liée au réchauffement climatique.',
+                thumbnailUrl: `${BASE_URL}/images/arte-meduses-souveraines-oceans-documentaire-marseille-2.webp`,
+                uploadDate: '2023-06-01',
+                url: `${BASE_URL}/meduses-souveraines-oceans-documentaire-arte/`,
+                publisher: { '@type': 'Organization', name: 'ARTE' },
+                mentions: { '@id': `${BASE_URL}/#person` },
+              },
+            },
+            {
+              '@type': 'ListItem',
+              position: 3,
+              item: {
+                '@type': 'VideoObject',
+                name: 'Échappées Belles — Karim Saari avec Ismaël Khelifa à Marseille',
+                description:
+                  "Reportage France Télévisions dans l'émission Échappées Belles. Karim Saari guide Ismaël Khelifa et Matthieu Witvoet dans les Calanques de Marseille.",
+                thumbnailUrl: `${BASE_URL}/images/karim-saari-marseille-echappees-belles-reportage-television.webp`,
+                uploadDate: '2023-04-08',
+                url: 'https://www.dailymotion.com/video/x8wzsm2',
+                publisher: { '@type': 'Organization', name: 'France Télévisions' },
+                mentions: { '@id': `${BASE_URL}/#person` },
+              },
+            },
+            {
+              '@type': 'ListItem',
+              position: 4,
+              item: {
+                '@type': 'VideoObject',
+                name: 'TF1 — Le scandale des décharges sauvages dans les calanques marseillaises',
+                description:
+                  'Reportage TF1 JT 20h sur la pollution marine dans les Calanques de Marseille. Interview de Karim Saari, apnéiste et sentinelle de la Méditerranée.',
+                thumbnailUrl: `${BASE_URL}/images/JT_20H_TF1_video-dechets-ordures-marseille-le-scandale-des-decharges-sauvages-dans-les-calanques-marseillaises-journal_de_tf1_pollution_calanques_calanque_cortiou-karimsaari.webp`,
+                uploadDate: '2023-05-28',
+                url: 'https://www.tf1info.fr/environnement-ecologie/video-dechets-ordures-marseille-le-scandale-des-decharges-sauvages-dans-les-calanques-marseillaises-2258467.html',
+                publisher: { '@type': 'Organization', name: 'TF1 Info' },
+                mentions: { '@id': `${BASE_URL}/#person` },
+              },
+            },
+            {
+              '@type': 'ListItem',
+              position: 5,
+              item: {
+                '@type': 'VideoObject',
+                name: "TF1 — Grève des éboueurs à Marseille : des craintes pour l'environnement",
+                description:
+                  "Reportage TF1 Info sur l'impact de la grève des éboueurs sur l'environnement marin à Marseille. Témoignage de Karim Saari, apnéiste et photographe.",
+                thumbnailUrl: `${BASE_URL}/images/TF1_plongeur_karimsaari_video-greve-des-eboueurs-a-marseille-des-craintes-pour-l-environnement.webp`,
+                uploadDate: '2022-09-23',
+                url: 'https://www.tf1info.fr/environnement-ecologie/video-greve-des-eboueurs-a-marseille-des-craintes-pour-l-environnement-2208213.html',
+                publisher: { '@type': 'Organization', name: 'TF1 Info' },
+                mentions: { '@id': `${BASE_URL}/#person` },
+              },
+            },
+            {
+              '@type': 'ListItem',
+              position: 6,
+              item: {
+                '@type': 'VideoObject',
+                name: 'La Provence — Marseille : 1,4 tonne de déchets sortie des eaux du Frioul',
+                description:
+                  'Reportage La Provence sur la mission de dépollution du Frioul à Marseille. Karim Saari et les apnéistes de Team Oxygen remontent 1,4 tonne de déchets.',
+                thumbnailUrl: `${BASE_URL}/images/laprovence_d%C3%A9pollution_calanques_frioul_marseille_karimsaari_projet_sentinelle.webp`,
+                uploadDate: '2024-09-28',
+                url: 'https://www.laprovence.com/videos/marseille-1-4-tonne-de-dchets-sortie-des-eaux-du-frioul-par-des-apnistes/10321076',
+                publisher: { '@type': 'Organization', name: 'La Provence' },
+                mentions: { '@id': `${BASE_URL}/#person` },
+              },
+            },
+          ],
         },
       ],
     },
@@ -567,7 +686,7 @@ export const SEO_PAGES = {
     title: 'Bénévolat Dépollution Marseille : Rejoignez Team Oxygen',
     description:
       "Envie d'agir pour la Méditerranée ? Rejoignez notre communauté de 130 000 sentinelles et participez à nos missions de bénévolat écologique à Marseille.",
-    canonical: `${BASE_URL}/communaute`,
+    canonical: `${BASE_URL}/communaute/`,
     schema: {
       '@context': 'https://schema.org',
       '@graph': [
@@ -654,7 +773,7 @@ export const SEO_PAGES = {
     title: 'Documentaire ARTE : Pollution, il faut sauver Marseille !',
     description:
       'Découvrez le documentaire ARTE Regards sur la pollution à Marseille. Une immersion choc avec Karim Saari et Team Oxygen pour sauver les Calanques.',
-    canonical: `${BASE_URL}/sauver-marseille-documentaire-arte`,
+    canonical: `${BASE_URL}/sauver-marseille-documentaire-arte/`,
     schema: {
       '@context': 'https://schema.org',
       '@graph': [
@@ -683,7 +802,7 @@ export const SEO_PAGES = {
     title: 'Méduses Souveraines des Océans — Documentaire ARTE',
     description:
       'Documentaire ARTE Évasion (2024, 43 min) de Sébastien Lafont. Karim Saari a fourni des images de Méditerranée sur la prolifération des méduses.',
-    canonical: `${BASE_URL}/meduses-souveraines-oceans-documentaire-arte`,
+    canonical: `${BASE_URL}/meduses-souveraines-oceans-documentaire-arte/`,
     schema: {
       '@context': 'https://schema.org',
       '@graph': [
@@ -716,7 +835,7 @@ export const SEO_PAGES = {
     title: 'Blog — Missions Dépollution Marine · Dark Massilia',
     description:
       'Suivez les dernières actions de dépollution de Team Oxygen en Méditerranée. Reportages, rencontres et coups de cœur depuis les Calanques de Marseille.',
-    canonical: `${BASE_URL}/blog`,
+    canonical: `${BASE_URL}/blog/`,
     schema: {
       '@context': 'https://schema.org',
       '@graph': [
@@ -726,7 +845,7 @@ export const SEO_PAGES = {
           name: 'Blog Dark Massilia — Actualités Méditerranée',
           description:
             'Journal de bord des missions de dépollution marine menées par Karim Saari et Team Oxygen dans les Calanques de Marseille.',
-          url: `${BASE_URL}/blog`,
+          url: `${BASE_URL}/blog/`,
           author: {
             '@type': 'Person',
             name: 'Karim Saari',
@@ -749,7 +868,7 @@ export const SEO_PAGES = {
     title: 'Actualités Calanques — Parc National & Dark Massilia',
     description:
       'Actualités officielles du Parc National des Calanques et alertes terrain de @dark_massilia. Dépollution marine, biodiversité et protection de la Méditerranée.',
-    canonical: `${BASE_URL}/actualites`,
+    canonical: `${BASE_URL}/actualites/`,
   },
   // noindex, follow — page satellite (profil Google Maps), liens suivis.
   // Exclue de l'index pour éviter la dilution du siloing "dépollution".
@@ -758,7 +877,7 @@ export const SEO_PAGES = {
     noindex: true, // noindex, follow
     description:
       'Suivez mes contributions en tant que Google Local Guide à Marseille. Plus de 183 millions de vues pour valoriser notre patrimoine naturel.',
-    canonical: `${BASE_URL}/local-guide-marseille`,
+    canonical: `${BASE_URL}/local-guide-marseille/`,
     schema: {
       '@context': 'https://schema.org',
       '@graph': [
@@ -766,7 +885,7 @@ export const SEO_PAGES = {
         {
           '@type': 'ProfilePage',
           name: 'Google Local Guides — Karim Saari',
-          url: `${BASE_URL}/local-guide-marseille`,
+          url: `${BASE_URL}/local-guide-marseille/`,
           description:
             'Profil Google Local Guides Niveau 10 de Karim Saari — contributeur actif depuis 9 ans, certifié Street View Trusted, 22 000+ contributions sur les Calanques de Marseille.',
           mainEntity: {
@@ -816,7 +935,7 @@ export const SEO_PAGES = {
     title: 'Contact Karim Saari | Reportages, Expositions & Dépollution',
     description:
       'Contactez Karim Saari pour une intervention dans un documentaire, une exposition photo engagée ou une mission de dépollution à Marseille.',
-    canonical: `${BASE_URL}/contact`,
+    canonical: `${BASE_URL}/contact/`,
     schema: {
       '@context': 'https://schema.org',
       '@graph': [
@@ -826,7 +945,7 @@ export const SEO_PAGES = {
           '@id': `${BASE_URL}/#business`,
           name: 'Karim SAARI - Photographe Calanques & Marseille',
           url: `${BASE_URL}/`,
-          email: 'email@karimsaari.com',
+          email: 'contact@karimsaari.com',
           telephone: '+33695331301',
           address: {
             '@type': 'PostalAddress',
@@ -863,7 +982,7 @@ export const SEO_PAGES = {
     title: 'Les Français de Yann Arthus-Bertrand — Marseille',
     description:
       'En 2024, Yann Arthus-Bertrand a photographié Team Oxygen pour son projet « Les Français ». Portrait de l\'engagement de Karim Saari pour la Méditerranée.',
-    canonical: `${BASE_URL}/les-francais-yann-arthus-bertrand`,
+    canonical: `${BASE_URL}/les-francais-yann-arthus-bertrand/`,
     schema: {
       '@context': 'https://schema.org',
       '@graph': [
@@ -874,7 +993,7 @@ export const SEO_PAGES = {
           description:
             'Portrait de Team Oxygen réalisé par Yann Arthus-Bertrand en 2024 à Marseille pour le projet photographique « Les Français ».',
           contentUrl: `${BASE_URL}/images/Marseille-2024-342-Les-Francais-copyright-Yann-Arthus-Bertrand.webp`,
-          url: `${BASE_URL}/les-francais-yann-arthus-bertrand`,
+          url: `${BASE_URL}/les-francais-yann-arthus-bertrand/`,
           creator: {
             '@type': 'Person',
             name: 'Yann Arthus-Bertrand',

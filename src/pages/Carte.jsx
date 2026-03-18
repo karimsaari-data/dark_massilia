@@ -21,7 +21,7 @@ import SEO from '../components/SEO';
 import { SEO_PAGES } from '../utils/seo';
 
 const MAP_ID = '1fu2q9DRyD80m11ejdp8Ivuj5vn2aguM';
-const EMBED_URL = `https://www.google.com/maps/d/embed?mid=${MAP_ID}&ehbc=2E312F`;
+const EMBED_URL = `https://www.google.com/maps/d/embed?mid=${MAP_ID}&ehbc=2E312F&ll=43.205,5.52&z=13`;
 const FULL_URL  = `https://www.google.com/maps/d/viewer?mid=${MAP_ID}`;
 
 export default function Carte() {
@@ -98,7 +98,7 @@ export default function Carte() {
       </div>
 
       {/* Contenu SEO — section scrollable sous la carte */}
-      <section className="container-custom py-12 max-w-5xl space-y-10">
+      <section className="container-custom py-12 space-y-10">
 
         {/* ── BLOC ÉDITORIAL PRINCIPAL ── */}
         <motion.div
@@ -279,12 +279,28 @@ export default function Carte() {
               <ArrowRight className="w-4 h-4" />
             </Link>
           </div>
+          <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mt-8 pt-6 border-t border-white/8">
+            <Link
+              to="/local-guide-marseille"
+              className="btn-primary inline-flex items-center gap-2"
+            >
+              <span>Local Guide Marseille</span>
+              <ArrowRight className="w-4 h-4" aria-hidden="true" />
+            </Link>
+            <Link
+              to="/#newsletter"
+              className="btn-secondary inline-flex items-center gap-2"
+            >
+              <span>S'inscrire à la newsletter</span>
+              <ArrowRight className="w-4 h-4" aria-hidden="true" />
+            </Link>
+          </div>
         </motion.div>
 
       </section>
 
       {/* CTA — Cartes officielles du Parc national des Calanques */}
-      <section className="container-custom pb-16 max-w-5xl">
+      <section className="container-custom pb-16">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -371,29 +387,6 @@ export default function Carte() {
           </div>
         </motion.div>
 
-        {/* CTAs */}
-        <motion.div
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
-          viewport={{ once: true }}
-          transition={{ delay: 0.2 }}
-          className="flex flex-col sm:flex-row items-center justify-center gap-4 mt-10 mb-8"
-        >
-          <Link
-            to="/local-guide-marseille"
-            className="btn-primary inline-flex items-center gap-2"
-          >
-            <span>Local Guide Marseille</span>
-            <ArrowRight className="w-4 h-4" aria-hidden="true" />
-          </Link>
-          <Link
-            to="/#newsletter"
-            className="btn-secondary inline-flex items-center gap-2"
-          >
-            <span>S'inscrire à la newsletter</span>
-            <ArrowRight className="w-4 h-4" aria-hidden="true" />
-          </Link>
-        </motion.div>
       </section>
     </>
   );

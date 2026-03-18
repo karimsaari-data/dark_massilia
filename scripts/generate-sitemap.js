@@ -32,20 +32,20 @@ const TODAY    = new Date().toISOString().slice(0, 10); // YYYY-MM-DD
 // changefreq : conseil de fréquence de crawl
 
 const STATIC_PAGES = [
-  { path: '/',                                        priority: '1.0', changefreq: 'weekly'  },
-  { path: '/depollution-marine',                      priority: '0.9', changefreq: 'monthly' },
-  { path: '/blog',                                    priority: '0.9', changefreq: 'weekly'  },
-  { path: '/communaute',                              priority: '0.8', changefreq: 'monthly' },
-  { path: '/photographie-paysage-mer',                priority: '0.8', changefreq: 'monthly' },
-  { path: '/videos',                                  priority: '0.8', changefreq: 'monthly' },
-  { path: '/carte-calanques',                         priority: '0.8', changefreq: 'weekly'  },
-  { path: '/presse',                                  priority: '0.7', changefreq: 'monthly' },
-  { path: '/donnees-scientifiques',                   priority: '0.7', changefreq: 'monthly' },
+  { path: '/',                                              priority: '1.0', changefreq: 'weekly'  },
+  { path: '/depollution-marine',                           priority: '0.9', changefreq: 'monthly' },
+  { path: '/blog',                                         priority: '0.9', changefreq: 'weekly'  },
+  { path: '/communaute',                                   priority: '0.8', changefreq: 'monthly' },
+  { path: '/photographie-paysage-mer',                     priority: '0.8', changefreq: 'monthly' },
+  { path: '/videos',                                       priority: '0.8', changefreq: 'monthly' },
+  { path: '/carte-calanques',                              priority: '0.8', changefreq: 'weekly'  },
+  { path: '/presse',                                       priority: '0.7', changefreq: 'monthly' },
+  { path: '/donnees-scientifiques',                        priority: '0.7', changefreq: 'monthly' },
   // /local-guide-marseille : noindex intentionnel — exclu du sitemap
-  { path: '/les-francais-yann-arthus-bertrand',       priority: '0.7', changefreq: 'yearly'  },
-  { path: '/sauver-marseille-documentaire-arte',      priority: '0.6', changefreq: 'yearly'  },
+  { path: '/les-francais-yann-arthus-bertrand',            priority: '0.7', changefreq: 'yearly'  },
+  { path: '/sauver-marseille-documentaire-arte',           priority: '0.6', changefreq: 'yearly'  },
   { path: '/meduses-souveraines-oceans-documentaire-arte', priority: '0.6', changefreq: 'yearly' },
-  { path: '/contact',                                 priority: '0.5', changefreq: 'yearly'  },
+  { path: '/contact',                                      priority: '0.5', changefreq: 'yearly'  },
   // mentions-legales et confidentialite : volontairement absents (noindex implicite)
 ];
 

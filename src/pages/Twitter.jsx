@@ -197,7 +197,7 @@ const Twitter = () => {
           initial="hidden"
           animate="visible"
           variants={STAGGER_CONTAINER}
-          className="max-w-4xl mx-auto mt-10 mb-8"
+          className="mx-auto mt-10 mb-8"
         >
           <motion.div variants={FADE_IN_UP} className="glass rounded-3xl p-8 md:p-10">
             <h1 className="text-lg md:text-xl font-bold text-white mb-4">

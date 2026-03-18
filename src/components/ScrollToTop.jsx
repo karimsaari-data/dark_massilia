@@ -1,5 +1,6 @@
 import { useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
+import { trackPageView } from '../lib/analytics';
 
 /**
  * Remet le scroll en haut de page à chaque changement de route.
@@ -9,6 +10,7 @@ const ScrollToTop = () => {
   const { pathname, hash } = useLocation();
 
   useEffect(() => {
+    trackPageView(pathname, document.title);
     if (!hash) {
       window.scrollTo(0, 0);
     } else {

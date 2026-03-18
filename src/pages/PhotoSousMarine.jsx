@@ -1,19 +1,21 @@
-import { useState, useEffect, useCallback, useRef } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
-import { ArrowLeft, ArrowRight, X, ChevronLeft, ChevronRight } from 'lucide-react';
+import { useState, useEffect } from 'react';
+import { motion } from 'framer-motion';
+import { ArrowLeft, ArrowRight, Trash2, Fish, ClipboardList } from 'lucide-react';
 import { Link } from 'react-router-dom';
+// Référence Fancybox — peuplée dynamiquement côté client uniquement
+let _FB = null;
+const getFB = () => _FB;
 import { FADE_IN_UP, STAGGER_CONTAINER } from '../utils/constants';
 import SEO from '../components/SEO';
 import { SEO_PAGES } from '../utils/seo';
-import useFocusTrap from '../hooks/useFocusTrap';
+import { supabase } from '../lib/supabase';
 
-const allImagePaths = [
+const depollutionPaths = [
   "/images/Marseille-dark-massilia-plastique-pollution-projet-sentinelle-apneiste.webp",
   "/images/Marseille-dark-massilia-plastique-pollution-projet-sentinelle-archipel-frioul-barquette-1.webp",
   "/images/Marseille-dark-massilia-plastique-pollution-projet-sentinelle-archipel-frioul-barquette-2.webp",
   "/images/Marseille-dark-massilia-plastique-pollution-projet-sentinelle-archipel-frioul-barquette-3.webp",
   "/images/Marseille-dark-massilia-plastique-pollution-projet-sentinelle-archipel-frioul-barquette-4.webp",
-  "/images/Marseille-dark-massilia-plastique-pollution-projet-sentinelle-archipel-frioul-barquette-5.webp",
   "/images/Marseille-dark-massilia-plastique-pollution-projet-sentinelle-archipel-frioul-barquette-6.webp",
   "/images/Marseille-dark-massilia-plastique-pollution-projet-sentinelle-archipel-frioul-barquette-8.webp",
   "/images/Marseille-dark-massilia-plastique-pollution-projet-sentinelle-bache.webp",
@@ -34,7 +36,6 @@ const allImagePaths = [
   "/images/Marseille-dark-massilia-plastique-pollution-projet-sentinelle-kayak-boudmer.webp",
   "/images/Marseille-dark-massilia-plastique-pollution-projet-sentinelle-mer-de-plastique.webp",
   "/images/Marseille-dark-massilia-plastique-pollution-projet-sentinelle-morgan-bourchis.webp",
-  "/images/Marseille-dark-massilia-plastique-pollution-projet-sentinelle-moyades-riou.webp",
   "/images/Marseille-dark-massilia-plastique-pollution-projet-sentinelle-moyades-romuald.webp",
   "/images/Marseille-dark-massilia-plastique-pollution-projet-sentinelle-moyades.webp",
   "/images/Marseille-dark-massilia-plastique-pollution-projet-sentinelle-musée.webp",
@@ -46,11 +47,9 @@ const allImagePaths = [
   "/images/Marseille-dark-massilia-plastique-pollution-projet-sentinelle-plaque-immatriculation.webp",
   "/images/Marseille-dark-massilia-plastique-pollution-projet-sentinelle-pollution-huveaune.webp",
   "/images/Marseille-dark-massilia-plastique-pollution-projet-sentinelle-poséidon.webp",
-  "/images/Marseille-dark-massilia-plastique-pollution-projet-sentinelle-poulpe.webp",
   "/images/Marseille-dark-massilia-plastique-pollution-projet-sentinelle-shooting-cave.webp",
   "/images/Marseille-dark-massilia-plastique-pollution-projet-sentinelle-shooting.webp",
   "/images/Marseille-dark-massilia-plastique-pollution-projet-sentinelle-soupe-plastique.webp",
-  "/images/Marseille-dark-massilia-plastique-pollution-projet-sentinelle-spirographe.webp",
   "/images/Marseille-dark-massilia-plastique-pollution-projet-sentinelle-teamoxygen-freediving.webp",
   "/images/Marseille-dark-massilia-plastique-pollution-projet-sentinelle-teamoxygen.webp",
   "/images/Marseille-dark-massilia-plastique-pollution-projet-sentinelle-vélo-métropole.webp",
@@ -79,6 +78,13 @@ const allImagePaths = [
   "/images/marseille-dark-massilia-port-goudes-depollution-apnee-projet-sentinelle.webp",
   "/images/marseille-dark-massilia-projet-sentinelle-caracterisation-dechets.webp",
   "/images/marseille-dark-massilia-tf1-reportage-projet-sentinelle-depollution.webp",
+  "/images/portfolio/New/h-3-vallon-depoll.webp",
+];
+
+const biodiversitePaths = [
+  "/images/Marseille-dark-massilia-plastique-pollution-projet-sentinelle-archipel-frioul-barquette-5.webp",
+  "/images/Marseille-dark-massilia-plastique-pollution-projet-sentinelle-spirographe.webp",
+  "/images/Marseille-dark-massilia-plastique-pollution-projet-sentinelle-poulpe.webp",
 ];
 
 const getAltText = (src) => {
@@ -91,11 +97,35 @@ const getAltText = (src) => {
   return `Mission Projet Sentinelle Marseille — ${cap} — © Karim Saari, photographe sous-marin Marseille`;
 };
 
-const baseImages = allImagePaths.map((src, i) => ({
-  uid: `sentinelle-${i}`,
-  src,
-  alt: getAltText(src),
-}));
+const getLieu = (src) => {
+  if (/frioul/i.test(src))               return 'Archipel du Frioul, Marseille';
+  if (/goudes/i.test(src))               return 'Les Goudes, Marseille';
+  if (/riou/i.test(src))                 return 'Île de Riou, Marseille';
+  if (/subaquatique|mus.e/i.test(src))   return 'Musée Subaquatique Méditerranée';
+  if (/huveaune/i.test(src))             return 'Huveaune, Marseille';
+  if (/boudmer/i.test(src))              return 'Calanque de Boudmer';
+  if (/moyades/i.test(src))              return 'Îles des Moyades';
+  if (/sormiou/i.test(src))              return 'Calanque de Sormiou';
+  if (/vallon/i.test(src))               return 'Vallon des Auffes, Marseille';
+  return 'Calanques de Marseille';
+};
+
+/* ─── URL Google Maps : coordonnées exactes ou recherche textuelle ─── */
+const mapsUrl = ({ lat, lng, lieu }) => {
+  if (lat && lng) return `https://maps.google.com/?q=${lat},${lng}&z=13`;
+  const q = lieu ? `${lieu}, Marseille, France` : 'Calanques de Marseille, France';
+  return `https://maps.google.com/?q=${encodeURIComponent(q)}`;
+};
+
+const baseDepollution = depollutionPaths.map((src, i) => {
+  const lieu = getLieu(src);
+  return { uid: `depoll-${i}`, src, alt: getAltText(src), lieu, maps: mapsUrl({ lieu }) };
+});
+
+const baseBiodiversite = biodiversitePaths.map((src, i) => {
+  const lieu = getLieu(src);
+  return { uid: `biodiv-${i}`, src, alt: getAltText(src), lieu, maps: mapsUrl({ lieu }) };
+});
 
 const shuffle = (arr) => {
   const a = [...arr];
@@ -106,93 +136,308 @@ const shuffle = (arr) => {
   return a;
 };
 
-const PhotoGrid = ({ images, onOpenLightbox }) => (
-  <div className="columns-1 md:columns-2 lg:columns-3 xl:columns-4 gap-4 space-y-4">
+/* ─── Modal de partage centré ──────────────────────────────── */
+const SHARE_ICONS = {
+  facebook:  `<svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>`,
+  twitter:   `<svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>`,
+  pinterest: `<svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.373 0 0 5.373 0 12c0 5.084 3.163 9.426 7.627 11.174-.105-.949-.2-2.405.042-3.441.218-.937 1.407-5.965 1.407-5.965s-.359-.719-.359-1.782c0-1.668.967-2.914 2.171-2.914 1.023 0 1.518.769 1.518 1.69 0 1.029-.655 2.568-.994 3.995-.283 1.194.599 2.169 1.777 2.169 2.133 0 3.772-2.249 3.772-5.495 0-2.873-2.064-4.882-5.012-4.882-3.414 0-5.418 2.561-5.418 5.207 0 1.031.397 2.138.893 2.738a.36.36 0 0 1 .083.345l-.333 1.36c-.053.22-.174.267-.402.161-1.499-.698-2.436-2.889-2.436-4.649 0-3.785 2.75-7.262 7.929-7.262 4.163 0 7.398 2.967 7.398 6.931 0 4.136-2.607 7.464-6.227 7.464-1.216 0-2.359-.632-2.75-1.378l-.748 2.853c-.271 1.043-1.002 2.35-1.492 3.146C9.57 23.812 10.763 24 12 24c6.627 0 12-5.373 12-12S18.627 0 12 0z"/></svg>`,
+  whatsapp:  `<svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413z"/></svg>`,
+  copy:      `<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="14" height="14" x="8" y="8" rx="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/></svg>`,
+};
+
+function showShareMenu(_triggerEl, slide) {
+  document.querySelector('.fb-share-overlay')?.remove();
+  if (!slide) return;
+
+  const uid = slide.triggerEl?.getAttribute('data-uid') || '';
+  const alt = slide.alt || slide.triggerEl?.getAttribute('data-caption') || '';
+  const src = slide.src || '';
+
+  const relayUrl    = `https://karimsaari.com/p/${encodeURIComponent(uid)}`;
+  const imageAbsUrl = `https://karimsaari.com${src}`;
+  const shareText   = `📸 ${alt} — Karim Saari, photographe Marseille`;
+  const enc = (s) => encodeURIComponent(s);
+
+  const overlay = document.createElement('div');
+  overlay.className = 'fb-share-overlay';
+  Object.assign(overlay.style, {
+    position: 'fixed', inset: '0', zIndex: '99999',
+    display: 'flex', alignItems: 'center', justifyContent: 'center',
+    background: 'rgba(0,0,0,0.75)', backdropFilter: 'blur(4px)',
+    fontFamily: 'system-ui, sans-serif',
+  });
+
+  const box = document.createElement('div');
+  Object.assign(box.style, {
+    background: '#faf8f4', border: '1px solid rgba(0,0,0,0.08)',
+    borderRadius: '20px', padding: '32px 32px 28px',
+    width: '340px', maxWidth: 'calc(100vw - 32px)',
+    boxShadow: '0 24px 80px rgba(0,0,0,0.7)', position: 'relative',
+  });
+
+  const header = document.createElement('div');
+  Object.assign(header.style, { display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '24px' });
+  const titleEl = document.createElement('p');
+  titleEl.textContent = 'Partager';
+  Object.assign(titleEl.style, { color: '#1a1a2e', fontWeight: '700', fontSize: '16px', margin: '0' });
+  const closeBtn = document.createElement('button');
+  closeBtn.innerHTML = `<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>`;
+  Object.assign(closeBtn.style, { background: 'rgba(0,0,0,0.06)', border: 'none', borderRadius: '50%', width: '32px', height: '32px', display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: 'pointer', color: 'rgba(0,0,0,0.5)', flexShrink: '0' });
+  closeBtn.addEventListener('click', () => overlay.remove());
+  header.appendChild(titleEl); header.appendChild(closeBtn);
+  box.appendChild(header);
+
+  const grid = document.createElement('div');
+  Object.assign(grid.style, { display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '12px', marginBottom: '18px' });
+
+  const socialItems = [
+    { label: 'Facebook',    icon: SHARE_ICONS.facebook,  bg: '#1877F2', url: `https://www.facebook.com/sharer/sharer.php?u=${enc(relayUrl)}` },
+    { label: 'X / Twitter', icon: SHARE_ICONS.twitter,   bg: '#000000', url: `https://twitter.com/intent/tweet?text=${enc(shareText)}&url=${enc(relayUrl)}&via=dark_massilia` },
+    { label: 'Pinterest',   icon: SHARE_ICONS.pinterest, bg: '#E60023', url: `https://pinterest.com/pin/create/button/?url=${enc(relayUrl)}&media=${enc(imageAbsUrl)}&description=${enc(shareText)}` },
+    { label: 'WhatsApp',    icon: SHARE_ICONS.whatsapp,  bg: '#25D366', url: `https://wa.me/?text=${enc(shareText + ' ' + relayUrl)}` },
+  ];
+
+  socialItems.forEach(({ label, icon, bg, url }) => {
+    const btn = document.createElement('a');
+    btn.href = url; btn.target = '_blank'; btn.rel = 'noopener noreferrer';
+    btn.innerHTML = `${icon}<span>${label}</span>`;
+    Object.assign(btn.style, {
+      display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '8px',
+      padding: '10px 12px', borderRadius: '12px', background: bg,
+      color: '#fff', fontSize: '12px', fontWeight: '600', textDecoration: 'none', transition: 'opacity 0.15s',
+    });
+    btn.addEventListener('mouseover', () => { btn.style.opacity = '0.85'; });
+    btn.addEventListener('mouseout',  () => { btn.style.opacity = '1'; });
+    btn.addEventListener('click', () => overlay.remove());
+    grid.appendChild(btn);
+  });
+  box.appendChild(grid);
+
+  const copyRow = document.createElement('div');
+  Object.assign(copyRow.style, { display: 'flex', gap: '8px', alignItems: 'center' });
+  const urlInput = document.createElement('input');
+  urlInput.value = relayUrl; urlInput.readOnly = true;
+  Object.assign(urlInput.style, {
+    flex: '1', background: 'rgba(0,0,0,0.04)', border: '1px solid rgba(0,0,0,0.10)',
+    borderRadius: '10px', padding: '8px 12px', color: 'rgba(0,0,0,0.45)',
+    fontSize: '11px', fontFamily: 'monospace', outline: 'none',
+  });
+  urlInput.addEventListener('click', () => urlInput.select());
+  const copyBtn = document.createElement('button');
+  copyBtn.innerHTML = `${SHARE_ICONS.copy}<span>Copier</span>`;
+  Object.assign(copyBtn.style, {
+    display: 'flex', alignItems: 'center', gap: '6px',
+    padding: '8px 14px', borderRadius: '10px', background: 'rgba(33,196,123,0.15)',
+    border: '1px solid rgba(33,196,123,0.4)', color: '#21c47b',
+    fontSize: '12px', fontWeight: '600', cursor: 'pointer', flexShrink: '0', whiteSpace: 'nowrap',
+  });
+  copyBtn.addEventListener('click', async () => {
+    try { await navigator.clipboard.writeText(relayUrl); }
+    catch {
+      const t = document.createElement('textarea');
+      t.value = relayUrl; document.body.appendChild(t); t.select();
+      document.execCommand('copy'); document.body.removeChild(t);
+    }
+    copyBtn.innerHTML = `${SHARE_ICONS.copy}<span>Copié !</span>`;
+    copyBtn.style.color = '#fff';
+    setTimeout(() => overlay.remove(), 1200);
+  });
+  copyRow.appendChild(urlInput); copyRow.appendChild(copyBtn);
+  box.appendChild(copyRow);
+
+  overlay.appendChild(box);
+  overlay.addEventListener('click', (e) => { if (e.target === overlay) overlay.remove(); });
+
+  const fbContainer = getFB()?.getInstance?.()?.getContainer?.();
+  (fbContainer || document.body).appendChild(overlay);
+}
+
+/* ─── Config Fancybox ──────────────────────────────────────── */
+const buildOpts = () => ({
+  on: {
+    initSlides(fancybox) {
+      const opts = fancybox.getOptions();
+      if (!opts.Carousel) opts.Carousel = {};
+      opts.Carousel.captionEl = null;
+      // Caption formatée : info gauche (titre + lieu) + bouton Commander droite
+      opts.Carousel.formatCaption = (_fb, slide) => {
+        const lieu    = slide.caption || '';
+        const title   = slide.triggerEl?.dataset?.title || '';
+        const mapsHref = slide.triggerEl?.dataset?.maps || '';
+        const pin = `<svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg>`;
+        const titleHtml = title ? `<span class="fb-caption-title">${title}</span>` : '';
+        const lieuHtml  = lieu
+          ? mapsHref
+            ? `<a class="fb-caption-lieu fb-caption-maps" href="${mapsHref}" target="_blank" rel="noopener" title="Voir sur Google Maps">${pin}${lieu}</a>`
+            : `<span class="fb-caption-lieu">${pin}${lieu}</span>`
+          : '';
+        return `<span class="fb-caption-wrapper"><span class="fb-caption-info">${titleHtml}${lieuHtml}</span></span>`;
+      };
+    },
+    initLayout(fancybox) {
+      const c = fancybox.getContainer();
+      if (!c) return;
+      // CTA flottant "Commander un tirage" — coin bas droit de la photo
+      const ctaBtn = document.createElement('button');
+      ctaBtn.className = 'fb-cta-floating';
+      ctaBtn.type = 'button';
+      ctaBtn.innerHTML = 'Commander un tirage';
+      c.appendChild(ctaBtn);
+      // CTA — délégation de clic sur le bouton Commander
+      c.addEventListener('click', (e) => {
+        if (!e.target.closest('.fb-cta-floating')) return;
+        const slide  = getFB()?.getSlide?.();
+        const uid    = slide?.triggerEl?.dataset?.hash || '';
+        const title  = slide?.triggerEl?.dataset?.title || slide?.caption || '';
+        const [cat, num] = uid.split('-');
+        const parts = [`catégorie ${cat || uid}`, num ? `numéro ${num}` : null, title || null].filter(Boolean);
+        const subject = encodeURIComponent(`Devis cliché : ${parts.join(' - ')}`);
+        window.location.href = `mailto:contact@karimsaari.com?subject=${subject}`;
+      });
+      // Protection clic droit sur les images
+      c.addEventListener('contextmenu', (e) => {
+        if (e.target.closest('.fancybox__slide')) e.preventDefault();
+      });
+    },
+  },
+  Carousel: {
+    Thumbs: false,
+    Autoplay: {
+      playOnStart: false,
+      timeout: 3000,
+    },
+    Toolbar: {
+      display: {
+        left:   ['counter'],
+        middle: [],
+        right:  ['autoplay', 'share', 'fullscreen', 'close'],
+      },
+      items: {
+        share: {
+          tpl: `<button class="f-button" title="Partager">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/>
+              <line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/>
+            </svg>
+          </button>`,
+          click: (carousel, event) => {
+            const slide = getFB()?.getSlide?.() || carousel.getPage()?.slides?.[0];
+            showShareMenu(event?.currentTarget || event?.target?.closest('.f-button'), slide);
+          },
+        },
+        fullscreen: {
+          tpl: `<button class="f-button" title="Plein écran" data-fullscreen-action="toggle">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <g class="full-exit"><path d="M8 3H5a2 2 0 0 0-2 2v3M21 8V5a2 2 0 0 0-2-2h-3M3 16v3a2 2 0 0 0 2 2h3M16 21h3a2 2 0 0 0 2-2v-3"/></g>
+              <g class="full-enter"><path d="M15 19v-2a2 2 0 0 1 2-2h2M15 5v2a2 2 0 0 0 2 2h2M5 15h2a2 2 0 0 1 2 2v2M5 9h2a2 2 0 0 0 2-2V5"/></g>
+            </svg>
+          </button>`,
+        },
+      },
+    },
+  },
+  l10n: {
+    CLOSE:  'Fermer',
+    NEXT:   'Suivant',
+    PREV:   'Précédent',
+    TOGGLE_FS:      'Plein écran',
+    TOGGLE_SIDEBAR: 'Vignettes',
+  },
+});
+
+/* ─── Composants utilitaires ───────────────────────────────── */
+const SectionTitle = ({ icon: Icon, title, count }) => (
+  <motion.div variants={FADE_IN_UP} className="flex items-center gap-3 mb-8">
+    <div className="flex items-center gap-3">
+      <Icon className="w-6 h-6 text-ocean-teal" aria-hidden="true" />
+      <h2 className="text-2xl font-bold text-white">{title}</h2>
+      <span className="text-sm text-white/40 font-medium">({count})</span>
+    </div>
+    <div className="flex-1 h-px bg-white/10 ml-2" />
+  </motion.div>
+);
+
+/* ─── Grille photos ────────────────────────────────────────── */
+const PhotoGrid = ({ images, gallery }) => (
+  <div className="columns-1 md:columns-2 lg:columns-3 xl:columns-4 gap-4">
     {images.map((image, index) => (
-      <motion.button
+      <motion.a
         key={image.uid}
-        type="button"
-        variants={FADE_IN_UP}
-        className="block w-full break-inside-avoid cursor-pointer group relative overflow-hidden rounded-xl focus-ring"
-        onClick={() => onOpenLightbox(image)}
+        href={image.src}
+        data-fancybox={gallery}
+        data-caption={image.lieu || image.alt}
+        data-title={image.title || ''}
+        data-uid={image.uid}
+        data-hash={image.uid}
+        data-maps={image.maps}
+        data-thumb={image.src}
+        variants={index < 8 ? FADE_IN_UP : undefined}
+        className="block w-full break-inside-avoid cursor-pointer relative overflow-hidden rounded-xl focus-ring mb-4"
         aria-label={`Ouvrir la photo : ${image.alt}`}
       >
         <img
           src={image.src}
           alt={image.alt}
-          className="w-full h-auto object-cover transition-transform duration-500 group-hover:scale-110"
+          className="w-full h-auto object-cover"
           loading={index < 4 ? 'eager' : 'lazy'}
           decoding="async"
         />
-        <div
-          className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"
-          aria-hidden="true"
-        />
-      </motion.button>
+      </motion.a>
     ))}
   </div>
 );
 
+/* ─── Composant principal ─────────────────────────────────── */
 const PhotoSousMarine = () => {
-  const [selectedImage, setSelectedImage] = useState(null);
-  const [isLightboxOpen, setIsLightboxOpen] = useState(false);
-  const closeBtnRef = useRef(null);
-  const [images, setImages] = useState(baseImages);
+  const [depollImages, setDepollImages] = useState(baseDepollution);
+  const [biodivImages, setBiodivImages] = useState(baseBiodiversite);
+  const [caracImages, setCaracImages] = useState([]);
 
-  const lightboxRef = useFocusTrap(isLightboxOpen);
+  // Fetch Supabase — remplace les données statiques si disponible
+  useEffect(() => {
+    supabase
+      .from('photos_sous_marine')
+      .select('uid, src, alt, title, lieu, categorie, visible')
+      .eq('visible', true)
+      .order('uid')
+      .then(({ data }) => {
+        if (!data || data.length === 0) return;
+        const depoll = data.filter(p => p.categorie === 'depollution');
+        const biodiv = data.filter(p => p.categorie === 'biodiversite');
+        const carac  = data.filter(p => p.categorie === 'caracterisation');
+        if (depoll.length) setDepollImages(shuffle(depoll));
+        if (biodiv.length) setBiodivImages(shuffle(biodiv));
+        if (carac.length)  setCaracImages(shuffle(carac));
+      });
+  }, []);
 
   // Shuffle côté client uniquement (après hydration SSR)
   useEffect(() => {
-    setImages(shuffle(baseImages));
+    setDepollImages(shuffle(baseDepollution));
+    setBiodivImages(shuffle(baseBiodiversite));
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  const openLightbox = (image) => {
-    setSelectedImage(image);
-    setIsLightboxOpen(true);
-    document.body.style.overflow = 'hidden';
-  };
-
-  const closeLightbox = useCallback(() => {
-    setIsLightboxOpen(false);
-    document.body.style.overflow = 'auto';
-    setTimeout(() => setSelectedImage(null), 300);
-  }, []);
-
-  const navigateImage = useCallback((direction) => {
-    setSelectedImage((current) => {
-      if (!current) return current;
-      const currentIndex = images.findIndex(img => img.uid === current.uid);
-      const newIndex = direction === 'next'
-        ? (currentIndex + 1) % images.length
-        : (currentIndex - 1 + images.length) % images.length;
-      return images[newIndex];
+  // Bind / unbind Fancybox (import dynamique — SSR safe)
+  useEffect(() => {
+    let FB;
+    Promise.all([
+      import('@fancyapps/ui'),
+      import('@fancyapps/ui/dist/fancybox/fancybox.css'),
+    ]).then(([mod]) => {
+      FB = mod.Fancybox;
+      _FB = FB;
+      FB.bind('[data-fancybox="gallery-depollution"]', buildOpts());
+      FB.bind('[data-fancybox="gallery-biodiversite"]', buildOpts());
+      FB.bind('[data-fancybox="gallery-caracterisation"]', buildOpts());
     });
-  }, [images]);
-
-  // Focus sur le bouton fermer à l'ouverture
-  useEffect(() => {
-    if (isLightboxOpen && closeBtnRef.current) {
-      setTimeout(() => closeBtnRef.current?.focus(), 100);
-    }
-  }, [isLightboxOpen]);
-
-  // Navigation clavier
-  useEffect(() => {
-    if (!isLightboxOpen) return;
-    const handleKeyDown = (e) => {
-      switch (e.key) {
-        case 'Escape': closeLightbox(); break;
-        case 'ArrowRight': navigateImage('next'); break;
-        case 'ArrowLeft': navigateImage('prev'); break;
-      }
+    return () => {
+      FB?.unbind('[data-fancybox="gallery-depollution"]');
+      FB?.unbind('[data-fancybox="gallery-biodiversite"]');
+      FB?.unbind('[data-fancybox="gallery-caracterisation"]');
+      FB?.close();
     };
-    window.addEventListener('keydown', handleKeyDown);
-    return () => window.removeEventListener('keydown', handleKeyDown);
-  }, [isLightboxOpen, closeLightbox, navigateImage]);
-
-  const currentIndex = selectedImage
-    ? images.findIndex(img => img.uid === selectedImage.uid) + 1
-    : 0;
+  }, []);
 
   return (
     <div className="min-h-screen py-24">
@@ -209,186 +454,166 @@ const PhotoSousMarine = () => {
           Photographe sous-marin à Marseille — Documenter pour alerter
         </motion.h1>
 
-        {/* Galerie mur d'images */}
+        {/* Section Actions de dépollution */}
         <motion.div
           initial="hidden"
           animate="visible"
           variants={STAGGER_CONTAINER}
           className="mb-16"
         >
-          <PhotoGrid images={images} onOpenLightbox={openLightbox} />
+          <SectionTitle icon={Trash2} title="Actions de dépollution" count={depollImages.length} />
+          <PhotoGrid images={depollImages} gallery="gallery-depollution" />
         </motion.div>
 
-        {/* Bloc éditorial — "documenter pour alerter" */}
+        {/* Section Biodiversité */}
+        <motion.div
+          initial="hidden"
+          animate="visible"
+          variants={STAGGER_CONTAINER}
+          className="mb-16"
+        >
+          <SectionTitle icon={Fish} title="Biodiversité" count={biodivImages.length} />
+          <PhotoGrid images={biodivImages} gallery="gallery-biodiversite" />
+        </motion.div>
+
+        {/* Section Caractérisation */}
+        {caracImages.length > 0 && (
+          <motion.div
+            initial="hidden"
+            animate="visible"
+            variants={STAGGER_CONTAINER}
+            className="mb-16"
+          >
+            <SectionTitle icon={ClipboardList} title="Caractérisation" count={caracImages.length} />
+            <PhotoGrid images={caracImages} gallery="gallery-caracterisation" />
+          </motion.div>
+        )}
+
+        {/* Bloc éditorial principal */}
         <motion.div
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true }}
           variants={STAGGER_CONTAINER}
-          className="max-w-4xl mx-auto mb-12"
+          className="mx-auto mb-12"
         >
-          <motion.div variants={FADE_IN_UP} className="glass-strong rounded-3xl p-8 md:p-12">
-            <h2 className="text-2xl md:text-3xl font-bold text-white mb-6">
-              La photographie sous-marine au service de l'engagement
-            </h2>
-            <div className="space-y-4 text-text-secondary leading-relaxed">
-              <p>
-                Karim Saari plonge en apnée dans les Calanques de Marseille avec un double objectif :
-                extraire les déchets des fonds marins et les{' '}
-                <strong className="text-white">documenter par la photographie sous-marine</strong>.
-                Chaque image est un témoignage direct, capturé entre 0 et 20 mètres de profondeur,
-                là où personne ne voit ce que la mer cache.
-              </p>
-              <p>
-                Ce travail de{' '}
-                <strong className="text-ocean-teal">photographie sous-marine engagée</strong> est
-                indissociable des missions de dépollution&nbsp;: les images servent à alerter le
-                grand public, à convaincre les partenaires institutionnels et à nourrir les médias
-                — ARTE, M6, France Télévisions, La Provence, Fondation de la Mer et bien d'autres —
-                qui ont relayé ces actions sur le terrain.
-              </p>
-              <p>
-                Cette galerie retrace les moments clés de l'
-                <strong className="text-white">Opération Sentinelle</strong> à travers le regard
-                du{' '}
-                <strong className="text-white">photographe sous-marin</strong>&nbsp;:
-                fonds marins pollués, vie marine des Calanques, apnéistes en action, déchets remontés
-                des profondeurs.
-              </p>
+          <motion.div variants={FADE_IN_UP} className="glass-strong rounded-3xl overflow-hidden flex flex-col lg:flex-row">
+            {/* Texte */}
+            <div className="p-8 md:p-12 lg:flex-1 flex flex-col justify-center">
+              <h2 className="text-2xl md:text-3xl font-bold text-white mb-6">
+                La photographie sous-marine au service de l'engagement
+              </h2>
+              <div className="space-y-4 text-text-secondary leading-[1.8]">
+                <p>
+                  Karim Saari plonge en apnée dans les Calanques de Marseille avec un double objectif :
+                  extraire les déchets des fonds marins et les{' '}
+                  <strong className="text-white">documenter par la photographie sous-marine</strong>.
+                  Chaque image est un témoignage direct, capturé entre 0 et 20 mètres de profondeur,
+                  là où personne ne voit ce que la mer cache.
+                </p>
+                <p>
+                  Ce travail de{' '}
+                  <strong className="text-ocean-teal">photographie sous-marine engagée</strong> est
+                  indissociable des missions de dépollution&nbsp;: les images servent à alerter le
+                  grand public, à convaincre les partenaires institutionnels et à nourrir les médias
+                  — ARTE, M6, France Télévisions, La Provence, Fondation de la Mer et bien d'autres —
+                  qui ont relayé ces actions sur le terrain.
+                </p>
+                <p>
+                  Cette galerie retrace les moments clés de l'
+                  <strong className="text-white">Opération Sentinelle</strong> à travers le regard
+                  du{' '}
+                  <strong className="text-white">photographe sous-marin</strong>&nbsp;:
+                  fonds marins pollués, vie marine des Calanques, apnéistes en action, déchets remontés
+                  des profondeurs.
+                </p>
+              </div>
+            </div>
+            {/* Photo */}
+            <div className="lg:w-[40%] flex-shrink-0 min-h-[280px] lg:min-h-0 overflow-hidden">
+              <img
+                src="/images/photographe-sous-marin-marseille-morgan-bourchis-triple-champion-monde-apnee-depollution-sentinelle.webp"
+                alt="Morgan Bourchis, triple champion du monde d'apnée, en mission de dépollution avec Karim Saari — Projet Sentinelle Marseille"
+                className="w-full h-full object-cover object-right hover:scale-105 transition-transform duration-500"
+                loading="lazy"
+                decoding="async"
+              />
             </div>
           </motion.div>
         </motion.div>
 
-        {/* Bloc éditorial bas — contexte SEO */}
+        {/* Bloc éditorial bas */}
         <motion.div
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true }}
           variants={STAGGER_CONTAINER}
-          className="max-w-3xl mx-auto mb-12"
+          className="mx-auto mb-12"
         >
-          <motion.div variants={FADE_IN_UP} className="glass rounded-2xl p-6 md:p-8">
-            <h2 className="text-xl md:text-2xl font-bold text-white mb-4">
-              Apnée et photographie engagée — au cœur des Calanques de Marseille
-            </h2>
-            <div className="space-y-4 text-text-secondary leading-relaxed">
-              <p>
-                Karim Saari plonge en{' '}
-                <strong className="text-white">apnée</strong> dans les eaux de Marseille avec un
-                double impératif&nbsp;: extraire les déchets <em>et</em> documenter l'agonie comme
-                la beauté des fonds marins. Contrairement à la majorité des photographes
-                sous-marins qui travaillent en bouteille, chaque image est prise en rétention de
-                souffle, le matériel de dépollution dans les mains, au milieu des déchets, entre 0
-                et 20 mètres de profondeur.
-              </p>
-              <p>
-                Chaque photo est un témoignage brut — un{' '}
-                <strong className="text-white">électrochoc visuel</strong> pour alerter le public
-                et convaincre les institutions. Ce regard sans filtre a trouvé un écho auprès de{' '}
-                <strong className="text-white">ARTE, M6, France Télévisions</strong> et d'autres
-                médias qui ont relayé le combat pour la Méditerranée.
-              </p>
-              <p>
-                Cette galerie rassemble des images de missions{' '}
-                <strong className="text-white">Team Oxygen</strong> et de l'
-                <strong className="text-white">Opération Sentinelle</strong>, et s'enrichit au fil
-                des éditions. Des{' '}
-                <strong className="text-ocean-teal">abysses pollués</strong> à la résilience de la
-                vie sauvage — poulpes, spirographes, méduses, fonds rocheux — des images qui
-                témoignent à la fois de l'urgence et de la beauté de ce qui reste à protéger.
-              </p>
+          <motion.div variants={FADE_IN_UP} className="glass rounded-2xl overflow-hidden flex flex-col lg:flex-row">
+            {/* Photo — gauche */}
+            <div className="lg:w-[40%] flex-shrink-0 min-h-[280px] lg:min-h-0 overflow-hidden order-last lg:order-first">
+              <img
+                src="/images/portfolio/Mer/photographe-sous-marin-marseille-pollution-plastique-fond-marin.webp"
+                alt="Pollution plastique au fond de la mer — fonds marins des Calanques de Marseille documentés par Karim Saari, photographe sous-marin"
+                className="w-full h-full object-cover hover:scale-105 transition-transform duration-500"
+                loading="lazy"
+                decoding="async"
+              />
+            </div>
+            {/* Texte */}
+            <div className="p-6 md:p-8 lg:flex-1 flex flex-col justify-center">
+              <h2 className="text-xl md:text-2xl font-bold text-white mb-4">
+                Apnée et photographie engagée — au cœur des Calanques de Marseille
+              </h2>
+              <div className="space-y-4 text-text-secondary leading-[1.8]">
+                <p>
+                  Karim Saari plonge en{' '}
+                  <strong className="text-white">apnée</strong> dans les eaux de Marseille avec un
+                  double impératif&nbsp;: extraire les déchets <em>et</em> documenter l'agonie comme
+                  la beauté des fonds marins. Contrairement à la majorité des photographes
+                  sous-marins qui travaillent en bouteille, chaque image est prise en rétention de
+                  souffle, le matériel de dépollution dans les mains, au milieu des déchets, entre 0
+                  et 20 mètres de profondeur.
+                </p>
+                <p>
+                  Chaque photo est un témoignage brut — un{' '}
+                  <strong className="text-white">électrochoc visuel</strong> pour alerter le public
+                  et convaincre les institutions. Ce regard sans filtre a trouvé un écho auprès de{' '}
+                  <strong className="text-white">ARTE, M6, France Télévisions</strong> et d'autres
+                  médias qui ont relayé le combat pour la Méditerranée.
+                </p>
+                <p>
+                  Cette galerie rassemble des images de missions{' '}
+                  <strong className="text-white">Team Oxygen</strong> et de l'
+                  <strong className="text-white">Opération Sentinelle</strong>, et s'enrichit au fil
+                  des éditions. Des{' '}
+                  <strong className="text-ocean-teal">abysses pollués</strong> à la résilience de la
+                  vie sauvage — poulpes, spirographes, méduses, fonds rocheux — des images qui
+                  témoignent à la fois de l'urgence et de la beauté de ce qui reste à protéger.
+                </p>
+              </div>
+              <div className="flex flex-col sm:flex-row items-center justify-start gap-4 mt-8 pt-6 border-t border-white/8">
+                <Link
+                  to="/depollution-marine"
+                  className="btn-primary inline-flex items-center gap-2"
+                >
+                  <span>Découvrir les missions de dépollution</span>
+                  <ArrowRight className="w-4 h-4" aria-hidden="true" />
+                </Link>
+                <Link
+                  to="/photographie-paysage-mer"
+                  className="btn-secondary inline-flex items-center gap-2 group"
+                >
+                  <ArrowLeft className="w-4 h-4 group-hover:-translate-x-1 transition-transform" aria-hidden="true" />
+                  <span>Galerie paysages &amp; littoral</span>
+                </Link>
+              </div>
             </div>
           </motion.div>
-        </motion.div>
-
-        {/* Maillage interne */}
-        <motion.div
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
-          viewport={{ once: true }}
-          transition={{ delay: 0.2 }}
-          className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-12"
-        >
-          <Link
-            to="/depollution-marine"
-            className="btn-primary inline-flex items-center gap-2"
-          >
-            <span>Découvrir les missions de dépollution</span>
-            <ArrowRight className="w-4 h-4" aria-hidden="true" />
-          </Link>
-          <Link
-            to="/photographie-paysage-mer"
-            className="btn-secondary inline-flex items-center gap-2 group"
-          >
-            <ArrowLeft className="w-4 h-4 group-hover:-translate-x-1 transition-transform" aria-hidden="true" />
-            <span>Galerie paysages & littoral</span>
-          </Link>
         </motion.div>
 
       </div>
-
-      {/* Lightbox */}
-      <AnimatePresence>
-        {isLightboxOpen && selectedImage && (
-          <motion.div
-            ref={lightboxRef}
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            role="dialog"
-            aria-modal="true"
-            aria-labelledby="lightbox-counter-sm"
-            className="fixed inset-0 z-50 flex items-center justify-center bg-black/95 backdrop-blur-sm p-4"
-            onClick={closeLightbox}
-          >
-            <button
-              ref={closeBtnRef}
-              onClick={closeLightbox}
-              className="absolute top-4 right-4 z-60 p-2 rounded-full bg-white/10 hover:bg-white/20 transition-colors backdrop-blur-md focus-ring"
-              aria-label="Fermer la galerie"
-            >
-              <X className="w-6 h-6 text-white" aria-hidden="true" />
-            </button>
-
-            <button
-              onClick={(e) => { e.stopPropagation(); navigateImage('prev'); }}
-              className="absolute left-4 z-60 p-3 rounded-full bg-white/10 hover:bg-white/20 transition-colors backdrop-blur-md focus-ring"
-              aria-label="Image précédente"
-            >
-              <ChevronLeft className="w-6 h-6 text-white" aria-hidden="true" />
-            </button>
-
-            <button
-              onClick={(e) => { e.stopPropagation(); navigateImage('next'); }}
-              className="absolute right-4 z-60 p-3 rounded-full bg-white/10 hover:bg-white/20 transition-colors backdrop-blur-md focus-ring"
-              aria-label="Image suivante"
-            >
-              <ChevronRight className="w-6 h-6 text-white" aria-hidden="true" />
-            </button>
-
-            <motion.img
-              key={selectedImage.uid}
-              initial={{ scale: 0.9, opacity: 0 }}
-              animate={{ scale: 1, opacity: 1 }}
-              exit={{ scale: 0.9, opacity: 0 }}
-              transition={{ duration: 0.3 }}
-              src={selectedImage.src}
-              alt={selectedImage.alt}
-              className="max-w-full max-h-[90vh] object-contain"
-              onClick={(e) => e.stopPropagation()}
-            />
-
-            <div
-              id="lightbox-counter-sm"
-              className="absolute bottom-4 left-1/2 -translate-x-1/2 px-4 py-2 rounded-full bg-white/10 backdrop-blur-md text-white text-sm"
-              aria-live="polite"
-              aria-atomic="true"
-            >
-              {currentIndex} / {images.length}
-            </div>
-          </motion.div>
-        )}
-      </AnimatePresence>
     </div>
   );
 };

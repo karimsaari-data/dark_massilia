@@ -88,49 +88,30 @@ const Yab = () => {
               <strong className="text-white">transmission</strong> : celle d'un regard, d'une
               exigence et d'un engagement au service des océans.
             </p>
+            <div className="pt-6 border-t border-white/8">
+              <p className="text-xs uppercase tracking-widest text-text-muted mb-4 font-semibold">
+                Découvrir le projet
+              </p>
+              <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
+                <a
+                  href="https://www.yabstudio.fr/portfolio/marseille-2024/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="btn inline-flex items-center gap-2 group hover:scale-105 transition-all duration-300"
+                >
+                  <span>« Les Français » — Yann Arthus-Bertrand</span>
+                  <ExternalLink className="w-4 h-4 group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform flex-shrink-0" />
+                </a>
+                <Link
+                  to="/presse"
+                  className="btn-secondary inline-flex items-center gap-2 group"
+                >
+                  <ArrowLeft className="w-4 h-4 group-hover:-translate-x-1 transition-transform" />
+                  <span>Retour aux Médias</span>
+                </Link>
+              </div>
+            </div>
           </motion.div>
-        </motion.div>
-
-        {/* CTA */}
-        <motion.div
-          initial="hidden"
-          animate="visible"
-          variants={STAGGER_CONTAINER}
-          className="text-center mb-16 max-w-4xl mx-auto"
-        >
-          <motion.h2
-            variants={FADE_IN_UP}
-            className="text-sm uppercase tracking-widest text-text-muted mb-6 font-semibold"
-          >
-            Découvrir le projet
-          </motion.h2>
-
-          <motion.a
-            variants={FADE_IN_UP}
-            href="https://www.yabstudio.fr/portfolio/marseille-2024/"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="btn inline-flex items-center justify-between group max-w-md mx-auto hover:scale-105 transition-all duration-300"
-          >
-            <span>« Les Français » — Yann Arthus-Bertrand</span>
-            <ExternalLink className="w-4 h-4 group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform flex-shrink-0 ml-3" />
-          </motion.a>
-        </motion.div>
-
-        {/* Back to Medias */}
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 0.8 }}
-          className="text-center max-w-4xl mx-auto"
-        >
-          <Link
-            to="/presse"
-            className="btn-secondary inline-flex items-center gap-2 group"
-          >
-            <ArrowLeft className="w-4 h-4 group-hover:-translate-x-1 transition-transform" />
-            <span>Retour aux Médias</span>
-          </Link>
         </motion.div>
       </div>
     </div>

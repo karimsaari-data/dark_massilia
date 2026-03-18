@@ -16,6 +16,8 @@ import Layout from './components/layout/Layout';
 
 // Imports EAGERLY (pas de lazy — nécessaire pour renderToString)
 import Home       from './pages/Home';
+import Blog       from './pages/Blog';
+import BlogPost   from './pages/BlogPost';
 import Missions   from './pages/Missions';
 import Medias     from './pages/Medias';
 import Photos     from './pages/Photos';
@@ -69,6 +71,8 @@ export function render(url) {
             <Route path="local-guide-marseille"              element={<LocalGuide />} />
             <Route path="admin"                              element={<AdminCarteSSR />} />
             <Route path="les-francais-yann-arthus-bertrand" element={<Yab />} />
+            <Route path="blog"                               element={<Blog />} />
+            <Route path="blog/:slug"                         element={<BlogPost />} />
             <Route path="home"                               element={<Navigate to="/" replace />} />
             <Route path="*"         element={<NotFound />} />
           </Route>

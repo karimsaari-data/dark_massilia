@@ -1,6 +1,19 @@
+<IfModule mod_dir.c>
+  # Désactive la redirection automatique /page → /page/ d'Apache
+  # Sans cela, les dossiers prérendus génèrent un trailing-slash non voulu
+  # qui crée un mismatch avec les canonicals et les liens internes (0 inlink Ahrefs)
+  DirectorySlash Off
+</IfModule>
+
 <IfModule mod_rewrite.c>
   RewriteEngine On
   RewriteBase /
+
+  # ── Canonicalisation — supprimer le slash final (sauf racine) ────────────
+  # Redirige /page/ → /page en 301 pour aligner les URLs crawlées par Ahrefs/Google
+  # avec les canonicals déclarés (sans slash) et les liens internes React Router
+  RewriteCond %{REQUEST_URI} ^/(.+)/$
+  RewriteRule ^(.+)/$ /$1 [R=301,L]
 
   # ── Redirections 301 — nouvelles URLs SEO ───────────────────────────────
   RewriteRule ^missions/?$    /depollution-marine              [R=301,L]

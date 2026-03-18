@@ -59,7 +59,7 @@ export default function Blog() {
             </p>
           </motion.div>
 
-          <motion.h1 variants={FADE_IN_UP} className="heading-1 gradient-text mb-6">
+          <motion.h1 variants={FADE_IN_UP} className="heading-1 text-white mb-6">
             Actualités & Actions
           </motion.h1>
 
@@ -173,7 +173,10 @@ function PostCard({ post }) {
       )}
 
       {/* Contenu */}
-      <div className="flex flex-col flex-1 p-6">
+      <div
+        className="flex flex-col flex-1 p-6"
+        style={{ background: 'rgba(8, 16, 32, 0.72)', backdropFilter: 'blur(8px)' }}
+      >
         {/* Date */}
         <div className="flex items-center gap-2 text-ocean-teal text-xs font-semibold uppercase tracking-wider mb-3">
           <Calendar className="w-3.5 h-3.5 flex-shrink-0" aria-hidden="true" />
@@ -181,7 +184,7 @@ function PostCard({ post }) {
         </div>
 
         {/* Titre */}
-        <h2 className="text-base font-bold text-text-primary mb-3 leading-snug group-hover:text-ocean-teal transition-colors">
+        <h2 className="text-base font-bold text-text-primary mb-3 leading-snug group-hover:text-astroide transition-colors">
           <Link to={`/blog/${post.slug}`}>
             {post.title}
           </Link>
@@ -203,6 +206,7 @@ function PostCard({ post }) {
           Lire la suite
           <ArrowRight className="w-4 h-4" aria-hidden="true" />
         </Link>
+
       </div>
     </motion.article>
   );

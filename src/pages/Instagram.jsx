@@ -1,5 +1,5 @@
-import { useState } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { useState, useEffect, useRef } from 'react';
+import { motion, AnimatePresence, useInView, useReducedMotion } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import {
   ExternalLink,
@@ -19,29 +19,55 @@ import { FADE_IN_UP, STAGGER_CONTAINER } from '../utils/constants';
 import SEO from '../components/SEO';
 import { SEO_PAGES } from '../utils/seo';
 
+// ── Compteur animé — s'active à l'entrée dans le viewport ───────────────────
+const StatCounter = ({ end, suffix = '', duration = 2000 }) => {
+  const prefersReducedMotion = useReducedMotion();
+  const ref = useRef(null);
+  const isInView = useInView(ref, { once: true, amount: 0.3 });
+  const [count, setCount] = useState(0);
+
+  useEffect(() => {
+    if (!isInView) return;
+    if (prefersReducedMotion) { setCount(end); return; }
+    let startTime = null;
+    let raf;
+    const step = (ts) => {
+      if (!startTime) startTime = ts;
+      const progress = Math.min((ts - startTime) / duration, 1);
+      const eased = 1 - (1 - progress) ** 3;
+      setCount(Math.round(eased * end));
+      if (progress < 1) raf = requestAnimationFrame(step);
+    };
+    raf = requestAnimationFrame(step);
+    return () => cancelAnimationFrame(raf);
+  }, [isInView, end, duration, prefersReducedMotion]);
+
+  return <span ref={ref}>{count.toLocaleString('fr-FR')}{suffix}</span>;
+};
+
 // ── Données statiques ───────────────────────────────────────────────────────
 
 const IMPACT = [
   {
-    value: '7 %',
+    num: 7, suffix: ' %',
     label: 'des microplastiques mondiaux — pour moins de 1 % de la surface océanique',
     icon: Waves,
     note: 'Le piège méditerranéen',
   },
   {
-    value: '33 800',
+    num: 33800, suffix: '',
     label: 'bouteilles plastique déversées chaque minute dans nos eaux',
     icon: AlertTriangle,
     note: 'Le déluge continu',
   },
   {
-    value: '80 %',
+    num: 80, suffix: ' %',
     label: 'des déchets marins viennent de nos activités à terre — la solution est entre nos mains',
     icon: Leaf,
     note: "L'origine terrestre",
   },
   {
-    value: '5 g',
+    num: 5, suffix: ' g',
     label: "de nanoplastiques ingérés par semaine — le poids d'une carte de crédit",
     icon: Heart,
     note: "L'impact boomerang",
@@ -164,20 +190,37 @@ const Communaute = () => {
         >
           <motion.div variants={FADE_IN_UP} className="glass-strong rounded-3xl p-8 md:p-12">
             <h1 className="text-2xl md:text-4xl font-bold text-white mb-4 leading-tight">
-              Rejoignez une communauté de 130 000 sentinelles
+              Rejoignez le mouvement : Devenez bénévole pour la protection de la Méditerranée
             </h1>
             <p className="text-ocean-teal text-lg md:text-xl font-semibold mb-6">
-              De l'émerveillement à l'action. Suivez mon quotidien entre photographie de paysages,
-              explorations du littoral et missions de sauvegarde de la Méditerranée.
+              Une communauté de plus de 130 000 sentinelles
             </p>
-            <p className="text-text-secondary leading-relaxed text-lg mb-8">
-              Sur mes réseaux, je partage ce que la Méditerranée a de plus beau, mais aussi ce
-              qu'elle a de plus fragile. En me suivant, vous plongez au cœur de mon quotidien :
-              entre randonnées sur les sentiers des Calanques de Marseille à Port-Cros, immersions
-              en apnée et reportages sur nos actions concrètes de dépollution.
-            </p>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+              <p className="text-text-secondary leading-[1.8] text-lg">
+                La protection de la Méditerranée repose sur une mobilisation collective et continue.
+                À travers mes réseaux sociaux, je fédère aujourd'hui une communauté de plus de
+                130 000 personnes sensibilisées aux enjeux environnementaux du littoral marseillais.
+              </p>
+              <p className="text-text-secondary leading-[1.8] text-lg">
+                De mes reportages en immersion sur YouTube à mes alertes environnementales sur
+                Instagram (24,2K), TikTok (21,9K) et mes fiches thématiques sur Pinterest, cette
+                audience numérique prolonge le travail de terrain en donnant de la visibilité aux
+                réalités observées sous la surface.
+              </p>
+              <p className="text-text-secondary leading-[1.8] text-lg">
+                À travers l'animation du groupe incontournable des Amoureux des Calanques (plus de
+                64 000 membres), ma présence sur Facebook (près de 18 000 abonnés cumulés), sur X
+                et en tant que Local Guide Google Maps à Marseille, j'informe, documente et interpelle
+                en temps réel.
+              </p>
+              <p className="text-text-secondary leading-[1.8] text-lg">
+                Cette audience n'est pas un indicateur abstrait : elle représente une capacité
+                concrète de sensibilisation et de mobilisation au service de la préservation de
+                la Méditerranée et du littoral marseillais.
+              </p>
+            </div>
             {/* CTA principal */}
-            <div className="flex flex-col sm:flex-row gap-4">
+            <div className="flex flex-col sm:flex-row gap-4 mb-8">
               <a
                 href="#reseaux"
                 className="btn-primary inline-flex items-center justify-center gap-2"
@@ -192,6 +235,12 @@ const Communaute = () => {
                 <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
               </Link>
             </div>
+            {/* Photo de groupe — pleine largeur */}
+            <img
+              src="/images/karim-saari-marseille-130000-sentinelles-calanques-depollution.webp"
+              alt="Karim Saari entouré des bénévoles du Projet Sentinelle — 130 000 sentinelles pour la dépollution des Calanques de Marseille"
+              className="w-full rounded-2xl"
+            />
           </motion.div>
         </motion.div>
 
@@ -210,13 +259,15 @@ const Communaute = () => {
               La Méditerranée est un piège à plastiques. Voici les chiffres qui rendent l'urgence impossible à ignorer.
             </p>
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6">
-              {IMPACT.map(({ value, label, note, icon: Icon }) => (
+              {IMPACT.map(({ num, suffix, label, note, icon: Icon }) => (
                 <div key={label} className="text-center flex flex-col items-center">
                   <div className="w-12 h-12 mx-auto mb-3 rounded-full bg-ocean-teal/20 flex items-center justify-center">
                     <Icon className="w-6 h-6 text-ocean-teal" />
                   </div>
                   <div className="text-xs font-semibold text-ocean-teal/70 uppercase tracking-widest mb-1">{note}</div>
-                  <div className="text-2xl md:text-3xl font-bold text-ocean-teal mb-1">{value}</div>
+                  <div className="text-2xl md:text-3xl font-bold text-ocean-teal mb-1">
+                    <StatCounter end={num} suffix={suffix} duration={num > 1000 ? 2500 : 1500} />
+                  </div>
                   <div className="text-xs text-text-secondary leading-snug">{label}</div>
                 </div>
               ))}

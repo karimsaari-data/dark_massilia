@@ -60,22 +60,34 @@ const Missions = () => {
           initial="hidden"
           animate="visible"
           variants={STAGGER_CONTAINER}
-          className="max-w-4xl mx-auto mb-12"
+          className="mx-auto mb-12"
         >
-          <motion.div variants={FADE_IN_UP} className="glass-strong rounded-3xl p-8 md:p-12">
-            <h2 className="text-2xl md:text-3xl font-bold text-white mb-2">
-              Notre mission sur le littoral méditerranéen
-            </h2>
-            <div className="space-y-4 text-text-secondary leading-relaxed">
-              <p className="font-medium text-white/80">
-                Association d'apnéistes éco-engagés basée à Marseille et intervenant sur l'ensemble du littoral marseillais : plages, ports, îles du Frioul, Calanques, Côte Bleue et jusqu'à La Ciotat.
-              </p>
-              <p>
-                De la surface à 20 mètres de profondeur, <strong className="text-ocean-teal">Team Oxygen</strong> conduit des opérations structurées de dépollution sous-marine en apnée, combinant extraction de déchets, documentation visuelle et collecte de données environnementales sur les fonds marins de Méditerranée.
-              </p>
-              <p>
-                L'association est aujourd'hui présidée par <strong className="text-white">Karim Saari</strong>, apnéiste et photographe engagé à Marseille, impliqué dans les actions de dépollution du littoral méditerranéen depuis 10 ans.
-              </p>
+          <motion.div variants={FADE_IN_UP} className="glass-strong rounded-3xl overflow-hidden flex flex-col lg:flex-row">
+            {/* Texte */}
+            <div className="p-8 md:p-12 lg:flex-1 flex flex-col justify-center">
+              <h2 className="text-2xl md:text-3xl font-bold text-white mb-2">
+                Notre mission sur le littoral méditerranéen
+              </h2>
+              <div className="space-y-4 text-text-secondary leading-[1.8]">
+                <p className="font-medium text-white/80">
+                  Association d'apnéistes éco-engagés basée à Marseille et intervenant sur l'ensemble du littoral marseillais : plages, ports, îles du Frioul, Calanques, Côte Bleue et jusqu'à La Ciotat.
+                </p>
+                <p>
+                  De la surface à 20 mètres de profondeur, <strong className="text-ocean-teal">Team Oxygen</strong> conduit des opérations structurées de dépollution sous-marine en apnée, combinant extraction de déchets, documentation visuelle et collecte de données environnementales sur les fonds marins de Méditerranée.
+                </p>
+                <p>
+                  L'association est aujourd'hui présidée par <strong className="text-white">Karim Saari</strong>, apnéiste et photographe engagé à Marseille, impliqué dans les actions de dépollution du littoral méditerranéen depuis 10 ans.
+                </p>
+              </div>
+            </div>
+            {/* Photo */}
+            <div className="lg:w-[40%] flex-shrink-0 min-h-[260px] lg:min-h-0">
+              <img
+                src="/images/Marseille-dark-massilia-plastique-pollution-projet-sentinelle-v%C3%A9lo-m%C3%A9tropole.webp"
+                alt="Mission de dépollution Projet Sentinelle — vélo métropole récupéré par Team Oxygen dans les fonds marins de Marseille"
+                className="w-full h-full object-cover"
+                loading="lazy"
+              />
             </div>
           </motion.div>
         </motion.div>
@@ -85,7 +97,7 @@ const Missions = () => {
           initial="hidden"
           animate="visible"
           variants={STAGGER_CONTAINER}
-          className="max-w-4xl mx-auto mb-12"
+          className="mx-auto mb-12"
         >
           <motion.div variants={FADE_IN_UP} className="grid grid-cols-1 md:grid-cols-2 gap-6">
             {EDITIONS.map((edition, index) => (
@@ -118,7 +130,7 @@ const Missions = () => {
           initial="hidden"
           animate="visible"
           variants={STAGGER_CONTAINER}
-          className="max-w-4xl mx-auto mb-12"
+          className="mx-auto mb-12"
         >
           <motion.div
             variants={FADE_IN_UP}
@@ -150,7 +162,7 @@ const Missions = () => {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.7, delay: 0.2 }}
-          className="max-w-4xl mx-auto mb-12"
+          className="mx-auto mb-12"
         >
           <Link to="/photographie-sous-marine" className="group block relative rounded-3xl overflow-hidden shadow-2xl shadow-black/40 ring-1 ring-white/10">
             <div className="aspect-[16/7] relative">
@@ -185,29 +197,39 @@ const Missions = () => {
           whileInView="visible"
           viewport={{ once: true }}
           variants={STAGGER_CONTAINER}
-          className="max-w-4xl mx-auto mb-12"
+          className="mx-auto mb-12"
         >
-          <motion.div variants={FADE_IN_UP} className="glass-strong rounded-3xl p-8 md:p-12">
-            <h2 className="text-2xl md:text-3xl font-bold text-white mb-6">
-              Agir à la source : Les Calanques et la Côte Bleue
-            </h2>
-            <p className="text-text-secondary leading-relaxed text-lg">
-              L'urgence est à nos portes&nbsp;: 80&nbsp;% des déchets marins proviennent de la terre.
-              L'impact sur notre littoral est massif. À titre d'exemple, lors du bilan 2023 de
-              l'opération Calanques Propres, 119&nbsp;m³ de déchets ont été récoltés sur le seul
-              littoral marseillais. Parmi les polluants les plus présents dans nos filets&nbsp;: les
-              bouteilles en verre, les canettes, les bouteilles en plastique et divers emballages.
-              Avec <strong className="text-ocean-teal">Team Oxygen</strong>, chaque immersion en
-              apnée est une action directe pour soustraire ces polluants de notre biodiversité locale.
-            </p>
-            <div className="mt-6">
-              <Link
-                to="/donnees-scientifiques"
-                className="inline-flex items-center gap-2 text-ocean-teal hover:text-white transition-colors text-sm font-medium"
-              >
-                Sources scientifiques
-                <ExternalLink className="w-4 h-4" />
-              </Link>
+          <motion.div variants={FADE_IN_UP} className="glass-strong rounded-3xl overflow-hidden flex flex-col lg:flex-row">
+            <div className="p-8 md:p-12 lg:flex-1 flex flex-col justify-center">
+              <h2 className="text-2xl md:text-3xl font-bold text-white mb-6">
+                Agir à la source : Les Calanques et la Côte Bleue
+              </h2>
+              <p className="text-text-secondary leading-[1.8] text-lg">
+                L'urgence est à nos portes&nbsp;: 80&nbsp;% des déchets marins proviennent de la terre.
+                L'impact sur notre littoral est massif. À titre d'exemple, lors du bilan 2023 de
+                l'opération Calanques Propres, 119&nbsp;m³ de déchets ont été récoltés sur le seul
+                littoral marseillais. Parmi les polluants les plus présents dans nos filets&nbsp;: les
+                bouteilles en verre, les canettes, les bouteilles en plastique et divers emballages.
+                Avec <strong className="text-ocean-teal">Team Oxygen</strong>, chaque immersion en
+                apnée est une action directe pour soustraire ces polluants de notre biodiversité locale.
+              </p>
+              <div className="mt-6">
+                <Link
+                  to="/donnees-scientifiques"
+                  className="inline-flex items-center gap-2 text-ocean-teal hover:text-white transition-colors text-sm font-medium"
+                >
+                  Sources scientifiques
+                  <ExternalLink className="w-4 h-4" />
+                </Link>
+              </div>
+            </div>
+            <div className="lg:w-[38%] flex-shrink-0 min-h-[260px] lg:min-h-0">
+              <img
+                src="/images/Marseille-dark-massilia-plastique-pollution-projet-sentinelle-plaque-immatriculation.webp"
+                alt="Plaque d'immatriculation récupérée lors d'une mission de dépollution sous-marine Projet Sentinelle dans les Calanques de Marseille"
+                className="w-full h-full object-cover"
+                loading="lazy"
+              />
             </div>
           </motion.div>
         </motion.div>
@@ -218,13 +240,22 @@ const Missions = () => {
           whileInView="visible"
           viewport={{ once: true }}
           variants={STAGGER_CONTAINER}
-          className="max-w-4xl mx-auto mb-12"
+          className="mx-auto mb-12"
         >
-          <motion.div variants={FADE_IN_UP} className="glass-strong rounded-3xl p-8 md:p-12">
+          <motion.div variants={FADE_IN_UP} className="glass-strong rounded-3xl overflow-hidden flex flex-col lg:flex-row-reverse">
+            <div className="lg:w-[38%] flex-shrink-0 min-h-[260px] lg:min-h-0">
+              <img
+                src="/images/Marseille-dark-massilia-plastique-pollution-projet-sentinelle-teamoxygen-freediving.webp"
+                alt="Apnéiste Team Oxygen en freediving lors d'une mission de dépollution sous-marine dans les Calanques de Marseille"
+                className="w-full h-full object-cover"
+                loading="lazy"
+              />
+            </div>
+            <div className="p-8 md:p-12 lg:flex-1 flex flex-col justify-center">
             <h2 className="text-2xl md:text-3xl font-bold text-white mb-6">
               Team Oxygen — association de dépollution loi 1901
             </h2>
-            <div className="space-y-4 text-text-secondary leading-relaxed">
+            <div className="space-y-4 text-text-secondary leading-[1.8]">
               <p>
                 <strong className="text-ocean-teal">Team Oxygen</strong> est une{' '}
                 <strong className="text-white">association de dépollution marine</strong> déclarée
@@ -274,49 +305,56 @@ const Missions = () => {
                 <ArrowRight className="w-4 h-4" />
               </Link>
             </div>
+            </div>
           </motion.div>
         </motion.div>
 
         {/* Voir aussi — maillage interne vidéos */}
         <motion.div
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
+          initial={{ opacity: 0, y: 16 }}
+          whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ delay: 0.2 }}
-          className="text-center mb-12"
+          className="mb-12"
         >
-          <p className="text-text-secondary text-sm mb-3">Nos missions en images et en vidéo</p>
-          <Link
-            to="/videos"
-            className="inline-flex items-center gap-2 text-ocean-teal hover:text-white transition-colors font-medium"
-          >
-            <span>Voir nos documentaires &amp; vidéos de mission</span>
-            <ArrowRight className="w-4 h-4" />
-          </Link>
-        </motion.div>
-
-        {/* CTAs finaux */}
-        <motion.div
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
-          viewport={{ once: true }}
-          transition={{ delay: 0.2 }}
-          className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-12"
-        >
-          <Link
-            to="/#newsletter"
-            className="btn-primary inline-flex items-center gap-2"
-          >
-            <span>S'inscrire à la newsletter</span>
-            <ArrowRight className="w-4 h-4" aria-hidden="true" />
-          </Link>
-          <Link
-            to="/"
-            className="btn-secondary inline-flex items-center gap-2 group"
-          >
-            <ArrowLeft className="w-4 h-4 group-hover:-translate-x-1 transition-transform" aria-hidden="true" />
-            <span>Retour à l'Accueil</span>
-          </Link>
+          <div className="glass rounded-2xl px-8 py-6 flex flex-col gap-6 border border-white/5">
+            <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
+              <div>
+                <p className="text-xs uppercase tracking-widest text-ocean-teal font-semibold mb-1">
+                  Nos missions en images et en vidéo
+                </p>
+                <p className="text-white font-semibold text-lg leading-snug">
+                  Documentaires &amp; vidéos de mission
+                </p>
+                <p className="text-text-secondary text-sm mt-1">
+                  ARTE, M6, France Télévisions, reportages terrain — retrouvez toutes nos productions.
+                </p>
+              </div>
+              <Link
+                to="/videos"
+                className="btn-secondary inline-flex items-center gap-2 whitespace-nowrap flex-shrink-0"
+              >
+                <span>Voir les vidéos</span>
+                <ArrowRight className="w-4 h-4" />
+              </Link>
+            </div>
+            <div className="flex flex-col sm:flex-row items-center justify-center gap-4 pt-2 border-t border-white/8">
+              <Link
+                to="/#newsletter"
+                className="btn-primary inline-flex items-center gap-2"
+              >
+                <span>S'inscrire à la newsletter</span>
+                <ArrowRight className="w-4 h-4" aria-hidden="true" />
+              </Link>
+              <Link
+                to="/"
+                className="btn-secondary inline-flex items-center gap-2 group"
+              >
+                <ArrowLeft className="w-4 h-4 group-hover:-translate-x-1 transition-transform" aria-hidden="true" />
+                <span>Retour à l'Accueil</span>
+              </Link>
+            </div>
+          </div>
         </motion.div>
 
       </div>

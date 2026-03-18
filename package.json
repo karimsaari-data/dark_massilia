@@ -10,11 +10,14 @@
     "build:sitemap": "node scripts/generate-sitemap.js",
     "build:sitemap-images": "node scripts/generate-sitemap-images.js",
     "images:responsive": "node scripts/generate-responsive-images.js",
-    "build:full": "node scripts/generate-sitemap.js && node scripts/generate-sitemap-images.js && vite build && node scripts/prerender.js",
+    "photos:import": "node scripts/import-photos.js",
+    "build:full": "node scripts/generate-sitemap.js && node scripts/generate-sitemap-images.js && vite build && node scripts/prerender.js && node scripts/generate-photo-shares.js",
+    "indexnow": "node scripts/notify-indexnow.js",
     "lint": "eslint .",
     "preview": "vite preview"
   },
   "dependencies": {
+    "@fancyapps/ui": "^6.1.13",
     "@supabase/supabase-js": "^2.95.3",
     "framer-motion": "^12.34.0",
     "leaflet": "^1.9.4",

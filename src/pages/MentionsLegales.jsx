@@ -54,7 +54,7 @@ export default function MentionsLegales() {
             <Row label="Code NAF / APE"      value="7420Z — Activités photographiques" />
             <Row label="Immatriculation"     value="29/04/2013 au RCS de Marseille" />
             <Row label="Adresse"             value="168 chemin de Morgiou, 13009 Marseille" />
-            <Row label="Email"               value="email@karimsaari.com" />
+            <Row label="Email"               value="contact@karimsaari.com" />
           </Section>
 
           {/* 2. Directeur de publication */}

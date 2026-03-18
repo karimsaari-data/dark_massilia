@@ -1,56 +1,291 @@
-import { useState, useEffect, useRef } from 'react';
-import { Link, useLocation } from 'react-router-dom';
+import { useState, useEffect, useRef, useCallback } from 'react';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Home, Compass, Film, Camera, Video, Instagram, Mail, Menu, X as XIcon, BookOpen, Share2, MapPin, Navigation } from 'lucide-react';
-import { NAV_LINKS } from '../../utils/constants';
+import {
+  Compass, Film, Camera, Video, Mail, Send,
+  Menu, X as XIcon, BookOpen, Share2, MapPin, Navigation,
+  ChevronDown, Newspaper, Instagram, Facebook, BarChart2, Tv, AtSign,
+} from 'lucide-react';
+import { NAV_LINKS, SOCIAL_LINKS } from '../../utils/constants';
 import useFocusTrap from '../../hooks/useFocusTrap';
 
+/* ─── Custom icons (Lucide n'a pas TikTok / X) ──────────── */
+const TikTokIcon = ({ className }) => (
+  <svg className={className} viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+    <path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-5.2 1.74 2.89 2.89 0 0 1 2.31-4.64 2.93 2.93 0 0 1 .88.13V9.4a6.84 6.84 0 0 0-1-.05A6.33 6.33 0 0 0 5 20.1a6.34 6.34 0 0 0 10.86-4.43v-7a8.16 8.16 0 0 0 4.77 1.52v-3.4a4.85 4.85 0 0 1-1-.1z"/>
+  </svg>
+);
+
+const XTwitterIcon = ({ className }) => (
+  <svg className={className} viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+    <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
+  </svg>
+);
+
+/* ─── Icônes réseaux sociaux navbar ─────────────────────── */
+const NAV_SOCIALS = [
+  { Icon: Send,        href: '/#newsletter',                             label: 'Newsletter',                               anchor: true },
+  { Icon: Instagram,   href: 'https://www.instagram.com/karimsaari',    label: 'Instagram Karim Saari' },
+  { Icon: TikTokIcon,  href: 'https://www.tiktok.com/@dark.massilia',   label: 'TikTok Dark Massilia' },
+  { Icon: XTwitterIcon,href: 'https://x.com/dark_massilia',            label: 'X Dark Massilia' },
+  { Icon: Facebook,    href: 'https://www.facebook.com/groups/calanque/', label: 'Groupe Facebook Amoureux des Calanques' },
+];
+
+/* ─── Icon map pour les dropdowns ───────────────────────── */
 const iconMap = {
-  Home,
-  Compass,
-  Film,
-  Camera,
-  Video,
-  Instagram,
-  BookOpen,
-  Share2,
-  Mail,
-  MapPin,
-  Navigation,
+  Compass, Film, Camera, Video, Mail, Send, BookOpen, Share2, MapPin, Navigation, Newspaper, BarChart2, Tv, AtSign,
 };
 
+/* ─── Desktop mega menu ──────────────────────────────────── */
+const NavDropdown = ({ item }) => {
+  const [open, setOpen] = useState(false);
+  const location = useLocation();
+  const navigate = useNavigate();
+  const timerRef = useRef(null);
+
+  const isActive = item.children?.some(c => location.pathname === c.path);
+  const HeaderIcon = iconMap[item.icon];
+
+  const openMenu  = () => { clearTimeout(timerRef.current); setOpen(true); };
+  const closeMenu = () => { timerRef.current = setTimeout(() => setOpen(false), 150); };
+
+  useEffect(() => () => clearTimeout(timerRef.current), []);
+  useEffect(() => { setOpen(false); }, [location]);
+
+  const handleChildClick = (path) => {
+    setOpen(false);
+    if (path.startsWith('/#')) {
+      navigate('/');
+      setTimeout(() => {
+        const id = path.slice(2);
+        document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' });
+      }, 100);
+    } else {
+      navigate(path);
+    }
+  };
+
+  const megaVariants = {
+    hidden:  { opacity: 0, y: -6, scale: 0.98 },
+    visible: { opacity: 1, y: 0,  scale: 1,    transition: { duration: 0.2, ease: 'easeOut' } },
+    exit:    { opacity: 0, y: -4, scale: 0.98,  transition: { duration: 0.15, ease: 'easeIn' } },
+  };
+
+  return (
+    <div className="relative" onMouseEnter={openMenu} onMouseLeave={closeMenu}>
+      {/* Trigger */}
+      <button
+        aria-haspopup="true"
+        aria-expanded={open}
+        onClick={() => setOpen(o => !o)}
+        className={`flex items-center gap-1.5 px-2 py-1.5 transition-all duration-300 text-[14px] lg:text-[15px] font-extrabold tracking-[0.15em] uppercase font-display focus-ring whitespace-nowrap relative group ${
+          isActive ? 'text-astroide' : 'text-white hover:text-astroide'
+        }`}
+      >
+        {item.name}
+        <ChevronDown className={`w-3.5 h-3.5 flex-shrink-0 transition-transform duration-200 ${open ? 'rotate-180' : ''}`} aria-hidden="true" />
+        <span className={`absolute bottom-0 left-0 right-0 h-[2px] rounded-full transition-all duration-300 ${
+          isActive ? 'bg-astroide scale-x-100' : 'bg-astroide scale-x-0 group-hover:scale-x-100 origin-left'
+        }`} aria-hidden="true" />
+      </button>
+
+      {/* Mega menu panel — pleine largeur */}
+      <AnimatePresence>
+        {open && (
+          <motion.div
+            initial="hidden" animate="visible" exit="exit"
+            variants={megaVariants}
+            className="fixed left-1/2 -translate-x-1/2 z-60 w-full max-w-2xl px-4"
+            style={{ top: '120px' }}
+            onMouseEnter={openMenu}
+            onMouseLeave={closeMenu}
+          >
+            <div className="rounded-2xl overflow-hidden shadow-2xl shadow-black/60 ring-1 ring-[#3c59ab]/60 flex">
+
+              {/* Colonne gauche — bleu méduse */}
+              <div className="w-56 flex-shrink-0 p-8 flex flex-col gap-4" style={{ background: '#3c59ab' }}>
+                <div className="flex gap-3 items-start">
+                  <div className="w-1 self-stretch rounded-full bg-astroide flex-shrink-0 mt-1" aria-hidden="true" />
+                  <p className="text-white font-extrabold text-2xl leading-tight uppercase tracking-wide">{item.name}</p>
+                </div>
+                <p className="text-white/50 text-sm leading-relaxed">{item.description}</p>
+                <div className="mt-auto">
+                  <div className="h-px bg-white/10 mb-3" />
+                  <p className="text-white/30 text-xs uppercase tracking-widest">Karim Saari</p>
+                </div>
+              </div>
+
+              {/* Colonne droite — blanc crème */}
+              <div className="flex-1 p-6 flex items-center" style={{ background: '#faf8f4' }}>
+                <ul className={`list-none m-0 p-0 w-full grid gap-x-3 gap-y-1 ${
+                  item.children.length >= 5 ? 'grid-cols-2' :
+                  item.children.length >= 3 ? 'grid-cols-2' : 'grid-cols-1'
+                }`}>
+                  {item.children.map((child) => {
+                    const Icon = iconMap[child.icon];
+                    const childActive = location.pathname === child.path;
+
+                    const linkClass = `w-full flex items-center gap-3 px-4 py-3.5 rounded-lg text-sm transition-all duration-150 text-left focus-ring group/link ${
+                      childActive
+                        ? 'text-astroide bg-black/10'
+                        : 'text-gray-800 hover:text-astroide hover:bg-black/10'
+                    }`;
+
+                    const content = (
+                      <>
+                        {Icon && <Icon className={`w-4 h-4 flex-shrink-0 transition-colors flex-shrink-0 ${childActive ? 'text-astroide' : 'text-gray-400 group-hover/link:text-astroide'}`} aria-hidden="true" />}
+                        <span className="font-semibold">{child.name}</span>
+                        {childActive && (
+                          <div className="ml-auto w-2 h-2 rounded-full bg-astroide flex-shrink-0" aria-hidden="true" />
+                        )}
+                      </>
+                    );
+
+                    return (
+                      <li key={child.path ?? child.name}>
+                        {child.path?.startsWith('mailto:') || child.path?.startsWith('https://') ? (
+                          <a href={child.path} target="_blank" rel="noopener noreferrer" className={linkClass}>{content}</a>
+                        ) : child.path?.startsWith('/#') ? (
+                          <Link to={child.path} onClick={() => setOpen(false)} className={linkClass}>{content}</Link>
+                        ) : (
+                          <button onClick={() => handleChildClick(child.path)} className={linkClass}>{content}</button>
+                        )}
+                      </li>
+                    );
+                  })}
+                </ul>
+              </div>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </div>
+  );
+};
+
+/* ─── Mobile accordion item ─────────────────────────────── */
+const MobileNavItem = ({ item, onClose }) => {
+  const [expanded, setExpanded] = useState(false);
+  const location = useLocation();
+  const navigate = useNavigate();
+
+  const isActive = item.children?.some(c => location.pathname === c.path);
+
+  const handleChildClick = (path) => {
+    onClose();
+    if (path.startsWith('/#')) {
+      navigate('/');
+      setTimeout(() => {
+        const id = path.slice(2);
+        document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' });
+      }, 100);
+    } else {
+      navigate(path);
+    }
+  };
+
+  const Icon = iconMap[item.icon];
+
+  return (
+    <li>
+      <button
+        onClick={() => setExpanded(e => !e)}
+        aria-expanded={expanded}
+        className={`w-full flex items-center justify-between px-4 py-3 rounded-lg transition-all duration-200 focus-ring ${
+          isActive
+            ? 'bg-astroide/20 text-astroide border border-astroide/30'
+            : 'text-text-secondary hover:text-astroide hover:bg-astroide/10'
+        }`}
+      >
+        <span className="flex items-center gap-3">
+          {Icon && <Icon className="w-5 h-5 flex-shrink-0" aria-hidden="true" />}
+          <span className="font-medium">{item.name}</span>
+        </span>
+        <ChevronDown className={`w-4 h-4 flex-shrink-0 transition-transform duration-200 ${expanded ? 'rotate-180' : ''}`} aria-hidden="true" />
+      </button>
+
+      <AnimatePresence>
+        {expanded && (
+          <motion.ul
+            initial={{ height: 0, opacity: 0 }}
+            animate={{ height: 'auto', opacity: 1 }}
+            exit={{ height: 0, opacity: 0 }}
+            transition={{ duration: 0.22, ease: 'easeInOut' }}
+            className="overflow-hidden list-none m-0 p-0 ml-4 mt-1 space-y-0.5"
+          >
+            {item.children.map((child) => {
+              const ChildIcon = iconMap[child.icon];
+              const childActive = location.pathname === child.path;
+              return (
+                <li key={child.path ?? child.name}>
+                  <button
+                    onClick={() => handleChildClick(child.path)}
+                    className={`w-full flex items-center gap-3 px-4 py-2.5 rounded-lg transition-all duration-200 text-left focus-ring relative ${
+                      childActive
+                        ? 'bg-astroide/15 text-astroide border border-astroide/20'
+                        : 'text-text-muted hover:text-astroide hover:bg-astroide/10'
+                    }`}
+                  >
+                    {ChildIcon && <ChildIcon className="w-4 h-4 flex-shrink-0" aria-hidden="true" />}
+                    <span className="text-sm font-medium">{child.name}</span>
+                    {childActive && (
+                      <div className="absolute left-0 top-1/2 -translate-y-1/2 w-0.5 h-3/4 bg-ocean-teal rounded-r-full" aria-hidden="true" />
+                    )}
+                  </button>
+                </li>
+              );
+            })}
+          </motion.ul>
+        )}
+      </AnimatePresence>
+    </li>
+  );
+};
+
+/* ─── Main Navbar ────────────────────────────────────────── */
 const Navbar = () => {
   const [isScrolled, setIsScrolled] = useState(false);
+  const [isHidden, setIsHidden]     = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const lastScrollY = useRef(0);
   const location = useLocation();
   const menuButtonRef = useRef(null);
 
-  // Focus trap pour le menu mobile
   const menuPanelRef = useFocusTrap(isMobileMenuOpen);
 
-  // Scroll listener throttlé avec requestAnimationFrame
   useEffect(() => {
     let ticking = false;
     const handleScroll = () => {
       if (!ticking) {
         requestAnimationFrame(() => {
-          setIsScrolled(window.scrollY > 20);
+          const currentY = window.scrollY;
+          const delta    = currentY - lastScrollY.current;
+
+          setIsScrolled(currentY > 60);
+
+          if (currentY < 80) {
+            // Tout en haut → toujours visible
+            setIsHidden(false);
+          } else if (delta > 6) {
+            // Scroll vers le bas → on cache
+            setIsHidden(true);
+          } else if (delta < -6) {
+            // Scroll vers le haut → on montre
+            setIsHidden(false);
+          }
+
+          lastScrollY.current = currentY;
           ticking = false;
         });
         ticking = true;
       }
     };
-
     window.addEventListener('scroll', handleScroll, { passive: true });
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  // Close mobile menu when route changes
-  useEffect(() => {
-    setIsMobileMenuOpen(false);
-  }, [location]);
+  useEffect(() => { setIsMobileMenuOpen(false); }, [location]);
 
-  // Fermer le menu au touche Escape
   useEffect(() => {
     if (!isMobileMenuOpen) return;
     const handleKeyDown = (e) => {
@@ -63,107 +298,105 @@ const Navbar = () => {
     return () => document.removeEventListener('keydown', handleKeyDown);
   }, [isMobileMenuOpen]);
 
-  // Bloquer le scroll de la page quand le menu est ouvert
   useEffect(() => {
     document.body.style.overflow = isMobileMenuOpen ? 'hidden' : '';
     return () => { document.body.style.overflow = ''; };
   }, [isMobileMenuOpen]);
 
-  const openMobileMenu = () => setIsMobileMenuOpen(true);
-  const closeMobileMenu = () => {
+  const openMobileMenu  = () => setIsMobileMenuOpen(true);
+  const closeMobileMenu = useCallback(() => {
     setIsMobileMenuOpen(false);
     menuButtonRef.current?.focus();
-  };
+  }, []);
 
   const navVariants = {
-    hidden: { y: -100 },
-    visible: {
-      y: 0,
-      transition: { duration: 0.6, ease: 'easeOut' }
-    }
+    hidden:  { y: '-100%' },
+    visible: { y: 0, transition: { duration: 0.6, ease: 'easeOut' } },
   };
 
   const mobileMenuVariants = {
-    closed: {
-      opacity: 0,
-      x: '100%',
-      transition: { duration: 0.3, ease: 'easeInOut' }
-    },
-    open: {
-      opacity: 1,
-      x: 0,
-      transition: { duration: 0.3, ease: 'easeInOut' }
-    }
+    closed: { opacity: 0, x: '100%', transition: { duration: 0.3, ease: 'easeInOut' } },
+    open:   { opacity: 1, x: 0,      transition: { duration: 0.3, ease: 'easeInOut' } },
   };
 
   return (
     <>
       <motion.nav
-        initial="hidden"
-        animate="visible"
-        variants={navVariants}
+        initial={{ y: '-100%' }}
+        animate={{ y: isHidden ? '-100%' : 0 }}
+        transition={{ duration: 0.4, ease: 'easeInOut' }}
         aria-label="Navigation principale"
-        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
+        className={`fixed top-0 left-0 right-0 z-50 transition-colors duration-500 ${
           isScrolled
-            ? 'glass-strong shadow-lg shadow-black/20'
-            : 'bg-black/60 backdrop-blur-md border-b border-white/5'
+            ? 'bg-[#0a142c]/95 backdrop-blur-xl border-b border-white/8 shadow-lg shadow-black/40'
+            : 'bg-gradient-to-b from-[#0a142c]/88 via-[#0a142c]/50 to-transparent backdrop-blur-sm'
         }`}
       >
         <div className="container-custom">
-          <div className="flex items-center justify-between h-16 md:h-20">
-            {/* Logo */}
-            <Link to="/" className="group" aria-label="Karim Saari — Accueil">
-              <div className="text-left">
-                <span className="text-2xl md:text-3xl font-bold text-white group-hover:text-ocean-teal transition-colors duration-300 block tracking-tight">
-                  Karim Saari
-                </span>
-                <div className="text-xs md:text-sm text-gray-400 uppercase tracking-widest leading-tight" style={{ letterSpacing: '0.15em' }}>
-                  <p className="mb-0">Sentinelle des Calanques</p>
-                  <p>Photographe · Paysages & Sous-Marin</p>
-                </div>
-              </div>
-            </Link>
+          {/* Layout 3 colonnes : Logo | Nav centré | Réseaux sociaux */}
+          <div className="flex items-center h-[70px] md:h-[128px] gap-4">
 
-            {/* Desktop Navigation — 6 items max, pages secondaires en mobile uniquement */}
-            <div className="hidden md:flex items-center gap-3 flex-1 justify-end ml-4">
-              {NAV_LINKS.filter(link => !link.mobileOnly).map((link) => {
-                const isActive = location.pathname === link.path;
-
-                return (
-                  <Link
-                    key={link.path}
-                    to={link.path}
-                    aria-current={isActive ? 'page' : undefined}
-                    className={`flex items-center px-3 py-1.5 rounded-full transition-all duration-300 relative whitespace-nowrap flex-shrink-0 text-sm focus-ring ${
-                      isActive
-                        ? 'bg-ocean-teal/20 text-ocean-teal border border-ocean-teal/30 shadow-lg shadow-ocean-teal/20'
-                        : 'text-text-secondary hover:text-white hover:bg-white/5'
-                    }`}
-                  >
-                    <span className="font-medium">{link.name}</span>
-                    {isActive && (
-                      <motion.div
-                        layoutId="navbar-active"
-                        className="absolute bottom-0 left-1/2 -translate-x-1/2 w-1/2 h-0.5 bg-ocean-teal rounded-full"
-                        transition={{ type: 'spring', stiffness: 380, damping: 30 }}
-                      />
-                    )}
-                  </Link>
-                );
-              })}
+            {/* Colonne 1 — Logo */}
+            <div className="flex-shrink-0">
+              <Link
+                to="/"
+                className="group flex items-center"
+                aria-label="Karim Saari — Sentinelle des Calanques — Accueil"
+              >
+                <img
+                  src="/assets/Karim SAARI WHITE.svg"
+                  alt="Karim Saari - Photographe Marseille"
+                  width="1138"
+                  height="506"
+                  className="logo-fade-in h-[62px] md:h-[120px] lg:h-[132px] w-auto group-hover:opacity-100 transition-opacity duration-300"
+                  loading="eager"
+                  decoding="async"
+                />
+              </Link>
             </div>
 
-            {/* Mobile Menu Button */}
-            <button
-              ref={menuButtonRef}
-              onClick={openMobileMenu}
-              className="md:hidden p-2 rounded-lg glass hover:bg-white/10 transition-colors focus-ring"
-              aria-label="Ouvrir le menu de navigation"
-              aria-expanded={isMobileMenuOpen}
-              aria-controls="mobile-menu-panel"
-            >
-              <Menu className="w-6 h-6" aria-hidden="true" />
-            </button>
+            {/* Colonne 2 — Nav dropdowns (centré) */}
+            <nav aria-label="Menu principal" className="hidden md:flex flex-1 items-center justify-center gap-8 lg:gap-14">
+              {NAV_LINKS.map((item) => (
+                <NavDropdown key={item.name} item={item} />
+              ))}
+            </nav>
+
+            {/* Colonne 3 — Icônes sociales (desktop) + Burger (mobile) */}
+            <div className="flex-shrink-0 flex items-center gap-1.5 lg:gap-2 ml-auto">
+              {/* Réseaux — desktop uniquement */}
+              <div className="hidden md:flex items-center gap-1 lg:gap-1.5">
+                {NAV_SOCIALS.map(({ Icon, href, label, anchor }) => {
+                  const iconClass = "w-10 h-10 lg:w-11 lg:h-11 rounded-full border border-white/20 flex items-center justify-center hover:border-astroide/50 hover:bg-astroide/10 transition-all duration-300 group";
+                  const inner = <Icon className="w-[20px] h-[20px] text-white/80 group-hover:text-astroide transition-colors" />;
+                  if (anchor) {
+                    return (
+                      <Link key={label} to={href} aria-label={label} className={iconClass}>
+                        {inner}
+                      </Link>
+                    );
+                  }
+                  return (
+                    <a key={label} href={href} target="_blank" rel="noopener noreferrer" aria-label={`${label} (ouvre dans un nouvel onglet)`} className={iconClass}>
+                      {inner}
+                    </a>
+                  );
+                })}
+              </div>
+
+              {/* Burger — mobile uniquement */}
+              <button
+                ref={menuButtonRef}
+                onClick={openMobileMenu}
+                className="md:hidden p-2 rounded-lg glass hover:bg-white/10 transition-colors focus-ring"
+                aria-label="Ouvrir le menu de navigation"
+                aria-expanded={isMobileMenuOpen}
+                aria-controls="mobile-menu-panel"
+              >
+                <Menu className="w-6 h-6" aria-hidden="true" />
+              </button>
+            </div>
+
           </div>
         </div>
       </motion.nav>
@@ -172,7 +405,6 @@ const Navbar = () => {
       <AnimatePresence>
         {isMobileMenuOpen && (
           <>
-            {/* Backdrop — cliquable pour fermer */}
             <motion.div
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
@@ -182,7 +414,6 @@ const Navbar = () => {
               aria-hidden="true"
             />
 
-            {/* Menu Panel — dialog modal */}
             <motion.div
               ref={menuPanelRef}
               id="mobile-menu-panel"
@@ -193,10 +424,9 @@ const Navbar = () => {
               animate="open"
               exit="closed"
               variants={mobileMenuVariants}
-              className="fixed top-0 right-0 bottom-0 w-64 glass-strong z-50 md:hidden overflow-y-auto"
+              className="fixed top-0 right-0 bottom-0 w-72 glass-strong z-50 md:hidden overflow-y-auto"
             >
               <div className="p-6">
-                {/* Close Button */}
                 <button
                   onClick={closeMobileMenu}
                   className="absolute top-4 right-4 p-2 rounded-lg hover:bg-white/10 transition-colors focus-ring"
@@ -205,75 +435,47 @@ const Navbar = () => {
                   <XIcon className="w-6 h-6" aria-hidden="true" />
                 </button>
 
-                {/* Logo */}
                 <div className="mb-8 mt-4">
                   <h2 className="text-xl font-bold text-white" style={{ fontFamily: 'serif' }}>Karim Saari</h2>
                   <p className="text-xs text-gray-400 mt-1 uppercase tracking-widest">Photographe / Sentinelle des Calanques</p>
                 </div>
 
-                {/* Navigation Links */}
                 <nav aria-label="Menu principal">
-                  <ul className="space-y-2 list-none p-0 m-0">
-                    {NAV_LINKS.map((link) => {
-                      const Icon = iconMap[link.icon];
-                      const isActive = location.pathname === link.path;
-
-                      return (
-                        <li key={link.path}>
-                          <Link
-                            to={link.path}
-                            aria-current={isActive ? 'page' : undefined}
-                            className={`flex items-center space-x-3 px-4 py-3 rounded-lg transition-all duration-300 relative focus-ring ${
-                              isActive
-                                ? 'bg-ocean-teal/20 text-ocean-teal border border-ocean-teal/30 shadow-lg shadow-ocean-teal/20'
-                                : 'text-text-secondary hover:text-white hover:bg-white/5'
-                            }`}
-                          >
-                            <Icon className="w-5 h-5 flex-shrink-0" aria-hidden="true" />
-                            <span className="font-medium">{link.name}</span>
-                            {isActive && (
-                              <div className="absolute left-0 top-1/2 -translate-y-1/2 w-1 h-3/4 bg-ocean-teal rounded-r-full" aria-hidden="true" />
-                            )}
-                          </Link>
-                        </li>
-                      );
-                    })}
+                  <ul className="space-y-1 list-none p-0 m-0">
+                    {NAV_LINKS.map((item) => (
+                      <MobileNavItem key={item.name} item={item} onClose={closeMobileMenu} />
+                    ))}
                   </ul>
                 </nav>
 
-                {/* Social Links in Mobile Menu */}
+                {/* Réseaux sociaux — menu mobile */}
                 <div className="mt-8 pt-6 border-t border-white/10">
                   <p className="text-xs text-text-muted uppercase tracking-wider mb-3" id="social-links-label">
                     Suivez-nous
                   </p>
                   <div className="flex flex-wrap gap-2" aria-labelledby="social-links-label">
-                    <a
-                      href="https://www.instagram.com/karimsaari"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      aria-label="Instagram de Karim Saari (ouvre dans un nouvel onglet)"
-                      className="px-3 py-1.5 text-xs glass rounded-full hover:bg-ocean-teal/20 hover:border-ocean-teal/30 transition-all focus-ring"
-                    >
-                      Instagram
-                    </a>
-                    <a
-                      href="https://www.tiktok.com/@dark.massilia"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      aria-label="TikTok Dark Massilia (ouvre dans un nouvel onglet)"
-                      className="px-3 py-1.5 text-xs glass rounded-full hover:bg-ocean-teal/20 hover:border-ocean-teal/30 transition-all focus-ring"
-                    >
-                      TikTok
-                    </a>
-                    <a
-                      href="https://www.youtube.com/@dark.massilia"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      aria-label="YouTube Dark Massilia (ouvre dans un nouvel onglet)"
-                      className="px-3 py-1.5 text-xs glass rounded-full hover:bg-ocean-teal/20 hover:border-ocean-teal/30 transition-all focus-ring"
-                    >
-                      YouTube
-                    </a>
+                    {NAV_SOCIALS.map(({ Icon, href, label, anchor }) => {
+                      const iconClass = "w-10 h-10 rounded-full border border-white/10 flex items-center justify-center hover:border-astroide/50 hover:bg-astroide/10 transition-all duration-300 group";
+                      const inner = <Icon className="w-5 h-5 text-gray-400 group-hover:text-astroide transition-colors" />;
+                      if (anchor) {
+                        return (
+                          <Link
+                            key={label}
+                            to={href}
+                            aria-label={label}
+                            className={iconClass}
+                            onClick={closeMobileMenu}
+                          >
+                            {inner}
+                          </Link>
+                        );
+                      }
+                      return (
+                        <a key={label} href={href} target="_blank" rel="noopener noreferrer" aria-label={`${label} (ouvre dans un nouvel onglet)`} className={iconClass}>
+                          {inner}
+                        </a>
+                      );
+                    })}
                   </div>
                 </div>
               </div>

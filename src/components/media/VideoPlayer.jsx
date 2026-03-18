@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { Play } from 'lucide-react';
 import { getYouTubeId, getVimeoId, getVideoThumbnail } from '../../utils/helpers';
 import VideoModal from './VideoModal';
+import { trackEvent } from '../../lib/analytics';
 
 /**
  * VideoPlayer with Facade Pattern + Modal
@@ -61,7 +62,7 @@ const VideoPlayer = ({ media }) => {
 
         {/* Play Button Overlay */}
         <button
-          onClick={() => setIsModalOpen(true)}
+          onClick={() => { setIsModalOpen(true); trackEvent('video_play', { video_title: title }); }}
           className="absolute inset-0 flex items-center justify-center bg-black/40 hover:bg-black/30 transition-all duration-300 cursor-pointer"
           aria-label={`Lire : ${title}`}
         >

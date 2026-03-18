@@ -3,7 +3,7 @@
 export const APP_CONFIG = {
   name: import.meta.env.VITE_APP_NAME || 'Dark Massilia',
   url: import.meta.env.VITE_APP_URL || 'https://karimsaari.com',
-  contactEmail: import.meta.env.VITE_CONTACT_EMAIL || 'email@karimsaari.com',
+  contactEmail: import.meta.env.VITE_CONTACT_EMAIL || 'contact@karimsaari.com',
   contactWhatsApp: import.meta.env.VITE_CONTACT_WHATSAPP || '+33695331301',
 };
 
@@ -22,18 +22,52 @@ export const SOCIAL_LINKS = {
 };
 
 export const NAV_LINKS = [
-  { name: 'Missions', path: '/depollution-marine', icon: 'Compass' },
-  { name: 'Paysages', path: '/photographie-paysage-mer', icon: 'Camera' },
-  { name: 'Sous-marin', path: '/photographie-sous-marine', icon: 'Camera' },
-  { name: 'Vidéos', path: '/videos', icon: 'Video' },
-  { name: 'Médias', path: '/presse', icon: 'Film' },
-  { name: 'Réseaux', path: '/communaute', icon: 'Share2' },
-  { name: 'Carte', path: '/carte-calanques', icon: 'MapPin' },
-  // Menu mobile uniquement — pages secondaires
-  { name: 'Contact', path: '/contact', icon: 'Mail', mobileOnly: true },
-  { name: 'Blog', path: '/blog', icon: 'BookOpen', mobileOnly: true },
-  { name: 'Local Guides', path: '/local-guide-marseille', icon: 'Navigation', mobileOnly: true },
-  { name: 'Références', path: '/donnees-scientifiques', icon: 'BookOpen', mobileOnly: true },
+  {
+    name: 'Missions',
+    icon: 'Compass',
+    description: 'Dépollution des fonds marins en apnée, documentation scientifique et mobilisation citoyenne dans les Calanques.',
+    children: [
+      { name: 'Photos sous-marines',       path: '/photographie-sous-marine', icon: 'Camera'   },
+      { name: 'Dépollution marine',       path: '/depollution-marine',       icon: 'Compass'  },
+      { name: 'Rejoindre la communauté',  path: '/communaute',               icon: 'Share2'   },
+      { name: 'Données scientifiques',    path: '/donnees-scientifiques',    icon: 'BarChart2' },
+    ],
+  },
+  {
+    name: 'Explorer',
+    icon: 'Compass',
+    description: 'Galeries photo paysages & mer, carte interactive des Calanques et guide local de Marseille.',
+    children: [
+      { name: 'Photos de paysages',  path: '/photographie-paysage-mer', icon: 'Camera'     },
+      { name: 'Carte des Calanques', path: '/carte-calanques',          icon: 'MapPin'     },
+      { name: 'Google Local Guide',  path: '/local-guide-marseille',    icon: 'Navigation' },
+      { name: 'Blog',                path: '/blog',                     icon: 'BookOpen'   },
+      { name: 'Actualités',          path: '/actualites',               icon: 'Newspaper'  },
+    ],
+  },
+  {
+    name: 'Médias',
+    icon: 'Film',
+    description: 'Documentaires ARTE, presse nationale, vidéos et actualités sur l\'engagement environnemental à Marseille.',
+    children: [
+      { name: 'Vidéos',                  path: '/videos',                                        icon: 'Video'     },
+      { name: 'Presse',                  path: '/presse',                                        icon: 'Film'      },
+      { name: 'ARTE — Sauver Marseille', path: '/sauver-marseille-documentaire-arte',            icon: 'Tv'        },
+      { name: 'ARTE — Méduses',          path: '/meduses-souveraines-oceans-documentaire-arte',  icon: 'Tv'        },
+      { name: 'Yann Arthus-Bertrand',    path: '/les-francais-yann-arthus-bertrand',             icon: 'Camera'    },
+    ],
+  },
+  {
+    name: 'Contact',
+    icon: 'Mail',
+    description: 'Collaborations, partenariats médias ou institutionnels — rejoignez la mission Dark Massilia.',
+    children: [
+      { name: 'Collaborer avec nous',          path: '/contact',                                              icon: 'Mail'    },
+      { name: 'Newsletter',                   path: '/#newsletter',                                          icon: 'Send'    },
+      { name: 'Amoureux des Calanques',       path: 'https://www.facebook.com/groups/calanque/',             icon: 'Share2'  },
+      { name: 'Team Oxygen',                  path: 'https://www.team-oxygen.com/',                          icon: 'Compass' },
+    ],
+  },
 ];
 
 export const TAGLINE = 'Une Mer · Une Ville · Une Mission';
@@ -55,8 +89,9 @@ export const MEDIA_TYPES = {
 
 // Animation variants for Framer Motion
 export const FADE_IN_UP = {
-  hidden: { y: 30 },
+  hidden: { opacity: 0, y: 30 },
   visible: {
+    opacity: 1,
     y: 0,
     transition: { duration: 0.6, ease: 'easeOut' }
   }

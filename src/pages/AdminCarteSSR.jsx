@@ -1,7 +1,7 @@
 /**
- * AdminCarteSSR — version statique pour le prérendu SSR
+ * AdminCarteSSR — version statique pour le prérendu SSR de /admin
  * Affiche uniquement le formulaire de login (pas de sessionStorage, pas de Leaflet)
- * Le client prend le relais avec AdminCarte.jsx complet via hydratation
+ * Le client prend le relais avec AdminGalerie.jsx complet via hydratation
  */
 import { Lock } from 'lucide-react';
 
@@ -17,8 +17,7 @@ export default function AdminCarteSSR() {
             <Lock className="w-5 h-5 text-[#21c47b]" />
           </div>
           <div>
-            <h1 className="text-lg font-bold text-white">Admin — Carte des Sites</h1>
-            <p className="text-xs" style={{ color: 'rgba(255,255,255,0.4)' }}>Dark Massilia</p>
+            <h1 className="text-lg font-bold text-white">Backoffice — Dark Massilia</h1>
           </div>
         </div>
         <input

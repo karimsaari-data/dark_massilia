@@ -1,7 +1,15 @@
 import { Instagram, Linkedin, Facebook, AtSign, Send } from 'lucide-react';
+
+// X (Twitter) icon — Lucide n'a pas le logo X
+const XTwitterIcon = ({ className }) => (
+  <svg className={className} viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+    <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
+  </svg>
+);
 import { Link } from 'react-router-dom';
 import { SOCIAL_LINKS, APP_CONFIG, NAV_LINKS } from '../../utils/constants';
 import { openConsentBanner } from '../../utils/consent';
+import { trackEvent } from '../../lib/analytics';
 
 // TikTok icon component (Lucide doesn't have TikTok, so we use a custom SVG)
 const TikTokIcon = ({ className }) => (
@@ -21,19 +29,10 @@ const navColumns = [
   {
     label: 'Missions',
     links: [
-      { to: '/depollution-marine', text: 'Dépollution marine' },
       { to: '/photographie-sous-marine', text: 'Photos sous-marines' },
+      { to: '/depollution-marine', text: 'Dépollution marine' },
+      { to: '/communaute', text: 'Rejoindre la communauté' },
       { to: '/donnees-scientifiques', text: 'Données scientifiques' },
-      { to: '/communaute', text: 'Communauté' },
-    ],
-  },
-  {
-    label: 'Médias',
-    links: [
-      { to: '/videos', text: 'Vidéos' },
-      { to: '/presse', text: 'Presse' },
-      { to: '/sauver-marseille-documentaire-arte', text: 'Documentaire ARTE' },
-      { to: '/les-francais-yann-arthus-bertrand', text: 'Yann Arthus-Bertrand' },
     ],
   },
   {
@@ -46,11 +45,22 @@ const navColumns = [
     ],
   },
   {
+    label: 'Médias',
+    links: [
+      { to: '/videos', text: 'Vidéos' },
+      { to: '/presse', text: 'Presse' },
+      { to: '/sauver-marseille-documentaire-arte', text: 'ARTE — Sauver Marseille' },
+      { to: '/meduses-souveraines-oceans-documentaire-arte', text: 'ARTE — Méduses Souveraines' },
+      { to: '/les-francais-yann-arthus-bertrand', text: 'Yann Arthus-Bertrand' },
+    ],
+  },
+  {
     label: 'Contact',
     links: [
       { to: '/contact', text: 'Collaborer avec nous' },
       { to: '/#newsletter', text: 'Newsletter', anchor: true },
-      { to: 'mailto:contact@karimsaari.com', text: 'Envoyer un mail', external: true },
+      { to: 'https://www.facebook.com/groups/calanque/', text: 'Amoureux des Calanques', external: true },
+      { to: 'https://www.team-oxygen.com/', text: 'Team Oxygen', external: true },
     ],
   },
 ];
@@ -62,6 +72,7 @@ const Footer = () => {
     { Icon: Send, href: '/#newsletter', label: 'Newsletter', anchor: true },
     { Icon: Instagram, href: SOCIAL_LINKS.instagram, label: 'Instagram' },
     { Icon: TikTokIcon, href: SOCIAL_LINKS.tiktok, label: 'TikTok' },
+    { Icon: XTwitterIcon, href: SOCIAL_LINKS.twitter, label: 'X (Twitter)' },
     { Icon: Facebook, href: SOCIAL_LINKS.facebook, label: 'Facebook' },
     { Icon: Linkedin, href: SOCIAL_LINKS.linkedin, label: 'LinkedIn' },
     { Icon: Px500Icon, href: SOCIAL_LINKS.px500, label: '500px' },
@@ -83,15 +94,15 @@ const Footer = () => {
                 <ul className="space-y-1">
                   {col.links.map((link) => {
                     const renderSingle = (l) => l.action ? (
-                      <button type="button" onClick={l.action} className="text-sm text-gray-300 hover:text-ocean-teal transition-colors duration-200 cursor-pointer py-1.5">
+                      <button type="button" onClick={l.action} className="text-sm text-gray-300 hover:text-astroide transition-colors duration-200 cursor-pointer py-1.5">
                         {l.text}
                       </button>
                     ) : l.anchor || l.external ? (
-                      <a href={l.to} className="text-sm text-gray-300 hover:text-ocean-teal transition-colors duration-200 py-1.5">
+                      <a href={l.to} className="text-sm text-gray-300 hover:text-astroide transition-colors duration-200 py-1.5">
                         {l.text}
                       </a>
                     ) : (
-                      <Link to={l.to} className="text-sm text-gray-300 hover:text-ocean-teal transition-colors duration-200 py-1.5">
+                      <Link to={l.to} className="text-sm text-gray-300 hover:text-astroide transition-colors duration-200 py-1.5">
                         {l.text}
                       </Link>
                     );
@@ -133,8 +144,8 @@ const Footer = () => {
         {/* Social Icons - Centered */}
         <div className="flex justify-center items-center gap-5 mb-8">
           {socialIcons.map(({ Icon, href, label, anchor, internal }) => {
-            const iconClass = "w-10 h-10 rounded-full border border-white/10 flex items-center justify-center hover:border-ocean-teal/50 hover:bg-ocean-teal/10 transition-all duration-300 group";
-            const innerIcon = <Icon className="w-5 h-5 text-gray-400 group-hover:text-ocean-teal transition-colors" />;
+            const iconClass = "w-10 h-10 rounded-full border border-white/10 flex items-center justify-center hover:border-astroide/50 hover:bg-astroide/10 transition-all duration-300 group";
+            const innerIcon = <Icon className="w-5 h-5 text-gray-400 group-hover:text-astroide transition-colors" />;
 
             if (anchor || internal) {
               return (
@@ -144,7 +155,7 @@ const Footer = () => {
               );
             }
             return (
-              <a key={label} href={href} target="_blank" rel="noopener noreferrer" aria-label={label} className={iconClass}>
+              <a key={label} href={href} target="_blank" rel="noopener noreferrer" aria-label={label} className={iconClass} onClick={() => trackEvent('social_click', { platform: label })}>
                 {innerIcon}
               </a>
             );
@@ -163,7 +174,7 @@ const Footer = () => {
               href="https://www.team-oxygen.com/"
               target="_blank"
               rel="noopener noreferrer"
-              className="text-gray-300 hover:text-ocean-teal underline decoration-white/40 hover:decoration-ocean-teal/60 underline-offset-2 transition-colors duration-200"
+              className="text-gray-300 hover:text-astroide underline decoration-white/40 hover:decoration-astroide/60 underline-offset-2 transition-colors duration-200"
             >
               Team Oxygen
             </a>
@@ -171,20 +182,20 @@ const Footer = () => {
           <div className="flex flex-wrap justify-center gap-x-4 gap-y-1">
             <Link
               to="/mentions-legales"
-              className="text-xs text-gray-400 hover:text-ocean-teal transition-colors duration-200 py-1.5 px-1"
+              className="text-xs text-gray-400 hover:text-astroide transition-colors duration-200 py-1.5 px-1"
             >
               Mentions légales
             </Link>
             <Link
               to="/confidentialite"
-              className="text-xs text-gray-400 hover:text-ocean-teal transition-colors duration-200 py-1.5 px-1"
+              className="text-xs text-gray-400 hover:text-astroide transition-colors duration-200 py-1.5 px-1"
             >
               Politique de confidentialité
             </Link>
             <button
               type="button"
               onClick={openConsentBanner}
-              className="text-xs text-gray-400 hover:text-ocean-teal transition-colors duration-200 cursor-pointer py-1.5 px-1"
+              className="text-xs text-gray-400 hover:text-astroide transition-colors duration-200 cursor-pointer py-1.5 px-1"
             >
               Gérer les cookies
             </button>

@@ -4,6 +4,7 @@ import { CheckCircle, AlertCircle, Loader2 } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { supabase } from '../lib/supabase';
 import { FADE_IN_UP } from '../utils/constants';
+import { trackEvent } from '../lib/analytics';
 
 const NewsletterSection = () => {
   const [email, setEmail] = useState('');
@@ -26,7 +27,9 @@ const NewsletterSection = () => {
       if (error) throw new Error(error.message);
       if (data?.error) throw new Error(data.error);
 
-      setStatus(data?.alreadySubscribed ? 'already' : 'success');
+      const newStatus = data?.alreadySubscribed ? 'already' : 'success';
+      if (newStatus === 'success') trackEvent('newsletter_subscribe');
+      setStatus(newStatus);
     } catch (err) {
       setErrorMsg(err.message || 'Une erreur est survenue, réessaie.');
       setStatus('error');

@@ -12,57 +12,9 @@ const Meduses = () => {
   return (
     <div className="min-h-screen py-32">
       <SEO {...SEO_PAGES['/meduses-souveraines-oceans-documentaire-arte']} />
-      <div className="container-custom max-w-4xl">
+      <div className="container-custom">
 
-        {/* Section éditoriale SEO — contribution & engagement */}
-        <motion.div
-          initial="hidden"
-          animate="visible"
-          variants={STAGGER_CONTAINER}
-          className="mb-12"
-        >
-          <motion.div variants={FADE_IN_UP} className="glass-strong rounded-3xl p-8 md:p-12">
-            <div className="flex items-start justify-between gap-6 mb-6">
-              <h2 className="text-2xl md:text-3xl font-bold text-white">
-                Contribution au documentaire ARTE « Méduses | Les souveraines des océans »
-              </h2>
-              <div className="w-16 h-16 md:w-20 md:h-20 rounded-full bg-white overflow-hidden flex-shrink-0 animate-pulse-glow">
-                <img
-                  src="/assets/dark-massilia-logo.webp"
-                  alt="Logo Dark Massilia — Karim Saari"
-                  className="w-full h-full object-contain"
-                />
-              </div>
-            </div>
-            <div className="space-y-4 text-text-secondary leading-relaxed text-lg">
-              <p>
-                Le documentaire{' '}
-                <strong className="text-white">« Méduses | Les souveraines des océans »</strong>{' '}
-                a été mis en ligne sur YouTube le 18 novembre 2025 par{' '}
-                <strong className="text-ocean-teal">ARTE Évasion</strong>. Diffusé initialement en
-                2024, ce film réalisé par{' '}
-                <strong className="text-white">Sébastien Lafont</strong> explore la prolifération
-                des méduses et la transformation des écosystèmes marins. J'ai fourni plusieurs
-                images tournées en Méditerranée pour cette production, issues de mon travail de
-                terrain.
-              </p>
-              <p>
-                La méduse n'est pas un sujet anecdotique dans mon univers : elle est au cœur de
-                l'identité visuelle de{' '}
-                <strong className="text-ocean-teal">Dark Massilia</strong>. Symbole d'adaptation
-                et d'évolution, elle représente à la fois la fragilité des équilibres marins et la
-                capacité du vivant à survivre aux bouleversements.
-              </p>
-              <p>
-                Contribuer à ce documentaire s'inscrit dans la continuité de mon engagement :
-                documenter l'océan, comprendre ses mutations et rendre visibles les signaux faibles
-                qui annoncent ses transformations.
-              </p>
-            </div>
-          </motion.div>
-        </motion.div>
-
-        {/* Header */}
+        {/* Header + H1 */}
         <motion.div
           initial="hidden"
           animate="visible"
@@ -96,100 +48,165 @@ const Meduses = () => {
           </motion.div>
         </motion.div>
 
-        {/* Galerie de 4 images */}
+        {/* Bloc 1 — Description ARTE + photos 2 & 3 */}
         <motion.div
           initial="hidden"
           animate="visible"
           variants={STAGGER_CONTAINER}
-          className="grid grid-cols-2 gap-3 mb-12"
+          className="mb-8"
         >
-          {[2, 3, 4, 5].map((n) => (
-            <motion.div
-              key={n}
-              variants={FADE_IN_UP}
-              className="rounded-2xl overflow-hidden aspect-video"
-            >
-              <picture>
-                <source srcSet={`${img(n)}.webp`} type="image/webp" />
-                <img
-                  src={`${img(n)}.jpg`}
-                  alt={`Méduses en Méditerranée — image fournie pour le documentaire ARTE Évasion (${n - 1}/4)`}
-                  className="w-full h-full object-cover hover:scale-105 transition-transform duration-500"
-                  loading="lazy"
-                  decoding="async"
-                />
-              </picture>
-            </motion.div>
-          ))}
-        </motion.div>
-
-        {/* Description ARTE — réalisateur mis en avant */}
-        <motion.div
-          initial="hidden"
-          animate="visible"
-          variants={STAGGER_CONTAINER}
-          className="glass-strong rounded-3xl p-8 md:p-12 mb-12"
-        >
-          <motion.div variants={FADE_IN_UP} className="mb-4 flex items-center gap-3">
-            <span className="text-xs uppercase tracking-widest text-ocean-teal font-semibold">
-              ARTE Évasion
-            </span>
-            <span className="text-text-muted">·</span>
-            <span className="text-sm text-text-muted">
-              Réalisé par <strong className="text-white">Sébastien Lafont</strong> — France, 2024, 43 min
-            </span>
-          </motion.div>
-          <motion.div variants={FADE_IN_UP} className="space-y-4 text-text-secondary leading-relaxed text-lg">
-            <p>
-              Les méduses sont-elles en passe de dominer les océans ? Donnant la parole à l'une
-              d'elles, ce documentaire aux images envoûtantes dévoile les superpouvoirs de ces
-              créatures d'apparence si fragile, qui profitent de la surpêche, de la pollution et
-              du réchauffement climatique pour proliférer.
-            </p>
-            <p>
-              Elles n'ont ni cœur, ni cerveau, ni squelette et sont constituées à 90 % d'eau.
-              Malgré leur apparente fragilité, les méduses ont conquis toutes les mers du globe
-              au fil de leurs{' '}
-              <strong className="text-white">650 millions d'années d'évolution</strong>. Mais
-              depuis quelques décennies, de la{' '}
-              <strong className="text-ocean-teal">Méditerranée</strong> aux fjords norvégiens en
-              passant par les côtes namibiennes, leur prolifération inquiète. Cette{' '}
-              <em>« gélification »</em> des mers et océans menace des pêcheries et aquacultures
-              aux quatre coins du monde.
-            </p>
-            <p>
-              Capacités de reproduction hors normes, venins redoutables, immortalité… Par la
-              voix d'<em>Aurelia aurita</em>, la méduse commune, ce documentaire passe en revue
-              les superpouvoirs de ses congénères et se penche sur les raisons de leur expansion
-              spectaculaire.
-            </p>
-          </motion.div>
-        </motion.div>
-
-        {/* Lien YouTube ARTE Évasion */}
-        <motion.div
-          initial="hidden"
-          animate="visible"
-          variants={STAGGER_CONTAINER}
-          className="text-center mb-16"
-        >
-          <motion.a
+          <motion.div
             variants={FADE_IN_UP}
-            href="https://youtu.be/yfebiTFOq7E"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="btn inline-flex items-center justify-between group max-w-md mx-auto hover:scale-105 transition-all duration-300"
+            className="glass-strong rounded-3xl overflow-hidden flex flex-col lg:flex-row"
           >
-            <span>Voir sur YouTube — ARTE Évasion</span>
-            <ExternalLink className="w-4 h-4 group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform" />
-          </motion.a>
+            {/* Texte */}
+            <div className="p-8 md:p-12 lg:flex-1 flex flex-col justify-center">
+              <div className="mb-4 flex items-center gap-3">
+                <span className="text-xs uppercase tracking-widest text-ocean-teal font-semibold">
+                  ARTE Évasion
+                </span>
+                <span className="text-text-muted">·</span>
+                <span className="text-sm text-text-muted">
+                  Réalisé par <strong className="text-white">Sébastien Lafont</strong> — France, 2024, 43 min
+                </span>
+              </div>
+              <div className="space-y-4 text-text-secondary leading-[1.8] text-lg">
+                <p>
+                  Les méduses sont-elles en passe de dominer les océans ? Donnant la parole à l'une
+                  d'elles, ce documentaire aux images envoûtantes dévoile les superpouvoirs de ces
+                  créatures d'apparence si fragile, qui profitent de la surpêche, de la pollution et
+                  du réchauffement climatique pour proliférer.
+                </p>
+                <p>
+                  Elles n'ont ni cœur, ni cerveau, ni squelette et sont constituées à 90 % d'eau.
+                  Malgré leur apparente fragilité, les méduses ont conquis toutes les mers du globe
+                  au fil de leurs{' '}
+                  <strong className="text-white">650 millions d'années d'évolution</strong>. Mais
+                  depuis quelques décennies, de la{' '}
+                  <strong className="text-ocean-teal">Méditerranée</strong> aux fjords norvégiens en
+                  passant par les côtes namibiennes, leur prolifération inquiète. Cette{' '}
+                  <em>« gélification »</em> des mers et océans menace des pêcheries et aquacultures
+                  aux quatre coins du monde.
+                </p>
+                <p>
+                  Capacités de reproduction hors normes, venins redoutables, immortalité… Par la
+                  voix d'<em>Aurelia aurita</em>, la méduse commune, ce documentaire passe en revue
+                  les superpouvoirs de ses congénères et se penche sur les raisons de leur expansion
+                  spectaculaire.
+                </p>
+              </div>
+            </div>
+
+            {/* Photos 2 & 3 */}
+            <div className="lg:w-[38%] flex-shrink-0 flex flex-col min-h-[300px] lg:min-h-0">
+              {[2, 3].map((n) => (
+                <div key={n} className="flex-1 overflow-hidden">
+                  <picture>
+                    <source srcSet={`${img(n)}.webp`} type="image/webp" />
+                    <img
+                      src={`${img(n)}.jpg`}
+                      alt={`Méduses en Méditerranée — image fournie pour le documentaire ARTE Évasion (${n - 1}/4)`}
+                      className="w-full h-full object-cover hover:scale-105 transition-transform duration-500"
+                      loading="lazy"
+                      decoding="async"
+                    />
+                  </picture>
+                </div>
+              ))}
+            </div>
+          </motion.div>
+        </motion.div>
+
+        {/* Bloc 2 — Contribution éditoriale + photos 4 & 5 + bouton YouTube */}
+        <motion.div
+          initial="hidden"
+          animate="visible"
+          variants={STAGGER_CONTAINER}
+          className="mb-12"
+        >
+          <motion.div
+            variants={FADE_IN_UP}
+            className="glass-strong rounded-3xl overflow-hidden flex flex-col lg:flex-row"
+          >
+            {/* Photos 4 & 5 — à gauche */}
+            <div className="lg:w-[38%] flex-shrink-0 flex flex-col min-h-[300px] lg:min-h-0 order-last lg:order-first">
+              {[4, 5].map((n) => (
+                <div key={n} className="flex-1 overflow-hidden">
+                  <picture>
+                    <source srcSet={`${img(n)}.webp`} type="image/webp" />
+                    <img
+                      src={`${img(n)}.jpg`}
+                      alt={`Méduses en Méditerranée — image fournie pour le documentaire ARTE Évasion (${n - 1}/4)`}
+                      className="w-full h-full object-cover hover:scale-105 transition-transform duration-500"
+                      loading="lazy"
+                      decoding="async"
+                    />
+                  </picture>
+                </div>
+              ))}
+            </div>
+
+            {/* Texte + bouton */}
+            <div className="p-8 md:p-12 lg:flex-1 flex flex-col justify-center">
+              <div className="flex items-start justify-between gap-6 mb-6">
+                <h2 className="text-2xl md:text-3xl font-bold text-white">
+                  Contribution au documentaire ARTE « Méduses | Les souveraines des océans »
+                </h2>
+                <div className="w-14 h-14 rounded-full bg-white overflow-hidden flex-shrink-0 animate-pulse-glow">
+                  <img
+                    src="/assets/dark-massilia-logo.webp"
+                    alt="Logo Dark Massilia — Karim Saari"
+                    className="w-full h-full object-contain"
+                  />
+                </div>
+              </div>
+              <div className="space-y-4 text-text-secondary leading-[1.8] text-lg">
+                <p>
+                  Le documentaire{' '}
+                  <strong className="text-white">« Méduses | Les souveraines des océans »</strong>{' '}
+                  a été mis en ligne sur YouTube le 18 novembre 2025 par{' '}
+                  <strong className="text-ocean-teal">ARTE Évasion</strong>. Diffusé initialement en
+                  2024, ce film réalisé par{' '}
+                  <strong className="text-white">Sébastien Lafont</strong> explore la prolifération
+                  des méduses et la transformation des écosystèmes marins. J'ai fourni plusieurs
+                  images tournées en Méditerranée pour cette production, issues de mon travail de
+                  terrain.
+                </p>
+                <p>
+                  La méduse n'est pas un sujet anecdotique dans mon univers : elle est au cœur de
+                  l'identité visuelle de{' '}
+                  <strong className="text-ocean-teal">Dark Massilia</strong>. Symbole d'adaptation
+                  et d'évolution, elle représente à la fois la fragilité des équilibres marins et la
+                  capacité du vivant à survivre aux bouleversements.
+                </p>
+                <p>
+                  Contribuer à ce documentaire s'inscrit dans la continuité de mon engagement :
+                  documenter l'océan, comprendre ses mutations et rendre visibles les signaux faibles
+                  qui annoncent ses transformations.
+                </p>
+              </div>
+
+              {/* Bouton YouTube intégré */}
+              <div className="mt-8">
+                <a
+                  href="https://youtu.be/yfebiTFOq7E"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="btn inline-flex items-center gap-3 group hover:scale-105 transition-all duration-300"
+                >
+                  <span>Voir sur YouTube — ARTE Évasion</span>
+                  <ExternalLink className="w-4 h-4 group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform flex-shrink-0" />
+                </a>
+              </div>
+            </div>
+          </motion.div>
         </motion.div>
 
         {/* Back to Presse */}
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
-          transition={{ delay: 0.8 }}
+          transition={{ delay: 0.6 }}
           className="text-center"
         >
           <Link

@@ -97,18 +97,19 @@
 
   /* Container responsive */
   .container-custom {
-    @apply max-w-7xl mx-auto px-4 sm:px-6 lg:px-8;
+    @apply max-w-screen-2xl mx-auto px-4 sm:px-6 lg:px-10 xl:px-16;
   }
 
   /* Button styles */
+  /* ── Orange Astroïde — Astroides calycularis (CTA primaire) ── */
   .btn-primary {
-    @apply px-6 py-3 bg-gradient-to-r from-ocean-teal to-ocean-blue;
-    @apply text-white font-semibold rounded-full;
+    @apply px-6 py-3 text-white font-semibold rounded-2xl;
     @apply transition-all duration-300;
-    @apply hover:shadow-lg hover:shadow-ocean-teal/50;
-    @apply hover:scale-105 active:scale-95;
-    @apply ring-4 ring-ocean-teal/20;
+    @apply active:scale-95;
+    @apply ring-4 ring-astroide/20;
     @apply relative overflow-hidden;
+    background: linear-gradient(135deg, #FF9500 0%, #FF7F00 100%);
+    box-shadow: 0 4px 15px rgba(255, 127, 0, 0.25);
   }
 
   .btn-primary::before {
@@ -127,18 +128,21 @@
   }
 
   .btn-primary:hover {
-    @apply shadow-2xl shadow-ocean-teal/60 ring-ocean-teal/30 scale-110;
+    background: linear-gradient(135deg, #FF7F00 0%, #FF5E00 100%);
+    box-shadow: 0 6px 20px rgba(255, 127, 0, 0.5);
+    transform: translateY(-2px) scale(1.05);
+    @apply ring-astroide/30;
   }
 
   .btn-secondary {
     @apply px-6 py-3 glass;
-    @apply text-white font-semibold rounded-full;
+    @apply text-white font-semibold rounded-2xl;
     @apply transition-all duration-300;
     @apply hover:bg-white/10 hover:border-ocean-teal/50;
   }
 
   .btn-ghost {
-    @apply px-6 py-3 bg-transparent border border-white/30 rounded-full;
+    @apply px-6 py-3 bg-transparent border border-white/30 rounded-2xl;
     @apply text-white font-semibold;
     @apply transition-all duration-300;
     @apply hover:bg-white/10 hover:border-white/60;
@@ -177,6 +181,15 @@
       opacity: 1;
       transform: translateY(0);
     }
+  }
+
+  @keyframes logoFadeIn {
+    from { opacity: 0; }
+    to   { opacity: 0.9; }
+  }
+
+  .logo-fade-in {
+    animation: logoFadeIn 1.8s ease-out 0.6s both;
   }
 
   /* Parallax effect */
@@ -257,13 +270,13 @@
 
 /* ── Prose Blog — styles du contenu WordPress ─────────────────────────────── */
 .prose-blog {
-  @apply text-gray-300 leading-relaxed text-base;
+  @apply text-gray-300 text-[17px] leading-[1.85];
 }
-.prose-blog h2 { @apply text-2xl md:text-3xl font-bold text-text-primary mt-10 mb-4 leading-snug; }
-.prose-blog h3 { @apply text-xl md:text-2xl font-bold text-text-primary mt-8 mb-3 leading-snug; }
-.prose-blog h4 { @apply text-lg md:text-xl font-semibold text-text-primary mt-6 mb-3; }
-.prose-blog p  { @apply mb-5; }
-.prose-blog a  { @apply text-ocean-teal underline underline-offset-2 hover:text-white transition-colors; }
+.prose-blog h2 { @apply text-2xl md:text-3xl font-bold text-text-primary mt-12 mb-5 leading-snug; }
+.prose-blog h3 { @apply text-xl md:text-2xl font-bold text-text-primary mt-10 mb-4 leading-snug; }
+.prose-blog h4 { @apply text-lg md:text-xl font-semibold text-text-primary mt-8 mb-3; }
+.prose-blog p  { @apply mb-7; }
+.prose-blog a  { @apply text-ocean-teal underline underline-offset-2 hover:text-white transition-colors break-all; }
 .prose-blog strong, .prose-blog b { @apply text-text-primary font-semibold; }
 .prose-blog em, .prose-blog i     { @apply italic text-gray-200; }
 .prose-blog ul { @apply list-disc list-outside pl-6 mb-5 space-y-2; }
@@ -294,3 +307,183 @@
   -ms-overflow-style: none;
   scrollbar-width: none;
 }
+
+/* ── Fancybox sidebar : vignettes verticales style YAB ─────────────────── */
+/* Toolbar : se décale vers la gauche quand la sidebar est ouverte */
+.fancybox__container .fancybox__toolbar {
+  transition: right 0.25s ease;
+}
+.fancybox__container.has-sidebar .fancybox__toolbar {
+  right: 130px !important;
+}
+/* Sidebar pleine hauteur, flush droite — type "scrollable" */
+.fancybox__sidebar {
+  /* Variables CSS officielles Fancybox Thumbs */
+  --f-thumb-width: 130px;
+  --f-thumb-height: 78px;
+  --f-thumbs-gap: 2px;
+  --f-thumbs-padding-x: 0px;
+  --f-thumbs-padding-y: 0px;
+  --f-thumbs-bg: transparent;
+  --f-thumb-bg: transparent;
+  /* Vignette active : inset shadow bleu */
+  --f-thumb-selected-shadow: inset 0 0 0 3px #2196f3;
+  --f-thumb-focus-shadow: inset 0 0 0 3px rgba(33, 150, 243, 0.5);
+
+  width: 130px !important;
+  min-width: 130px !important;
+  max-width: 130px !important;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  align-self: stretch;
+  border-left: 1px solid rgba(255,255,255,0.08);
+}
+/* Viewport scrollable : colonne unique */
+.fancybox__sidebar .f-thumbs.is-scrollable {
+  flex: 1;
+  width: 100% !important;
+  overflow: hidden;
+}
+.fancybox__sidebar .f-thumbs.is-scrollable .f-thumbs__viewport {
+  grid-template-columns: 1fr !important;
+  grid-auto-rows: auto !important;
+  gap: 2px !important;
+  overflow-y: scroll !important;
+  overflow-x: hidden !important;
+  height: 100% !important;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(255,255,255,0.3) transparent;
+}
+/* Vignette pleine largeur */
+.fancybox__sidebar .f-thumbs.is-scrollable .f-thumbs__slide {
+  width: 100% !important;
+  height: 78px !important;
+  padding: 0 !important;
+}
+.fancybox__sidebar .f-thumbs.is-scrollable .f-thumbs__slide button {
+  width: 100% !important;
+  height: 100% !important;
+  padding: 0 !important;
+  border-radius: 0 !important;
+}
+.fancybox__sidebar .f-thumbs.is-scrollable .f-thumbs__slide img {
+  width: 100% !important;
+  height: 100% !important;
+  object-fit: cover !important;
+  display: block;
+  opacity: 0.65;
+  transition: opacity 0.15s;
+}
+/* Hover + active */
+.fancybox__sidebar .f-thumbs.is-scrollable .f-thumbs__slide.is-selected img,
+.fancybox__sidebar .f-thumbs.is-scrollable .f-thumbs__slide.is-nav-selected img,
+.fancybox__sidebar .f-thumbs.is-scrollable .f-thumbs__slide:hover img {
+  opacity: 1;
+}
+/* Menu partage Fancybox — positionné dans le dialog (top layer) */
+.fancybox__container .fb-share-menu {
+  position: fixed;
+  z-index: 99999;
+}
+/* ── Caption : row info gauche + bouton Commander droite ─────────────── */
+.fb-caption-wrapper {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  width: 100%;
+  padding: 0 4px;
+}
+.fb-caption-info {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 8px;
+  min-width: 0;
+}
+.fb-caption-title {
+  font-size: 0.84rem;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.92);
+  letter-spacing: 0.01em;
+  line-height: 1.3;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 320px;
+}
+.fb-caption-title + .fb-caption-lieu::before {
+  content: '—';
+  margin-right: 6px;
+  color: rgba(255, 255, 255, 0.3);
+  font-weight: 300;
+}
+/* ── Caption lieu avec icône pin map ─────────────────────────────────── */
+.fb-caption-lieu {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 13px;
+  font-weight: 500;
+  color: rgba(255, 255, 255, 0.85);
+  letter-spacing: 0.01em;
+}
+.fb-caption-lieu svg {
+  color: #FF7F00;
+  flex-shrink: 0;
+  margin-top: -1px;
+}
+/* Lien Maps — hover discret */
+a.fb-caption-maps {
+  text-decoration: none;
+  transition: color 0.15s;
+}
+a.fb-caption-maps:hover {
+  color: #fff;
+}
+a.fb-caption-maps:hover svg {
+  color: #FF9500;
+}
+
+/* ── CTA "Commander un tirage" — sous la toolbar Fancybox ── */
+.fb-cta-floating {
+  position: absolute;
+  top: 48px;
+  right: 0;
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 160px; /* 4 boutons × 40px = largeur exacte de la toolbar */
+  background: rgba(16, 16, 18, 0.82);
+  border: none;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  color: rgba(255, 255, 255, 0.65);
+  padding: 7px 0;
+  border-radius: 0 0 6px 6px;
+  font-size: 10.5px;
+  font-weight: 500;
+  font-family: inherit;
+  cursor: pointer;
+  backdrop-filter: blur(16px);
+  transition: background 0.15s, color 0.15s;
+  white-space: nowrap;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+.fb-cta-floating:hover {
+  background: rgba(40, 40, 44, 0.92);
+  color: #fff;
+}
+/* Mobile : caption en colonne */
+@media (max-width: 480px) {
+  .fb-caption-wrapper {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+  }
+  .fb-caption-title { max-width: 100%; }
+}
+

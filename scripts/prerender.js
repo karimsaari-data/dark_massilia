@@ -44,21 +44,22 @@ const STATIC_ROUTES = [
   '/admin',
 ];
 
-// ── Récupération des slugs WordPress (pour routes dynamiques /blog/:slug) ────
-async function fetchWPSlugs() {
+// ── Récupération des slugs + dates de modification WP ────────────────────────
+// Retourne [{ slug, modified }] pour permettre le prérendu incrémental
+async function fetchWPMeta() {
   const WP_BASE = 'https://cms.karimsaari.com/wp-json/wp/v2';
-  const slugs = [];
+  const metas = [];
   let page = 1;
   let totalPages = 1;
 
   try {
     do {
       const controller = new AbortController();
-      const timer = setTimeout(() => controller.abort(), 8000); // timeout 8s par page
+      const timer = setTimeout(() => controller.abort(), 8000);
       let res;
       try {
         res = await fetch(
-          `${WP_BASE}/posts?per_page=100&page=${page}&_fields=slug&status=publish`,
+          `${WP_BASE}/posts?per_page=100&page=${page}&_fields=slug,modified&status=publish`,
           { signal: controller.signal }
         );
       } finally {
@@ -69,7 +70,7 @@ async function fetchWPSlugs() {
         return [];
       }
       const posts = await res.json();
-      posts.forEach(p => slugs.push(p.slug));
+      posts.forEach(p => metas.push({ slug: p.slug, modified: p.modified }));
       totalPages = parseInt(res.headers.get('X-WP-TotalPages') ?? '1', 10);
       page++;
     } while (page <= totalPages);
@@ -79,7 +80,19 @@ async function fetchWPSlugs() {
     return [];
   }
 
-  return slugs;
+  return metas;
+}
+
+// ── Pré-fetch parallèle des articles WP (batch de 5) ─────────────────────────
+// Divise le temps de fetch par ~5 vs. séquentiel pur
+async function prefetchWPPosts(slugs, batchSize = 5) {
+  const cache = new Map();
+  for (let i = 0; i < slugs.length; i += batchSize) {
+    const batch = slugs.slice(i, i + batchSize);
+    const results = await Promise.all(batch.map(slug => fetchWPPost(slug)));
+    batch.forEach((slug, idx) => cache.set(slug, results[idx]));
+  }
+  return cache;
 }
 
 // ── Récupération d'un article WP pour injection SSR ──────────────────────────
@@ -106,13 +119,18 @@ async function fetchWPPost(slug) {
       dateFormatted: new Date(post.date).toLocaleDateString('fr-FR', {
         year: 'numeric', month: 'long', day: 'numeric',
       }),
-      image:    media?.source_url ?? null,
+      image:    media?.source_url ?? extractFirstImage(post.content?.rendered ?? '') ?? null,
       imageAlt: media?.alt_text   || stripEntities(post.title?.rendered ?? ''),
       author:   author?.name      ?? 'Dark Massilia',
     };
   } catch (_) {
     return null;
   }
+}
+
+function extractFirstImage(html) {
+  const match = html.match(/<img[^>]+src="([^"]+)"/);
+  return match ? match[1] : null;
 }
 
 function stripHtml(html) {
@@ -128,16 +146,47 @@ function stripEntities(str) {
 async function prerender() {
   console.log('\n🏗  Prérendu statique — Dark Massilia\n');
 
-  // ── 0. Récupérer les slugs WP pour les routes dynamiques ────────────────
-  console.log('  🌐 Récupération des slugs WordPress…');
-  const wpSlugs = await fetchWPSlugs();
-  const BLOG_ROUTES = wpSlugs.map(slug => `/blog/${slug}`);
+  // ── 0. Récupérer les métadonnées WP (slug + modified) ───────────────────
+  console.log('  🌐 Récupération des métadonnées WordPress…');
+  const wpMetas = await fetchWPMeta();
+  const BLOG_ROUTES = wpMetas.map(({ slug }) => `/blog/${slug}`);
   const ROUTES = [...STATIC_ROUTES, ...BLOG_ROUTES];
 
-  if (wpSlugs.length > 0) {
-    console.log(`  ✅ ${wpSlugs.length} article(s) WP trouvé(s)\n`);
+  if (wpMetas.length > 0) {
+    console.log(`  ✅ ${wpMetas.length} article(s) WP trouvé(s)`);
   } else {
-    console.log('  ℹ️  Aucun article WP — seul /blog (index) sera prérendu\n');
+    console.log('  ℹ️  Aucun article WP — seul /blog (index) sera prérendu');
+  }
+
+  // ── 0b. Prérendu incrémental : détecter les articles à jour ─────────────
+  // Si dist/blog/{slug}/index.html existe et est plus récent que la date WP
+  // → inutile de re-fetcher et re-rendre cet article
+  const slugsToUpdate = wpMetas
+    .filter(({ slug, modified }) => {
+      const outFile = path.resolve(distDir, `blog/${slug}/index.html`);
+      if (!fs.existsSync(outFile)) return true; // nouveau → à créer
+      const fileMtime  = fs.statSync(outFile).mtime;
+      const wpModified = new Date(modified);
+      return fileMtime <= wpModified;            // modifié depuis dernier build
+    })
+    .map(({ slug }) => slug);
+
+  const skippedCount = wpMetas.length - slugsToUpdate.length;
+  if (skippedCount > 0) {
+    console.log(`  ⏭  ${skippedCount} article(s) inchangé(s), skippé(s)`);
+  }
+  if (slugsToUpdate.length > 0) {
+    console.log(`  🔄 ${slugsToUpdate.length} article(s) à re-rendre`);
+  }
+
+  // ── 0c. Pré-fetch parallèle des articles à mettre à jour (batch de 5) ───
+  let wpPostCache = new Map();
+  if (slugsToUpdate.length > 0) {
+    console.log('  📥 Fetch parallèle des articles WP (batch×5)…');
+    wpPostCache = await prefetchWPPosts(slugsToUpdate);
+    console.log(`  ✅ ${slugsToUpdate.length} article(s) fetchés\n`);
+  } else {
+    console.log('');
   }
 
   // ── 1. Build SSR bundle ─────────────────────────────────────────────────
@@ -212,8 +261,15 @@ async function prerender() {
       // BlogPost.jsx lit globalThis.__WP_SSR_DATA__ de façon synchrone lors du render()
       if (route.startsWith('/blog/')) {
         const slug = route.slice('/blog/'.length);
-        const postData = await fetchWPPost(slug);
-        globalThis.__WP_SSR_DATA__ = postData;
+
+        // Prérendu incrémental : skip si article inchangé
+        if (!slugsToUpdate.includes(slug)) {
+          console.log(`  ⏭  ${route.padEnd(60)}→ inchangé`);
+          continue;
+        }
+
+        // Données pré-fetchées en parallèle (déjà dans le cache)
+        globalThis.__WP_SSR_DATA__ = wpPostCache.get(slug) ?? null;
       } else {
         globalThis.__WP_SSR_DATA__ = null;
       }
@@ -289,6 +345,49 @@ async function prerender() {
         );
       }
 
+      // Extraire og:image:width et og:image:height (requis par FB pour traitement synchrone)
+      const renderedOgImageWidth = appHtml.match(/<meta property="og:image:width" content="([^"]+)"/);
+      if (renderedOgImageWidth) {
+        finalTemplate = finalTemplate.replace(
+          /<meta property="og:image:width" content="[^"]*"/,
+          `<meta property="og:image:width" content="${renderedOgImageWidth[1]}"`
+        );
+      }
+      const renderedOgImageHeight = appHtml.match(/<meta property="og:image:height" content="([^"]+)"/);
+      if (renderedOgImageHeight) {
+        finalTemplate = finalTemplate.replace(
+          /<meta property="og:image:height" content="[^"]*"/,
+          `<meta property="og:image:height" content="${renderedOgImageHeight[1]}"`
+        );
+      }
+
+      // Extraire l'og:image:alt page-spécifique
+      const renderedOgImageAlt = appHtml.match(/<meta property="og:image:alt" content="([^"]+)"/);
+      if (renderedOgImageAlt) {
+        finalTemplate = finalTemplate.replace(
+          /<meta property="og:image:alt" content="[^"]*"/,
+          `<meta property="og:image:alt" content="${renderedOgImageAlt[1]}"`
+        );
+      }
+
+      // Extraire l'og:type page-spécifique (article vs website)
+      const renderedOgType = appHtml.match(/<meta property="og:type" content="([^"]+)"/);
+      if (renderedOgType) {
+        finalTemplate = finalTemplate.replace(
+          /<meta property="og:type" content="[^"]*"/,
+          `<meta property="og:type" content="${renderedOgType[1]}"`
+        );
+      }
+
+      // Extraire les balises article:* (type="article" uniquement)
+      const articleMetas = appHtml.match(/<meta property="article:[^"]*" content="[^"]*"[^>]*>/g) || [];
+      if (articleMetas.length > 0) {
+        finalTemplate = finalTemplate.replace(
+          '</head>',
+          `${articleMetas.map(m => `    ${m}`).join('\n')}\n  </head>`
+        );
+      }
+
       // Synchroniser les Twitter Card avec le title/description de la page
       // (twitter:title et twitter:description mirrorent og:title/og:description)
       if (renderedTitle) {
@@ -336,12 +435,23 @@ async function prerender() {
         finalTemplate = finalTemplate.replace('</head>', `${schemasBlock}\n  </head>`);
       }
 
-      // 3. Supprimer les blocs JSON-LD du appHtml avant injection dans le body
-      //    (évite le doublon : schema déjà dans <head>, inutile de le répéter dans <body>)
+      // 3. Supprimer les balises SEO du appHtml avant injection dans le body
+      //    (évite les doublons : déjà hoistées dans <head> par les étapes ci-dessus)
       let appHtmlClean = appHtml;
+      // JSON-LD déjà dans <head>
       schemaMatches.forEach(match => {
         appHtmlClean = appHtmlClean.replace(match, '');
       });
+      // Autres balises SEO hoistées dans <head> → retirer du body pour éviter doublons
+      appHtmlClean = appHtmlClean
+        .replace(/<title>[\s\S]*?<\/title>/g, '')
+        .replace(/<meta name="description"[^>]*\/?>/g, '')
+        .replace(/<meta name="author"[^>]*\/?>/g, '')
+        .replace(/<link rel="canonical"[^>]*\/?>/g, '')
+        .replace(/<meta property="og:[^"]*"[^>]*\/?>/g, '')
+        .replace(/<meta property="article:[^"]*"[^>]*\/?>/g, '')
+        .replace(/<meta name="twitter:[^"]*"[^>]*\/?>/g, '')
+        .replace(/<meta name="robots"[^>]*\/?>/g, '');
 
       // Injecter le HTML rendu dans le placeholder <!--app-html-->
       const pageHtml = finalTemplate.replace('<!--app-html-->', appHtmlClean);

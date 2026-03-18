@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import { ArrowRight, Users, ChevronDown, Camera, MapPin, Rss } from 'lucide-react';
 
 import { FADE_IN_UP, STAGGER_CONTAINER, FACEBOOK_GROUP_MEMBERS } from '../utils/constants';
+import { trackEvent } from '../lib/analytics';
 import SEO from '../components/SEO';
 import { SEO_PAGES } from '../utils/seo';
 
@@ -11,14 +12,15 @@ import { SEO_PAGES } from '../utils/seo';
 // Supabase ne sera chargé qu'après le premier rendu de la page (chunk async)
 const NewsletterSection = lazy(() => import('../components/NewsletterSection'));
 
-// Chiffres clés — impact terrain
-const KEY_STATS = [
+// Chiffres clés — impact terrain (valeurs statiques de base)
+const KEY_STATS_BASE = [
   {
     end: 5724,
     suffix: ' kg',
     label: 'Déchets collectés dans les fonds marins marseillais',
     sub: 'jusqu\'à 20 m de profondeur',
     detail: '900 + 1 357 + 1 147 + 2 320 kg · 4 éditions',
+    href: '/depollution-marine',
   },
   {
     end: 10,
@@ -33,6 +35,7 @@ const KEY_STATS = [
     label: 'Abonnés passionnés par les Calanques',
     sub: 'sur l\'ensemble des réseaux sociaux',
     detail: 'dont 64 000 sur le groupe Facebook',
+    href: '/communaute',
   },
   {
     end: 183,
@@ -40,6 +43,7 @@ const KEY_STATS = [
     label: 'Vues Google Maps sur Marseille et ses environs',
     sub: '9 ans de contributions Local Guide',
     detail: 'Photos et avis sur les Calanques de Marseille',
+    href: '/local-guide-marseille',
   },
 ];
 
@@ -171,6 +175,42 @@ const FaqItem = ({ question, answer }) => {
 const Home = () => {
   const prefersReducedMotion = useReducedMotion();
   const [currentFactIndex, setCurrentFactIndex] = useState(0);
+
+  // Stats réseaux — valeurs dynamiques depuis Supabase (fallback sur KEY_STATS_BASE)
+  const [communityEnd, setCommunityEnd]       = useState(KEY_STATS_BASE[2].end);
+  const [communityDetail, setCommunityDetail] = useState(KEY_STATS_BASE[2].detail);
+  const [localGuidesEnd, setLocalGuidesEnd]   = useState(KEY_STATS_BASE[3].end);
+  const [fbGroupMembers, setFbGroupMembers]   = useState(FACEBOOK_GROUP_MEMBERS);
+
+  useEffect(() => {
+    import('../lib/supabase').then(({ supabase }) => {
+      supabase
+        .from('social_stats')
+        .select('platform, value, note')
+        .in('platform', ['total_community', 'local_guide_views_m', 'facebook_group'])
+        .then(({ data }) => {
+          data?.forEach(row => {
+            if (row.platform === 'total_community') {
+              setCommunityEnd(parseFloat(row.value));
+              if (row.note) setCommunityDetail(row.note);
+            } else if (row.platform === 'local_guide_views_m') {
+              setLocalGuidesEnd(parseFloat(row.value));
+            } else if (row.platform === 'facebook_group') {
+              const v = parseFloat(row.value);
+              if (v > 100) setFbGroupMembers(v);
+              else setFbGroupMembers(Math.round(v * 1000));
+            }
+          });
+        });
+    });
+  }, []);
+
+  const KEY_STATS = [
+    KEY_STATS_BASE[0],
+    KEY_STATS_BASE[1],
+    { ...KEY_STATS_BASE[2], end: communityEnd, detail: communityDetail },
+    { ...KEY_STATS_BASE[3], end: localGuidesEnd },
+  ];
   const [factsPaused, setFactsPaused] = useState(false);
   const [factsTimerKey, setFactsTimerKey] = useState(0);
 
@@ -195,92 +235,99 @@ const Home = () => {
       <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
         {/* Pas d'overlay supplémentaire ici — géré dans Layout.jsx */}
 
-        {/* Hero Content */}
-        <div className="container-custom relative z-10 text-center md:text-left px-4">
+        {/* Hero Content — layout 2 colonnes desktop, empilé mobile */}
+        <div className="container-custom relative z-10 w-full px-4 py-16 md:py-12">
           <motion.div
             initial="hidden"
             animate="visible"
             variants={STAGGER_CONTAINER}
-            className="max-w-[800px] mx-auto md:mx-0"
           >
-            {/* ── Bloc accroche — trait vertical + H1 + lead ── */}
             <motion.div
-              variants={FADE_IN_UP}
-              className="mb-8"
-              style={{ borderLeft: '2px solid white', paddingLeft: '30px' }}
+              variants={{
+                hidden: { y: 20 },
+                visible: { y: 0, transition: { duration: 0.6, ease: 'easeOut' } }
+              }}
+              style={{
+                background: 'rgba(10, 20, 40, 0.75)',
+                backdropFilter: 'blur(12px)',
+                borderRadius: '20px',
+                padding: 'clamp(40px, 5vw, 72px)',
+              }}
             >
-              <h1
-                className="text-3xl md:text-4xl lg:text-5xl font-extrabold text-white uppercase tracking-[0.08em] leading-tight mb-5"
-                style={{ textShadow: '0 2px 24px rgba(0,0,0,0.85)' }}
-              >
-                Ensemble, révélons et protégeons les Calanques
-              </h1>
-              <p
-                className="text-base md:text-lg text-text-secondary leading-[1.7]"
-                style={{ textShadow: '0 1px 10px rgba(0,0,0,0.65)' }}
-              >
-                <strong className="text-ocean-teal font-semibold">Rendre visible l'invisible</strong> : exploration et documentation de la beauté brute du littoral, des sentiers de randonnée aux profondeurs des Calanques de Marseille à Port-Cros. Entre photographie d'art et actions de dépollution avec{' '}
-                <strong className="text-ocean-teal font-semibold">Team Oxygen</strong>, un regard engagé pour la préservation de la Méditerranée.
-              </p>
-            </motion.div>
+              {/* Photo profil — Mobile uniquement (au-dessus du texte) */}
+              <div className="flex justify-center mb-6 md:hidden">
+                <img
+                  src="/images/karim-saari-photo-profil-arte-regard-marseille.webp"
+                  srcSet="/images/karim-saari-photo-profil-arte-regard-marseille_300w.webp 300w, /images/karim-saari-photo-profil-arte-regard-marseille.webp 472w"
+                  sizes="192px"
+                  alt="Karim Saari - Apnéiste et photographe à Marseille"
+                  width="472"
+                  height="488"
+                  className="h-48 w-auto rounded-xl border border-white/20 shadow-lg shadow-ocean-teal/20"
+                  loading="eager"
+                  fetchpriority="high"
+                  decoding="async"
+                />
+              </div>
 
-            {/* Hero CTAs */}
-            <motion.div
-              variants={FADE_IN_UP}
-              className="flex flex-col sm:flex-row items-center justify-center md:justify-start gap-4 mb-12"
-            >
-              <Link
-                to="/photographie-paysage-mer"
-                className="btn-primary inline-flex items-center gap-2"
-                title="Voir les photographies des Calanques de Marseille par Karim Saari"
-              >
-                <span>Découvrir les Calanques</span>
-                <ArrowRight className="w-4 h-4" aria-hidden="true" />
-              </Link>
-              <Link
-                to="/depollution-marine"
-                className="btn-ghost inline-flex items-center gap-2"
-                title="En savoir plus sur mes actions de dépollution et mon engagement écologique"
-              >
-                <span>Engagement &amp; Dépollution</span>
-                <ArrowRight className="w-4 h-4" aria-hidden="true" />
-              </Link>
-            </motion.div>
+              {/* Grille 2 colonnes desktop : texte gauche, photo droite */}
+              <div className="md:grid md:grid-cols-[1fr_auto] md:gap-12 md:items-center">
+                {/* Bloc texte */}
+                <div className="text-center md:text-left">
+                  {/* Trait vertical + titre — style Fondation de la Mer */}
+                  <div className="flex items-stretch gap-5 mb-8">
+                    <div className="w-[3px] bg-ocean-teal rounded-full flex-shrink-0" aria-hidden="true" />
+                    <h1 className="font-display text-3xl md:text-4xl lg:text-5xl font-extrabold text-white uppercase tracking-[0.08em] leading-[1.15]">
+                      Photographie &amp; Engagement : Révéler et Protéger les Calanques de Marseille
+                    </h1>
+                  </div>
 
-            {/* Photo de profil + Signature — style préface */}
-            <motion.div
-              variants={FADE_IN_UP}
-              className="flex flex-col md:flex-row items-center justify-center md:justify-start gap-6 md:gap-10"
-            >
-              {/* Photo profil */}
-              <img
-                src="/images/photo%20profil%20Arte.webp"
-                srcSet="/images/photo%20profil%20Arte_300w.webp 300w, /images/photo%20profil%20Arte.webp 472w"
-                sizes="(max-width: 768px) 160px, 224px"
-                alt="Karim Saari - Apnéiste et photographe à Marseille"
-                width="472"
-                height="488"
-                className="h-40 md:h-56 w-auto rounded-xl border border-white/20 shadow-lg shadow-ocean-teal/20"
-                loading="eager"
-                fetchpriority="high"
-                decoding="async"
-              />
+                  <p className="font-display text-base md:text-lg font-normal text-text-secondary leading-[1.85] mb-10">
+                    <strong className="text-ocean-teal font-semibold">Rendre visible l'invisible.</strong>{' '}
+                    Entre photographie d'art et exploration en apnée, je documente la beauté brute du littoral marseillais pour témoigner de l'urgence écologique. En tant que Sentinelle des Calanques, j'allie le pouvoir de l'image aux actions de terrain avec{' '}
+                    <strong className="text-ocean-teal font-semibold">Team Oxygen</strong>{' '}
+                    pour préserver durablement la biodiversité de notre Méditerranée.
+                  </p>
 
-              {/* Séparateur vertical (desktop) */}
-              <div className="hidden md:block w-px h-20 bg-white/15 self-center" />
+                  {/* Hero CTAs */}
+                  <div className="flex flex-col sm:flex-row items-center justify-center md:justify-start gap-4 mt-2">
+                    <a
+                      href="#galerie"
+                      className="btn-primary inline-flex items-center gap-2"
+                      title="Voir les photographies des Calanques de Marseille par Karim Saari"
+                      onClick={() => trackEvent('cta_click', { label: 'Découvrir les Calanques' })}
+                    >
+                      <span>Découvrir les Calanques</span>
+                      <ArrowRight className="w-4 h-4" aria-hidden="true" />
+                    </a>
+                    <Link
+                      to="/depollution-marine"
+                      className="btn-ghost inline-flex items-center gap-2"
+                      title="En savoir plus sur mes actions de dépollution et mon engagement écologique"
+                      onClick={() => trackEvent('cta_click', { label: 'Engagement & Dépollution' })}
+                    >
+                      <span>Engagement &amp; Dépollution</span>
+                      <ArrowRight className="w-4 h-4" aria-hidden="true" />
+                    </Link>
+                  </div>
+                </div>
 
-              {/* Signature */}
-              <img
-                src="/images/karim-saari-photographe-sous-marin-marseille-dark-massilia.webp"
-                srcSet="/images/karim-saari-photographe-sous-marin-marseille-dark-massilia_480w.webp 480w, /images/karim-saari-photographe-sous-marin-marseille-dark-massilia.webp 1200w"
-                sizes="(max-width: 768px) 240px, (max-width: 1024px) 280px, 320px"
-                alt="Signature Karim Saari"
-                width="1200"
-                height="800"
-                className="h-40 md:h-56 lg:h-64 w-auto opacity-90"
-                loading="eager"
-                decoding="async"
-              />
+                {/* Photo profil — Desktop uniquement (colonne droite) */}
+                <div className="hidden md:flex items-center justify-center">
+                  <img
+                    src="/images/karim-saari-photo-profil-arte-regard-marseille.webp"
+                    srcSet="/images/karim-saari-photo-profil-arte-regard-marseille_300w.webp 300w, /images/karim-saari-photo-profil-arte-regard-marseille_400w.webp 400w, /images/karim-saari-photo-profil-arte-regard-marseille.webp 472w"
+                    sizes="(max-width: 1024px) 280px, 360px"
+                    alt="Karim Saari - Apnéiste et photographe à Marseille"
+                    width="472"
+                    height="488"
+                    className="h-[380px] lg:h-[460px] w-auto rounded-xl border border-white/20 shadow-lg shadow-ocean-teal/20"
+                    loading="eager"
+                    fetchpriority="high"
+                    decoding="async"
+                  />
+                </div>
+              </div>
             </motion.div>
           </motion.div>
         </div>
@@ -330,59 +377,6 @@ const Home = () => {
                 decoding="async"
               />
               <div className="absolute inset-0 bg-gradient-to-l from-transparent to-black/30" />
-            </div>
-          </div>
-        </motion.div>
-      </section>
-
-      {/* Section éditoriale SEO — contexte Méditerranée */}
-      <section className="container-custom py-8 md:py-12">
-        <motion.div
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true }}
-          variants={FADE_IN_UP}
-          className="glass-strong rounded-3xl overflow-hidden border border-white/10 mb-16"
-        >
-          <div className="grid md:grid-cols-[1.2fr_1fr] gap-0">
-            {/* Image — Gauche */}
-            <div className="relative h-64 md:h-auto min-h-[400px] order-1 md:order-1">
-              <img
-                src="/images/Marseille-dark-massilia-plastique-polluttion-projet-sentinelle-huveaune.webp"
-                srcSet="/images/Marseille-dark-massilia-plastique-polluttion-projet-sentinelle-huveaune_400w.webp 400w, /images/Marseille-dark-massilia-plastique-polluttion-projet-sentinelle-huveaune_800w.webp 800w, /images/Marseille-dark-massilia-plastique-polluttion-projet-sentinelle-huveaune_1200w.webp 1200w, /images/Marseille-dark-massilia-plastique-polluttion-projet-sentinelle-huveaune.webp 1920w"
-                sizes="(max-width: 768px) 100vw, 50vw"
-                alt="Pollution plastique dans l'Huveaune à Marseille - Projet Sentinelle Dark Massilia"
-                className="absolute inset-0 w-full h-full object-cover"
-                loading="lazy"
-                decoding="async"
-              />
-              <div className="absolute inset-0 bg-gradient-to-r from-transparent to-black/30" />
-            </div>
-
-            {/* Contenu — Droite */}
-            <div className="p-8 md:p-12 flex flex-col justify-center order-2 md:order-2">
-              <h2 className="text-2xl md:text-3xl font-bold text-white mb-6">
-                La Méditerranée : Un écosystème en péril
-              </h2>
-              <p className="text-text-secondary text-lg leading-relaxed">
-                Bien qu'elle ne représente que 1&nbsp;% des eaux mondiales, la mer Méditerranée concentre{' '}
-                <strong className="text-white">7&nbsp;% de tous les microplastiques de la planète</strong>.
-                Mer semi-fermée, le renouvellement de ses eaux prend environ 90&nbsp;ans — emprisonnant
-                durablement les déchets. À Marseille et dans le monde, plus de{' '}
-                <strong className="text-white">600 espèces marines</strong> sont impactées
-                par l'ingestion de plastique ou l'enchevêtrement.
-                À travers mes images et mon engagement en apnée dans les Calanques, je documente cette
-                urgence pour rendre l'invisible, visible.
-              </p>
-              <div className="mt-6">
-                <Link
-                  to="/donnees-scientifiques"
-                  className="inline-flex items-center gap-2 text-ocean-teal hover:text-white transition-colors text-sm font-medium"
-                >
-                  Consulter les sources scientifiques
-                  <ArrowRight className="w-4 h-4" />
-                </Link>
-              </div>
             </div>
           </div>
         </motion.div>
@@ -471,7 +465,7 @@ const Home = () => {
                 Agir pour la Méditerranée.
               </h2>
 
-              <p className="text-gray-300 text-lg mb-8 leading-relaxed">
+              <p className="text-gray-300 text-lg mb-8 leading-[1.8]">
                 À Marseille avec Team Oxygen, nous intervenons en apnée de la surface à 20 mètres pour dépolluer les fonds marins, documenter les déchets et protéger la biodiversité locale. Calanques, Frioul, Côte Bleue, La Ciotat : chaque mission est une action concrète pour notre littoral.
               </p>
 
@@ -520,6 +514,8 @@ const Home = () => {
                 srcSet="/images/portfolio/Mer/photographe-sous-marin-marseille-apnee-grotte-marine-calanques_400w.webp 400w, /images/portfolio/Mer/photographe-sous-marin-marseille-apnee-grotte-marine-calanques_800w.webp 800w, /images/portfolio/Mer/photographe-sous-marin-marseille-apnee-grotte-marine-calanques_1200w.webp 1200w, /images/portfolio/Mer/photographe-sous-marin-marseille-apnee-grotte-marine-calanques.webp 1920w"
                 sizes="(max-width: 768px) 100vw, 50vw"
                 alt="Photographe sous-marin Marseille — apnée en grotte marine Calanques de Marseille © Karim Saari"
+                width="800"
+                height="534"
                 className="absolute inset-0 w-full h-full object-cover"
                 loading="lazy"
                 decoding="async"
@@ -532,7 +528,7 @@ const Home = () => {
               <h2 className="text-3xl md:text-4xl font-bold text-white mb-6">
                 Les Vidéos des Missions
               </h2>
-              <p className="text-gray-300 text-lg mb-8 leading-relaxed">
+              <p className="text-gray-300 text-lg mb-8 leading-[1.8]">
                 Documentaires ARTE, reportages de dépollution en apnée, rétrospectives annuelles… Vivez nos missions depuis les profondeurs des Calanques de Marseille.
               </p>
               <Link
@@ -548,7 +544,7 @@ const Home = () => {
       </section>
 
       {/* CTA Photos */}
-      <section className="container-custom py-8 md:py-12">
+      <section id="galerie" className="container-custom py-8 md:py-12">
         <motion.div
           initial="hidden"
           whileInView="visible"
@@ -560,27 +556,36 @@ const Home = () => {
             {/* Contenu - Gauche */}
             <div className="p-8 md:p-12 flex flex-col justify-center order-2 md:order-1">
               <h2 className="text-3xl md:text-4xl font-bold text-white mb-6">
-                Explorer la galerie
+                Deux univers, un même engagement
               </h2>
-              <p className="text-gray-300 text-lg mb-8 leading-relaxed">
-                Des dizaines de photos qui témoignent d'un territoire : la Méditerranée, les Calanques et la Provence. Des fonds marins aux falaises calcaires, entre beauté naturelle et réalités environnementales, chaque image raconte un lieu et son équilibre fragile.
+              <p className="text-gray-300 text-lg mb-8 leading-[1.8]">
+                Des falaises calcaires du littoral marseillais aux profondeurs de la Méditerranée, découvrez un témoignage visuel unique. Entre la splendeur des paysages de Provence et l'urgence écologique des fonds marins, chaque image raconte l'équilibre fragile de notre écosystème.
               </p>
-              <Link
-                to="/photographie-paysage-mer"
-                className="btn-primary inline-flex items-center gap-2 w-fit"
-              >
-                <span>Voir les photos</span>
-                <ArrowRight className="w-5 h-5" />
-              </Link>
+              <div className="flex flex-col gap-3">
+                <Link
+                  to="/photographie-paysage-mer"
+                  className="btn-primary inline-flex items-center justify-between gap-2 w-full"
+                  title="Voir les photographies de paysages et du littoral marseillais par Karim Saari"
+                >
+                  <span>Galerie Paysages &amp; Littoral</span>
+                  <ArrowRight className="w-5 h-5" />
+                </Link>
+                <Link
+                  to="/photographie-sous-marine"
+                  className="btn-ghost inline-flex items-center justify-between gap-2 w-full"
+                  title="Voir les photographies sous-marines et les actions de dépollution par Karim Saari"
+                >
+                  <span>Galerie Sous-marine &amp; Dépollution</span>
+                  <ArrowRight className="w-5 h-5" />
+                </Link>
+              </div>
             </div>
 
             {/* Image - Droite */}
             <div className="relative h-64 md:h-auto min-h-[400px] order-1 md:order-2">
               <img
-                src="/images/portfolio/Mer/karim-saari-marseille-en-vau-aerien-calanque-falaises.webp"
-                srcSet="/images/portfolio/Mer/karim-saari-marseille-en-vau-aerien-calanque-falaises_400w.webp 400w, /images/portfolio/Mer/karim-saari-marseille-en-vau-aerien-calanque-falaises_800w.webp 800w, /images/portfolio/Mer/karim-saari-marseille-en-vau-aerien-calanque-falaises_1200w.webp 1200w, /images/portfolio/Mer/karim-saari-marseille-en-vau-aerien-calanque-falaises.webp 1920w"
-                sizes="(max-width: 768px) 100vw, 50vw"
-                alt="Karim Saari photographe Marseille — vue aérienne Calanque d'En-Vau falaises calcaires Calanques"
+                src="/images/Karimsaari-portfolio-sous-marin-paysages-calanques-marseille-photographie-photographe-environnemental.webp"
+                alt="Karim Saari — portfolio photographie sous-marine et paysages des Calanques de Marseille, photographe environnemental"
                 className="absolute inset-0 w-full h-full object-cover"
                 loading="lazy"
                 decoding="async"
@@ -635,6 +640,11 @@ const Home = () => {
                 <div className="absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none"
                   style={{ boxShadow: 'inset 0 0 30px rgba(0,171,168,0.06)' }} />
 
+                {/* Lien pleine carte */}
+                {stat.href && (
+                  <Link to={stat.href} className="absolute inset-0 rounded-2xl z-10" aria-label={stat.label} />
+                )}
+
                 {/* Valeur animée */}
                 <div className="text-3xl md:text-4xl lg:text-5xl font-bold gradient-text mb-1 tabular-nums pb-1">
                   <StatCounter
@@ -682,7 +692,12 @@ const Home = () => {
       </section>
 
       {/* Section Newsletter — lazy (supabase hors bundle initial) */}
-      <Suspense fallback={null}>
+      {/* fallback réserve la hauteur pour éviter le CLS quand le composant apparaît */}
+      <Suspense fallback={
+        <section className="container-custom py-8 md:py-12">
+          <div className="rounded-3xl border border-ocean-teal/30 mb-16 min-h-[420px] md:min-h-[480px]" />
+        </section>
+      }>
         <NewsletterSection />
       </Suspense>
 
@@ -721,7 +736,7 @@ const Home = () => {
                 Carte interactive des Calanques de Marseille & du littoral marseillais
               </h2>
 
-              <p className="text-gray-300 text-lg mb-8 leading-relaxed">
+              <p className="text-gray-300 text-lg mb-8 leading-[1.8]">
                 Explorez les Calanques de Marseille via une carte interactive présentant paysages, spots de plongée et actions de dépollution menées avec Team Oxygen sur le littoral marseillais.
               </p>
 
@@ -757,12 +772,12 @@ const Home = () => {
               <div className="mb-6 inline-flex items-center gap-2 px-4 py-2 bg-ocean-teal/10 rounded-full border border-ocean-teal/30 w-fit">
                 <Users className="w-5 h-5 text-ocean-teal" />
                 <span className="text-xl font-bold text-white">
-                  {FACEBOOK_GROUP_MEMBERS.toLocaleString('fr-FR')}
+                  {fbGroupMembers.toLocaleString('fr-FR')}
                 </span>
                 <span className="text-gray-300">membres</span>
               </div>
 
-              <p className="text-gray-300 text-lg mb-8 leading-relaxed">
+              <p className="text-gray-300 text-lg mb-8 leading-[1.8]">
                 Amoureux des Calanques de Marseille à Port-Cros ? Rejoignez notre communauté pour suivre nos actions et participer à la protection de la Méditerranée.
               </p>
 
@@ -771,6 +786,7 @@ const Home = () => {
                 target="_blank"
                 rel="noopener noreferrer"
                 className="btn-primary inline-flex items-center gap-2 w-fit"
+                onClick={() => trackEvent('cta_click', { label: 'Rejoindre le Groupe Facebook' })}
               >
                 <span>Rejoindre le Groupe Facebook</span>
                 <ArrowRight className="w-5 h-5" />
@@ -842,7 +858,7 @@ const Home = () => {
                 Photographiés par Yann Arthus-Bertrand
               </h2>
 
-              <p className="text-gray-300 text-lg mb-8 leading-relaxed">
+              <p className="text-gray-300 text-lg mb-8 leading-[1.8]">
                 Team Oxygen et Dark Massilia ont été sélectionnés par Yann Arthus-Bertrand pour son projet <strong className="text-white">« Les Français »</strong> — une galerie photographique portrait de celles et ceux qui font la France, à Marseille en 2024.
               </p>
 
@@ -880,7 +896,7 @@ const Home = () => {
                 En direct des Calanques
               </h2>
 
-              <p className="text-gray-300 text-lg mb-8 leading-relaxed">
+              <p className="text-gray-300 text-lg mb-8 leading-[1.8]">
                 Suivez l'actualité officielle du Parc National des Calanques — espèces protégées, réglementation, événements et alertes environnementales en Méditerranée.
               </p>
 
@@ -926,6 +942,59 @@ const Home = () => {
             {FAQ_ITEMS.map((item, index) => (
               <FaqItem key={index} question={item.q} answer={item.a} />
             ))}
+          </div>
+        </motion.div>
+      </section>
+
+      {/* Section éditoriale SEO — contexte Méditerranée (après FAQ) */}
+      <section className="container-custom pb-12 md:pb-16">
+        <motion.div
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true }}
+          variants={FADE_IN_UP}
+          className="glass-strong rounded-3xl overflow-hidden border border-white/10"
+        >
+          <div className="grid md:grid-cols-[1.2fr_1fr] gap-0">
+            {/* Image — Gauche */}
+            <div className="relative h-64 md:h-auto min-h-[400px]">
+              <img
+                src="/images/Marseille-dark-massilia-plastique-polluttion-projet-sentinelle-huveaune.webp"
+                srcSet="/images/Marseille-dark-massilia-plastique-polluttion-projet-sentinelle-huveaune_400w.webp 400w, /images/Marseille-dark-massilia-plastique-polluttion-projet-sentinelle-huveaune_800w.webp 800w, /images/Marseille-dark-massilia-plastique-polluttion-projet-sentinelle-huveaune_1200w.webp 1200w, /images/Marseille-dark-massilia-plastique-polluttion-projet-sentinelle-huveaune.webp 1920w"
+                sizes="(max-width: 768px) 100vw, 50vw"
+                alt="Pollution plastique dans l'Huveaune à Marseille - Projet Sentinelle Dark Massilia"
+                className="absolute inset-0 w-full h-full object-cover"
+                loading="lazy"
+                decoding="async"
+              />
+              <div className="absolute inset-0 bg-gradient-to-r from-transparent to-black/30" />
+            </div>
+
+            {/* Contenu — Droite */}
+            <div className="p-8 md:p-12 flex flex-col justify-center">
+              <h2 className="text-2xl md:text-3xl font-bold text-white mb-6">
+                La Méditerranée : Un écosystème en péril
+              </h2>
+              <p className="text-text-secondary text-lg leading-relaxed">
+                Bien qu'elle ne représente que 1&nbsp;% des eaux mondiales, la mer Méditerranée concentre{' '}
+                <strong className="text-white">7&nbsp;% de tous les microplastiques de la planète</strong>.
+                Mer semi-fermée, le renouvellement de ses eaux prend environ 90&nbsp;ans — emprisonnant
+                durablement les déchets. À Marseille et dans le monde, plus de{' '}
+                <strong className="text-white">600 espèces marines</strong> sont impactées
+                par l'ingestion de plastique ou l'enchevêtrement.
+                À travers mes images et mon engagement en apnée dans les Calanques, je documente cette
+                urgence pour rendre l'invisible, visible.
+              </p>
+              <div className="mt-6">
+                <Link
+                  to="/donnees-scientifiques"
+                  className="inline-flex items-center gap-2 text-ocean-teal hover:text-white transition-colors text-sm font-medium"
+                >
+                  Consulter les sources scientifiques
+                  <ArrowRight className="w-4 h-4" />
+                </Link>
+              </div>
+            </div>
           </div>
         </motion.div>
       </section>

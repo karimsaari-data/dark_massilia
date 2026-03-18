@@ -62,16 +62,22 @@
     </script>
     <!-- End Google Consent Mode v2 -->
 
-    <!-- Google Tag Manager -->
-    <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
-    new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
-    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
-    'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
-    })(window,document,'script','dataLayer','GTM-PTPMHNNP');</script>
-    <!-- End Google Tag Manager -->
+    <!-- Google Analytics 4 — chargé après window.load pour ne pas bloquer le LCP -->
+    <script>
+      gtag('js', new Date());
+      gtag('config', 'G-R3EY7H9Y2Z', { send_page_view: false });
+      function _loadGtag(){
+        var s=document.createElement('script');s.async=true;
+        s.src='https://www.googletagmanager.com/gtag/js?id=G-R3EY7H9Y2Z';
+        document.head.appendChild(s);
+      }
+      if(document.readyState==='complete'){_loadGtag();}
+      else{window.addEventListener('load',_loadGtag);}
+    </script>
+    <!-- End Google Analytics 4 -->
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Karim Saari | Photographe de paysages Marseille | Sentinelle du littoral</title>
-    <meta name="description" content="Découvrez le travail de Karim Saari, photographe de paysages à Marseille. Entre photographie d'art sous-marine et terrestre, découvrez un regard engagé pour la protection de la Méditerranée." />
+    <meta name="description" content="Karim Saari, photographe et Sentinelle des Calanques de Marseille. Découvrez mes clichés sous-marins et mon engagement pour protéger la Méditerranée." />
 
     <!-- Favicons & PWA -->
     <link rel="icon" type="image/x-icon" href="/favicon.ico" />
@@ -82,34 +88,37 @@
     <!-- Preconnect pour Google Fonts (élimine le round-trip DNS) -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Montserrat:wght@400;500;600;700;800&display=swap" />
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Montserrat:wght@400;500;600;700;800&display=swap" media="print" onload="this.media='all'" />
+    <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Montserrat:wght@400;500;600;700;800&display=optional" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Montserrat:wght@400;500;600;700;800&display=optional" media="print" onload="this.media='all'" />
 
     <!-- Preload LCP critical image — photo profil (candidat LCP au-dessus du fold) -->
     <!-- hero-bg.webp (177 KiB background CSS) délibérément non-préchargé : n'est pas candidat LCP -->
     <link rel="preload" as="image" fetchpriority="high"
-          href="/images/photo%20profil%20Arte_300w.webp"
-          imagesrcset="/images/photo%20profil%20Arte_300w.webp 300w, /images/photo%20profil%20Arte.webp 472w"
-          imagesizes="(max-width: 640px) 300px, 472px"
+          href="/images/karim-saari-photo-profil-arte-regard-marseille_300w.webp"
+          imagesrcset="/images/karim-saari-photo-profil-arte-regard-marseille_300w.webp 300w, /images/karim-saari-photo-profil-arte-regard-marseille_400w.webp 400w, /images/karim-saari-photo-profil-arte-regard-marseille.webp 472w"
+          imagesizes="(max-width: 640px) 192px, (max-width: 1024px) 280px, 360px"
           type="image/webp" />
 
     <!-- Open Graph / Facebook -->
     <meta property="og:type" content="website" />
     <meta property="og:url" content="https://karimsaari.com/" />
     <meta property="og:title" content="Karim Saari | Photographe de paysages Marseille | Sentinelle du littoral" />
-    <meta property="og:description" content="Découvrez le travail de Karim Saari, photographe de paysages à Marseille. Entre photographie d'art sous-marine et terrestre, découvrez un regard engagé pour la protection de la Méditerranée." />
+    <meta property="og:description" content="Karim Saari, photographe et Sentinelle des Calanques de Marseille. Découvrez mes clichés sous-marins et mon engagement pour protéger la Méditerranée." />
     <meta property="og:image" content="https://karimsaari.com/assets/og-social-card.jpg" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
     <meta property="og:locale" content="fr_FR" />
 
     <!-- Twitter Card -->
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:site" content="@dark_massilia" />
     <meta name="twitter:title" content="Karim Saari | Photographe de paysages Marseille | Sentinelle du littoral" />
-    <meta name="twitter:description" content="Découvrez le travail de Karim Saari, photographe de paysages à Marseille. Entre photographie d'art sous-marine et terrestre, découvrez un regard engagé pour la protection de la Méditerranée." />
+    <meta name="twitter:description" content="Karim Saari, photographe et Sentinelle des Calanques de Marseille. Découvrez mes clichés sous-marins et mon engagement pour protéger la Méditerranée." />
     <meta name="twitter:image" content="https://karimsaari.com/assets/og-social-card.jpg" />
 
     <!-- Canonical -->
     <link rel="canonical" href="https://karimsaari.com/" />
+
 
     <!-- Theme -->
     <meta name="theme-color" content="#0B1C2D" />
@@ -118,10 +127,6 @@
     <!-- En dev (Vite), React 19 hoise les schemas dans <head> côté client -->
   </head>
   <body>
-    <!-- Google Tag Manager (noscript) -->
-    <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-PTPMHNNP"
-    height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
-    <!-- End Google Tag Manager (noscript) -->
     <div id="root"><!--app-html--></div>
     <noscript>
       <div style="padding:2rem;text-align:center;color:#ccc;font-family:system-ui,sans-serif;background:#0B1C2D;min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center">

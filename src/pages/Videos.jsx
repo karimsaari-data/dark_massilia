@@ -122,30 +122,40 @@ const Videos = () => {
           initial="hidden"
           animate="visible"
           variants={STAGGER_CONTAINER}
-          className="max-w-4xl mx-auto mt-16 mb-12"
+          className="mx-auto mt-16 mb-12"
         >
-          <motion.div variants={FADE_IN_UP} className="glass-strong rounded-3xl p-8 md:p-12">
-            <h2 className="text-2xl md:text-3xl font-bold text-white mb-6">
-              Les Vidéos
-            </h2>
-            <div className="space-y-4 text-text-secondary leading-relaxed">
-              <p>
-                De l'immersion en apnée dans les Calanques au reportage diffusé sur ARTE, nos vidéos racontent chaque mission de dépollution. Images tournées sous l'eau, témoignages de terrain, rétrospectives annuelles — chaque format documente une réalité que l'œil nu ne peut pas toujours atteindre.
-              </p>
-              <p>
-                Retrouvez l'intégralité de nos productions sur notre chaîne YouTube, mise à jour après chaque mission.
-              </p>
+          <motion.div variants={FADE_IN_UP} className="glass-strong rounded-3xl overflow-hidden flex flex-col lg:flex-row">
+            <div className="p-8 md:p-12 lg:flex-1 flex flex-col justify-center">
+              <h2 className="text-2xl md:text-3xl font-bold text-white mb-6">
+                Les Vidéos
+              </h2>
+              <div className="space-y-4 text-text-secondary leading-[1.8]">
+                <p>
+                  De l'immersion en apnée dans les Calanques au reportage diffusé sur ARTE, nos vidéos racontent chaque mission de dépollution. Images tournées sous l'eau, témoignages de terrain, rétrospectives annuelles — chaque format documente une réalité que l'œil nu ne peut pas toujours atteindre.
+                </p>
+                <p>
+                  Retrouvez l'intégralité de nos productions sur notre chaîne YouTube, mise à jour après chaque mission.
+                </p>
+              </div>
+              <div className="mt-6">
+                <a
+                  href="https://www.youtube.com/@dark.massilia"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-2 text-ocean-teal hover:text-white transition-colors font-medium"
+                >
+                  Voir sur YouTube
+                  <ExternalLink className="w-4 h-4" />
+                </a>
+              </div>
             </div>
-            <div className="mt-6">
-              <a
-                href="https://www.youtube.com/@dark.massilia"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 text-ocean-teal hover:text-white transition-colors font-medium"
-              >
-                Voir sur YouTube
-                <ExternalLink className="w-4 h-4" />
-              </a>
+            <div className="lg:w-[38%] flex-shrink-0 min-h-[260px] lg:min-h-0">
+              <img
+                src="/images/Marseille-dark-massilia-plastique-pollution-projet-sentinelle-grotte-riou.webp"
+                alt="Grotte sous-marine de Riou photographiée lors d'une mission de dépollution Projet Sentinelle — Karim Saari"
+                className="w-full h-full object-cover"
+                loading="lazy"
+              />
             </div>
           </motion.div>
         </motion.div>
@@ -155,7 +165,7 @@ const Videos = () => {
           initial="hidden"
           animate="visible"
           variants={STAGGER_CONTAINER}
-          className="max-w-4xl mx-auto mb-12 grid grid-cols-1 md:grid-cols-2 gap-6"
+          className="mx-auto mb-12 grid grid-cols-1 md:grid-cols-2 gap-6"
         >
           {/* Sauver Marseille */}
           <motion.div
@@ -209,7 +219,7 @@ const Videos = () => {
           initial="hidden"
           animate="visible"
           variants={STAGGER_CONTAINER}
-          className="max-w-4xl mx-auto mb-12"
+          className="mx-auto mb-12"
         >
           <motion.div variants={FADE_IN_UP} className="glass rounded-3xl p-8 md:p-10">
             <h2 className="text-lg md:text-xl font-bold text-white mb-4">

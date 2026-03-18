@@ -19,11 +19,23 @@
 
 import { DEFAULT_SEO } from '../utils/seo';
 
-const SEO = ({ title, description, canonical, image, noindex = false, robots = null, schema = null }) => {
+// Supprime le slash final pour éviter les canonical → 301
+// ex: https://karimsaari.com/communaute/ → https://karimsaari.com/communaute
+const normalizeCanonical = (url) => (url || '').replace(/\/$/, '') || url;
+
+const SEO = ({
+  title, description, canonical, image, imageAlt = null,
+  imageWidth = 1200, imageHeight = 630,
+  noindex = false, robots = null, schema = null,
+  type = 'website',
+  // Balises article:* (uniquement si type="article")
+  articlePublishedTime = null, articleModifiedTime = null, articleAuthor = null, articleSection = null,
+}) => {
   const metaTitle       = title       || DEFAULT_SEO.title;
   const metaDescription = description || DEFAULT_SEO.description;
-  const metaCanonical   = canonical   || DEFAULT_SEO.canonical;
+  const metaCanonical   = normalizeCanonical(canonical || DEFAULT_SEO.canonical);
   const metaImage       = image       || DEFAULT_SEO.image;
+  const metaImageAlt    = imageAlt    || 'Dark Massilia · Karim Saari — Sentinelle des Calanques';
 
   return (
     <>
@@ -37,11 +49,27 @@ const SEO = ({ title, description, canonical, image, noindex = false, robots = n
       <meta property="og:title"       content={metaTitle} />
       <meta property="og:description" content={metaDescription} />
       <meta property="og:url"         content={metaCanonical} />
-      <meta property="og:image"       content={metaImage} />
-      <meta property="og:image:alt"   content="Dark Massilia · Karim Saari — Sentinelle des Calanques" />
-      <meta property="og:type"        content="website" />
+      <meta property="og:image"        content={metaImage} />
+      <meta property="og:image:width"  content={String(imageWidth)} />
+      <meta property="og:image:height" content={String(imageHeight)} />
+      <meta property="og:image:alt"   content={metaImageAlt} />
+      <meta property="og:type"        content={type} />
       <meta property="og:locale"      content="fr_FR" />
       <meta property="og:site_name"   content={DEFAULT_SEO.siteName} />
+
+      {/* ── Balises article:* (type="article" uniquement) ── */}
+      {type === 'article' && articlePublishedTime && (
+        <meta property="article:published_time" content={articlePublishedTime} />
+      )}
+      {type === 'article' && articleModifiedTime && (
+        <meta property="article:modified_time" content={articleModifiedTime} />
+      )}
+      {type === 'article' && articleAuthor && (
+        <meta property="article:author" content={articleAuthor} />
+      )}
+      {type === 'article' && articleSection && (
+        <meta property="article:section" content={articleSection} />
+      )}
 
       {/* ── Twitter Card ── */}
       <meta name="twitter:card"        content="summary_large_image" />

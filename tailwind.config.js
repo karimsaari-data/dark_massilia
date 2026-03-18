@@ -16,6 +16,11 @@ export default {
           teal: '#00ABA8',     // Turquoise - accent principal
           blue: '#0091ff',     // Bleu action (conservé)
         },
+        astroide: {
+          DEFAULT: '#FF7F00',  // Orange Astroïde — Astroides calycularis
+          light:   '#FF9500',  // Début du gradient
+          dark:    '#FF5E00',  // Hover saturé
+        },
         // Palette de texte — WCAG AA sur fonds sombres (#0B1C2D)
         text: {
           primary:   '#f8fafc', // slate-50  — titres, ratio ≈ 19:1
@@ -31,8 +36,13 @@ export default {
         'fade-in': 'fadeIn 0.8s ease-out',
         'slide-up': 'slideUp 0.6s ease-out',
         'pulse-glow': 'pulseGlow 4.5s ease-in-out infinite alternate',
+        'scroll-left': 'scrollLeft 35s linear infinite',
       },
       keyframes: {
+        scrollLeft: {
+          '0%':   { transform: 'translateX(0)' },
+          '100%': { transform: 'translateX(-50%)' },
+        },
         fadeIn: {
           '0%': { opacity: '0' },
           '100%': { opacity: '1' },
