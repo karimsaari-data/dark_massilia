@@ -1,17 +1,18 @@
-import { useState, useEffect, useMemo } from 'react';
+import { useState, useEffect, useMemo, useRef } from 'react';
 import { motion } from 'framer-motion';
-import { Waves, TreePine, ArrowLeft, ZoomIn, ExternalLink } from 'lucide-react';
+import { Waves, TreePine, Compass, ArrowLeft, ZoomIn, ExternalLink } from 'lucide-react';
 // Référence Fancybox — peuplée dynamiquement côté client uniquement
 let _FB = null;
 const getFB = () => _FB;
 import { FADE_IN_UP, STAGGER_CONTAINER } from '../utils/constants';
 import SEO from '../components/SEO';
 import { SEO_PAGES } from '../utils/seo';
-import { Link } from 'react-router-dom';
+import { Link, useSearchParams } from 'react-router-dom';
 import { supabase } from '../lib/supabase';
 
 const merIds = [2, 4, 6, 10, 12, 13, 14, 20, 22, 23, 30, 32, 33, 35, 39, 44, 45, 46, 47, 50, 51, 52, 54, 55, 56, 57, 58, 59, 60, 61, 62, 63, 64, 66, 67, 68, 70, 72, 73, 74, 75, 76, 78, 79, 80, 81, 82, 83, 86, 87, 89, 90, 91, 92, 94, 95, 97, 98, 99, 100];
 const terreIds = [1, 3, 5, 7, 8, 9, 15, 16, 17, 18, 19, 21, 24, 25, 26, 27, 28, 29, 31, 34, 36, 37, 38, 40, 41, 42, 43, 48, 49, 53, 54, 85];
+const horizonsIds = []; // géré via Supabase admin
 
 const terreFilenames = {
   1:  'karim-saari-photographe-provence-femme-chapeau-champ-lavande-lumiere-doree',
@@ -289,6 +290,19 @@ const terreImages = terreIds.map((id, index) => {
   };
 });
 
+const horizonsImages = horizonsIds.map((id, index) => {
+  const lieu = terreLieux[id] || 'Voyage';
+  return {
+    uid: `horizons-${id}`,
+    src: `/images/portfolio/Terre/${terreFilenames[id]}.webp`,
+    alt: terreAlts[id] || `Photographe voyage Karim Saari ${index + 1}`,
+    lieu,
+    maps: mapsUrl({ lieu }),
+    width: terreDims[id]?.[0] || 1920,
+    height: terreDims[id]?.[1] || 1280,
+  };
+});
+
 const shuffle = (arr) => {
   const a = [...arr];
   for (let i = a.length - 1; i > 0; i--) {
@@ -311,11 +325,12 @@ function showShareMenu(_triggerEl, slide) {
   document.querySelector('.fb-share-overlay')?.remove();
   if (!slide) return;
 
-  const uid = slide.triggerEl?.getAttribute('data-uid') || '';
-  const alt = slide.alt || slide.triggerEl?.getAttribute('data-caption') || '';
-  const src = slide.src || '';
+  const uid  = slide.triggerEl?.getAttribute('data-uid')  || '';
+  const slug = slide.triggerEl?.getAttribute('data-slug') || uid;
+  const alt  = slide.alt || slide.triggerEl?.getAttribute('data-caption') || '';
+  const src  = slide.src || '';
 
-  const relayUrl    = `https://karimsaari.com/p/${encodeURIComponent(uid)}`;
+  const relayUrl    = `https://karimsaari.com/p/${encodeURIComponent(slug)}`;
   const imageAbsUrl = `https://karimsaari.com${src}`;
   const shareText   = `📸 ${alt} — Karim Saari, photographe Marseille`;
   const enc = (s) => encodeURIComponent(s);
@@ -442,34 +457,31 @@ const buildOpts = () => ({
         const title   = slide.triggerEl?.dataset?.title || '';
         const mapsHref = slide.triggerEl?.dataset?.maps || '';
         const pin = `<svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg>`;
+        const uid       = slide.triggerEl?.dataset?.hash || '';
         const titleHtml = title ? `<span class="fb-caption-title">${title}</span>` : '';
         const lieuHtml  = lieu
           ? mapsHref
             ? `<a class="fb-caption-lieu fb-caption-maps" href="${mapsHref}" target="_blank" rel="noopener" title="Voir sur Google Maps">${pin}${lieu}</a>`
             : `<span class="fb-caption-lieu">${pin}${lieu}</span>`
           : '';
-        return `<span class="fb-caption-wrapper"><span class="fb-caption-info">${titleHtml}${lieuHtml}</span></span>`;
+        const cartIcon = `<svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="8" cy="21" r="1"/><circle cx="19" cy="21" r="1"/><path d="M2.05 2.05h2l2.66 12.42a2 2 0 0 0 2 1.58h9.78a2 2 0 0 0 1.95-1.57l1.65-7.43H5.12"/></svg>`;
+        const buyBtn = `<button class="fb-caption-buy" data-uid="${uid}" data-title="${title}" title="Commander un tirage">${cartIcon}<span>Commander un tirage</span></button>`;
+        return `<span class="fb-caption-wrapper"><span class="fb-caption-info">${titleHtml}${lieuHtml}</span>${buyBtn}</span>`;
       };
     },
     initLayout(fancybox) {
       const c = fancybox.getContainer();
       if (!c) return;
-      // CTA "Commander un tirage" — sous la toolbar Fancybox
-      const ctaBtn = document.createElement('button');
-      ctaBtn.className = 'fb-cta-floating';
-      ctaBtn.type = 'button';
-      ctaBtn.innerHTML = 'Commander un tirage';
-      c.appendChild(ctaBtn);
-      // CTA — délégation de clic sur le bouton Commander
+      // Clic sur l'icône panier dans la caption
       c.addEventListener('click', (e) => {
-        if (!e.target.closest('.fb-cta-floating')) return;
-        const slide  = getFB()?.getSlide?.();
-        const uid    = slide?.triggerEl?.dataset?.hash || '';
-        const title  = slide?.triggerEl?.dataset?.title || slide?.caption || '';
+        const btn = e.target.closest('.fb-caption-buy');
+        if (!btn) return;
+        const uid   = btn.dataset.uid || '';
+        const title = btn.dataset.title || '';
         const [cat, num] = uid.split('-');
         const parts = [`catégorie ${cat || uid}`, num ? `numéro ${num}` : null, title || null].filter(Boolean);
         const subject = encodeURIComponent(`Devis cliché : ${parts.join(' - ')}`);
-        window.location.href = `mailto:contact@karimsaari.com?subject=${subject}`;
+        window.location.href = `mailto:commande@karimsaari.com?subject=${subject}`;
       });
       // Protection clic droit sur les images
       c.addEventListener('contextmenu', (e) => {
@@ -545,6 +557,7 @@ const PhotoGrid = ({ images }) => (
         data-caption={image.lieu || image.alt}
         data-title={image.title || ''}
         data-uid={image.uid}
+        data-slug={image.slug || image.uid}
         data-hash={image.uid}
         data-maps={image.maps}
         data-thumb={image.src}
@@ -578,28 +591,35 @@ const mergeWithDims = (rows) => {
 
 /* ─── Composant principal ─────────────────────────────────── */
 const Photos = () => {
-  const [merImages_,   setMerImages]   = useState(merImages);
-  const [terreImages_, setTerreImages] = useState(terreImages);
+  const [merImages_,      setMerImages]      = useState(merImages);
+  const [terreImages_,    setTerreImages]    = useState(terreImages);
+  const [horizonsImages_, setHorizonsImages] = useState(horizonsImages);
 
-  const [shuffledMer,   setShuffledMer]   = useState(merImages);
-  const [shuffledTerre, setShuffledTerre] = useState(terreImages);
+  const [shuffledMer,      setShuffledMer]      = useState(merImages);
+  const [shuffledTerre,    setShuffledTerre]    = useState(terreImages);
+  const [shuffledHorizons, setShuffledHorizons] = useState(horizonsImages);
+  const [searchParams] = useSearchParams();
+  const deepLinkDone = useRef(false);
 
   // Fetch Supabase — remplace les données statiques si disponible
   useEffect(() => {
     supabase
       .from('photos_paysage')
-      .select('uid, src, alt, title, lieu, lat, lng, categorie, visible')
+      .select('uid, src, alt, title, lieu, lat, lng, slug, categorie, visible')
       .eq('visible', true)
       .order('uid')
       .then(({ data }) => {
         if (!data || data.length === 0) return;
         const withDims = mergeWithDims(data);
-        const mer   = withDims.filter(p => p.categorie === 'mer');
-        const terre = withDims.filter(p => p.categorie === 'terre');
+        const mer      = withDims.filter(p => p.categorie === 'mer');
+        const terre    = withDims.filter(p => p.categorie === 'terre');
+        const horizons = withDims.filter(p => p.categorie === 'horizons');
         setMerImages(mer);
         setTerreImages(terre);
+        setHorizonsImages(horizons);
         setShuffledMer(shuffle(mer));
         setShuffledTerre(shuffle(terre));
+        setShuffledHorizons(shuffle(horizons));
       });
   }, []);
 
@@ -607,6 +627,7 @@ const Photos = () => {
   useEffect(() => {
     setShuffledMer(shuffle(merImages_));
     setShuffledTerre(shuffle(terreImages_));
+    setShuffledHorizons(shuffle(horizonsImages_));
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -627,9 +648,23 @@ const Photos = () => {
     };
   }, []);
 
+  // Deep-link : ouvre directement la photo ciblée via ?photo=uid (partage Pinterest / Facebook)
+  useEffect(() => {
+    const uid = searchParams.get('photo');
+    if (!uid || deepLinkDone.current) return;
+    const timer = setTimeout(() => {
+      const el = document.querySelector(`[data-uid="${uid}"]`);
+      if (el) {
+        deepLinkDone.current = true;
+        el.click();
+      }
+    }, 300);
+    return () => clearTimeout(timer);
+  }, [searchParams, shuffledMer, shuffledTerre, shuffledHorizons]);
+
   const totalImages = useMemo(
-    () => merImages_.length + terreImages_.length,
-    [merImages_, terreImages_]
+    () => merImages_.length + terreImages_.length + horizonsImages_.length,
+    [merImages_, terreImages_, horizonsImages_]
   );
 
   return (
@@ -643,28 +678,43 @@ const Photos = () => {
           transition={{ duration: 0.6 }}
           className="text-xl md:text-2xl font-bold text-white text-center mb-8 leading-tight"
         >
-          Photographie environnementale : Les paysages littoraux et sous-marins des Calanques
+          Photographie de Paysages : Du Littoral Marseillais aux Horizons Lointains
         </motion.h1>
 
-        {/* Section Côté Mer */}
+        {/* Section 1 — Littoral Marseillais & Calanques */}
         <motion.div
+          id="littoral"
           initial="hidden"
           animate="visible"
           variants={STAGGER_CONTAINER}
-          className="mb-16"
+          className="mb-16 scroll-mt-8"
         >
-          <SectionTitle icon={Waves} title="Côté Mer" count={shuffledMer.length} />
+          <SectionTitle icon={Waves} title="Le Littoral Marseillais & Calanques" count={shuffledMer.length} />
           <PhotoGrid images={shuffledMer} />
         </motion.div>
 
-        {/* Section Côté Terre */}
+        {/* Section 2 — Terres de Provence & Camargue */}
         <motion.div
+          id="provence"
           initial="hidden"
           animate="visible"
           variants={STAGGER_CONTAINER}
+          className="mb-16 scroll-mt-8"
         >
-          <SectionTitle icon={TreePine} title="Côté Terre" count={shuffledTerre.length} />
+          <SectionTitle icon={TreePine} title="Terres de Provence & Camargue" count={shuffledTerre.length} />
           <PhotoGrid images={shuffledTerre} />
+        </motion.div>
+
+        {/* Section 3 — Explorations & Horizons Lointains */}
+        <motion.div
+          id="horizons"
+          initial="hidden"
+          animate="visible"
+          variants={STAGGER_CONTAINER}
+          className="mb-16 scroll-mt-8"
+        >
+          <SectionTitle icon={Compass} title="Explorations & Horizons Lointains" count={shuffledHorizons.length} />
+          <PhotoGrid images={shuffledHorizons} />
         </motion.div>
 
         {/* Description */}
@@ -676,14 +726,37 @@ const Photos = () => {
         >
           <motion.div variants={FADE_IN_UP} className="glass-strong rounded-3xl overflow-hidden flex flex-col lg:flex-row">
             <div className="p-8 md:p-12 lg:flex-1 flex flex-col justify-center">
-              <h2 className="text-2xl md:text-3xl font-bold text-white mb-6">La Galerie</h2>
+              <h2 className="text-2xl md:text-3xl font-bold text-white mb-2">Portfolio : de l'abyssal à l'horizon</h2>
+              <p className="text-ocean-teal font-semibold text-sm uppercase tracking-widest mb-6">
+                Sentinelle du littoral et des terres sauvages
+              </p>
+              <div className="flex flex-wrap gap-2 mb-6">
+                {[
+                  { href: '#littoral', label: '🌊 Littoral & Calanques' },
+                  { href: '#provence', label: '🌿 Provence & Camargue' },
+                  { href: '#horizons', label: '🧭 Horizons Lointains' },
+                ].map(({ href, label }) => (
+                  <a
+                    key={href}
+                    href={href}
+                    className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-medium
+                               bg-white/5 border border-white/10 text-text-secondary
+                               hover:bg-ocean-teal/10 hover:border-ocean-teal/40 hover:text-ocean-teal
+                               transition-colors duration-200"
+                  >
+                    {label}
+                  </a>
+                ))}
+              </div>
               <div className="space-y-4 text-text-secondary leading-[1.8]">
-                <p>Deux univers structurent mon travail photographique :</p>
                 <p>
-                  <strong className="text-ocean-teal">Côté Mer</strong> — Photographe sous-marin à Marseille, je documente les fonds des Calanques et la biodiversité méditerranéenne en apnée. De la faune aux paysages subaquatiques, mes images témoignent de la beauté et des fragilités de la Méditerranée.
+                  <strong className="text-ocean-teal">Le Littoral Marseillais & Calanques</strong> — Une immersion au cœur du Parc national des Calanques. Entre falaises calcaires monumentales et eaux turquoises, je documente la splendeur et la fragilité de ce littoral rocheux de la mer Méditerranée. Une géographie d'exception où chaque crique sauvage appelle à la préservation de la faune.
                 </p>
                 <p>
-                  <strong className="text-ocean-teal">Côté Terre</strong> — Photographe de paysages en Provence, je capture les reliefs des Calanques, les champs de lavande, les lumières marseillaises et les horizons méditerranéens. Une approche naturaliste et immersive du territoire.
+                  <strong className="text-ocean-teal">Terres de Provence & Camargue</strong> — Des marais salants de Camargue aux champs de lavande du plateau de Valensole, je parcours l'arrière-pays provençal. Sous les lumières rasantes, les reliefs sauvages du Luberon et des Alpilles révèlent la richesse d'une flore méditerranéenne préservée.
+                </p>
+                <p>
+                  <strong className="text-ocean-teal">Explorations & Horizons Lointains</strong> — Mes carnets de voyage s'ouvrent sur la diversité culturelle et les paysages du monde. Des ruelles bleues de Chefchaouen aux dunes du Pilat, mon regard de photographe naturaliste cherche à capturer la beauté brute de notre planète, bien au-delà de Marseille.
                 </p>
                 <p>Retrouvez l'ensemble de mes photographies en haute résolution sur 500px.</p>
               </div>

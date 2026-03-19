@@ -57,6 +57,7 @@ const PERSON_SCHEMA = {
   ],
   knowsAbout: [
     'Protection de l\'environnement',
+    'Photographie environnementale',
     'Photographie sous-marine',
     'Dépollution marine',
     'Calanques de Marseille',
@@ -199,6 +200,14 @@ export const SEO_PAGES = {
               acceptedAnswer: {
                 '@type': 'Answer',
                 text: "Le bassin méditerranéen reçoit plus de 200 millions de touristes par an. Cette affluence saisonnière provoque une augmentation de 40 % de la production de déchets en été, saturant les infrastructures locales de gestion des déchets et entraînant l'abandon direct de nombreux déchets sur les côtes.",
+              },
+            },
+            {
+              '@type': 'Question',
+              name: "Qu'est-ce que la photographie environnementale ?",
+              acceptedAnswer: {
+                '@type': 'Answer',
+                text: "La photographie environnementale se sert d'images de paysages, de plantes ou d'animaux pour éveiller chez l'observateur le désir d'en protéger l'existence — particulièrement face aux dangers auxquels la nature est confrontée. En Méditerranée, elle devient un outil de témoignage direct : chaque image des calanques de Marseille, de leurs fonds marins ou de la faune locale est une preuve visuelle de l'urgence écologique.",
               },
             },
           ],

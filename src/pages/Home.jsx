@@ -143,6 +143,10 @@ const FAQ_ITEMS = [
     q: "Quel est le rôle du tourisme dans cette pollution ?",
     a: "Le bassin méditerranéen reçoit plus de 200 millions de touristes par an, ce qui exerce une pression gigantesque sur le littoral. Durant les mois d'été, cette affluence saisonnière provoque une augmentation de 40 % de la production de déchets. Les infrastructures locales de gestion des déchets sont souvent saturées, ce qui entraîne des débordements et l'abandon direct de nombreux déchets (bouteilles, emballages, objets de plage) sur les côtes.",
   },
+  {
+    q: "Qu'est-ce que la photographie environnementale ?",
+    a: "La photographie environnementale se sert d'images de paysages, de plantes ou d'animaux pour éveiller chez l'observateur le désir d'en protéger l'existence — particulièrement face aux dangers auxquels la nature est confrontée. En Méditerranée, elle devient un outil de témoignage direct : chaque image des calanques de Marseille, de leurs fonds marins ou de la faune locale est une preuve visuelle de l'urgence écologique. La photographie environnementale que je pratique n'est pas simplement esthétique : chaque cliché est un document, une preuve, un appel à l'action.",
+  },
 ];
 
 const FaqItem = ({ question, answer }) => {
@@ -354,7 +358,7 @@ const Home = () => {
                   De la photographie de paysages littoraux aux images sous-marines, j'utilise l'objectif pour porter la voix de Marseille, des Calanques et de ceux qui les protègent.
                 </p>
                 <p>
-                  En tant que photographe environnemental en Méditerranée, je capture la beauté de nos côtes, en surface comme en apnée, pour témoigner de l'état réel de nos écosystèmes.
+                  En tant que photographe environnemental en Méditerranée, je capture la beauté de nos côtes, en surface comme en apnée, pour témoigner de l'état réel de nos écosystèmes. La photographie environnementale que je pratique n'est pas simplement esthétique : chaque image est un document, une preuve, un appel à l'action.
                 </p>
                 <p>
                   Apnéiste engagé depuis plus de 10 ans et président de <strong className="text-ocean-teal">Team Oxygen</strong>, ma mission se vit sur le terrain et à l'écran.

@@ -2,7 +2,7 @@ import { useState, useEffect, useCallback } from 'react';
 import { supabase } from '../lib/supabase';
 import {
   Lock, LogOut, Search, Save, Eye, EyeOff,
-  ChevronDown, ChevronUp, MapPin, ExternalLink, ArrowUp, X,
+  ChevronDown, ChevronUp, MapPin, ExternalLink, ArrowUp, X, Upload, Rss, Trash2, Download,
 } from 'lucide-react';
 
 const ADMIN_PASSWORD = import.meta.env.VITE_ADMIN_PASSWORD || 'darkm';
@@ -91,6 +91,117 @@ const CoordField = ({ draft, setDraft }) => {
 };
 
 
+/* ── Modal import photos ────────────────────────────────────── */
+const INBOX_FOLDERS = [
+  'public/images/portfolio/New/photos_paysages/Mer/',
+  'public/images/portfolio/New/photos_paysages/Terre/',
+  'public/images/portfolio/New/photos_paysages/Horizons/',
+  'public/images/portfolio/New/photos_sous_marine/Dépollution/',
+  'public/images/portfolio/New/photos_sous_marine/Biodiversité/',
+  'public/images/portfolio/New/photos_sous_marine/Caractérisation/',
+];
+
+const ImportModal = ({ onClose, onDone }) => {
+  const [status, setStatus] = useState('idle'); // idle | running | done | error
+  const [logs, setLogs] = useState('');
+
+  const runImport = async () => {
+    setStatus('running');
+    setLogs('');
+    try {
+      const res = await fetch('/api/import-photos', { method: 'POST' });
+      const data = await res.json();
+      setLogs(data.logs || '');
+      setStatus(data.success ? 'done' : 'error');
+      if (data.success) onDone?.();
+    } catch (e) {
+      setLogs("Erreur : impossible de contacter /api/import-photos\n(le serveur de dev doit être actif)");
+      setStatus('error');
+    }
+  };
+
+  return (
+    <div className="fixed inset-0 z-[200] flex items-center justify-center p-4"
+      style={{ background: 'rgba(0,0,0,0.85)', backdropFilter: 'blur(10px)' }}
+      onClick={onClose}
+    >
+      <div className="w-full max-w-lg rounded-2xl border border-white/10 p-6 space-y-4"
+        style={{ background: 'rgba(6,13,26,0.97)' }}
+        onClick={e => e.stopPropagation()}
+      >
+        <div className="flex items-center justify-between">
+          <h2 className="font-bold text-white flex items-center gap-2">
+            <Upload className="w-4 h-4 text-[#21c47b]" />
+            Importer de nouvelles photos
+          </h2>
+          <button type="button" onClick={onClose} className="p-1.5 rounded-lg hover:bg-white/10 text-white/50 hover:text-white transition-colors">
+            <X className="w-4 h-4" />
+          </button>
+        </div>
+
+        {status === 'idle' && (
+          <div className="space-y-3">
+            <p className="text-sm text-white/50">Dépose tes fichiers dans le bon dossier, puis lance l'import :</p>
+            <ul className="space-y-1">
+              {INBOX_FOLDERS.map(f => (
+                <li key={f} className="text-xs font-mono text-[#21c47b]/70 bg-white/3 rounded px-3 py-1.5 border border-white/5">{f}</li>
+              ))}
+            </ul>
+            <p className="text-xs text-white/30">Le script convertit en WebP, crée les entrées Supabase (visible=false) et déplace les originaux dans <code className="text-white/50">done/</code>.</p>
+          </div>
+        )}
+
+        {status === 'running' && (
+          <div className="flex items-center gap-3 py-4 text-white/60">
+            <div className="w-5 h-5 border-2 border-[#21c47b] border-t-transparent rounded-full animate-spin flex-shrink-0" />
+            Import en cours…
+          </div>
+        )}
+
+        {(status === 'done' || status === 'error') && logs && (
+          <pre className={`text-xs rounded-xl p-4 overflow-auto max-h-64 border whitespace-pre-wrap ${
+            status === 'done' ? 'bg-[#21c47b]/5 border-[#21c47b]/20 text-[#21c47b]/80' : 'bg-red-500/5 border-red-500/20 text-red-400/80'
+          }`}>{logs}</pre>
+        )}
+
+        <div className="flex gap-2 pt-1">
+          {status === 'idle' && (
+            <button type="button" onClick={runImport}
+              className="flex-1 flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl text-sm font-semibold text-black transition-all hover:opacity-90"
+              style={{ background: 'linear-gradient(135deg, #21c47b, #1aaa6a)' }}
+            >
+              <Upload className="w-4 h-4" />
+              Lancer l'import
+            </button>
+          )}
+          {status === 'done' && (
+            <button type="button" onClick={onClose}
+              className="flex-1 px-4 py-2.5 rounded-xl text-sm font-semibold text-black"
+              style={{ background: 'linear-gradient(135deg, #21c47b, #1aaa6a)' }}
+            >
+              Fermer — voir les nouvelles photos dans "Incomplet"
+            </button>
+          )}
+          {status === 'error' && (
+            <button type="button" onClick={runImport}
+              className="flex-1 px-4 py-2.5 rounded-xl text-sm font-semibold text-white bg-white/10 hover:bg-white/15 transition-colors"
+            >
+              Réessayer
+            </button>
+          )}
+          {status !== 'idle' && status !== 'running' && (
+            <button type="button" onClick={onClose}
+              className="px-4 py-2.5 rounded-xl text-sm text-white/50 hover:text-white bg-white/5 hover:bg-white/10 transition-colors"
+            >
+              Fermer
+            </button>
+          )}
+        </div>
+      </div>
+    </div>
+  );
+};
+
 /* ── Modal preview plein écran ──────────────────────────────── */
 const PhotoPreviewModal = ({ photo, onClose }) => {
   useEffect(() => {
@@ -134,10 +245,11 @@ const PhotoPreviewModal = ({ photo, onClose }) => {
 };
 
 /* ── PhotoRow (galerie) ─────────────────────────────────────── */
-const PhotoRow = ({ photo, onSave, onToggleVisible, onPreview, showCategorie, categorieOptions }) => {
+const PhotoRow = ({ photo, onSave, onToggleVisible, onPreview, onDelete, showCategorie, categorieOptions }) => {
   const [draft, setDraft]       = useState({ title: photo.title, alt: photo.alt, lieu: photo.lieu, lat: photo.lat ?? null, lng: photo.lng ?? null, categorie: photo.categorie ?? null });
   const [saving, setSaving]     = useState(false);
   const [saved, setSaved]       = useState(false);
+  const [deleting, setDeleting] = useState(false);
   const [expanded, setExpanded] = useState(false);
 
   const dirty = GALERIE_FIELDS.some(f => draft[f.key] !== photo[f.key])
@@ -151,6 +263,20 @@ const PhotoRow = ({ photo, onSave, onToggleVisible, onPreview, showCategorie, ca
     setSaving(false);
     setSaved(true);
     setTimeout(() => setSaved(false), 2000);
+  };
+
+  const handleDelete = async () => {
+    if (!window.confirm(`Supprimer "${photo.title || photo.uid}" ?\n\nCette action supprime la photo de la base et le fichier image.`)) return;
+    setDeleting(true);
+    await supabase.from(photo._table || 'photos_paysage').delete().eq('id', photo.id);
+    try {
+      await fetch('/api/delete-photo', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ path: photo.src }),
+      });
+    } catch { /* en prod, le fichier reste — pas grave */ }
+    onDelete(photo.id);
   };
 
   return (
@@ -231,17 +357,30 @@ const PhotoRow = ({ photo, onSave, onToggleVisible, onPreview, showCategorie, ca
               <select
                 value={draft.categorie || ''}
                 onChange={e => setDraft(d => ({ ...d, categorie: e.target.value || null }))}
-                className="w-full bg-white/5 border border-white/10 rounded-lg px-3 py-2 text-sm text-white focus:outline-none focus:border-[#21c47b]/60 transition-colors"
-                style={{ colorScheme: 'dark' }}
+                className="w-full border border-white/10 rounded-lg px-3 py-2 text-sm text-white focus:outline-none focus:border-[#21c47b]/60 transition-colors"
+                style={{ backgroundColor: '#1a1f2e', colorScheme: 'dark' }}
               >
-                <option value="">— Non classée —</option>
+                <option value="" style={{ backgroundColor: '#1a1f2e', color: '#fff' }}>— Non classée —</option>
                 {categorieOptions.map(({ value, label }) => (
-                  <option key={value} value={value}>{label}</option>
+                  <option key={value} value={value} style={{ backgroundColor: '#1a1f2e', color: '#fff' }}>{label}</option>
                 ))}
               </select>
             </div>
           )}
-          <div className="flex justify-end">
+          <div>
+            <label className="block text-xs font-semibold text-white/50 uppercase tracking-wider mb-1">Chemin fichier</label>
+            <p className="text-xs font-mono text-white/30 bg-white/3 rounded-lg px-3 py-2 border border-white/5 break-all select-all">{photo.src}</p>
+          </div>
+          <div className="flex justify-between items-center">
+            <button
+              type="button"
+              onClick={handleDelete}
+              disabled={deleting}
+              className="flex items-center gap-1.5 px-3 py-2 rounded-lg text-sm text-red-400/60 hover:text-red-400 hover:bg-red-400/10 border border-transparent hover:border-red-400/20 transition-all"
+            >
+              <Trash2 className="w-4 h-4" />
+              {deleting ? 'Suppression…' : 'Supprimer'}
+            </button>
             <button
               type="button"
               onClick={handleSave}
@@ -266,6 +405,8 @@ const PhotoRow = ({ photo, onSave, onToggleVisible, onPreview, showCategorie, ca
 const TabGalerie = ({ tableName }) => {
   const [catFilter,      setCatFilter]      = useState('all');
   const [incompleteOnly, setIncompleteOnly] = useState(false);
+  const [hiddenOnly,     setHiddenOnly]     = useState(false);
+  const [noTitleOnly,    setNoTitleOnly]    = useState(false);
   const [search, setSearch]                = useState('');
   const [photos, setPhotos]                = useState([]);
   const [loading, setLoading]              = useState(false);
@@ -302,6 +443,8 @@ const TabGalerie = ({ tableName }) => {
   const filtered = photos.filter(p => {
     if ((isPaysage || isSousMarine) && catFilter !== 'all' && p.categorie !== catFilter) return false;
     if (incompleteOnly && !isIncomplete(p)) return false;
+    if (hiddenOnly && p.visible !== false) return false;
+    if (noTitleOnly && p.title) return false;
     const q = search.toLowerCase();
     if (!q) return true;
     return (
@@ -313,9 +456,9 @@ const TabGalerie = ({ tableName }) => {
   });
 
   return (
-    <div className="space-y-4">
-      {/* Filtres */}
-      <div className="flex gap-3 flex-wrap">
+    <div className="space-y-3">
+      {/* Ligne 1 : recherche + catégories */}
+      <div className="flex gap-3 flex-wrap items-center">
         <div className="flex-1 min-w-48 relative">
           <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-white/30" />
           <input
@@ -328,46 +471,55 @@ const TabGalerie = ({ tableName }) => {
         </div>
         {isPaysage && (
           <div className="flex gap-1 bg-white/5 rounded-lg p-1">
-            {[{ key: 'all', label: 'Tout' }, { key: 'mer', label: 'Mer' }, { key: 'terre', label: 'Terre' }].map(({ key, label }) => (
-              <button
-                key={key}
-                type="button"
-                onClick={() => setCatFilter(key)}
+            {[
+              { key: 'all',      label: 'Tout' },
+              { key: 'mer',      label: 'Littoral' },
+              { key: 'terre',    label: 'Provence' },
+              { key: 'horizons', label: 'Horizons' },
+            ].map(({ key, label }) => (
+              <button key={key} type="button" onClick={() => setCatFilter(key)}
                 className={`px-3 py-1 rounded-md text-xs font-medium transition-colors ${catFilter === key ? 'bg-white/15 text-white' : 'text-white/50 hover:text-white'}`}
-              >
-                {label}
-              </button>
+              >{label}</button>
             ))}
           </div>
         )}
         {isSousMarine && (
           <div className="flex gap-1 bg-white/5 rounded-lg p-1">
             {[{ key: 'all', label: 'Tout' }, { key: 'depollution', label: 'Dépollution' }, { key: 'biodiversite', label: 'Biodiversité' }, { key: 'caracterisation', label: 'Caractérisation' }].map(({ key, label }) => (
-              <button
-                key={key}
-                type="button"
-                onClick={() => setCatFilter(key)}
+              <button key={key} type="button" onClick={() => setCatFilter(key)}
                 className={`px-3 py-1 rounded-md text-xs font-medium transition-colors ${catFilter === key ? 'bg-white/15 text-white' : 'text-white/50 hover:text-white'}`}
-              >
-                {label}
-              </button>
+              >{label}</button>
             ))}
           </div>
         )}
-        <button
-          type="button"
-          onClick={() => setIncompleteOnly(v => !v)}
+      </div>
+
+      {/* Ligne 2 : filtres statut + compteur */}
+      <div className="flex gap-2 flex-wrap items-center">
+        <button type="button" onClick={() => setIncompleteOnly(v => !v)}
           className={`px-3 py-1.5 rounded-lg text-xs font-medium transition-colors flex items-center gap-1.5 ${
-            incompleteOnly
-              ? 'bg-orange-500/20 border border-orange-500/50 text-orange-300'
-              : 'bg-white/5 border border-white/10 text-white/50 hover:text-white'
+            incompleteOnly ? 'bg-orange-500/20 border border-orange-500/50 text-orange-300' : 'bg-white/5 border border-white/10 text-white/50 hover:text-white'
           }`}
         >
           ⚠ Incomplet {incompleteOnly && `(${filtered.length})`}
         </button>
+        <button type="button" onClick={() => setHiddenOnly(v => !v)}
+          className={`px-3 py-1.5 rounded-lg text-xs font-medium transition-colors flex items-center gap-1.5 ${
+            hiddenOnly ? 'bg-white/15 border border-white/30 text-white' : 'bg-white/5 border border-white/10 text-white/50 hover:text-white'
+          }`}
+        >
+          <EyeOff className="w-3.5 h-3.5" />
+          Masquées {hiddenOnly && `(${filtered.length})`}
+        </button>
+        <button type="button" onClick={() => setNoTitleOnly(v => !v)}
+          className={`px-3 py-1.5 rounded-lg text-xs font-medium transition-colors flex items-center gap-1.5 ${
+            noTitleOnly ? 'bg-blue-500/20 border border-blue/50 text-blue-300' : 'bg-white/5 border border-white/10 text-white/50 hover:text-white'
+          }`}
+        >
+          Sans titre {noTitleOnly && `(${filtered.length})`}
+        </button>
+        <span className="ml-auto text-xs text-white/30">{loading ? 'Chargement…' : `${filtered.length} photo${filtered.length > 1 ? 's' : ''}`}</span>
       </div>
-
-      <p className="text-xs text-white/30">{loading ? 'Chargement…' : `${filtered.length} photo${filtered.length > 1 ? 's' : ''}`}</p>
 
       {loadError && (
         <div className="bg-red-500/10 border border-red-500/30 rounded-lg px-4 py-3 text-sm text-red-400">
@@ -379,26 +531,72 @@ const TabGalerie = ({ tableName }) => {
         <div className="flex items-center justify-center py-20">
           <div className="w-8 h-8 border-2 border-[#21c47b] border-t-transparent rounded-full animate-spin" />
         </div>
-      ) : (
-        <div className="space-y-2">
-          {filtered.map(photo => (
-            <PhotoRow
-              key={photo.id}
-              photo={photo}
-              onSave={handleSave}
-              onToggleVisible={handleToggleVisible}
-              onPreview={setPreview}
-              showCategorie={isPaysage || isSousMarine}
-              categorieOptions={
-                isSousMarine
-                  ? [{ value: 'depollution', label: 'Dépollution' }, { value: 'biodiversite', label: 'Biodiversité' }, { value: 'caracterisation', label: 'Caractérisation' }]
-                  : [{ value: 'mer', label: 'Mer' }, { value: 'terre', label: 'Terre' }]
-              }
-            />
-          ))}
-          {filtered.length === 0 && <p className="text-center text-white/30 py-12">Aucune photo trouvée</p>}
-        </div>
-      )}
+      ) : (() => {
+        const catOptions = isSousMarine
+          ? [{ value: 'depollution', label: 'Dépollution' }, { value: 'biodiversite', label: 'Biodiversité' }, { value: 'caracterisation', label: 'Caractérisation' }]
+          : [{ value: 'mer', label: 'Littoral Marseillais & Calanques' }, { value: 'terre', label: 'Terres de Provence & Camargue' }, { value: 'horizons', label: 'Explorations & Horizons Lointains' }];
+
+        const handleDelete = (id) => setPhotos(prev => prev.filter(p => p.id !== id));
+
+        const renderRow = (photo) => (
+          <PhotoRow
+            key={photo.id}
+            photo={{ ...photo, _table: tableName }}
+            onSave={handleSave}
+            onToggleVisible={handleToggleVisible}
+            onPreview={setPreview}
+            onDelete={handleDelete}
+            showCategorie={isPaysage || isSousMarine}
+            categorieOptions={catOptions}
+          />
+        );
+
+        if (catFilter !== 'all' || !(isPaysage || isSousMarine)) {
+          return (
+            <div className="space-y-2">
+              {filtered.map(renderRow)}
+              {filtered.length === 0 && <p className="text-center text-white/30 py-12">Aucune photo trouvée</p>}
+            </div>
+          );
+        }
+
+        // Groupé par catégorie
+        const groups = catOptions.map(({ value, label }) => ({
+          value,
+          label,
+          photos: filtered.filter(p => p.categorie === value),
+        }));
+        const uncategorized = filtered.filter(p => !p.categorie || !catOptions.find(c => c.value === p.categorie));
+
+        return (
+          <div className="space-y-8">
+            {groups.map(({ value, label, photos: groupPhotos }) => (
+              <div key={value}>
+                <div className="flex items-center gap-3 mb-3">
+                  <h3 className="text-sm font-semibold text-white/70 uppercase tracking-wider">{label}</h3>
+                  <span className="text-xs text-white/30 bg-white/5 rounded-full px-2 py-0.5">{groupPhotos.length}</span>
+                  <div className="flex-1 h-px bg-white/8" />
+                </div>
+                {groupPhotos.length > 0
+                  ? <div className="space-y-2">{groupPhotos.map(renderRow)}</div>
+                  : <p className="text-xs text-white/20 italic pl-1">Aucune photo dans cette catégorie</p>
+                }
+              </div>
+            ))}
+            {uncategorized.length > 0 && (
+              <div>
+                <div className="flex items-center gap-3 mb-3">
+                  <h3 className="text-sm font-semibold text-white/40 uppercase tracking-wider">Non classées</h3>
+                  <span className="text-xs text-white/30 bg-white/5 rounded-full px-2 py-0.5">{uncategorized.length}</span>
+                  <div className="flex-1 h-px bg-white/8" />
+                </div>
+                <div className="space-y-2">{uncategorized.map(renderRow)}</div>
+              </div>
+            )}
+            {filtered.length === 0 && <p className="text-center text-white/30 py-12">Aucune photo trouvée</p>}
+          </div>
+        );
+      })()}
       {preview && <PhotoPreviewModal photo={preview} onClose={() => setPreview(null)} />}
     </div>
   );
@@ -529,7 +727,9 @@ export default function Admin() {
   const [password, setPassword]   = useState('');
   const [showPwd, setShowPwd]     = useState(false);
   const [authError, setAuthError] = useState('');
-  const [tab, setTab]             = useState('paysage');
+  const [tab, setTab]               = useState('paysage');
+  const [showImport, setShowImport] = useState(false);
+  const [indexNowStatus, setIndexNowStatus] = useState('idle'); // idle | running | done | error
 
   const login = () => {
     if (password === ADMIN_PASSWORD) {
@@ -637,6 +837,68 @@ export default function Admin() {
 
           <button
             type="button"
+            onClick={() => setShowImport(true)}
+            className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-sm font-medium text-[#21c47b] border border-[#21c47b]/30 hover:border-[#21c47b]/60 hover:bg-[#21c47b]/10 transition-colors"
+            title="Importer de nouvelles photos"
+          >
+            <Upload className="w-3.5 h-3.5" />
+            Importer
+          </button>
+
+          <button
+            type="button"
+            disabled={indexNowStatus === 'running'}
+            onClick={async () => {
+              setIndexNowStatus('running');
+              try {
+                const res = await fetch('/api/indexnow', { method: 'POST' });
+                const data = await res.json();
+                setIndexNowStatus(data.success ? 'done' : 'error');
+              } catch {
+                setIndexNowStatus('error');
+              }
+              setTimeout(() => setIndexNowStatus('idle'), 4000);
+            }}
+            className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-sm font-medium border transition-colors ${
+              indexNowStatus === 'running' ? 'text-white/30 border-white/10 cursor-wait' :
+              indexNowStatus === 'done'    ? 'text-[#21c47b] border-[#21c47b]/60 bg-[#21c47b]/10' :
+              indexNowStatus === 'error'   ? 'text-red-400 border-red-400/30' :
+              'text-white/50 border-white/15 hover:text-white hover:border-white/30'
+            }`}
+            title="Soumettre les URLs à IndexNow (Bing)"
+          >
+            {indexNowStatus === 'running'
+              ? <div className="w-3.5 h-3.5 border border-current border-t-transparent rounded-full animate-spin" />
+              : <Rss className="w-3.5 h-3.5" />
+            }
+            {indexNowStatus === 'done' ? 'Soumis ✓' : indexNowStatus === 'error' ? 'Erreur' : 'IndexNow'}
+          </button>
+
+          <button
+            type="button"
+            onClick={async () => {
+              const tableName = tab === 'paysage' ? 'photos_paysage' : tab === 'sous_marine' ? 'photos_sous_marine' : null;
+              if (!tableName) return;
+              const { data } = await supabase.from(tableName).select('uid,src,title,alt,lieu,lat,lng,categorie,visible').order('uid');
+              if (!data?.length) return;
+              const cols = ['uid','src','title','alt','lieu','lat','lng','categorie','visible'];
+              const escape = v => `"${String(v ?? '').replace(/"/g, '""')}"`;
+              const csv = [cols.join(','), ...data.map(r => cols.map(c => escape(r[c])).join(','))].join('\n');
+              const blob = new Blob(['\uFEFF' + csv], { type: 'text/csv;charset=utf-8' });
+              const a = document.createElement('a');
+              a.href = URL.createObjectURL(blob);
+              a.download = `${tableName}_${new Date().toISOString().slice(0,10)}.csv`;
+              a.click();
+            }}
+            className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-sm font-medium border border-white/15 text-white/50 hover:text-white hover:border-white/30 transition-colors"
+            title="Exporter en CSV"
+          >
+            <Download className="w-3.5 h-3.5" />
+            CSV
+          </button>
+
+          <button
+            type="button"
             onClick={logout}
             className="p-2 rounded-lg hover:bg-white/10 text-white/50 hover:text-white transition-colors"
             title="Déconnexion"
@@ -651,6 +913,13 @@ export default function Admin() {
         {tab === 'sous_marine' && <TabGalerie tableName="photos_sous_marine" />}
         {tab === 'reseaux'     && <TabReseaux />}
       </main>
+
+      {showImport && (
+        <ImportModal
+          onClose={() => setShowImport(false)}
+          onDone={() => { setShowImport(false); window.location.reload(); }}
+        />
+      )}
 
       {/* ── Bouton retour en haut ── */}
       <button

@@ -58,6 +58,21 @@ export default function Carte() {
           />
         </motion.div>
 
+        {/* Bouton plein écran — bas droite */}
+        <motion.a
+          href={FULL_URL}
+          target="_blank"
+          rel="noopener noreferrer"
+          initial={{ opacity: 0, y: 10 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5, delay: 0.8 }}
+          style={{ position: 'absolute', bottom: '1.5rem', right: '1.5rem', zIndex: 10 }}
+          className="glass rounded-xl border border-white/10 px-4 py-2.5 flex items-center gap-2 text-xs text-text-secondary hover:text-white hover:border-ocean-teal/40 transition-colors duration-200"
+        >
+          <ExternalLink className="w-3.5 h-3.5" />
+          Ouvrir en plein écran
+        </motion.a>
+
         {/* Titre flottant — haut centré */}
         <motion.div
           initial={{ opacity: 0, y: -10 }}
@@ -74,13 +89,13 @@ export default function Carte() {
           </p>
         </motion.div>
 
-        {/* Légende flottante — haut gauche */}
+        {/* Légende flottante — haut gauche de la carte (après le panneau Google Maps ~200px) */}
         <motion.div
-          initial={{ opacity: 0, x: -10 }}
+          initial={{ opacity: 0, x: 10 }}
           animate={{ opacity: 1, x: 0 }}
           transition={{ duration: 0.5, delay: 0.6 }}
-          style={{ position: 'absolute', top: '1.5rem', left: '1.5rem', zIndex: 10 }}
-          className="glass rounded-xl border border-white/10 px-4 py-3"
+          style={{ position: 'absolute', top: '1.5rem', right: '1.5rem', zIndex: 10, background: 'rgba(10,15,30,0.85)', backdropFilter: 'blur(8px)' }}
+          className="rounded-xl border border-white/15 px-4 py-3"
         >
           <p className="text-xs uppercase tracking-widest text-ocean-teal font-semibold mb-2">Légende</p>
           <div className="space-y-1.5">
@@ -154,7 +169,7 @@ export default function Carte() {
               href={FULL_URL}
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-white/20 text-text-secondary text-sm hover:text-white hover:border-white/40 transition-all duration-200"
+              className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-orange-400/50 text-orange-400 text-sm font-medium hover:text-orange-300 hover:border-orange-400 transition-all duration-200"
             >
               <MapPin className="w-4 h-4" />
               Ouvrir la carte en plein écran

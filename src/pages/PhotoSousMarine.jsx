@@ -1,7 +1,7 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { motion } from 'framer-motion';
 import { ArrowLeft, ArrowRight, Trash2, Fish, ClipboardList } from 'lucide-react';
-import { Link } from 'react-router-dom';
+import { Link, useSearchParams } from 'react-router-dom';
 // Référence Fancybox — peuplée dynamiquement côté client uniquement
 let _FB = null;
 const getFB = () => _FB;
@@ -149,11 +149,12 @@ function showShareMenu(_triggerEl, slide) {
   document.querySelector('.fb-share-overlay')?.remove();
   if (!slide) return;
 
-  const uid = slide.triggerEl?.getAttribute('data-uid') || '';
-  const alt = slide.alt || slide.triggerEl?.getAttribute('data-caption') || '';
-  const src = slide.src || '';
+  const uid  = slide.triggerEl?.getAttribute('data-uid')  || '';
+  const slug = slide.triggerEl?.getAttribute('data-slug') || uid;
+  const alt  = slide.alt || slide.triggerEl?.getAttribute('data-caption') || '';
+  const src  = slide.src || '';
 
-  const relayUrl    = `https://karimsaari.com/p/${encodeURIComponent(uid)}`;
+  const relayUrl    = `https://karimsaari.com/p/${encodeURIComponent(slug)}`;
   const imageAbsUrl = `https://karimsaari.com${src}`;
   const shareText   = `📸 ${alt} — Karim Saari, photographe Marseille`;
   const enc = (s) => encodeURIComponent(s);
@@ -265,34 +266,31 @@ const buildOpts = () => ({
         const title   = slide.triggerEl?.dataset?.title || '';
         const mapsHref = slide.triggerEl?.dataset?.maps || '';
         const pin = `<svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg>`;
+        const uid       = slide.triggerEl?.dataset?.hash || '';
         const titleHtml = title ? `<span class="fb-caption-title">${title}</span>` : '';
         const lieuHtml  = lieu
           ? mapsHref
             ? `<a class="fb-caption-lieu fb-caption-maps" href="${mapsHref}" target="_blank" rel="noopener" title="Voir sur Google Maps">${pin}${lieu}</a>`
             : `<span class="fb-caption-lieu">${pin}${lieu}</span>`
           : '';
-        return `<span class="fb-caption-wrapper"><span class="fb-caption-info">${titleHtml}${lieuHtml}</span></span>`;
+        const cartIcon = `<svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="8" cy="21" r="1"/><circle cx="19" cy="21" r="1"/><path d="M2.05 2.05h2l2.66 12.42a2 2 0 0 0 2 1.58h9.78a2 2 0 0 0 1.95-1.57l1.65-7.43H5.12"/></svg>`;
+        const buyBtn = `<button class="fb-caption-buy" data-uid="${uid}" data-title="${title}" title="Commander un tirage">${cartIcon}<span>Commander un tirage</span></button>`;
+        return `<span class="fb-caption-wrapper"><span class="fb-caption-info">${titleHtml}${lieuHtml}</span>${buyBtn}</span>`;
       };
     },
     initLayout(fancybox) {
       const c = fancybox.getContainer();
       if (!c) return;
-      // CTA flottant "Commander un tirage" — coin bas droit de la photo
-      const ctaBtn = document.createElement('button');
-      ctaBtn.className = 'fb-cta-floating';
-      ctaBtn.type = 'button';
-      ctaBtn.innerHTML = 'Commander un tirage';
-      c.appendChild(ctaBtn);
-      // CTA — délégation de clic sur le bouton Commander
+      // Clic sur l'icône panier dans la caption
       c.addEventListener('click', (e) => {
-        if (!e.target.closest('.fb-cta-floating')) return;
-        const slide  = getFB()?.getSlide?.();
-        const uid    = slide?.triggerEl?.dataset?.hash || '';
-        const title  = slide?.triggerEl?.dataset?.title || slide?.caption || '';
+        const btn = e.target.closest('.fb-caption-buy');
+        if (!btn) return;
+        const uid   = btn.dataset.uid || '';
+        const title = btn.dataset.title || '';
         const [cat, num] = uid.split('-');
         const parts = [`catégorie ${cat || uid}`, num ? `numéro ${num}` : null, title || null].filter(Boolean);
         const subject = encodeURIComponent(`Devis cliché : ${parts.join(' - ')}`);
-        window.location.href = `mailto:contact@karimsaari.com?subject=${subject}`;
+        window.location.href = `mailto:commande@karimsaari.com?subject=${subject}`;
       });
       // Protection clic droit sur les images
       c.addEventListener('contextmenu', (e) => {
@@ -368,6 +366,7 @@ const PhotoGrid = ({ images, gallery }) => (
         data-caption={image.lieu || image.alt}
         data-title={image.title || ''}
         data-uid={image.uid}
+        data-slug={image.slug || image.uid}
         data-hash={image.uid}
         data-maps={image.maps}
         data-thumb={image.src}
@@ -392,19 +391,22 @@ const PhotoSousMarine = () => {
   const [depollImages, setDepollImages] = useState(baseDepollution);
   const [biodivImages, setBiodivImages] = useState(baseBiodiversite);
   const [caracImages, setCaracImages] = useState([]);
+  const [searchParams] = useSearchParams();
+  const deepLinkDone = useRef(false);
 
   // Fetch Supabase — remplace les données statiques si disponible
   useEffect(() => {
     supabase
       .from('photos_sous_marine')
-      .select('uid, src, alt, title, lieu, categorie, visible')
+      .select('uid, src, alt, title, lieu, lat, lng, slug, categorie, visible')
       .eq('visible', true)
       .order('uid')
       .then(({ data }) => {
         if (!data || data.length === 0) return;
-        const depoll = data.filter(p => p.categorie === 'depollution');
-        const biodiv = data.filter(p => p.categorie === 'biodiversite');
-        const carac  = data.filter(p => p.categorie === 'caracterisation');
+        const withMaps = data.map(p => ({ ...p, maps: mapsUrl({ lat: p.lat, lng: p.lng, lieu: p.lieu }) }));
+        const depoll = withMaps.filter(p => p.categorie === 'depollution');
+        const biodiv = withMaps.filter(p => p.categorie === 'biodiversite');
+        const carac  = withMaps.filter(p => p.categorie === 'caracterisation');
         if (depoll.length) setDepollImages(shuffle(depoll));
         if (biodiv.length) setBiodivImages(shuffle(biodiv));
         if (carac.length)  setCaracImages(shuffle(carac));
@@ -439,6 +441,20 @@ const PhotoSousMarine = () => {
     };
   }, []);
 
+  // Deep-link : ouvre directement la photo ciblée via ?photo=uid (partage Pinterest / Facebook)
+  useEffect(() => {
+    const uid = searchParams.get('photo');
+    if (!uid || deepLinkDone.current) return;
+    const timer = setTimeout(() => {
+      const el = document.querySelector(`[data-uid="${uid}"]`);
+      if (el) {
+        deepLinkDone.current = true;
+        el.click();
+      }
+    }, 300);
+    return () => clearTimeout(timer);
+  }, [searchParams, depollImages, biodivImages, caracImages]);
+
   return (
     <div className="min-h-screen py-24">
       <SEO {...SEO_PAGES['/photographie-sous-marine']} />
@@ -456,10 +472,11 @@ const PhotoSousMarine = () => {
 
         {/* Section Actions de dépollution */}
         <motion.div
+          id="depollution"
           initial="hidden"
           animate="visible"
           variants={STAGGER_CONTAINER}
-          className="mb-16"
+          className="mb-16 scroll-mt-8"
         >
           <SectionTitle icon={Trash2} title="Actions de dépollution" count={depollImages.length} />
           <PhotoGrid images={depollImages} gallery="gallery-depollution" />
@@ -467,10 +484,11 @@ const PhotoSousMarine = () => {
 
         {/* Section Biodiversité */}
         <motion.div
+          id="biodiversite"
           initial="hidden"
           animate="visible"
           variants={STAGGER_CONTAINER}
-          className="mb-16"
+          className="mb-16 scroll-mt-8"
         >
           <SectionTitle icon={Fish} title="Biodiversité" count={biodivImages.length} />
           <PhotoGrid images={biodivImages} gallery="gallery-biodiversite" />
@@ -479,10 +497,11 @@ const PhotoSousMarine = () => {
         {/* Section Caractérisation */}
         {caracImages.length > 0 && (
           <motion.div
+            id="caracterisation"
             initial="hidden"
             animate="visible"
             variants={STAGGER_CONTAINER}
-            className="mb-16"
+            className="mb-16 scroll-mt-8"
           >
             <SectionTitle icon={ClipboardList} title="Caractérisation" count={caracImages.length} />
             <PhotoGrid images={caracImages} gallery="gallery-caracterisation" />
@@ -500,41 +519,96 @@ const PhotoSousMarine = () => {
           <motion.div variants={FADE_IN_UP} className="glass-strong rounded-3xl overflow-hidden flex flex-col lg:flex-row">
             {/* Texte */}
             <div className="p-8 md:p-12 lg:flex-1 flex flex-col justify-center">
-              <h2 className="text-2xl md:text-3xl font-bold text-white mb-6">
+              <h2 className="text-2xl md:text-3xl font-bold text-white mb-2">
                 La photographie sous-marine au service de l'engagement
               </h2>
-              <div className="space-y-4 text-text-secondary leading-[1.8]">
-                <p>
-                  Karim Saari plonge en apnée dans les Calanques de Marseille avec un double objectif :
-                  extraire les déchets des fonds marins et les{' '}
-                  <strong className="text-white">documenter par la photographie sous-marine</strong>.
-                  Chaque image est un témoignage direct, capturé entre 0 et 20 mètres de profondeur,
-                  là où personne ne voit ce que la mer cache.
-                </p>
-                <p>
-                  Ce travail de{' '}
-                  <strong className="text-ocean-teal">photographie sous-marine engagée</strong> est
-                  indissociable des missions de dépollution&nbsp;: les images servent à alerter le
-                  grand public, à convaincre les partenaires institutionnels et à nourrir les médias
-                  — ARTE, M6, France Télévisions, La Provence, Fondation de la Mer et bien d'autres —
-                  qui ont relayé ces actions sur le terrain.
-                </p>
-                <p>
-                  Cette galerie retrace les moments clés de l'
-                  <strong className="text-white">Opération Sentinelle</strong> à travers le regard
-                  du{' '}
-                  <strong className="text-white">photographe sous-marin</strong>&nbsp;:
-                  fonds marins pollués, vie marine des Calanques, apnéistes en action, déchets remontés
-                  des profondeurs.
-                </p>
+              <p className="text-ocean-teal font-semibold text-sm uppercase tracking-widest mb-6">
+                Comprendre ma démarche : de l'image à l'impact
+              </p>
+
+              {/* Liens d'ancres */}
+              <div className="flex flex-wrap gap-2 mb-7">
+                {[
+                  { href: '#depollution', label: '🤿 Actions de dépollution' },
+                  { href: '#biodiversite', label: '🐟 Biodiversité' },
+                  { href: '#caracterisation', label: '🔬 Caractérisation' },
+                ].map(({ href, label }) => (
+                  <a
+                    key={href}
+                    href={href}
+                    className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-medium
+                               bg-white/5 border border-white/10 text-text-secondary
+                               hover:bg-ocean-teal/10 hover:border-ocean-teal/40 hover:text-ocean-teal
+                               transition-colors duration-200"
+                  >
+                    {label}
+                  </a>
+                ))}
               </div>
+
+              <p className="text-text-secondary leading-[1.8] mb-6">
+                Mon travail photographique s'articule autour de trois axes complémentaires qui forment
+                un cycle complet de préservation marine. Chaque rubrique de cette galerie répond à un
+                besoin spécifique de l'engagement environnemental.
+              </p>
+
+              <div className="space-y-5 text-text-secondary leading-[1.8]">
+                <div>
+                  <p className="font-semibold text-white mb-1">
+                    1. <a href="#depollution" className="hover:text-ocean-teal transition-colors">Actions de dépollution</a>
+                    {' '}<span className="text-text-secondary font-normal">— L'urgence de l'intervention</span>
+                  </p>
+                  <p>
+                    Extraire un pneu, un filet fantôme ou des batteries à 15 mètres de profondeur en apnée
+                    demande une logistique précise. Ces images servent de{' '}
+                    <strong className="text-white">preuves visuelles</strong> pour alerter l'opinion publique
+                    et montrer que chaque déchet retiré est une victoire immédiate pour l'écosystème local.
+                  </p>
+                </div>
+
+                <div>
+                  <p className="font-semibold text-white mb-1">
+                    2. <a href="#biodiversite" className="hover:text-ocean-teal transition-colors">Biodiversité</a>
+                    {' '}<span className="text-text-secondary font-normal">— Ce que nous protégeons</span>
+                  </p>
+                  <p>
+                    On ne protège bien que ce que l'on aime, et on n'aime que ce que l'on connaît.
+                    Malgré la proximité des zones urbaines, coralligène, herbiers de posidonie, mérous et
+                    nudibranches colorés{' '}
+                    <strong className="text-white">luttent et s'épanouissent</strong>. Ces clichés visent
+                    à recréer un lien émotionnel entre le public et la mer.
+                  </p>
+                </div>
+
+                <div>
+                  <p className="font-semibold text-white mb-1">
+                    3. <a href="#caracterisation" className="hover:text-ocean-teal transition-colors">Caractérisation</a>
+                    {' '}<span className="text-text-secondary font-normal">— Transformer l'image en donnée scientifique</span>
+                  </p>
+                  <p>
+                    En identifiant la nature des matériaux, les marques et l'état de dégradation, nous
+                    transformons une action citoyenne en{' '}
+                    <strong className="text-white">information exploitable</strong>. Toutes les données
+                    sont reportées sur la plateforme{' '}
+                    <strong className="text-ocean-teal">ReMed Zéro Déchet Sauvage</strong>, alimentant
+                    une base nationale pour chercheurs et décideurs.
+                  </p>
+                </div>
+              </div>
+
+              <p className="text-text-secondary leading-[1.8] mt-6 text-sm border-t border-white/10 pt-5">
+                Au-delà du cadre technique ou esthétique, chaque plongée, chaque cliché et chaque donnée
+                reportée est une brique supplémentaire pour la préservation de ce bien commun.
+                L'objectif reste le même&nbsp;:{' '}
+                <strong className="text-white">transformer le regard en action et l'indignation en solution durable</strong>.
+              </p>
             </div>
             {/* Photo */}
-            <div className="lg:w-[40%] flex-shrink-0 min-h-[280px] lg:min-h-0 overflow-hidden">
+            <div className="lg:w-[38%] flex-shrink-0 min-h-[320px] lg:min-h-0 overflow-hidden">
               <img
-                src="/images/photographe-sous-marin-marseille-morgan-bourchis-triple-champion-monde-apnee-depollution-sentinelle.webp"
-                alt="Morgan Bourchis, triple champion du monde d'apnée, en mission de dépollution avec Karim Saari — Projet Sentinelle Marseille"
-                className="w-full h-full object-cover object-right hover:scale-105 transition-transform duration-500"
+                src="/images/558580014-1379392530856377-5985320880881967901-n.webp"
+                alt="Karim Saari, photographe sous-marin et apnéiste — Projet Sentinelle, dépollution marine Calanques de Marseille"
+                className="w-full h-full object-cover hover:scale-105 transition-transform duration-500"
                 loading="lazy"
                 decoding="async"
               />
@@ -581,7 +655,10 @@ const PhotoSousMarine = () => {
                   <strong className="text-white">électrochoc visuel</strong> pour alerter le public
                   et convaincre les institutions. Ce regard sans filtre a trouvé un écho auprès de{' '}
                   <strong className="text-white">ARTE, M6, France Télévisions</strong> et d'autres
-                  médias qui ont relayé le combat pour la Méditerranée.
+                  médias qui ont relayé le combat pour la Méditerranée.{' '}
+                  <Link to="/presse" className="text-ocean-teal hover:underline">
+                    Voir toute la revue de presse →
+                  </Link>
                 </p>
                 <p>
                   Cette galerie rassemble des images de missions{' '}
