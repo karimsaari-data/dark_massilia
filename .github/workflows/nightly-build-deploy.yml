@@ -1,0 +1,87 @@
+name: Build nocturne & Déploiement FTP
+
+on:
+  schedule:
+    - cron: '0 3 * * *'   # 3h UTC = 4h/5h heure de Paris
+  workflow_dispatch:        # déclenchement manuel depuis GitHub Actions
+
+permissions:
+  contents: write           # nécessaire pour committer .notified-slugs.json
+
+jobs:
+  build-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      # ── 1. Checkout ──────────────────────────────────────────────────────────
+      - name: Checkout du dépôt
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      # ── 2. Node.js ───────────────────────────────────────────────────────────
+      - name: Setup Node.js 20
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      # ── 3. Dépendances ───────────────────────────────────────────────────────
+      - name: Installation des dépendances
+        run: npm ci
+
+      # ── 4. Build complet ─────────────────────────────────────────────────────
+      - name: Build (sitemap + vite + prerender)
+        env:
+          VITE_SUPABASE_URL: ${{ secrets.VITE_SUPABASE_URL }}
+          VITE_SUPABASE_ANON_KEY: ${{ secrets.VITE_SUPABASE_ANON_KEY }}
+          VITE_ADMIN_PASSWORD: ${{ secrets.VITE_ADMIN_PASSWORD }}
+          VITE_APP_NAME: Dark Massilia
+          VITE_APP_URL: https://karimsaari.com
+          VITE_CONTACT_EMAIL: contact@karimsaari.com
+          VITE_CONTACT_WHATSAPP: "+33695331301"
+          VITE_INSTAGRAM_URL: https://www.instagram.com/karimsaari
+          VITE_TIKTOK_URL: https://www.tiktok.com/@dark.massilia
+          VITE_YOUTUBE_URL: https://www.youtube.com/@dark.massilia
+          VITE_500PX_URL: https://500px.com/p/karimsaari
+          VITE_LINKEDIN_URL: https://www.linkedin.com/in/karimsaari/
+          VITE_FACEBOOK_GROUP_URL: https://www.facebook.com/groups/calanque/
+          VITE_INSTAGRAM_ACCESS_TOKEN: ${{ secrets.VITE_INSTAGRAM_ACCESS_TOKEN }}
+          NOTIFY_SECRET: ${{ secrets.NOTIFY_SECRET }}
+        run: npm run build:full
+
+      # ── 5. Déploiement FTP ───────────────────────────────────────────────────
+      - name: Déploiement FTP vers karimsaari.com/home
+        uses: SamKirkland/FTP-Deploy-Action@v4.3.4
+        with:
+          server: ftp.cluster1.easy-hebergement.net
+          username: karimsaari
+          password: ${{ secrets.FTP_PASSWORD }}
+          local-dir: ./dist/
+          server-dir: home/
+          exclude: |
+            **/.git*
+            **/.git*/**
+            **/node_modules/**
+
+      # ── 6. Notification Brevo (nouveaux articles seulement) ──────────────────
+      - name: Notify nouveaux articles (Brevo)
+        env:
+          VITE_SUPABASE_URL: ${{ secrets.VITE_SUPABASE_URL }}
+          VITE_SUPABASE_ANON_KEY: ${{ secrets.VITE_SUPABASE_ANON_KEY }}
+          VITE_APP_URL: https://karimsaari.com
+          NOTIFY_SECRET: ${{ secrets.NOTIFY_SECRET }}
+        run: npm run notify
+
+      # ── 7. Commit .notified-slugs.json (mémoire des articles notifiés) ────────
+      - name: Commit .notified-slugs.json
+        run: |
+          git config user.name  "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add scripts/.notified-slugs.json
+          git diff --staged --quiet || git commit -m "chore: update notified-slugs [skip ci]"
+          git push
+
+      # ── 8. IndexNow (notifier Google/Bing des nouvelles URLs) ────────────────
+      - name: IndexNow
+        run: npm run indexnow
