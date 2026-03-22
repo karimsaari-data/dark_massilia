@@ -401,6 +401,7 @@
   flex-direction: row;
   align-items: center;
   gap: 8px;
+  flex: 1;
   min-width: 0;
 }
 .fb-caption-title {
@@ -412,7 +413,6 @@
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-  max-width: 320px;
 }
 .fb-caption-title + .fb-caption-lieu::before {
   content: '—';
@@ -447,35 +447,28 @@ a.fb-caption-maps:hover svg {
   color: #FF9500;
 }
 
-/* ── CTA "Commander un tirage" — sous la toolbar Fancybox ── */
-.fb-cta-floating {
-  position: absolute;
-  top: 48px;
-  right: 0;
-  z-index: 9999;
-  display: flex;
+/* ── Bouton panier dans la caption Fancybox ── */
+.fb-caption-buy {
+  display: inline-flex;
   align-items: center;
-  justify-content: center;
-  width: 160px; /* 4 boutons × 40px = largeur exacte de la toolbar */
-  background: rgba(16, 16, 18, 0.82);
-  border: none;
-  border-top: 1px solid rgba(255, 255, 255, 0.08);
-  color: rgba(255, 255, 255, 0.65);
-  padding: 7px 0;
-  border-radius: 0 0 6px 6px;
-  font-size: 10.5px;
+  gap: 5px;
+  background: none;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  color: rgba(255, 255, 255, 0.5);
+  padding: 3px 10px 3px 8px;
+  border-radius: 20px;
+  font-size: 10px;
   font-weight: 500;
   font-family: inherit;
   cursor: pointer;
-  backdrop-filter: blur(16px);
-  transition: background 0.15s, color 0.15s;
+  transition: border-color 0.15s, color 0.15s;
   white-space: nowrap;
   letter-spacing: 0.04em;
-  text-transform: uppercase;
+  flex-shrink: 0;
 }
-.fb-cta-floating:hover {
-  background: rgba(40, 40, 44, 0.92);
-  color: #fff;
+.fb-caption-buy:hover {
+  border-color: rgba(255, 255, 255, 0.4);
+  color: rgba(255, 255, 255, 0.9);
 }
 /* Mobile : caption en colonne */
 @media (max-width: 480px) {

@@ -62,6 +62,14 @@ const FOLDERS = [
     uidPrefix: 'carac',
     srcPrefix: '/images',
   },
+  {
+    inbox: join(NEW_DIR, 'photos_paysages/Horizons'),
+    table: 'photos_paysage',
+    categorie: 'horizons',
+    destDir: join(ROOT, 'public/images/portfolio/Horizons'),
+    uidPrefix: 'mer',
+    srcPrefix: '/images/portfolio/Horizons',
+  },
 ];
 
 const IMAGE_EXTS = new Set(['.jpg', '.jpeg', '.png', '.tiff', '.tif']);
@@ -177,8 +185,10 @@ async function main() {
     console.log('Dépose tes JPG dans :');
     console.log('  • public/images/portfolio/New/photos_paysages/Mer/');
     console.log('  • public/images/portfolio/New/photos_paysages/Terre/');
+    console.log('  • public/images/portfolio/New/photos_paysages/Horizons/');
     console.log('  • public/images/portfolio/New/photos_sous_marine/Dépollution/');
-    console.log('  • public/images/portfolio/New/photos_sous_marine/Biodiversité/\n');
+    console.log('  • public/images/portfolio/New/photos_sous_marine/Biodiversité/');
+    console.log('  • public/images/portfolio/New/photos_sous_marine/Caractérisation/\n');
   } else {
     console.log(`\n🎉 ${totalImported} photo(s) importée(s) avec succès !`);
     console.log('📝 Prochaine étape : ouvre l\'admin → filtre "Incomplet" → remplis titre/alt/lieu/GPS');

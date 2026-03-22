@@ -164,6 +164,12 @@ const Footer = () => {
 
         {/* Copyright + liens légaux — SEO optimisé */}
         <div className="text-center">
+          <p className="text-xs text-gray-500 mb-2">
+            <span itemProp="addressLocality">Marseille</span>
+            {', '}
+            <span itemProp="addressRegion">Bouches-du-Rhône</span>
+            {' · France'}
+          </p>
           <p className="text-xs text-gray-400 leading-relaxed mb-3">
             © {currentYear}{' '}
             <span className="text-gray-300 font-medium">Karim Saari</span>

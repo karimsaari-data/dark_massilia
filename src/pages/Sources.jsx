@@ -176,13 +176,16 @@ const Sources = () => {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
-          className="text-3xl md:text-4xl font-bold text-white text-center mb-12 leading-tight"
+          className="text-3xl md:text-4xl font-bold text-white text-center mb-4 leading-tight"
         >
           Sources Scientifiques
           <span className="block text-xl md:text-2xl font-medium text-ocean-teal mt-3">
             Pollution Plastique en Méditerranée & espèces invasives
           </span>
         </motion.h1>
+        <p className="text-center text-xs text-gray-500 mb-10">
+          Mis à jour le <time dateTime="2026-03-19">19 mars 2026</time>
+        </p>
 
         {/* Section éditoriale SEO — chiffres de l'urgence */}
         <motion.div

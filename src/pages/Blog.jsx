@@ -136,6 +136,30 @@ export default function Blog() {
           </div>
         )}
 
+        {/* ── Cluster interne ─────────────────────────────────────────────── */}
+        <motion.div
+          initial={{ opacity: 0, y: 16 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.5 }}
+          className="mt-16 pt-8 border-t border-white/10 flex flex-col sm:flex-row flex-wrap items-center justify-center gap-4 text-sm"
+        >
+          <Link to="/communaute" className="text-text-secondary hover:text-ocean-teal transition-colors inline-flex items-center gap-1">
+            Rejoindre la communauté <ArrowRight className="w-4 h-4" />
+          </Link>
+          <Link to="/#newsletter" className="text-text-secondary hover:text-ocean-teal transition-colors inline-flex items-center gap-1">
+            S'inscrire à la newsletter <ArrowRight className="w-4 h-4" />
+          </Link>
+          <Link to="/depollution-marine" className="text-text-secondary hover:text-ocean-teal transition-colors inline-flex items-center gap-1">
+            Nos missions de dépollution <ArrowRight className="w-4 h-4" />
+          </Link>
+          <Link to="/carte-calanques" className="text-text-secondary hover:text-ocean-teal transition-colors inline-flex items-center gap-1">
+            Carte interactive des Calanques <ArrowRight className="w-4 h-4" />
+          </Link>
+          <Link to="/local-guide-marseille" className="text-text-secondary hover:text-ocean-teal transition-colors inline-flex items-center gap-1">
+            Local Guide Marseille <ArrowRight className="w-4 h-4" />
+          </Link>
+        </motion.div>
+
       </div>
     </div>
   );

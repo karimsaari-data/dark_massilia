@@ -49,10 +49,10 @@ const SEO = ({
       <meta property="og:title"       content={metaTitle} />
       <meta property="og:description" content={metaDescription} />
       <meta property="og:url"         content={metaCanonical} />
-      <meta property="og:image"        content={metaImage} />
-      <meta property="og:image:width"  content={String(imageWidth)} />
-      <meta property="og:image:height" content={String(imageHeight)} />
-      <meta property="og:image:alt"   content={metaImageAlt} />
+      <meta property="og:image"     content={metaImage} />
+      {imageWidth  !== 1200 && <meta property="og:image:width"  content={String(imageWidth)} />}
+      {imageHeight !== 630  && <meta property="og:image:height" content={String(imageHeight)} />}
+      <meta property="og:image:alt" content={metaImageAlt} />
       <meta property="og:type"        content={type} />
       <meta property="og:locale"      content="fr_FR" />
       <meta property="og:site_name"   content={DEFAULT_SEO.siteName} />

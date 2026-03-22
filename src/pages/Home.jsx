@@ -13,22 +13,8 @@ import { SEO_PAGES } from '../utils/seo';
 const NewsletterSection = lazy(() => import('../components/NewsletterSection'));
 
 // Chiffres clés — impact terrain (valeurs statiques de base)
+// La valeur end de la stat 500px est remplacée dynamiquement via Supabase (site_config)
 const KEY_STATS_BASE = [
-  {
-    end: 5724,
-    suffix: ' kg',
-    label: 'Déchets collectés dans les fonds marins marseillais',
-    sub: 'jusqu\'à 20 m de profondeur',
-    detail: '900 + 1 357 + 1 147 + 2 320 kg · 4 éditions',
-    href: '/depollution-marine',
-  },
-  {
-    end: 10,
-    suffix: ' ans',
-    label: 'D\'engagement terrain',
-    sub: 'pour la protection du littoral',
-    detail: 'dont 4 ans avec Team Oxygen · Projet Sentinelle',
-  },
   {
     end: 130000,
     suffix: '',
@@ -38,12 +24,28 @@ const KEY_STATS_BASE = [
     href: '/communaute',
   },
   {
+    end: 5724,
+    suffix: ' kg',
+    label: 'Déchets collectés dans les fonds marins marseillais',
+    sub: 'jusqu\'à 20 m de profondeur',
+    detail: '900 + 1 357 + 1 147 + 2 320 kg · 4 éditions',
+    href: '/depollution-marine',
+  },
+  {
     end: 183,
     suffix: ' M',
     label: 'Vues Google Maps sur Marseille et ses environs',
     sub: '9 ans de contributions Local Guide',
     detail: 'Photos et avis sur les Calanques de Marseille',
     href: '/local-guide-marseille',
+  },
+  {
+    key: 'impressions_500px',   // valeur chargée depuis Supabase site_config
+    end: 800,
+    suffix: ' K',
+    label: 'Impressions photos sur 500px',
+    sub: 'photographie underwater & paysage',
+    detail: '798 K impressions · 29,4 K photo likes · 667 followers',
   },
 ];
 
@@ -181,17 +183,18 @@ const Home = () => {
   const [currentFactIndex, setCurrentFactIndex] = useState(0);
 
   // Stats réseaux — valeurs dynamiques depuis Supabase (fallback sur KEY_STATS_BASE)
-  const [communityEnd, setCommunityEnd]       = useState(KEY_STATS_BASE[2].end);
-  const [communityDetail, setCommunityDetail] = useState(KEY_STATS_BASE[2].detail);
-  const [localGuidesEnd, setLocalGuidesEnd]   = useState(KEY_STATS_BASE[3].end);
+  const [communityEnd, setCommunityEnd]       = useState(KEY_STATS_BASE[0].end);
+  const [communityDetail, setCommunityDetail] = useState(KEY_STATS_BASE[0].detail);
+  const [localGuidesEnd, setLocalGuidesEnd]   = useState(KEY_STATS_BASE[2].end);
   const [fbGroupMembers, setFbGroupMembers]   = useState(FACEBOOK_GROUP_MEMBERS);
+  const [impressions500px, setImpressions500px] = useState(KEY_STATS_BASE[3].end);
 
   useEffect(() => {
     import('../lib/supabase').then(({ supabase }) => {
       supabase
         .from('social_stats')
         .select('platform, value, note')
-        .in('platform', ['total_community', 'local_guide_views_m', 'facebook_group'])
+        .in('platform', ['total_community', 'local_guide_views_m', 'facebook_group', '500px_impressions'])
         .then(({ data }) => {
           data?.forEach(row => {
             if (row.platform === 'total_community') {
@@ -203,6 +206,8 @@ const Home = () => {
               const v = parseFloat(row.value);
               if (v > 100) setFbGroupMembers(v);
               else setFbGroupMembers(Math.round(v * 1000));
+            } else if (row.platform === '500px_impressions') {
+              setImpressions500px(parseFloat(row.value));
             }
           });
         });
@@ -210,10 +215,10 @@ const Home = () => {
   }, []);
 
   const KEY_STATS = [
-    KEY_STATS_BASE[0],
+    { ...KEY_STATS_BASE[0], end: communityEnd, detail: communityDetail },
     KEY_STATS_BASE[1],
-    { ...KEY_STATS_BASE[2], end: communityEnd, detail: communityDetail },
-    { ...KEY_STATS_BASE[3], end: localGuidesEnd },
+    { ...KEY_STATS_BASE[2], end: localGuidesEnd },
+    { ...KEY_STATS_BASE[3], end: impressions500px, href: 'https://500px.com/p/karimsaari' },
   ];
   const [factsPaused, setFactsPaused] = useState(false);
   const [factsTimerKey, setFactsTimerKey] = useState(0);
@@ -355,16 +360,16 @@ const Home = () => {
               </h2>
               <div className="text-lg text-text-secondary leading-relaxed space-y-4">
                 <p>
-                  De la photographie de paysages littoraux aux images sous-marines, j'utilise l'objectif pour porter la voix de Marseille, des Calanques et de ceux qui les protègent.
+                  De la <strong className="text-white font-semibold">photographie de paysages littoraux</strong> aux <strong className="text-white font-semibold">images sous-marines</strong>, j'utilise l'objectif pour porter la voix de <strong className="text-white font-semibold">Marseille, des Calanques</strong> et de ceux qui les protègent.
                 </p>
                 <p>
-                  En tant que photographe environnemental en Méditerranée, je capture la beauté de nos côtes, en surface comme en apnée, pour témoigner de l'état réel de nos écosystèmes. La photographie environnementale que je pratique n'est pas simplement esthétique : chaque image est un document, une preuve, un appel à l'action.
+                  En tant que <strong className="text-white font-semibold">photographe environnemental en Méditerranée</strong>, je capture la beauté de nos côtes, en surface comme en apnée, pour témoigner de l'état réel de nos écosystèmes. La photographie environnementale que je pratique n'est pas simplement esthétique : <strong className="text-ocean-teal font-semibold">chaque image est un document, une preuve, un appel à l'action.</strong>
                 </p>
                 <p>
-                  Apnéiste engagé depuis plus de 10 ans et président de <strong className="text-ocean-teal">Team Oxygen</strong>, ma mission se vit sur le terrain et à l'écran.
+                  <strong className="text-white font-semibold">Apnéiste engagé depuis plus de 10 ans</strong> et président de <strong className="text-ocean-teal">Team Oxygen</strong>, ma mission se vit sur le terrain et à l'écran.
                 </p>
                 <p>
-                  Pour rendre visible l'impact de la pollution plastique, je participe à des documentaires et reportages sur l'environnement marin, je conçois des expositions photos engagées et je mène des missions de dépollution sous-marine avec mon association.
+                  Pour rendre visible l'<strong className="text-white font-semibold">impact de la pollution plastique</strong>, je participe à des <strong className="text-white font-semibold">documentaires et reportages</strong> sur l'environnement marin, je conçois des <strong className="text-white font-semibold">expositions photos engagées</strong> et je mène des <strong className="text-white font-semibold">missions de dépollution sous-marine</strong> avec mon association.
                 </p>
               </div>
             </div>
@@ -501,6 +506,16 @@ const Home = () => {
         </motion.div>
       </section>
 
+      {/* Section Newsletter — lazy (supabase hors bundle initial) */}
+      {/* fallback réserve la hauteur pour éviter le CLS quand le composant apparaît */}
+      <Suspense fallback={
+        <section className="container-custom py-8 md:py-12">
+          <div className="rounded-3xl border border-ocean-teal/30 mb-16 min-h-[420px] md:min-h-[480px]" />
+        </section>
+      }>
+        <NewsletterSection />
+      </Suspense>
+
       {/* CTA Vidéos */}
       <section className="container-custom py-8 md:py-12">
         <motion.div
@@ -619,7 +634,7 @@ const Home = () => {
               Impact
             </span>
             <h2 className="text-3xl md:text-4xl font-bold text-white">
-              10 ans d'engagement en chiffres
+              10 ans d'engagement sur Marseille
             </h2>
           </motion.div>
 
@@ -644,9 +659,11 @@ const Home = () => {
                 <div className="absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none"
                   style={{ boxShadow: 'inset 0 0 30px rgba(0,171,168,0.06)' }} />
 
-                {/* Lien pleine carte */}
+                {/* Lien pleine carte — interne (Link) ou externe (a) */}
                 {stat.href && (
-                  <Link to={stat.href} className="absolute inset-0 rounded-2xl z-10" aria-label={stat.label} />
+                  stat.href.startsWith('http')
+                    ? <a href={stat.href} target="_blank" rel="noopener noreferrer" className="absolute inset-0 rounded-2xl z-10" aria-label={stat.label} />
+                    : <Link to={stat.href} className="absolute inset-0 rounded-2xl z-10" aria-label={stat.label} />
                 )}
 
                 {/* Valeur animée */}
@@ -694,16 +711,6 @@ const Home = () => {
           </motion.div>
         </div>
       </section>
-
-      {/* Section Newsletter — lazy (supabase hors bundle initial) */}
-      {/* fallback réserve la hauteur pour éviter le CLS quand le composant apparaît */}
-      <Suspense fallback={
-        <section className="container-custom py-8 md:py-12">
-          <div className="rounded-3xl border border-ocean-teal/30 mb-16 min-h-[420px] md:min-h-[480px]" />
-        </section>
-      }>
-        <NewsletterSection />
-      </Suspense>
 
       {/* CTA Carte Interactive */}
       <section className="container-custom py-8 md:py-12">

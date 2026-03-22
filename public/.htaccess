@@ -9,6 +9,10 @@
   RewriteEngine On
   RewriteBase /
 
+  # ── Canonicalisation — forcer non-www (évite la duplication www/non-www) ──
+  RewriteCond %{HTTP_HOST} ^www\.karimsaari\.com$ [NC]
+  RewriteRule ^(.*)$ https://karimsaari.com/$1 [R=301,L]
+
   # ── Canonicalisation — supprimer le slash final (sauf racine) ────────────
   # Redirige /page/ → /page en 301 pour aligner les URLs crawlées par Ahrefs/Google
   # avec les canonicals déclarés (sans slash) et les liens internes React Router

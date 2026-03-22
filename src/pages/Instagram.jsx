@@ -453,6 +453,20 @@ const Communaute = () => {
               Nos passages dans les médias
               <ArrowRight className="w-4 h-4" />
             </Link>
+            <Link
+              to="/photographie-sous-marine"
+              className="text-text-secondary hover:text-ocean-teal transition-colors text-sm inline-flex items-center gap-1"
+            >
+              Galerie photos sous-marines
+              <ArrowRight className="w-4 h-4" />
+            </Link>
+            <Link
+              to="/local-guide-marseille"
+              className="text-text-secondary hover:text-ocean-teal transition-colors text-sm inline-flex items-center gap-1"
+            >
+              Local Guide Marseille
+              <ArrowRight className="w-4 h-4" />
+            </Link>
           </div>
         </motion.div>
 

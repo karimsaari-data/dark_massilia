@@ -189,27 +189,31 @@ function showShareMenu(_triggerEl, slide) {
   box.appendChild(header);
 
   const grid = document.createElement('div');
-  Object.assign(grid.style, { display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '12px', marginBottom: '18px' });
+  Object.assign(grid.style, { display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: '12px', marginBottom: '18px' });
 
   const socialItems = [
     { label: 'Facebook',    icon: SHARE_ICONS.facebook,  bg: '#1877F2', url: `https://www.facebook.com/sharer/sharer.php?u=${enc(relayUrl)}` },
-    { label: 'X / Twitter', icon: SHARE_ICONS.twitter,   bg: '#000000', url: `https://twitter.com/intent/tweet?text=${enc(shareText)}&url=${enc(relayUrl)}&via=dark_massilia` },
+    { label: 'X',           icon: SHARE_ICONS.twitter,   bg: '#000000', url: `https://twitter.com/intent/tweet?text=${enc(shareText)}&url=${enc(relayUrl)}&via=dark_massilia` },
     { label: 'Pinterest',   icon: SHARE_ICONS.pinterest, bg: '#E60023', url: `https://pinterest.com/pin/create/button/?url=${enc(relayUrl)}&media=${enc(imageAbsUrl)}&description=${enc(shareText)}` },
-    { label: 'WhatsApp',    icon: SHARE_ICONS.whatsapp,  bg: '#25D366', url: `https://wa.me/?text=${enc(shareText + ' ' + relayUrl)}` },
   ];
 
   socialItems.forEach(({ label, icon, bg, url }) => {
     const btn = document.createElement('a');
     btn.href = url; btn.target = '_blank'; btn.rel = 'noopener noreferrer';
-    btn.innerHTML = `${icon}<span>${label}</span>`;
+    btn.innerHTML = icon;
+    btn.title = label;
     Object.assign(btn.style, {
-      display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '8px',
-      padding: '10px 12px', borderRadius: '12px', background: bg,
-      color: '#fff', fontSize: '12px', fontWeight: '600', textDecoration: 'none', transition: 'opacity 0.15s',
+      display: 'flex', alignItems: 'center', justifyContent: 'center',
+      width: '52px', height: '52px', borderRadius: '12px', background: bg,
+      color: '#fff', textDecoration: 'none', transition: 'opacity 0.15s',
     });
     btn.addEventListener('mouseover', () => { btn.style.opacity = '0.85'; });
     btn.addEventListener('mouseout',  () => { btn.style.opacity = '1'; });
-    btn.addEventListener('click', () => overlay.remove());
+    btn.addEventListener('click', (e) => {
+      e.preventDefault();
+      window.open(url, '_blank', 'noopener,noreferrer');
+      overlay.remove();
+    });
     grid.appendChild(btn);
   });
   box.appendChild(grid);
@@ -274,7 +278,7 @@ const buildOpts = () => ({
             : `<span class="fb-caption-lieu">${pin}${lieu}</span>`
           : '';
         const cartIcon = `<svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="8" cy="21" r="1"/><circle cx="19" cy="21" r="1"/><path d="M2.05 2.05h2l2.66 12.42a2 2 0 0 0 2 1.58h9.78a2 2 0 0 0 1.95-1.57l1.65-7.43H5.12"/></svg>`;
-        const buyBtn = `<button class="fb-caption-buy" data-uid="${uid}" data-title="${title}" title="Commander un tirage">${cartIcon}<span>Commander un tirage</span></button>`;
+        const buyBtn = `<button class="fb-caption-buy" data-uid="${uid}" data-title="${title}" title="Demander l'utilisation">${cartIcon}<span>Demander l'utilisation</span></button>`;
         return `<span class="fb-caption-wrapper"><span class="fb-caption-info">${titleHtml}${lieuHtml}</span>${buyBtn}</span>`;
       };
     },
@@ -289,7 +293,7 @@ const buildOpts = () => ({
         const title = btn.dataset.title || '';
         const [cat, num] = uid.split('-');
         const parts = [`catégorie ${cat || uid}`, num ? `numéro ${num}` : null, title || null].filter(Boolean);
-        const subject = encodeURIComponent(`Devis cliché : ${parts.join(' - ')}`);
+        const subject = encodeURIComponent(`Demande d'utilisation : ${parts.join(' - ')}`);
         window.location.href = `mailto:commande@karimsaari.com?subject=${subject}`;
       });
       // Protection clic droit sur les images

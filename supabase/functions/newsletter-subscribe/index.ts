@@ -2,8 +2,10 @@ import "jsr:@supabase/functions-js/edge-runtime.d.ts";
 
 const BREVO_API_KEY = Deno.env.get("BREVO_API_KEY") ?? "";
 const BREVO_LIST_ID = Deno.env.get("BREVO_LIST_ID");
+const SUPABASE_URL = Deno.env.get("SUPABASE_URL") ?? "";
+const SUPABASE_SERVICE_ROLE_KEY = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY") ?? "";
 const PHOTO_URL = "https://karimsaari.com/home/Welcome%20Pack.jpg";
-const SENDER_EMAIL = "karimsaari.com@gmail.com";
+const SENDER_EMAIL = "newsletter@karimsaari.com";
 const SENDER_NAME = "Karim Saari — Dark Massilia";
 
 const corsHeaders = {
@@ -25,7 +27,7 @@ function buildEmailHtml(photoUrl: string): string {
     <!-- Header -->
     <div style="text-align:center;margin-bottom:40px;">
       <img
-        src="https://karimsaari.com/home/assets/dark-massilia-logo.webp"
+        src="https://karimsaari.com/assets/L3r-UtHN_400x400.jpg"
         alt="Dark Massilia"
         width="72" height="72"
         style="border-radius:50%;background:#ffffff;padding:8px;display:block;margin:0 auto 16px;"
@@ -65,8 +67,7 @@ function buildEmailHtml(photoUrl: string): string {
     <div style="text-align:center;padding:0 16px;">
       <p style="color:rgba(255,255,255,0.25);font-size:12px;line-height:1.7;margin:0;">
         <a href="https://karimsaari.com/home" style="color:#00ABA8;text-decoration:none;">karimsaari.com</a>
-        &nbsp;&middot;&nbsp; Marseille, Méditerranée<br>
-        Pour te désinscrire, réponds à cet email avec le mot <em>désinscription</em>.
+        &nbsp;&middot;&nbsp; Marseille, Méditerranée
       </p>
     </div>
 
@@ -140,6 +141,20 @@ Deno.serve(async (req: Request) => {
     if (!emailRes.ok) {
       const errText = await emailRes.text();
       throw new Error(`Brevo email: ${errText}`);
+    }
+
+    // 3. Backup dans newsletter_subscribers (ignore les doublons)
+    if (SUPABASE_URL && SUPABASE_SERVICE_ROLE_KEY) {
+      await fetch(`${SUPABASE_URL}/rest/v1/newsletter_subscribers`, {
+        method: "POST",
+        headers: {
+          "apikey": SUPABASE_SERVICE_ROLE_KEY,
+          "Authorization": `Bearer ${SUPABASE_SERVICE_ROLE_KEY}`,
+          "Content-Type": "application/json",
+          "Prefer": "resolution=ignore-duplicates",
+        },
+        body: JSON.stringify({ email }),
+      });
     }
 
     return new Response(

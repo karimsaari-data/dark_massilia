@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion';
-import { ArrowLeft, ExternalLink } from 'lucide-react';
+import { ArrowLeft, ArrowRight, ExternalLink } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import VideoPlayer from '../components/media/VideoPlayer';
 import { FADE_IN_UP, STAGGER_CONTAINER } from '../utils/constants';
@@ -244,13 +244,36 @@ const Videos = () => {
           </motion.div>
         </motion.div>
 
-        {/* Back to Home */}
+        {/* Liens internes — cluster dépollution/photos */}
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 0.8 }}
           className="text-center"
         >
+          <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-6">
+            <Link
+              to="/depollution-marine"
+              className="text-text-secondary hover:text-ocean-teal transition-colors text-sm inline-flex items-center gap-1"
+            >
+              Nos missions de dépollution
+              <ArrowRight className="w-4 h-4" />
+            </Link>
+            <Link
+              to="/photographie-sous-marine"
+              className="text-text-secondary hover:text-ocean-teal transition-colors text-sm inline-flex items-center gap-1"
+            >
+              Galerie photos sous-marines
+              <ArrowRight className="w-4 h-4" />
+            </Link>
+            <Link
+              to="/presse"
+              className="text-text-secondary hover:text-ocean-teal transition-colors text-sm inline-flex items-center gap-1"
+            >
+              Revue de presse
+              <ArrowRight className="w-4 h-4" />
+            </Link>
+          </div>
           <Link
             to="/"
             className="btn-secondary inline-flex items-center gap-2 group"

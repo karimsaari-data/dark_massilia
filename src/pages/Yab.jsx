@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion';
-import { ArrowLeft, ExternalLink } from 'lucide-react';
+import { ArrowLeft, ArrowRight, ExternalLink } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { FADE_IN_UP, STAGGER_CONTAINER } from '../utils/constants';
 import SEO from '../components/SEO';
@@ -113,6 +113,25 @@ const Yab = () => {
             </div>
           </motion.div>
         </motion.div>
+
+        {/* ── Cluster interne ─────────────────────────────────────────────── */}
+        <motion.div
+          initial={{ opacity: 0, y: 16 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.6 }}
+          className="mt-10 pt-8 border-t border-white/10 flex flex-col sm:flex-row flex-wrap items-center justify-center gap-4 text-sm"
+        >
+          <Link to="/depollution-marine" className="text-text-secondary hover:text-ocean-teal transition-colors inline-flex items-center gap-1">
+            Nos missions de dépollution <ArrowRight className="w-4 h-4" />
+          </Link>
+          <Link to="/photographie-sous-marine" className="text-text-secondary hover:text-ocean-teal transition-colors inline-flex items-center gap-1">
+            Galerie photos sous-marines <ArrowRight className="w-4 h-4" />
+          </Link>
+          <Link to="/communaute" className="text-text-secondary hover:text-ocean-teal transition-colors inline-flex items-center gap-1">
+            Rejoindre la communauté <ArrowRight className="w-4 h-4" />
+          </Link>
+        </motion.div>
+
       </div>
     </div>
   );

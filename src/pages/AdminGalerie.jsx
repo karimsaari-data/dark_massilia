@@ -616,6 +616,7 @@ const PLATFORM_META = {
   local_guide_points:        { label: 'Local Guide — Points',               unit: 'pts' },
   local_guide_views_m:       { label: 'Local Guide — Vues générées',        unit: 'millions' },
   local_guide_level:         { label: 'Local Guide — Niveau',               unit: 'niveau' },
+  '500px_impressions':       { label: '500px — Impressions photos',         unit: 'K impressions' },
 };
 
 /* ── Tab Réseaux ────────────────────────────────────────────── */

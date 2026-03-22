@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
-import { ArrowLeft, ExternalLink, Rss, CalendarDays, AlertCircle, Loader2 } from 'lucide-react';
+import { ArrowLeft, ArrowRight, ExternalLink, Rss, CalendarDays, AlertCircle, Loader2 } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { FADE_IN_UP, STAGGER_CONTAINER } from '../utils/constants';
 import SEO from '../components/SEO';
@@ -224,19 +224,27 @@ const Twitter = () => {
           </motion.div>
         </motion.div>
 
-        {/* Retour */}
+        {/* ── Cluster interne ─────────────────────────────────────────────── */}
         <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
+          initial={{ opacity: 0, y: 16 }}
+          animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.8 }}
-          className="text-center mt-8"
+          className="mt-8 pt-8 border-t border-white/10 flex flex-col sm:flex-row flex-wrap items-center justify-center gap-4 text-sm"
         >
-          <Link
-            to="/"
-            className="btn-secondary inline-flex items-center gap-2 group"
-          >
-            <ArrowLeft className="w-4 h-4 group-hover:-translate-x-1 transition-transform" />
-            <span>Retour à l'Accueil</span>
+          <Link to="/communaute" className="text-text-secondary hover:text-ocean-teal transition-colors inline-flex items-center gap-1">
+            Rejoindre la communauté <ArrowRight className="w-4 h-4" />
+          </Link>
+          <Link to="/#newsletter" className="text-text-secondary hover:text-ocean-teal transition-colors inline-flex items-center gap-1">
+            S'inscrire à la newsletter <ArrowRight className="w-4 h-4" />
+          </Link>
+          <Link to="/depollution-marine" className="text-text-secondary hover:text-ocean-teal transition-colors inline-flex items-center gap-1">
+            Nos missions de dépollution <ArrowRight className="w-4 h-4" />
+          </Link>
+          <Link to="/carte-calanques" className="text-text-secondary hover:text-ocean-teal transition-colors inline-flex items-center gap-1">
+            Carte interactive des Calanques <ArrowRight className="w-4 h-4" />
+          </Link>
+          <Link to="/" className="text-text-secondary hover:text-ocean-teal transition-colors inline-flex items-center gap-1">
+            <ArrowLeft className="w-4 h-4" /> Accueil
           </Link>
         </motion.div>
       </div>

@@ -1,6 +1,7 @@
 import { motion, useInView, useReducedMotion } from 'framer-motion';
 import { useRef, useState, useEffect } from 'react';
-import { ExternalLink, Star, MapPin, ThumbsUp, Eye } from 'lucide-react';
+import { ExternalLink, Star, MapPin, ThumbsUp, Eye, ArrowRight } from 'lucide-react';
+import { Link } from 'react-router-dom';
 import SEO from '../components/SEO';
 import { SEO_PAGES } from '../utils/seo';
 import { supabase } from '../lib/supabase';
@@ -251,6 +252,37 @@ export default function LocalGuide() {
                 </div>
               ))}
             </div>
+          </motion.div>
+
+          {/* Liens internes — cluster local Marseille */}
+          <motion.div
+            initial={{ opacity: 0, y: 16 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.5 }}
+            className="mt-8 pt-6 border-t border-white/10 flex flex-col sm:flex-row items-center justify-center gap-4"
+          >
+            <Link
+              to="/depollution-marine"
+              className="text-text-secondary hover:text-ocean-teal transition-colors text-sm inline-flex items-center gap-1"
+            >
+              Nos missions de dépollution marine
+              <ArrowRight className="w-4 h-4" />
+            </Link>
+            <Link
+              to="/photographie-paysage-mer"
+              className="text-text-secondary hover:text-ocean-teal transition-colors text-sm inline-flex items-center gap-1"
+            >
+              Galerie Paysages &amp; Littoral
+              <ArrowRight className="w-4 h-4" />
+            </Link>
+            <Link
+              to="/communaute"
+              className="text-text-secondary hover:text-ocean-teal transition-colors text-sm inline-flex items-center gap-1"
+            >
+              Rejoindre la communauté
+              <ArrowRight className="w-4 h-4" />
+            </Link>
           </motion.div>
 
         </div>

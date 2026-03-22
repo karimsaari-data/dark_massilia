@@ -50,10 +50,13 @@ const Missions = () => {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
-          className="text-xl md:text-2xl font-bold text-white text-center mb-8 leading-tight"
+          className="text-xl md:text-2xl font-bold text-white text-center mb-3 leading-tight"
         >
           Team Oxygen : Association de dépollution marine et nettoyage sous-marin à Marseille
         </motion.h1>
+        <p className="text-center text-xs text-gray-500 mb-8">
+          Mis à jour le <time dateTime="2026-03-19">19 mars 2026</time>
+        </p>
 
         {/* Mission Description */}
         <motion.div
