@@ -48,3 +48,5 @@ coverage
 backup/
 nul
 brevo.txt
+gsc-credentials.json
+gsc-token.json
