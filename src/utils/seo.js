@@ -219,7 +219,7 @@ export const SEO_PAGES = {
     title: 'Dépollution Marine Marseille — Team Oxygen | Karim Saari',
     description:
       'Team Oxygen, association de dépollution marine à Marseille. Depuis 2022, 5 724 kg de déchets extraits des Calanques en apnée — Opération Sentinelle.',
-    canonical: `${BASE_URL}/depollution-marine/`,
+    canonical: `${BASE_URL}/depollution-marine`,
     schema: {
       '@context': 'https://schema.org',
       '@graph': [
@@ -387,7 +387,7 @@ export const SEO_PAGES = {
     title: 'Vidéos — Dépollution en Méditerranée | Karim Saari',
     description:
       "Visionnez mes documentaires et reportages d'action en immersion. Plongez au cœur des missions de dépollution marine en Méditerranée.",
-    canonical: `${BASE_URL}/videos/`,
+    canonical: `${BASE_URL}/videos`,
     schema: {
       '@context': 'https://schema.org',
       '@graph': [
@@ -435,7 +435,7 @@ export const SEO_PAGES = {
     title: 'Photographe Sous-Marin Marseille — Galerie | Karim Saari',
     description:
       'Galerie de 58 photographies sous-marines de missions de dépollution en apnée dans les Calanques de Marseille — Projet Sentinelle, Team Oxygen.',
-    canonical: `${BASE_URL}/photographie-sous-marine/`,
+    canonical: `${BASE_URL}/photographie-sous-marine`,
     schema: {
       '@context': 'https://schema.org',
       '@graph': [
@@ -585,7 +585,7 @@ export const SEO_PAGES = {
     title: 'Pollution Plastique Méditerranée — Données Scientifiques',
     description:
       "7 % des microplastiques mondiaux en Méditerranée. Données scientifiques sur les rejets plastiques, l'impact sur les espèces marines et la santé humaine.",
-    canonical: `${BASE_URL}/donnees-scientifiques/`,
+    canonical: `${BASE_URL}/donnees-scientifiques`,
     schema: {
       '@context': 'https://schema.org',
       '@graph': [
@@ -691,7 +691,7 @@ export const SEO_PAGES = {
     title: 'Documentaires & Reportages Environnement Marin | Karim Saari',
     description:
       "Retrouvez les reportages et documentaires (ARTE, France TV) témoignant de nos missions de dépollution et de l'urgence écologique en mer Méditerranée.",
-    canonical: `${BASE_URL}/presse/`,
+    canonical: `${BASE_URL}/presse`,
     schema: {
       '@context': 'https://schema.org',
       '@graph': [
@@ -811,7 +811,7 @@ export const SEO_PAGES = {
     title: 'Bénévolat Dépollution Marseille : Rejoignez Team Oxygen',
     description:
       "Envie d'agir pour la Méditerranée ? Rejoignez notre communauté de 130 000 sentinelles et participez à nos missions de bénévolat écologique à Marseille.",
-    canonical: `${BASE_URL}/communaute/`,
+    canonical: `${BASE_URL}/communaute`,
     schema: {
       '@context': 'https://schema.org',
       '@graph': [
@@ -898,7 +898,7 @@ export const SEO_PAGES = {
     title: 'Documentaire ARTE — Sauver Marseille de la Pollution',
     description:
       'Découvrez le documentaire ARTE Regards sur la pollution à Marseille. Une immersion choc avec Karim Saari et Team Oxygen pour sauver les Calanques.',
-    canonical: `${BASE_URL}/sauver-marseille-documentaire-arte/`,
+    canonical: `${BASE_URL}/sauver-marseille-documentaire-arte`,
     schema: {
       '@context': 'https://schema.org',
       '@graph': [
@@ -927,7 +927,7 @@ export const SEO_PAGES = {
     title: 'Méduses Souveraines des Océans — Documentaire ARTE',
     description:
       'Documentaire ARTE Évasion (2024, 43 min) de Sébastien Lafont. Karim Saari a fourni des images de Méditerranée sur la prolifération des méduses.',
-    canonical: `${BASE_URL}/meduses-souveraines-oceans-documentaire-arte/`,
+    canonical: `${BASE_URL}/meduses-souveraines-oceans-documentaire-arte`,
     schema: {
       '@context': 'https://schema.org',
       '@graph': [
@@ -960,7 +960,7 @@ export const SEO_PAGES = {
     title: 'Blog — Missions Dépollution Marine · Dark Massilia',
     description:
       'Suivez les dernières actions de dépollution de Team Oxygen en Méditerranée. Reportages, rencontres et coups de cœur depuis les Calanques de Marseille.',
-    canonical: `${BASE_URL}/blog/`,
+    canonical: `${BASE_URL}/blog`,
     schema: {
       '@context': 'https://schema.org',
       '@graph': [
@@ -993,13 +993,13 @@ export const SEO_PAGES = {
     title: 'Actualités Calanques — Parc National & Dark Massilia',
     description:
       'Actualités officielles du Parc National des Calanques et alertes terrain de @dark_massilia. Dépollution marine, biodiversité et protection de la Méditerranée.',
-    canonical: `${BASE_URL}/actualites/`,
+    canonical: `${BASE_URL}/actualites`,
   },
   '/local-guide-marseille': {
     title: 'Google Local Guide à Marseille | Karim Saari',
     description:
       'Suivez mes contributions en tant que Google Local Guide à Marseille. Plus de 183 millions de vues pour valoriser notre patrimoine naturel.',
-    canonical: `${BASE_URL}/local-guide-marseille/`,
+    canonical: `${BASE_URL}/local-guide-marseille`,
     schema: {
       '@context': 'https://schema.org',
       '@graph': [
@@ -1057,7 +1057,7 @@ export const SEO_PAGES = {
     title: 'Contact Karim Saari | Reportages, Expositions & Dépollution',
     description:
       'Contactez Karim Saari pour une intervention dans un documentaire, une exposition photo engagée ou une mission de dépollution à Marseille.',
-    canonical: `${BASE_URL}/contact/`,
+    canonical: `${BASE_URL}/contact`,
     schema: {
       '@context': 'https://schema.org',
       '@graph': [
@@ -1104,7 +1104,7 @@ export const SEO_PAGES = {
     title: 'Les Français de Yann Arthus-Bertrand — Marseille',
     description:
       'En 2024, Yann Arthus-Bertrand a photographié Team Oxygen pour son projet « Les Français ». Portrait de l\'engagement de Karim Saari pour la Méditerranée.',
-    canonical: `${BASE_URL}/les-francais-yann-arthus-bertrand/`,
+    canonical: `${BASE_URL}/les-francais-yann-arthus-bertrand`,
     schema: {
       '@context': 'https://schema.org',
       '@graph': [
