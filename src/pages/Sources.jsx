@@ -256,7 +256,7 @@ const Sources = () => {
                 className="glass-strong rounded-3xl overflow-hidden border border-white/10"
               >
                 {/* Image pleine largeur en haut */}
-                <motion.div variants={FADE_IN_UP} className="relative h-56 md:h-72 overflow-hidden">
+                <motion.div variants={FADE_IN_UP} className="relative h-80 md:h-96 overflow-hidden">
                   <img
                     src={section.image}
                     alt={`Illustration ${section.category}`}

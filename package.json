@@ -17,7 +17,8 @@
     "indexnow": "node scripts/notify-indexnow.js",
     "lint": "eslint .",
     "preview": "vite preview",
-    "seo-digest": "node scripts/weekly-seo-digest.js"
+    "seo-digest": "node scripts/weekly-seo-digest.js",
+    "psi-audit": "node scripts/psi-audit.js"
   },
   "dependencies": {
     "@fancyapps/ui": "^6.1.13",

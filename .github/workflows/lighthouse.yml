@@ -1,47 +1,32 @@
-name: Lighthouse CI
+name: PSI Audit (PageSpeed Insights)
 
 on:
   schedule:
-    - cron: '30 4 * * *'   # 4h30 UTC = après le build nocturne (3h UTC ~40min)
-  workflow_dispatch:         # déclenchement manuel possible
+    - cron: '30 4 * * *'   # 4h30 UTC = après le build nocturne
+  workflow_dispatch:
 
 env:
   FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
 
 jobs:
-  lighthouse:
+  psi-audit:
     runs-on: ubuntu-latest
 
     steps:
-      # ── 1. Checkout ──────────────────────────────────────────────────────────
       - name: Checkout
         uses: actions/checkout@v4
 
-      # ── 2. Node.js ───────────────────────────────────────────────────────────
       - name: Setup Node.js 20
         uses: actions/setup-node@v4
         with:
           node-version: '20'
+          cache: 'npm'
 
-      # ── 3. Xvfb + Lighthouse CI ──────────────────────────────────────────────
-      # xvfb crée un écran virtuel → Chrome peut vraiment peindre le DOM (fix NO_FCP)
-      - name: Install Xvfb & Lighthouse CI
-        run: |
-          sudo apt-get install -y xvfb
-          npm install -g @lhci/cli
+      - name: Installation des dépendances
+        run: npm ci
 
-      # ── 4. Audit ──────────────────────────────────────────────────────────────
-      - name: Audit Lighthouse (25 pages)
-        run: |
-          xvfb-run --auto-servernum --server-args="-screen 0 1280x800x24" \
-            lhci autorun --config=.lighthouserc.json
+      - name: Audit PSI (25 pages) + email
         env:
-          LHCI_BUILD_CONTEXT__CURRENT_HASH: ${{ github.sha }}
-
-      # ── 5. Upload rapports ────────────────────────────────────────────────────
-      - name: Upload rapports Lighthouse
-        uses: actions/upload-artifact@v4
-        if: always()
-        with:
-          name: lighthouse-reports-${{ github.run_number }}
-          path: .lighthouseci/
+          PSI_API_KEY:   ${{ secrets.PSI_API_KEY }}
+          BREVO_API_KEY: ${{ secrets.BREVO_API_KEY }}
+        run: npm run psi-audit
