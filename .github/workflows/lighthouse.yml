@@ -23,11 +23,25 @@ jobs:
         with:
           node-version: '20'
 
-      # ── 3. Lighthouse CI ─────────────────────────────────────────────────────
+      # ── 3. Xvfb + Lighthouse CI ──────────────────────────────────────────────
+      # xvfb crée un écran virtuel → Chrome peut vraiment peindre le DOM (fix NO_FCP)
+      - name: Install Xvfb & Lighthouse CI
+        run: |
+          sudo apt-get install -y xvfb
+          npm install -g @lhci/cli
+
+      # ── 4. Audit ──────────────────────────────────────────────────────────────
       - name: Audit Lighthouse (25 pages)
-        uses: treosh/lighthouse-ci-action@v12
+        run: |
+          xvfb-run --auto-servernum --server-args="-screen 0 1280x800x24" \
+            lhci autorun --config=.lighthouserc.json
+        env:
+          LHCI_BUILD_CONTEXT__CURRENT_HASH: ${{ github.sha }}
+
+      # ── 5. Upload rapports ────────────────────────────────────────────────────
+      - name: Upload rapports Lighthouse
+        uses: actions/upload-artifact@v4
+        if: always()
         with:
-          configPath: .lighthouserc.json
-          uploadArtifacts: true
-          artifactName: lighthouse-reports-${{ github.run_number }}
-          temporaryPublicStorage: false
+          name: lighthouse-reports-${{ github.run_number }}
+          path: .lighthouseci/
