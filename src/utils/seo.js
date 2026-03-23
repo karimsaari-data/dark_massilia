@@ -87,7 +87,7 @@ const breadcrumb = (name, path) => ({
 
 export const SEO_PAGES = {
   '/': {
-    title: 'Karim Saari | Photographe Paysages & Sous-Marin | Sentinelle des Calanques',
+    title: 'Karim Saari — Photographe & Sentinelle des Calanques',
     description:
       "Karim Saari, photographe et Sentinelle des Calanques de Marseille. Découvrez mes clichés sous-marins et mon engagement pour protéger la Méditerranée.",
     canonical: `${BASE_URL}/`,
@@ -216,7 +216,7 @@ export const SEO_PAGES = {
     },
   },
   '/depollution-marine': {
-    title: 'Association Dépollution Marine Marseille — Team Oxygen | Karim Saari',
+    title: 'Dépollution Marine Marseille — Team Oxygen | Karim Saari',
     description:
       'Team Oxygen, association de dépollution marine à Marseille. Depuis 2022, 5 724 kg de déchets extraits des Calanques en apnée — Opération Sentinelle.',
     canonical: `${BASE_URL}/depollution-marine/`,
@@ -384,7 +384,7 @@ export const SEO_PAGES = {
     },
   },
   '/videos': {
-    title: 'Vidéos & Documentaires — Dépollution en Méditerranée | Karim Saari',
+    title: 'Vidéos — Dépollution en Méditerranée | Karim Saari',
     description:
       "Visionnez mes documentaires et reportages d'action en immersion. Plongez au cœur des missions de dépollution marine en Méditerranée.",
     canonical: `${BASE_URL}/videos/`,
@@ -432,7 +432,7 @@ export const SEO_PAGES = {
     },
   },
   '/photographie-sous-marine': {
-    title: 'Photographe Sous-Marin à Marseille — 58 Photos de Missions | Karim Saari',
+    title: 'Photographe Sous-Marin Marseille — Galerie | Karim Saari',
     description:
       'Galerie de 58 photographies sous-marines de missions de dépollution en apnée dans les Calanques de Marseille — Projet Sentinelle, Team Oxygen.',
     canonical: `${BASE_URL}/photographie-sous-marine/`,
@@ -494,10 +494,10 @@ export const SEO_PAGES = {
     },
   },
   '/photographie-paysage-mer': {
-    title: 'Karim Saari | Photographe Paysage & Sous-Marin à Marseille',
+    title: 'Photographe Paysage Marseille | Calanques & Méditerranée — Karim Saari',
     description:
-      'Karim Saari, photographe de paysages et sous-marin à Marseille. Calanques, Méditerranée, Provence, Maroc — images capturées en apnée et lumière naturelle.',
-    canonical: `${BASE_URL}/photographie-paysage-mer/`,
+      'Galerie photo de paysages des Calanques de Marseille, Méditerranée et Provence. Lumière naturelle, apnée, nature sauvage. Par le photographe Karim Saari.',
+    canonical: `${BASE_URL}/photographie-paysage-mer`,
     schema: {
       '@context': 'https://schema.org',
       '@graph': [
@@ -582,11 +582,110 @@ export const SEO_PAGES = {
     },
   },
   '/donnees-scientifiques': {
-    title: 'Données Scientifiques — Pollution Plastique Méditerranée | Karim Saari',
+    title: 'Pollution Plastique Méditerranée — Données Scientifiques',
     description:
-      "Consultez les données scientifiques sur la pollution plastique en Méditerranée. Comprendre l'urgence écologique pour mieux agir.",
+      "7 % des microplastiques mondiaux en Méditerranée. Données scientifiques sur les rejets plastiques, l'impact sur les espèces marines et la santé humaine.",
     canonical: `${BASE_URL}/donnees-scientifiques/`,
-    schema: breadcrumb('Données Scientifiques', '/donnees-scientifiques'),
+    schema: {
+      '@context': 'https://schema.org',
+      '@graph': [
+        breadcrumb('Données Scientifiques', '/donnees-scientifiques'),
+        {
+          '@type': 'Dataset',
+          name: 'Pollution Plastique en Méditerranée — Données Scientifiques',
+          description:
+            'Données chiffrées sur la pollution plastique en Méditerranée : concentration de microplastiques, volumes annuels rejetés, impact sur les espèces marines et la santé humaine.',
+          url: `${BASE_URL}/donnees-scientifiques/`,
+          creator: { '@id': 'https://karimsaari.com/#person' },
+          spatialCoverage: 'Mer Méditerranée',
+          keywords: [
+            'pollution plastique',
+            'microplastiques',
+            'nanoplastiques',
+            'Méditerranée',
+            'déchets marins',
+            'biodiversité marine',
+          ],
+        },
+        {
+          '@type': 'FAQPage',
+          mainEntity: [
+            {
+              '@type': 'Question',
+              name: 'Quelle part des microplastiques mondiaux se trouve en Méditerranée ?',
+              acceptedAnswer: {
+                '@type': 'Answer',
+                text: "Bien que la Méditerranée ne représente que 1 % de la surface des océans, elle concentre environ 7 % des microplastiques de la planète. Sa densité moyenne atteint jusqu'à 1,25 million de fragments par km², soit quatre fois plus que le « 7ᵉ continent de plastique » dans le Pacifique Nord.",
+              },
+            },
+            {
+              '@type': 'Question',
+              name: 'Combien de plastique est rejeté en Méditerranée chaque année ?',
+              acceptedAnswer: {
+                '@type': 'Answer',
+                text: "On estime que 229 000 tonnes de plastique finissent dans les eaux méditerranéennes chaque année, soit entre 700 et 1 400 tonnes par jour — l'équivalent d'un à deux camions-poubelles déchargés chaque heure. La France contribue seule à hauteur de 11 200 tonnes annuelles.",
+              },
+            },
+            {
+              '@type': 'Question',
+              name: 'Où va le plastique dans la mer ? Est-il visible en surface ?',
+              acceptedAnswer: {
+                '@type': 'Answer',
+                text: "La pollution visible n'est que la partie émergée de l'iceberg : 94 % du plastique coule et sédimente sur les fonds marins, 5 % s'échoue sur les côtes et seulement 1 % reste en surface. Malgré ce faible pourcentage, environ 247 milliards de pièces en plastique flotteraient actuellement en Méditerranée.",
+              },
+            },
+            {
+              '@type': 'Question',
+              name: "Combien d'espèces marines sont affectées par la pollution plastique en Méditerranée ?",
+              acceptedAnswer: {
+                '@type': 'Answer',
+                text: 'Plus de 600 espèces marines méditerranéennes sont directement affectées par la pollution plastique, par ingestion ou enchevêtrement. Toutes les espèces de tortues marines présentes en Méditerranée sont concernées : des fragments plastiques ont été retrouvés dans 100 % des tortues marines étudiées.',
+              },
+            },
+            {
+              '@type': 'Question',
+              name: 'Les humains ingèrent-ils du plastique ?',
+              acceptedAnswer: {
+                '@type': 'Answer',
+                text: "Oui. La contamination remonte toute la chaîne alimentaire. En moyenne, une personne ingère aujourd'hui 5 grammes de nanoplastiques par semaine, soit l'équivalent en poids d'une carte de crédit.",
+              },
+            },
+            {
+              '@type': 'Question',
+              name: 'Que se passera-t-il en 2050 si rien ne change ?',
+              acceptedAnswer: {
+                '@type': 'Answer',
+                text: "Si aucune mesure radicale n'est prise, les scientifiques estiment qu'en 2050, la Méditerranée contiendra plus de plastiques que de poissons en poids.",
+              },
+            },
+            {
+              '@type': 'Question',
+              name: "Comment l'aquaculture devient-elle une source locale de pollution plastique ?",
+              acceptedAnswer: {
+                '@type': 'Answer',
+                text: "L'aquaculture utilise massivement des filets, bouées et cordages en plastique qui se fragmentent avec le temps. Ces matériaux libèrent des microplastiques directement dans les zones de production, contaminant les élevages eux-mêmes et les écosystèmes marins environnants.",
+              },
+            },
+            {
+              '@type': 'Question',
+              name: 'Quels sont les effets des nanoplastiques sur la reproduction des huîtres ?',
+              acceptedAnswer: {
+                '@type': 'Answer',
+                text: "Des études ont montré que l'exposition aux nanoplastiques perturbe la reproduction des huîtres : réduction du taux de fécondation, anomalies du développement larvaire et diminution de la capacité à former des coquilles solides. Ces effets menacent directement les filières ostréicoles méditerranéennes.",
+              },
+            },
+            {
+              '@type': 'Question',
+              name: 'En quoi consiste l\'effet "Cheval de Troie" des microplastiques ?',
+              acceptedAnswer: {
+                '@type': 'Answer',
+                text: "Les microplastiques agissent comme des « chevaux de Troie » : leur surface hydrophobe attire et concentre des polluants chimiques (PCB, pesticides, métaux lourds) jusqu'à un million de fois leur concentration dans l'eau ambiante. Lorsqu'ils sont ingérés par des organismes marins, ces polluants sont libérés dans les tissus, amplifiant la toxicité bien au-delà du plastique seul.",
+              },
+            },
+          ],
+        },
+      ],
+    },
   },
   '/presse': {
     title: 'Documentaires & Reportages Environnement Marin | Karim Saari',
@@ -796,7 +895,7 @@ export const SEO_PAGES = {
     },
   },
   '/sauver-marseille-documentaire-arte': {
-    title: 'Documentaire ARTE — Pollution, il faut sauver Marseille | Karim Saari',
+    title: 'Documentaire ARTE — Sauver Marseille de la Pollution',
     description:
       'Découvrez le documentaire ARTE Regards sur la pollution à Marseille. Une immersion choc avec Karim Saari et Team Oxygen pour sauver les Calanques.',
     canonical: `${BASE_URL}/sauver-marseille-documentaire-arte/`,
