@@ -77,6 +77,7 @@ async function sendEmail(html, subject) {
 
   const results = [];
   let errors = 0;
+  let apiErrors = 0;
 
   for (const url of URLS) {
     process.stdout.write(`  → ${pageLabel(url)} … `);
@@ -105,15 +106,18 @@ async function sendEmail(html, subject) {
       console.log(`perf=${Math.round((r.perf??0)*100)} seo=${Math.round((r.seo??0)*100)} a11y=${Math.round((r.a11y??0)*100)} bp=${Math.round((r.bp??0)*100)}`);
     } catch (err) {
       console.log(`❌ ${err.message}`);
+      const is429 = err.message.includes('429');
       results.push({ url, perf: null, seo: null, a11y: null, bp: null, fcp: '—', lcp: '—', cls: '—', error: err.message });
-      errors++;
+      if (is429) apiErrors++;
+      else errors++;
     }
 
     // Délai pour ne pas dépasser la limite sans clé API
-    if (!process.env.PSI_API_KEY) await new Promise(r => setTimeout(r, 1500));
+    if (!process.env.PSI_API_KEY) await new Promise(r => setTimeout(r, 3000));
   }
 
-  console.log(`\n✅ Audit terminé — ${errors} page(s) sous les seuils\n`);
+  if (apiErrors > 0) console.warn(`\n⚠️  ${apiErrors} page(s) ignorées (429 rate limit — configurez PSI_API_KEY dans les secrets GitHub)`);
+  console.log(`\n${errors === 0 ? '✅' : '❌'} Audit terminé — ${errors} page(s) sous les seuils\n`);
 
   // ── Calcul des moyennes ──────────────────────────────────────────────────────
   const avg = (key) => {
@@ -213,5 +217,6 @@ async function sendEmail(html, subject) {
     console.log('ℹ️  BREVO_API_KEY non défini — résultats affichés uniquement en console');
   }
 
+  // N'échoue que pour les vraies violations de seuil, pas les erreurs d'API
   if (errors > 0) process.exit(1);
 })();
