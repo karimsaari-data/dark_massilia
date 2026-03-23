@@ -24,22 +24,10 @@ jobs:
           node-version: '20'
 
       # ── 3. Lighthouse CI ─────────────────────────────────────────────────────
-      - name: Installer @lhci/cli
-        run: npm install -g @lhci/cli@0.14.x
-
-      - name: Audit Lighthouse (4 pages)
-        run: lhci autorun
-        # Seuils définis dans .lighthouserc.json :
-        #   SEO ≥ 90        → error  (fail + email GitHub si chute)
-        #   Performance ≥ 60 → error  (fail si très dégradé)
-        #   Accessibility ≥ 80 → warn
-        #   Best Practices ≥ 80 → warn
-
-      # ── 4. Upload des rapports HTML ──────────────────────────────────────────
-      - name: Sauvegarder les rapports
-        uses: actions/upload-artifact@v4
-        if: always()          # même en cas d'échec
+      - name: Audit Lighthouse (25 pages)
+        uses: treosh/lighthouse-ci-action@v12
         with:
-          name: lighthouse-reports-${{ github.run_number }}
-          path: .lighthouseci/
-          retention-days: 30
+          configPath: .lighthouserc.json
+          uploadArtifacts: true
+          artifactName: lighthouse-reports-${{ github.run_number }}
+          temporaryPublicStorage: false
