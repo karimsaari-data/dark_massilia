@@ -255,70 +255,65 @@ const Sources = () => {
                 variants={STAGGER_CONTAINER}
                 className="glass-strong rounded-3xl overflow-hidden border border-white/10"
               >
-                {/* Category Header with Image */}
-                <div className="grid md:grid-cols-[1fr_420px] gap-0">
-                  <div className="p-8 md:p-10">
-                    <motion.div variants={FADE_IN_UP} className="flex items-center gap-4 mb-8">
-                      <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-ocean-teal to-blue-500 flex items-center justify-center shadow-lg shadow-ocean-teal/30">
-                        <Icon className="w-7 h-7 text-white" />
-                      </div>
-                      <h2 className="text-2xl md:text-3xl font-bold text-white">
-                        {section.category}
-                      </h2>
-                    </motion.div>
+                {/* Image pleine largeur en haut */}
+                <motion.div variants={FADE_IN_UP} className="relative h-56 md:h-72 overflow-hidden">
+                  <img
+                    src={section.image}
+                    alt={`Illustration ${section.category}`}
+                    className="w-full h-full object-cover"
+                    loading="lazy"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-background-primary/90" />
+                </motion.div>
 
-                    {/* References List */}
-                    <div className="space-y-6">
-                      {section.references.map((ref, refIndex) => (
-                        <motion.div
-                          key={refIndex}
-                          variants={FADE_IN_UP}
-                          className="glass rounded-2xl p-6 border border-white/5 hover:border-ocean-teal/30 transition-all duration-300"
-                        >
-                          <div className="mb-3">
-                            <p className="text-ocean-teal font-semibold text-sm mb-1">
-                              {ref.authors} {ref.year && `(${ref.year})`}
-                            </p>
-                            <h3 className="text-white font-semibold text-lg mb-1">
-                              {ref.title}
-                            </h3>
-                            <p className="text-gray-400 text-sm italic">
-                              {ref.journal}
-                            </p>
-                          </div>
-
-                          <div className="flex flex-wrap gap-3 mt-4">
-                            {ref.links.map((link, linkIndex) => (
-                              <a
-                                key={linkIndex}
-                                href={link.url}
-                                target="_blank"
-                                rel="noopener noreferrer"
-                                className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-ocean-teal/10 border border-ocean-teal/30 text-ocean-teal hover:bg-ocean-teal/20 hover:border-ocean-teal hover:scale-105 transition-all duration-200 text-sm font-medium"
-                              >
-                                <ExternalLink className="w-4 h-4" />
-                                {link.label}
-                              </a>
-                            ))}
-                          </div>
-                        </motion.div>
-                      ))}
+                {/* Contenu */}
+                <div className="p-8 md:p-10">
+                  <motion.div variants={FADE_IN_UP} className="flex items-center gap-4 mb-8">
+                    <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-ocean-teal to-blue-500 flex items-center justify-center shadow-lg shadow-ocean-teal/30">
+                      <Icon className="w-7 h-7 text-white" />
                     </div>
-                  </div>
-
-                  {/* Image */}
-                  <motion.div
-                    variants={FADE_IN_UP}
-                    className="relative h-64 md:h-full order-first md:order-last"
-                  >
-                    <img
-                      src={section.image}
-                      alt={`Illustration ${section.category}`}
-                      className="w-full h-full object-cover"
-                      loading="lazy"
-                    />
-                    <div className="absolute inset-0 bg-gradient-to-r from-background-primary/80 to-transparent md:from-transparent md:to-background-primary/80" />
+                    <h2 className="text-2xl md:text-3xl font-bold text-white">
+                      {section.category}
+                    </h2>
                   </motion.div>
+
+                  {/* References List */}
+                  <div className="space-y-6">
+                    {section.references.map((ref, refIndex) => (
+                      <motion.div
+                        key={refIndex}
+                        variants={FADE_IN_UP}
+                        className="glass rounded-2xl p-6 border border-white/5 hover:border-ocean-teal/30 transition-all duration-300"
+                      >
+                        <div className="mb-3">
+                          <p className="text-ocean-teal font-semibold text-sm mb-1">
+                            {ref.authors} {ref.year && `(${ref.year})`}
+                          </p>
+                          <h3 className="text-white font-semibold text-lg mb-1">
+                            {ref.title}
+                          </h3>
+                          <p className="text-gray-400 text-sm italic">
+                            {ref.journal}
+                          </p>
+                        </div>
+
+                        <div className="flex flex-wrap gap-3 mt-4">
+                          {ref.links.map((link, linkIndex) => (
+                            <a
+                              key={linkIndex}
+                              href={link.url}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-ocean-teal/10 border border-ocean-teal/30 text-ocean-teal hover:bg-ocean-teal/20 hover:border-ocean-teal hover:scale-105 transition-all duration-200 text-sm font-medium"
+                            >
+                              <ExternalLink className="w-4 h-4" />
+                              {link.label}
+                            </a>
+                          ))}
+                        </div>
+                      </motion.div>
+                    ))}
+                  </div>
                 </div>
               </motion.div>
             );
