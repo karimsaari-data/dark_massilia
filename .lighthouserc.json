@@ -1,0 +1,25 @@
+{
+  "ci": {
+    "collect": {
+      "urls": [
+        "https://karimsaari.com/home",
+        "https://karimsaari.com/photographie-sous-marine",
+        "https://karimsaari.com/donnees-scientifiques",
+        "https://karimsaari.com/blog"
+      ],
+      "numberOfRuns": 1
+    },
+    "assert": {
+      "assertions": {
+        "categories:seo":           ["error", { "minScore": 0.90 }],
+        "categories:performance":   ["error", { "minScore": 0.60 }],
+        "categories:accessibility": ["warn",  { "minScore": 0.80 }],
+        "categories:best-practices":["warn",  { "minScore": 0.80 }]
+      }
+    },
+    "upload": {
+      "target": "filesystem",
+      "outputDir": ".lighthouseci"
+    }
+  }
+}
