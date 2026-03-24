@@ -98,14 +98,14 @@ const PLATFORM_VISUALS = {
 // Ordre : ligne 1 → Amoureux, Instagram, TikTok, Facebook
 //          ligne 2 → Pinterest, YouTube, X, Local Guide
 const SOCIAL_NETWORKS_STATIC = [
-  { platform: 'facebook_group', name: 'Amoureux des Calanques', handle: 'Groupe Facebook',        end: 64.3, suffix: 'K', decimals: 1, url: 'https://www.facebook.com/groups/calanque/' },
+  { platform: 'facebook_group', name: 'Amoureux des Calanques', handle: 'Groupe Facebook',        end: 64.6, suffix: 'K', decimals: 1, url: 'https://www.facebook.com/groups/calanque/' },
   { platform: 'instagram',      name: 'Instagram',              handle: '@karimsaari',             end: 24.2, suffix: 'K', decimals: 1, url: 'https://www.instagram.com/karimsaari' },
   { platform: 'tiktok',         name: 'TikTok',                 handle: '@dark.massilia',          end: 21.9, suffix: 'K', decimals: 1, url: 'https://www.tiktok.com/@dark.massilia' },
   { platform: 'facebook_pages', name: 'Facebook',               handle: 'Pages pro & perso',       end: 17.8, suffix: 'K', decimals: 1, note: '13K + 4,8K', url: 'https://www.facebook.com/Photographie.Marseille' },
   { platform: 'pinterest',      name: 'Pinterest',              handle: 'Photographie_Marseille',  end: 50,   suffix: 'K', decimals: 0, unit: 'vues / mois', url: 'https://fr.pinterest.com/Photographie_Marseille/' },
   { platform: 'youtube',        name: 'YouTube',                handle: '@dark.massilia',          end: 1.33, suffix: 'K', decimals: 2, url: 'https://www.youtube.com/@dark.massilia' },
   { platform: 'x',              name: 'X',                      handle: '@dark_massilia',          end: 1.6,  suffix: 'K', decimals: 1, url: 'https://x.com/dark_massilia' },
-  { platform: 'local_guides',   name: 'Local Guides',           handle: 'Google Maps · Marseille', end: 183,  suffix: 'M', decimals: 0, unit: 'vues', url: 'https://www.google.com/maps/contrib/114912564832630219145/photos/' },
+  { platform: 'local_guides',   name: 'Local Guides',           handle: 'Google Maps · Marseille', end: 143,  suffix: 'M', decimals: 0, unit: 'vues', url: 'https://www.google.com/maps/contrib/114912564832630219145/photos/' },
 ];
 
 const SocialStats = () => {
@@ -114,27 +114,36 @@ const SocialStats = () => {
   );
 
   useEffect(() => {
-    supabase
-      .from('social_stats')
-      .select('platform, name, handle, value, suffix, decimals, unit, note, url')
-      .eq('visible', true)
-      .neq('platform', 'total_community')
-      .order('sort_order')
-      .then(({ data }) => {
-        if (!data || data.length === 0) return;
-        setNetworks(data.map(row => ({
-          ...(PLATFORM_VISUALS[row.platform] || { bg: 'from-gray-800/60 to-gray-900/60', border: 'border-white/10', icon: null }),
-          platform: row.platform,
-          name: row.name,
-          handle: row.handle,
-          end: parseFloat(row.value),
-          suffix: row.suffix,
-          decimals: row.decimals,
-          unit: row.unit || undefined,
-          note: row.note || undefined,
-          url: row.url,
-        })));
-      });
+    Promise.all([
+      supabase
+        .from('social_stats')
+        .select('platform, name, handle, value, suffix, decimals, unit, note, url')
+        .eq('visible', true)
+        .neq('platform', 'total_community')
+        .order('sort_order'),
+      supabase
+        .from('social_stats')
+        .select('value')
+        .eq('platform', 'local_guide_views_m')
+        .single(),
+    ]).then(([{ data: cards }, { data: lgViews }]) => {
+      if (!cards || cards.length === 0) return;
+      const localGuidesValue = lgViews ? parseFloat(lgViews.value) : null;
+      setNetworks(cards.map(row => ({
+        ...(PLATFORM_VISUALS[row.platform] || { bg: 'from-gray-800/60 to-gray-900/60', border: 'border-white/10', icon: null }),
+        platform: row.platform,
+        name: row.name,
+        handle: row.handle,
+        end: row.platform === 'local_guides' && localGuidesValue !== null
+          ? localGuidesValue
+          : parseFloat(row.value),
+        suffix: row.suffix,
+        decimals: row.decimals,
+        unit: row.unit || undefined,
+        note: row.note || undefined,
+        url: row.url,
+      })));
+    });
   }, []);
 
   return (

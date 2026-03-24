@@ -76,7 +76,7 @@ export const MISSION_STATEMENT =
   "Sentinelle des Calanques, je documente et nettoie les fonds marins de Marseille en apnée. Avec Team Oxygen, chaque plongée devient une mission de dépollution.";
 
 // Facebook Group Stats
-export const FACEBOOK_GROUP_MEMBERS = 64300;
+export const FACEBOOK_GROUP_MEMBERS = 64600;
 
 // Media types configuration
 export const MEDIA_TYPES = {

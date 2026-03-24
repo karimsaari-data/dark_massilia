@@ -35,7 +35,7 @@ const StatCounter = ({ end, suffix = '', decimals = 0, duration = 2000 }) => {
 const DEFAULT_STATS = [
   { label: 'Contributions', end: 22000,  suffix: '+', icon: Star,     badge: false },
   { label: 'Points obtenus', end: 118000, suffix: '+', icon: ThumbsUp, badge: false },
-  { label: 'Vues générées',  end: 183,    suffix: ' M', icon: Eye,     badge: false },
+  { label: 'Vues générées',  end: 143,    suffix: ' M', icon: Eye,     badge: false },
   { label: 'Niveau',         end: 10,     suffix: '',   icon: null,    badge: true  },
 ];
 

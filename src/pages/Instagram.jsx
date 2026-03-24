@@ -15,6 +15,7 @@ import {
   Anchor,
 } from 'lucide-react';
 import InstagramStats from '../components/ui/InstagramStats';
+import { supabase } from '../lib/supabase';
 import { FADE_IN_UP, STAGGER_CONTAINER } from '../utils/constants';
 import SEO from '../components/SEO';
 import { SEO_PAGES } from '../utils/seo';
@@ -79,7 +80,7 @@ const STEPS = [
     num: '01',
     icon: Users,
     title: 'Suivre et amplifier',
-    desc: "Rejoignez le groupe Facebook « Amoureux des Calanques » (64 000 membres) et suivez @karimsaari sur Instagram. Partager nos posts, c'est déjà agir : chaque partage sensibilise de nouveaux publics à la cause.",
+    desc: "Rejoignez le groupe Facebook « Amoureux des Calanques » et suivez @karimsaari sur Instagram. Partager nos posts, c'est déjà agir : chaque partage sensibilise de nouveaux publics à la cause.",
   },
   {
     num: '02',
@@ -176,7 +177,34 @@ const FaqItem = ({ q, a }) => {
 
 // ── Page principale ─────────────────────────────────────────────────────────
 
+const fmt = (value, decimals, suffix) =>
+  parseFloat(value).toFixed(decimals ?? 1).replace('.', ',') + (suffix ?? '');
+
 const Communaute = () => {
+  const [fbGroupLabel,  setFbGroupLabel]  = useState('64\u202f600');
+  const [totalLabel,    setTotalLabel]    = useState('130\u202f000');
+  const [instaLabel,    setInstaLabel]    = useState('24,2K');
+  const [tiktokLabel,   setTiktokLabel]   = useState('21,9K');
+  const [fbPagesLabel,  setFbPagesLabel]  = useState('18\u202f000');
+
+  useEffect(() => {
+    supabase
+      .from('social_stats')
+      .select('platform, value, suffix, decimals')
+      .in('platform', ['facebook_group', 'total_community', 'instagram', 'tiktok', 'facebook_pages'])
+      .then(({ data }) => {
+        if (!data) return;
+        data.forEach(row => {
+          const { platform, value, suffix, decimals } = row;
+          if (platform === 'facebook_group')  setFbGroupLabel(fmt(value, decimals, suffix));
+          if (platform === 'total_community') setTotalLabel(Math.round(parseFloat(value)).toLocaleString('fr-FR'));
+          if (platform === 'instagram')       setInstaLabel(fmt(value, decimals, suffix));
+          if (platform === 'tiktok')          setTiktokLabel(fmt(value, decimals, suffix));
+          if (platform === 'facebook_pages')  setFbPagesLabel(Math.round(parseFloat(value) * 1000).toLocaleString('fr-FR'));
+        });
+      });
+  }, []);
+
   return (
     <div className="min-h-screen py-24">
       <SEO {...SEO_PAGES['/communaute']} />
@@ -193,23 +221,23 @@ const Communaute = () => {
               Rejoignez le mouvement : Devenez bénévole pour la protection de la Méditerranée
             </h1>
             <p className="text-ocean-teal text-lg md:text-xl font-semibold mb-6">
-              Une communauté de plus de 130 000 sentinelles
+              Une communauté de plus de {totalLabel} sentinelles
             </p>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
               <p className="text-text-secondary leading-[1.8] text-lg">
                 La protection de la Méditerranée repose sur une mobilisation collective et continue.
                 À travers mes réseaux sociaux, je fédère aujourd'hui une communauté de plus de
-                130 000 personnes sensibilisées aux enjeux environnementaux du littoral marseillais.
+                {' '}{totalLabel} personnes sensibilisées aux enjeux environnementaux du littoral marseillais.
               </p>
               <p className="text-text-secondary leading-[1.8] text-lg">
                 De mes reportages en immersion sur YouTube à mes alertes environnementales sur
-                Instagram (24,2K), TikTok (21,9K) et mes fiches thématiques sur Pinterest, cette
+                Instagram ({instaLabel}), TikTok ({tiktokLabel}) et mes fiches thématiques sur Pinterest, cette
                 audience numérique prolonge le travail de terrain en donnant de la visibilité aux
                 réalités observées sous la surface.
               </p>
               <p className="text-text-secondary leading-[1.8] text-lg">
                 À travers l'animation du groupe incontournable des Amoureux des Calanques (plus de
-                64 000 membres), ma présence sur Facebook (près de 18 000 abonnés cumulés), sur X
+                {' '}{fbGroupLabel} membres), ma présence sur Facebook (près de {fbPagesLabel} abonnés cumulés), sur X
                 et en tant que Local Guide Google Maps à Marseille, j'informe, documente et interpelle
                 en temps réel.
               </p>
@@ -348,7 +376,7 @@ const Communaute = () => {
         >
           <motion.div variants={FADE_IN_UP} className="glass-strong rounded-3xl p-8 md:p-12">
             <h2 className="text-2xl md:text-3xl font-bold text-white mb-2">
-              130 000 sentinelles déjà mobilisées
+              {totalLabel} sentinelles déjà mobilisées
             </h2>
             <p className="text-text-secondary mb-8 text-lg">
               Une audience numérique au service d'une cause réelle. Rejoindre nos réseaux, c'est
@@ -427,7 +455,7 @@ const Communaute = () => {
               className="btn-primary inline-flex items-center justify-center gap-2"
             >
               <Users className="w-5 h-5" />
-              Rejoindre le groupe · 64 000 membres
+              Rejoindre le groupe · {fbGroupLabel} membres
             </a>
             <Link
               to="/contact"

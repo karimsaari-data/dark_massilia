@@ -998,7 +998,7 @@ export const SEO_PAGES = {
   '/local-guide-marseille': {
     title: 'Google Local Guide à Marseille | Karim Saari',
     description:
-      'Suivez mes contributions en tant que Google Local Guide à Marseille. Plus de 183 millions de vues pour valoriser notre patrimoine naturel.',
+      'Suivez mes contributions en tant que Google Local Guide à Marseille. Plus de 143 millions de vues pour valoriser notre patrimoine naturel.',
     canonical: `${BASE_URL}/local-guide-marseille`,
     schema: {
       '@context': 'https://schema.org',

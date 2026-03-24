@@ -32,7 +32,7 @@ const KEY_STATS_BASE = [
     href: '/depollution-marine',
   },
   {
-    end: 183,
+    end: 143,
     suffix: ' M',
     label: 'Vues Google Maps sur Marseille et ses environs',
     sub: '9 ans de contributions Local Guide',
