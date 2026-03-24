@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import { FADE_IN_UP, STAGGER_CONTAINER } from '../utils/constants';
 import SEO from '../components/SEO';
 import { SEO_PAGES } from '../utils/seo';
+import YouTubeFacade from '../components/media/YouTubeFacade';
 
 const img = (n) =>
   `/images/arte-meduses-souveraines-oceans-documentaire-marseille-${n}`;
@@ -36,15 +37,10 @@ const Meduses = () => {
             variants={FADE_IN_UP}
             className="glass-strong rounded-2xl overflow-hidden border border-white/10 mb-12"
           >
-            <div className="relative aspect-video bg-black">
-              <iframe
-                src="https://www.youtube.com/embed/yfebiTFOq7E"
-                title="Méduses | Les souveraines des océans — Documentaire ARTE Évasion"
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                allowFullScreen
-                className="absolute inset-0 w-full h-full"
-              />
-            </div>
+            <YouTubeFacade
+              videoId="yfebiTFOq7E"
+              title="Méduses | Les souveraines des océans — Documentaire ARTE Évasion"
+            />
           </motion.div>
         </motion.div>
 

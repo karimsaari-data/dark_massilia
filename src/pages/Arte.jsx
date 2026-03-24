@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import { FADE_IN_UP, STAGGER_CONTAINER } from '../utils/constants';
 import SEO from '../components/SEO';
 import { SEO_PAGES } from '../utils/seo';
+import YouTubeFacade from '../components/media/YouTubeFacade';
 
 const Arte = () => {
   return (
@@ -37,16 +38,10 @@ const Arte = () => {
             variants={FADE_IN_UP}
             className="glass-strong rounded-2xl overflow-hidden border border-white/10 mb-12"
           >
-            <div className="relative aspect-video bg-black">
-              <iframe
-                src="https://www.youtube.com/embed/cxjAQtSHHyI"
-                title="Documentaire ARTE — Pollution : Il faut sauver Marseille et ses Calanques"
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                allowFullScreen
-                loading="lazy"
-                className="absolute inset-0 w-full h-full"
-              />
-            </div>
+            <YouTubeFacade
+              videoId="cxjAQtSHHyI"
+              title="Documentaire ARTE — Pollution : Il faut sauver Marseille et ses Calanques"
+            />
           </motion.div>
         </motion.div>
 

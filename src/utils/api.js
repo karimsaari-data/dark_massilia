@@ -90,6 +90,15 @@ export function normalizePost(post) {
   const rawTitle   = post.title?.rendered   ?? '';
   const rawExcerpt = post.excerpt?.rendered ?? '';
 
+  // Préférer medium_large (768px) comme src principal → LCP plus rapide sur mobile
+  const sizes = media?.media_details?.sizes;
+  const imageSrc =
+    sizes?.medium_large?.source_url ??
+    sizes?.large?.source_url ??
+    media?.source_url ??
+    extractFirstImage(post.content?.rendered ?? '') ??
+    null;
+
   return {
     id:            post.id,
     slug:          post.slug,
@@ -99,10 +108,13 @@ export function normalizePost(post) {
     date:          post.date,
     modified:      post.modified,
     dateFormatted: formatDate(post.date),
-    image:         media?.source_url ?? extractFirstImage(post.content?.rendered ?? '') ?? null,
-    imageAlt:      media?.alt_text   || decodeEntities(rawTitle),
-    author:        author?.name      ?? 'Dark Massilia',
-    categories:    post.categories   ?? [],
+    image:         imageSrc,
+    imageSrcset:   buildSrcset(media),
+    imageWidth:    media?.media_details?.width  ?? 1280,
+    imageHeight:   media?.media_details?.height ?? 720,
+    imageAlt:      media?.alt_text || decodeEntities(rawTitle),
+    author:        author?.name    ?? 'Dark Massilia',
+    categories:    post.categories ?? [],
   };
 }
 
@@ -157,6 +169,16 @@ function decodeEntities(str) {
 function extractFirstImage(html) {
   const match = html.match(/<img[^>]+src="([^"]+)"/);
   return match ? match[1] : null;
+}
+
+// Construit un srcset à partir des tailles générées par WordPress
+function buildSrcset(media) {
+  const sizes = media?.media_details?.sizes;
+  if (!sizes) return null;
+  const entries = Object.values(sizes)
+    .filter(s => s?.source_url && s?.width)
+    .map(s => `${s.source_url} ${s.width}w`);
+  return entries.length ? entries.join(', ') : null;
 }
 
 function formatDate(dateStr) {

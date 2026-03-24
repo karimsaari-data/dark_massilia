@@ -19,6 +19,14 @@ import { FADE_IN_UP } from '../utils/constants';
 
 const BASE_URL = 'https://karimsaari.com';
 
+// Post-traite le HTML WordPress : lazy loading images + rétrogradation h1→h2
+function lazyLoadContent(html) {
+  return html
+    .replace(/<h1(\s[^>]*)?>/gi, '<h2$1>')
+    .replace(/<\/h1>/gi, '</h2>')
+    .replace(/<img(?![^>]*\bloading=)([^>]*>)/gi, '<img loading="lazy" decoding="async"$1');
+}
+
 // Lire les données pré-injectées par prerender.js lors du rendu SSR
 function getSSRPost() {
   try {
@@ -165,12 +173,15 @@ export default function BlogPost() {
               <div className="rounded-2xl overflow-hidden mb-10 aspect-video">
                 <img
                   src={post.image}
+                  srcSet={post.imageSrcset ?? undefined}
+                  sizes="(max-width: 768px) 100vw, 800px"
                   alt={post.imageAlt}
                   className="w-full h-full object-cover"
                   loading="eager"
+                  fetchPriority="high"
                   decoding="async"
-                  width="1280"
-                  height="720"
+                  width={post.imageWidth ?? 1280}
+                  height={post.imageHeight ?? 720}
                 />
               </div>
             )}
@@ -203,7 +214,7 @@ export default function BlogPost() {
               {/* Contenu HTML WordPress — les h1 WP sont rétrogradés en h2 pour éviter les doublons */}
               <div
                 className="prose-blog"
-                dangerouslySetInnerHTML={{ __html: post.content.replace(/<h1(\s[^>]*)?>/gi, '<h2$1>').replace(/<\/h1>/gi, '</h2>') }}
+                dangerouslySetInnerHTML={{ __html: lazyLoadContent(post.content) }}
               />
 
               {/* Partage */}
