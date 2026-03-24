@@ -117,14 +117,93 @@ const mapsUrl = ({ lat, lng, lieu }) => {
   return `https://maps.google.com/?q=${encodeURIComponent(q)}`;
 };
 
+const depollDims = {
+  "/images/Marseille-dark-massilia-plastique-pollution-projet-sentinelle-apneiste.webp":[1920,1312],
+  "/images/Marseille-dark-massilia-plastique-pollution-projet-sentinelle-archipel-frioul-barquette-1.webp":[1920,1312],
+  "/images/Marseille-dark-massilia-plastique-pollution-projet-sentinelle-archipel-frioul-barquette-2.webp":[1920,1312],
+  "/images/Marseille-dark-massilia-plastique-pollution-projet-sentinelle-archipel-frioul-barquette-3.webp":[1920,1312],
+  "/images/Marseille-dark-massilia-plastique-pollution-projet-sentinelle-archipel-frioul-barquette-4.webp":[1920,1312],
+  "/images/Marseille-dark-massilia-plastique-pollution-projet-sentinelle-archipel-frioul-barquette-6.webp":[1920,1312],
+  "/images/Marseille-dark-massilia-plastique-pollution-projet-sentinelle-archipel-frioul-barquette-8.webp":[1920,1312],
+  "/images/Marseille-dark-massilia-plastique-pollution-projet-sentinelle-bache.webp":[1920,1312],
+  "/images/Marseille-dark-massilia-plastique-pollution-projet-sentinelle-barrière.webp":[1920,1312],
+  "/images/Marseille-dark-massilia-plastique-pollution-projet-sentinelle-bateau.webp":[1920,1105],
+  "/images/Marseille-dark-massilia-plastique-pollution-projet-sentinelle-bouteille.webp":[1920,1312],
+  "/images/Marseille-dark-massilia-plastique-pollution-projet-sentinelle-canette.webp":[1920,1312],
+  "/images/Marseille-dark-massilia-plastique-pollution-projet-sentinelle-déchets.webp":[1920,1312],
+  "/images/Marseille-dark-massilia-plastique-pollution-projet-sentinelle-escargot.webp":[1920,1312],
+  "/images/Marseille-dark-massilia-plastique-pollution-projet-sentinelle-fonds-marins.webp":[1920,1312],
+  "/images/Marseille-dark-massilia-plastique-pollution-projet-sentinelle-frioul-1.webp":[1920,1312],
+  "/images/Marseille-dark-massilia-plastique-pollution-projet-sentinelle-frioul-4.webp":[1920,1312],
+  "/images/Marseille-dark-massilia-plastique-pollution-projet-sentinelle-frioul-8.webp":[1920,1312],
+  "/images/Marseille-dark-massilia-plastique-pollution-projet-sentinelle-goudes-esprit-equipe-fight.webp":[1920,1312],
+  "/images/Marseille-dark-massilia-plastique-pollution-projet-sentinelle-grotte-riou.webp":[1920,1155],
+  "/images/Marseille-dark-massilia-plastique-pollution-projet-sentinelle-grotte.webp":[1920,1105],
+  "/images/Marseille-dark-massilia-plastique-pollution-projet-sentinelle-huveaune.webp":[1920,1312],
+  "/images/Marseille-dark-massilia-plastique-pollution-projet-sentinelle-kayak-boudmer.webp":[1920,1312],
+  "/images/Marseille-dark-massilia-plastique-pollution-projet-sentinelle-mer-de-plastique.webp":[1920,1105],
+  "/images/Marseille-dark-massilia-plastique-pollution-projet-sentinelle-morgan-bourchis.webp":[1920,1312],
+  "/images/Marseille-dark-massilia-plastique-pollution-projet-sentinelle-moyades-romuald.webp":[1920,1312],
+  "/images/Marseille-dark-massilia-plastique-pollution-projet-sentinelle-moyades.webp":[1920,1312],
+  "/images/Marseille-dark-massilia-plastique-pollution-projet-sentinelle-musée.webp":[1920,1247],
+  "/images/Marseille-dark-massilia-plastique-pollution-projet-sentinelle-musée_subaquatique-1.webp":[1920,1312],
+  "/images/Marseille-dark-massilia-plastique-pollution-projet-sentinelle-musée_subaquatique-2.webp":[1920,1312],
+  "/images/Marseille-dark-massilia-plastique-pollution-projet-sentinelle-musée_subaquatique-vie-marine.webp":[1920,1312],
+  "/images/Marseille-dark-massilia-plastique-pollution-projet-sentinelle-nage-calanque.webp":[1920,1105],
+  "/images/Marseille-dark-massilia-plastique-pollution-projet-sentinelle-nage.webp":[1920,1105],
+  "/images/Marseille-dark-massilia-plastique-pollution-projet-sentinelle-plaque-immatriculation.webp":[1920,1312],
+  "/images/Marseille-dark-massilia-plastique-pollution-projet-sentinelle-pollution-huveaune.webp":[1920,1312],
+  "/images/Marseille-dark-massilia-plastique-pollution-projet-sentinelle-poséidon.webp":[1920,1312],
+  "/images/Marseille-dark-massilia-plastique-pollution-projet-sentinelle-shooting-cave.webp":[1920,1155],
+  "/images/Marseille-dark-massilia-plastique-pollution-projet-sentinelle-shooting.webp":[1920,1312],
+  "/images/Marseille-dark-massilia-plastique-pollution-projet-sentinelle-soupe-plastique.webp":[1920,1312],
+  "/images/Marseille-dark-massilia-plastique-pollution-projet-sentinelle-teamoxygen-freediving.webp":[1920,1312],
+  "/images/Marseille-dark-massilia-plastique-pollution-projet-sentinelle-teamoxygen.webp":[1920,1312],
+  "/images/Marseille-dark-massilia-plastique-pollution-projet-sentinelle-vélo-métropole.webp":[1920,1312],
+  "/images/Marseille-dark-massilia-plastique-pollution-projet-sentinelle-vélo.webp":[1920,1312],
+  "/images/Marseille-dark-massilia-plastique-pollution-projet-sentinelle-angel.webp":[1920,1312],
+  "/images/Marseille-dark-massilia-plastique-pollution-projet-sentinelle-archipel-frioul-barquette-7.webp":[1920,1312],
+  "/images/Marseille-dark-massilia-plastique-pollution-projet-sentinelle-diving.webp":[1920,1312],
+  "/images/Marseille-dark-massilia-plastique-pollution-projet-sentinelle-frioul-7.webp":[1920,1312],
+  "/images/Marseille-dark-massilia-plastique-pollution-projet-sentinelle-frioul-9.webp":[1920,1312],
+  "/images/Marseille-dark-massilia-plastique-pollution-projet-sentinelle-mer-goudes.webp":[1920,1312],
+  "/images/Marseille-dark-massilia-plastique-pollution-projet-sentinelle-musée-subaquatique.webp":[1920,1312],
+  "/images/Marseille-dark-massilia-plastique-pollution-projet-sentinelle-musée_subaquatique-3.webp":[1920,1312],
+  "/images/Marseille-dark-massilia-plastique-pollution-projet-sentinelle-octopus.webp":[1920,1312],
+  "/images/Marseille-dark-massilia-plastique-pollution-projet-sentinelle-paysage-sous-marin.webp":[1920,1105],
+  "/images/photographe-sous-marin-marseille-depollution-posidonie-apnee-projet-sentinelle.webp":[3000,1750],
+  "/images/photographe-sous-marin-marseille-mission-depollution-projet-sentinelle.webp":[1920,1440],
+  "/images/photographe-sous-marin-marseille-fonds-marins-calanques-apnee.webp":[1920,1440],
+  "/images/photographe-sous-marin-marseille-apneiste-competition-certification.webp":[3000,1750],
+  "/images/photographe-sous-marin-marseille-morgan-bourchis-triple-champion-monde-apnee-depollution-sentinelle.webp":[3000,1970],
+  "/images/photographe-sous-marin-marseille-plongeurs-fonds-marins-mediterranee.webp":[3000,1750],
+  "/images/photographe-sous-marin-marseille-apneiste-exploration-fonds-marins.webp":[1920,1440],
+  "/images/marseille-dark-massilia-depollution-maritime-calanques-projet-sentinelle.webp":[2048,1536],
+  "/images/marseille-dark-massilia-depollution-pneu-port-goudes-projet-sentinelle.webp":[2048,1152],
+  "/images/marseille-dark-massilia-operation-sentinelle-kayak-dechets-calanques.webp":[2048,1152],
+  "/images/marseille-dark-massilia-photo-sous-marine-depollution-team-oxygen.webp":[1152,2048],
+  "/images/marseille-dark-massilia-port-goudes-depollution-apnee-projet-sentinelle.webp":[2048,1536],
+  "/images/marseille-dark-massilia-projet-sentinelle-caracterisation-dechets.webp":[3884,2136],
+  "/images/marseille-dark-massilia-tf1-reportage-projet-sentinelle-depollution.webp":[4000,2252],
+  "/images/portfolio/New/h-3-vallon-depoll.webp":[1920,1280],
+};
+
+const biodivDims = {
+  "/images/Marseille-dark-massilia-plastique-pollution-projet-sentinelle-archipel-frioul-barquette-5.webp":[1920,1312],
+  "/images/Marseille-dark-massilia-plastique-pollution-projet-sentinelle-spirographe.webp":[1920,1312],
+  "/images/Marseille-dark-massilia-plastique-pollution-projet-sentinelle-poulpe.webp":[1920,1216],
+};
+
 const baseDepollution = depollutionPaths.map((src, i) => {
   const lieu = getLieu(src);
-  return { uid: `depoll-${i}`, src, alt: getAltText(src), lieu, maps: mapsUrl({ lieu }) };
+  const [width, height] = depollDims[src] || [1920, 1312];
+  return { uid: `depoll-${i}`, src, alt: getAltText(src), lieu, maps: mapsUrl({ lieu }), width, height };
 });
 
 const baseBiodiversite = biodiversitePaths.map((src, i) => {
   const lieu = getLieu(src);
-  return { uid: `biodiv-${i}`, src, alt: getAltText(src), lieu, maps: mapsUrl({ lieu }) };
+  const [width, height] = biodivDims[src] || [1920, 1312];
+  return { uid: `biodiv-${i}`, src, alt: getAltText(src), lieu, maps: mapsUrl({ lieu }), width, height };
 });
 
 const shuffle = (arr) => {
@@ -381,8 +460,11 @@ const PhotoGrid = ({ images, gallery }) => (
         <img
           src={image.src}
           alt={image.alt}
+          width={image.width}
+          height={image.height}
           className="w-full h-auto object-cover"
           loading={index < 4 ? 'eager' : 'lazy'}
+          fetchPriority={index === 0 ? 'high' : undefined}
           decoding="async"
         />
       </motion.a>

@@ -575,6 +575,7 @@ const PhotoGrid = ({ images }) => (
           height={image.height}
           className="w-full h-auto object-cover"
           loading={index < 4 ? 'eager' : 'lazy'}
+          fetchPriority={index === 0 ? 'high' : undefined}
           decoding="async"
         />
       </motion.a>
