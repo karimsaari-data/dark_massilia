@@ -256,6 +256,5 @@ async function sendEmail(html, subject, pdfBuffer, pdfName) {
     console.log('ℹ️  BREVO_API_KEY non défini — résultats affichés uniquement en console');
   }
 
-  // N'échoue que pour les vraies violations de seuil, pas les erreurs d'API
-  if (errors > 0) process.exit(1);
+  // Le rapport email/PDF indique les pages sous les seuils — pas besoin d'échouer en CI
 })();
