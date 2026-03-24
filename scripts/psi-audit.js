@@ -7,6 +7,7 @@
 import { readFileSync } from 'fs';
 import { resolve, dirname } from 'path';
 import { fileURLToPath } from 'url';
+import puppeteer from 'puppeteer';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 
@@ -59,11 +60,38 @@ function scoreBar(s) {
 
 function pageLabel(url) { return url.replace('https://karimsaari.com', '') || '/'; }
 
-async function sendEmail(html, subject) {
+async function generatePDF(html) {
+  const browser = await puppeteer.launch({
+    executablePath: process.env.PUPPETEER_EXECUTABLE_PATH || undefined,
+    args: ['--no-sandbox', '--disable-dev-shm-usage', '--disable-gpu'],
+    headless: true,
+  });
+  const page = await browser.newPage();
+  await page.setViewport({ width: 720, height: 900 });
+  await page.setContent(html, { waitUntil: 'networkidle0' });
+  const pdf = await page.pdf({
+    format: 'A4',
+    printBackground: true,
+    margin: { top: '10mm', right: '10mm', bottom: '10mm', left: '10mm' },
+  });
+  await browser.close();
+  return pdf;
+}
+
+async function sendEmail(html, subject, pdfBuffer, pdfName) {
+  const body = {
+    sender: BREVO_FROM,
+    to: [{ email: BREVO_TO }],
+    subject,
+    htmlContent: html,
+  };
+  if (pdfBuffer) {
+    body.attachment = [{ name: pdfName, content: Buffer.from(pdfBuffer).toString('base64') }];
+  }
   const res = await fetch('https://api.brevo.com/v3/smtp/email', {
     method: 'POST',
     headers: { 'api-key': process.env.BREVO_API_KEY, 'Content-Type': 'application/json' },
-    body: JSON.stringify({ sender: BREVO_FROM, to: [{ email: BREVO_TO }], subject, htmlContent: html }),
+    body: JSON.stringify(body),
   });
   return res.json();
 }
@@ -206,10 +234,21 @@ async function sendEmail(html, subject) {
 
   if (process.env.BREVO_API_KEY) {
     const subject = `🚦 PSI Audit — ${dateStr} — ${errors === 0 ? 'OK' : errors + ' alerte(s)'}`;
+    const pdfName = `psi-audit-${dateStr}.pdf`;
+
+    console.log('📄 Génération PDF…');
+    let pdfBuffer = null;
+    try {
+      pdfBuffer = await generatePDF(html);
+      console.log(`✅ PDF généré (${Math.round(pdfBuffer.length / 1024)} KB)`);
+    } catch (err) {
+      console.warn('⚠️  PDF non généré (puppeteer indisponible) :', err.message);
+    }
+
     console.log('📧 Envoi email Brevo…');
-    const result = await sendEmail(html, subject);
+    const result = await sendEmail(html, subject, pdfBuffer, pdfName);
     if (result.messageId) {
-      console.log(`✅ Email envoyé (messageId: ${result.messageId})`);
+      console.log(`✅ Email envoyé (messageId: ${result.messageId})${pdfBuffer ? ' + PDF en pièce jointe' : ''}`);
     } else {
       console.error('❌ Erreur Brevo:', JSON.stringify(result));
     }

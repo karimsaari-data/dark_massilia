@@ -79,23 +79,28 @@ async function main() {
   let page = 1;
   let totalPages = 1;
 
-  do {
-    const params = new URLSearchParams({
-      per_page: 100,
-      page,
-      status: 'publish',
-      _embed: '',
-    });
-    const res = await fetch(`${WP_BASE}/posts?${params}`);
-    if (!res.ok) {
-      console.error(`❌ WordPress API erreur ${res.status}`);
-      process.exit(1);
-    }
-    const posts = await res.json();
-    allPosts = allPosts.concat(posts);
-    totalPages = parseInt(res.headers.get('X-WP-TotalPages') ?? '1', 10);
-    page++;
-  } while (page <= totalPages);
+  try {
+    do {
+      const params = new URLSearchParams({
+        per_page: 100,
+        page,
+        status: 'publish',
+        _embed: '',
+      });
+      const res = await fetch(`${WP_BASE}/posts?${params}`);
+      if (!res.ok) {
+        console.warn(`⚠️  WordPress API erreur HTTP ${res.status} — notification ignorée.`);
+        return;
+      }
+      const posts = await res.json();
+      allPosts = allPosts.concat(posts);
+      totalPages = parseInt(res.headers.get('X-WP-TotalPages') ?? '1', 10);
+      page++;
+    } while (page <= totalPages);
+  } catch (err) {
+    console.warn(`⚠️  WordPress injoignable (${err.message}) — notification ignorée.`);
+    return;
+  }
 
   // 3. Filtrer les nouveaux slugs
   const newPosts = allPosts.filter(p => !notified.includes(p.slug));
@@ -107,7 +112,10 @@ async function main() {
 
   console.log(`📧 ${newPosts.length} nouvel(s) article(s) à notifier…`);
 
-  // 4. Notifier pour chaque nouvel article
+  let failures = 0;
+
+  // 4. Notifier article par article — sauvegarde immédiate après chaque succès
+  //    pour éviter toute double notification en cas d'erreur ultérieure
   for (const post of newPosts) {
     const title   = decodeEntities(post.title?.rendered ?? '');
     const rawExc  = stripHtml(post.excerpt?.rendered ?? '');
@@ -117,31 +125,39 @@ async function main() {
 
     console.log(`   → ${title}`);
 
-    const res = await fetch(`${SUPABASE_URL}/functions/v1/notify-new-article`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'x-notify-secret': NOTIFY_SECRET,
-      },
-      body: JSON.stringify({ title, excerpt, url, image }),
-    });
+    try {
+      const res = await fetch(`${SUPABASE_URL}/functions/v1/notify-new-article`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'x-notify-secret': NOTIFY_SECRET,
+        },
+        body: JSON.stringify({ title, excerpt, url, image }),
+      });
 
-    if (!res.ok) {
-      const err = await res.text();
-      console.error(`   ❌ Erreur Supabase : ${err}`);
-    } else {
-      const data = await res.json();
-      console.log(`   ✅ Campagne Brevo envoyée (id: ${data.campaignId})`);
-      notified.push(post.slug);
+      if (!res.ok) {
+        const err = await res.text();
+        console.error(`   ❌ Erreur Supabase (HTTP ${res.status}) : ${err}`);
+        failures++;
+      } else {
+        const data = await res.json();
+        console.log(`   ✅ Campagne Brevo envoyée (id: ${data.campaignId})`);
+        notified.push(post.slug);
+        // Sauvegarde immédiate : si le process est interrompu ensuite,
+        // cet article ne sera jamais notifié en double
+        await writeFile(LOG_FILE, JSON.stringify(notified, null, 2));
+      }
+    } catch (err) {
+      console.error(`   ❌ Erreur réseau Supabase (${err.message}) — article ignoré, sera retenté demain`);
+      failures++;
     }
   }
 
-  // 5. Sauvegarder le log
-  await writeFile(LOG_FILE, JSON.stringify(notified, null, 2));
-  console.log('✓ Log mis à jour.');
+  console.log(`✓ Log à jour.${failures > 0 ? ` ⚠️  ${failures} notification(s) échouée(s).` : ''}`);
+  if (failures > 0) process.exit(1);
 }
 
 main().catch(err => {
-  console.error('❌ notify-new-articles:', err.message);
+  console.error('❌ notify-new-articles (erreur inattendue):', err.message);
   process.exit(1);
 });
