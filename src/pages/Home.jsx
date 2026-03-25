@@ -561,13 +561,24 @@ const Home = () => {
               <p className="text-gray-300 text-lg mb-8 leading-[1.8]">
                 Documentaires ARTE, reportages de dépollution en apnée, rétrospectives annuelles… Vivez nos missions depuis les profondeurs des Calanques de Marseille.
               </p>
-              <Link
-                to="/videos"
-                className="btn-primary inline-flex items-center gap-2 w-fit"
-              >
-                <span>Voir les vidéos</span>
-                <ArrowRight className="w-5 h-5" />
-              </Link>
+              <div className="flex flex-wrap gap-3">
+                <Link
+                  to="/videos"
+                  className="btn-primary inline-flex items-center gap-2"
+                  onClick={() => trackEvent('cta_click', { button_name: 'Voir les vidéos' })}
+                >
+                  <span>Voir les vidéos</span>
+                  <ArrowRight className="w-5 h-5" />
+                </Link>
+                <Link
+                  to="/presse"
+                  className="btn-ghost inline-flex items-center gap-2"
+                  onClick={() => trackEvent('cta_click', { button_name: 'Couverture médiatique' })}
+                >
+                  <span>Couverture médiatique</span>
+                  <ArrowRight className="w-5 h-5" />
+                </Link>
+              </div>
             </div>
           </div>
         </motion.div>
