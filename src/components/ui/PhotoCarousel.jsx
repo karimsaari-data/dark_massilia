@@ -1,6 +1,7 @@
 import { useState, useEffect, useCallback } from 'react';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
+import { trackEvent } from '../../lib/analytics';
 
 // Liste complète des 58 images du Projet Sentinelle
 const allImages = [
@@ -124,13 +125,23 @@ const PhotoCarousel = () => {
 
   const nextSlide = useCallback(() => {
     setDirection(1);
-    setCurrentIndex((prev) => (prev + 1) % shuffledImages.length);
-  }, [shuffledImages.length]);
+    setCurrentIndex((prev) => {
+      const next = (prev + 1) % shuffledImages.length;
+      const name = shuffledImages[next]?.split('/').pop().replace('.webp', '') ?? '';
+      trackEvent('photo_view', { photo_name: name });
+      return next;
+    });
+  }, [shuffledImages]);
 
   const prevSlide = useCallback(() => {
     setDirection(-1);
-    setCurrentIndex((prev) => (prev - 1 + shuffledImages.length) % shuffledImages.length);
-  }, [shuffledImages.length]);
+    setCurrentIndex((prev) => {
+      const next = (prev - 1 + shuffledImages.length) % shuffledImages.length;
+      const name = shuffledImages[next]?.split('/').pop().replace('.webp', '') ?? '';
+      trackEvent('photo_view', { photo_name: name });
+      return next;
+    });
+  }, [shuffledImages]);
 
   // Navigation au clavier
   useEffect(() => {

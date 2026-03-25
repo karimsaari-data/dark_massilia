@@ -304,7 +304,7 @@ const Home = () => {
                       href="#galerie"
                       className="btn-primary inline-flex items-center gap-2"
                       title="Voir les photographies des Calanques de Marseille par Karim Saari"
-                      onClick={() => trackEvent('cta_click', { label: 'Découvrir les Calanques' })}
+                      onClick={() => trackEvent('cta_click', { button_name: 'Découvrir les Calanques' })}
                     >
                       <span>Découvrir les Calanques</span>
                       <ArrowRight className="w-4 h-4" aria-hidden="true" />
@@ -313,7 +313,7 @@ const Home = () => {
                       to="/depollution-marine"
                       className="btn-ghost inline-flex items-center gap-2"
                       title="En savoir plus sur mes actions de dépollution et mon engagement écologique"
-                      onClick={() => trackEvent('cta_click', { label: 'Engagement & Dépollution' })}
+                      onClick={() => trackEvent('cta_click', { button_name: 'Engagement & Dépollution' })}
                     >
                       <span>Engagement &amp; Dépollution</span>
                       <ArrowRight className="w-4 h-4" aria-hidden="true" />
@@ -797,7 +797,7 @@ const Home = () => {
                 target="_blank"
                 rel="noopener noreferrer"
                 className="btn-primary inline-flex items-center gap-2 w-fit"
-                onClick={() => trackEvent('cta_click', { label: 'Rejoindre le Groupe Facebook' })}
+                onClick={() => trackEvent('cta_click', { button_name: 'Rejoindre le Groupe Facebook' })}
               >
                 <span>Rejoindre le Groupe Facebook</span>
                 <ArrowRight className="w-5 h-5" />
