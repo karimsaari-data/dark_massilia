@@ -1,0 +1,37 @@
+name: Weekly GA Report
+
+on:
+  schedule:
+    - cron: '30 7 * * 0'   # Chaque dimanche à 7h30 UTC = 8h30/9h30 Paris (après le SEO digest)
+  workflow_dispatch:        # Déclenchement manuel possible
+
+env:
+  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
+  PUPPETEER_SKIP_CHROMIUM_DOWNLOAD: true
+  PUPPETEER_EXECUTABLE_PATH: /usr/bin/google-chrome-stable
+
+jobs:
+  ga-report:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js 24
+        uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+          cache: 'npm'
+
+      - name: Installation des dépendances
+        run: npm ci
+
+      - name: Générer et envoyer le rapport GA4
+        env:
+          GSC_CLIENT_ID:     ${{ secrets.GSC_CLIENT_ID }}
+          GSC_CLIENT_SECRET: ${{ secrets.GSC_CLIENT_SECRET }}
+          GSC_REFRESH_TOKEN: ${{ secrets.GSC_REFRESH_TOKEN }}
+          GA_PROPERTY_ID:    ${{ secrets.GA_PROPERTY_ID }}
+          BREVO_API_KEY:     ${{ secrets.BREVO_API_KEY }}
+        run: npm run ga-report
