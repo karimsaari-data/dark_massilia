@@ -529,11 +529,19 @@ async function sendEmail(html, subject, pdfBuffer, pdfName) {
     ${kpi('Pages vues',      fmtNum(curr.pageViews),        `${diffArrow(curr.pageViews,       prev.pageViews)}${diffPct(curr.pageViews,      prev.pageViews)} vs péri. préc.`, curr.pageViews       >= prev.pageViews        ? '#21c47b' : '#e74c3c')}
     ${kpi('Durée moy.',      fmtDuration(curr.duration),   `prev: ${fmtDuration(prev.duration)}`, null)}
   </div>
-  <div style="display:flex;gap:8px;margin-bottom:32px">
+  <div style="display:flex;gap:8px;margin-bottom:8px">
     ${kpi('Engagement',      fmtPct(curr.engagementRate),  `prev: ${fmtPct(prev.engagementRate)}`, curr.engagementRate >= prev.engagementRate ? '#21c47b' : '#e74c3c')}
     ${kpi('Nv. utilisateurs',fmtNum(curr.newUsers),        `${diffArrow(curr.newUsers, prev.newUsers)} vs péri. préc.`, curr.newUsers >= prev.newUsers ? '#21c47b' : '#e74c3c')}
     ${kpi('Sessions 28j',    fmtNum(curr28.sessions),      null, null)}
     ${kpi('Pages vues 28j',  fmtNum(curr28.pageViews),     null, null)}
+  </div>
+
+  <div style="font-size:11px;color:#64748b;text-transform:uppercase;letter-spacing:1px;margin-bottom:8px;margin-top:8px">28 derniers jours</div>
+  <div style="display:flex;gap:8px;margin-bottom:32px">
+    ${kpi('Utilisateurs 28j',  fmtNum(curr28.users),            null, null)}
+    ${kpi('Durée moy. 28j',    fmtDuration(curr28.duration),    null, null)}
+    ${kpi('Engagement 28j',    fmtPct(curr28.engagementRate),   null, null)}
+    ${kpi('Nv. visiteurs 28j', fmtNum(curr28.newUsers),         null, null)}
   </div>
 
   <!-- ═══════════════════ PAGE 2 — Top pages ═══════════════════ -->
