@@ -76,10 +76,19 @@ function fetchTopPages(token, startDate, endDate) {
 function fetchSources(token, startDate, endDate) {
   return gaQuery(token, {
     dateRanges: [{ startDate, endDate }],
-    dimensions: [{ name: 'sessionDefaultChannelGroup' }],
+    dimensions: [{ name: 'sessionSourceMedium' }],
     metrics: [{ name: 'sessions' }, { name: 'activeUsers' }],
     orderBys: [{ metric: { metricName: 'sessions' }, desc: true }],
-    limit: 8,
+    // Exclure les bots connus (Ahrefs, Semrush, etc.)
+    dimensionFilter: {
+      notExpression: {
+        filter: {
+          fieldName: 'sessionSource',
+          stringFilter: { matchType: 'CONTAINS', value: 'ahrefs' },
+        },
+      },
+    },
+    limit: 10,
   });
 }
 
@@ -161,17 +170,24 @@ function kpi(label, value, sub, subColor) {
 }
 
 function sourceLabel(name) {
+  // name = "source / medium"
   const map = {
-    'Organic Search':   '🔍 Recherche organique',
-    'Direct':           '🔗 Direct',
-    'Organic Social':   '📱 Réseaux sociaux',
-    'Referral':         '↗️ Référents',
-    'Email':            '📧 Email',
-    'Paid Search':      '💰 Recherche payante',
-    'Unassigned':       '❓ Non assigné',
-    'Organic Video':    '▶️ Vidéo organique',
+    'google / organic':           '🔍 Google organique',
+    'ig / social':                '📸 Instagram',
+    'sendinblue / email':         '📧 Brevo email',
+    'brevo / email':              '📧 Brevo email',
+    '(direct) / (none)':         '🔗 Direct',
+    'fr.pinterest.com / referral':'📌 Pinterest',
+    't.co / referral':            '🐦 Twitter/X',
+    'bing / organic':             '🔍 Bing organique',
+    'facebook.com / referral':    '📘 Facebook',
+    'youtube.com / referral':     '▶️ YouTube',
   };
-  return map[name] || name;
+  if (map[name]) return map[name];
+  // Génération automatique pour les autres
+  const [src, med] = name.split(' / ');
+  const icons = { organic: '🔍', social: '📱', email: '📧', referral: '↗️', cpc: '💰', none: '🔗' };
+  return (icons[med] ?? '🌐') + ' ' + name;
 }
 
 function deviceIcon(name) {
@@ -417,7 +433,7 @@ async function sendEmail(html, subject, pdfBuffer, pdfName) {
   <!-- Sources + Appareils -->
   <div style="display:flex;gap:10px;margin-bottom:16px">
     <div style="flex:1;background:#0f2035;border-radius:12px;padding:16px">
-      <h2 style="margin:0 0 12px;font-size:13px;color:#21c47b">Sources de trafic — 7j</h2>
+      <h2 style="margin:0 0 12px;font-size:13px;color:#21c47b">Source / Support — 7j</h2>
       <table style="width:100%;border-collapse:collapse">${sourcesHtml}</table>
     </div>
     <div style="flex:1;background:#0f2035;border-radius:12px;padding:16px">
