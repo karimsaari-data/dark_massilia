@@ -90,16 +90,22 @@ function formatDate(d) { return d.toISOString().split('T')[0]; }
 function pageLabel(url) { return url.replace('https://karimsaari.com', '') || '/'; }
 function sum(rows, field) { return (rows || []).reduce((a, r) => a + r[field], 0); }
 
+function avgPos(rows) {
+  const total = (rows || []).reduce((a, r) => a + r.impressions, 0);
+  if (!total) return 0;
+  return (rows || []).reduce((a, r) => a + r.position * r.impressions, 0) / total;
+}
+
 function trendRows(curr, prev) {
   const currMap = Object.fromEntries((curr.rows || []).map(r => [r.keys[0], r]));
   const prevMap = Object.fromEntries((prev.rows || []).map(r => [r.keys[0], r]));
   const rising = [], falling = [];
   for (const [url, c] of Object.entries(currMap)) {
     const p = prevMap[url];
-    if (!p) continue;
+    if (!p || p.impressions < 8) continue; // anti-bruit : volume minimum
     const diff = c.impressions - p.impressions;
-    const pct  = p.impressions > 0 ? Math.round((diff / p.impressions) * 100) : 0;
-    if (pct >= 20 && diff >= 5)  rising.push({ url, impressions: c.impressions, diff, pct });
+    const pct  = Math.round((diff / p.impressions) * 100);
+    if (pct >= 20 && diff >= 5)   rising.push({ url, impressions: c.impressions, diff, pct });
     if (pct <= -20 && diff <= -5) falling.push({ url, impressions: c.impressions, diff, pct });
   }
   rising.sort((a, b) => b.pct - a.pct);
@@ -193,11 +199,26 @@ async function sendEmail(html, subject, pdfBuffer, pdfName) {
   const ctr7  = c7.impressions  > 0 ? ((c7.clicks  / c7.impressions)  * 100).toFixed(1) : '0';
   const ctr28 = c28.impressions > 0 ? ((c28.clicks / c28.impressions) * 100).toFixed(1) : '0';
 
+  // Position moyenne pondérée (impressions)
+  const pos7  = avgPos(curr7.rows).toFixed(1);
+  const ppos7 = avgPos(prev7.rows).toFixed(1);
+  const pos28 = avgPos(curr28.rows).toFixed(1);
+
   // Tendances
   const { rising, falling } = trendRows(curr7, prev7);
 
   // Top pages (7j, triées par clics)
   const top10 = [...(curr7.rows || [])].sort((a,b) => b.clicks - a.clicks).slice(0, 10);
+
+  // Carte prev7 pour delta position
+  const prev7Map = Object.fromEntries((prev7.rows || []).map(r => [r.keys[0], r]));
+
+  // Opportunités quick wins : position 4–10, impressions >= 5, CTR < CTR moyen
+  const avgCtr7 = c7.impressions > 0 ? c7.clicks / c7.impressions : 0;
+  const opportunities = (curr7.rows || [])
+    .filter(r => r.position >= 4 && r.position <= 10 && r.impressions >= 5 && r.ctr < avgCtr7)
+    .sort((a, b) => b.impressions - a.impressions)
+    .slice(0, 5);
 
   // Image search
   const imgClicks = imageSearch7.rows?.[0]?.clicks ?? 0;
@@ -208,20 +229,28 @@ async function sendEmail(html, subject, pdfBuffer, pdfName) {
 
   // ── HTML rows ────────────────────────────────────────────────────────────────
 
-  const pagesRows = top10.map(r => `
+  const pagesRows = top10.map(r => {
+    const prev = prev7Map[r.keys[0]];
+    const posDelta = prev ? (prev.position - r.position).toFixed(1) : null;
+    const posCell = r.position.toFixed(1) + (posDelta !== null
+      ? ` <span style="font-size:10px;color:${posDelta > 0 ? '#21c47b' : posDelta < 0 ? '#e74c3c' : '#64748b'}">${posDelta > 0 ? '↑' : posDelta < 0 ? '↓' : ''}${Math.abs(posDelta)}</span>`
+      : '');
+    return `
     <tr>
       <td style="padding:7px 10px;border-bottom:1px solid #1e3a50;color:#94a3b8;font-size:12px">${pageLabel(r.keys[0])}</td>
       <td style="padding:7px 10px;border-bottom:1px solid #1e3a50;text-align:center;font-weight:600;font-size:13px">${r.clicks}</td>
       <td style="padding:7px 10px;border-bottom:1px solid #1e3a50;text-align:center;color:#94a3b8;font-size:12px">${r.impressions}</td>
       <td style="padding:7px 10px;border-bottom:1px solid #1e3a50;text-align:center;color:#94a3b8;font-size:12px">${(r.ctr*100).toFixed(1)}%</td>
-      <td style="padding:7px 10px;border-bottom:1px solid #1e3a50;text-align:center;color:#94a3b8;font-size:12px">${r.position.toFixed(1)}</td>
-    </tr>`).join('');
+      <td style="padding:7px 10px;border-bottom:1px solid #1e3a50;text-align:center;color:#94a3b8;font-size:12px">${posCell}</td>
+    </tr>`;
+  }).join('');
 
   const queriesRows = (queries7.rows || []).slice(0, 10).map(r => `
     <tr>
       <td style="padding:7px 10px;border-bottom:1px solid #1e3a50;color:#94a3b8;font-size:12px">${r.keys[0]}</td>
       <td style="padding:7px 10px;border-bottom:1px solid #1e3a50;text-align:center;font-weight:600;font-size:13px">${r.clicks}</td>
       <td style="padding:7px 10px;border-bottom:1px solid #1e3a50;text-align:center;color:#94a3b8;font-size:12px">${r.impressions}</td>
+      <td style="padding:7px 10px;border-bottom:1px solid #1e3a50;text-align:center;color:#94a3b8;font-size:12px">${(r.ctr*100).toFixed(1)}%</td>
       <td style="padding:7px 10px;border-bottom:1px solid #1e3a50;text-align:center;color:#94a3b8;font-size:12px">${r.position.toFixed(1)}</td>
     </tr>`).join('');
 
@@ -276,18 +305,20 @@ async function sendEmail(html, subject, pdfBuffer, pdfName) {
 
   <!-- KPIs 7 jours -->
   <div style="font-size:11px;color:#64748b;text-transform:uppercase;letter-spacing:1px;margin-bottom:8px">7 derniers jours</div>
-  <div style="display:flex;gap:10px;margin-bottom:8px">
+  <div style="display:flex;gap:8px;margin-bottom:8px">
     ${kpiBlock('Clics', c7.clicks, `${diffArrow(c7.clicks - p7.clicks)} vs sem. préc.`, c7.clicks >= p7.clicks ? '#21c47b' : '#e74c3c')}
     ${kpiBlock('Impressions', c7.impressions, `${diffArrow(c7.impressions - p7.impressions)} vs sem. préc.`, c7.impressions >= p7.impressions ? '#21c47b' : '#e74c3c')}
     ${kpiBlock('CTR moyen', ctr7 + '%', null, null)}
+    ${kpiBlock('Pos. moyenne', pos7, `${diffArrow(parseFloat(ppos7) - parseFloat(pos7))} vs sem. préc.`, parseFloat(pos7) <= parseFloat(ppos7) ? '#21c47b' : '#e74c3c')}
   </div>
 
   <!-- KPIs 28 jours -->
   <div style="font-size:11px;color:#64748b;text-transform:uppercase;letter-spacing:1px;margin-bottom:8px;margin-top:20px">28 derniers jours</div>
-  <div style="display:flex;gap:10px;margin-bottom:24px">
+  <div style="display:flex;gap:8px;margin-bottom:24px">
     ${kpiBlock('Clics', c28.clicks, `${diffArrow(c28.clicks - p28.clicks)} vs 28j préc.`, c28.clicks >= p28.clicks ? '#21c47b' : '#e74c3c')}
     ${kpiBlock('Impressions', c28.impressions, `${diffArrow(c28.impressions - p28.impressions)} vs 28j préc.`, c28.impressions >= p28.impressions ? '#21c47b' : '#e74c3c')}
     ${kpiBlock('CTR moyen', ctr28 + '%', null, null)}
+    ${kpiBlock('Pos. moyenne', pos28, null, null)}
   </div>
 
   <!-- Tendances -->
@@ -311,11 +342,13 @@ async function sendEmail(html, subject, pdfBuffer, pdfName) {
           <td style="padding:7px 10px;border-bottom:1px solid #1e3a50;color:#94a3b8;font-size:12px">🔍 Recherche web</td>
           <td style="padding:7px 10px;border-bottom:1px solid #1e3a50;text-align:center;font-weight:600;font-size:13px">${c7.clicks}</td>
           <td style="padding:7px 10px;border-bottom:1px solid #1e3a50;text-align:center;color:#94a3b8;font-size:12px">${c7.impressions} impr.</td>
+          <td style="padding:7px 10px;border-bottom:1px solid #1e3a50;text-align:center;color:#94a3b8;font-size:12px">${ctr7}% CTR</td>
         </tr>
         <tr>
           <td style="padding:7px 10px;color:#94a3b8;font-size:12px">🖼️ Recherche d'images</td>
           <td style="padding:7px 10px;text-align:center;font-weight:600;font-size:13px">${imgClicks}</td>
           <td style="padding:7px 10px;text-align:center;color:#94a3b8;font-size:12px">${imgImpr} impr.</td>
+          <td style="padding:7px 10px;text-align:center;color:#94a3b8;font-size:12px">${imgImpr > 0 ? ((imgClicks/imgImpr)*100).toFixed(1) : '0'}% CTR</td>
         </tr>
       </table>
     </div>
@@ -340,6 +373,29 @@ async function sendEmail(html, subject, pdfBuffer, pdfName) {
     </table>
   </div>
 
+  <!-- Opportunités quick wins -->
+  <div style="background:#0f2035;border-radius:12px;padding:16px;margin-bottom:12px">
+    <h2 style="margin:0 0 4px;font-size:13px;color:#f59e0b">⚡ Opportunités quick wins — pos. 4–10 · CTR sous la moyenne</h2>
+    <div style="font-size:11px;color:#64748b;margin-bottom:10px">Pages bien positionnées mais avec un CTR faible → optimiser title/meta description</div>
+    ${opportunities.length ? `
+    <table style="width:100%;border-collapse:collapse">
+      <thead><tr style="font-size:10px;color:#64748b;text-transform:uppercase">
+        <th style="padding:6px 10px;text-align:left">Page</th>
+        <th style="padding:6px 10px">Impr.</th>
+        <th style="padding:6px 10px">CTR</th>
+        <th style="padding:6px 10px">Pos.</th>
+      </tr></thead>
+      <tbody>${opportunities.map(r => `
+        <tr>
+          <td style="padding:7px 10px;border-bottom:1px solid #1e3a50;color:#94a3b8;font-size:12px">${pageLabel(r.keys[0])}</td>
+          <td style="padding:7px 10px;border-bottom:1px solid #1e3a50;text-align:center;color:#94a3b8;font-size:12px">${r.impressions}</td>
+          <td style="padding:7px 10px;border-bottom:1px solid #1e3a50;text-align:center;color:#f59e0b;font-size:12px">${(r.ctr*100).toFixed(1)}%</td>
+          <td style="padding:7px 10px;border-bottom:1px solid #1e3a50;text-align:center;color:#94a3b8;font-size:12px">${r.position.toFixed(1)}</td>
+        </tr>`).join('')}
+      </tbody>
+    </table>` : `<div style="font-size:12px;color:#64748b;padding:8px 0">Aucune opportunité détectée cette semaine</div>`}
+  </div>
+
   <!-- Top requêtes -->
   <div style="background:#0f2035;border-radius:12px;padding:16px;margin-bottom:24px">
     <h2 style="margin:0 0 12px;font-size:13px;color:#21c47b">Top requêtes — 7 jours</h2>
@@ -348,6 +404,7 @@ async function sendEmail(html, subject, pdfBuffer, pdfName) {
         <th style="padding:6px 10px;text-align:left">Requête</th>
         <th style="padding:6px 10px">Clics</th>
         <th style="padding:6px 10px">Impr.</th>
+        <th style="padding:6px 10px">CTR</th>
         <th style="padding:6px 10px">Pos.</th>
       </tr></thead>
       <tbody>${queriesRows}</tbody>
