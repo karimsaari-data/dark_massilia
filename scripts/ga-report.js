@@ -92,6 +92,54 @@ function fetchSources(token, startDate, endDate) {
   });
 }
 
+function fetchTopPhotos(token, startDate, endDate) {
+  return gaQuery(token, {
+    dateRanges: [{ startDate, endDate }],
+    dimensions: [{ name: 'customEvent:photo_name' }],
+    metrics: [{ name: 'eventCount' }],
+    orderBys: [{ metric: { metricName: 'eventCount' }, desc: true }],
+    dimensionFilter: {
+      filter: {
+        fieldName: 'customEvent:photo_name',
+        stringFilter: { matchType: 'PARTIAL_REGEXP', value: '.+' },
+      },
+    },
+    limit: 8,
+  });
+}
+
+function fetchTopVideos(token, startDate, endDate) {
+  return gaQuery(token, {
+    dateRanges: [{ startDate, endDate }],
+    dimensions: [{ name: 'customEvent:video_title' }],
+    metrics: [{ name: 'eventCount' }],
+    orderBys: [{ metric: { metricName: 'eventCount' }, desc: true }],
+    dimensionFilter: {
+      filter: {
+        fieldName: 'customEvent:video_title',
+        stringFilter: { matchType: 'PARTIAL_REGEXP', value: '.+' },
+      },
+    },
+    limit: 5,
+  });
+}
+
+function fetchTopCTAs(token, startDate, endDate) {
+  return gaQuery(token, {
+    dateRanges: [{ startDate, endDate }],
+    dimensions: [{ name: 'customEvent:button_name' }],
+    metrics: [{ name: 'eventCount' }],
+    orderBys: [{ metric: { metricName: 'eventCount' }, desc: true }],
+    dimensionFilter: {
+      filter: {
+        fieldName: 'customEvent:button_name',
+        stringFilter: { matchType: 'PARTIAL_REGEXP', value: '.+' },
+      },
+    },
+    limit: 6,
+  });
+}
+
 function fetchDevices(token, startDate, endDate) {
   return gaQuery(token, {
     dateRanges: [{ startDate, endDate }],
@@ -258,7 +306,7 @@ async function sendEmail(html, subject, pdfBuffer, pdfName) {
   const token = await getAccessToken();
   console.log('✅ Token OAuth2 ok');
 
-  const [overview, overviewPrev, topPages, sources, devices, countries, overview28] = await Promise.all([
+  const [overview, overviewPrev, topPages, sources, devices, countries, overview28, topPhotos, topVideos, topCTAs] = await Promise.all([
     fetchOverview(token, d7Start, d7End, prevStart, prevEnd),
     fetchOverview(token, prevStart, prevEnd, formatDate(new Date(now - 23 * 86400000)), formatDate(new Date(now - 16 * 86400000))),
     fetchTopPages(token, d7Start, d7End),
@@ -266,6 +314,9 @@ async function sendEmail(html, subject, pdfBuffer, pdfName) {
     fetchDevices(token,  d7Start, d7End),
     fetchCountries(token,d7Start, d7End),
     fetchOverview(token, d28Start, d28End, formatDate(new Date(now - 58 * 86400000)), formatDate(new Date(now - 30 * 86400000))),
+    fetchTopPhotos(token, d28Start, d28End),
+    fetchTopVideos(token, d28Start, d28End),
+    fetchTopCTAs(token,   d28Start, d28End),
   ]);
 
   console.log('✅ Données GA4 récupérées');
@@ -363,6 +414,68 @@ async function sendEmail(html, subject, pdfBuffer, pdfName) {
     </tr>`;
   }).join('');
 
+  // ── Top Photos ────────────────────────────────────────────────────────────
+  const photoRows = getRows(topPhotos);
+  const totalPhotoEvents = photoRows.reduce((a, r) => a + r.metrics[0], 0) || 1;
+
+  const photosHtml = photoRows.length === 0
+    ? `<tr><td colspan="3" style="padding:12px;color:#64748b;font-size:12px;text-align:center">Aucune donnée photo sur 28j</td></tr>`
+    : photoRows.map(r => {
+        // photo_name = "filename.webp | Titre de la photo" → on sépare les deux parties
+        const parts = r.dim[0].split(' | ');
+        const filename = parts[0].replace(/\.webp$/, '').replace(/-/g, ' ').slice(0, 40);
+        const title    = parts[1] ? parts[1].slice(0, 35) : filename;
+        const pct = Math.round((r.metrics[0] / totalPhotoEvents) * 100);
+        return `
+    <tr>
+      <td style="padding:7px 10px;border-bottom:1px solid #1e3a50;font-size:12px">
+        <div style="color:#e2e8f0;font-weight:500">${title}</div>
+        <div style="color:#475569;font-size:10px;margin-top:2px">${filename}</div>
+      </td>
+      <td style="padding:7px 10px;border-bottom:1px solid #1e3a50;text-align:center;font-weight:600;font-size:13px">${fmtNum(r.metrics[0])}</td>
+      <td style="padding:7px 10px;border-bottom:1px solid #1e3a50;text-align:right;padding-right:14px">
+        <div style="display:inline-flex;align-items:center;gap:6px">
+          <div style="width:50px;height:5px;background:#1e3a50;border-radius:3px">
+            <div style="width:${Math.min(pct,100)}%;height:5px;background:#21c47b;border-radius:3px"></div>
+          </div>
+          <span style="font-size:10px;color:#64748b">${pct}%</span>
+        </div>
+      </td>
+    </tr>`;
+      }).join('');
+
+  // ── Top Vidéos ────────────────────────────────────────────────────────────
+  const videoRows = getRows(topVideos);
+  const videosHtml = videoRows.length === 0
+    ? `<tr><td colspan="2" style="padding:12px;color:#64748b;font-size:12px;text-align:center">Aucune vidéo sur 28j</td></tr>`
+    : videoRows.map(r => `
+    <tr>
+      <td style="padding:7px 10px;border-bottom:1px solid #1e3a50;color:#94a3b8;font-size:12px">▶ ${r.dim[0].slice(0, 45)}</td>
+      <td style="padding:7px 10px;border-bottom:1px solid #1e3a50;text-align:center;font-weight:600;font-size:13px">${fmtNum(r.metrics[0])}</td>
+    </tr>`).join('');
+
+  // ── Top CTAs ──────────────────────────────────────────────────────────────
+  const ctaRows = getRows(topCTAs);
+  const totalCTAEvents = ctaRows.reduce((a, r) => a + r.metrics[0], 0) || 1;
+  const ctasHtml = ctaRows.length === 0
+    ? `<tr><td colspan="3" style="padding:12px;color:#64748b;font-size:12px;text-align:center">Aucun clic CTA sur 28j</td></tr>`
+    : ctaRows.map(r => {
+        const pct = Math.round((r.metrics[0] / totalCTAEvents) * 100);
+        return `
+    <tr>
+      <td style="padding:7px 10px;border-bottom:1px solid #1e3a50;color:#94a3b8;font-size:12px">${r.dim[0].slice(0, 40)}</td>
+      <td style="padding:7px 10px;border-bottom:1px solid #1e3a50;text-align:center;font-weight:600;font-size:13px">${fmtNum(r.metrics[0])}</td>
+      <td style="padding:7px 10px;border-bottom:1px solid #1e3a50;text-align:right;padding-right:14px">
+        <div style="display:inline-flex;align-items:center;gap:6px">
+          <div style="width:50px;height:5px;background:#1e3a50;border-radius:3px">
+            <div style="width:${Math.min(pct,100)}%;height:5px;background:#f59e0b;border-radius:3px"></div>
+          </div>
+          <span style="font-size:10px;color:#64748b">${pct}%</span>
+        </div>
+      </td>
+    </tr>`;
+      }).join('');
+
   // ── Pays ──────────────────────────────────────────────────────────────────
   const countryRows = getRows(countries);
   const totalCountrySessions = countryRows.reduce((a, r) => a + r.metrics[0], 0) || 1;
@@ -443,7 +556,7 @@ async function sendEmail(html, subject, pdfBuffer, pdfName) {
   </div>
 
   <!-- Pays -->
-  <div style="background:#0f2035;border-radius:12px;padding:16px;margin-bottom:24px">
+  <div style="background:#0f2035;border-radius:12px;padding:16px;margin-bottom:16px">
     <h2 style="margin:0 0 12px;font-size:13px;color:#21c47b">Top pays — 7 jours</h2>
     <table style="width:100%;border-collapse:collapse">
       <thead><tr style="font-size:10px;color:#64748b;text-transform:uppercase">
@@ -453,6 +566,44 @@ async function sendEmail(html, subject, pdfBuffer, pdfName) {
       </tr></thead>
       <tbody>${countriesHtml}</tbody>
     </table>
+  </div>
+
+  <!-- Top Photos -->
+  <div style="background:#0f2035;border-radius:12px;padding:16px;margin-bottom:16px">
+    <h2 style="margin:0 0 12px;font-size:13px;color:#21c47b">📸 Top photos vues — 28 jours</h2>
+    <table style="width:100%;border-collapse:collapse">
+      <thead><tr style="font-size:10px;color:#64748b;text-transform:uppercase">
+        <th style="padding:6px 10px;text-align:left">Photo</th>
+        <th style="padding:6px 10px">Vues</th>
+        <th style="padding:6px 10px">Part</th>
+      </tr></thead>
+      <tbody>${photosHtml}</tbody>
+    </table>
+  </div>
+
+  <!-- Top Vidéos + Top CTAs -->
+  <div style="display:flex;gap:10px;margin-bottom:24px">
+    <div style="flex:1;background:#0f2035;border-radius:12px;padding:16px">
+      <h2 style="margin:0 0 12px;font-size:13px;color:#0091ff">▶ Top vidéos — 28j</h2>
+      <table style="width:100%;border-collapse:collapse">
+        <thead><tr style="font-size:10px;color:#64748b;text-transform:uppercase">
+          <th style="padding:6px 10px;text-align:left">Vidéo</th>
+          <th style="padding:6px 10px">Lectures</th>
+        </tr></thead>
+        <tbody>${videosHtml}</tbody>
+      </table>
+    </div>
+    <div style="flex:1;background:#0f2035;border-radius:12px;padding:16px">
+      <h2 style="margin:0 0 12px;font-size:13px;color:#f59e0b">🎯 Top CTAs — 28j</h2>
+      <table style="width:100%;border-collapse:collapse">
+        <thead><tr style="font-size:10px;color:#64748b;text-transform:uppercase">
+          <th style="padding:6px 10px;text-align:left">Bouton</th>
+          <th style="padding:6px 10px">Clics</th>
+          <th style="padding:6px 10px">Part</th>
+        </tr></thead>
+        <tbody>${ctasHtml}</tbody>
+      </table>
+    </div>
   </div>
 
   <div style="text-align:center;font-size:11px;color:#334155">
