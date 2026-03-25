@@ -18,7 +18,8 @@
     "lint": "eslint .",
     "preview": "vite preview",
     "seo-digest": "node scripts/weekly-seo-digest.js",
-    "psi-audit": "node scripts/psi-audit.js"
+    "psi-audit": "node scripts/psi-audit.js",
+    "ga-report": "node scripts/ga-report.js"
   },
   "dependencies": {
     "@fancyapps/ui": "^6.1.13",
