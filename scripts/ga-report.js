@@ -503,7 +503,22 @@ async function sendEmail(html, subject, pdfBuffer, pdfName) {
   // ── HTML ──────────────────────────────────────────────────────────────────
 
   const html = `<!DOCTYPE html>
-<html><head><meta charset="UTF-8"></head>
+<html><head><meta charset="UTF-8">
+<style>
+  @media print {
+    table { page-break-inside: auto; }
+    tr    { page-break-inside: avoid; page-break-after: auto; }
+    .section { page-break-inside: avoid; }
+    .page-break { page-break-before: always; }
+    .no-break { page-break-inside: avoid; }
+  }
+  table { page-break-inside: auto; }
+  tr    { page-break-inside: avoid; }
+  .section { page-break-inside: avoid; }
+  .page-break { page-break-before: always; }
+  .no-break { page-break-inside: avoid; }
+</style>
+</head>
 <body style="margin:0;padding:0;background:#0a1628;font-family:system-ui,sans-serif;color:#e2e8f0">
 <div style="max-width:660px;margin:0 auto;padding:28px 16px">
 
@@ -529,9 +544,9 @@ async function sendEmail(html, subject, pdfBuffer, pdfName) {
     ${kpi('Pages vues 28j', fmtNum(curr28.pageViews), null, null)}
   </div>
 
-  <!-- Top pages + sources -->
-  <div style="display:flex;gap:10px;margin-bottom:16px">
-    <div style="flex:1.5;background:#0f2035;border-radius:12px;padding:16px">
+  <!-- Top pages -->
+  <div class="section" style="margin-bottom:16px">
+    <div style="background:#0f2035;border-radius:12px;padding:16px">
       <h2 style="margin:0 0 12px;font-size:13px;color:#21c47b">Top pages — 7 jours</h2>
       <table style="width:100%;border-collapse:collapse">
         <thead><tr style="font-size:10px;color:#64748b;text-transform:uppercase">
@@ -546,8 +561,8 @@ async function sendEmail(html, subject, pdfBuffer, pdfName) {
     </div>
   </div>
 
-  <!-- Sources + Appareils -->
-  <div style="display:flex;gap:10px;margin-bottom:16px">
+  <!-- Sources + Appareils — côte à côte, protégé contre la coupure -->
+  <div class="no-break" style="display:flex;gap:10px;margin-bottom:16px">
     <div style="flex:1;background:#0f2035;border-radius:12px;padding:16px">
       <h2 style="margin:0 0 12px;font-size:13px;color:#21c47b">Source / Support — 7j</h2>
       <table style="width:100%;border-collapse:collapse">${sourcesHtml}</table>
@@ -559,7 +574,7 @@ async function sendEmail(html, subject, pdfBuffer, pdfName) {
   </div>
 
   <!-- Pays -->
-  <div style="background:#0f2035;border-radius:12px;padding:16px;margin-bottom:16px">
+  <div class="no-break" style="background:#0f2035;border-radius:12px;padding:16px;margin-bottom:16px">
     <h2 style="margin:0 0 12px;font-size:13px;color:#21c47b">Top pays — 7 jours</h2>
     <table style="width:100%;border-collapse:collapse">
       <thead><tr style="font-size:10px;color:#64748b;text-transform:uppercase">
@@ -571,8 +586,11 @@ async function sendEmail(html, subject, pdfBuffer, pdfName) {
     </table>
   </div>
 
+  <!-- Saut de page avant les données 28j -->
+  <div class="page-break"></div>
+
   <!-- Top Photos -->
-  <div style="background:#0f2035;border-radius:12px;padding:16px;margin-bottom:16px">
+  <div class="section" style="background:#0f2035;border-radius:12px;padding:16px;margin-bottom:16px">
     <h2 style="margin:0 0 12px;font-size:13px;color:#21c47b">📸 Top photos vues — 28 jours</h2>
     <table style="width:100%;border-collapse:collapse">
       <thead><tr style="font-size:10px;color:#64748b;text-transform:uppercase">
@@ -585,7 +603,7 @@ async function sendEmail(html, subject, pdfBuffer, pdfName) {
   </div>
 
   <!-- Top Vidéos + Top CTAs -->
-  <div style="display:flex;gap:10px;margin-bottom:24px">
+  <div class="no-break" style="display:flex;gap:10px;margin-bottom:24px">
     <div style="flex:1;background:#0f2035;border-radius:12px;padding:16px">
       <h2 style="margin:0 0 12px;font-size:13px;color:#0091ff">▶ Top vidéos — 28j</h2>
       <table style="width:100%;border-collapse:collapse">
