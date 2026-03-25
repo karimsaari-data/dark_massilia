@@ -502,53 +502,45 @@ async function sendEmail(html, subject, pdfBuffer, pdfName) {
 
   // ── HTML ──────────────────────────────────────────────────────────────────
 
+  const PB = 'page-break-before:always;padding-top:24px;'; // shorthand saut de page Puppeteer
+
   const html = `<!DOCTYPE html>
 <html><head><meta charset="UTF-8">
 <style>
-  @media print {
-    table { page-break-inside: auto; }
-    tr    { page-break-inside: avoid; page-break-after: auto; }
-    .section { page-break-inside: avoid; }
-    .page-break { page-break-before: always; }
-    .no-break { page-break-inside: avoid; }
-  }
-  table { page-break-inside: auto; }
-  tr    { page-break-inside: avoid; }
-  .section { page-break-inside: avoid; }
-  .page-break { page-break-before: always; }
-  .no-break { page-break-inside: avoid; }
+  body { margin:0; padding:0; background:#0a1628; font-family:system-ui,sans-serif; color:#e2e8f0; }
+  tr { page-break-inside: avoid; }
+  table { border-collapse: collapse; width: 100%; }
 </style>
 </head>
-<body style="margin:0;padding:0;background:#0a1628;font-family:system-ui,sans-serif;color:#e2e8f0">
+<body>
 <div style="max-width:660px;margin:0 auto;padding:28px 16px">
 
-  <!-- Header -->
+  <!-- ═══════════════════ PAGE 1 — Header + KPIs ═══════════════════ -->
   <div style="text-align:center;margin-bottom:28px">
-    <div style="font-size:11px;letter-spacing:2px;color:#21c47b;text-transform:uppercase;margin-bottom:6px">Rapport Analytics hebdomadaire</div>
+    <div style="font-size:11px;letter-spacing:2px;color:#21c47b;text-transform:uppercase;margin-bottom:6px">Rapport Analytics bi-mensuel</div>
     <h1 style="margin:0;font-size:22px;color:#fff">Dark Massilia · Google Analytics 4</h1>
     <div style="font-size:12px;color:#64748b;margin-top:4px">${d7Start} → ${d7End}</div>
   </div>
 
-  <!-- KPIs 7j -->
   <div style="font-size:11px;color:#64748b;text-transform:uppercase;letter-spacing:1px;margin-bottom:8px">7 derniers jours</div>
   <div style="display:flex;gap:8px;margin-bottom:8px">
-    ${kpi('Sessions', fmtNum(curr.sessions),   `${diffArrow(curr.sessions, prev.sessions)}${diffPct(curr.sessions, prev.sessions)} vs sem. préc.`, curr.sessions >= prev.sessions ? '#21c47b' : '#e74c3c')}
-    ${kpi('Utilisateurs', fmtNum(curr.users),   `${diffArrow(curr.users, prev.users)}${diffPct(curr.users, prev.users)} vs sem. préc.`, curr.users >= prev.users ? '#21c47b' : '#e74c3c')}
-    ${kpi('Pages vues', fmtNum(curr.pageViews), `${diffArrow(curr.pageViews, prev.pageViews)}${diffPct(curr.pageViews, prev.pageViews)} vs sem. préc.`, curr.pageViews >= prev.pageViews ? '#21c47b' : '#e74c3c')}
-    ${kpi('Durée moy.', fmtDuration(curr.duration), `prev: ${fmtDuration(prev.duration)}`, null)}
+    ${kpi('Sessions',        fmtNum(curr.sessions),        `${diffArrow(curr.sessions,        prev.sessions)}${diffPct(curr.sessions,        prev.sessions)} vs péri. préc.`, curr.sessions        >= prev.sessions        ? '#21c47b' : '#e74c3c')}
+    ${kpi('Utilisateurs',    fmtNum(curr.users),            `${diffArrow(curr.users,           prev.users)}${diffPct(curr.users,            prev.users)} vs péri. préc.`,   curr.users             >= prev.users            ? '#21c47b' : '#e74c3c')}
+    ${kpi('Pages vues',      fmtNum(curr.pageViews),        `${diffArrow(curr.pageViews,       prev.pageViews)}${diffPct(curr.pageViews,      prev.pageViews)} vs péri. préc.`, curr.pageViews       >= prev.pageViews        ? '#21c47b' : '#e74c3c')}
+    ${kpi('Durée moy.',      fmtDuration(curr.duration),   `prev: ${fmtDuration(prev.duration)}`, null)}
   </div>
-  <div style="display:flex;gap:8px;margin-bottom:24px">
-    ${kpi('Engagement', fmtPct(curr.engagementRate), `prev: ${fmtPct(prev.engagementRate)}`, curr.engagementRate >= prev.engagementRate ? '#21c47b' : '#e74c3c')}
-    ${kpi('Nv. utilisateurs', fmtNum(curr.newUsers), `${diffArrow(curr.newUsers, prev.newUsers)} vs sem. préc.`, curr.newUsers >= prev.newUsers ? '#21c47b' : '#e74c3c')}
-    ${kpi('Sessions 28j', fmtNum(curr28.sessions), null, null)}
-    ${kpi('Pages vues 28j', fmtNum(curr28.pageViews), null, null)}
+  <div style="display:flex;gap:8px;margin-bottom:32px">
+    ${kpi('Engagement',      fmtPct(curr.engagementRate),  `prev: ${fmtPct(prev.engagementRate)}`, curr.engagementRate >= prev.engagementRate ? '#21c47b' : '#e74c3c')}
+    ${kpi('Nv. utilisateurs',fmtNum(curr.newUsers),        `${diffArrow(curr.newUsers, prev.newUsers)} vs péri. préc.`, curr.newUsers >= prev.newUsers ? '#21c47b' : '#e74c3c')}
+    ${kpi('Sessions 28j',    fmtNum(curr28.sessions),      null, null)}
+    ${kpi('Pages vues 28j',  fmtNum(curr28.pageViews),     null, null)}
   </div>
 
-  <!-- Top pages -->
-  <div class="section" style="margin-bottom:16px">
+  <!-- ═══════════════════ PAGE 2 — Top pages ═══════════════════ -->
+  <div style="${PB}">
     <div style="background:#0f2035;border-radius:12px;padding:16px">
       <h2 style="margin:0 0 12px;font-size:13px;color:#21c47b">Top pages — 7 jours</h2>
-      <table style="width:100%;border-collapse:collapse">
+      <table>
         <thead><tr style="font-size:10px;color:#64748b;text-transform:uppercase">
           <th style="padding:6px 10px;text-align:left">Page</th>
           <th style="padding:6px 10px">Vues</th>
@@ -561,75 +553,72 @@ async function sendEmail(html, subject, pdfBuffer, pdfName) {
     </div>
   </div>
 
-  <!-- Sources + Appareils — côte à côte, protégé contre la coupure -->
-  <div class="no-break" style="display:flex;gap:10px;margin-bottom:16px">
-    <div style="flex:1;background:#0f2035;border-radius:12px;padding:16px">
-      <h2 style="margin:0 0 12px;font-size:13px;color:#21c47b">Source / Support — 7j</h2>
-      <table style="width:100%;border-collapse:collapse">${sourcesHtml}</table>
+  <!-- ═══════════════════ PAGE 3 — Sources + Appareils + Pays ═══════════════════ -->
+  <div style="${PB}">
+    <div style="display:flex;gap:10px;margin-bottom:16px">
+      <div style="flex:1;background:#0f2035;border-radius:12px;padding:16px">
+        <h2 style="margin:0 0 12px;font-size:13px;color:#21c47b">Source / Support — 7j</h2>
+        <table>${sourcesHtml}</table>
+      </div>
+      <div style="flex:1;background:#0f2035;border-radius:12px;padding:16px">
+        <h2 style="margin:0 0 12px;font-size:13px;color:#0091ff">Appareils — 7j</h2>
+        <table>${devicesHtml}</table>
+      </div>
     </div>
-    <div style="flex:1;background:#0f2035;border-radius:12px;padding:16px">
-      <h2 style="margin:0 0 12px;font-size:13px;color:#0091ff">Appareils — 7j</h2>
-      <table style="width:100%;border-collapse:collapse">${devicesHtml}</table>
-    </div>
-  </div>
-
-  <!-- Pays -->
-  <div class="no-break" style="background:#0f2035;border-radius:12px;padding:16px;margin-bottom:16px">
-    <h2 style="margin:0 0 12px;font-size:13px;color:#21c47b">Top pays — 7 jours</h2>
-    <table style="width:100%;border-collapse:collapse">
-      <thead><tr style="font-size:10px;color:#64748b;text-transform:uppercase">
-        <th style="padding:6px 10px;text-align:left">Pays</th>
-        <th style="padding:6px 10px">Sessions</th>
-        <th style="padding:6px 10px">Part</th>
-      </tr></thead>
-      <tbody>${countriesHtml}</tbody>
-    </table>
-  </div>
-
-  <!-- Saut de page avant les données 28j -->
-  <div class="page-break"></div>
-
-  <!-- Top Photos -->
-  <div class="section" style="background:#0f2035;border-radius:12px;padding:16px;margin-bottom:16px">
-    <h2 style="margin:0 0 12px;font-size:13px;color:#21c47b">📸 Top photos vues — 28 jours</h2>
-    <table style="width:100%;border-collapse:collapse">
-      <thead><tr style="font-size:10px;color:#64748b;text-transform:uppercase">
-        <th style="padding:6px 10px;text-align:left">Photo</th>
-        <th style="padding:6px 10px">Vues</th>
-        <th style="padding:6px 10px">Part</th>
-      </tr></thead>
-      <tbody>${photosHtml}</tbody>
-    </table>
-  </div>
-
-  <!-- Top Vidéos + Top CTAs -->
-  <div class="no-break" style="display:flex;gap:10px;margin-bottom:24px">
-    <div style="flex:1;background:#0f2035;border-radius:12px;padding:16px">
-      <h2 style="margin:0 0 12px;font-size:13px;color:#0091ff">▶ Top vidéos — 28j</h2>
-      <table style="width:100%;border-collapse:collapse">
+    <div style="background:#0f2035;border-radius:12px;padding:16px">
+      <h2 style="margin:0 0 12px;font-size:13px;color:#21c47b">Top pays — 7 jours</h2>
+      <table>
         <thead><tr style="font-size:10px;color:#64748b;text-transform:uppercase">
-          <th style="padding:6px 10px;text-align:left">Vidéo</th>
-          <th style="padding:6px 10px">Lectures</th>
-        </tr></thead>
-        <tbody>${videosHtml}</tbody>
-      </table>
-    </div>
-    <div style="flex:1;background:#0f2035;border-radius:12px;padding:16px">
-      <h2 style="margin:0 0 12px;font-size:13px;color:#f59e0b">🎯 Top CTAs — 28j</h2>
-      <table style="width:100%;border-collapse:collapse">
-        <thead><tr style="font-size:10px;color:#64748b;text-transform:uppercase">
-          <th style="padding:6px 10px;text-align:left">Bouton</th>
-          <th style="padding:6px 10px">Clics</th>
+          <th style="padding:6px 10px;text-align:left">Pays</th>
+          <th style="padding:6px 10px">Sessions</th>
           <th style="padding:6px 10px">Part</th>
         </tr></thead>
-        <tbody>${ctasHtml}</tbody>
+        <tbody>${countriesHtml}</tbody>
       </table>
     </div>
   </div>
 
-  <div style="text-align:center;font-size:11px;color:#334155">
-    Généré automatiquement chaque semaine · Google Analytics 4 · Dark Massilia
+  <!-- ═══════════════════ PAGE 4 — Photos + Vidéos + CTAs (28j) ═══════════════════ -->
+  <div style="${PB}">
+    <div style="background:#0f2035;border-radius:12px;padding:16px;margin-bottom:16px">
+      <h2 style="margin:0 0 12px;font-size:13px;color:#21c47b">📸 Top photos vues — 28 jours</h2>
+      <table>
+        <thead><tr style="font-size:10px;color:#64748b;text-transform:uppercase">
+          <th style="padding:6px 10px;text-align:left">Photo</th>
+          <th style="padding:6px 10px">Vues</th>
+          <th style="padding:6px 10px">Part</th>
+        </tr></thead>
+        <tbody>${photosHtml}</tbody>
+      </table>
+    </div>
+    <div style="display:flex;gap:10px;margin-bottom:24px">
+      <div style="flex:1;background:#0f2035;border-radius:12px;padding:16px">
+        <h2 style="margin:0 0 12px;font-size:13px;color:#0091ff">▶ Top vidéos — 28j</h2>
+        <table>
+          <thead><tr style="font-size:10px;color:#64748b;text-transform:uppercase">
+            <th style="padding:6px 10px;text-align:left">Vidéo</th>
+            <th style="padding:6px 10px">Lectures</th>
+          </tr></thead>
+          <tbody>${videosHtml}</tbody>
+        </table>
+      </div>
+      <div style="flex:1;background:#0f2035;border-radius:12px;padding:16px">
+        <h2 style="margin:0 0 12px;font-size:13px;color:#f59e0b">🎯 Top CTAs — 28j</h2>
+        <table>
+          <thead><tr style="font-size:10px;color:#64748b;text-transform:uppercase">
+            <th style="padding:6px 10px;text-align:left">Bouton</th>
+            <th style="padding:6px 10px">Clics</th>
+            <th style="padding:6px 10px">Part</th>
+          </tr></thead>
+          <tbody>${ctasHtml}</tbody>
+        </table>
+      </div>
+    </div>
+    <div style="text-align:center;font-size:11px;color:#334155">
+      Généré automatiquement · Google Analytics 4 · Dark Massilia
+    </div>
   </div>
+
 </div>
 </body></html>`;
 
