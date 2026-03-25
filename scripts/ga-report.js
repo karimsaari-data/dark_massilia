@@ -98,10 +98,11 @@ function fetchTopPhotos(token, startDate, endDate) {
     dimensions: [{ name: 'customEvent:photo_name' }],
     metrics: [{ name: 'eventCount' }],
     orderBys: [{ metric: { metricName: 'eventCount' }, desc: true }],
+    // Filtre sur le nom de l'événement : seuls les photo_view sont inclus
     dimensionFilter: {
       filter: {
-        fieldName: 'customEvent:photo_name',
-        stringFilter: { matchType: 'PARTIAL_REGEXP', value: '.+' },
+        fieldName: 'eventName',
+        stringFilter: { matchType: 'EXACT', value: 'photo_view' },
       },
     },
     limit: 8,
@@ -114,10 +115,11 @@ function fetchTopVideos(token, startDate, endDate) {
     dimensions: [{ name: 'customEvent:video_title' }],
     metrics: [{ name: 'eventCount' }],
     orderBys: [{ metric: { metricName: 'eventCount' }, desc: true }],
+    // Filtre sur le nom de l'événement : seuls les video_play sont inclus
     dimensionFilter: {
       filter: {
-        fieldName: 'customEvent:video_title',
-        stringFilter: { matchType: 'PARTIAL_REGEXP', value: '.+' },
+        fieldName: 'eventName',
+        stringFilter: { matchType: 'EXACT', value: 'video_play' },
       },
     },
     limit: 5,
@@ -130,10 +132,11 @@ function fetchTopCTAs(token, startDate, endDate) {
     dimensions: [{ name: 'customEvent:button_name' }],
     metrics: [{ name: 'eventCount' }],
     orderBys: [{ metric: { metricName: 'eventCount' }, desc: true }],
+    // Filtre sur le nom de l'événement : seuls les cta_click sont inclus
     dimensionFilter: {
       filter: {
-        fieldName: 'customEvent:button_name',
-        stringFilter: { matchType: 'PARTIAL_REGEXP', value: '.+' },
+        fieldName: 'eventName',
+        stringFilter: { matchType: 'EXACT', value: 'cta_click' },
       },
     },
     limit: 6,
