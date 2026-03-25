@@ -478,13 +478,24 @@ const Home = () => {
                 À Marseille avec Team Oxygen, nous intervenons en apnée de la surface à 20 mètres pour dépolluer les fonds marins, documenter les déchets et protéger la biodiversité locale. Calanques, Frioul, Côte Bleue, La Ciotat : chaque mission est une action concrète pour notre littoral.
               </p>
 
-              <Link
-                to="/depollution-marine"
-                className="btn-primary inline-flex items-center gap-2 w-fit"
-              >
-                <span>Découvrir nos missions</span>
-                <ArrowRight className="w-5 h-5" />
-              </Link>
+              <div className="flex flex-wrap gap-3">
+                <Link
+                  to="/depollution-marine"
+                  className="btn-primary inline-flex items-center gap-2"
+                  onClick={() => trackEvent('cta_click', { button_name: 'Découvrir nos missions' })}
+                >
+                  <span>Découvrir nos missions</span>
+                  <ArrowRight className="w-5 h-5" />
+                </Link>
+                <Link
+                  to="/presse"
+                  className="btn-ghost inline-flex items-center gap-2"
+                  onClick={() => trackEvent('cta_click', { button_name: 'Couverture médiatique' })}
+                >
+                  <span>Couverture médiatique</span>
+                  <ArrowRight className="w-5 h-5" />
+                </Link>
+              </div>
             </div>
 
             {/* Image Team Oxygen - Droite */}
