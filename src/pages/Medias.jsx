@@ -138,6 +138,27 @@ const Medias = () => {
           Documentaires et Reportages : Témoigner de l'urgence écologique en Méditerranée
         </motion.h1>
 
+        {/* Barre de stats — crédibilité immédiate */}
+        <motion.div
+          initial={{ opacity: 0, y: 16 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5, delay: 0.2 }}
+          className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-16"
+        >
+          {[
+            { value: '6',    label: 'passages TV',          icon: '📺' },
+            { value: '15+',  label: 'articles de presse',   icon: '📰' },
+            { value: '10 ans', label: 'd\'engagement terrain', icon: '🤿' },
+            { value: '5,7T', label: 'de déchets documentés', icon: '♻️' },
+          ].map(({ value, label, icon }) => (
+            <div key={label} className="glass-strong rounded-2xl p-5 text-center border border-white/10">
+              <div className="text-2xl mb-1">{icon}</div>
+              <div className="text-2xl font-bold text-ocean-teal">{value}</div>
+              <div className="text-xs text-text-muted mt-1 leading-tight">{label}</div>
+            </div>
+          ))}
+        </motion.div>
+
         {/* Section: Passage TV — ARTE & Échappées Belles */}
         <motion.div
           initial="hidden"
@@ -187,6 +208,7 @@ const Medias = () => {
                     <h3 className="text-lg font-bold text-white group-hover:text-ocean-teal transition-colors">
                       Documentaire ARTE — Marseille contre la pollution
                     </h3>
+                    <p className="text-sm text-gray-400 mt-2 leading-snug">Plongée documentaire au cœur des Calanques pour filmer l'invisible : déchets, pollution et vie marine menacée.</p>
                   </div>
                   <ArrowLeft className="w-5 h-5 rotate-180 text-gray-400 group-hover:text-ocean-teal group-hover:translate-x-1 transition-all flex-shrink-0 ml-4" />
                 </div>
@@ -226,6 +248,7 @@ const Medias = () => {
                     <h3 className="text-lg font-bold text-white group-hover:text-ocean-teal transition-colors">
                       Méduses | Les souveraines des océans
                     </h3>
+                    <p className="text-sm text-gray-400 mt-2 leading-snug">Les méduses, sentinelles fragiles de la santé des océans — témoignage filmé en Méditerranée.</p>
                   </div>
                   <ArrowLeft className="w-5 h-5 rotate-180 text-gray-400 group-hover:text-ocean-teal group-hover:translate-x-1 transition-all flex-shrink-0 ml-4" />
                 </div>
@@ -264,6 +287,7 @@ const Medias = () => {
                     <h3 className="text-lg font-bold text-white group-hover:text-ocean-teal transition-colors">
                       Échappées Belles — Karim Saari avec Ismaël Khelifa & Matthieu Witvoet
                     </h3>
+                    <p className="text-sm text-gray-400 mt-2 leading-snug">Marseille vue d'en bas : Ismaël Khelifa découvre les fonds des Calanques avec Karim et l'équipe Team Oxygen.</p>
                   </div>
                   <ExternalLink className="w-5 h-5 text-gray-400 group-hover:text-ocean-teal group-hover:translate-x-1 group-hover:-translate-y-1 transition-all flex-shrink-0 ml-4" />
                 </div>
@@ -302,6 +326,7 @@ const Medias = () => {
                     <h3 className="text-lg font-bold text-white group-hover:text-ocean-teal transition-colors">
                       Le scandale des décharges sauvages dans les calanques marseillaises
                     </h3>
+                    <p className="text-sm text-gray-400 mt-2 leading-snug">Le JT de TF1 enquête sur les dépôts sauvages qui dévastent les Calanques — avec les images sous-marines de Karim Saari.</p>
                   </div>
                   <ExternalLink className="w-5 h-5 text-gray-400 group-hover:text-ocean-teal group-hover:translate-x-1 group-hover:-translate-y-1 transition-all flex-shrink-0 ml-4" />
                 </div>
@@ -340,6 +365,7 @@ const Medias = () => {
                     <h3 className="text-lg font-bold text-white group-hover:text-ocean-teal transition-colors">
                       Grève des éboueurs à Marseille : l'impact sous-marin
                     </h3>
+                    <p className="text-sm text-gray-400 mt-2 leading-snug">Quand les ordures non collectées finissent sous la mer : Karim documente l'impact en direct pour TF1.</p>
                   </div>
                   <ExternalLink className="w-5 h-5 text-gray-400 group-hover:text-ocean-teal group-hover:translate-x-1 group-hover:-translate-y-1 transition-all flex-shrink-0 ml-4" />
                 </div>
@@ -378,6 +404,7 @@ const Medias = () => {
                     <h3 className="text-lg font-bold text-white group-hover:text-ocean-teal transition-colors">
                       VIDÉO. La Méditerranée, la mer la plus polluée du monde
                     </h3>
+                    <p className="text-sm text-gray-400 mt-2 leading-snug">Reportage Novo19 : chiffres, images et témoignage de terrain sur l'état alarmant de la Méditerranée.</p>
                   </div>
                   <ExternalLink className="w-5 h-5 text-gray-400 group-hover:text-ocean-teal group-hover:translate-x-1 group-hover:-translate-y-1 transition-all flex-shrink-0 ml-4" />
                 </div>
@@ -416,6 +443,7 @@ const Medias = () => {
                     <h3 className="text-lg font-bold text-white group-hover:text-ocean-teal transition-colors">
                       Marseille : 1,4 tonnes de déchets sorties des eaux du Frioul par des apnéistes
                     </h3>
+                    <p className="text-sm text-gray-400 mt-2 leading-snug">La Provence couvre la plus grande opération de dépollution de l'archipel du Frioul par Team Oxygen.</p>
                   </div>
                   <ExternalLink className="w-5 h-5 text-gray-400 group-hover:text-ocean-teal group-hover:translate-x-1 group-hover:-translate-y-1 transition-all flex-shrink-0 ml-4" />
                 </div>
