@@ -42,9 +42,9 @@ const GLOBAL_PERSON_SCHEMA = {
   '@context': 'https://schema.org',
   '@type':    'Person',
   name:       'Karim Saari',
-  jobTitle:   'Photographe environnemental & Apnéiste',
+  jobTitle:   'Photographe environnemental à Marseille & Apnéiste',
   url:        'https://karimsaari.com',
-  description: 'Photographe environnemental et apnéiste engagé en Méditerranée.',
+  description: 'Photographe environnemental à Marseille, photographe de paysages et apnéiste engagé en Méditerranée.',
   affiliation: {
     '@type': 'NGO',
     name:    'Team Oxygen',

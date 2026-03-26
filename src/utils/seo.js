@@ -27,9 +27,9 @@ const PERSON_SCHEMA = {
   alternateName: 'Dark Massilia',
   url: 'https://karimsaari.com',
   image: DEFAULT_IMAGE,
-  jobTitle: ['Photographe de paysage', 'Apnéiste', 'Expert environnemental'],
+  jobTitle: ['Photographe de paysages à Marseille', 'Photographe environnemental à Marseille', 'Apnéiste', 'Expert environnemental'],
   description:
-    'Expert environnemental et apnéiste engagé, photographe de paysage salué par National Geographic. Interventions sur TF1, ARTE et Échappées Belles.',
+    'Photographe environnemental à Marseille, apnéiste engagé et photographe de paysages salué par National Geographic. Interventions sur TF1, ARTE et Échappées Belles.',
   address: {
     '@type': 'PostalAddress',
     addressLocality: 'Marseille',

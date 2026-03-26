@@ -798,7 +798,7 @@ const Photos = () => {
           <motion.div variants={FADE_IN_UP} className="glass rounded-3xl p-8 md:p-10">
             <h2 className="text-lg md:text-xl font-bold text-white mb-4">Témoigner par l'image</h2>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6 text-text-secondary leading-relaxed text-sm mb-8">
-              <p>Photographe sous-marin à Marseille et photographe de paysages en Provence, j'explore la Méditerranée de la surface aux profondeurs.</p>
+              <p>Photographe sous-marin et photographe de paysages à Marseille, j'explore la Méditerranée et la Provence de la surface aux profondeurs.</p>
               <p>Sous l'eau, mes images révèlent la biodiversité des fonds marins méditerranéens et leurs fragilités.</p>
               <p>Mon travail documente un territoire — la Méditerranée et la Provence — entre beauté naturelle et enjeux contemporains.</p>
             </div>
