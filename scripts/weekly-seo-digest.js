@@ -90,6 +90,58 @@ function formatDate(d) { return d.toISOString().split('T')[0]; }
 function pageLabel(url) { return url.replace('https://karimsaari.com', '') || '/'; }
 function sum(rows, field) { return (rows || []).reduce((a, r) => a + r[field], 0); }
 
+// ── Mots-clés cibles à suivre ─────────────────────────────────────────────────
+const TRACKED_KEYWORDS = [
+  // Marque
+  { q: 'karim saari',                                   cat: 'Marque' },
+  { q: 'dark massilia',                                 cat: 'Marque' },
+  { q: 'projet sentinelle',                             cat: 'Marque' },
+  { q: 'team oxygen',                                   cat: 'Marque' },
+  // Longue traîne locale
+  { q: 'dépollution marine marseille',                  cat: 'Local' },
+  { q: 'photographe sous-marin marseille',              cat: 'Local' },
+  { q: 'photographe sous-marin calanques',              cat: 'Local' },
+  { q: 'bénévolat dépollution marseille',               cat: 'Local' },
+  { q: 'bénévolat écologique marseille',                cat: 'Local' },
+  { q: 'association dépollution marine marseille',      cat: 'Local' },
+  { q: 'photographe de paysages marseille',             cat: 'Local' },
+  { q: 'photographe environnemental marseille',         cat: 'Local' },
+  // Documentaires ARTE
+  { q: 'documentaire arte sauver marseille',            cat: 'ARTE' },
+  { q: 'documentaire arte méduses souveraines',         cat: 'ARTE' },
+  { q: 'yann arthus-bertrand les français karim saari', cat: 'ARTE' },
+  // Éditorial
+  { q: 'pollution plastique méditerranée',              cat: 'Éditorial' },
+  { q: 'microplastiques méditerranée',                  cat: 'Éditorial' },
+  { q: 'rugulopteryx okamurae calanques',               cat: 'Éditorial' },
+  { q: 'posidonie calanques',                           cat: 'Éditorial' },
+];
+
+function fetchAllQueries(token, startDate, endDate) {
+  return gscQuery(token, {
+    startDate, endDate,
+    dimensions: ['query'],
+    rowLimit: 5000,
+  });
+}
+
+function extractKeywordData(gscRows, prevRows) {
+  const curr = Object.fromEntries((gscRows || []).map(r => [r.keys[0].toLowerCase(), r]));
+  const prev = Object.fromEntries((prevRows  || []).map(r => [r.keys[0].toLowerCase(), r]));
+  return TRACKED_KEYWORDS.map(kw => {
+    const c = curr[kw.q];
+    const p = prev[kw.q];
+    return {
+      ...kw,
+      clicks:      c?.clicks      ?? 0,
+      impressions: c?.impressions ?? 0,
+      ctr:         c?.ctr         ?? 0,
+      position:    c?.position    ?? null,
+      prevPos:     p?.position    ?? null,
+    };
+  });
+}
+
 function avgPos(rows) {
   const total = (rows || []).reduce((a, r) => a + r.impressions, 0);
   if (!total) return 0;
@@ -179,7 +231,7 @@ async function sendEmail(html, subject, pdfBuffer, pdfName) {
   console.log('📊 Récupération GSC...');
   const token = await getAccessToken();
 
-  const [curr7, prev7, curr28, prev28, queries7, countries7, imageSearch7] = await Promise.all([
+  const [curr7, prev7, curr28, prev28, queries7, countries7, imageSearch7, kwCurr, kwPrev] = await Promise.all([
     fetchPages(token,      d7Start,    d7End,    25),
     fetchPages(token,      prevStart,  prevEnd,  25),
     fetchPages(token,      d28Start,   d28End,   25),
@@ -187,6 +239,8 @@ async function sendEmail(html, subject, pdfBuffer, pdfName) {
     fetchQueries(token,    d7Start,    d7End),
     fetchCountries(token,  d7Start,    d7End),
     fetchImageSearch(token,d7Start,    d7End),
+    fetchAllQueries(token, d7Start,    d7End),
+    fetchAllQueries(token, prevStart,  prevEnd),
   ]);
 
   // KPIs 7j
@@ -223,6 +277,9 @@ async function sendEmail(html, subject, pdfBuffer, pdfName) {
   // Image search
   const imgClicks = imageSearch7.rows?.[0]?.clicks ?? 0;
   const imgImpr   = imageSearch7.rows?.[0]?.impressions ?? 0;
+
+  // Mots-clés cibles
+  const trackedData = extractKeywordData(kwCurr.rows, kwPrev.rows);
 
   // Pays
   const totalCountryClicks = sum(countries7.rows, 'clicks') || 1;
@@ -409,6 +466,52 @@ async function sendEmail(html, subject, pdfBuffer, pdfName) {
       </tr></thead>
       <tbody>${queriesRows}</tbody>
     </table>
+  </div>
+
+  <!-- Suivi mots-clés cibles -->
+  <div style="background:#0f2035;border-radius:12px;padding:16px;margin-bottom:24px">
+    <h2 style="margin:0 0 4px;font-size:13px;color:#21c47b">🎯 Suivi mots-clés cibles — 7 jours</h2>
+    <div style="font-size:11px;color:#64748b;margin-bottom:12px">Position moyenne · ↑ amélioration · ↓ recul · — non détecté dans le top 5 000</div>
+    ${['Marque', 'Local', 'ARTE', 'Éditorial'].map(cat => {
+      const rows = trackedData.filter(k => k.cat === cat);
+      const catColors = { Marque: '#0091ff', Local: '#21c47b', ARTE: '#ff6b35', 'Éditorial': '#a78bfa' };
+      return `
+      <div style="margin-bottom:14px">
+        <div style="font-size:10px;font-weight:700;color:${catColors[cat]};text-transform:uppercase;letter-spacing:1px;margin-bottom:6px">${cat}</div>
+        <table style="width:100%;border-collapse:collapse">
+          <thead><tr style="font-size:10px;color:#64748b;text-transform:uppercase">
+            <th style="padding:4px 8px;text-align:left">Mot-clé</th>
+            <th style="padding:4px 8px;text-align:center;width:50px">Pos.</th>
+            <th style="padding:4px 8px;text-align:center;width:40px">Δ</th>
+            <th style="padding:4px 8px;text-align:center;width:50px">Impr.</th>
+            <th style="padding:4px 8px;text-align:center;width:40px">Clics</th>
+          </tr></thead>
+          <tbody>
+          ${rows.map(k => {
+            const posColor = k.position === null ? '#334155'
+              : k.position <= 3  ? '#21c47b'
+              : k.position <= 10 ? '#f59e0b'
+              : '#94a3b8';
+            const posLabel = k.position === null ? '—' : k.position.toFixed(1);
+            let deltaCell = '<span style="color:#64748b">—</span>';
+            if (k.position !== null && k.prevPos !== null) {
+              const d = (k.prevPos - k.position).toFixed(1);
+              if (d > 0)      deltaCell = `<span style="color:#21c47b">↑${d}</span>`;
+              else if (d < 0) deltaCell = `<span style="color:#e74c3c">↓${Math.abs(d)}</span>`;
+              else            deltaCell = `<span style="color:#64748b">0</span>`;
+            }
+            return `<tr>
+              <td style="padding:5px 8px;border-bottom:1px solid #1e3a50;color:#94a3b8;font-size:11px">${k.q}</td>
+              <td style="padding:5px 8px;border-bottom:1px solid #1e3a50;text-align:center;font-weight:700;font-size:12px;color:${posColor}">${posLabel}</td>
+              <td style="padding:5px 8px;border-bottom:1px solid #1e3a50;text-align:center;font-size:11px">${deltaCell}</td>
+              <td style="padding:5px 8px;border-bottom:1px solid #1e3a50;text-align:center;color:#64748b;font-size:11px">${k.impressions}</td>
+              <td style="padding:5px 8px;border-bottom:1px solid #1e3a50;text-align:center;color:#64748b;font-size:11px">${k.clicks}</td>
+            </tr>`;
+          }).join('')}
+          </tbody>
+        </table>
+      </div>`;
+    }).join('')}
   </div>
 
   <div style="text-align:center;font-size:11px;color:#334155">
