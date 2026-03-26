@@ -444,8 +444,7 @@ const Communaute = () => {
             Prêt à rejoindre le mouvement ?
           </h2>
           <p className="text-text-secondary text-lg mb-8 max-w-xl mx-auto">
-            Chaque bénévole compte. Chaque mission enlève des kilos de déchets de la Méditerranée.
-            La prochaine pourrait être la vôtre.
+            Suivre nos actions, c'est déjà agir. Rejoignez le groupe pour être informé des prochaines missions et amplifier la cause sur vos réseaux.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <a
@@ -455,7 +454,7 @@ const Communaute = () => {
               className="btn-primary inline-flex items-center justify-center gap-2"
             >
               <Users className="w-5 h-5" />
-              Rejoindre le groupe · {fbGroupLabel} membres
+              Suivre les missions · {fbGroupLabel} membres
             </a>
             <Link
               to="/contact"
