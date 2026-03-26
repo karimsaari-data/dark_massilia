@@ -54,6 +54,7 @@ const PERSON_SCHEMA = {
     'https://www.laprovence.com/video/marseille-14-tonne-de-dechets-sortie-des-eaux-du-frioul-par-des-apneistes/14871',
     'https://www.laprovence.com/article/region/1865431/le-vieux-port-de-marseille-nettoye-par-des-apneistes',
     'https://www.midilibre.fr/2024/04/02/une-maree-bleue-pourquoi-des-milliers-de-meduses-recouvrent-elles-le-littoral-a-marseille-11865324.php',
+    'https://www.zero-dechet-sauvage.org/structures/dark-massilia',
   ],
   knowsAbout: [
     'Protection de l\'environnement',
