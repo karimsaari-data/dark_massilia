@@ -301,7 +301,7 @@ export default function BlogPost() {
                 Retour aux actualités
               </Link>
 
-              <Link to="/contact" className="btn-primary text-sm">
+              <Link to="/communaute" className="btn-primary text-sm">
                 Rejoindre la mission →
               </Link>
             </div>

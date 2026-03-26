@@ -312,6 +312,36 @@ const Missions = () => {
           </motion.div>
         </motion.div>
 
+        {/* Dernières actualités — maillage interne blog */}
+        <motion.div
+          initial={{ opacity: 0, y: 16 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ delay: 0.1 }}
+          className="mb-12"
+        >
+          <div className="glass rounded-2xl px-8 py-6 flex flex-col sm:flex-row items-center justify-between gap-4 border border-white/5">
+            <div>
+              <p className="text-xs uppercase tracking-widest text-ocean-teal font-semibold mb-1">
+                Journal de bord
+              </p>
+              <p className="text-white font-semibold text-lg leading-snug">
+                Actualités &amp; comptes rendus de mission
+              </p>
+              <p className="text-text-secondary text-sm mt-1">
+                Reportages terrain, faune observée et bilans de dépollution depuis les Calanques.
+              </p>
+            </div>
+            <Link
+              to="/blog"
+              className="btn-secondary inline-flex items-center gap-2 whitespace-nowrap flex-shrink-0"
+            >
+              <span>Lire le blog</span>
+              <ArrowRight className="w-4 h-4" />
+            </Link>
+          </div>
+        </motion.div>
+
         {/* Voir aussi — maillage interne vidéos */}
         <motion.div
           initial={{ opacity: 0, y: 16 }}

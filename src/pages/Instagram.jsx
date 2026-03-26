@@ -495,6 +495,13 @@ const Communaute = () => {
               Local Guide Marseille
               <ArrowRight className="w-4 h-4" />
             </Link>
+            <Link
+              to="/blog"
+              className="text-text-secondary hover:text-ocean-teal transition-colors text-sm inline-flex items-center gap-1"
+            >
+              Actualités &amp; missions
+              <ArrowRight className="w-4 h-4" />
+            </Link>
           </div>
         </motion.div>
 

@@ -141,23 +141,44 @@ export default function Blog() {
           initial={{ opacity: 0, y: 16 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.5 }}
-          className="mt-16 pt-8 border-t border-white/10 flex flex-col sm:flex-row flex-wrap items-center justify-center gap-4 text-sm"
+          className="mt-16"
         >
-          <Link to="/communaute" className="text-text-secondary hover:text-ocean-teal transition-colors inline-flex items-center gap-1">
-            Rejoindre la communauté <ArrowRight className="w-4 h-4" />
-          </Link>
-          <Link to="/#newsletter" className="text-text-secondary hover:text-ocean-teal transition-colors inline-flex items-center gap-1">
-            S'inscrire à la newsletter <ArrowRight className="w-4 h-4" />
-          </Link>
-          <Link to="/depollution-marine" className="text-text-secondary hover:text-ocean-teal transition-colors inline-flex items-center gap-1">
-            Nos missions de dépollution <ArrowRight className="w-4 h-4" />
-          </Link>
-          <Link to="/carte-calanques" className="text-text-secondary hover:text-ocean-teal transition-colors inline-flex items-center gap-1">
-            Carte interactive des Calanques <ArrowRight className="w-4 h-4" />
-          </Link>
-          <Link to="/local-guide-marseille" className="text-text-secondary hover:text-ocean-teal transition-colors inline-flex items-center gap-1">
-            Local Guide Marseille <ArrowRight className="w-4 h-4" />
-          </Link>
+          <div className="glass rounded-2xl px-8 py-6 flex flex-col gap-6 border border-white/5">
+            <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
+              <div>
+                <p className="text-xs uppercase tracking-widest text-ocean-teal font-semibold mb-1">
+                  Passer à l'action
+                </p>
+                <p className="text-white font-semibold text-lg leading-snug">
+                  Rejoindre une mission de dépollution
+                </p>
+                <p className="text-text-secondary text-sm mt-1">
+                  Bénévoles, kayakistes, photographes — chaque profil a sa place dans nos équipes.
+                </p>
+              </div>
+              <Link
+                to="/communaute"
+                className="btn-primary inline-flex items-center gap-2 whitespace-nowrap flex-shrink-0"
+              >
+                <span>Devenir bénévole</span>
+                <ArrowRight className="w-4 h-4" />
+              </Link>
+            </div>
+            <div className="flex flex-col sm:flex-row flex-wrap items-center justify-center gap-4 pt-2 border-t border-white/8 text-sm">
+              <Link to="/depollution-marine" className="text-text-secondary hover:text-ocean-teal transition-colors inline-flex items-center gap-1">
+                Nos missions de dépollution <ArrowRight className="w-4 h-4" />
+              </Link>
+              <Link to="/#newsletter" className="text-text-secondary hover:text-ocean-teal transition-colors inline-flex items-center gap-1">
+                S'inscrire à la newsletter <ArrowRight className="w-4 h-4" />
+              </Link>
+              <Link to="/carte-calanques" className="text-text-secondary hover:text-ocean-teal transition-colors inline-flex items-center gap-1">
+                Carte interactive des Calanques <ArrowRight className="w-4 h-4" />
+              </Link>
+              <Link to="/donnees-scientifiques" className="text-text-secondary hover:text-ocean-teal transition-colors inline-flex items-center gap-1">
+                Données scientifiques <ArrowRight className="w-4 h-4" />
+              </Link>
+            </div>
+          </div>
         </motion.div>
 
       </div>
