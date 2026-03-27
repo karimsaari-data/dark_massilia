@@ -208,113 +208,111 @@ function statusDot(page) {
   const allLinked = new Set(pages.flatMap(p => p.internalLinks));
   const orphans   = pages.filter(p => !allLinked.has(p.url) && p.url !== urls[0]);
 
+  // ── Inlinks par page (nombre de pages qui pointent vers chaque URL) ─────────
+  const inlinksMap = new Map(pages.map(p => [p.url, 0]));
+  for (const p of pages) {
+    for (const link of p.internalLinks) {
+      if (inlinksMap.has(link)) inlinksMap.set(link, inlinksMap.get(link) + 1);
+    }
+  }
+
   // ── Scores synthèse ────────────────────────────────────────────────────────
-  const totalErrors = pages.reduce((a, p) => a + p.issues.filter(i => i.sev === 'error').length, 0);
-  const totalWarns  = pages.reduce((a, p) => a + p.issues.filter(i => i.sev === 'warn').length, 0);
-  const pagesOK     = pages.filter(p => p.issues.length === 0).length;
+  const totalErrors    = pages.reduce((a, p) => a + p.issues.filter(i => i.sev === 'error').length, 0);
+  const totalWarns     = pages.reduce((a, p) => a + p.issues.filter(i => i.sev === 'warn').length, 0);
+  const pagesOK        = pages.filter(p => p.issues.length === 0).length;
   const totalImgsNoAlt = pages.reduce((a, p) => a + p.imgsNoAlt.length, 0);
   const pagesNoEEAT    = pages.filter(p => !p.hasEEAT).length;
 
   console.log(`\n✅ Crawl terminé — ${pages.length} pages · ${totalErrors} erreurs · ${totalWarns} warnings · ${orphans.length} orphelines\n`);
 
-  // ── HTML rapport ───────────────────────────────────────────────────────────
-  function kpi(label, value, color) {
-    return `<div style="flex:1;background:#0f2035;border-radius:12px;padding:16px 12px;text-align:center">
-      <div style="font-size:32px;font-weight:700;color:${color}">${value}</div>
-      <div style="font-size:11px;color:#64748b;margin-top:4px">${label}</div>
-    </div>`;
+  // ── Helpers colonnes (labels textuels pour lecture IA) ────────────────────
+  function h1Label(count) {
+    if (count === 0) return 'Vide';
+    if (count === 1) return 'Oui';
+    return `Multiple (${count})`;
+  }
+  function h1Color(count) {
+    if (count === 1) return '#21c47b';
+    if (count === 0) return '#e74c3c';
+    return '#f59e0b';
   }
 
-  const pageRows = [...pages]
-    .sort((a, b) => b.issues.length - a.issues.length)
-    .map(p => `
-    <tr>
-      <td style="padding:7px 10px;border-bottom:1px solid #1e3a50;font-size:11px;color:#94a3b8;word-break:break-all">
-        ${statusDot(p)} ${pageLabel(p.url)}
-      </td>
-      <td style="padding:7px 10px;border-bottom:1px solid #1e3a50;font-size:11px;color:#64748b;max-width:160px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap" title="${p.title}">${p.title || '<span style="color:#e74c3c">—</span>'}</td>
-      <td style="padding:7px 10px;border-bottom:1px solid #1e3a50;text-align:center;font-size:12px">${p.h1Count === 1 ? `<span style="color:#21c47b">1</span>` : `<span style="color:#e74c3c">${p.h1Count}</span>`}</td>
-      <td style="padding:7px 10px;border-bottom:1px solid #1e3a50;text-align:center;font-size:12px">${p.h2Count}</td>
-      <td style="padding:7px 10px;border-bottom:1px solid #1e3a50;text-align:center;font-size:12px">${p.imgsNoAlt.length > 0 ? `<span style="color:#f59e0b">${p.imgsNoAlt.length}</span>` : '<span style="color:#21c47b">0</span>'}</td>
-      <td style="padding:7px 10px;border-bottom:1px solid #1e3a50;text-align:center;font-size:12px">${p.hasEEAT ? '<span style="color:#21c47b">✓</span>' : '<span style="color:#f59e0b">✗</span>'}</td>
-      <td style="padding:7px 10px;border-bottom:1px solid #1e3a50;font-size:10px;color:#64748b">
-        ${p.issues.map(i => `<span style="color:${sevColor(i.sev)}">${sevIcon(i.sev)} ${i.msg}</span>`).join('<br>')}
-      </td>
-    </tr>`).join('');
+  // ── Tableau principal (colonnes exactes pour extraction IA) ──────────────
+  const sortedPages = [...pages].sort((a, b) => b.issues.length - a.issues.length);
 
-  const orphanRows = orphans.length
-    ? orphans.map(p => `
-      <tr>
-        <td style="padding:7px 10px;border-bottom:1px solid #1e3a50;color:#94a3b8;font-size:12px">${pageLabel(p.url)}</td>
-        <td style="padding:7px 10px;border-bottom:1px solid #1e3a50;color:#64748b;font-size:11px">${p.title}</td>
-      </tr>`).join('')
-    : `<tr><td colspan="2" style="padding:12px;color:#64748b;font-size:12px;text-align:center">✅ Aucune page orpheline</td></tr>`;
+  const pageRows = sortedPages.map(p => {
+    const inlinks = inlinksMap.get(p.url) ?? 0;
+    return `
+    <tr>
+      <td style="padding:6px 10px;border-bottom:1px solid #ddd;font-size:11px;font-family:monospace">${pageLabel(p.url)}</td>
+      <td style="padding:6px 10px;border-bottom:1px solid #ddd;text-align:center;font-size:11px;color:${h1Color(p.h1Count)};font-weight:600">${h1Label(p.h1Count)}</td>
+      <td style="padding:6px 10px;border-bottom:1px solid #ddd;text-align:center;font-size:11px;color:${p.metaDesc ? '#21c47b' : '#e74c3c'};font-weight:600">${p.metaDesc ? 'Oui' : 'Non'}</td>
+      <td style="padding:6px 10px;border-bottom:1px solid #ddd;text-align:center;font-size:11px;color:${p.imgsNoAlt.length > 0 ? '#f59e0b' : '#21c47b'};font-weight:600">${p.imgsNoAlt.length}</td>
+      <td style="padding:6px 10px;border-bottom:1px solid #ddd;text-align:center;font-size:11px;color:${p.hasEEAT ? '#21c47b' : '#f59e0b'};font-weight:600">${p.hasEEAT ? 'Trouvé' : 'Absent'}</td>
+      <td style="padding:6px 10px;border-bottom:1px solid #ddd;text-align:center;font-size:11px;color:${inlinks === 0 ? '#e74c3c' : '#21c47b'};font-weight:600">${inlinks}</td>
+      <td style="padding:6px 10px;border-bottom:1px solid #ddd;font-size:10px;color:#555">${p.issues.map(i => `${sevIcon(i.sev)} ${i.msg}`).join(' · ') || '—'}</td>
+    </tr>`;
+  }).join('');
+
+  // ── Liste orphelines (section dédiée pour trigger maillage IA) ───────────
+  const orphanList = orphans.length
+    ? orphans.map(p => `<li style="margin:4px 0;font-family:monospace;font-size:12px">${pageLabel(p.url)}<span style="color:#666;font-family:sans-serif"> — ${p.title || 'sans titre'}</span></li>`).join('')
+    : '<li style="color:#21c47b;font-size:12px">Aucune page orpheline détectée</li>';
 
   const html = `<!DOCTYPE html>
-<html><head><meta charset="UTF-8"></head>
-<body style="margin:0;padding:0;background:#0a1628;font-family:system-ui,sans-serif;color:#e2e8f0">
-<div style="max-width:720px;margin:0 auto;padding:28px 16px">
+<html><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width"></head>
+<body style="margin:0;padding:24px;background:#fff;font-family:Georgia,serif;color:#1a1a1a">
+<div style="max-width:760px;margin:0 auto">
 
-  <!-- Header -->
-  <div style="text-align:center;margin-bottom:28px">
-    <div style="font-size:11px;letter-spacing:2px;color:#21c47b;text-transform:uppercase;margin-bottom:6px">Audit On-Page & Sémantique</div>
-    <h1 style="margin:0;font-size:22px;color:#fff">Dark Massilia · Crawl SEO</h1>
-    <div style="font-size:12px;color:#64748b;margin-top:4px">${dateStr} — ${pages.length} pages crawlées${crawlErrors ? ` · ⚠️ ${crawlErrors} erreur(s)` : ''}</div>
+  <h1 style="font-size:20px;margin:0 0 4px">Audit On-Page & Sémantique — Dark Massilia</h1>
+  <p style="margin:0 0 24px;font-size:12px;color:#666">${dateStr} · ${pages.length} pages crawlées · karimsaari.com${crawlErrors ? ` · ⚠️ ${crawlErrors} erreur(s) de crawl` : ''}</p>
+
+  <h2 style="font-size:14px;border-bottom:2px solid #1a1a1a;padding-bottom:4px;margin-bottom:8px">Synthèse</h2>
+  <table style="border-collapse:collapse;margin-bottom:24px;font-size:12px">
+    <tr><td style="padding:3px 16px 3px 0;color:#555">Pages crawlées</td><td style="font-weight:700">${pages.length}</td></tr>
+    <tr><td style="padding:3px 16px 3px 0;color:#555">Pages sans problème</td><td style="font-weight:700;color:${pagesOK === pages.length ? 'green' : '#c0392b'}">${pagesOK}</td></tr>
+    <tr><td style="padding:3px 16px 3px 0;color:#555">Erreurs critiques</td><td style="font-weight:700;color:${totalErrors === 0 ? 'green' : '#c0392b'}">${totalErrors}</td></tr>
+    <tr><td style="padding:3px 16px 3px 0;color:#555">Warnings</td><td style="font-weight:700;color:${totalWarns === 0 ? 'green' : '#e67e22'}">${totalWarns}</td></tr>
+    <tr><td style="padding:3px 16px 3px 0;color:#555">Images sans attribut ALT</td><td style="font-weight:700;color:${totalImgsNoAlt === 0 ? 'green' : '#e67e22'}">${totalImgsNoAlt}</td></tr>
+    <tr><td style="padding:3px 16px 3px 0;color:#555">Pages orphelines (0 lien entrant)</td><td style="font-weight:700;color:${orphans.length === 0 ? 'green' : '#c0392b'}">${orphans.length}</td></tr>
+    <tr><td style="padding:3px 16px 3px 0;color:#555">Pages sans mention E-E-A-T</td><td style="font-weight:700;color:${pagesNoEEAT === 0 ? 'green' : '#e67e22'}">${pagesNoEEAT}</td></tr>
+  </table>
+
+  <h2 style="font-size:14px;border-bottom:2px solid #1a1a1a;padding-bottom:4px;margin-bottom:8px">Tableau récapitulatif On-Page</h2>
+  <p style="font-size:11px;color:#666;margin:0 0 8px">Colonnes : URL · H1 Unique ? · Meta Desc Présente ? · Images sans ALT · Mention Karim Saari (E-E-A-T) · Maillage Interne (Inlinks) · Problèmes détectés</p>
+  <div style="overflow-x:auto">
+  <table style="width:100%;border-collapse:collapse;font-size:11px;margin-bottom:28px">
+    <thead>
+      <tr style="background:#1a1a1a;color:#fff">
+        <th style="padding:7px 10px;text-align:left;font-weight:600">URL</th>
+        <th style="padding:7px 10px;text-align:center;font-weight:600">H1 Unique ?</th>
+        <th style="padding:7px 10px;text-align:center;font-weight:600">Meta Desc ?</th>
+        <th style="padding:7px 10px;text-align:center;font-weight:600">Images sans ALT</th>
+        <th style="padding:7px 10px;text-align:center;font-weight:600">Karim Saari (E-E-A-T)</th>
+        <th style="padding:7px 10px;text-align:center;font-weight:600">Inlinks</th>
+        <th style="padding:7px 10px;text-align:left;font-weight:600">Problèmes</th>
+      </tr>
+    </thead>
+    <tbody>${pageRows}</tbody>
+  </table>
   </div>
 
-  <!-- KPIs -->
-  <div style="display:flex;gap:10px;margin-bottom:24px">
-    ${kpi('Pages OK', pagesOK, pagesOK === pages.length ? '#21c47b' : '#f59e0b')}
-    ${kpi('Erreurs critiques', totalErrors, totalErrors === 0 ? '#21c47b' : '#e74c3c')}
-    ${kpi('Warnings', totalWarns, totalWarns === 0 ? '#21c47b' : '#f59e0b')}
-    ${kpi('Images sans ALT', totalImgsNoAlt, totalImgsNoAlt === 0 ? '#21c47b' : '#f59e0b')}
-    ${kpi('Pages orphelines', orphans.length, orphans.length === 0 ? '#21c47b' : '#e74c3c')}
-    ${kpi('Sans E-E-A-T', pagesNoEEAT, pagesNoEEAT === 0 ? '#21c47b' : '#f59e0b')}
-  </div>
+  <h2 style="font-size:14px;border-bottom:2px solid #c0392b;padding-bottom:4px;margin-bottom:8px;color:#c0392b">Pages Orphelines — Action Maillage Interne Requise</h2>
+  <p style="font-size:11px;color:#666;margin:0 0 8px">Pages avec 0 lien interne entrant. Non accessibles depuis le maillage → indexation compromise.</p>
+  <ul style="margin:0 0 28px;padding-left:20px;line-height:1.8">
+    ${orphanList}
+  </ul>
 
-  <!-- Tableau principal -->
-  <div style="background:#0f2035;border-radius:12px;padding:16px;margin-bottom:16px;overflow-x:auto">
-    <h2 style="margin:0 0 12px;font-size:13px;color:#21c47b">Détail par page</h2>
-    <table style="width:100%;border-collapse:collapse;min-width:600px">
-      <thead><tr style="font-size:10px;color:#64748b;text-transform:uppercase">
-        <th style="padding:6px 10px;text-align:left">Page</th>
-        <th style="padding:6px 10px;text-align:left">Title</th>
-        <th style="padding:6px 10px">H1</th>
-        <th style="padding:6px 10px">H2</th>
-        <th style="padding:6px 10px">ALT∅</th>
-        <th style="padding:6px 10px">E-E-A-T</th>
-        <th style="padding:6px 10px;text-align:left">Problèmes</th>
-      </tr></thead>
-      <tbody>${pageRows}</tbody>
-    </table>
-  </div>
+  <h2 style="font-size:14px;border-bottom:2px solid #1a1a1a;padding-bottom:4px;margin-bottom:8px">Légende</h2>
+  <p style="font-size:11px;color:#555;line-height:1.8;margin:0 0 24px">
+    <strong>H1 Unique ?</strong> : Oui = exactement 1 H1 · Non/Vide = 0 H1 · Multiple = plus d'un H1<br>
+    <strong>Images sans ALT</strong> : nombre exact d'images sans attribut alt (ou alt vide)<br>
+    <strong>Karim Saari (E-E-A-T)</strong> : Trouvé = texte "Karim Saari" présent dans le corps de la page · Absent = signal E-E-A-T manquant<br>
+    <strong>Inlinks</strong> : nombre de pages du site pointant vers cette URL via un lien &lt;a href&gt;<br>
+    ❌ = erreur critique · ⚠️ = warning
+  </p>
 
-  <!-- Pages orphelines -->
-  <div style="background:#0f2035;border-radius:12px;padding:16px;margin-bottom:16px">
-    <h2 style="margin:0 0 4px;font-size:13px;color:${orphans.length ? '#e74c3c' : '#21c47b'}">🔗 Pages orphelines (aucun lien interne entrant)</h2>
-    <div style="font-size:11px;color:#64748b;margin-bottom:10px">Ces pages ne sont pas accessibles depuis le maillage interne → elles ne seront pas bien indexées</div>
-    <table style="width:100%;border-collapse:collapse">
-      <thead><tr style="font-size:10px;color:#64748b;text-transform:uppercase">
-        <th style="padding:6px 10px;text-align:left">Page</th>
-        <th style="padding:6px 10px;text-align:left">Title</th>
-      </tr></thead>
-      <tbody>${orphanRows}</tbody>
-    </table>
-  </div>
-
-  <!-- Légende -->
-  <div style="background:#0f2035;border-radius:12px;padding:12px 16px;font-size:11px;color:#64748b;margin-bottom:24px">
-    <strong style="color:#94a3b8">Légende :</strong>
-    ● <span style="color:#21c47b">vert</span> = OK ·
-    ● <span style="color:#f59e0b">orange</span> = warning ·
-    ● <span style="color:#e74c3c">rouge</span> = erreur critique ·
-    E-E-A-T = présence "Karim Saari" dans le corps de la page ·
-    ALT∅ = images sans attribut alt
-  </div>
-
-  <div style="text-align:center;font-size:11px;color:#334155">
-    Généré automatiquement · Crawl On-Page SEO · Dark Massilia
-  </div>
+  <p style="font-size:10px;color:#aaa;text-align:center;margin:0">Généré automatiquement le ${dateStr} · Crawl On-Page SEO · Dark Massilia · karimsaari.com</p>
 </div>
 </body></html>`;
 
