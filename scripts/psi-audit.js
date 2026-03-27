@@ -53,16 +53,24 @@ function score(data, cat) {
 }
 
 function scoreColor(s, cat) {
-  if (s === null) return '#64748b';
+  if (s === null) return '#666';
   const t = THRESHOLDS[cat];
-  if (s >= t.min) return '#21c47b';
-  return t.level === 'error' ? '#e74c3c' : '#f59e0b';
+  if (s >= t.min) return 'green';
+  return t.level === 'error' ? '#c0392b' : '#e67e22';
+}
+
+function scoreLabel(s) {
+  if (s === null) return '—';
+  const pct = Math.round(s * 100);
+  const label = pct >= 90 ? 'Bon' : pct >= 50 ? 'Moyen' : 'Faible';
+  const color = pct >= 90 ? 'green' : pct >= 50 ? '#e67e22' : '#c0392b';
+  return `<span style="font-weight:700;color:${color}">${pct} (${label})</span>`;
 }
 
 function scoreBar(s) {
   if (s === null) return '—';
   const pct = Math.round(s * 100);
-  const color = pct >= 90 ? '#21c47b' : pct >= 50 ? '#f59e0b' : '#e74c3c';
+  const color = pct >= 90 ? 'green' : pct >= 50 ? '#e67e22' : '#c0392b';
   return `<span style="font-weight:700;color:${color}">${pct}</span>`;
 }
 
@@ -226,30 +234,23 @@ async function sendEmail(html, subject, pdfBuffer, pdfName) {
   const rows = sorted.map(r => {
     const warn = (r.perf ?? 1) < THRESHOLDS.performance.min || (r.seo ?? 1) < THRESHOLDS.seo.min;
     return `
-    <tr style="${warn ? 'background:rgba(231,76,60,0.05)' : ''}">
-      <td style="padding:7px 10px;border-bottom:1px solid #1e3a50;color:#94a3b8;font-size:11px;word-break:break-all">${pageLabel(r.url)}</td>
-      <td style="padding:7px 10px;border-bottom:1px solid #1e3a50;text-align:center;font-size:13px">${scoreBar(r.perf)}</td>
-      <td style="padding:7px 10px;border-bottom:1px solid #1e3a50;text-align:center;font-size:13px">${scoreBar(r.seo)}</td>
-      <td style="padding:7px 10px;border-bottom:1px solid #1e3a50;text-align:center;font-size:13px">${scoreBar(r.a11y)}</td>
-      <td style="padding:7px 10px;border-bottom:1px solid #1e3a50;text-align:center;font-size:13px">${scoreBar(r.bp)}</td>
-      <td style="padding:7px 10px;border-bottom:1px solid #1e3a50;text-align:center;color:#64748b;font-size:11px">${r.fcp}</td>
-      <td style="padding:7px 10px;border-bottom:1px solid #1e3a50;text-align:center;color:#64748b;font-size:11px">${r.lcp}</td>
-      <td style="padding:7px 10px;border-bottom:1px solid #1e3a50;text-align:center;color:#64748b;font-size:11px">${r.cls}</td>
-      <td style="padding:7px 10px;border-bottom:1px solid #1e3a50;text-align:center;color:#64748b;font-size:11px">${r.tbt}</td>
-      <td style="padding:7px 10px;border-bottom:1px solid #1e3a50;text-align:center;color:#64748b;font-size:11px">${r.inp}</td>
-      <td style="padding:7px 10px;border-bottom:1px solid #1e3a50;text-align:center;color:#64748b;font-size:11px">${r.ttfb}</td>
+    <tr style="${warn ? 'background:rgba(192,57,43,0.05)' : ''}">
+      <td style="padding:7px 10px;border-bottom:1px solid #ddd;color:#555;font-size:11px;word-break:break-all">${pageLabel(r.url)}</td>
+      <td style="padding:7px 10px;border-bottom:1px solid #ddd;text-align:center;font-size:12px">${scoreLabel(r.perf)}</td>
+      <td style="padding:7px 10px;border-bottom:1px solid #ddd;text-align:center;font-size:12px">${scoreLabel(r.seo)}</td>
+      <td style="padding:7px 10px;border-bottom:1px solid #ddd;text-align:center;font-size:12px">${scoreLabel(r.a11y)}</td>
+      <td style="padding:7px 10px;border-bottom:1px solid #ddd;text-align:center;font-size:12px">${scoreLabel(r.bp)}</td>
+      <td style="padding:7px 10px;border-bottom:1px solid #ddd;text-align:center;color:#555;font-size:11px">${r.fcp}</td>
+      <td style="padding:7px 10px;border-bottom:1px solid #ddd;text-align:center;color:#555;font-size:11px">${r.lcp}</td>
+      <td style="padding:7px 10px;border-bottom:1px solid #ddd;text-align:center;color:#555;font-size:11px">${r.cls}</td>
+      <td style="padding:7px 10px;border-bottom:1px solid #ddd;text-align:center;color:#555;font-size:11px">${r.tbt}</td>
+      <td style="padding:7px 10px;border-bottom:1px solid #ddd;text-align:center;color:#555;font-size:11px">${r.inp}</td>
+      <td style="padding:7px 10px;border-bottom:1px solid #ddd;text-align:center;color:#555;font-size:11px">${r.ttfb}</td>
     </tr>`;
   }).join('');
 
-  function kpi(label, value, color) {
-    return `<div style="flex:1;background:#0f2035;border-radius:12px;padding:16px 12px;text-align:center">
-      <div style="font-size:32px;font-weight:700;color:${color ?? '#fff'}">${value ?? '—'}</div>
-      <div style="font-size:11px;color:#64748b;margin-top:4px">${label}</div>
-    </div>`;
-  }
-
-  const statusColor = errors === 0 ? '#21c47b' : '#e74c3c';
-  const statusLabel = errors === 0 ? '✅ Toutes les pages OK' : `❌ ${errors} page(s) sous les seuils`;
+  const statusColor = errors === 0 ? 'green' : '#c0392b';
+  const statusLabel = errors === 0 ? 'Toutes les pages OK' : `${errors} page(s) sous les seuils`;
   const barsHeight  = Math.max(320, sorted.length * 22);
 
   const html = `<!DOCTYPE html>
@@ -257,87 +258,70 @@ async function sendEmail(html, subject, pdfBuffer, pdfName) {
   <meta charset="UTF-8">
   <script src="https://cdn.jsdelivr.net/npm/chart.js@4/dist/chart.umd.min.js"></script>
 </head>
-<body style="margin:0;padding:0;background:#0a1628;font-family:system-ui,sans-serif;color:#e2e8f0">
-<div style="max-width:860px;margin:0 auto;padding:28px 16px">
+<body style="margin:0;background:#fff;font-family:Georgia,serif;color:#1a1a1a;padding:24px">
+<div style="max-width:860px;margin:0 auto">
 
-  <!-- Header -->
-  <div style="text-align:center;margin-bottom:28px">
-    <div style="font-size:11px;letter-spacing:2px;color:#21c47b;text-transform:uppercase;margin-bottom:6px">Audit Performance hebdomadaire</div>
-    <h1 style="margin:0;font-size:22px;color:#fff">Dark Massilia · PageSpeed Insights</h1>
-    <div style="font-size:12px;color:#64748b;margin-top:4px">${dateStr} — ${URLS.length} pages · mobile</div>
-    <div style="margin-top:10px;font-size:13px;font-weight:600;color:${statusColor}">${statusLabel}</div>
-  </div>
+  <h1 style="font-size:20px;color:#1a1a1a;margin:0 0 4px">Audit PageSpeed Insights — Dark Massilia</h1>
+  <p style="margin:0 0 4px;font-size:12px;color:#666">${dateStr} — ${URLS.length} pages · mobile · karimsaari.com</p>
+  <p style="margin:0 0 24px;font-size:13px;font-weight:600;color:${statusColor}">${statusLabel}</p>
 
-  <!-- ① Jauges scores globaux -->
-  <div style="background:#0f2035;border-radius:12px;padding:16px;margin-bottom:20px">
-    <div style="font-size:11px;color:#64748b;text-transform:uppercase;letter-spacing:.1em;margin-bottom:12px">Scores moyens — ${URLS.length} pages</div>
-    <div style="display:flex;gap:8px;justify-content:space-around">
-      ${g.map(({ id, label, val, color }) => `
-      <div style="flex:1;text-align:center">
-        <div style="position:relative;height:80px">
-          <canvas id="${id}"></canvas>
-          <div style="position:absolute;bottom:4px;left:50%;transform:translateX(-50%);font-size:20px;font-weight:800;color:${color}">${val ?? '—'}</div>
-        </div>
-        <div style="font-size:10px;color:#64748b;margin-top:2px">${label}</div>
-      </div>`).join('')}
-    </div>
-  </div>
-
-  <!-- ② Courbe d'évolution -->
-  <div style="background:#0f2035;border-radius:12px;padding:16px;margin-bottom:20px">
-    <div style="font-size:11px;color:#64748b;text-transform:uppercase;letter-spacing:.1em;margin-bottom:12px">
-      Évolution — ${chartHistory.length} semaine${chartHistory.length > 1 ? 's' : ''}
-      ${chartHistory.length < 2 ? '<span style="font-size:10px;color:#334155;margin-left:8px">(courbe disponible dès la 2e semaine)</span>' : ''}
-    </div>
-    <div style="position:relative;height:180px">
-      <canvas id="chartEvol"></canvas>
-    </div>
-  </div>
-
-  <!-- ③ Barres horizontales — comparaison pages -->
-  <div style="background:#0f2035;border-radius:12px;padding:16px;margin-bottom:20px">
-    <div style="font-size:11px;color:#64748b;text-transform:uppercase;letter-spacing:.1em;margin-bottom:12px">Score performance par page</div>
-    <div style="position:relative;height:${barsHeight}px">
-      <canvas id="chartBars"></canvas>
-    </div>
-  </div>
+  <!-- Scores moyens (tableau synthèse) -->
+  <h2 style="font-size:14px;border-bottom:2px solid #1a1a1a;padding-bottom:4px;margin-bottom:8px">Scores moyens — ${URLS.length} pages</h2>
+  <table style="border-collapse:collapse;margin-bottom:24px;font-size:12px">
+    <tr><td style="padding:3px 16px 3px 0;color:#555">Performance</td><td>${scoreLabel(avgPerf !== null ? avgPerf / 100 : null)}</td></tr>
+    <tr><td style="padding:3px 16px 3px 0;color:#555">SEO</td><td>${scoreLabel(avgSeo !== null ? avgSeo / 100 : null)}</td></tr>
+    <tr><td style="padding:3px 16px 3px 0;color:#555">Accessibilité</td><td>${scoreLabel(avgA11y !== null ? avgA11y / 100 : null)}</td></tr>
+    <tr><td style="padding:3px 16px 3px 0;color:#555">Best Practices</td><td>${scoreLabel(avgBp !== null ? avgBp / 100 : null)}</td></tr>
+  </table>
 
   <!-- Seuils -->
-  <div style="background:#0f2035;border-radius:12px;padding:12px 16px;margin-bottom:20px;font-size:11px;color:#64748b">
-    Seuils : Perf ≥60 (erreur) · SEO ≥90 (erreur) · Accessibilité ≥80 (warning) · Best Practices ≥80 (warning)
-  </div>
+  <p style="font-size:11px;color:#666;margin:0 0 24px">Seuils : Perf ≥60 (erreur) · SEO ≥90 (erreur) · Accessibilité ≥80 (warning) · Best Practices ≥80 (warning) — Interprétation : ≥90 = Bon · ≥50 = Moyen · &lt;50 = Faible</p>
 
-  <!-- Tableau détail -->
-  <div style="background:#0f2035;border-radius:12px;padding:16px;overflow-x:auto">
-    <h2 style="margin:0 0 12px;font-size:13px;color:#21c47b">Détail par page (triées par perf. croissante)</h2>
+  <!-- Tableau détail par page -->
+  <h2 style="font-size:14px;border-bottom:2px solid #1a1a1a;padding-bottom:4px;margin-bottom:8px">Détail par page (triées par perf. croissante)</h2>
+  <div style="overflow-x:auto;margin-bottom:24px">
     <table style="width:100%;border-collapse:collapse;min-width:750px">
-      <thead><tr style="font-size:10px;color:#64748b;text-transform:uppercase">
-        <th style="padding:6px 10px;text-align:left">Page</th>
-        <th style="padding:6px 10px">Perf</th>
-        <th style="padding:6px 10px">SEO</th>
-        <th style="padding:6px 10px">A11y</th>
-        <th style="padding:6px 10px">BP</th>
-        <th style="padding:6px 10px">FCP</th>
-        <th style="padding:6px 10px">LCP</th>
-        <th style="padding:6px 10px">CLS</th>
-        <th style="padding:6px 10px">TBT</th>
-        <th style="padding:6px 10px">INP</th>
-        <th style="padding:6px 10px">TTFB</th>
+      <thead><tr style="background:#1a1a1a;color:#fff">
+        <th style="padding:7px 10px;text-align:left;font-weight:600;font-size:11px">Page</th>
+        <th style="padding:7px 10px;font-weight:600;font-size:11px">Perf</th>
+        <th style="padding:7px 10px;font-weight:600;font-size:11px">SEO</th>
+        <th style="padding:7px 10px;font-weight:600;font-size:11px">A11y</th>
+        <th style="padding:7px 10px;font-weight:600;font-size:11px">BP</th>
+        <th style="padding:7px 10px;font-weight:600;font-size:11px">FCP</th>
+        <th style="padding:7px 10px;font-weight:600;font-size:11px">LCP</th>
+        <th style="padding:7px 10px;font-weight:600;font-size:11px">CLS</th>
+        <th style="padding:7px 10px;font-weight:600;font-size:11px">TBT</th>
+        <th style="padding:7px 10px;font-weight:600;font-size:11px">INP</th>
+        <th style="padding:7px 10px;font-weight:600;font-size:11px">TTFB</th>
       </tr></thead>
       <tbody>${rows}</tbody>
     </table>
   </div>
 
-  <div style="text-align:center;font-size:11px;color:#334155;margin-top:24px">
-    Généré automatiquement chaque dimanche · PageSpeed Insights API · Dark Massilia
+  <!-- Courbe d'évolution -->
+  <h2 style="font-size:14px;border-bottom:2px solid #1a1a1a;padding-bottom:4px;margin-bottom:8px">
+    Évolution — ${chartHistory.length} semaine${chartHistory.length > 1 ? 's' : ''}
+    ${chartHistory.length < 2 ? '<span style="font-size:10px;color:#666;margin-left:8px">(courbe disponible dès la 2e semaine)</span>' : ''}
+  </h2>
+  <div style="background:#f8f9fa;border:1px solid #ddd;border-radius:4px;padding:16px;margin-bottom:24px">
+    <div style="position:relative;height:180px">
+      <canvas id="chartEvol" style="background:#f8f9fa"></canvas>
+    </div>
   </div>
+
+  <!-- Barres horizontales — comparaison pages -->
+  <h2 style="font-size:14px;border-bottom:2px solid #1a1a1a;padding-bottom:4px;margin-bottom:8px">Score performance par page</h2>
+  <div style="background:#f8f9fa;border:1px solid #ddd;border-radius:4px;padding:16px;margin-bottom:24px">
+    <div style="position:relative;height:${barsHeight}px">
+      <canvas id="chartBars" style="background:#f8f9fa"></canvas>
+    </div>
+  </div>
+
+  <p style="font-size:10px;color:#aaa;text-align:center;margin:0">Généré automatiquement chaque dimanche · PageSpeed Insights API · Dark Massilia · karimsaari.com</p>
 </div>
 
 <script>
-// ① Jauges
-${gaugeScript}
-
-// ② Courbe d'évolution
+// Courbe d'évolution
 new Chart(document.getElementById('chartEvol'), {
   type: 'line',
   data: {
@@ -363,26 +347,26 @@ new Chart(document.getElementById('chartEvol'), {
   },
   options: {
     responsive: true, maintainAspectRatio: false,
-    plugins: { legend: { labels: { color: '#94a3b8', font: { size: 10 } } } },
+    plugins: { legend: { labels: { color: '#1a1a1a', font: { size: 10 } } } },
     scales: {
-      x: { ticks: { color: '#64748b', font: { size: 9 } }, grid: { color: 'rgba(255,255,255,0.04)' } },
+      x: { ticks: { color: '#666', font: { size: 9 } }, grid: { color: '#ddd' } },
       y: {
         type: 'linear', position: 'left', min: 0, max: 100,
         ticks: { color: '#21c47b', font: { size: 9 } },
-        grid: { color: 'rgba(255,255,255,0.04)' },
+        grid: { color: '#ddd' },
         title: { display: true, text: 'Score Perf', color: '#21c47b', font: { size: 9 } }
       },
       y1: {
         type: 'linear', position: 'right', min: 0,
-        ticks: { color: '#f59e0b', font: { size: 9 } },
+        ticks: { color: '#e67e22', font: { size: 9 } },
         grid: { drawOnChartArea: false },
-        title: { display: true, text: 'LCP (s)', color: '#f59e0b', font: { size: 9 } }
+        title: { display: true, text: 'LCP (s)', color: '#e67e22', font: { size: 9 } }
       }
     }
   }
 });
 
-// ③ Barres horizontales
+// Barres horizontales
 new Chart(document.getElementById('chartBars'), {
   type: 'bar',
   data: {
@@ -401,10 +385,10 @@ new Chart(document.getElementById('chartBars'), {
     scales: {
       x: {
         min: 0, max: 100,
-        ticks: { color: '#64748b', font: { size: 9 } },
-        grid: { color: 'rgba(255,255,255,0.04)' }
+        ticks: { color: '#666', font: { size: 9 } },
+        grid: { color: '#ddd' }
       },
-      y: { ticks: { color: '#94a3b8', font: { size: 9 } }, grid: { display: false } }
+      y: { ticks: { color: '#555', font: { size: 9 } }, grid: { display: false } }
     }
   }
 });

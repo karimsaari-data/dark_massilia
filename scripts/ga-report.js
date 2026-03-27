@@ -197,9 +197,9 @@ function getRows(report) {
 function diffArrow(curr, prev, lowerIsBetter = false) {
   const diff = curr - prev;
   const better = lowerIsBetter ? diff < 0 : diff > 0;
-  if (diff === 0) return `<span style="color:#64748b">— 0</span>`;
+  if (diff === 0) return `<span style="color:#666">— 0</span>`;
   const sign  = diff > 0 ? '+' : '';
-  const color = better ? '#21c47b' : '#e74c3c';
+  const color = better ? 'green' : '#c0392b';
   const arrow = diff > 0 ? '▲' : '▼';
   return `<span style="color:${color}">${arrow} ${sign}${fmtNum(Math.abs(diff))}</span>`;
 }
@@ -208,16 +208,13 @@ function diffPct(curr, prev) {
   if (!prev) return '';
   const pct = Math.round(((curr - prev) / prev) * 100);
   if (pct === 0) return '';
-  const color = pct > 0 ? '#21c47b' : '#e74c3c';
+  const color = pct > 0 ? 'green' : '#c0392b';
   return ` <span style="font-size:11px;color:${color}">(${pct > 0 ? '+' : ''}${pct}%)</span>`;
 }
 
-function kpi(label, value, sub, subColor) {
-  return `<div style="flex:1;background:#0f2035;border-radius:12px;padding:16px 12px;text-align:center">
-    <div style="font-size:28px;font-weight:700;color:#fff">${value}</div>
-    <div style="font-size:11px;color:#64748b;margin-top:3px">${label}</div>
-    ${sub ? `<div style="font-size:11px;color:${subColor ?? '#94a3b8'};margin-top:3px">${sub}</div>` : ''}
-  </div>`;
+function kpi(label, value, sub) {
+  // Retourne une ligne <tr> pour le tableau synthèse KPI
+  return `<tr><td style="padding:3px 16px 3px 0;color:#555;font-size:12px">${label}</td><td style="font-weight:700;font-size:12px;color:#1a1a1a">${value}${sub ? ` <span style="font-size:11px;color:#555">${sub}</span>` : ''}</td></tr>`;
 }
 
 function sourceLabel(name) {
@@ -360,18 +357,11 @@ async function sendEmail(html, subject, pdfBuffer, pdfName) {
     const pct = Math.round((r.metrics[0] / totalPageViews) * 100);
     return `
     <tr>
-      <td style="padding:7px 10px;border-bottom:1px solid #1e3a50;color:#94a3b8;font-size:12px">${r.dim[0]}</td>
-      <td style="padding:7px 10px;border-bottom:1px solid #1e3a50;text-align:center;font-weight:600;font-size:13px">${fmtNum(r.metrics[0])}</td>
-      <td style="padding:7px 10px;border-bottom:1px solid #1e3a50;text-align:center;color:#94a3b8;font-size:12px">${fmtNum(r.metrics[1])}</td>
-      <td style="padding:7px 10px;border-bottom:1px solid #1e3a50;text-align:center;color:#94a3b8;font-size:12px">${fmtDuration(r.metrics[2])}</td>
-      <td style="padding:7px 10px;border-bottom:1px solid #1e3a50;text-align:right;padding-right:14px">
-        <div style="display:inline-flex;align-items:center;gap:6px">
-          <div style="width:50px;height:5px;background:#1e3a50;border-radius:3px">
-            <div style="width:${Math.min(pct,100)}%;height:5px;background:#21c47b;border-radius:3px"></div>
-          </div>
-          <span style="font-size:10px;color:#64748b">${pct}%</span>
-        </div>
-      </td>
+      <td style="padding:7px 10px;border-bottom:1px solid #ddd;color:#555;font-size:12px">${r.dim[0]}</td>
+      <td style="padding:7px 10px;border-bottom:1px solid #ddd;text-align:center;font-weight:600;font-size:13px;color:#1a1a1a">${fmtNum(r.metrics[0])}</td>
+      <td style="padding:7px 10px;border-bottom:1px solid #ddd;text-align:center;color:#555;font-size:12px">${fmtNum(r.metrics[1])}</td>
+      <td style="padding:7px 10px;border-bottom:1px solid #ddd;text-align:center;color:#555;font-size:12px">${fmtDuration(r.metrics[2])}</td>
+      <td style="padding:7px 10px;border-bottom:1px solid #ddd;text-align:center;color:#555;font-size:12px">${pct}%</td>
     </tr>`;
   }).join('');
 
@@ -383,16 +373,9 @@ async function sendEmail(html, subject, pdfBuffer, pdfName) {
     const pct = Math.round((r.metrics[0] / totalSessions) * 100);
     return `
     <tr>
-      <td style="padding:7px 10px;border-bottom:1px solid #1e3a50;color:#94a3b8;font-size:12px">${sourceLabel(r.dim[0])}</td>
-      <td style="padding:7px 10px;border-bottom:1px solid #1e3a50;text-align:center;font-weight:600;font-size:13px">${fmtNum(r.metrics[0])}</td>
-      <td style="padding:7px 10px;border-bottom:1px solid #1e3a50;text-align:right;padding-right:14px">
-        <div style="display:inline-flex;align-items:center;gap:6px">
-          <div style="width:60px;height:6px;background:#1e3a50;border-radius:3px">
-            <div style="width:${Math.min(pct,100)}%;height:6px;background:#21c47b;border-radius:3px"></div>
-          </div>
-          <span style="font-size:11px;color:#64748b">${pct}%</span>
-        </div>
-      </td>
+      <td style="padding:7px 10px;border-bottom:1px solid #ddd;color:#555;font-size:12px">${sourceLabel(r.dim[0])}</td>
+      <td style="padding:7px 10px;border-bottom:1px solid #ddd;text-align:center;font-weight:600;font-size:13px;color:#1a1a1a">${fmtNum(r.metrics[0])}</td>
+      <td style="padding:7px 10px;border-bottom:1px solid #ddd;text-align:center;color:#555;font-size:12px">${pct}%</td>
     </tr>`;
   }).join('');
 
@@ -404,16 +387,9 @@ async function sendEmail(html, subject, pdfBuffer, pdfName) {
     const pct = Math.round((r.metrics[0] / totalDeviceSessions) * 100);
     return `
     <tr>
-      <td style="padding:7px 10px;border-bottom:1px solid #1e3a50;color:#94a3b8;font-size:12px">${deviceIcon(r.dim[0])}</td>
-      <td style="padding:7px 10px;border-bottom:1px solid #1e3a50;text-align:center;font-weight:600;font-size:13px">${fmtNum(r.metrics[0])}</td>
-      <td style="padding:7px 10px;border-bottom:1px solid #1e3a50;text-align:right;padding-right:14px">
-        <div style="display:inline-flex;align-items:center;gap:6px">
-          <div style="width:60px;height:6px;background:#1e3a50;border-radius:3px">
-            <div style="width:${Math.min(pct,100)}%;height:6px;background:#0091ff;border-radius:3px"></div>
-          </div>
-          <span style="font-size:11px;color:#64748b">${pct}%</span>
-        </div>
-      </td>
+      <td style="padding:7px 10px;border-bottom:1px solid #ddd;color:#555;font-size:12px">${deviceIcon(r.dim[0])}</td>
+      <td style="padding:7px 10px;border-bottom:1px solid #ddd;text-align:center;font-weight:600;font-size:13px;color:#1a1a1a">${fmtNum(r.metrics[0])}</td>
+      <td style="padding:7px 10px;border-bottom:1px solid #ddd;text-align:center;color:#555;font-size:12px">${pct}%</td>
     </tr>`;
   }).join('');
 
@@ -422,7 +398,7 @@ async function sendEmail(html, subject, pdfBuffer, pdfName) {
   const totalPhotoEvents = photoRows.reduce((a, r) => a + r.metrics[0], 0) || 1;
 
   const photosHtml = photoRows.length === 0
-    ? `<tr><td colspan="3" style="padding:12px;color:#64748b;font-size:12px;text-align:center">Aucune donnée photo sur 28j</td></tr>`
+    ? `<tr><td colspan="3" style="padding:12px;color:#666;font-size:12px;text-align:center">Aucune donnée photo sur 28j</td></tr>`
     : photoRows.map(r => {
         // photo_name = "filename.webp | Titre de la photo" → on sépare les deux parties
         const parts = r.dim[0].split(' | ');
@@ -431,51 +407,37 @@ async function sendEmail(html, subject, pdfBuffer, pdfName) {
         const pct = Math.round((r.metrics[0] / totalPhotoEvents) * 100);
         return `
     <tr>
-      <td style="padding:7px 10px;border-bottom:1px solid #1e3a50;font-size:12px">
-        <div style="color:#e2e8f0;font-weight:500">${title}</div>
-        <div style="color:#475569;font-size:10px;margin-top:2px">${filename}</div>
+      <td style="padding:7px 10px;border-bottom:1px solid #ddd;font-size:12px">
+        <div style="color:#1a1a1a;font-weight:500">${title}</div>
+        <div style="color:#666;font-size:10px;margin-top:2px">${filename}</div>
       </td>
-      <td style="padding:7px 10px;border-bottom:1px solid #1e3a50;text-align:center;font-weight:600;font-size:13px">${fmtNum(r.metrics[0])}</td>
-      <td style="padding:7px 10px;border-bottom:1px solid #1e3a50;text-align:right;padding-right:14px">
-        <div style="display:inline-flex;align-items:center;gap:6px">
-          <div style="width:50px;height:5px;background:#1e3a50;border-radius:3px">
-            <div style="width:${Math.min(pct,100)}%;height:5px;background:#21c47b;border-radius:3px"></div>
-          </div>
-          <span style="font-size:10px;color:#64748b">${pct}%</span>
-        </div>
-      </td>
+      <td style="padding:7px 10px;border-bottom:1px solid #ddd;text-align:center;font-weight:600;font-size:13px;color:#1a1a1a">${fmtNum(r.metrics[0])}</td>
+      <td style="padding:7px 10px;border-bottom:1px solid #ddd;text-align:center;color:#555;font-size:12px">${pct}%</td>
     </tr>`;
       }).join('');
 
   // ── Top Vidéos ────────────────────────────────────────────────────────────
   const videoRows = getRows(topVideos);
   const videosHtml = videoRows.length === 0
-    ? `<tr><td colspan="2" style="padding:12px;color:#64748b;font-size:12px;text-align:center">Aucune vidéo sur 28j</td></tr>`
+    ? `<tr><td colspan="2" style="padding:12px;color:#666;font-size:12px;text-align:center">Aucune vidéo sur 28j</td></tr>`
     : videoRows.map(r => `
     <tr>
-      <td style="padding:7px 10px;border-bottom:1px solid #1e3a50;color:#94a3b8;font-size:12px">▶ ${r.dim[0].slice(0, 45)}</td>
-      <td style="padding:7px 10px;border-bottom:1px solid #1e3a50;text-align:center;font-weight:600;font-size:13px">${fmtNum(r.metrics[0])}</td>
+      <td style="padding:7px 10px;border-bottom:1px solid #ddd;color:#555;font-size:12px">▶ ${r.dim[0].slice(0, 45)}</td>
+      <td style="padding:7px 10px;border-bottom:1px solid #ddd;text-align:center;font-weight:600;font-size:13px;color:#1a1a1a">${fmtNum(r.metrics[0])}</td>
     </tr>`).join('');
 
   // ── Top CTAs ──────────────────────────────────────────────────────────────
   const ctaRows = getRows(topCTAs);
   const totalCTAEvents = ctaRows.reduce((a, r) => a + r.metrics[0], 0) || 1;
   const ctasHtml = ctaRows.length === 0
-    ? `<tr><td colspan="3" style="padding:12px;color:#64748b;font-size:12px;text-align:center">Aucun clic CTA sur 28j</td></tr>`
+    ? `<tr><td colspan="3" style="padding:12px;color:#666;font-size:12px;text-align:center">Aucun clic CTA sur 28j</td></tr>`
     : ctaRows.map(r => {
         const pct = Math.round((r.metrics[0] / totalCTAEvents) * 100);
         return `
     <tr>
-      <td style="padding:7px 10px;border-bottom:1px solid #1e3a50;color:#94a3b8;font-size:12px">${r.dim[0].slice(0, 40)}</td>
-      <td style="padding:7px 10px;border-bottom:1px solid #1e3a50;text-align:center;font-weight:600;font-size:13px">${fmtNum(r.metrics[0])}</td>
-      <td style="padding:7px 10px;border-bottom:1px solid #1e3a50;text-align:right;padding-right:14px">
-        <div style="display:inline-flex;align-items:center;gap:6px">
-          <div style="width:50px;height:5px;background:#1e3a50;border-radius:3px">
-            <div style="width:${Math.min(pct,100)}%;height:5px;background:#f59e0b;border-radius:3px"></div>
-          </div>
-          <span style="font-size:10px;color:#64748b">${pct}%</span>
-        </div>
-      </td>
+      <td style="padding:7px 10px;border-bottom:1px solid #ddd;color:#555;font-size:12px">${r.dim[0].slice(0, 40)}</td>
+      <td style="padding:7px 10px;border-bottom:1px solid #ddd;text-align:center;font-weight:600;font-size:13px;color:#1a1a1a">${fmtNum(r.metrics[0])}</td>
+      <td style="padding:7px 10px;border-bottom:1px solid #ddd;text-align:center;color:#555;font-size:12px">${pct}%</td>
     </tr>`;
       }).join('');
 
@@ -487,16 +449,9 @@ async function sendEmail(html, subject, pdfBuffer, pdfName) {
     const pct = Math.round((r.metrics[0] / totalCountrySessions) * 100);
     return `
     <tr>
-      <td style="padding:7px 10px;border-bottom:1px solid #1e3a50;color:#94a3b8;font-size:12px">${r.dim[0]}</td>
-      <td style="padding:7px 10px;border-bottom:1px solid #1e3a50;text-align:center;font-weight:600;font-size:13px">${fmtNum(r.metrics[0])}</td>
-      <td style="padding:7px 10px;border-bottom:1px solid #1e3a50;text-align:right;padding-right:14px">
-        <div style="display:inline-flex;align-items:center;gap:6px">
-          <div style="width:60px;height:6px;background:#1e3a50;border-radius:3px">
-            <div style="width:${Math.min(pct,100)}%;height:6px;background:#21c47b;border-radius:3px"></div>
-          </div>
-          <span style="font-size:11px;color:#64748b">${pct}%</span>
-        </div>
-      </td>
+      <td style="padding:7px 10px;border-bottom:1px solid #ddd;color:#555;font-size:12px">${r.dim[0]}</td>
+      <td style="padding:7px 10px;border-bottom:1px solid #ddd;text-align:center;font-weight:600;font-size:13px;color:#1a1a1a">${fmtNum(r.metrics[0])}</td>
+      <td style="padding:7px 10px;border-bottom:1px solid #ddd;text-align:center;color:#555;font-size:12px">${pct}%</td>
     </tr>`;
   }).join('');
 
@@ -507,124 +462,123 @@ async function sendEmail(html, subject, pdfBuffer, pdfName) {
   const html = `<!DOCTYPE html>
 <html><head><meta charset="UTF-8">
 <style>
-  body { margin:0; padding:0; background:#0a1628; font-family:system-ui,sans-serif; color:#e2e8f0; }
+  body { margin:0; padding:24px; background:#fff; font-family:Georgia,serif; color:#1a1a1a; }
   tr { page-break-inside: avoid; }
   table { border-collapse: collapse; width: 100%; }
 </style>
 </head>
 <body>
-<div style="max-width:660px;margin:0 auto;padding:28px 16px">
+<div style="max-width:660px;margin:0 auto">
 
   <!-- ═══════════════════ PAGE 1 — Header + KPIs ═══════════════════ -->
-  <div style="text-align:center;margin-bottom:28px">
-    <div style="font-size:11px;letter-spacing:2px;color:#21c47b;text-transform:uppercase;margin-bottom:6px">Rapport Analytics bi-mensuel</div>
-    <h1 style="margin:0;font-size:22px;color:#fff">Dark Massilia · Google Analytics 4</h1>
-    <div style="font-size:12px;color:#64748b;margin-top:4px">${d7Start} → ${d7End}</div>
-  </div>
+  <h1 style="font-size:20px;color:#1a1a1a;margin:0 0 4px">Rapport Google Analytics 4 — Dark Massilia</h1>
+  <p style="margin:0 0 24px;font-size:12px;color:#666">${d7Start} → ${d7End} · karimsaari.com</p>
 
-  <div style="font-size:11px;color:#64748b;text-transform:uppercase;letter-spacing:1px;margin-bottom:8px">7 derniers jours</div>
-  <div style="display:flex;gap:8px;margin-bottom:8px">
-    ${kpi('Sessions',        fmtNum(curr.sessions),        `${diffArrow(curr.sessions,        prev.sessions)}${diffPct(curr.sessions,        prev.sessions)} vs péri. préc.`, curr.sessions        >= prev.sessions        ? '#21c47b' : '#e74c3c')}
-    ${kpi('Utilisateurs',    fmtNum(curr.users),            `${diffArrow(curr.users,           prev.users)}${diffPct(curr.users,            prev.users)} vs péri. préc.`,   curr.users             >= prev.users            ? '#21c47b' : '#e74c3c')}
-    ${kpi('Pages vues',      fmtNum(curr.pageViews),        `${diffArrow(curr.pageViews,       prev.pageViews)}${diffPct(curr.pageViews,      prev.pageViews)} vs péri. préc.`, curr.pageViews       >= prev.pageViews        ? '#21c47b' : '#e74c3c')}
-    ${kpi('Durée moy.',      fmtDuration(curr.duration),   `prev: ${fmtDuration(prev.duration)}`, null)}
-  </div>
-  <div style="display:flex;gap:8px;margin-bottom:8px">
-    ${kpi('Engagement',      fmtPct(curr.engagementRate),  `prev: ${fmtPct(prev.engagementRate)}`, curr.engagementRate >= prev.engagementRate ? '#21c47b' : '#e74c3c')}
-    ${kpi('Nv. utilisateurs',fmtNum(curr.newUsers),        `${diffArrow(curr.newUsers, prev.newUsers)} vs péri. préc.`, curr.newUsers >= prev.newUsers ? '#21c47b' : '#e74c3c')}
-    ${kpi('Sessions 28j',    fmtNum(curr28.sessions),      null, null)}
-    ${kpi('Pages vues 28j',  fmtNum(curr28.pageViews),     null, null)}
-  </div>
+  <h2 style="font-size:14px;border-bottom:2px solid #1a1a1a;padding-bottom:4px;margin-bottom:8px">7 derniers jours</h2>
+  <table style="border-collapse:collapse;margin-bottom:24px;font-size:12px">
+    ${kpi('Sessions',         fmtNum(curr.sessions),       `— ${diffArrow(curr.sessions,        prev.sessions)}${diffPct(curr.sessions,        prev.sessions)} vs péri. préc.`)}
+    ${kpi('Utilisateurs',     fmtNum(curr.users),          `— ${diffArrow(curr.users,           prev.users)}${diffPct(curr.users,            prev.users)} vs péri. préc.`)}
+    ${kpi('Pages vues',       fmtNum(curr.pageViews),      `— ${diffArrow(curr.pageViews,       prev.pageViews)}${diffPct(curr.pageViews,      prev.pageViews)} vs péri. préc.`)}
+    ${kpi('Durée moy.',       fmtDuration(curr.duration),  `— prev: ${fmtDuration(prev.duration)}`)}
+    ${kpi('Engagement',       fmtPct(curr.engagementRate), `— prev: ${fmtPct(prev.engagementRate)}`)}
+    ${kpi('Nv. utilisateurs', fmtNum(curr.newUsers),       `— ${diffArrow(curr.newUsers, prev.newUsers)} vs péri. préc.`)}
+  </table>
 
-  <div style="font-size:11px;color:#64748b;text-transform:uppercase;letter-spacing:1px;margin-bottom:8px;margin-top:8px">28 derniers jours</div>
-  <div style="display:flex;gap:8px;margin-bottom:32px">
-    ${kpi('Utilisateurs 28j',  fmtNum(curr28.users),            null, null)}
-    ${kpi('Durée moy. 28j',    fmtDuration(curr28.duration),    null, null)}
-    ${kpi('Engagement 28j',    fmtPct(curr28.engagementRate),   null, null)}
-    ${kpi('Nv. visiteurs 28j', fmtNum(curr28.newUsers),         null, null)}
-  </div>
+  <h2 style="font-size:14px;border-bottom:2px solid #1a1a1a;padding-bottom:4px;margin-bottom:8px">28 derniers jours</h2>
+  <table style="border-collapse:collapse;margin-bottom:32px;font-size:12px">
+    ${kpi('Sessions 28j',       fmtNum(curr28.sessions),       null)}
+    ${kpi('Utilisateurs 28j',   fmtNum(curr28.users),          null)}
+    ${kpi('Pages vues 28j',     fmtNum(curr28.pageViews),      null)}
+    ${kpi('Durée moy. 28j',     fmtDuration(curr28.duration),  null)}
+    ${kpi('Engagement 28j',     fmtPct(curr28.engagementRate), null)}
+    ${kpi('Nv. visiteurs 28j',  fmtNum(curr28.newUsers),       null)}
+  </table>
 
   <!-- ═══════════════════ PAGE 2 — Top pages ═══════════════════ -->
   <div style="${PB}">
-    <div style="background:#0f2035;border-radius:12px;padding:16px">
-      <h2 style="margin:0 0 12px;font-size:13px;color:#21c47b">Top pages — 7 jours</h2>
-      <table>
-        <thead><tr style="font-size:10px;color:#64748b;text-transform:uppercase">
-          <th style="padding:6px 10px;text-align:left">Page</th>
-          <th style="padding:6px 10px">Vues</th>
-          <th style="padding:6px 10px">Sessions</th>
-          <th style="padding:6px 10px">Durée</th>
-          <th style="padding:6px 10px">Part</th>
-        </tr></thead>
-        <tbody>${pagesHtml}</tbody>
-      </table>
-    </div>
+    <h2 style="font-size:14px;border-bottom:2px solid #1a1a1a;padding-bottom:4px;margin-bottom:8px">Top pages — 7 jours</h2>
+    <table style="margin-bottom:24px">
+      <thead><tr style="background:#1a1a1a;color:#fff">
+        <th style="padding:7px 10px;text-align:left;font-weight:600;font-size:12px">Page</th>
+        <th style="padding:7px 10px;font-weight:600;font-size:12px">Vues</th>
+        <th style="padding:7px 10px;font-weight:600;font-size:12px">Sessions</th>
+        <th style="padding:7px 10px;font-weight:600;font-size:12px">Durée</th>
+        <th style="padding:7px 10px;font-weight:600;font-size:12px">Part</th>
+      </tr></thead>
+      <tbody>${pagesHtml}</tbody>
+    </table>
   </div>
 
   <!-- ═══════════════════ PAGE 3 — Sources + Appareils + Pays ═══════════════════ -->
   <div style="${PB}">
-    <div style="display:flex;gap:10px;margin-bottom:16px">
-      <div style="flex:1;background:#0f2035;border-radius:12px;padding:16px">
-        <h2 style="margin:0 0 12px;font-size:13px;color:#21c47b">Source / Support — 7j</h2>
-        <table>${sourcesHtml}</table>
-      </div>
-      <div style="flex:1;background:#0f2035;border-radius:12px;padding:16px">
-        <h2 style="margin:0 0 12px;font-size:13px;color:#0091ff">Appareils — 7j</h2>
-        <table>${devicesHtml}</table>
-      </div>
-    </div>
-    <div style="background:#0f2035;border-radius:12px;padding:16px">
-      <h2 style="margin:0 0 12px;font-size:13px;color:#21c47b">Top pays — 7 jours</h2>
-      <table>
-        <thead><tr style="font-size:10px;color:#64748b;text-transform:uppercase">
-          <th style="padding:6px 10px;text-align:left">Pays</th>
-          <th style="padding:6px 10px">Sessions</th>
-          <th style="padding:6px 10px">Part</th>
-        </tr></thead>
-        <tbody>${countriesHtml}</tbody>
-      </table>
-    </div>
+    <h2 style="font-size:14px;border-bottom:2px solid #1a1a1a;padding-bottom:4px;margin-bottom:8px">Source / Support — 7 jours</h2>
+    <table style="margin-bottom:24px">
+      <thead><tr style="background:#1a1a1a;color:#fff">
+        <th style="padding:7px 10px;text-align:left;font-weight:600;font-size:12px">Source</th>
+        <th style="padding:7px 10px;font-weight:600;font-size:12px">Sessions</th>
+        <th style="padding:7px 10px;font-weight:600;font-size:12px">Part</th>
+      </tr></thead>
+      <tbody>${sourcesHtml}</tbody>
+    </table>
+
+    <h2 style="font-size:14px;border-bottom:2px solid #1a1a1a;padding-bottom:4px;margin-bottom:8px">Appareils — 7 jours</h2>
+    <table style="margin-bottom:24px">
+      <thead><tr style="background:#1a1a1a;color:#fff">
+        <th style="padding:7px 10px;text-align:left;font-weight:600;font-size:12px">Appareil</th>
+        <th style="padding:7px 10px;font-weight:600;font-size:12px">Sessions</th>
+        <th style="padding:7px 10px;font-weight:600;font-size:12px">Part</th>
+      </tr></thead>
+      <tbody>${devicesHtml}</tbody>
+    </table>
+
+    <h2 style="font-size:14px;border-bottom:2px solid #1a1a1a;padding-bottom:4px;margin-bottom:8px">Top pays — 7 jours</h2>
+    <table style="margin-bottom:24px">
+      <thead><tr style="background:#1a1a1a;color:#fff">
+        <th style="padding:7px 10px;text-align:left;font-weight:600;font-size:12px">Pays</th>
+        <th style="padding:7px 10px;font-weight:600;font-size:12px">Sessions</th>
+        <th style="padding:7px 10px;font-weight:600;font-size:12px">Part</th>
+      </tr></thead>
+      <tbody>${countriesHtml}</tbody>
+    </table>
   </div>
 
   <!-- ═══════════════════ PAGE 4 — Photos + Vidéos + CTAs (28j) ═══════════════════ -->
   <div style="${PB}">
-    <div style="background:#0f2035;border-radius:12px;padding:16px;margin-bottom:16px">
-      <h2 style="margin:0 0 12px;font-size:13px;color:#21c47b">📸 Top photos vues — 28 jours</h2>
-      <table>
-        <thead><tr style="font-size:10px;color:#64748b;text-transform:uppercase">
-          <th style="padding:6px 10px;text-align:left">Photo</th>
-          <th style="padding:6px 10px">Vues</th>
-          <th style="padding:6px 10px">Part</th>
-        </tr></thead>
-        <tbody>${photosHtml}</tbody>
-      </table>
-    </div>
-    <div style="display:flex;gap:10px;margin-bottom:24px">
-      <div style="flex:1;background:#0f2035;border-radius:12px;padding:16px">
-        <h2 style="margin:0 0 12px;font-size:13px;color:#0091ff">▶ Top vidéos — 28j</h2>
+    <h2 style="font-size:14px;border-bottom:2px solid #1a1a1a;padding-bottom:4px;margin-bottom:8px">📸 Top photos vues — 28 jours</h2>
+    <table style="margin-bottom:24px">
+      <thead><tr style="background:#1a1a1a;color:#fff">
+        <th style="padding:7px 10px;text-align:left;font-weight:600;font-size:12px">Photo</th>
+        <th style="padding:7px 10px;font-weight:600;font-size:12px">Vues</th>
+        <th style="padding:7px 10px;font-weight:600;font-size:12px">Part</th>
+      </tr></thead>
+      <tbody>${photosHtml}</tbody>
+    </table>
+
+    <div style="display:flex;gap:16px;margin-bottom:24px">
+      <div style="flex:1">
+        <h2 style="font-size:14px;border-bottom:2px solid #1a1a1a;padding-bottom:4px;margin-bottom:8px">▶ Top vidéos — 28j</h2>
         <table>
-          <thead><tr style="font-size:10px;color:#64748b;text-transform:uppercase">
-            <th style="padding:6px 10px;text-align:left">Vidéo</th>
-            <th style="padding:6px 10px">Lectures</th>
+          <thead><tr style="background:#1a1a1a;color:#fff">
+            <th style="padding:7px 10px;text-align:left;font-weight:600;font-size:12px">Vidéo</th>
+            <th style="padding:7px 10px;font-weight:600;font-size:12px">Lectures</th>
           </tr></thead>
           <tbody>${videosHtml}</tbody>
         </table>
       </div>
-      <div style="flex:1;background:#0f2035;border-radius:12px;padding:16px">
-        <h2 style="margin:0 0 12px;font-size:13px;color:#f59e0b">🎯 Top CTAs — 28j</h2>
+      <div style="flex:1">
+        <h2 style="font-size:14px;border-bottom:2px solid #1a1a1a;padding-bottom:4px;margin-bottom:8px">🎯 Top CTAs — 28j</h2>
         <table>
-          <thead><tr style="font-size:10px;color:#64748b;text-transform:uppercase">
-            <th style="padding:6px 10px;text-align:left">Bouton</th>
-            <th style="padding:6px 10px">Clics</th>
-            <th style="padding:6px 10px">Part</th>
+          <thead><tr style="background:#1a1a1a;color:#fff">
+            <th style="padding:7px 10px;text-align:left;font-weight:600;font-size:12px">Bouton</th>
+            <th style="padding:7px 10px;font-weight:600;font-size:12px">Clics</th>
+            <th style="padding:7px 10px;font-weight:600;font-size:12px">Part</th>
           </tr></thead>
           <tbody>${ctasHtml}</tbody>
         </table>
       </div>
     </div>
-    <div style="text-align:center;font-size:11px;color:#334155">
-      Généré automatiquement · Google Analytics 4 · Dark Massilia
-    </div>
+
+    <p style="font-size:10px;color:#aaa;text-align:center;margin:0">Généré automatiquement · Google Analytics 4 · Dark Massilia · karimsaari.com</p>
   </div>
 
 </div>

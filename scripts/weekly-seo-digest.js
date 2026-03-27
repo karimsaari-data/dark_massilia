@@ -173,18 +173,15 @@ function trendRows(curr, prev) {
   return { rising: rising.slice(0, 5), falling: falling.slice(0, 5) };
 }
 
-function kpiBlock(label, value, sub, subColor) {
-  return `<div style="flex:1;background:#0f2035;border-radius:12px;padding:16px 12px;text-align:center">
-    <div style="font-size:28px;font-weight:700;color:#fff">${value}</div>
-    <div style="font-size:11px;color:#64748b;margin-top:3px">${label}</div>
-    ${sub ? `<div style="font-size:11px;color:${subColor};margin-top:3px">${sub}</div>` : ''}
-  </div>`;
+function kpiBlock(label, value, sub) {
+  // Retourne une ligne <tr> pour le tableau synthèse KPI
+  return `<tr><td style="padding:3px 16px 3px 0;color:#555;font-size:12px">${label}</td><td style="font-weight:700;font-size:12px">${value}${sub ? ` <span style="font-size:11px;color:#555">${sub}</span>` : ''}</td></tr>`;
 }
 
 function diffArrow(diff) {
-  if (diff > 0) return `<span style="color:#21c47b">▲ ${diff}</span>`;
-  if (diff < 0) return `<span style="color:#e74c3c">▼ ${Math.abs(diff)}</span>`;
-  return `<span style="color:#64748b">— 0</span>`;
+  if (diff > 0) return `<span style="color:green">▲ ${diff}</span>`;
+  if (diff < 0) return `<span style="color:#c0392b">▼ ${Math.abs(diff)}</span>`;
+  return `<span style="color:#666">— 0</span>`;
 }
 
 async function generatePDF(html) {
@@ -322,59 +319,52 @@ async function sendEmail(html, subject, pdfBuffer, pdfName) {
     const prev = prev7Map[r.keys[0]];
     const posDelta = prev ? (prev.position - r.position).toFixed(1) : null;
     const posCell = r.position.toFixed(1) + (posDelta !== null
-      ? ` <span style="font-size:10px;color:${posDelta > 0 ? '#21c47b' : posDelta < 0 ? '#e74c3c' : '#64748b'}">${posDelta > 0 ? '↑' : posDelta < 0 ? '↓' : ''}${Math.abs(posDelta)}</span>`
+      ? ` <span style="font-size:10px;color:${posDelta > 0 ? 'green' : posDelta < 0 ? '#c0392b' : '#666'}">${posDelta > 0 ? '↑' : posDelta < 0 ? '↓' : ''}${Math.abs(posDelta)}</span>`
       : '');
     return `
     <tr>
-      <td style="padding:7px 10px;border-bottom:1px solid #1e3a50;color:#94a3b8;font-size:12px">${pageLabel(r.keys[0])}</td>
-      <td style="padding:7px 10px;border-bottom:1px solid #1e3a50;text-align:center;font-weight:600;font-size:13px">${r.clicks}</td>
-      <td style="padding:7px 10px;border-bottom:1px solid #1e3a50;text-align:center;color:#94a3b8;font-size:12px">${r.impressions}</td>
-      <td style="padding:7px 10px;border-bottom:1px solid #1e3a50;text-align:center;color:#94a3b8;font-size:12px">${(r.ctr*100).toFixed(1)}%</td>
-      <td style="padding:7px 10px;border-bottom:1px solid #1e3a50;text-align:center;color:#94a3b8;font-size:12px">${posCell}</td>
+      <td style="padding:7px 10px;border-bottom:1px solid #ddd;color:#555;font-size:12px">${pageLabel(r.keys[0])}</td>
+      <td style="padding:7px 10px;border-bottom:1px solid #ddd;text-align:center;font-weight:600;font-size:13px;color:#1a1a1a">${r.clicks}</td>
+      <td style="padding:7px 10px;border-bottom:1px solid #ddd;text-align:center;color:#555;font-size:12px">${r.impressions}</td>
+      <td style="padding:7px 10px;border-bottom:1px solid #ddd;text-align:center;color:#555;font-size:12px">${(r.ctr*100).toFixed(1)}%</td>
+      <td style="padding:7px 10px;border-bottom:1px solid #ddd;text-align:center;color:#555;font-size:12px">${posCell}</td>
     </tr>`;
   }).join('');
 
   const queriesRows = (queries7.rows || []).slice(0, 10).map(r => `
     <tr>
-      <td style="padding:7px 10px;border-bottom:1px solid #1e3a50;color:#94a3b8;font-size:12px">${r.keys[0]}</td>
-      <td style="padding:7px 10px;border-bottom:1px solid #1e3a50;text-align:center;font-weight:600;font-size:13px">${r.clicks}</td>
-      <td style="padding:7px 10px;border-bottom:1px solid #1e3a50;text-align:center;color:#94a3b8;font-size:12px">${r.impressions}</td>
-      <td style="padding:7px 10px;border-bottom:1px solid #1e3a50;text-align:center;color:#94a3b8;font-size:12px">${(r.ctr*100).toFixed(1)}%</td>
-      <td style="padding:7px 10px;border-bottom:1px solid #1e3a50;text-align:center;color:#94a3b8;font-size:12px">${r.position.toFixed(1)}</td>
+      <td style="padding:7px 10px;border-bottom:1px solid #ddd;color:#555;font-size:12px">${r.keys[0]}</td>
+      <td style="padding:7px 10px;border-bottom:1px solid #ddd;text-align:center;font-weight:600;font-size:13px;color:#1a1a1a">${r.clicks}</td>
+      <td style="padding:7px 10px;border-bottom:1px solid #ddd;text-align:center;color:#555;font-size:12px">${r.impressions}</td>
+      <td style="padding:7px 10px;border-bottom:1px solid #ddd;text-align:center;color:#555;font-size:12px">${(r.ctr*100).toFixed(1)}%</td>
+      <td style="padding:7px 10px;border-bottom:1px solid #ddd;text-align:center;color:#555;font-size:12px">${r.position.toFixed(1)}</td>
     </tr>`).join('');
 
   const risingRows = rising.length
     ? rising.map(r => `
       <tr>
-        <td style="padding:7px 10px;border-bottom:1px solid #1e3a50;color:#94a3b8;font-size:12px">${pageLabel(r.url)}</td>
-        <td style="padding:7px 10px;border-bottom:1px solid #1e3a50;text-align:center;color:#21c47b;font-weight:600">+${r.pct}%</td>
-        <td style="padding:7px 10px;border-bottom:1px solid #1e3a50;text-align:center;color:#94a3b8;font-size:12px">${r.impressions} impr.</td>
+        <td style="padding:7px 10px;border-bottom:1px solid #ddd;color:#555;font-size:12px">${pageLabel(r.url)}</td>
+        <td style="padding:7px 10px;border-bottom:1px solid #ddd;text-align:center;color:green;font-weight:600">+${r.pct}%</td>
+        <td style="padding:7px 10px;border-bottom:1px solid #ddd;text-align:center;color:#555;font-size:12px">${r.impressions} impr.</td>
       </tr>`).join('')
-    : `<tr><td colspan="3" style="padding:12px;color:#64748b;font-size:12px;text-align:center">Pas de tendance haussière cette semaine</td></tr>`;
+    : `<tr><td colspan="3" style="padding:12px;color:#666;font-size:12px;text-align:center">Pas de tendance haussière cette semaine</td></tr>`;
 
   const fallingRows = falling.length
     ? falling.map(r => `
       <tr>
-        <td style="padding:7px 10px;border-bottom:1px solid #1e3a50;color:#94a3b8;font-size:12px">${pageLabel(r.url)}</td>
-        <td style="padding:7px 10px;border-bottom:1px solid #1e3a50;text-align:center;color:#e74c3c;font-weight:600">${r.pct}%</td>
-        <td style="padding:7px 10px;border-bottom:1px solid #1e3a50;text-align:center;color:#94a3b8;font-size:12px">${r.impressions} impr.</td>
+        <td style="padding:7px 10px;border-bottom:1px solid #ddd;color:#555;font-size:12px">${pageLabel(r.url)}</td>
+        <td style="padding:7px 10px;border-bottom:1px solid #ddd;text-align:center;color:#c0392b;font-weight:600">${r.pct}%</td>
+        <td style="padding:7px 10px;border-bottom:1px solid #ddd;text-align:center;color:#555;font-size:12px">${r.impressions} impr.</td>
       </tr>`).join('')
-    : `<tr><td colspan="3" style="padding:12px;color:#64748b;font-size:12px;text-align:center">Pas de tendance baissière cette semaine</td></tr>`;
+    : `<tr><td colspan="3" style="padding:12px;color:#666;font-size:12px;text-align:center">Pas de tendance baissière cette semaine</td></tr>`;
 
   const countryRows = (countries7.rows || []).map(r => {
     const pct = Math.round((r.clicks / totalCountryClicks) * 100);
     return `
     <tr>
-      <td style="padding:7px 10px;border-bottom:1px solid #1e3a50;color:#94a3b8;font-size:12px">${countryLabel(r.keys[0])}</td>
-      <td style="padding:7px 10px;border-bottom:1px solid #1e3a50;text-align:center;font-weight:600;font-size:13px">${r.clicks}</td>
-      <td style="padding:7px 10px;border-bottom:1px solid #1e3a50;text-align:right;padding-right:14px">
-        <div style="display:inline-flex;align-items:center;gap:6px">
-          <div style="width:60px;height:6px;background:#1e3a50;border-radius:3px">
-            <div style="width:${Math.min(pct,100)}%;height:6px;background:#21c47b;border-radius:3px"></div>
-          </div>
-          <span style="font-size:11px;color:#64748b">${pct}%</span>
-        </div>
-      </td>
+      <td style="padding:7px 10px;border-bottom:1px solid #ddd;color:#555;font-size:12px">${countryLabel(r.keys[0])}</td>
+      <td style="padding:7px 10px;border-bottom:1px solid #ddd;text-align:center;font-weight:600;font-size:13px;color:#1a1a1a">${r.clicks}</td>
+      <td style="padding:7px 10px;border-bottom:1px solid #ddd;text-align:center;color:#555;font-size:12px">${pct}%</td>
     </tr>`;
   }).join('');
 
@@ -385,188 +375,185 @@ async function sendEmail(html, subject, pdfBuffer, pdfName) {
   <meta charset="UTF-8">
   <script src="https://cdn.jsdelivr.net/npm/chart.js@4/dist/chart.umd.min.js"></script>
 </head>
-<body style="margin:0;padding:0;background:#0a1628;font-family:system-ui,sans-serif;color:#e2e8f0">
-<div style="max-width:620px;margin:0 auto;padding:28px 16px">
+<body style="margin:0;background:#fff;font-family:Georgia,serif;color:#1a1a1a;padding:24px">
+<div style="max-width:620px;margin:0 auto">
 
-  <!-- Header -->
-  <div style="text-align:center;margin-bottom:28px">
-    <div style="font-size:11px;letter-spacing:2px;color:#21c47b;text-transform:uppercase;margin-bottom:6px">Rapport SEO hebdomadaire</div>
-    <h1 style="margin:0;font-size:22px;color:#fff">Dark Massilia</h1>
-    <div style="font-size:12px;color:#64748b;margin-top:4px">${d7Start} → ${d7End}</div>
-  </div>
+  <h1 style="font-size:20px;color:#1a1a1a;margin:0 0 4px">Digest SEO hebdomadaire — Dark Massilia</h1>
+  <p style="margin:0 0 24px;font-size:12px;color:#666">${d7Start} → ${d7End} · Google Search Console · karimsaari.com</p>
 
   <!-- KPIs 7 jours -->
-  <div style="font-size:11px;color:#64748b;text-transform:uppercase;letter-spacing:1px;margin-bottom:8px">7 derniers jours</div>
-  <div style="display:flex;gap:8px;margin-bottom:8px">
-    ${kpiBlock('Clics', c7.clicks, `${diffArrow(c7.clicks - p7.clicks)} vs sem. préc.`, c7.clicks >= p7.clicks ? '#21c47b' : '#e74c3c')}
-    ${kpiBlock('Impressions', c7.impressions, `${diffArrow(c7.impressions - p7.impressions)} vs sem. préc.`, c7.impressions >= p7.impressions ? '#21c47b' : '#e74c3c')}
-    ${kpiBlock('CTR moyen', ctr7 + '%', null, null)}
-    ${kpiBlock('Pos. moyenne', pos7, `${diffArrow(parseFloat(ppos7) - parseFloat(pos7))} vs sem. préc.`, parseFloat(pos7) <= parseFloat(ppos7) ? '#21c47b' : '#e74c3c')}
-  </div>
+  <h2 style="font-size:14px;border-bottom:2px solid #1a1a1a;padding-bottom:4px;margin-bottom:8px">7 derniers jours</h2>
+  <table style="border-collapse:collapse;margin-bottom:24px;font-size:12px">
+    ${kpiBlock('Clics', c7.clicks, `— ${diffArrow(c7.clicks - p7.clicks)} vs sem. préc.`)}
+    ${kpiBlock('Impressions', c7.impressions, `— ${diffArrow(c7.impressions - p7.impressions)} vs sem. préc.`)}
+    ${kpiBlock('CTR moyen', ctr7 + '%', null)}
+    ${kpiBlock('Position moyenne', pos7, `— ${diffArrow(parseFloat(ppos7) - parseFloat(pos7))} vs sem. préc.`)}
+  </table>
 
   <!-- KPIs 28 jours -->
-  <div style="font-size:11px;color:#64748b;text-transform:uppercase;letter-spacing:1px;margin-bottom:8px;margin-top:20px">28 derniers jours</div>
-  <div style="display:flex;gap:8px;margin-bottom:24px">
-    ${kpiBlock('Clics', c28.clicks, `${diffArrow(c28.clicks - p28.clicks)} vs 28j préc.`, c28.clicks >= p28.clicks ? '#21c47b' : '#e74c3c')}
-    ${kpiBlock('Impressions', c28.impressions, `${diffArrow(c28.impressions - p28.impressions)} vs 28j préc.`, c28.impressions >= p28.impressions ? '#21c47b' : '#e74c3c')}
-    ${kpiBlock('CTR moyen', ctr28 + '%', null, null)}
-    ${kpiBlock('Pos. moyenne', pos28, null, null)}
-  </div>
+  <h2 style="font-size:14px;border-bottom:2px solid #1a1a1a;padding-bottom:4px;margin-bottom:8px">28 derniers jours</h2>
+  <table style="border-collapse:collapse;margin-bottom:24px;font-size:12px">
+    ${kpiBlock('Clics', c28.clicks, `— ${diffArrow(c28.clicks - p28.clicks)} vs 28j préc.`)}
+    ${kpiBlock('Impressions', c28.impressions, `— ${diffArrow(c28.impressions - p28.impressions)} vs 28j préc.`)}
+    ${kpiBlock('CTR moyen', ctr28 + '%', null)}
+    ${kpiBlock('Position moyenne', pos28, null)}
+  </table>
 
   <!-- Tendances -->
-  <div style="display:flex;gap:10px;margin-bottom:16px">
-    <div style="flex:1;background:#0f2035;border-radius:12px;padding:16px">
-      <h2 style="margin:0 0 12px;font-size:13px;color:#21c47b">▲ En progression</h2>
+  <h2 style="font-size:14px;border-bottom:2px solid #1a1a1a;padding-bottom:4px;margin-bottom:8px">Tendances — 7 jours</h2>
+  <div style="display:flex;gap:16px;margin-bottom:24px">
+    <div style="flex:1">
+      <p style="font-size:12px;font-weight:700;color:green;margin:0 0 6px">▲ En progression</p>
       <table style="width:100%;border-collapse:collapse">${risingRows}</table>
     </div>
-    <div style="flex:1;background:#0f2035;border-radius:12px;padding:16px">
-      <h2 style="margin:0 0 12px;font-size:13px;color:#e74c3c">▼ En recul</h2>
+    <div style="flex:1">
+      <p style="font-size:12px;font-weight:700;color:#c0392b;margin:0 0 6px">▼ En recul</p>
       <table style="width:100%;border-collapse:collapse">${fallingRows}</table>
     </div>
   </div>
 
   <!-- Sources de trafic -->
-  <div style="display:flex;gap:10px;margin-bottom:16px">
-    <div style="flex:1;background:#0f2035;border-radius:12px;padding:16px">
-      <h2 style="margin:0 0 12px;font-size:13px;color:#21c47b">Sources de trafic — 7 jours</h2>
-      <table style="width:100%;border-collapse:collapse">
-        <tr>
-          <td style="padding:7px 10px;border-bottom:1px solid #1e3a50;color:#94a3b8;font-size:12px">🔍 Recherche web</td>
-          <td style="padding:7px 10px;border-bottom:1px solid #1e3a50;text-align:center;font-weight:600;font-size:13px">${c7.clicks}</td>
-          <td style="padding:7px 10px;border-bottom:1px solid #1e3a50;text-align:center;color:#94a3b8;font-size:12px">${c7.impressions} impr.</td>
-          <td style="padding:7px 10px;border-bottom:1px solid #1e3a50;text-align:center;color:#94a3b8;font-size:12px">${ctr7}% CTR</td>
-        </tr>
-        <tr>
-          <td style="padding:7px 10px;color:#94a3b8;font-size:12px">🖼️ Recherche d'images</td>
-          <td style="padding:7px 10px;text-align:center;font-weight:600;font-size:13px">${imgClicks}</td>
-          <td style="padding:7px 10px;text-align:center;color:#94a3b8;font-size:12px">${imgImpr} impr.</td>
-          <td style="padding:7px 10px;text-align:center;color:#94a3b8;font-size:12px">${imgImpr > 0 ? ((imgClicks/imgImpr)*100).toFixed(1) : '0'}% CTR</td>
-        </tr>
-      </table>
-    </div>
-    <div style="flex:1;background:#0f2035;border-radius:12px;padding:16px">
-      <h2 style="margin:0 0 12px;font-size:13px;color:#21c47b">Top pays — 7 jours</h2>
-      <table style="width:100%;border-collapse:collapse">${countryRows}</table>
-    </div>
-  </div>
+  <h2 style="font-size:14px;border-bottom:2px solid #1a1a1a;padding-bottom:4px;margin-bottom:8px">Sources de trafic — 7 jours</h2>
+  <table style="width:100%;border-collapse:collapse;margin-bottom:24px">
+    <thead><tr style="background:#1a1a1a;color:#fff">
+      <th style="padding:7px 10px;text-align:left;font-weight:600;font-size:12px">Source</th>
+      <th style="padding:7px 10px;font-weight:600;font-size:12px">Clics</th>
+      <th style="padding:7px 10px;font-weight:600;font-size:12px">Impressions</th>
+      <th style="padding:7px 10px;font-weight:600;font-size:12px">CTR</th>
+    </tr></thead>
+    <tbody>
+      <tr>
+        <td style="padding:7px 10px;border-bottom:1px solid #ddd;color:#555;font-size:12px">🔍 Recherche web</td>
+        <td style="padding:7px 10px;border-bottom:1px solid #ddd;text-align:center;font-weight:600;font-size:13px;color:#1a1a1a">${c7.clicks}</td>
+        <td style="padding:7px 10px;border-bottom:1px solid #ddd;text-align:center;color:#555;font-size:12px">${c7.impressions}</td>
+        <td style="padding:7px 10px;border-bottom:1px solid #ddd;text-align:center;color:#555;font-size:12px">${ctr7}%</td>
+      </tr>
+      <tr>
+        <td style="padding:7px 10px;border-bottom:1px solid #ddd;color:#555;font-size:12px">🖼️ Recherche d'images</td>
+        <td style="padding:7px 10px;border-bottom:1px solid #ddd;text-align:center;font-weight:600;font-size:13px;color:#1a1a1a">${imgClicks}</td>
+        <td style="padding:7px 10px;border-bottom:1px solid #ddd;text-align:center;color:#555;font-size:12px">${imgImpr}</td>
+        <td style="padding:7px 10px;border-bottom:1px solid #ddd;text-align:center;color:#555;font-size:12px">${imgImpr > 0 ? ((imgClicks/imgImpr)*100).toFixed(1) : '0'}%</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <!-- Top pays -->
+  <h2 style="font-size:14px;border-bottom:2px solid #1a1a1a;padding-bottom:4px;margin-bottom:8px">Top pays — 7 jours</h2>
+  <table style="width:100%;border-collapse:collapse;margin-bottom:24px">
+    <thead><tr style="background:#1a1a1a;color:#fff">
+      <th style="padding:7px 10px;text-align:left;font-weight:600;font-size:12px">Pays</th>
+      <th style="padding:7px 10px;font-weight:600;font-size:12px">Clics</th>
+      <th style="padding:7px 10px;font-weight:600;font-size:12px">Part</th>
+    </tr></thead>
+    <tbody>${countryRows}</tbody>
+  </table>
 
   <!-- Top pages 7j -->
-  <div style="background:#0f2035;border-radius:12px;padding:16px;margin-bottom:12px">
-    <h2 style="margin:0 0 12px;font-size:13px;color:#21c47b">Top pages — 7 jours</h2>
-    <table style="width:100%;border-collapse:collapse">
-      <thead><tr style="font-size:10px;color:#64748b;text-transform:uppercase">
-        <th style="padding:6px 10px;text-align:left">Page</th>
-        <th style="padding:6px 10px">Clics</th>
-        <th style="padding:6px 10px">Impr.</th>
-        <th style="padding:6px 10px">CTR</th>
-        <th style="padding:6px 10px">Pos.</th>
-      </tr></thead>
-      <tbody>${pagesRows}</tbody>
-    </table>
-  </div>
+  <h2 style="font-size:14px;border-bottom:2px solid #1a1a1a;padding-bottom:4px;margin-bottom:8px">Top pages — 7 jours</h2>
+  <table style="width:100%;border-collapse:collapse;margin-bottom:24px">
+    <thead><tr style="background:#1a1a1a;color:#fff">
+      <th style="padding:7px 10px;text-align:left;font-weight:600;font-size:12px">Page</th>
+      <th style="padding:7px 10px;font-weight:600;font-size:12px">Clics</th>
+      <th style="padding:7px 10px;font-weight:600;font-size:12px">Impr.</th>
+      <th style="padding:7px 10px;font-weight:600;font-size:12px">CTR</th>
+      <th style="padding:7px 10px;font-weight:600;font-size:12px">Pos.</th>
+    </tr></thead>
+    <tbody>${pagesRows}</tbody>
+  </table>
 
   <!-- Opportunités quick wins -->
-  <div style="background:#0f2035;border-radius:12px;padding:16px;margin-bottom:12px">
-    <h2 style="margin:0 0 4px;font-size:13px;color:#f59e0b">⚡ Opportunités quick wins — pos. 4–10 · CTR sous la moyenne</h2>
-    <div style="font-size:11px;color:#64748b;margin-bottom:10px">Pages bien positionnées mais avec un CTR faible → optimiser title/meta description</div>
-    ${opportunities.length ? `
-    <table style="width:100%;border-collapse:collapse">
-      <thead><tr style="font-size:10px;color:#64748b;text-transform:uppercase">
-        <th style="padding:6px 10px;text-align:left">Page</th>
-        <th style="padding:6px 10px">Impr.</th>
-        <th style="padding:6px 10px">CTR</th>
-        <th style="padding:6px 10px">Pos.</th>
-      </tr></thead>
-      <tbody>${opportunities.map(r => `
-        <tr>
-          <td style="padding:7px 10px;border-bottom:1px solid #1e3a50;color:#94a3b8;font-size:12px">${pageLabel(r.keys[0])}</td>
-          <td style="padding:7px 10px;border-bottom:1px solid #1e3a50;text-align:center;color:#94a3b8;font-size:12px">${r.impressions}</td>
-          <td style="padding:7px 10px;border-bottom:1px solid #1e3a50;text-align:center;color:#f59e0b;font-size:12px">${(r.ctr*100).toFixed(1)}%</td>
-          <td style="padding:7px 10px;border-bottom:1px solid #1e3a50;text-align:center;color:#94a3b8;font-size:12px">${r.position.toFixed(1)}</td>
-        </tr>`).join('')}
-      </tbody>
-    </table>` : `<div style="font-size:12px;color:#64748b;padding:8px 0">Aucune opportunité détectée cette semaine</div>`}
-  </div>
+  <h2 style="font-size:14px;border-bottom:2px solid #1a1a1a;padding-bottom:4px;margin-bottom:8px">Quick wins — pos. 4–10 · CTR sous la moyenne</h2>
+  <p style="font-size:11px;color:#666;margin:0 0 8px">Pages bien positionnées mais avec un CTR faible → optimiser title/meta description</p>
+  ${opportunities.length ? `
+  <table style="width:100%;border-collapse:collapse;margin-bottom:24px">
+    <thead><tr style="background:#1a1a1a;color:#fff">
+      <th style="padding:7px 10px;text-align:left;font-weight:600;font-size:12px">Page</th>
+      <th style="padding:7px 10px;font-weight:600;font-size:12px">Impr.</th>
+      <th style="padding:7px 10px;font-weight:600;font-size:12px">CTR</th>
+      <th style="padding:7px 10px;font-weight:600;font-size:12px">Pos.</th>
+    </tr></thead>
+    <tbody>${opportunities.map(r => `
+      <tr>
+        <td style="padding:7px 10px;border-bottom:1px solid #ddd;color:#555;font-size:12px">${pageLabel(r.keys[0])}</td>
+        <td style="padding:7px 10px;border-bottom:1px solid #ddd;text-align:center;color:#555;font-size:12px">${r.impressions}</td>
+        <td style="padding:7px 10px;border-bottom:1px solid #ddd;text-align:center;color:#c0392b;font-size:12px">${(r.ctr*100).toFixed(1)}%</td>
+        <td style="padding:7px 10px;border-bottom:1px solid #ddd;text-align:center;color:#555;font-size:12px">${r.position.toFixed(1)}</td>
+      </tr>`).join('')}
+    </tbody>
+  </table>` : `<p style="font-size:12px;color:#666;margin-bottom:24px">Aucune opportunité détectée cette semaine</p>`}
 
   <!-- Top requêtes -->
-  <div style="background:#0f2035;border-radius:12px;padding:16px;margin-bottom:24px">
-    <h2 style="margin:0 0 12px;font-size:13px;color:#21c47b">Top requêtes — 7 jours</h2>
-    <table style="width:100%;border-collapse:collapse">
-      <thead><tr style="font-size:10px;color:#64748b;text-transform:uppercase">
-        <th style="padding:6px 10px;text-align:left">Requête</th>
-        <th style="padding:6px 10px">Clics</th>
-        <th style="padding:6px 10px">Impr.</th>
-        <th style="padding:6px 10px">CTR</th>
-        <th style="padding:6px 10px">Pos.</th>
-      </tr></thead>
-      <tbody>${queriesRows}</tbody>
-    </table>
-  </div>
+  <h2 style="font-size:14px;border-bottom:2px solid #1a1a1a;padding-bottom:4px;margin-bottom:8px">Top requêtes — 7 jours</h2>
+  <table style="width:100%;border-collapse:collapse;margin-bottom:24px">
+    <thead><tr style="background:#1a1a1a;color:#fff">
+      <th style="padding:7px 10px;text-align:left;font-weight:600;font-size:12px">Requête</th>
+      <th style="padding:7px 10px;font-weight:600;font-size:12px">Clics</th>
+      <th style="padding:7px 10px;font-weight:600;font-size:12px">Impr.</th>
+      <th style="padding:7px 10px;font-weight:600;font-size:12px">CTR</th>
+      <th style="padding:7px 10px;font-weight:600;font-size:12px">Pos.</th>
+    </tr></thead>
+    <tbody>${queriesRows}</tbody>
+  </table>
 
   <!-- Suivi mots-clés cibles -->
-  <div style="background:#0f2035;border-radius:12px;padding:16px;margin-bottom:24px">
-    <h2 style="margin:0 0 4px;font-size:13px;color:#21c47b">🎯 Suivi mots-clés cibles — 7 jours</h2>
-    <div style="font-size:11px;color:#64748b;margin-bottom:12px">Position moyenne · ↑ amélioration · ↓ recul · — non détecté dans le top 5 000</div>
-    ${['Marque', 'Local', 'ARTE', 'Éditorial'].map(cat => {
-      const rows = trackedData.filter(k => k.cat === cat);
-      const catColors = { Marque: '#0091ff', Local: '#21c47b', ARTE: '#ff6b35', 'Éditorial': '#a78bfa' };
-      return `
-      <div style="margin-bottom:14px">
-        <div style="font-size:10px;font-weight:700;color:${catColors[cat]};text-transform:uppercase;letter-spacing:1px;margin-bottom:6px">${cat}</div>
-        <table style="width:100%;border-collapse:collapse">
-          <thead><tr style="font-size:10px;color:#64748b;text-transform:uppercase">
-            <th style="padding:4px 8px;text-align:left">Mot-clé</th>
-            <th style="padding:4px 8px;text-align:center;width:50px">Pos.</th>
-            <th style="padding:4px 8px;text-align:center;width:40px">Δ</th>
-            <th style="padding:4px 8px;text-align:center;width:50px">Impr.</th>
-            <th style="padding:4px 8px;text-align:center;width:40px">Clics</th>
-          </tr></thead>
-          <tbody>
-          ${rows.map(k => {
-            const posColor = k.position === null ? '#334155'
-              : k.position <= 3  ? '#21c47b'
-              : k.position <= 10 ? '#f59e0b'
-              : '#94a3b8';
-            const posLabel = k.position === null ? '—' : k.position.toFixed(1);
-            let deltaCell = '<span style="color:#64748b">—</span>';
-            if (k.position !== null && k.prevPos !== null) {
-              const d = (k.prevPos - k.position).toFixed(1);
-              if (d > 0)      deltaCell = `<span style="color:#21c47b">↑${d}</span>`;
-              else if (d < 0) deltaCell = `<span style="color:#e74c3c">↓${Math.abs(d)}</span>`;
-              else            deltaCell = `<span style="color:#64748b">0</span>`;
-            }
-            return `<tr>
-              <td style="padding:5px 8px;border-bottom:1px solid #1e3a50;color:#94a3b8;font-size:11px">${k.q}</td>
-              <td style="padding:5px 8px;border-bottom:1px solid #1e3a50;text-align:center;font-weight:700;font-size:12px;color:${posColor}">${posLabel}</td>
-              <td style="padding:5px 8px;border-bottom:1px solid #1e3a50;text-align:center;font-size:11px">${deltaCell}</td>
-              <td style="padding:5px 8px;border-bottom:1px solid #1e3a50;text-align:center;color:#64748b;font-size:11px">${k.impressions}</td>
-              <td style="padding:5px 8px;border-bottom:1px solid #1e3a50;text-align:center;color:#64748b;font-size:11px">${k.clicks}</td>
-            </tr>`;
-          }).join('')}
-          </tbody>
-        </table>
-      </div>`;
-    }).join('')}
-  </div>
+  <h2 style="font-size:14px;border-bottom:2px solid #1a1a1a;padding-bottom:4px;margin-bottom:8px">Suivi mots-clés cibles — 7 jours</h2>
+  <p style="font-size:11px;color:#666;margin:0 0 12px">Position moyenne · ↑ amélioration · ↓ recul · — non détecté dans le top 5 000</p>
+  ${['Marque', 'Local', 'ARTE', 'Éditorial'].map(cat => {
+    const rows = trackedData.filter(k => k.cat === cat);
+    return `
+    <div style="margin-bottom:16px">
+      <p style="font-size:11px;font-weight:700;color:#1a1a1a;text-transform:uppercase;letter-spacing:1px;margin:0 0 6px">${cat}</p>
+      <table style="width:100%;border-collapse:collapse">
+        <thead><tr style="background:#1a1a1a;color:#fff">
+          <th style="padding:5px 8px;text-align:left;font-weight:600;font-size:11px">Mot-clé</th>
+          <th style="padding:5px 8px;text-align:center;width:50px;font-weight:600;font-size:11px">Pos.</th>
+          <th style="padding:5px 8px;text-align:center;width:40px;font-weight:600;font-size:11px">Δ</th>
+          <th style="padding:5px 8px;text-align:center;width:50px;font-weight:600;font-size:11px">Impr.</th>
+          <th style="padding:5px 8px;text-align:center;width:40px;font-weight:600;font-size:11px">Clics</th>
+        </tr></thead>
+        <tbody>
+        ${rows.map(k => {
+          const posColor = k.position === null ? '#666'
+            : k.position <= 3  ? 'green'
+            : k.position <= 10 ? '#e67e22'
+            : '#555';
+          const posLabel = k.position === null ? '—' : k.position.toFixed(1);
+          let deltaCell = '<span style="color:#666">—</span>';
+          if (k.position !== null && k.prevPos !== null) {
+            const d = (k.prevPos - k.position).toFixed(1);
+            if (d > 0)      deltaCell = `<span style="color:green">↑${d}</span>`;
+            else if (d < 0) deltaCell = `<span style="color:#c0392b">↓${Math.abs(d)}</span>`;
+            else            deltaCell = `<span style="color:#666">0</span>`;
+          }
+          return `<tr>
+            <td style="padding:5px 8px;border-bottom:1px solid #ddd;color:#555;font-size:11px">${k.q}</td>
+            <td style="padding:5px 8px;border-bottom:1px solid #ddd;text-align:center;font-weight:700;font-size:12px;color:${posColor}">${posLabel}</td>
+            <td style="padding:5px 8px;border-bottom:1px solid #ddd;text-align:center;font-size:11px">${deltaCell}</td>
+            <td style="padding:5px 8px;border-bottom:1px solid #ddd;text-align:center;color:#666;font-size:11px">${k.impressions}</td>
+            <td style="padding:5px 8px;border-bottom:1px solid #ddd;text-align:center;color:#666;font-size:11px">${k.clicks}</td>
+          </tr>`;
+        }).join('')}
+        </tbody>
+      </table>
+    </div>`;
+  }).join('')}
 
   <!-- Graphiques historiques GSC -->
   ${chartH.some(e => e.clicks !== null) ? `
-  <div style="background:#0f2035;border-radius:12px;padding:16px;margin-bottom:16px">
-    <h2 style="margin:0 0 4px;font-size:13px;color:#21c47b">📈 Évolution — 12 dernières semaines</h2>
-    <div style="font-size:11px;color:#64748b;margin-bottom:14px">Données GSC hebdomadaires</div>
+  <h2 style="font-size:14px;border-bottom:2px solid #1a1a1a;padding-bottom:4px;margin-bottom:8px">Évolution historique — 12 dernières semaines</h2>
+  <p style="font-size:11px;color:#666;margin:0 0 14px">Données GSC hebdomadaires</p>
+  <div style="background:#f8f9fa;border:1px solid #ddd;border-radius:4px;padding:16px;margin-bottom:24px">
     <div style="display:flex;gap:12px;margin-bottom:16px">
-      <div style="flex:1"><canvas id="gscClics" height="120"></canvas></div>
-      <div style="flex:1"><canvas id="gscImpr"  height="120"></canvas></div>
+      <div style="flex:1;background:#fff;padding:8px;border-radius:4px"><canvas id="gscClics" height="120"></canvas></div>
+      <div style="flex:1;background:#fff;padding:8px;border-radius:4px"><canvas id="gscImpr"  height="120"></canvas></div>
     </div>
     <div style="display:flex;gap:12px">
-      <div style="flex:1"><canvas id="gscCtr"   height="120"></canvas></div>
-      <div style="flex:1"><canvas id="gscPos"   height="120"></canvas></div>
+      <div style="flex:1;background:#fff;padding:8px;border-radius:4px"><canvas id="gscCtr"   height="120"></canvas></div>
+      <div style="flex:1;background:#fff;padding:8px;border-radius:4px"><canvas id="gscPos"   height="120"></canvas></div>
     </div>
   </div>` : ''}
 
-  <div style="text-align:center;font-size:11px;color:#334155">
-    Généré automatiquement chaque dimanche · Dark Massilia
-  </div>
+  <p style="font-size:10px;color:#aaa;text-align:center;margin:0">Généré automatiquement chaque dimanche · Dark Massilia · karimsaari.com</p>
 </div>
 ${chartH.some(e => e.clicks !== null) ? `
 <script>
@@ -574,8 +561,8 @@ const chartDefaults = {
   responsive: true,
   plugins: { legend: { display: false } },
   scales: {
-    x: { ticks: { color: '#64748b', font: { size: 9 } }, grid: { color: '#1e3a50' } },
-    y: { ticks: { color: '#64748b', font: { size: 9 } }, grid: { color: '#1e3a50' } },
+    x: { ticks: { color: '#666', font: { size: 9 } }, grid: { color: '#ddd' } },
+    y: { ticks: { color: '#666', font: { size: 9 } }, grid: { color: '#ddd' } },
   },
 };
 function lineChart(id, label, color, data, extraOpts = {}) {
@@ -586,7 +573,7 @@ function lineChart(id, label, color, data, extraOpts = {}) {
       datasets: [{ label, data, borderColor: color, backgroundColor: color.replace(')', ',0.12)').replace('rgb','rgba'), borderWidth: 2, pointRadius: 3, tension: 0.3, fill: true }],
     },
     options: { ...chartDefaults, ...extraOpts,
-      plugins: { ...chartDefaults.plugins, title: { display: true, text: label, color: '#94a3b8', font: { size: 11 }, padding: { bottom: 8 } } },
+      plugins: { ...chartDefaults.plugins, title: { display: true, text: label, color: '#1a1a1a', font: { size: 11 }, padding: { bottom: 8 } } },
     },
   });
 }
