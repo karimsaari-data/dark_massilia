@@ -16,17 +16,36 @@ import puppeteer from 'puppeteer';
 
 const __dirname   = dirname(fileURLToPath(import.meta.url));
 const SITE        = 'https://karimsaari.com';
+const DIST_DIR    = resolve(__dirname, '../dist');
 const BREVO_TO    = 'email@karimsaari.com';
 const BREVO_FROM  = { email: 'contact@karimsaari.com', name: 'Dark Massilia' };
 const EEAT_SIGNAL = 'karim saari';
-const DELAY_MS    = 1500; // délai entre pages (politesse crawler)
+const DELAY_MS    = 500; // réduit car lecture locale en CI
 
-// ── Fetch helpers ────────────────────────────────────────────────────────────
+// ── Lecture locale depuis dist/ (pas de réseau) ──────────────────────────────
+// Le serveur bloque les IP GitHub Actions → on build d'abord, on lit ensuite
+
+function urlToDistPath(url) {
+  const path = url.replace(SITE, '').replace(/\/$/, '') || '/';
+  if (path === '/') return resolve(DIST_DIR, 'index.html');
+  return resolve(DIST_DIR, path.replace(/^\//, ''), 'index.html');
+}
+
+function readPageFromDist(url) {
+  const filePath = urlToDistPath(url);
+  if (!existsSync(filePath)) throw new Error(`Fichier dist introuvable : ${filePath}`);
+  return readFileSync(filePath, 'utf8');
+}
+
+const USE_DIST = existsSync(DIST_DIR) && existsSync(resolve(DIST_DIR, 'index.html'));
+
+// ── Fetch helpers (fallback réseau si dist/ absent — usage local) ─────────────
 
 async function fetchText(url) {
   const res = await fetch(url, {
     headers: { 'User-Agent': 'DarkMassilia-SEO-Bot/1.0 (+https://karimsaari.com)' },
     redirect: 'follow',
+    signal: AbortSignal.timeout(20000),
   });
   if (!res.ok) throw new Error(`HTTP ${res.status} — ${url}`);
   return res.text();
@@ -195,10 +214,14 @@ function statusDot(page) {
   const pages = [];
   let crawlErrors = 0;
 
+  console.log(USE_DIST
+    ? `📁 Lecture depuis dist/ (${DIST_DIR})`
+    : '🌐 Fetch depuis le site live (dist/ absent)');
+
   for (const url of urls) {
     process.stdout.write(`  → ${pageLabel(url)} … `);
     try {
-      const html = await fetchText(url);
+      const html = USE_DIST ? readPageFromDist(url) : await fetchText(url);
       const page = analysePage(url, html);
       pages.push(page);
       console.log(`H1:${page.h1Count} img-noalt:${page.imgsNoAlt.length} eeat:${page.hasEEAT ? '✓' : '✗'}`);
@@ -206,7 +229,7 @@ function statusDot(page) {
       console.log(`❌ ${err.message}`);
       crawlErrors++;
     }
-    await delay(DELAY_MS);
+    if (!USE_DIST) await delay(DELAY_MS);
   }
 
   // ── Issues ─────────────────────────────────────────────────────────────────
