@@ -2,7 +2,7 @@ name: PSI Audit (PageSpeed Insights)
 
 on:
   schedule:
-    - cron: '30 4 * * *'   # 4h30 UTC = après le build nocturne
+    - cron: '0 6 * * 0'    # Dimanche 6h UTC = 7h/8h Paris
   workflow_dispatch:
 
 env:
