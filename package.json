@@ -19,7 +19,8 @@
     "preview": "vite preview",
     "seo-digest": "node scripts/weekly-seo-digest.js",
     "psi-audit": "node scripts/psi-audit.js",
-    "ga-report": "node scripts/ga-report.js"
+    "ga-report": "node scripts/ga-report.js",
+    "seo-crawl": "node scripts/seo-crawl.js"
   },
   "dependencies": {
     "@fancyapps/ui": "^6.1.13",
@@ -42,6 +43,7 @@
     "eslint-plugin-react-hooks": "^7.0.1",
     "eslint-plugin-react-refresh": "^0.4.24",
     "globals": "^16.5.0",
+    "node-html-parser": "^7.1.0",
     "postcss": "^8.5.6",
     "puppeteer": "^23.0.0",
     "sharp": "^0.34.5",
