@@ -5,6 +5,9 @@ on:
     - cron: '0 6 * * 0'    # Dimanche 6h UTC = 7h/8h Paris
   workflow_dispatch:
 
+permissions:
+  contents: write           # nécessaire pour commiter psi-history.json
+
 env:
   FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
 
@@ -30,3 +33,11 @@ jobs:
           PSI_API_KEY:   ${{ secrets.PSI_API_KEY }}
           BREVO_API_KEY: ${{ secrets.BREVO_API_KEY }}
         run: npm run psi-audit
+
+      - name: Sauvegarder l'historique PSI
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add data/psi-history.json
+          git diff --staged --quiet || git commit -m "chore(data): historique PSI $(date +%Y-%m-%d)"
+          git push
