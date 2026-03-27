@@ -120,6 +120,9 @@ async function sendEmail(html, subject, pdfBuffer, pdfName) {
         fcp:  data.lighthouseResult?.audits?.['first-contentful-paint']?.displayValue ?? '—',
         lcp:  data.lighthouseResult?.audits?.['largest-contentful-paint']?.displayValue ?? '—',
         cls:  data.lighthouseResult?.audits?.['cumulative-layout-shift']?.displayValue ?? '—',
+        tbt:  data.lighthouseResult?.audits?.['total-blocking-time']?.displayValue ?? '—',
+        inp:  data.lighthouseResult?.audits?.['interaction-to-next-paint']?.displayValue ?? '—',
+        ttfb: data.lighthouseResult?.audits?.['server-response-time']?.displayValue ?? '—',
       };
       results.push(r);
 
@@ -135,7 +138,7 @@ async function sendEmail(html, subject, pdfBuffer, pdfName) {
     } catch (err) {
       console.log(`❌ ${err.message}`);
       const is429 = err.message.includes('429');
-      results.push({ url, perf: null, seo: null, a11y: null, bp: null, fcp: '—', lcp: '—', cls: '—', error: err.message });
+      results.push({ url, perf: null, seo: null, a11y: null, bp: null, fcp: '—', lcp: '—', cls: '—', tbt: '—', inp: '—', ttfb: '—', error: err.message });
       if (is429) apiErrors++;
       else errors++;
     }
@@ -170,6 +173,10 @@ async function sendEmail(html, subject, pdfBuffer, pdfName) {
       <td style="padding:7px 10px;border-bottom:1px solid #1e3a50;text-align:center;font-size:13px">${scoreBar(r.bp)}</td>
       <td style="padding:7px 10px;border-bottom:1px solid #1e3a50;text-align:center;color:#64748b;font-size:11px">${r.fcp}</td>
       <td style="padding:7px 10px;border-bottom:1px solid #1e3a50;text-align:center;color:#64748b;font-size:11px">${r.lcp}</td>
+      <td style="padding:7px 10px;border-bottom:1px solid #1e3a50;text-align:center;color:#64748b;font-size:11px">${r.cls}</td>
+      <td style="padding:7px 10px;border-bottom:1px solid #1e3a50;text-align:center;color:#64748b;font-size:11px">${r.tbt}</td>
+      <td style="padding:7px 10px;border-bottom:1px solid #1e3a50;text-align:center;color:#64748b;font-size:11px">${r.inp}</td>
+      <td style="padding:7px 10px;border-bottom:1px solid #1e3a50;text-align:center;color:#64748b;font-size:11px">${r.ttfb}</td>
     </tr>`;
   }).join('');
 
@@ -212,7 +219,7 @@ async function sendEmail(html, subject, pdfBuffer, pdfName) {
   <!-- Tableau -->
   <div style="background:#0f2035;border-radius:12px;padding:16px;overflow-x:auto">
     <h2 style="margin:0 0 12px;font-size:13px;color:#21c47b">Détail par page (triées par perf. croissante)</h2>
-    <table style="width:100%;border-collapse:collapse;min-width:550px">
+    <table style="width:100%;border-collapse:collapse;min-width:750px">
       <thead><tr style="font-size:10px;color:#64748b;text-transform:uppercase">
         <th style="padding:6px 10px;text-align:left">Page</th>
         <th style="padding:6px 10px">Perf</th>
@@ -221,6 +228,10 @@ async function sendEmail(html, subject, pdfBuffer, pdfName) {
         <th style="padding:6px 10px">BP</th>
         <th style="padding:6px 10px">FCP</th>
         <th style="padding:6px 10px">LCP</th>
+        <th style="padding:6px 10px">CLS</th>
+        <th style="padding:6px 10px">TBT</th>
+        <th style="padding:6px 10px">INP</th>
+        <th style="padding:6px 10px">TTFB</th>
       </tr></thead>
       <tbody>${rows}</tbody>
     </table>

@@ -621,7 +621,14 @@
       <span class="toc-num">04</span>
       <div>
         <div class="toc-title">Core Web Vitals — PageSpeed Insights Mobile</div>
-        <div class="toc-sub">Scores Lighthouse · LCP · TBT · Scripts tiers · Opportunités d'optimisation</div>
+        <div class="toc-sub">Scores Lighthouse · FCP · LCP · CLS · INP · TBT · TTFB · Scripts tiers · Opportunités d'optimisation</div>
+      </div>
+    </li>
+    <li>
+      <span class="toc-num">05</span>
+      <div>
+        <div class="toc-title">Glossaire — Core Web Vitals &amp; Métriques Performance</div>
+        <div class="toc-sub">CLS · INP · TBT · TTFB · FCP · LCP — Définitions, seuils Google et impact SEO</div>
       </div>
     </li>
   </ul>
@@ -1115,6 +1122,27 @@
     </div>
   </div>
 
+  <!-- Métriques complémentaires CWV -->
+  <h3 style="margin-top:24px;margin-bottom:12px;">Métriques complémentaires (Core Web Vitals officiels)</h3>
+  <div style="display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin-bottom:28px;">
+
+    <div style="background:var(--card);border:1px solid rgba(139,148,158,0.4);border-radius:10px;padding:14px 16px;">
+      <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:var(--muted);margin-bottom:6px;">INP</div>
+      <div style="font-size:22px;font-weight:800;color:var(--muted);">N/D</div>
+      <div style="font-size:10px;color:var(--muted);margin-top:4px;">Interaction to Next Paint</div>
+      <div style="font-size:9px;color:var(--orange);margin-top:2px;">⚠ Non mesuré — trafic CrUX insuffisant</div>
+      <div style="font-size:9px;color:var(--muted);margin-top:4px;border-top:1px solid var(--border);padding-top:4px;">CWV officiel depuis 2024 · Cible &lt; 200 ms · Estim. &gt;200 ms (TBT = 250 ms)</div>
+    </div>
+
+    <div style="background:var(--card);border:1px solid rgba(63,185,80,0.4);border-radius:10px;padding:14px 16px;">
+      <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:var(--muted);margin-bottom:6px;">TTFB</div>
+      <div style="font-size:22px;font-weight:800;color:var(--green);">~0 ms</div>
+      <div style="font-size:10px;color:var(--muted);margin-top:4px;">Time to First Byte</div>
+      <div style="font-size:9px;color:var(--green);margin-top:2px;">✓ Excellent (prerender SSR)</div>
+      <div style="font-size:9px;color:var(--muted);margin-top:4px;border-top:1px solid var(--border);padding-top:4px;">Serveur réactif · Cible &lt; 800 ms · Le LCP lent est dû aux médias, pas à l'hébergeur</div>
+    </div>
+  </div>
+
   <!-- LCP breakdown -->
   <div class="verdict" style="background:rgba(248,81,73,0.05);border-color:rgba(248,81,73,0.3);margin-bottom:28px;">
     <div class="verdict-icon">🔎</div>
@@ -1269,6 +1297,160 @@
   <!-- Note de bas -->
   <div style="margin-top:24px;padding:14px 18px;background:rgba(0,171,168,0.06);border:1px solid rgba(0,171,168,0.2);border-radius:10px;font-size:11.5px;color:var(--muted);">
     <strong style="color:var(--teal);">Note CWV et SEO :</strong> Google utilise les Core Web Vitals (LCP, CLS, INP) comme signal de classement. Un LCP à 4,1 s sur mobile pénalise le ranking sur des requêtes compétitives. Le score SEO Lighthouse 100/100 concerne uniquement les méta-données — les CWV constituent un signal complémentaire distinct. Objectif : LCP &lt; 2,5 s sur mobile.
+  </div>
+</div>
+
+<!-- ════════════════════════ GLOSSAIRE ════════════════════════ -->
+<div class="page" style="page-break-before:always;">
+  <div class="section-header">
+    <div class="section-num">5</div>
+    <div class="section-title">
+      <span>Référence technique</span>
+      Glossaire — Core Web Vitals &amp; Métriques Performance
+    </div>
+  </div>
+
+  <p style="margin-bottom:24px;">Ce glossaire recense les métriques de performance clés utilisées dans ce rapport et par Google pour évaluer l'expérience utilisateur. Pour un diagnostic SEO technique complet, l'ensemble de ces indicateurs doit être mesuré et optimisé.</p>
+
+  <!-- CLS -->
+  <div style="background:var(--card);border:1px solid var(--border);border-radius:12px;padding:20px 24px;margin-bottom:16px;">
+    <div style="display:flex;align-items:center;gap:14px;margin-bottom:12px;">
+      <div style="background:rgba(63,185,80,0.15);border:1px solid rgba(63,185,80,0.4);border-radius:8px;padding:6px 14px;font-size:14px;font-weight:800;color:var(--green);white-space:nowrap;">CLS</div>
+      <div>
+        <div style="font-size:14px;font-weight:700;color:var(--text);">Cumulative Layout Shift — Stabilité visuelle</div>
+        <div style="font-size:11px;color:var(--muted);margin-top:2px;">Core Web Vital officiel · Signal de classement Google</div>
+      </div>
+      <div style="margin-left:auto;text-align:right;flex-shrink:0;">
+        <div style="font-size:11px;color:var(--muted);">Score actuel</div>
+        <div style="font-size:18px;font-weight:800;color:var(--green);">0 ✓</div>
+      </div>
+    </div>
+    <p style="margin-bottom:8px;">Mesure la quantité de déplacements inattendus des éléments visuels pendant le chargement de la page. Un élément se "déplace" lorsque sa position change après avoir été affiché (ex. : un texte qui saute parce qu'une image se charge au-dessus).</p>
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:12px;font-size:11px;">
+      <div style="background:rgba(63,185,80,0.08);border:1px solid rgba(63,185,80,0.2);border-radius:6px;padding:8px 10px;text-align:center;">
+        <div style="font-weight:700;color:var(--green);">≤ 0,1</div><div style="color:var(--muted);margin-top:2px;">✓ Bon</div>
+      </div>
+      <div style="background:rgba(210,153,34,0.08);border:1px solid rgba(210,153,34,0.2);border-radius:6px;padding:8px 10px;text-align:center;">
+        <div style="font-weight:700;color:var(--orange);">0,1 – 0,25</div><div style="color:var(--muted);margin-top:2px;">⚠ Amélioration</div>
+      </div>
+      <div style="background:rgba(248,81,73,0.08);border:1px solid rgba(248,81,73,0.2);border-radius:6px;padding:8px 10px;text-align:center;">
+        <div style="font-weight:700;color:var(--red);">&gt; 0,25</div><div style="color:var(--muted);margin-top:2px;">✗ Mauvais</div>
+      </div>
+    </div>
+    <p style="margin-top:10px;margin-bottom:0;font-size:11.5px;"><strong>Impact sur ce site :</strong> CLS = 0 (parfait). Les images ont des dimensions prédéfinies (width/height) et le Suspense React réserve l'espace avant le chargement. Aucune action requise.</p>
+  </div>
+
+  <!-- INP -->
+  <div style="background:var(--card);border:1px solid var(--border);border-radius:12px;padding:20px 24px;margin-bottom:16px;">
+    <div style="display:flex;align-items:center;gap:14px;margin-bottom:12px;">
+      <div style="background:rgba(210,153,34,0.15);border:1px solid rgba(210,153,34,0.4);border-radius:8px;padding:6px 14px;font-size:14px;font-weight:800;color:var(--orange);white-space:nowrap;">INP</div>
+      <div>
+        <div style="font-size:14px;font-weight:700;color:var(--text);">Interaction to Next Paint — Réactivité aux interactions</div>
+        <div style="font-size:11px;color:var(--muted);margin-top:2px;">Core Web Vital officiel depuis mars 2024 (remplace le FID) · Signal de classement Google</div>
+      </div>
+      <div style="margin-left:auto;text-align:right;flex-shrink:0;">
+        <div style="font-size:11px;color:var(--muted);">Score actuel</div>
+        <div style="font-size:18px;font-weight:800;color:var(--muted);">N/D</div>
+      </div>
+    </div>
+    <p style="margin-bottom:8px;">Mesure le délai entre une interaction utilisateur (clic, appui, saisie clavier) et le prochain affichage à l'écran. Contrairement au FID qui mesurait uniquement le premier clic, l'INP mesure <em>toutes</em> les interactions sur toute la durée de la session.</p>
+    <p style="margin-bottom:8px;">Sur un site de photographie, les interactions critiques sont : l'ouverture d'une lightbox, la navigation dans une galerie, les clics sur le menu mobile. Si des scripts tiers (GTM, pixels) bloquent le thread principal, l'INP grimpe au-delà du seuil.</p>
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:12px;font-size:11px;">
+      <div style="background:rgba(63,185,80,0.08);border:1px solid rgba(63,185,80,0.2);border-radius:6px;padding:8px 10px;text-align:center;">
+        <div style="font-weight:700;color:var(--green);">≤ 200 ms</div><div style="color:var(--muted);margin-top:2px;">✓ Bon</div>
+      </div>
+      <div style="background:rgba(210,153,34,0.08);border:1px solid rgba(210,153,34,0.2);border-radius:6px;padding:8px 10px;text-align:center;">
+        <div style="font-weight:700;color:var(--orange);">200 – 500 ms</div><div style="color:var(--muted);margin-top:2px;">⚠ Amélioration</div>
+      </div>
+      <div style="background:rgba(248,81,73,0.08);border:1px solid rgba(248,81,73,0.2);border-radius:6px;padding:8px 10px;text-align:center;">
+        <div style="font-weight:700;color:var(--red);">&gt; 500 ms</div><div style="color:var(--muted);margin-top:2px;">✗ Mauvais</div>
+      </div>
+    </div>
+    <p style="margin-top:10px;margin-bottom:0;font-size:11.5px;"><strong>Impact sur ce site :</strong> Non mesuré (données CrUX insuffisantes). Avec un TBT de 250 ms causé par GTM (253 ms) et les pixels tiers, l'INP est probablement supérieur à 200 ms. <strong>Action prioritaire :</strong> différer les scripts tiers (P1 dans le plan d'action) réduira directement l'INP.</p>
+  </div>
+
+  <!-- TBT -->
+  <div style="background:var(--card);border:1px solid var(--border);border-radius:12px;padding:20px 24px;margin-bottom:16px;">
+    <div style="display:flex;align-items:center;gap:14px;margin-bottom:12px;">
+      <div style="background:rgba(210,153,34,0.15);border:1px solid rgba(210,153,34,0.4);border-radius:8px;padding:6px 14px;font-size:14px;font-weight:800;color:var(--orange);white-space:nowrap;">TBT</div>
+      <div>
+        <div style="font-size:14px;font-weight:700;color:var(--text);">Total Blocking Time — Temps de blocage total</div>
+        <div style="font-size:11px;color:var(--muted);margin-top:2px;">Métrique Lighthouse (lab) · Proxy de l'INP en conditions de laboratoire</div>
+      </div>
+      <div style="margin-left:auto;text-align:right;flex-shrink:0;">
+        <div style="font-size:11px;color:var(--muted);">Score actuel</div>
+        <div style="font-size:18px;font-weight:800;color:var(--orange);">250 ms ⚠</div>
+      </div>
+    </div>
+    <p style="margin-bottom:8px;">Mesure la somme du temps durant lequel le thread principal JavaScript est bloqué et ne peut pas répondre aux interactions utilisateur. Une tâche JavaScript bloque le thread si elle dure plus de 50 ms (toute durée au-delà de 50 ms est comptée comme "temps de blocage").</p>
+    <p style="margin-bottom:8px;">Le TBT est la métrique de laboratoire qui corrèle le mieux avec l'INP (terrain). C'est l'indicateur disponible dans Lighthouse pour estimer l'INP quand les données CrUX sont insuffisantes.</p>
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:12px;font-size:11px;">
+      <div style="background:rgba(63,185,80,0.08);border:1px solid rgba(63,185,80,0.2);border-radius:6px;padding:8px 10px;text-align:center;">
+        <div style="font-weight:700;color:var(--green);">≤ 200 ms</div><div style="color:var(--muted);margin-top:2px;">✓ Bon</div>
+      </div>
+      <div style="background:rgba(210,153,34,0.08);border:1px solid rgba(210,153,34,0.2);border-radius:6px;padding:8px 10px;text-align:center;">
+        <div style="font-weight:700;color:var(--orange);">200 – 600 ms</div><div style="color:var(--muted);margin-top:2px;">⚠ Amélioration</div>
+      </div>
+      <div style="background:rgba(248,81,73,0.08);border:1px solid rgba(248,81,73,0.2);border-radius:6px;padding:8px 10px;text-align:center;">
+        <div style="font-weight:700;color:var(--red);">&gt; 600 ms</div><div style="color:var(--muted);margin-top:2px;">✗ Mauvais</div>
+      </div>
+    </div>
+    <p style="margin-top:10px;margin-bottom:0;font-size:11.5px;"><strong>Impact sur ce site :</strong> TBT = 250 ms (amélioration nécessaire). Causes identifiées : GTM (253 ms) + karimsaari.com index.js (120 ms) + TikTok Pixel (101 ms) + Facebook Pixel (72 ms). Différer ces scripts peut ramener le TBT sous 100 ms.</p>
+  </div>
+
+  <!-- TTFB -->
+  <div style="background:var(--card);border:1px solid var(--border);border-radius:12px;padding:20px 24px;margin-bottom:16px;">
+    <div style="display:flex;align-items:center;gap:14px;margin-bottom:12px;">
+      <div style="background:rgba(63,185,80,0.15);border:1px solid rgba(63,185,80,0.4);border-radius:8px;padding:6px 14px;font-size:14px;font-weight:800;color:var(--green);white-space:nowrap;">TTFB</div>
+      <div>
+        <div style="font-size:14px;font-weight:700;color:var(--text);">Time to First Byte — Temps de réponse serveur</div>
+        <div style="font-size:11px;color:var(--muted);margin-top:2px;">Métrique Lighthouse + CrUX · Diagnostic hébergement</div>
+      </div>
+      <div style="margin-left:auto;text-align:right;flex-shrink:0;">
+        <div style="font-size:11px;color:var(--muted);">Score actuel</div>
+        <div style="font-size:18px;font-weight:800;color:var(--green);">~0 ms ✓</div>
+      </div>
+    </div>
+    <p style="margin-bottom:8px;">Mesure le temps entre la requête HTTP du navigateur et la réception du premier octet de la réponse serveur. Un TTFB élevé indique un problème d'hébergement (serveur lent, base de données), tandis qu'un TTFB faible avec un LCP lent indique un problème de ressources côté client (images lourdes, scripts bloquants).</p>
+    <p style="margin-bottom:8px;"><strong>Diagnostic essentiel :</strong> Le TTFB permet de distinguer les deux causes d'une page lente — serveur vs. médias — et d'appliquer la bonne correction. Sans ce KPI, on risque d'optimiser les mauvais éléments.</p>
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:12px;font-size:11px;">
+      <div style="background:rgba(63,185,80,0.08);border:1px solid rgba(63,185,80,0.2);border-radius:6px;padding:8px 10px;text-align:center;">
+        <div style="font-weight:700;color:var(--green);">≤ 800 ms</div><div style="color:var(--muted);margin-top:2px;">✓ Bon</div>
+      </div>
+      <div style="background:rgba(210,153,34,0.08);border:1px solid rgba(210,153,34,0.2);border-radius:6px;padding:8px 10px;text-align:center;">
+        <div style="font-weight:700;color:var(--orange);">800 ms – 1,8 s</div><div style="color:var(--muted);margin-top:2px;">⚠ Amélioration</div>
+      </div>
+      <div style="background:rgba(248,81,73,0.08);border:1px solid rgba(248,81,73,0.2);border-radius:6px;padding:8px 10px;text-align:center;">
+        <div style="font-weight:700;color:var(--red);">&gt; 1,8 s</div><div style="color:var(--muted);margin-top:2px;">✗ Mauvais</div>
+      </div>
+    </div>
+    <p style="margin-top:10px;margin-bottom:0;font-size:11.5px;"><strong>Impact sur ce site :</strong> TTFB ≈ 0 ms (excellent) grâce au prerender SSR Netlify. Le LCP lent (4,1 s) n'est donc pas dû à l'hébergeur mais au poids des médias et aux scripts bloquants. L'hébergement n'est pas à changer.</p>
+  </div>
+
+  <!-- Rappel FCP & LCP pour complétude -->
+  <h3 style="margin-top:28px;margin-bottom:12px;">Rappel — Métriques déjà présentes dans le rapport</h3>
+  <div style="display:grid;grid-template-columns:repeat(2,1fr);gap:12px;margin-bottom:24px;">
+    <div style="background:var(--card);border:1px solid var(--border);border-radius:10px;padding:16px 18px;">
+      <div style="display:flex;align-items:center;gap:10px;margin-bottom:8px;">
+        <span style="background:rgba(248,81,73,0.15);border:1px solid rgba(248,81,73,0.4);border-radius:6px;padding:4px 10px;font-size:12px;font-weight:800;color:var(--red);">FCP</span>
+        <span style="font-size:13px;font-weight:600;color:var(--text);">First Contentful Paint</span>
+      </div>
+      <p style="font-size:11.5px;margin-bottom:6px;">Premier élément visuel affiché à l'écran (texte, image, SVG). Indique que la page commence à se charger pour l'utilisateur.</p>
+      <div style="font-size:11px;color:var(--muted);">Cible &lt; 1,8 s · Actuel : <span style="color:var(--red);font-weight:700;">2,7 s</span></div>
+    </div>
+    <div style="background:var(--card);border:1px solid var(--border);border-radius:10px;padding:16px 18px;">
+      <div style="display:flex;align-items:center;gap:10px;margin-bottom:8px;">
+        <span style="background:rgba(248,81,73,0.15);border:1px solid rgba(248,81,73,0.4);border-radius:6px;padding:4px 10px;font-size:12px;font-weight:800;color:var(--red);">LCP</span>
+        <span style="font-size:13px;font-weight:600;color:var(--text);">Largest Contentful Paint</span>
+      </div>
+      <p style="font-size:11.5px;margin-bottom:6px;">Plus grand élément visible dans la fenêtre. Principal signal de performance perçue et de classement Google.</p>
+      <div style="font-size:11px;color:var(--muted);">Cible &lt; 2,5 s · Actuel : <span style="color:var(--red);font-weight:700;">4,1 s</span> — élément : H1 principal</div>
+    </div>
+  </div>
+
+  <!-- Note finale -->
+  <div style="padding:16px 20px;background:rgba(0,171,168,0.06);border:1px solid rgba(0,171,168,0.2);border-radius:10px;font-size:11.5px;color:var(--muted);">
+    <strong style="color:var(--teal);">Les trois Core Web Vitals officiels Google (2024) :</strong> LCP · CLS · INP. Ces trois métriques constituent le signal "Page Experience" utilisé dans l'algorithme de classement. Le TBT et le TTFB sont des métriques Lighthouse complémentaires essentielles au diagnostic mais ne font pas partie des CWV officiels. Le FCP est une métrique de perception de chargement.
   </div>
 </div>
 
