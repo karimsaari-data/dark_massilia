@@ -9,10 +9,13 @@
  */
 
 import { parse } from 'node-html-parser';
+import { readFileSync, existsSync } from 'fs';
+import { resolve, dirname } from 'path';
+import { fileURLToPath } from 'url';
 import puppeteer from 'puppeteer';
 
+const __dirname   = dirname(fileURLToPath(import.meta.url));
 const SITE        = 'https://karimsaari.com';
-const SITEMAP_URL = `${SITE}/home/sitemap.xml`;
 const BREVO_TO    = 'email@karimsaari.com';
 const BREVO_FROM  = { email: 'contact@karimsaari.com', name: 'Dark Massilia' };
 const EEAT_SIGNAL = 'karim saari';
@@ -23,6 +26,7 @@ const DELAY_MS    = 1500; // délai entre pages (politesse crawler)
 async function fetchText(url) {
   const res = await fetch(url, {
     headers: { 'User-Agent': 'DarkMassilia-SEO-Bot/1.0 (+https://karimsaari.com)' },
+    redirect: 'follow',
   });
   if (!res.ok) throw new Error(`HTTP ${res.status} — ${url}`);
   return res.text();
@@ -30,12 +34,18 @@ async function fetchText(url) {
 
 function delay(ms) { return new Promise(r => setTimeout(r, ms)); }
 
-// ── Sitemap parser ───────────────────────────────────────────────────────────
+// ── Sitemap parser — lit le fichier local (plus fiable que le fetch réseau) ──
 
-async function fetchSitemapUrls() {
-  const xml = await fetchText(SITEMAP_URL);
-  const matches = [...xml.matchAll(/<loc>(.*?)<\/loc>/g)];
-  return matches.map(m => m[1].trim()).filter(u => u.startsWith(SITE));
+function readSitemapUrls() {
+  // 1. Fichier local public/sitemap.xml (disponible après git checkout en CI)
+  const localPath = resolve(__dirname, '../public/sitemap.xml');
+  if (existsSync(localPath)) {
+    console.log('📄 Sitemap lu depuis le repo local :', localPath);
+    const xml = readFileSync(localPath, 'utf8');
+    const matches = [...xml.matchAll(/<loc>(.*?)<\/loc>/g)];
+    return matches.map(m => m[1].trim()).filter(u => u.startsWith(SITE));
+  }
+  throw new Error('public/sitemap.xml introuvable — s\'assurer que le repo est bien cloné');
 }
 
 // ── Page analyser ────────────────────────────────────────────────────────────
@@ -174,7 +184,7 @@ function statusDot(page) {
 
   let urls;
   try {
-    urls = await fetchSitemapUrls();
+    urls = readSitemapUrls();
   } catch (err) {
     console.error('❌ Impossible de lire le sitemap :', err.message);
     process.exit(1);

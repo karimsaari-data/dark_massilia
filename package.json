@@ -20,7 +20,8 @@
     "seo-digest": "node scripts/weekly-seo-digest.js",
     "psi-audit": "node scripts/psi-audit.js",
     "ga-report": "node scripts/ga-report.js",
-    "seo-crawl": "node scripts/seo-crawl.js"
+    "seo-crawl": "node scripts/seo-crawl.js",
+    "backlink-report": "node scripts/backlink-report.js"
   },
   "dependencies": {
     "@fancyapps/ui": "^6.1.13",
