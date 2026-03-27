@@ -4,16 +4,6 @@
  */
 
 import puppeteer from 'puppeteer';
-import { readFileSync, writeFileSync, mkdirSync } from 'fs';
-import { resolve, dirname } from 'path';
-import { fileURLToPath } from 'url';
-
-const __dirname = dirname(fileURLToPath(import.meta.url));
-const GSC_HISTORY_PATH = resolve(__dirname, '../data/gsc-history.json');
-
-let gscHistory = { history: [] };
-try { gscHistory = JSON.parse(readFileSync(GSC_HISTORY_PATH, 'utf8')); }
-catch (e) { /* première exécution */ }
 
 const GSC_SITE  = 'sc-domain:karimsaari.com';
 const BREVO_TO  = 'email@karimsaari.com';
@@ -91,6 +81,14 @@ function fetchImageSearch(token, startDate, endDate) {
   return gscQuery(token, {
     startDate, endDate,
     type: 'image',
+    dimensions: [],
+    rowLimit: 1,
+  });
+}
+
+function fetchWeekSummary(token, startDate, endDate) {
+  return gscQuery(token, {
+    startDate, endDate,
     dimensions: [],
     rowLimit: 1,
   });
@@ -238,10 +236,16 @@ async function sendEmail(html, subject, pdfBuffer, pdfName) {
   const prev28Start = formatDate(new Date(now - 58 * 86400000));
   const prev28End   = formatDate(new Date(now - 30 * 86400000));
 
+  // Périodes historiques (12 semaines, pour les graphiques)
+  const histWeeks = Array.from({ length: 12 }, (_, i) => ({
+    start: formatDate(new Date(now - (9  + i * 7) * 86400000)),
+    end:   formatDate(new Date(now - (2  + i * 7) * 86400000)),
+  })).reverse(); // du plus ancien au plus récent
+
   console.log('📊 Récupération GSC...');
   const token = await getAccessToken();
 
-  const [curr7, prev7, curr28, prev28, queries7, countries7, imageSearch7, kwCurr, kwPrev] = await Promise.all([
+  const [curr7, prev7, curr28, prev28, queries7, countries7, imageSearch7, kwCurr, kwPrev, ...histRaw] = await Promise.all([
     fetchPages(token,      d7Start,    d7End,    25),
     fetchPages(token,      prevStart,  prevEnd,  25),
     fetchPages(token,      d28Start,   d28End,   25),
@@ -251,6 +255,7 @@ async function sendEmail(html, subject, pdfBuffer, pdfName) {
     fetchImageSearch(token,d7Start,    d7End),
     fetchAllQueries(token, d7Start,    d7End),
     fetchAllQueries(token, prevStart,  prevEnd),
+    ...histWeeks.map(w => fetchWeekSummary(token, w.start, w.end)),
   ]);
 
   // KPIs 7j
@@ -291,26 +296,22 @@ async function sendEmail(html, subject, pdfBuffer, pdfName) {
   // Mots-clés cibles
   const trackedData = extractKeywordData(kwCurr.rows, kwPrev.rows);
 
-  // ── Mise à jour historique GSC ────────────────────────────────────────────
-  gscHistory.history.push({
-    date: d7Start,
-    clicks:      c7.clicks,
-    impressions: c7.impressions,
-    ctr:         parseFloat(ctr7),
-    pos:         parseFloat(pos7),
+  // ── Données graphiques GSC (12 dernières semaines via API) ───────────────
+  const chartH = histWeeks.map((w, i) => {
+    const r = histRaw[i]?.rows?.[0];
+    return {
+      label:       w.start.slice(5),
+      clicks:      r?.clicks      ?? null,
+      impressions: r?.impressions ?? null,
+      ctr:         r ? +((r.ctr * 100).toFixed(1)) : null,
+      pos:         r ? +(r.position.toFixed(1))    : null,
+    };
   });
-  if (gscHistory.history.length > 52) gscHistory.history = gscHistory.history.slice(-52);
-  mkdirSync(resolve(__dirname, '../data'), { recursive: true });
-  writeFileSync(GSC_HISTORY_PATH, JSON.stringify(gscHistory, null, 2), 'utf8');
-  console.log(`📊 Historique GSC mis à jour (${gscHistory.history.length} entrée(s))`);
-
-  // ── Données graphiques GSC (12 dernières semaines) ────────────────────────
-  const chartH      = gscHistory.history.slice(-12);
-  const chartLabels = JSON.stringify(chartH.map(e => e.date.slice(5)));  // MM-DD
-  const chartClicks = JSON.stringify(chartH.map(e => e.clicks ?? null));
-  const chartImpr   = JSON.stringify(chartH.map(e => e.impressions ?? null));
-  const chartCtr    = JSON.stringify(chartH.map(e => e.ctr ?? null));
-  const chartPos    = JSON.stringify(chartH.map(e => e.pos ?? null));
+  const chartLabels = JSON.stringify(chartH.map(e => e.label));
+  const chartClicks = JSON.stringify(chartH.map(e => e.clicks));
+  const chartImpr   = JSON.stringify(chartH.map(e => e.impressions));
+  const chartCtr    = JSON.stringify(chartH.map(e => e.ctr));
+  const chartPos    = JSON.stringify(chartH.map(e => e.pos));
 
   // Pays
   const totalCountryClicks = sum(countries7.rows, 'clicks') || 1;
@@ -549,7 +550,7 @@ async function sendEmail(html, subject, pdfBuffer, pdfName) {
   </div>
 
   <!-- Graphiques historiques GSC -->
-  ${chartH.length >= 2 ? `
+  ${chartH.some(e => e.clicks !== null) ? `
   <div style="background:#0f2035;border-radius:12px;padding:16px;margin-bottom:16px">
     <h2 style="margin:0 0 4px;font-size:13px;color:#21c47b">📈 Évolution — 12 dernières semaines</h2>
     <div style="font-size:11px;color:#64748b;margin-bottom:14px">Données GSC hebdomadaires</div>
@@ -567,7 +568,7 @@ async function sendEmail(html, subject, pdfBuffer, pdfName) {
     Généré automatiquement chaque dimanche · Dark Massilia
   </div>
 </div>
-${chartH.length >= 2 ? `
+${chartH.some(e => e.clicks !== null) ? `
 <script>
 const chartDefaults = {
   responsive: true,
