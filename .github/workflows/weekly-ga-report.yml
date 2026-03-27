@@ -1,8 +1,8 @@
-name: Biweekly GA Report
+name: Weekly GA Report
 
 on:
   schedule:
-    - cron: '30 7 1,15 * *'  # Le 1er et le 15 de chaque mois à 7h30 UTC = 8h30/9h30 Paris
+    - cron: '30 7 * * 0'   # Chaque dimanche à 7h30 UTC = 8h30/9h30 Paris
   workflow_dispatch:          # Déclenchement manuel possible
 
 env:
