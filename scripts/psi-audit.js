@@ -320,6 +320,42 @@ async function sendEmail(html, subject, pdfBuffer, pdfName) {
   <p style="font-size:10px;color:#aaa;text-align:center;margin:0">Généré automatiquement chaque dimanche · PageSpeed Insights API · Dark Massilia · karimsaari.com</p>
 </div>
 
+<!-- ── GLOSSAIRE ──────────────────────────────────────────────────────── -->
+<div style="max-width:860px;margin:0 auto;page-break-before:always;padding-top:16px">
+  <h2 style="font-size:16px;color:#1a1a1a;border-bottom:2px solid #1a1a1a;padding-bottom:4px;margin-bottom:4px">Glossaire Technique — Webperf &amp; SEO</h2>
+  <p style="font-size:10px;color:#888;margin:0 0 16px">Référence des indicateurs — Rapport Audit PageSpeed Insights · Dark Massilia</p>
+
+  <!-- Section 1 -->
+  <h3 style="font-size:12px;font-weight:700;color:#21c47b;border-left:3px solid #21c47b;padding-left:8px;margin:0 0 8px">Indicateurs de Performance (Core Web Vitals &amp; Lab Data)</h3>
+  <table style="width:100%;border-collapse:collapse;margin-bottom:16px;font-size:11px">
+    <tr style="background:#f5f5f5"><td style="padding:6px 8px;font-weight:700;color:#1a1a1a;width:160px;border-bottom:1px solid #e0e0e0">Performance (Score Global)</td><td style="padding:6px 8px;color:#444;border-bottom:1px solid #e0e0e0">Note calculée par Google sur 100 synthétisant la vitesse de chargement et la fluidité de la page. Ton score moyen actuel est de 66/100.</td></tr>
+    <tr><td style="padding:6px 8px;font-weight:700;color:#1a1a1a;border-bottom:1px solid #e0e0e0">FCP — First Contentful Paint</td><td style="padding:6px 8px;color:#444;border-bottom:1px solid #e0e0e0">Temps écoulé avant que le premier texte ou image ne devienne visible à l'écran. Sur /actualites, il est de 2,6 s.</td></tr>
+    <tr style="background:#f5f5f5"><td style="padding:6px 8px;font-weight:700;color:#1a1a1a;border-bottom:1px solid #e0e0e0">LCP — Largest Contentful Paint</td><td style="padding:6px 8px;color:#444;border-bottom:1px solid #e0e0e0">Temps nécessaire pour afficher l'élément le plus volumineux de la page (souvent une photo haute résolution). Point critique sur /photographie-paysage-mer (15,9 s).</td></tr>
+    <tr><td style="padding:6px 8px;font-weight:700;color:#1a1a1a;border-bottom:1px solid #e0e0e0">CLS — Cumulative Layout Shift</td><td style="padding:6px 8px;color:#444;border-bottom:1px solid #e0e0e0">Mesure la stabilité visuelle. Un score élevé (0,166 sur /blog) indique que des éléments « sautent » pendant le chargement, ce qui nuit à l'expérience utilisateur.</td></tr>
+    <tr style="background:#f5f5f5"><td style="padding:6px 8px;font-weight:700;color:#1a1a1a">TBT — Total Blocking Time</td><td style="padding:6px 8px;color:#444">Temps total durant lequel la page est bloquée par des scripts, empêchant l'utilisateur d'interagir (clics, défilement).</td></tr>
+  </table>
+
+  <!-- Section 2 -->
+  <h3 style="font-size:12px;font-weight:700;color:#f97316;border-left:3px solid #f97316;padding-left:8px;margin:0 0 8px">Qualité &amp; Accessibilité</h3>
+  <table style="width:100%;border-collapse:collapse;margin-bottom:16px;font-size:11px">
+    <tr style="background:#f5f5f5"><td style="padding:6px 8px;font-weight:700;color:#1a1a1a;width:160px;border-bottom:1px solid #e0e0e0">BP — Best Practices</td><td style="padding:6px 8px;color:#444;border-bottom:1px solid #e0e0e0">Respect des standards de développement web (HTTPS, contraste des images, bibliothèques JS à jour). Ton site excelle ici : 99/100.</td></tr>
+    <tr><td style="padding:6px 8px;font-weight:700;color:#1a1a1a;border-bottom:1px solid #e0e0e0">A11y — Accessibility</td><td style="padding:6px 8px;color:#444;border-bottom:1px solid #e0e0e0">Facilité d'utilisation pour les personnes en situation de handicap (lecteurs d'écran, navigation au clavier). Score : 98/100.</td></tr>
+    <tr style="background:#f5f5f5"><td style="padding:6px 8px;font-weight:700;color:#1a1a1a">SEO</td><td style="padding:6px 8px;color:#444">Présence des éléments de base pour l'indexation (balises Title, Meta descriptions, H1). Score : 100/100.</td></tr>
+  </table>
+
+  <!-- Section 3 -->
+  <h3 style="font-size:12px;font-weight:700;color:#3b82f6;border-left:3px solid #3b82f6;padding-left:8px;margin:0 0 8px">Lexique SEO &amp; On-Page</h3>
+  <table style="width:100%;border-collapse:collapse;margin-bottom:16px;font-size:11px">
+    <tr style="background:#f5f5f5"><td style="padding:6px 8px;font-weight:700;color:#1a1a1a;width:160px;border-bottom:1px solid #e0e0e0">E-E-A-T</td><td style="padding:6px 8px;color:#444;border-bottom:1px solid #e0e0e0">Expérience, Expertise, Autorité et Fiabilité. Critère Google pour juger la qualité d'un auteur sur des sujets sensibles (écologie, science).</td></tr>
+    <tr><td style="padding:6px 8px;font-weight:700;color:#1a1a1a;border-bottom:1px solid #e0e0e0">Ancre de lien (Anchor Text)</td><td style="padding:6px 8px;color:#444;border-bottom:1px solid #e0e0e0">Texte cliquable d'un lien hypertexte. Des ancres thématiques (ex : « calanques marseille ») ont plus de valeur SEO que les ancres neutres (ex : « official website »).</td></tr>
+    <tr style="background:#f5f5f5"><td style="padding:6px 8px;font-weight:700;color:#1a1a1a;border-bottom:1px solid #e0e0e0">Deep Link (Lien profond)</td><td style="padding:6px 8px;color:#444;border-bottom:1px solid #e0e0e0">Lien pointant vers une page interne plutôt que vers la page d'accueil. Une absence critique (0 %) nuit à la distribution du PageRank.</td></tr>
+    <tr><td style="padding:6px 8px;font-weight:700;color:#1a1a1a;border-bottom:1px solid #e0e0e0">CTR — Click-Through Rate</td><td style="padding:6px 8px;color:#444;border-bottom:1px solid #e0e0e0">Rapport entre clics et impressions dans les résultats de recherche. Un CTR moyen de 6,5 % est au-dessus de la norme (2-3 %).</td></tr>
+    <tr style="background:#f5f5f5"><td style="padding:6px 8px;font-weight:700;color:#1a1a1a">Lien Orphelin</td><td style="padding:6px 8px;color:#444">Page présente sur le site mais ne recevant aucun lien interne, la rendant invisible pour Google. Aucune détectée sur ton site.</td></tr>
+  </table>
+
+  <p style="font-size:10px;color:#aaa;text-align:center;margin:24px 0 0">karimsaari.com — Dark Massilia · Karim Saari · Rapport Audit PageSpeed Insights 2026</p>
+</div>
+
 <script>
 // Courbe d'évolution
 new Chart(document.getElementById('chartEvol'), {

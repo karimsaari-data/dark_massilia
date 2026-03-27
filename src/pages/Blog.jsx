@@ -96,8 +96,8 @@ export default function Blog() {
             animate="visible"
             variants={STAGGER_CONTAINER}
           >
-            {posts.map(post => (
-              <PostCard key={post.id} post={post} />
+            {posts.map((post, i) => (
+              <PostCard key={post.id} post={post} priority={i === 0} />
             ))}
           </motion.div>
         )}
@@ -137,12 +137,7 @@ export default function Blog() {
         )}
 
         {/* ── Cluster interne ─────────────────────────────────────────────── */}
-        <motion.div
-          initial={{ opacity: 0, y: 16 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.5 }}
-          className="mt-16"
-        >
+        <div className="mt-16">
           <div className="glass rounded-2xl px-8 py-6 flex flex-col gap-6 border border-white/5">
             <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
               <div>
@@ -179,7 +174,7 @@ export default function Blog() {
               </Link>
             </div>
           </div>
-        </motion.div>
+        </div>
 
       </div>
     </div>
@@ -188,10 +183,15 @@ export default function Blog() {
 
 // ── Composant carte article ───────────────────────────────────────────────────
 
-function PostCard({ post }) {
+function PostCard({ post, priority = false }) {
+  // La carte prioritaire (LCP) utilise un article natif pour éviter le render delay
+  // causé par motion.article qui démarre à opacity:0 (FADE_IN_UP)
+  const Tag = priority ? 'article' : motion.article;
+  const motionProps = priority ? {} : { variants: FADE_IN_UP };
+
   return (
-    <motion.article
-      variants={FADE_IN_UP}
+    <Tag
+      {...motionProps}
       className="card group flex flex-col overflow-hidden p-0"
     >
       {/* Image de couverture */}
@@ -205,8 +205,9 @@ function PostCard({ post }) {
             src={post.image}
             alt={post.imageAlt}
             className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
-            loading="lazy"
-            decoding="async"
+            loading={priority ? 'eager' : 'lazy'}
+            fetchPriority={priority ? 'high' : undefined}
+            decoding={priority ? 'sync' : 'async'}
             width="640"
             height="360"
           />
@@ -253,6 +254,6 @@ function PostCard({ post }) {
         </Link>
 
       </div>
-    </motion.article>
+    </Tag>
   );
 }

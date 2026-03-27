@@ -85,9 +85,14 @@
     <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
     <link rel="manifest" href="/site.webmanifest" />
 
-    <!-- Preconnect pour Google Fonts (élimine le round-trip DNS) -->
+    <!-- Preconnect — élimine DNS+TCP+TLS pour les domaines critiques -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <!-- Images hero des articles blog (cms.karimsaari.com) et Supabase -->
+    <link rel="preconnect" href="https://cms.karimsaari.com" />
+    <link rel="dns-prefetch" href="https://cms.karimsaari.com" />
+    <link rel="preconnect" href="https://calanques-parcnational.fr" />
+    <link rel="dns-prefetch" href="https://calanques-parcnational.fr" />
     <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Montserrat:wght@400;500;600;700;800&display=optional" />
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Montserrat:wght@400;500;600;700;800&display=optional" media="print" onload="this.media='all'" />
 

@@ -163,28 +163,31 @@ export default function BlogPost() {
 
         {/* ── Article ─────────────────────────────────────────────────────── */}
         {!loading && post && (
-          <motion.article
-            initial="hidden"
-            animate="visible"
-            variants={FADE_IN_UP}
-          >
-            {/* Image de couverture */}
+          <>
+            {/* Image de couverture — hors motion.article pour éviter le render delay LCP
+                (motion démarre à opacity:0, ce qui retardait l'affichage de ~3,6s) */}
             {post.image && (
               <div className="rounded-2xl overflow-hidden mb-10 aspect-video">
                 <img
                   src={post.image}
                   srcSet={post.imageSrcset ?? undefined}
-                  sizes="(max-width: 768px) 100vw, 800px"
+                  sizes="(max-width: 480px) 100vw, (max-width: 900px) 100vw, 800px"
                   alt={post.imageAlt}
                   className="w-full h-full object-cover"
                   loading="eager"
                   fetchPriority="high"
-                  decoding="async"
+                  decoding="sync"
                   width={post.imageWidth ?? 1280}
                   height={post.imageHeight ?? 720}
                 />
               </div>
             )}
+
+          <motion.article
+            initial="hidden"
+            animate="visible"
+            variants={FADE_IN_UP}
+          >
 
             {/* Contenu principal — fond semi-transparent pour lisibilité sur fond méduses */}
             <div
@@ -306,6 +309,7 @@ export default function BlogPost() {
               </Link>
             </div>
           </motion.article>
+          </>
         )}
 
       </div>
