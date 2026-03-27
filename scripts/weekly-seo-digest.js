@@ -4,6 +4,16 @@
  */
 
 import puppeteer from 'puppeteer';
+import { readFileSync, writeFileSync, mkdirSync } from 'fs';
+import { resolve, dirname } from 'path';
+import { fileURLToPath } from 'url';
+
+const __dirname = dirname(fileURLToPath(import.meta.url));
+const GSC_HISTORY_PATH = resolve(__dirname, '../data/gsc-history.json');
+
+let gscHistory = { history: [] };
+try { gscHistory = JSON.parse(readFileSync(GSC_HISTORY_PATH, 'utf8')); }
+catch (e) { /* première exécution */ }
 
 const GSC_SITE  = 'sc-domain:karimsaari.com';
 const BREVO_TO  = 'email@karimsaari.com';
@@ -281,6 +291,27 @@ async function sendEmail(html, subject, pdfBuffer, pdfName) {
   // Mots-clés cibles
   const trackedData = extractKeywordData(kwCurr.rows, kwPrev.rows);
 
+  // ── Mise à jour historique GSC ────────────────────────────────────────────
+  gscHistory.history.push({
+    date: d7Start,
+    clicks:      c7.clicks,
+    impressions: c7.impressions,
+    ctr:         parseFloat(ctr7),
+    pos:         parseFloat(pos7),
+  });
+  if (gscHistory.history.length > 52) gscHistory.history = gscHistory.history.slice(-52);
+  mkdirSync(resolve(__dirname, '../data'), { recursive: true });
+  writeFileSync(GSC_HISTORY_PATH, JSON.stringify(gscHistory, null, 2), 'utf8');
+  console.log(`📊 Historique GSC mis à jour (${gscHistory.history.length} entrée(s))`);
+
+  // ── Données graphiques GSC (12 dernières semaines) ────────────────────────
+  const chartH      = gscHistory.history.slice(-12);
+  const chartLabels = JSON.stringify(chartH.map(e => e.date.slice(5)));  // MM-DD
+  const chartClicks = JSON.stringify(chartH.map(e => e.clicks ?? null));
+  const chartImpr   = JSON.stringify(chartH.map(e => e.impressions ?? null));
+  const chartCtr    = JSON.stringify(chartH.map(e => e.ctr ?? null));
+  const chartPos    = JSON.stringify(chartH.map(e => e.pos ?? null));
+
   // Pays
   const totalCountryClicks = sum(countries7.rows, 'clicks') || 1;
 
@@ -349,7 +380,10 @@ async function sendEmail(html, subject, pdfBuffer, pdfName) {
   // ── HTML template ────────────────────────────────────────────────────────────
 
   const html = `<!DOCTYPE html>
-<html><head><meta charset="UTF-8"></head>
+<html><head>
+  <meta charset="UTF-8">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4/dist/chart.umd.min.js"></script>
+</head>
 <body style="margin:0;padding:0;background:#0a1628;font-family:system-ui,sans-serif;color:#e2e8f0">
 <div style="max-width:620px;margin:0 auto;padding:28px 16px">
 
@@ -514,10 +548,52 @@ async function sendEmail(html, subject, pdfBuffer, pdfName) {
     }).join('')}
   </div>
 
+  <!-- Graphiques historiques GSC -->
+  ${chartH.length >= 2 ? `
+  <div style="background:#0f2035;border-radius:12px;padding:16px;margin-bottom:16px">
+    <h2 style="margin:0 0 4px;font-size:13px;color:#21c47b">📈 Évolution — 12 dernières semaines</h2>
+    <div style="font-size:11px;color:#64748b;margin-bottom:14px">Données GSC hebdomadaires</div>
+    <div style="display:flex;gap:12px;margin-bottom:16px">
+      <div style="flex:1"><canvas id="gscClics" height="120"></canvas></div>
+      <div style="flex:1"><canvas id="gscImpr"  height="120"></canvas></div>
+    </div>
+    <div style="display:flex;gap:12px">
+      <div style="flex:1"><canvas id="gscCtr"   height="120"></canvas></div>
+      <div style="flex:1"><canvas id="gscPos"   height="120"></canvas></div>
+    </div>
+  </div>` : ''}
+
   <div style="text-align:center;font-size:11px;color:#334155">
     Généré automatiquement chaque dimanche · Dark Massilia
   </div>
 </div>
+${chartH.length >= 2 ? `
+<script>
+const chartDefaults = {
+  responsive: true,
+  plugins: { legend: { display: false } },
+  scales: {
+    x: { ticks: { color: '#64748b', font: { size: 9 } }, grid: { color: '#1e3a50' } },
+    y: { ticks: { color: '#64748b', font: { size: 9 } }, grid: { color: '#1e3a50' } },
+  },
+};
+function lineChart(id, label, color, data, extraOpts = {}) {
+  new Chart(document.getElementById(id), {
+    type: 'line',
+    data: {
+      labels: ${chartLabels},
+      datasets: [{ label, data, borderColor: color, backgroundColor: color.replace(')', ',0.12)').replace('rgb','rgba'), borderWidth: 2, pointRadius: 3, tension: 0.3, fill: true }],
+    },
+    options: { ...chartDefaults, ...extraOpts,
+      plugins: { ...chartDefaults.plugins, title: { display: true, text: label, color: '#94a3b8', font: { size: 11 }, padding: { bottom: 8 } } },
+    },
+  });
+}
+lineChart('gscClics', 'Clics',         'rgb(33,196,123)',  ${chartClicks});
+lineChart('gscImpr',  'Impressions',   'rgb(0,145,255)',   ${chartImpr});
+lineChart('gscCtr',   'CTR %',         'rgb(245,158,11)',  ${chartCtr});
+lineChart('gscPos',   'Position moy.', 'rgb(167,139,250)', ${chartPos}, { scales: { ...chartDefaults.scales, y: { ...chartDefaults.scales.y, reverse: true } } });
+</script>` : ''}
 </body></html>`;
 
   // ── PDF ──────────────────────────────────────────────────────────────────────
