@@ -100,7 +100,7 @@ async function sendEmail(html, subject, pdfBuffer, pdfName) {
     htmlContent: html,
   };
   if (pdfBuffer) {
-    body.attachment = [{ name: pdfName, content: pdfBuffer.toString('base64') }];
+    body.attachment = [{ name: pdfName, content: Buffer.from(pdfBuffer).toString('base64') }];
   }
   const res = await fetch('https://api.brevo.com/v3/smtp/email', {
     method: 'POST',
