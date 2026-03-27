@@ -489,7 +489,7 @@ const Medias = () => {
                     <div className="p-4">
                       {link.logo && (
                         <div className="mb-2 bg-white/90 rounded px-2 py-1 inline-block">
-                          <img src={link.logo} alt="" className="h-4 w-auto max-w-[64px]" loading="lazy" />
+                          <img src={link.logo} alt={link.title?.split(/\s*[—–-]\s*/)[0]?.trim() ?? ''} className="h-4 w-auto max-w-[64px]" loading="lazy" />
                         </div>
                       )}
                       {link.date && (
@@ -522,7 +522,7 @@ const Medias = () => {
                     <div className="p-4">
                       {link.logo && (
                         <div className="mb-2 bg-white/90 rounded px-2 py-1 inline-block">
-                          <img src={link.logo} alt="" className="h-4 w-auto max-w-[64px]" loading="lazy" />
+                          <img src={link.logo} alt={link.title?.split(/\s*[—–-]\s*/)[0]?.trim() ?? ''} className="h-4 w-auto max-w-[64px]" loading="lazy" />
                         </div>
                       )}
                       {link.date && (
@@ -560,7 +560,7 @@ const Medias = () => {
                     <div className="p-4">
                       {link.logo && (
                         <div className="mb-2 bg-white/90 rounded px-2 py-1 inline-block">
-                          <img src={link.logo} alt="" className="h-4 w-auto max-w-[64px]" loading="lazy" />
+                          <img src={link.logo} alt={link.title?.split(/\s*[—–-]\s*/)[0]?.trim() ?? ''} className="h-4 w-auto max-w-[64px]" loading="lazy" />
                         </div>
                       )}
                       {link.date && (

@@ -1,0 +1,36 @@
+name: Monthly Backlink Report (Off-Page Phase 3)
+
+on:
+  schedule:
+    - cron: '0 9 1-7 * 0'  # 1er dimanche du mois à 9h UTC = 10h/11h Paris
+  workflow_dispatch:        # Déclenchement manuel possible
+
+jobs:
+  backlink-report:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Install Puppeteer browser
+        run: npx puppeteer browsers install chrome
+
+      - name: Vérification des fichiers GSC
+        run: |
+          echo "📂 Contenu de data/gsc-links/ :"
+          ls -la data/gsc-links/ || echo "⚠️  Dossier vide — déposer les exports GSC avant de relancer"
+
+      - name: Rapport Backlinks Off-Page + email
+        env:
+          BREVO_API_KEY: ${{ secrets.BREVO_API_KEY }}
+        run: npm run backlink-report
