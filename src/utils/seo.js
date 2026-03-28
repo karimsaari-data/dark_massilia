@@ -55,6 +55,7 @@ const PERSON_SCHEMA = {
     'https://www.laprovence.com/article/region/1865431/le-vieux-port-de-marseille-nettoye-par-des-apneistes',
     'https://www.midilibre.fr/2024/04/02/une-maree-bleue-pourquoi-des-milliers-de-meduses-recouvrent-elles-le-littoral-a-marseille-11865324.php',
     'https://www.zero-dechet-sauvage.org/structures/dark-massilia',
+    'https://www.wikidata.org/wiki/Q138808583',
   ],
   knowsAbout: [
     'Protection de l\'environnement',
@@ -495,7 +496,7 @@ export const SEO_PAGES = {
     },
   },
   '/photographie-paysage-mer': {
-    title: 'Photographe Paysage Marseille | Calanques & Méditerranée — Karim Saari',
+    title: 'Photographe Paysage Marseille | Calanques & Méditerranée',
     description:
       'Galerie photo de paysages des Calanques de Marseille, Méditerranée et Provence. Lumière naturelle, apnée, nature sauvage. Par le photographe Karim Saari.',
     canonical: `${BASE_URL}/photographie-paysage-mer`,
