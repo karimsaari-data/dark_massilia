@@ -40,4 +40,5 @@ jobs:
           git config user.email "github-actions[bot]@users.noreply.github.com"
           git add data/psi-history.json
           git diff --staged --quiet || git commit -m "chore(data): historique PSI $(date +%Y-%m-%d)"
+          git pull --rebase
           git push
