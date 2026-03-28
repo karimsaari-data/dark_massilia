@@ -18,7 +18,7 @@
     "lint": "eslint .",
     "preview": "vite preview",
     "seo-digest": "node scripts/weekly-seo-digest.js",
-    "psi-audit": "node scripts/psi-audit.js",
+    "psi-audit": "node --env-file-if-exists=.env scripts/psi-audit.js",
     "ga-report": "node scripts/ga-report.js",
     "seo-crawl": "node scripts/seo-crawl.js",
     "backlink-report": "node scripts/backlink-report.js"

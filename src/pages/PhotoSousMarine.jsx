@@ -78,7 +78,6 @@ const depollutionPaths = [
   "/images/marseille-dark-massilia-port-goudes-depollution-apnee-projet-sentinelle.webp",
   "/images/marseille-dark-massilia-projet-sentinelle-caracterisation-dechets.webp",
   "/images/marseille-dark-massilia-tf1-reportage-projet-sentinelle-depollution.webp",
-  "/images/portfolio/New/h-3-vallon-depoll.webp",
 ];
 
 const biodiversitePaths = [
@@ -185,7 +184,6 @@ const depollDims = {
   "/images/marseille-dark-massilia-port-goudes-depollution-apnee-projet-sentinelle.webp":[2048,1536],
   "/images/marseille-dark-massilia-projet-sentinelle-caracterisation-dechets.webp":[3884,2136],
   "/images/marseille-dark-massilia-tf1-reportage-projet-sentinelle-depollution.webp":[4000,2252],
-  "/images/portfolio/New/h-3-vallon-depoll.webp":[1920,1280],
 };
 
 const biodivDims = {
@@ -432,17 +430,32 @@ const SectionTitle = ({ icon: Icon, title, count }) => (
     <div className="flex items-center gap-3">
       <Icon className="w-6 h-6 text-ocean-teal" aria-hidden="true" />
       <h2 className="text-2xl font-bold text-white">{title}</h2>
-      <span className="text-sm text-white/40 font-medium">({count})</span>
+      <span className="text-sm text-white/70 font-medium">({count})</span>
     </div>
     <div className="flex-1 h-px bg-white/10 ml-2" />
   </motion.div>
 );
 
+/* ─── Thumbnail 800px pour la grille ──────────────────────── */
+const toThumbSrc = (src) => {
+  if (!src) return src;
+  // /images/portfolio/New/foo.webp → /images/portfolio/New/800w/foo.webp
+  if (src.startsWith('/images/portfolio/New/')) {
+    return src.replace('/images/portfolio/New/', '/images/portfolio/New/800w/');
+  }
+  // /images/foo.webp → /images/800w/foo.webp
+  return src.replace(/^\/images\/([^/]+\.webp)$/, '/images/800w/$1');
+};
+
 /* ─── Grille photos ────────────────────────────────────────── */
 const PhotoGrid = ({ images, gallery }) => (
   <div className="columns-1 md:columns-2 lg:columns-3 xl:columns-4 gap-4">
-    {images.map((image, index) => (
-      <motion.a
+    {images.filter(image => image.src).map((image, index) => {
+      const thumbSrc = toThumbSrc(image.src) || image.src;
+      const thumbW = Math.min(image.width || 800, 800);
+      const thumbH = image.height ? Math.round(image.height * (thumbW / (image.width || 800))) : undefined;
+      return (
+      <a
         key={image.uid}
         href={image.src}
         data-fancybox={gallery}
@@ -452,23 +465,25 @@ const PhotoGrid = ({ images, gallery }) => (
         data-slug={image.slug || image.uid}
         data-hash={image.uid}
         data-maps={image.maps}
-        data-thumb={image.src}
-        variants={index < 8 ? FADE_IN_UP : undefined}
+        data-thumb={thumbSrc}
         className="block w-full break-inside-avoid cursor-pointer relative overflow-hidden rounded-xl focus-ring mb-4"
         aria-label={`Ouvrir la photo : ${image.alt}`}
       >
         <img
-          src={image.src}
+          src={thumbSrc}
+          srcSet={`${thumbSrc} 800w`}
+          sizes="(min-width: 1280px) 25vw, (min-width: 1024px) 33vw, (min-width: 768px) 50vw, 100vw"
           alt={image.alt}
-          width={image.width}
-          height={image.height}
+          width={thumbW}
+          height={thumbH}
           className="w-full h-auto object-cover"
           loading={index < 4 ? 'eager' : 'lazy'}
           fetchPriority={index === 0 ? 'high' : undefined}
           decoding="async"
         />
-      </motion.a>
-    ))}
+      </a>
+      );
+    })}
   </div>
 );
 
@@ -489,7 +504,9 @@ const PhotoSousMarine = () => {
       .order('uid')
       .then(({ data }) => {
         if (!data || data.length === 0) return;
-        const withMaps = data.map(p => ({ ...p, maps: mapsUrl({ lat: p.lat, lng: p.lng, lieu: p.lieu }) }));
+        const withMaps = data
+          .filter(p => p.src && p.src.trim())
+          .map(p => ({ ...p, maps: mapsUrl({ lat: p.lat, lng: p.lng, lieu: p.lieu }) }));
         const depoll = withMaps.filter(p => p.categorie === 'depollution');
         const biodiv = withMaps.filter(p => p.categorie === 'biodiversite');
         const carac  = withMaps.filter(p => p.categorie === 'caracterisation');
