@@ -117,7 +117,8 @@ async function sendEmail(html, subject, pdfBuffer, pdfName) {
   const dateStr = now.toISOString().split('T')[0];
 
   console.log(`🔍 PSI Audit — ${URLS.length} pages (mobile) …`);
-  console.log('⚠️  Sans clé PSI_API_KEY : limite 50 req/s → délai 3s entre pages\n');
+  if (!process.env.PSI_API_KEY) console.log('⚠️  Sans clé PSI_API_KEY : limite 50 req/s → délai 3s entre pages\n');
+  else console.log(`✅ PSI_API_KEY configurée — délai 1s entre pages\n`);
 
   const results = [];
   let errors = 0;
@@ -163,7 +164,8 @@ async function sendEmail(html, subject, pdfBuffer, pdfName) {
       else errors++;
     }
 
-    if (!process.env.PSI_API_KEY) await new Promise(r => setTimeout(r, 3000));
+    // Délai anti rate-limit : 1s avec clé (quota dédié), 3s sans
+    await new Promise(r => setTimeout(r, process.env.PSI_API_KEY ? 1000 : 3000));
   }
 
   if (apiErrors > 0) console.warn(`\n⚠️  ${apiErrors} page(s) ignorées (429 rate limit — configurez PSI_API_KEY dans les secrets GitHub)`);
