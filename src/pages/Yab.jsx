@@ -44,10 +44,15 @@ const Yab = () => {
           <motion.div variants={FADE_IN_UP} className="relative w-full">
             <img
               src="/images/Marseille-2024-342-Les-Francais-copyright-Yann-Arthus-Bertrand.webp"
+              srcSet="/images/Marseille-2024-342-Les-Francais-copyright-Yann-Arthus-Bertrand_400w.webp 400w, /images/Marseille-2024-342-Les-Francais-copyright-Yann-Arthus-Bertrand_800w.webp 800w, /images/Marseille-2024-342-Les-Francais-copyright-Yann-Arthus-Bertrand_1200w.webp 1200w"
+              sizes="(max-width: 480px) 100vw, (max-width: 900px) 100vw, 1200px"
               alt="Team Oxygen à Marseille — Portrait par Yann Arthus-Bertrand pour le projet Les Français (2024)"
               className="w-full object-cover"
               loading="eager"
-              decoding="async"
+              fetchPriority="high"
+              decoding="sync"
+              width="1920"
+              height="1281"
             />
             {/* Crédit photo */}
             <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/70 to-transparent p-6">
