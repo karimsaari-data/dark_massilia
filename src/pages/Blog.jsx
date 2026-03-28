@@ -8,7 +8,7 @@
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { Calendar, ArrowRight, Loader2, Rss } from 'lucide-react';
+import { Calendar, ArrowRight, Rss } from 'lucide-react';
 import SEO from '../components/SEO';
 import { SEO_PAGES } from '../utils/seo';
 import { fetchPosts } from '../utils/api';
@@ -81,10 +81,21 @@ export default function Blog() {
           </div>
         )}
 
-        {/* ── Chargement ──────────────────────────────────────────────────── */}
+        {/* ── Chargement — skeleton grid pour réserver l'espace (évite CLS) ── */}
         {loading && (
-          <div className="flex justify-center py-20">
-            <Loader2 className="w-9 h-9 text-ocean-teal animate-spin" />
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-12" aria-hidden="true">
+            {Array.from({ length: 9 }).map((_, i) => (
+              <div key={i} className="card flex flex-col overflow-hidden p-0 animate-pulse">
+                <div className="aspect-video bg-white/5 rounded-t-2xl" />
+                <div className="flex flex-col flex-1 p-6 gap-3">
+                  <div className="h-3 w-24 bg-white/5 rounded" />
+                  <div className="h-4 w-full bg-white/8 rounded" />
+                  <div className="h-4 w-3/4 bg-white/8 rounded" />
+                  <div className="h-3 w-full bg-white/5 rounded mt-2" />
+                  <div className="h-3 w-5/6 bg-white/5 rounded" />
+                </div>
+              </div>
+            ))}
           </div>
         )}
 
