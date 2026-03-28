@@ -544,16 +544,22 @@ const SectionTitle = ({ icon: Icon, title, count }) => (
     <div className="flex items-center gap-3">
       <Icon className="w-6 h-6 text-ocean-teal" aria-hidden="true" />
       <h2 className="text-2xl font-bold text-white">{title}</h2>
-      <span className="text-sm text-white/40 font-medium">({count})</span>
+      <span className="text-sm text-white/70 font-medium">({count})</span>
     </div>
     <div className="flex-1 h-px bg-white/10 ml-2" />
   </motion.div>
 );
 
+/* Thumb 800px pour la grille — original pour Fancybox */
+const toThumbSrc = (src) =>
+  src.replace(/\/images\/portfolio\/(Mer|Terre)\//, '/images/portfolio/$1/800w/');
+
 const PhotoGrid = ({ images }) => (
   <div className="columns-1 md:columns-2 lg:columns-3 xl:columns-4 gap-4">
-    {images.map((image, index) => (
-      <motion.a
+    {images.map((image, index) => {
+      const thumbSrc = image.thumbSrc || toThumbSrc(image.src);
+      return (
+      <a
         key={image.uid}
         href={image.src}
         data-fancybox="gallery-paysage"
@@ -563,23 +569,25 @@ const PhotoGrid = ({ images }) => (
         data-slug={image.slug || image.uid}
         data-hash={image.uid}
         data-maps={image.maps}
-        data-thumb={image.src}
-        variants={FADE_IN_UP}
+        data-thumb={thumbSrc}
         className="block w-full break-inside-avoid cursor-pointer relative overflow-hidden rounded-xl focus-ring mb-4"
         aria-label={`Ouvrir la photo : ${image.alt}`}
       >
         <img
-          src={image.src}
+          src={thumbSrc}
+          srcSet={`${thumbSrc} 800w`}
+          sizes="(min-width: 1280px) 25vw, (min-width: 1024px) 33vw, (min-width: 768px) 50vw, 100vw"
           alt={image.alt}
-          width={image.width}
-          height={image.height}
+          width={Math.min(image.width, 800)}
+          height={Math.round(image.height * (Math.min(image.width, 800) / image.width))}
           className="w-full h-auto object-cover"
           loading={index < 4 ? 'eager' : 'lazy'}
           fetchPriority={index === 0 ? 'high' : undefined}
           decoding="async"
         />
-      </motion.a>
-    ))}
+      </a>
+      );
+    })}
   </div>
 );
 
@@ -779,7 +787,7 @@ const Photos = () => {
             </div>
             <div className="lg:w-[38%] flex-shrink-0 min-h-[260px] lg:min-h-0">
               <img
-                src="/images/Karimsaari-portfolio-sous-marin-paysages-calanques-marseille-photographie-photographe-environnemental.JPG"
+                src="/images/Karimsaari-portfolio-sous-marin-paysages-calanques-marseille-photographie-photographe-environnemental.webp"
                 alt="Karim Saari — portfolio photographe sous-marin et paysages dans les Calanques de Marseille"
                 className="w-full h-full object-cover"
                 loading="lazy"
