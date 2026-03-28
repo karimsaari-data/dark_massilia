@@ -64,7 +64,7 @@ const useParcRss = () => {
 };
 
 // ── Composant carte RSS — style Parc ─────────────────────────────────────────
-const RssCard = ({ title, link, date, description, image }) => (
+const RssCard = ({ title, link, date, description, image, priority }) => (
   <a
     href={link}
     target="_blank"
@@ -78,7 +78,8 @@ const RssCard = ({ title, link, date, description, image }) => (
           src={image}
           alt={title}
           className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-          loading="lazy"
+          loading={priority ? 'eager' : 'lazy'}
+          fetchPriority={priority ? 'high' : undefined}
         />
       ) : (
         <div className="w-full h-full flex items-center justify-center">
@@ -121,8 +122,8 @@ const Twitter = () => {
       <div className="container-custom">
 
         {/* ── Section RSS Parc National ─────────────────────────────────── */}
-        <motion.div initial="hidden" animate="visible" variants={STAGGER_CONTAINER} className="mb-10">
-          <motion.div variants={FADE_IN_UP} className="glass-strong rounded-2xl p-6 md:p-8 border border-white/10">
+        <div className="mb-10">
+          <div className="glass-strong rounded-2xl p-6 md:p-8 border border-white/10">
             <div className="flex items-center justify-between mb-7">
               <div className="flex items-center gap-2">
                 <Rss className="w-4 h-4 text-ocean-teal" />
@@ -142,7 +143,7 @@ const Twitter = () => {
             </div>
 
             {loading && (
-              <div className="flex items-center justify-center py-16 text-gray-400">
+              <div className="flex items-center justify-center text-gray-400" style={{ minHeight: '420px' }}>
                 <Loader2 className="w-5 h-5 animate-spin mr-2" />
                 <span className="text-sm">Chargement…</span>
               </div>
@@ -167,9 +168,9 @@ const Twitter = () => {
             )}
 
             {!loading && !error && items.length > 0 && (
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6" style={{ minHeight: '420px' }}>
                 {items.map((item, i) => (
-                  <RssCard key={i} {...item} />
+                  <RssCard key={i} {...item} priority={i === 0} />
                 ))}
               </div>
             )}
@@ -189,8 +190,8 @@ const Twitter = () => {
                 calanques-parcnational.fr
               </a>
             </p>
-          </motion.div>
-        </motion.div>
+          </div>
+        </div>
 
         {/* Header — déplacé en bas */}
         <motion.div

@@ -150,7 +150,7 @@ const Meduses = () => {
                 </h2>
                 <div className="w-14 h-14 rounded-full bg-white overflow-hidden flex-shrink-0 animate-pulse-glow">
                   <img
-                    src="/assets/dark-massilia-logo.webp"
+                    src="/assets/dark-massilia-logo-200.webp"
                     alt="Logo Dark Massilia — Karim Saari"
                     className="w-full h-full object-contain"
                   />

@@ -596,7 +596,7 @@ async function sendEmail(html, subject, pdfBuffer, pdfName) {
     }
 
     const subject = `📈 GA Report — semaine du ${d7Start}`;
-    const pdfName = `ga-report-${d7Start}.pdf`;
+    const pdfName = `ga-report-${d7End}.pdf`;
     console.log('📧 Envoi email Brevo...');
     const result = await sendEmail(html, subject, pdfBuffer, pdfName);
     if (result.messageId) {

@@ -312,6 +312,29 @@ const Missions = () => {
           </motion.div>
         </motion.div>
 
+        {/* Section ramassage fonds marins — SEO "ramassage déchets mer Marseille" */}
+        <motion.div
+          initial={{ opacity: 0, y: 16 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          className="mb-12"
+        >
+          <div className="glass rounded-2xl px-8 py-6 border border-white/5">
+            <h2 className="text-lg font-bold text-white mb-3">
+              Comment se déroule le ramassage de déchets sur les fonds marins à Marseille ?
+            </h2>
+            <p className="text-text-secondary leading-[1.8]">
+              Chaque opération de <strong className="text-white">ramassage de déchets en mer</strong> combine
+              plongée en apnée et logistique de surface. Les apnéistes descendent entre 0 et 20 mètres pour
+              collecter plastiques, métaux et déchets divers déposés sur les{' '}
+              <strong className="text-white">fonds marins des Calanques</strong>. Les sacs remontés sont triés
+              à bord, pesés et acheminés vers des filières de traitement adaptées. Cette méthode de{' '}
+              <strong className="text-white">nettoyage sous-marin</strong> à Marseille permet d'atteindre des
+              zones inaccessibles aux dispositifs classiques de ramassage en mer.
+            </p>
+          </div>
+        </motion.div>
+
         {/* Dernières actualités — maillage interne blog */}
         <motion.div
           initial={{ opacity: 0, y: 16 }}

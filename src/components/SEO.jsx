@@ -30,6 +30,8 @@ const SEO = ({
   type = 'website',
   // Balises article:* (uniquement si type="article")
   articlePublishedTime = null, articleModifiedTime = null, articleAuthor = null, articleSection = null,
+  // Preload image LCP — hoisté dans <head> par React 19
+  preloadImage = null,
 }) => {
   const metaTitle       = title       || DEFAULT_SEO.title;
   const metaDescription = description || DEFAULT_SEO.description;
@@ -39,6 +41,11 @@ const SEO = ({
 
   return (
     <>
+      {/* ── Preload image LCP (hoisté dans <head>) ── */}
+      {preloadImage && (
+        <link rel="preload" as="image" href={preloadImage} fetchPriority="high" />
+      )}
+
       {/* ── Balises fondamentales ── */}
       <title>{metaTitle}</title>
       <meta name="description" content={metaDescription} />

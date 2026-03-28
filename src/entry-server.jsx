@@ -34,6 +34,7 @@ import LocalGuide    from './pages/LocalGuide';
 // AdminCarteSSR = version statique (pas de sessionStorage en Node)
 import AdminCarteSSR from './pages/AdminCarteSSR';
 import Yab          from './pages/Yab';
+import PhotoSousMarine from './pages/PhotoSousMarine';
 
 function NotFound() {
   return (
@@ -60,6 +61,7 @@ export function render(url) {
             <Route path="depollution-marine"                 element={<Missions />} />
             <Route path="presse"                             element={<Medias />} />
             <Route path="photographie-paysage-mer"           element={<Photos />} />
+            <Route path="photographie-sous-marine"           element={<PhotoSousMarine />} />
             <Route path="videos"                             element={<Videos />} />
             <Route path="communaute"                         element={<Instagram />} />
             <Route path="actualites"                         element={<Twitter />} />

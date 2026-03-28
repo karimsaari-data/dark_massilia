@@ -442,6 +442,21 @@ async function prerender() {
       schemaMatches.forEach(match => {
         appHtmlClean = appHtmlClean.replace(match, '');
       });
+      // Extraire les <link rel="preload" as="image" fetchpriority="high"> et les hisser dans <head>
+      // Dédoublonner par href (React 19 peut émettre le même preload depuis <img> ET depuis SEO)
+      const preloadImageMatches = appHtml.match(/<link rel="preload" as="image" [^>]*fetchPriority="high"[^>]*\/?>/gi) || [];
+      if (preloadImageMatches.length > 0) {
+        const seenHrefs = new Set();
+        const unique = preloadImageMatches.filter(l => {
+          const m = l.match(/href="([^"]+)"/i);
+          if (!m || seenHrefs.has(m[1])) return false;
+          seenHrefs.add(m[1]);
+          return true;
+        });
+        const preloadsBlock = unique.map(l => `    ${l.replace(/fetchPriority/g, 'fetchpriority')}`).join('\n');
+        finalTemplate = finalTemplate.replace('</head>', `${preloadsBlock}\n  </head>`);
+      }
+
       // Autres balises SEO hoistées dans <head> → retirer du body pour éviter doublons
       appHtmlClean = appHtmlClean
         .replace(/<title>[\s\S]*?<\/title>/g, '')
@@ -451,7 +466,8 @@ async function prerender() {
         .replace(/<meta property="og:[^"]*"[^>]*\/?>/g, '')
         .replace(/<meta property="article:[^"]*"[^>]*\/?>/g, '')
         .replace(/<meta name="twitter:[^"]*"[^>]*\/?>/g, '')
-        .replace(/<meta name="robots"[^>]*\/?>/g, '');
+        .replace(/<meta name="robots"[^>]*\/?>/g, '')
+        .replace(/<link rel="preload" as="image" [^>]*fetchPriority="high"[^>]*\/?>/gi, '');
 
       // Injecter le HTML rendu dans le placeholder <!--app-html-->
       const pageHtml = finalTemplate.replace('<!--app-html-->', appHtmlClean);

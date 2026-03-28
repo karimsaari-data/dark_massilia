@@ -131,7 +131,7 @@ const Footer = () => {
             style={{ boxShadow: '0 0 0 2px rgba(255,255,255,0.3), 0 0 16px rgba(33,196,123,0.2)' }}
           >
             <img
-              src="/assets/dark-massilia-logo.webp"
+              src="/assets/dark-massilia-logo-200.webp"
               alt="Dark Massilia — logo de Karim Saari, photographe à Marseille"
               width="80"
               height="80"

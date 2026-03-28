@@ -596,7 +596,7 @@ lineChart('gscPos',   'Position moy.', 'rgb(167,139,250)', ${chartPos}, { scales
 
   // ── Email ────────────────────────────────────────────────────────────────────
   const subject  = `📊 SEO Digest — semaine du ${d7Start}`;
-  const pdfName  = `seo-digest-${d7Start}.pdf`;
+  const pdfName  = `seo-digest-${d7End}.pdf`;
   console.log('📧 Envoi email Brevo...');
   const result = await sendEmail(html, subject, pdfBuffer, pdfName);
   if (result.messageId) {

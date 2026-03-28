@@ -211,12 +211,8 @@ const Communaute = () => {
       <div className="container-custom space-y-12">
 
         {/* ── 1. HERO — H1 + accroche + CTA ── */}
-        <motion.div
-          initial="hidden"
-          animate="visible"
-          variants={STAGGER_CONTAINER}
-        >
-          <motion.div variants={FADE_IN_UP} className="glass-strong rounded-3xl p-8 md:p-12">
+        {/* Rendu natif (pas motion) pour que le H1 et l'image soient visibles immédiatement → LCP */}
+        <div className="glass-strong rounded-3xl p-8 md:p-12">
             <h1 className="text-2xl md:text-4xl font-bold text-white mb-4 leading-tight">
               Rejoignez le mouvement : Devenez bénévole pour la protection de la Méditerranée
             </h1>
@@ -263,14 +259,16 @@ const Communaute = () => {
                 <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
               </Link>
             </div>
-            {/* Photo de groupe — pleine largeur */}
+            {/* Photo de groupe — candidat LCP, chargée en priorité */}
             <img
               src="/images/karim-saari-marseille-130000-sentinelles-calanques-depollution.webp"
               alt="Karim Saari entouré des bénévoles du Projet Sentinelle — 130 000 sentinelles pour la dépollution des Calanques de Marseille"
               className="w-full rounded-2xl"
+              loading="eager"
+              fetchPriority="high"
+              decoding="sync"
             />
-          </motion.div>
-        </motion.div>
+        </div>
 
         {/* ── 2. CHIFFRES D'URGENCE — contexte pollution ── */}
         <motion.div

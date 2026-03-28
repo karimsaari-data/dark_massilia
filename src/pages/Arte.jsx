@@ -9,7 +9,7 @@ import YouTubeFacade from '../components/media/YouTubeFacade';
 const Arte = () => {
   return (
     <div className="min-h-screen py-32">
-      <SEO {...SEO_PAGES['/sauver-marseille-documentaire-arte']} />
+      <SEO {...SEO_PAGES['/sauver-marseille-documentaire-arte']} preloadImage="/images/karim-saari-arte-regard-documentaire-calanques-marseille_800w.webp" />
       <div className="container-custom">
 
         {/* Header */}
@@ -140,11 +140,19 @@ const Arte = () => {
             {/* Photo */}
             <div className="lg:w-[42%] flex-shrink-0 min-h-[300px] lg:min-h-0 overflow-hidden">
               <picture>
-                <source srcSet="/images/karim-saari-arte-regard-documentaire-calanques-marseille.webp" type="image/webp" />
+                <source
+                  srcSet="/images/karim-saari-arte-regard-documentaire-calanques-marseille_800w.webp 800w, /images/karim-saari-arte-regard-documentaire-calanques-marseille.webp 1440w"
+                  sizes="(max-width: 1024px) 100vw, 42vw"
+                  type="image/webp"
+                />
                 <img
                   src="/images/karim-saari-arte-regard-documentaire-calanques-marseille.jpg"
                   alt="Karim Saari dans le reportage ARTE Regards — Pollution marine à Marseille"
                   className="w-full h-full object-cover object-center"
+                  loading="eager"
+                  fetchPriority="high"
+                  width="800"
+                  height="1000"
                 />
               </picture>
             </div>
