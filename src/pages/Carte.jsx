@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import { ExternalLink, MapPin, FileText, Map, ArrowRight } from 'lucide-react';
@@ -25,6 +26,8 @@ const EMBED_URL = `https://www.google.com/maps/d/embed?mid=${MAP_ID}&ehbc=2E312F
 const FULL_URL  = `https://www.google.com/maps/d/viewer?mid=${MAP_ID}`;
 
 export default function Carte() {
+  const [mapLoaded, setMapLoaded] = useState(false);
+
   return (
     <>
       <SEO {...SEO_PAGES['/carte-calanques']} />
@@ -32,31 +35,63 @@ export default function Carte() {
       {/* Carte plein écran — mode immersif */}
       <div style={{ position: 'relative', height: '100vh', paddingTop: '80px', overflow: 'hidden' }}>
 
-        {/* Carte Google My Maps */}
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 0.8 }}
-          style={{ position: 'relative', height: '100%', overflow: 'hidden' }}
-        >
-          <iframe
-            src={EMBED_URL}
-            title="Carte des sites — Dark Massilia Karim Saari"
-            style={{
-              position: 'absolute',
-              top: '-54px',
-              left: 0,
-              right: 0,
-              bottom: 0,
-              width: '100%',
-              height: 'calc(100% + 54px)',
-              border: 'none',
-            }}
-            allowFullScreen
-            loading="lazy"
-            referrerPolicy="no-referrer-when-downgrade"
-          />
-        </motion.div>
+        {/* Carte Google My Maps — façade au clic pour éviter cookies tiers */}
+        <div style={{ position: 'relative', height: '100%', overflow: 'hidden' }}>
+          {mapLoaded ? (
+            <iframe
+              src={EMBED_URL}
+              title="Carte des sites — Dark Massilia Karim Saari"
+              style={{
+                position: 'absolute',
+                top: '-54px',
+                left: 0,
+                right: 0,
+                bottom: 0,
+                width: '100%',
+                height: 'calc(100% + 54px)',
+                border: 'none',
+              }}
+              allow="fullscreen"
+              allowFullScreen
+              referrerPolicy="no-referrer-when-downgrade"
+            />
+          ) : (
+            <div
+              style={{ position: 'absolute', inset: 0, background: 'linear-gradient(135deg, #0a1628 0%, #0d2137 50%, #0a1e30 100%)', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', gap: '1.5rem', cursor: 'pointer' }}
+              onClick={() => setMapLoaded(true)}
+              onKeyDown={e => e.key === 'Enter' && setMapLoaded(true)}
+              role="button"
+              tabIndex={0}
+              aria-label="Charger la carte interactive des Calanques"
+            >
+              {/* Grille cartographique décorative */}
+              <svg style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', opacity: 0.06 }} aria-hidden="true">
+                <defs>
+                  <pattern id="grid" width="60" height="60" patternUnits="userSpaceOnUse">
+                    <path d="M 60 0 L 0 0 0 60" fill="none" stroke="#21c47b" strokeWidth="0.5"/>
+                  </pattern>
+                </defs>
+                <rect width="100%" height="100%" fill="url(#grid)" />
+              </svg>
+              <MapPin className="w-12 h-12 text-ocean-teal opacity-60" aria-hidden="true" />
+              <div style={{ textAlign: 'center' }}>
+                <p style={{ color: 'white', fontWeight: 700, fontSize: '1.1rem', marginBottom: '0.5rem' }}>
+                  Carte interactive des Calanques
+                </p>
+                <p style={{ color: 'rgba(255,255,255,0.5)', fontSize: '0.85rem' }}>
+                  Cliquez pour charger la carte
+                </p>
+              </div>
+              <button
+                onClick={e => { e.stopPropagation(); setMapLoaded(true); }}
+                style={{ background: 'rgba(33,196,123,0.15)', border: '1px solid rgba(33,196,123,0.4)', color: '#21c47b', padding: '0.6rem 1.5rem', borderRadius: '9999px', fontSize: '0.9rem', fontWeight: 600, cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '0.5rem' }}
+              >
+                <Map className="w-4 h-4" />
+                Charger la carte
+              </button>
+            </div>
+          )}
+        </div>
 
         {/* Bouton plein écran — bas droite */}
         <motion.a
