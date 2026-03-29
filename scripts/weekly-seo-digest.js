@@ -394,6 +394,7 @@ async function sendEmail(html, subject, pdfBuffer, pdfName) {
 <html><head>
   <meta charset="UTF-8">
   <script src="https://cdn.jsdelivr.net/npm/chart.js@4/dist/chart.umd.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2/dist/chartjs-plugin-datalabels.min.js"></script>
 </head>
 <body style="margin:0;background:#fff;font-family:Georgia,serif;color:#1a1a1a;padding:24px">
 <div style="max-width:620px;margin:0 auto">
@@ -574,9 +575,21 @@ async function sendEmail(html, subject, pdfBuffer, pdfName) {
 </div>
 ${chartH.some(e => e.clicks !== null) ? `
 <script>
+Chart.register(ChartDataLabels);
 const chartDefaults = {
   responsive: true,
-  plugins: { legend: { display: false } },
+  plugins: {
+    legend: { display: false },
+    datalabels: {
+      display: ctx => ctx.dataset.data[ctx.dataIndex] !== null && ctx.dataset.data[ctx.dataIndex] !== 0,
+      color: '#444',
+      font: { size: 8 },
+      anchor: 'end',
+      align: 'top',
+      offset: 2,
+      formatter: v => v !== null ? (Number.isInteger(v) ? v : v.toFixed(1)) : '',
+    },
+  },
   scales: {
     x: { ticks: { color: '#666', font: { size: 9 } }, grid: { color: '#ddd' } },
     y: { ticks: { color: '#666', font: { size: 9 } }, grid: { color: '#ddd' } },
