@@ -151,8 +151,8 @@ function extractKeywordData(currMap, prevMap) {
       clicks:      c?.clicks      ?? 0,
       impressions: c?.impressions ?? 0,
       ctr:         c?.ctr         ?? 0,
-      position:    c?.position    != null ? +c.position : null,
-      prevPos:     p?.position    != null ? +p.position : null,
+      position:    c?.position ? +c.position : null,
+      prevPos:     p?.position ? +p.position : null,
     };
   });
 }
