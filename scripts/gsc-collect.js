@@ -79,9 +79,9 @@ async function collectWeeklyQueries(token, weekStart) {
     startDate: weekStart, endDate: weekEnd,
     dimensions: ['query'],
     rowLimit: 50,
-    orderBy: [{ fieldName: 'impressions', sortOrder: 'DESCENDING' }],
   });
 
+  if (data.error) throw new Error(`GSC API: ${JSON.stringify(data.error)}`);
   const rows = (data.rows || []).map(r => ({
     week_start:  weekStart,
     query:       r.keys[0],
