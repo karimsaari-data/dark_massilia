@@ -244,12 +244,13 @@ async function sendEmail(html, subject, pdfBuffer, pdfName) {
   console.log('📊 Récupération GSC...');
   const token = await getAccessToken();
 
-  const [curr7, prev7, curr28, prev28, queries7, countries7, imageSearch7] = await Promise.all([
+  const [curr7, prev7, curr28, prev28, queries7, queries28, countries7, imageSearch7] = await Promise.all([
     fetchPages(token,      d7Start,    d7End,    25),
     fetchPages(token,      prevStart,  prevEnd,  25),
     fetchPages(token,      d28Start,   d28End,   25),
     fetchPages(token,      prev28Start,prev28End,25),
     fetchQueries(token,    d7Start,    d7End),
+    fetchQueries(token,    d28Start,   d28End),
     fetchCountries(token,  d7Start,    d7End),
     fetchImageSearch(token,d7Start,    d7End),
   ]);
@@ -504,7 +505,7 @@ async function sendEmail(html, subject, pdfBuffer, pdfName) {
     </tbody>
   </table>` : `<p style="font-size:12px;color:#666;margin-bottom:24px">Aucune opportunité détectée cette semaine</p>`}
 
-  <!-- Top requêtes -->
+  <!-- Top requêtes 7j -->
   <h2 style="font-size:14px;border-bottom:2px solid #1a1a1a;padding-bottom:4px;margin-bottom:8px">Top requêtes — 7 jours</h2>
   <table style="width:100%;border-collapse:collapse;margin-bottom:24px">
     <thead><tr style="background:#1a1a1a;color:#fff">
@@ -515,6 +516,27 @@ async function sendEmail(html, subject, pdfBuffer, pdfName) {
       <th style="padding:7px 10px;font-weight:600;font-size:12px">Pos.</th>
     </tr></thead>
     <tbody>${queriesRows}</tbody>
+  </table>
+
+  <!-- Top requêtes 28j -->
+  <h2 style="font-size:14px;border-bottom:2px solid #1a1a1a;padding-bottom:4px;margin-bottom:8px">Top requêtes — 28 jours</h2>
+  <table style="width:100%;border-collapse:collapse;margin-bottom:24px">
+    <thead><tr style="background:#1a1a1a;color:#fff">
+      <th style="padding:7px 10px;text-align:left;font-weight:600;font-size:12px">Requête</th>
+      <th style="padding:7px 10px;font-weight:600;font-size:12px">Clics</th>
+      <th style="padding:7px 10px;font-weight:600;font-size:12px">Impr.</th>
+      <th style="padding:7px 10px;font-weight:600;font-size:12px">CTR</th>
+      <th style="padding:7px 10px;font-weight:600;font-size:12px">Pos.</th>
+    </tr></thead>
+    <tbody>${(queries28.rows || []).slice(0, 15).map(r => `
+      <tr>
+        <td style="padding:7px 10px;border-bottom:1px solid #ddd;color:#555;font-size:12px">${r.keys[0]}</td>
+        <td style="padding:7px 10px;border-bottom:1px solid #ddd;text-align:center;font-weight:600;font-size:13px;color:#1a1a1a">${r.clicks}</td>
+        <td style="padding:7px 10px;border-bottom:1px solid #ddd;text-align:center;color:#555;font-size:12px">${r.impressions}</td>
+        <td style="padding:7px 10px;border-bottom:1px solid #ddd;text-align:center;color:#555;font-size:12px">${(r.ctr*100).toFixed(1)}%</td>
+        <td style="padding:7px 10px;border-bottom:1px solid #ddd;text-align:center;color:#555;font-size:12px">${r.position.toFixed(1)}</td>
+      </tr>`).join('')}
+    </tbody>
   </table>
 
   <!-- Suivi mots-clés cibles -->
