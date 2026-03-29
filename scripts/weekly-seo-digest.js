@@ -564,14 +564,10 @@ async function sendEmail(html, subject, pdfBuffer, pdfName) {
   <h2 style="font-size:14px;border-bottom:2px solid #1a1a1a;padding-bottom:4px;margin-bottom:8px">Évolution — 28 derniers jours</h2>
   <p style="font-size:11px;color:#666;margin:0 0 14px">Données GSC quotidiennes</p>
   <div style="background:#f8f9fa;border:1px solid #ddd;border-radius:4px;padding:16px;margin-bottom:24px">
-    <div style="display:flex;gap:12px;margin-bottom:16px">
-      <div style="flex:1;background:#fff;padding:8px;border-radius:4px"><canvas id="gscClics" height="120"></canvas></div>
-      <div style="flex:1;background:#fff;padding:8px;border-radius:4px"><canvas id="gscImpr"  height="120"></canvas></div>
-    </div>
-    <div style="display:flex;gap:12px">
-      <div style="flex:1;background:#fff;padding:8px;border-radius:4px"><canvas id="gscCtr"   height="120"></canvas></div>
-      <div style="flex:1;background:#fff;padding:8px;border-radius:4px"><canvas id="gscPos"   height="120"></canvas></div>
-    </div>
+    <div style="background:#fff;padding:8px;border-radius:4px;margin-bottom:12px"><canvas id="gscClics" height="80"></canvas></div>
+    <div style="background:#fff;padding:8px;border-radius:4px;margin-bottom:12px"><canvas id="gscImpr"  height="80"></canvas></div>
+    <div style="background:#fff;padding:8px;border-radius:4px;margin-bottom:12px"><canvas id="gscCtr"   height="80"></canvas></div>
+    <div style="background:#fff;padding:8px;border-radius:4px">                  <canvas id="gscPos"   height="80"></canvas></div>
   </div>` : ''}
 
   <p style="font-size:10px;color:#aaa;text-align:center;margin:0">Généré automatiquement chaque dimanche · Dark Massilia · karimsaari.com</p>
