@@ -4,8 +4,11 @@
  */
 
 import puppeteer from 'puppeteer';
+import { createClient } from '@supabase/supabase-js';
 
 const GSC_SITE  = 'sc-domain:karimsaari.com';
+const SUPABASE_URL = process.env.VITE_SUPABASE_URL;
+const SUPABASE_KEY = process.env.VITE_SUPABASE_ANON_KEY || process.env.SUPABASE_SERVICE_KEY;
 const BREVO_TO  = 'email@karimsaari.com';
 const BREVO_FROM = { email: 'contact@karimsaari.com', name: 'Dark Massilia' };
 
@@ -233,16 +236,10 @@ async function sendEmail(html, subject, pdfBuffer, pdfName) {
   const prev28Start = formatDate(new Date(now - 58 * 86400000));
   const prev28End   = formatDate(new Date(now - 30 * 86400000));
 
-  // Périodes historiques (12 semaines, pour les graphiques)
-  const histWeeks = Array.from({ length: 12 }, (_, i) => ({
-    start: formatDate(new Date(now - (9  + i * 7) * 86400000)),
-    end:   formatDate(new Date(now - (2  + i * 7) * 86400000)),
-  })).reverse(); // du plus ancien au plus récent
-
   console.log('📊 Récupération GSC...');
   const token = await getAccessToken();
 
-  const [curr7, prev7, curr28, prev28, queries7, countries7, imageSearch7, kwCurr, kwPrev, ...histRaw] = await Promise.all([
+  const [curr7, prev7, curr28, prev28, queries7, countries7, imageSearch7, kwCurr, kwPrev] = await Promise.all([
     fetchPages(token,      d7Start,    d7End,    25),
     fetchPages(token,      prevStart,  prevEnd,  25),
     fetchPages(token,      d28Start,   d28End,   25),
@@ -252,7 +249,6 @@ async function sendEmail(html, subject, pdfBuffer, pdfName) {
     fetchImageSearch(token,d7Start,    d7End),
     fetchAllQueries(token, d7Start,    d7End),
     fetchAllQueries(token, prevStart,  prevEnd),
-    ...histWeeks.map(w => fetchWeekSummary(token, w.start, w.end)),
   ]);
 
   // KPIs 7j
@@ -293,17 +289,24 @@ async function sendEmail(html, subject, pdfBuffer, pdfName) {
   // Mots-clés cibles
   const trackedData = extractKeywordData(kwCurr.rows, kwPrev.rows);
 
-  // ── Données graphiques GSC (12 dernières semaines via API) ───────────────
-  const chartH = histWeeks.map((w, i) => {
-    const r = histRaw[i]?.rows?.[0];
-    return {
-      label:       w.start.slice(5),
-      clicks:      r?.clicks      ?? null,
-      impressions: r?.impressions ?? null,
-      ctr:         r ? +((r.ctr * 100).toFixed(1)) : null,
-      pos:         r ? +(r.position.toFixed(1))    : null,
-    };
-  });
+  // ── Données graphiques depuis Supabase (28 derniers jours) ───────────────
+  let chartH = [];
+  if (SUPABASE_URL && SUPABASE_KEY) {
+    const sb = createClient(SUPABASE_URL, SUPABASE_KEY);
+    const { data: sbRows } = await sb
+      .from('gsc_daily')
+      .select('date, clicks, impressions, ctr, position')
+      .gte('date', d28Start)
+      .lte('date', d28End)
+      .order('date', { ascending: true });
+    chartH = (sbRows || []).map(r => ({
+      label:       r.date.slice(5),
+      clicks:      r.clicks,
+      impressions: r.impressions,
+      ctr:         +((r.ctr * 100).toFixed(1)),
+      pos:         +(+r.position).toFixed(1),
+    }));
+  }
   const chartLabels = JSON.stringify(chartH.map(e => e.label));
   const chartClicks = JSON.stringify(chartH.map(e => e.clicks));
   const chartImpr   = JSON.stringify(chartH.map(e => e.impressions));
@@ -540,8 +543,8 @@ async function sendEmail(html, subject, pdfBuffer, pdfName) {
 
   <!-- Graphiques historiques GSC -->
   ${chartH.some(e => e.clicks !== null) ? `
-  <h2 style="font-size:14px;border-bottom:2px solid #1a1a1a;padding-bottom:4px;margin-bottom:8px">Évolution historique — 12 dernières semaines</h2>
-  <p style="font-size:11px;color:#666;margin:0 0 14px">Données GSC hebdomadaires</p>
+  <h2 style="font-size:14px;border-bottom:2px solid #1a1a1a;padding-bottom:4px;margin-bottom:8px">Évolution — 28 derniers jours</h2>
+  <p style="font-size:11px;color:#666;margin:0 0 14px">Données GSC quotidiennes</p>
   <div style="background:#f8f9fa;border:1px solid #ddd;border-radius:4px;padding:16px;margin-bottom:24px">
     <div style="display:flex;gap:12px;margin-bottom:16px">
       <div style="flex:1;background:#fff;padding:8px;border-radius:4px"><canvas id="gscClics" height="120"></canvas></div>

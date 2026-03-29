@@ -30,8 +30,10 @@ jobs:
 
       - name: Générer et envoyer le digest SEO
         env:
-          GSC_CLIENT_ID:     ${{ secrets.GSC_CLIENT_ID }}
-          GSC_CLIENT_SECRET: ${{ secrets.GSC_CLIENT_SECRET }}
-          GSC_REFRESH_TOKEN: ${{ secrets.GSC_REFRESH_TOKEN }}
-          BREVO_API_KEY:     ${{ secrets.BREVO_API_KEY }}
+          GSC_CLIENT_ID:        ${{ secrets.GSC_CLIENT_ID }}
+          GSC_CLIENT_SECRET:    ${{ secrets.GSC_CLIENT_SECRET }}
+          GSC_REFRESH_TOKEN:    ${{ secrets.GSC_REFRESH_TOKEN }}
+          BREVO_API_KEY:        ${{ secrets.BREVO_API_KEY }}
+          VITE_SUPABASE_URL:    ${{ secrets.VITE_SUPABASE_URL }}
+          VITE_SUPABASE_ANON_KEY: ${{ secrets.VITE_SUPABASE_ANON_KEY }}
         run: npm run seo-digest
