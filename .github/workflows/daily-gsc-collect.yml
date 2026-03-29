@@ -6,7 +6,11 @@ on:
   workflow_dispatch:
     inputs:
       backfill_days:
-        description: 'Nombre de jours à backfiller (ex: 28)'
+        description: 'Jours à backfiller pour gsc_daily (ex: 28)'
+        required: false
+        default: '1'
+      backfill_weeks:
+        description: 'Semaines à backfiller pour gsc_weekly_queries (ex: 12)'
         required: false
         default: '1'
 
@@ -32,10 +36,11 @@ jobs:
 
       - name: Collecte GSC → Supabase
         env:
-          GSC_CLIENT_ID:       ${{ secrets.GSC_CLIENT_ID }}
-          GSC_CLIENT_SECRET:   ${{ secrets.GSC_CLIENT_SECRET }}
-          GSC_REFRESH_TOKEN:   ${{ secrets.GSC_REFRESH_TOKEN }}
-          VITE_SUPABASE_URL:   ${{ secrets.VITE_SUPABASE_URL }}
+          GSC_CLIENT_ID:        ${{ secrets.GSC_CLIENT_ID }}
+          GSC_CLIENT_SECRET:    ${{ secrets.GSC_CLIENT_SECRET }}
+          GSC_REFRESH_TOKEN:    ${{ secrets.GSC_REFRESH_TOKEN }}
+          VITE_SUPABASE_URL:    ${{ secrets.VITE_SUPABASE_URL }}
           SUPABASE_SERVICE_KEY: ${{ secrets.SUPABASE_SERVICE_KEY }}
-          BACKFILL_DAYS:       ${{ github.event.inputs.backfill_days || '1' }}
+          BACKFILL_DAYS:        ${{ github.event.inputs.backfill_days || '1' }}
+          BACKFILL_WEEKS:       ${{ github.event.inputs.backfill_weeks || '1' }}
         run: node scripts/gsc-collect.js

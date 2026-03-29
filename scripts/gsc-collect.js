@@ -1,10 +1,11 @@
 /**
- * gsc-collect.js — Collecte quotidienne GSC → Supabase
- *   · gsc_daily         : agrégat global (clics, impressions, CTR, position)
- *   · gsc_daily_queries : détail par mot-clé tracé
+ * gsc-collect.js — Collecte GSC → Supabase
+ *   · gsc_daily          : agrégat global quotidien (clics, impressions, CTR, position)
+ *   · gsc_weekly_queries : détail par mot-clé tracé sur 7 jours (dimanche uniquement)
  *
- * Usage normal  : node scripts/gsc-collect.js
- * Backfill 28j  : BACKFILL_DAYS=28 node scripts/gsc-collect.js
+ * Usage quotidien  : node scripts/gsc-collect.js
+ * Backfill jours   : BACKFILL_DAYS=28 node scripts/gsc-collect.js
+ * Backfill semaines: BACKFILL_WEEKS=12 node scripts/gsc-collect.js
  */
 
 import { createClient } from '@supabase/supabase-js';
@@ -84,7 +85,7 @@ async function gscQuery(token, body) {
   return res.json();
 }
 
-// ── Collecte agrégat global ───────────────────────────────────────────────────
+// ── Collecte agrégat global (quotidien) ──────────────────────────────────────
 async function collectGlobal(token, date) {
   const data = await gscQuery(token, {
     startDate: date, endDate: date, dimensions: [], rowLimit: 1,
@@ -103,11 +104,13 @@ async function collectGlobal(token, date) {
   console.log(`  ✅ global — ${row.clicks} clics / ${row.impressions} impr. / pos. ${row.position.toFixed(1)}`);
 }
 
-// ── Collecte par mot-clé tracé ────────────────────────────────────────────────
-async function collectQueries(token, date) {
-  // Un seul appel GSC : toutes les requêtes du jour, jusqu'à 5000 lignes
+// ── Collecte par mot-clé tracé (hebdomadaire, fenêtre 7 jours) ───────────────
+async function collectWeeklyQueries(token, weekStart) {
+  const weekEnd = formatDate(new Date(new Date(weekStart).getTime() + 6 * 86400000));
+
+  // 1 seul appel GSC sur 7 jours → dépasse le seuil de confidentialité
   const data = await gscQuery(token, {
-    startDate: date, endDate: date, dimensions: ['query'], rowLimit: 5000,
+    startDate: weekStart, endDate: weekEnd, dimensions: ['query'], rowLimit: 5000,
   });
   const rowMap = Object.fromEntries(
     (data.rows || []).map(r => [r.keys[0].toLowerCase(), r])
@@ -116,7 +119,7 @@ async function collectQueries(token, date) {
   const rows = TRACKED_QUERIES.map(q => {
     const r = rowMap[q.toLowerCase()];
     return {
-      date,
+      week_start:  weekStart,
       query:       q,
       clicks:      r?.clicks      ?? 0,
       impressions: r?.impressions ?? 0,
@@ -126,30 +129,50 @@ async function collectQueries(token, date) {
   });
 
   const { error } = await supabase
-    .from('gsc_daily_queries')
-    .upsert(rows, { onConflict: 'date,query' });
-  if (error) throw new Error(`gsc_daily_queries ${date}: ${error.message}`);
+    .from('gsc_weekly_queries')
+    .upsert(rows, { onConflict: 'week_start,query' });
+  if (error) throw new Error(`gsc_weekly_queries ${weekStart}: ${error.message}`);
 
   const found = rows.filter(r => r.impressions > 0).length;
-  console.log(`  ✅ requêtes — ${found}/${TRACKED_QUERIES.length} avec données`);
+  console.log(`  ✅ requêtes — ${found}/${TRACKED_QUERIES.length} avec données (semaine du ${weekStart})`);
 }
 
 // ── Main ──────────────────────────────────────────────────────────────────────
 (async () => {
   const now          = Date.now();
-  const backfillDays = parseInt(process.env.BACKFILL_DAYS || '1', 10);
+  const backfillDays = parseInt(process.env.BACKFILL_DAYS  || '1',  10);
+  const backfillWeeks= parseInt(process.env.BACKFILL_WEEKS || '0',  10);
 
+  const token = await getAccessToken();
+
+  // ── Collecte quotidienne globale ─────────────────────────────────────────
   const dates = Array.from({ length: backfillDays }, (_, i) =>
     formatDate(new Date(now - (2 + i) * 86400000))
   ).reverse();
 
-  console.log(`📊 Collecte GSC → Supabase (${dates.length} jour${dates.length > 1 ? 's' : ''})...`);
-  const token = await getAccessToken();
-
+  console.log(`📊 Collecte globale GSC → gsc_daily (${dates.length} jour${dates.length > 1 ? 's' : ''})...`);
   for (const date of dates) {
     console.log(`\n📅 ${date}`);
     await collectGlobal(token, date);
-    await collectQueries(token, date);
   }
+
+  // ── Collecte hebdomadaire requêtes ───────────────────────────────────────
+  const weeksToCollect = backfillWeeks > 0 ? backfillWeeks : 1;
+  // week_start = lundi de la semaine (J-2 arrondi au lundi précédent)
+  const refDate  = new Date(now - 2 * 86400000);
+  const dayOfWeek = refDate.getUTCDay(); // 0=dim, 1=lun...
+  const daysToLastMonday = (dayOfWeek === 0 ? 6 : dayOfWeek - 1);
+  const lastMonday = new Date(refDate.getTime() - daysToLastMonday * 86400000);
+
+  const weeks = Array.from({ length: weeksToCollect }, (_, i) =>
+    formatDate(new Date(lastMonday.getTime() - i * 7 * 86400000))
+  ).reverse();
+
+  console.log(`\n📊 Collecte requêtes GSC → gsc_weekly_queries (${weeks.length} semaine${weeks.length > 1 ? 's' : ''})...`);
+  for (const weekStart of weeks) {
+    console.log(`\n📅 Semaine du ${weekStart}`);
+    await collectWeeklyQueries(token, weekStart);
+  }
+
   console.log('\n✅ Collecte terminée.');
 })().catch(e => { console.error('❌', e.message); process.exit(1); });
