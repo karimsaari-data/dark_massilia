@@ -21,39 +21,6 @@ if (!SUPABASE_URL || !SUPABASE_KEY) {
 
 const supabase = createClient(SUPABASE_URL, SUPABASE_KEY);
 
-// ── Mots-clés à suivre (synchronisé avec weekly-seo-digest.js) ──────────────
-const TRACKED_QUERIES = [
-  // Marque
-  'karim saari',
-  'dark massilia',
-  'projet sentinelle',
-  'projet sentinelle marseille',
-  'team oxygen',
-  // Longue traîne locale
-  'calanques marseille',
-  'dépollution marine marseille',
-  'dépollution calanques marseille',
-  'nettoyage calanques',
-  'photographe sous-marin marseille',
-  'photographe sous-marin calanques',
-  'photographe paysages marseille',
-  'photographe de paysages marseille',
-  'photographe environnemental marseille',
-  'bénévolat dépollution marseille',
-  'bénévolat écologique marseille',
-  'association dépollution marine marseille',
-  // ARTE
-  'documentaire arte sauver marseille',
-  'documentaire arte méduses souveraines',
-  'yann arthus-bertrand les français karim saari',
-  // Éditorial
-  'ramassage plastique mer',
-  'pollution plastique méditerranée',
-  'microplastiques méditerranée',
-  'rugulopteryx okamurae calanques',
-  'posidonie calanques',
-];
-
 // ── Helpers ──────────────────────────────────────────────────────────────────
 function formatDate(d) { return d.toISOString().slice(0, 10); }
 
@@ -104,37 +71,40 @@ async function collectGlobal(token, date) {
   console.log(`  ✅ global — ${row.clicks} clics / ${row.impressions} impr. / pos. ${row.position.toFixed(1)}`);
 }
 
-// ── Collecte par mot-clé tracé (hebdomadaire, fenêtre 7 jours) ───────────────
+// ── Collecte top requêtes réelles (hebdomadaire, fenêtre 7 jours) ────────────
 async function collectWeeklyQueries(token, weekStart) {
   const weekEnd = formatDate(new Date(new Date(weekStart).getTime() + 6 * 86400000));
 
-  // 1 seul appel GSC sur 7 jours → dépasse le seuil de confidentialité
   const data = await gscQuery(token, {
-    startDate: weekStart, endDate: weekEnd, dimensions: ['query'], rowLimit: 5000,
+    startDate: weekStart, endDate: weekEnd,
+    dimensions: ['query'],
+    rowLimit: 50,
+    orderBy: [{ fieldName: 'impressions', sortOrder: 'DESCENDING' }],
   });
-  const rowMap = Object.fromEntries(
-    (data.rows || []).map(r => [r.keys[0].toLowerCase(), r])
-  );
 
-  const rows = TRACKED_QUERIES.map(q => {
-    const r = rowMap[q.toLowerCase()];
-    return {
-      week_start:  weekStart,
-      query:       q,
-      clicks:      r?.clicks      ?? 0,
-      impressions: r?.impressions ?? 0,
-      ctr:         r?.ctr         ?? 0,
-      position:    r ? +(r.position.toFixed(2)) : 0,
-    };
-  });
+  const rows = (data.rows || []).map(r => ({
+    week_start:  weekStart,
+    query:       r.keys[0],
+    clicks:      r.clicks,
+    impressions: r.impressions,
+    ctr:         r.ctr,
+    position:    +(r.position.toFixed(2)),
+  }));
+
+  if (rows.length === 0) {
+    console.log(`  ⚠️  Semaine du ${weekStart} — aucune requête retournée par GSC`);
+    return;
+  }
 
   const { error } = await supabase
     .from('gsc_weekly_queries')
     .upsert(rows, { onConflict: 'week_start,query' });
   if (error) throw new Error(`gsc_weekly_queries ${weekStart}: ${error.message}`);
 
-  const found = rows.filter(r => r.impressions > 0).length;
-  console.log(`  ✅ requêtes — ${found}/${TRACKED_QUERIES.length} avec données (semaine du ${weekStart})`);
+  console.log(`  ✅ ${rows.length} requêtes stockées (semaine du ${weekStart})`);
+  rows.slice(0, 5).forEach(r =>
+    console.log(`     "${r.query}" — ${r.impressions} impr. / pos. ${r.position}`)
+  );
 }
 
 // ── Main ──────────────────────────────────────────────────────────────────────
