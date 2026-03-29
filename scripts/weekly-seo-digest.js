@@ -142,19 +142,17 @@ function fetchAllQueries(token, startDate, endDate) {
   });
 }
 
-function extractKeywordData(gscRows, prevRows) {
-  const curr = Object.fromEntries((gscRows || []).map(r => [r.keys[0].toLowerCase(), r]));
-  const prev = Object.fromEntries((prevRows  || []).map(r => [r.keys[0].toLowerCase(), r]));
+function extractKeywordData(currMap, prevMap) {
   return TRACKED_KEYWORDS.map(kw => {
-    const c = curr[kw.q];
-    const p = prev[kw.q];
+    const c = currMap[kw.q.toLowerCase()];
+    const p = prevMap[kw.q.toLowerCase()];
     return {
       ...kw,
       clicks:      c?.clicks      ?? 0,
       impressions: c?.impressions ?? 0,
       ctr:         c?.ctr         ?? 0,
-      position:    c?.position    ?? null,
-      prevPos:     p?.position    ?? null,
+      position:    c?.position    != null ? +c.position : null,
+      prevPos:     p?.position    != null ? +p.position : null,
     };
   });
 }
@@ -188,8 +186,9 @@ function kpiBlock(label, value, sub) {
 }
 
 function diffArrow(diff) {
-  if (diff > 0) return `<span style="color:green">▲ ${diff}</span>`;
-  if (diff < 0) return `<span style="color:#c0392b">▼ ${Math.abs(diff)}</span>`;
+  const d = +parseFloat(diff).toFixed(1);
+  if (d > 0) return `<span style="color:green">▲ ${d}</span>`;
+  if (d < 0) return `<span style="color:#c0392b">▼ ${Math.abs(d)}</span>`;
   return `<span style="color:#666">— 0</span>`;
 }
 
@@ -245,7 +244,7 @@ async function sendEmail(html, subject, pdfBuffer, pdfName) {
   console.log('📊 Récupération GSC...');
   const token = await getAccessToken();
 
-  const [curr7, prev7, curr28, prev28, queries7, countries7, imageSearch7, kwCurr, kwPrev] = await Promise.all([
+  const [curr7, prev7, curr28, prev28, queries7, countries7, imageSearch7] = await Promise.all([
     fetchPages(token,      d7Start,    d7End,    25),
     fetchPages(token,      prevStart,  prevEnd,  25),
     fetchPages(token,      d28Start,   d28End,   25),
@@ -253,8 +252,6 @@ async function sendEmail(html, subject, pdfBuffer, pdfName) {
     fetchQueries(token,    d7Start,    d7End),
     fetchCountries(token,  d7Start,    d7End),
     fetchImageSearch(token,d7Start,    d7End),
-    fetchAllQueries(token, d7Start,    d7End),
-    fetchAllQueries(token, prevStart,  prevEnd),
   ]);
 
   // KPIs 7j
@@ -292,8 +289,22 @@ async function sendEmail(html, subject, pdfBuffer, pdfName) {
   const imgClicks = imageSearch7.rows?.[0]?.clicks ?? 0;
   const imgImpr   = imageSearch7.rows?.[0]?.impressions ?? 0;
 
-  // Mots-clés cibles
-  const trackedData = extractKeywordData(kwCurr.rows, kwPrev.rows);
+  // ── Mots-clés cibles depuis Supabase (gsc_weekly_queries) ──────────────────
+  let trackedData = TRACKED_KEYWORDS.map(kw => ({ ...kw, clicks: 0, impressions: 0, ctr: 0, position: null, prevPos: null }));
+  if (SUPABASE_URL && SUPABASE_KEY) {
+    const sb = createClient(SUPABASE_URL, SUPABASE_KEY);
+    const { data: weeklyRows } = await sb
+      .from('gsc_weekly_queries')
+      .select('week_start, query, clicks, impressions, ctr, position')
+      .order('week_start', { ascending: false })
+      .limit(200);
+    const weekStarts = [...new Set((weeklyRows || []).map(r => r.week_start))].slice(0, 2);
+    const toMap = rows => Object.fromEntries((rows || []).map(r => [r.query.toLowerCase(), r]));
+    const currMap = toMap((weeklyRows || []).filter(r => r.week_start === weekStarts[0]));
+    const prevMap = toMap((weeklyRows || []).filter(r => r.week_start === weekStarts[1]));
+    trackedData = extractKeywordData(currMap, prevMap);
+    console.log(`📋 Mots-clés : semaine du ${weekStarts[0]} vs ${weekStarts[1] || 'N/A'}`);
+  }
 
   // ── Données graphiques depuis Supabase (28 derniers jours) ───────────────
   let chartH = [];
@@ -388,7 +399,8 @@ async function sendEmail(html, subject, pdfBuffer, pdfName) {
 <div style="max-width:620px;margin:0 auto">
 
   <h1 style="font-size:20px;color:#1a1a1a;margin:0 0 4px">Digest SEO hebdomadaire — Dark Massilia</h1>
-  <p style="margin:0 0 24px;font-size:12px;color:#666">${d7Start} → ${d7End} · Google Search Console · karimsaari.com</p>
+  <p style="margin:0 0 4px;font-size:12px;color:#666">${d7Start} → ${d7End} · Google Search Console · karimsaari.com</p>
+  <p style="margin:0 0 24px;font-size:11px;color:#aaa">Généré le ${new Date().toLocaleDateString('fr-FR', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' })} à ${new Date().toLocaleTimeString('fr-FR', { hour: '2-digit', minute: '2-digit', timeZone: 'Europe/Paris' })} (heure de Paris)</p>
 
   <!-- KPIs 7 jours -->
   <h2 style="font-size:14px;border-bottom:2px solid #1a1a1a;padding-bottom:4px;margin-bottom:8px">7 derniers jours</h2>
@@ -505,8 +517,8 @@ async function sendEmail(html, subject, pdfBuffer, pdfName) {
   </table>
 
   <!-- Suivi mots-clés cibles -->
-  <h2 style="font-size:14px;border-bottom:2px solid #1a1a1a;padding-bottom:4px;margin-bottom:8px">Suivi mots-clés cibles — 7 jours</h2>
-  <p style="font-size:11px;color:#666;margin:0 0 12px">Position moyenne · ↑ amélioration · ↓ recul · — non détecté dans le top 5 000</p>
+  <h2 style="font-size:14px;border-bottom:2px solid #1a1a1a;padding-bottom:4px;margin-bottom:8px">Suivi mots-clés cibles — semaine</h2>
+  <p style="font-size:11px;color:#666;margin:0 0 12px">Position moyenne · ↑ amélioration · ↓ recul · — non détecté cette semaine</p>
   ${['Marque', 'Local', 'ARTE', 'Éditorial'].map(cat => {
     const rows = trackedData.filter(k => k.cat === cat);
     return `
