@@ -22,7 +22,10 @@
     "psi-audit": "node --env-file-if-exists=.env scripts/psi-audit.js",
     "ga-report": "node scripts/ga-report.js",
     "seo-crawl": "node scripts/seo-crawl.js",
-    "backlink-report": "node scripts/backlink-report.js"
+    "backlink-report": "node scripts/backlink-report.js",
+    "wp:audit-images": "node --env-file-if-exists=.env scripts/wp-optimize-images.mjs --audit",
+    "wp:fix-images": "node --env-file-if-exists=.env scripts/wp-optimize-images.mjs --fix",
+    "wp:fix-images-dry": "node --env-file-if-exists=.env scripts/wp-optimize-images.mjs --fix --dry-run"
   },
   "dependencies": {
     "@fancyapps/ui": "^6.1.13",
