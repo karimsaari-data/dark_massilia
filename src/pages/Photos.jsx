@@ -690,7 +690,7 @@ const Photos = () => {
           transition={{ duration: 0.6 }}
           className="text-xl md:text-2xl font-bold text-white text-center mb-8 leading-tight"
         >
-          Photographie de Paysages : Du Littoral Marseillais aux Horizons Lointains
+          Photographe de Paysages à Marseille — Calanques, Littoral & Méditerranée
         </motion.h1>
 
         {/* Section 1 — Littoral Marseillais & Calanques */}
@@ -808,7 +808,7 @@ const Photos = () => {
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6 text-text-secondary leading-relaxed text-sm mb-8">
               <p>Photographe sous-marin et photographe de paysages à Marseille, j'explore la Méditerranée et la Provence de la surface aux profondeurs.</p>
               <p>Sous l'eau, mes images révèlent la biodiversité des fonds marins méditerranéens et leurs fragilités.</p>
-              <p>Mon travail documente un territoire — la Méditerranée et la Provence — entre beauté naturelle et enjeux contemporains.</p>
+              <p>Mon travail documente un territoire — la Méditerranée et la Provence — entre beauté naturelle et enjeux contemporains, en lien direct avec les <Link to="/depollution-marine" className="text-ocean-teal hover:text-white transition-colors">missions de dépollution marine</Link> que je mène avec Team Oxygen dans les Calanques.</p>
             </div>
             <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
               <Link

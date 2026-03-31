@@ -539,6 +539,9 @@ const Sources = () => {
                   nos opérations concrètes sur nos{' '}
                   <Link to="/depollution-marine" className="text-ocean-teal hover:text-white transition-colors">
                     missions de dépollution marine
+                  </Link>, et explorez leur réalité visuelle dans la{' '}
+                  <Link to="/photographie-sous-marine" className="text-ocean-teal hover:text-white transition-colors">
+                    galerie de photographies sous-marines des Calanques
                   </Link>.
                 </p>
               </div>

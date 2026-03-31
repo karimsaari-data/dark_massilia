@@ -149,6 +149,14 @@ const FAQ_ITEMS = [
     q: "Qu'est-ce que la photographie environnementale ?",
     a: "La photographie environnementale se sert d'images de paysages, de plantes ou d'animaux pour éveiller chez l'observateur le désir d'en protéger l'existence — particulièrement face aux dangers auxquels la nature est confrontée. En Méditerranée, elle devient un outil de témoignage direct : chaque image des calanques de Marseille, de leurs fonds marins ou de la faune locale est une preuve visuelle de l'urgence écologique. La photographie environnementale que je pratique n'est pas simplement esthétique : chaque cliché est un document, une preuve, un appel à l'action.",
   },
+  {
+    q: "Quel matériel utilisez-vous pour photographier sous l'eau dans les Calanques ?",
+    a: "La photographie sous-marine dans les Calanques de Marseille se pratique principalement en apnée, ce qui impose des contraintes très différentes de la plongée bouteille : aucune bulle, aucun bruit, une proximité naturelle avec la faune. J'utilise un boîtier étanche monté avec un grand angle pour capter la profondeur des fonds marins et la lumière naturelle de la Méditerranée. La transparence exceptionnelle de l'eau des Calanques — entre 15 et 30 mètres de visibilité — permet d'obtenir des images d'une clarté rare, à la fois pour les paysages sous-marins et pour la documentation des espèces comme les poulpes, les mérous et les posidonies.",
+  },
+  {
+    q: "Où voir vos photographies sous-marines des Calanques de Marseille ?",
+    a: "Mes photographies sous-marines des Calanques sont accessibles sur ce site dans la galerie dédiée à la photographie sous-marine, qui regroupe plus de 58 clichés pris lors des missions de dépollution du Projet Sentinelle (2022–2025). Vous pouvez également retrouver une sélection de paysages marins et terrestres dans la galerie de photographie de paysages, ainsi que sur mon profil 500px (karimsaari) où mes images cumulent plus de 800 000 impressions. Pour les expositions et demandes de tirage, n'hésitez pas à me contacter directement.",
+  },
 ];
 
 const FaqItem = ({ question, answer }) => {

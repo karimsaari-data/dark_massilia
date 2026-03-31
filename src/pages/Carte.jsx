@@ -26,14 +26,14 @@ const EMBED_URL = `https://www.google.com/maps/d/embed?mid=${MAP_ID}&ehbc=2E312F
 const FULL_URL  = `https://www.google.com/maps/d/viewer?mid=${MAP_ID}`;
 
 export default function Carte() {
-  const [mapLoaded, setMapLoaded] = useState(false);
+  const [mapLoaded, setMapLoaded] = useState(true);
 
   return (
     <>
       <SEO {...SEO_PAGES['/carte-calanques']} />
 
       {/* Carte plein écran — mode immersif */}
-      <div style={{ position: 'relative', height: '100vh', paddingTop: '80px', overflow: 'hidden' }}>
+      <div className="relative overflow-hidden h-[calc(100vh-70px)] md:h-[calc(100vh-128px)]">
 
         {/* Carte Google My Maps — façade au clic pour éviter cookies tiers */}
         <div style={{ position: 'relative', height: '100%', overflow: 'hidden' }}>
@@ -57,38 +57,38 @@ export default function Carte() {
             />
           ) : (
             <div
-              style={{ position: 'absolute', inset: 0, background: 'linear-gradient(135deg, #0a1628 0%, #0d2137 50%, #0a1e30 100%)', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', gap: '1.5rem', cursor: 'pointer' }}
+              style={{ position: 'absolute', inset: 0, overflow: 'hidden', cursor: 'pointer' }}
               onClick={() => setMapLoaded(true)}
               onKeyDown={e => e.key === 'Enter' && setMapLoaded(true)}
               role="button"
               tabIndex={0}
               aria-label="Charger la carte interactive des Calanques"
             >
-              {/* Grille cartographique décorative */}
-              <svg style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', opacity: 0.06 }} aria-hidden="true">
-                <defs>
-                  <pattern id="grid" width="60" height="60" patternUnits="userSpaceOnUse">
-                    <path d="M 60 0 L 0 0 0 60" fill="none" stroke="#21c47b" strokeWidth="0.5"/>
-                  </pattern>
-                </defs>
-                <rect width="100%" height="100%" fill="url(#grid)" />
-              </svg>
-              <MapPin className="w-12 h-12 text-ocean-teal opacity-60" aria-hidden="true" />
-              <div style={{ textAlign: 'center' }}>
-                <p style={{ color: 'white', fontWeight: 700, fontSize: '1.1rem', marginBottom: '0.5rem' }}>
-                  Carte interactive des Calanques
-                </p>
-                <p style={{ color: 'rgba(255,255,255,0.5)', fontSize: '0.85rem' }}>
-                  Cliquez pour charger la carte
-                </p>
+              {/* Image statique du Parc national des Calanques */}
+              <img
+                src="https://www.calanques-parcnational.fr/sites/calanques-parcnational.fr/files/thumbnails/image/carte-calanques-marseille-cassis-la-ciotat-3000x1733.jpg"
+                alt="Carte du Parc national des Calanques de Marseille — aperçu statique"
+                style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover', filter: 'brightness(0.55) saturate(0.85)' }}
+              />
+              {/* Overlay centré — bouton de chargement */}
+              <div style={{ position: 'absolute', inset: 0, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', gap: '1.25rem', background: 'linear-gradient(to bottom, transparent 20%, rgba(0,0,0,0.35) 100%)' }}>
+                <MapPin className="w-10 h-10 text-ocean-teal drop-shadow-lg" aria-hidden="true" />
+                <div style={{ textAlign: 'center' }}>
+                  <p style={{ color: 'white', fontWeight: 700, fontSize: '1.1rem', marginBottom: '0.35rem', textShadow: '0 1px 6px rgba(0,0,0,0.7)' }}>
+                    Carte interactive des Calanques
+                  </p>
+                  <p style={{ color: 'rgba(255,255,255,0.65)', fontSize: '0.82rem', textShadow: '0 1px 4px rgba(0,0,0,0.6)' }}>
+                    Cliquez pour charger la carte
+                  </p>
+                </div>
+                <button
+                  onClick={e => { e.stopPropagation(); setMapLoaded(true); }}
+                  style={{ background: 'rgba(33,196,123,0.18)', border: '1px solid rgba(33,196,123,0.5)', color: '#21c47b', padding: '0.6rem 1.5rem', borderRadius: '9999px', fontSize: '0.9rem', fontWeight: 600, cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '0.5rem', backdropFilter: 'blur(6px)' }}
+                >
+                  <Map className="w-4 h-4" />
+                  Charger la carte
+                </button>
               </div>
-              <button
-                onClick={e => { e.stopPropagation(); setMapLoaded(true); }}
-                style={{ background: 'rgba(33,196,123,0.15)', border: '1px solid rgba(33,196,123,0.4)', color: '#21c47b', padding: '0.6rem 1.5rem', borderRadius: '9999px', fontSize: '0.9rem', fontWeight: 600, cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '0.5rem' }}
-              >
-                <Map className="w-4 h-4" />
-                Charger la carte
-              </button>
             </div>
           )}
         </div>

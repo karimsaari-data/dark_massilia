@@ -91,13 +91,17 @@ export function normalizePost(post) {
   const rawExcerpt = post.excerpt?.rendered ?? '';
 
   // Préférer medium_large (768px) comme src principal → LCP plus rapide sur mobile
+  // URL convertie en WebP (ShortPixel stocke les WebP avec extension remplacée)
   const sizes = media?.media_details?.sizes;
-  const imageSrc =
+  const rawImageSrc =
     sizes?.medium_large?.source_url ??
     sizes?.large?.source_url ??
     media?.source_url ??
     extractFirstImage(post.content?.rendered ?? '') ??
     null;
+  const imageSrc = rawImageSrc
+    ? rawImageSrc.replace(/\.(png|jpe?g)$/i, '.webp')
+    : null;
 
   return {
     id:            post.id,
@@ -171,13 +175,19 @@ function extractFirstImage(html) {
   return match ? match[1] : null;
 }
 
-// Construit un srcset à partir des tailles générées par WordPress
+// Construit un srcset à partir des tailles générées par WordPress.
+// - Plafond à 1200px : évite les variants 1536/2048px (PNG 1-3 Mo sur Retina)
+// - URLs converties en WebP : ShortPixel stocke les WebP avec extension remplacée
+//   (ex: image-768x413.png → image-768x413.webp), ce qui réduit le poids de 60-80%.
 function buildSrcset(media) {
   const sizes = media?.media_details?.sizes;
   if (!sizes) return null;
   const entries = Object.values(sizes)
-    .filter(s => s?.source_url && s?.width)
-    .map(s => `${s.source_url} ${s.width}w`);
+    .filter(s => s?.source_url && s?.width && s.width <= 1200)
+    .map(s => {
+      const webpUrl = s.source_url.replace(/\.(png|jpe?g)$/i, '.webp');
+      return `${webpUrl} ${s.width}w`;
+    });
   return entries.length ? entries.join(', ') : null;
 }
 

@@ -6,7 +6,7 @@
 
 const BASE_URL = 'https://karimsaari.com';
 const DEFAULT_IMAGE = `${BASE_URL}/assets/og-social-card.jpg`;
-const SITE_NAME = 'Dark Massilia';
+const SITE_NAME = 'Karim Saari';
 const TWITTER_HANDLE = '@dark_massilia';
 
 export const DEFAULT_SEO = {
@@ -56,6 +56,8 @@ const PERSON_SCHEMA = {
     'https://www.midilibre.fr/2024/04/02/une-maree-bleue-pourquoi-des-milliers-de-meduses-recouvrent-elles-le-littoral-a-marseille-11865324.php',
     'https://www.zero-dechet-sauvage.org/structures/dark-massilia',
     'https://www.wikidata.org/wiki/Q138808583',
+    'https://commons.wikimedia.org/wiki/User:Karim_saari',
+    'https://commons.wikimedia.org/wiki/User:Dark_massilia',
   ],
   knowsAbout: [
     'Protection de l\'environnement',
@@ -210,6 +212,22 @@ export const SEO_PAGES = {
               acceptedAnswer: {
                 '@type': 'Answer',
                 text: "La photographie environnementale se sert d'images de paysages, de plantes ou d'animaux pour éveiller chez l'observateur le désir d'en protéger l'existence — particulièrement face aux dangers auxquels la nature est confrontée. En Méditerranée, elle devient un outil de témoignage direct : chaque image des calanques de Marseille, de leurs fonds marins ou de la faune locale est une preuve visuelle de l'urgence écologique.",
+              },
+            },
+            {
+              '@type': 'Question',
+              name: "Quel matériel utilisez-vous pour photographier sous l'eau dans les Calanques ?",
+              acceptedAnswer: {
+                '@type': 'Answer',
+                text: "La photographie sous-marine dans les Calanques de Marseille se pratique principalement en apnée, ce qui impose des contraintes très différentes de la plongée bouteille : aucune bulle, aucun bruit, une proximité naturelle avec la faune. J'utilise un boîtier étanche monté avec un grand angle pour capter la profondeur des fonds marins et la lumière naturelle de la Méditerranée. La transparence exceptionnelle de l'eau des Calanques — entre 15 et 30 mètres de visibilité — permet d'obtenir des images d'une clarté rare, à la fois pour les paysages sous-marins et pour la documentation des espèces comme les poulpes, les mérous et les posidonies.",
+              },
+            },
+            {
+              '@type': 'Question',
+              name: "Où voir vos photographies sous-marines des Calanques de Marseille ?",
+              acceptedAnswer: {
+                '@type': 'Answer',
+                text: "Mes photographies sous-marines des Calanques sont accessibles sur ce site dans la galerie dédiée à la photographie sous-marine, qui regroupe plus de 58 clichés pris lors des missions de dépollution du Projet Sentinelle (2022–2025). Vous pouvez également retrouver une sélection de paysages marins et terrestres dans la galerie de photographie de paysages, ainsi que sur mon profil 500px (karimsaari) où mes images cumulent plus de 800 000 impressions.",
               },
             },
           ],
@@ -436,7 +454,7 @@ export const SEO_PAGES = {
   '/photographie-sous-marine': {
     title: 'Photographe Sous-Marin Marseille — Galerie | Karim Saari',
     description:
-      'Galerie de 58 photographies sous-marines de missions de dépollution en apnée dans les Calanques de Marseille — Projet Sentinelle, Team Oxygen.',
+      'Galerie sous-marine de Karim Saari : actions de dépollution, biodiversité et caractérisation des fonds des Calanques de Marseille — photographe apnéiste.',
     canonical: `${BASE_URL}/photographie-sous-marine`,
     schema: {
       '@context': 'https://schema.org',
@@ -496,9 +514,9 @@ export const SEO_PAGES = {
     },
   },
   '/photographie-paysage-mer': {
-    title: 'Photographe Paysage Marseille | Calanques & Méditerranée',
+    title: 'Photographe Paysages Marseille | Calanques & Méditerranée',
     description:
-      'Galerie photo de paysages des Calanques de Marseille, Méditerranée et Provence. Lumière naturelle, apnée, nature sauvage. Par le photographe Karim Saari.',
+      'Calanques, Méditerranée, Provence : des paysages capturés en apnée par Karim Saari. Lumière naturelle, grands formats disponibles à la vente.',
     canonical: `${BASE_URL}/photographie-paysage-mer`,
     schema: {
       '@context': 'https://schema.org',
@@ -523,10 +541,70 @@ export const SEO_PAGES = {
         // ImageObjects représentatifs — déclenchent les rich results Google Images
         {
           '@type': 'ImageObject',
-          name: 'Photographe paysages Marseille — Calanque En-Vau vue aérienne — Karim Saari',
-          description: "Karim Saari, photographe paysages à Marseille, capture la calanque d'En-Vau depuis les airs — eaux turquoise et falaises calcaires blanches des Calanques.",
+          name: 'Photographe Paysages Marseille — Calanque En-Vau vue aérienne — Karim Saari',
+          description: "Karim Saari, photographe paysages à Marseille, capture la calanque d'En-Vau depuis les airs — eaux turquoise et falaises calcaires blanches des Calanques de Marseille.",
           caption: "Karim Saari, photographe paysages à Marseille, capture la calanque d'En-Vau depuis les airs — eaux turquoise et falaises calcaires blanches des Calanques.",
           contentUrl: `${BASE_URL}/images/portfolio/Mer/karim-saari-marseille-en-vau-aerien-calanque-falaises.webp`,
+          url: `${BASE_URL}/photographie-paysage-mer`,
+          creator: { '@type': 'Person', name: 'Karim Saari', jobTitle: 'Photographe Paysages Marseille', alternateName: 'Dark Massilia', url: BASE_URL },
+          copyrightHolder: { '@type': 'Person', name: 'Karim Saari' },
+          copyrightYear: 2023,
+          creditText: '© Karim Saari / Dark Massilia',
+          copyrightNotice: '© Karim Saari / Dark Massilia — Tous droits réservés',
+          license: `${BASE_URL}/mentions-legales/`,
+          acquireLicensePage: `${BASE_URL}/contact/`,
+        },
+        {
+          '@type': 'ImageObject',
+          name: 'Photographe Paysages Marseille — Grotte marine Calanques en apnée — Karim Saari',
+          description: "Karim Saari, photographe paysages marins à Marseille, explore en apnée une grotte marine dans les Calanques. Vue subjective sur les eaux turquoise de la Méditerranée.",
+          caption: "Karim Saari, photographe paysages marins à Marseille, explore une grotte marine des Calanques en apnée — eau turquoise, lumière naturelle.",
+          contentUrl: `${BASE_URL}/images/portfolio/Mer/photographe-sous-marin-marseille-apnee-grotte-marine-calanques.webp`,
+          url: `${BASE_URL}/photographie-paysage-mer`,
+          creator: { '@type': 'Person', name: 'Karim Saari', jobTitle: 'Photographe Paysages Marseille', alternateName: 'Dark Massilia', url: BASE_URL },
+          copyrightHolder: { '@type': 'Person', name: 'Karim Saari' },
+          copyrightYear: 2024,
+          creditText: '© Karim Saari / Dark Massilia',
+          copyrightNotice: '© Karim Saari / Dark Massilia — Tous droits réservés',
+          license: `${BASE_URL}/mentions-legales/`,
+          acquireLicensePage: `${BASE_URL}/contact/`,
+        },
+        {
+          '@type': 'ImageObject',
+          name: 'Photographe Paysages Marseille — Biodiversité Calanques posidonie faune marine — Karim Saari',
+          description: "Karim Saari, photographe paysages naturels à Marseille, capture la biodiversité des Calanques en apnée — posidonie, faune méditerranéenne, fonds marins.",
+          caption: "Karim Saari, photographe paysages à Marseille, documente la biodiversité des Calanques — posidonie, faune marine méditerranéenne.",
+          contentUrl: `${BASE_URL}/images/portfolio/Mer/photographe-sous-marin-marseille-biodiversite-fonds-marins-calanques.webp`,
+          url: `${BASE_URL}/photographie-paysage-mer`,
+          creator: { '@type': 'Person', name: 'Karim Saari', jobTitle: 'Photographe Paysages Marseille', alternateName: 'Dark Massilia', url: BASE_URL },
+          copyrightHolder: { '@type': 'Person', name: 'Karim Saari' },
+          copyrightYear: 2023,
+          creditText: '© Karim Saari / Dark Massilia',
+          copyrightNotice: '© Karim Saari / Dark Massilia — Tous droits réservés',
+          license: `${BASE_URL}/mentions-legales/`,
+          acquireLicensePage: `${BASE_URL}/contact/`,
+        },
+        {
+          '@type': 'ImageObject',
+          name: 'Photographe Paysages Marseille — Pollution plastique fond marin Méditerranée — Karim Saari',
+          description: "Karim Saari, photographe paysages environnementaux à Marseille, documente la pollution plastique sur les fonds marins des Calanques lors du Projet Sentinelle.",
+          caption: "Photographe paysages environnementaux à Marseille — pollution plastique fond marin Calanques, Projet Sentinelle, Team Oxygen.",
+          contentUrl: `${BASE_URL}/images/portfolio/Mer/photographe-sous-marin-marseille-pollution-plastique-fond-marin.webp`,
+          url: `${BASE_URL}/photographie-paysage-mer`,
+          creator: { '@type': 'Person', name: 'Karim Saari', jobTitle: 'Photographe Paysages Marseille', alternateName: 'Dark Massilia', url: BASE_URL },
+          copyrightHolder: { '@type': 'Person', name: 'Karim Saari' },
+          copyrightYear: 2024,
+          creditText: '© Karim Saari / Dark Massilia',
+          copyrightNotice: '© Karim Saari / Dark Massilia — Tous droits réservés',
+          license: `${BASE_URL}/mentions-legales/`,
+          acquireLicensePage: `${BASE_URL}/contact/`,
+        },
+        {
+          '@type': 'ImageObject',
+          name: 'Photographe Paysages Marseille — Apnée dépollution Calanques Projet Sentinelle — Karim Saari',
+          description: "Karim Saari, photographe paysages et apnéiste engagé à Marseille, documente en images les missions de dépollution en apnée dans les Calanques — Projet Sentinelle.",
+          caption: "Karim Saari, photographe paysages à Marseille — dépollution en apnée dans les Calanques, Projet Sentinelle, Team Oxygen.",
+          contentUrl: `${BASE_URL}/images/portfolio/Mer/photographe-sous-marin-marseille-depollution-apnee-pneu-projet-sentinelle.webp`,
           url: `${BASE_URL}/photographie-paysage-mer`,
           creator: { '@type': 'Person', name: 'Karim Saari', jobTitle: 'Photographe Paysages Marseille', alternateName: 'Dark Massilia', url: BASE_URL },
           copyrightHolder: { '@type': 'Person', name: 'Karim Saari' },
@@ -672,19 +750,37 @@ export const SEO_PAGES = {
         breadcrumb('Données Scientifiques', '/donnees-scientifiques'),
         {
           '@type': 'Dataset',
+          '@id': `${BASE_URL}/donnees-scientifiques/#dataset`,
           name: 'Pollution Plastique en Méditerranée — Données Scientifiques',
           description:
-            'Données chiffrées sur la pollution plastique en Méditerranée : concentration de microplastiques, volumes annuels rejetés, impact sur les espèces marines et la santé humaine.',
+            'Données chiffrées sur la pollution plastique en Méditerranée : concentration de microplastiques, volumes annuels rejetés, impact sur les espèces marines et la santé humaine. Sources : WWF, PNUE, Marine Pollution Bulletin, Frontiers in Marine Science.',
           url: `${BASE_URL}/donnees-scientifiques/`,
           creator: { '@id': 'https://karimsaari.com/#person' },
+          publisher: { '@id': 'https://karimsaari.com/#person' },
           spatialCoverage: 'Mer Méditerranée',
+          temporalCoverage: '2018/2026',
+          inLanguage: 'fr',
+          license: 'https://creativecommons.org/licenses/by-nc/4.0/',
           keywords: [
-            'pollution plastique',
-            'microplastiques',
+            'pollution plastique Méditerranée',
+            'microplastiques Méditerranée',
             'nanoplastiques',
-            'Méditerranée',
-            'déchets marins',
-            'biodiversité marine',
+            'déchets marins données',
+            'pollution plastique données scientifiques',
+            'biodiversité marine Méditerranée',
+            'statistiques pollution mer',
+          ],
+          variableMeasured: [
+            'Concentration de microplastiques en Méditerranée (fragments/km²)',
+            'Volume annuel de plastique rejeté en Méditerranée (tonnes/an)',
+            'Nombre d\'espèces marines impactées par la pollution plastique',
+            'Ingestion de nanoplastiques par les humains (g/semaine)',
+            'Part de la Méditerranée dans les microplastiques mondiaux (%)',
+          ],
+          about: [
+            { '@type': 'Thing', name: 'Pollution plastique' },
+            { '@type': 'Thing', name: 'Microplastiques' },
+            { '@type': 'Place', name: 'Mer Méditerranée' },
           ],
         },
         {
@@ -1004,9 +1100,9 @@ export const SEO_PAGES = {
     },
   },
   '/meduses-souveraines-oceans-documentaire-arte': {
-    title: 'Méduses Souveraines des Océans — Documentaire ARTE',
+    title: 'Méduses Souveraines des Océans — Documentaire ARTE avec Karim Saari',
     description:
-      'Documentaire ARTE Évasion (2024, 43 min) de Sébastien Lafont. Karim Saari a fourni des images de Méditerranée sur la prolifération des méduses.',
+      'Documentaire ARTE Évasion (2024) : plongez dans la prolifération des méduses en Méditerranée. Avec les images exclusives de Karim Saari, apnéiste à Marseille.',
     canonical: `${BASE_URL}/meduses-souveraines-oceans-documentaire-arte`,
     schema: {
       '@context': 'https://schema.org',
@@ -1134,9 +1230,9 @@ export const SEO_PAGES = {
     },
   },
   '/contact': {
-    title: 'Contact Karim Saari | Reportages, Expositions & Dépollution',
+    title: 'Contacter Karim Saari | Photographe & Sentinelle des Calanques',
     description:
-      'Contactez Karim Saari pour une intervention dans un documentaire, une exposition photo engagée ou une mission de dépollution à Marseille.',
+      'Collaboration documentaire, exposition photo ou mission de dépollution à Marseille ? Écrivez à Karim Saari — réponse sous 48h.',
     canonical: `${BASE_URL}/contact`,
     schema: {
       '@context': 'https://schema.org',

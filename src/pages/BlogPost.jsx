@@ -112,8 +112,11 @@ export default function BlogPost() {
   }, [slug]); // eslint-disable-line react-hooks/exhaustive-deps
 
   // ── Balises SEO dynamiques ──────────────────────────────────────────────────
-  const seoTitle       = post ? `${post.title} | Dark Massilia` : 'Article | Dark Massilia';
-  const seoDescription = post?.excerpt ?? 'Actualités et actions de dépollution marine par Dark Massilia.';
+  const seoTitle       = post
+    ? (post.title.length > 44 ? post.title.slice(0, 57) + '…' : `${post.title} | Dark Massilia`)
+    : 'Article | Karim Saari';
+  const rawExcerpt     = post?.excerpt ?? 'Actualités et actions de dépollution marine par Dark Massilia.';
+  const seoDescription = rawExcerpt.length > 155 ? rawExcerpt.slice(0, 152) + '…' : rawExcerpt;
   const seoImage       = post?.image   ?? `${BASE_URL}/assets/og-social-card.jpg`;
   const seoCanonical   = `${BASE_URL}/blog/${slug}/`;
 

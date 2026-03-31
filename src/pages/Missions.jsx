@@ -76,7 +76,7 @@ const Missions = () => {
                   Association d'apnéistes éco-engagés basée à Marseille et intervenant sur l'ensemble du littoral marseillais : plages, ports, îles du Frioul, Calanques, Côte Bleue et jusqu'à La Ciotat.
                 </p>
                 <p>
-                  De la surface à 20 mètres de profondeur, <strong className="text-ocean-teal">Team Oxygen</strong> conduit des opérations structurées de dépollution sous-marine en apnée, combinant extraction de déchets, documentation visuelle et collecte de données environnementales sur les fonds marins de Méditerranée.
+                  De la surface à 20 mètres de profondeur, <strong className="text-ocean-teal">Team Oxygen</strong> conduit des opérations structurées de dépollution sous-marine en apnée, combinant extraction de déchets, <Link to="/photographie-sous-marine" className="text-ocean-teal hover:text-white transition-colors">documentation photographique des fonds marins des Calanques</Link> et collecte de données environnementales sur les fonds marins de Méditerranée.
                 </p>
                 <p>
                   L'association est aujourd'hui présidée par <strong className="text-white">Karim Saari</strong>, apnéiste et photographe engagé à Marseille, impliqué dans les actions de dépollution du littoral méditerranéen depuis 10 ans.
@@ -216,13 +216,20 @@ const Missions = () => {
                 Avec <strong className="text-ocean-teal">Team Oxygen</strong>, chaque immersion en
                 apnée est une action directe pour soustraire ces polluants de notre biodiversité locale.
               </p>
-              <div className="mt-6">
+              <div className="mt-6 flex flex-wrap gap-6">
                 <Link
                   to="/donnees-scientifiques"
                   className="inline-flex items-center gap-2 text-ocean-teal hover:text-white transition-colors text-sm font-medium"
                 >
                   Sources scientifiques
                   <ExternalLink className="w-4 h-4" />
+                </Link>
+                <Link
+                  to="/photographie-paysage-mer"
+                  className="inline-flex items-center gap-2 text-ocean-teal hover:text-white transition-colors text-sm font-medium"
+                >
+                  Paysages des Calanques
+                  <ArrowRight className="w-4 h-4" />
                 </Link>
               </div>
             </div>

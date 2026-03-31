@@ -584,6 +584,7 @@ async function sendEmail(html, subject, pdfBuffer, pdfName) {
 
   <!-- Graphiques historiques GSC -->
   ${chartH.some(e => e.clicks !== null) ? `
+  <div style="page-break-before:always"></div>
   <h2 style="font-size:14px;border-bottom:2px solid #1a1a1a;padding-bottom:4px;margin-bottom:8px">Évolution — 28 derniers jours</h2>
   <p style="font-size:11px;color:#666;margin:0 0 14px">Données GSC quotidiennes</p>
   <div style="background:#f8f9fa;border:1px solid #ddd;border-radius:4px;padding:16px;margin-bottom:24px">

@@ -95,6 +95,16 @@ async function prefetchWPPosts(slugs, batchSize = 5) {
   return cache;
 }
 
+// ── Construit le srcset WebP plafonné à 1200px (miroir de api.js) ────────────
+function buildSrcsetSSR(media) {
+  const sizes = media?.media_details?.sizes;
+  if (!sizes) return null;
+  const entries = Object.values(sizes)
+    .filter(s => s?.source_url && s?.width && s.width <= 1200)
+    .map(s => `${s.source_url.replace(/\.(png|jpe?g)$/i, '.webp')} ${s.width}w`);
+  return entries.length ? entries.join(', ') : null;
+}
+
 // ── Récupération d'un article WP pour injection SSR ──────────────────────────
 async function fetchWPPost(slug) {
   const WP_BASE = 'https://cms.karimsaari.com/wp-json/wp/v2';
@@ -108,6 +118,17 @@ async function fetchWPPost(slug) {
     const media  = post._embedded?.['wp:featuredmedia']?.[0];
     const author = post._embedded?.author?.[0];
 
+    // Utiliser medium_large (768px) comme src principal + conversion WebP
+    // (identique à normalizePost dans api.js pour cohérence SSR/client)
+    const sizes      = media?.media_details?.sizes;
+    const rawSrc     = sizes?.medium_large?.source_url
+                    ?? sizes?.large?.source_url
+                    ?? media?.source_url
+                    ?? extractFirstImage(post.content?.rendered ?? '')
+                    ?? null;
+    const imageSrc     = rawSrc ? rawSrc.replace(/\.(png|jpe?g)$/i, '.webp') : null;
+    const imageSrcset  = buildSrcsetSSR(media);
+
     return {
       id:            post.id,
       slug:          post.slug,
@@ -119,9 +140,12 @@ async function fetchWPPost(slug) {
       dateFormatted: new Date(post.date).toLocaleDateString('fr-FR', {
         year: 'numeric', month: 'long', day: 'numeric',
       }),
-      image:    media?.source_url ?? extractFirstImage(post.content?.rendered ?? '') ?? null,
-      imageAlt: media?.alt_text   || stripEntities(post.title?.rendered ?? ''),
-      author:   author?.name      ?? 'Dark Massilia',
+      image:         imageSrc,
+      imageSrcset:   imageSrcset,
+      imageWidth:    media?.media_details?.width  ?? 1280,
+      imageHeight:   media?.media_details?.height ?? 720,
+      imageAlt:      media?.alt_text || stripEntities(post.title?.rendered ?? ''),
+      author:        author?.name    ?? 'Dark Massilia',
     };
   } catch (_) {
     return null;
@@ -281,6 +305,22 @@ async function prerender() {
       // dans le body (pas de hoisting). On les extrait manuellement pour les
       // injecter dans <head> et améliorer le SEO (social cards, bots sans JS).
       let finalTemplate = template;
+
+      // ── Injecter un <link rel="preload"> explicite pour l'image hero des articles ──
+      // PSI vérifie que la ressource LCP est "visible dans le document initial" :
+      // un preload dans <head> garantit que le navigateur démarre le téléchargement
+      // AVANT l'exécution de JS, ce qui réduit le LCP de plusieurs secondes.
+      if (route.startsWith('/blog/')) {
+        const slug    = route.slice('/blog/'.length);
+        const wpPost  = wpPostCache.get(slug);
+        if (wpPost?.image) {
+          const srcset = wpPost.imageSrcset
+            ? ` imagesrcset="${wpPost.imageSrcset}" imagesizes="(max-width: 480px) 100vw, (max-width: 900px) 100vw, 800px"`
+            : '';
+          const preloadTag = `    <link rel="preload" as="image" fetchpriority="high" href="${wpPost.image}"${srcset}>\n`;
+          finalTemplate = finalTemplate.replace('</head>', `${preloadTag}  </head>`);
+        }
+      }
 
       // Extraire le <title> page-spécifique depuis le début du HTML rendu
       const renderedTitle = appHtml.match(/<title>([\s\S]*?)<\/title>/);
@@ -470,7 +510,25 @@ async function prerender() {
         .replace(/<link rel="preload" as="image" [^>]*fetchPriority="high"[^>]*\/?>/gi, '');
 
       // Injecter le HTML rendu dans le placeholder <!--app-html-->
-      const pageHtml = finalTemplate.replace('<!--app-html-->', appHtmlClean);
+      let pageHtml = finalTemplate.replace('<!--app-html-->', appHtmlClean);
+
+      // ── /blog : injecter les liens d'articles pour les crawlers non-JS ──────
+      // Blog.jsx charge les articles en client-side → le HTML prérendu est vide
+      // de liens → Ahrefs/Bing voient les articles comme "orphelins" (0 inlinks).
+      // On injecte un <noscript> avec tous les slugs connus pour que les crawlers
+      // puissent les découvrir via la page index.
+      if (route === '/blog' && BLOG_ROUTES.length > 0) {
+        const articleLinks = BLOG_ROUTES
+          .map(r => {
+            const slug = r.replace('/blog/', '');
+            const meta = wpMetas.find(m => m.slug === slug);
+            const label = meta ? slug.replace(/-/g, ' ') : slug;
+            return `<a href="${r}">${label}</a>`;
+          })
+          .join('\n        ');
+        const noscriptNav = `\n  <noscript><nav aria-label="Articles du blog">\n        ${articleLinks}\n      </nav></noscript>`;
+        pageHtml = pageHtml.replace('</body>', `${noscriptNav}\n</body>`);
+      }
 
       // Déterminer le chemin de sortie
       // "/" → dist/index.html
