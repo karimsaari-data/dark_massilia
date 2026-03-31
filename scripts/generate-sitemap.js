@@ -36,8 +36,8 @@ const STATIC_PAGES = [
   { path: '/depollution-marine',                           priority: '0.9', changefreq: 'monthly' },
   { path: '/blog',                                         priority: '0.9', changefreq: 'weekly'  },
   { path: '/communaute',                                   priority: '0.8', changefreq: 'monthly' },
-  { path: '/photographie-paysage-mer',                     priority: '0.8', changefreq: 'monthly' },
-  { path: '/photographie-sous-marine',                     priority: '0.8', changefreq: 'monthly' },
+  { path: '/photographie-paysage-mer',                     priority: '0.9', changefreq: 'monthly' },
+  { path: '/photographie-sous-marine',                     priority: '0.9', changefreq: 'monthly' },
   { path: '/videos',                                       priority: '0.8', changefreq: 'monthly' },
   { path: '/carte-calanques',                              priority: '0.8', changefreq: 'weekly'  },
   { path: '/actualites',                                   priority: '0.6', changefreq: 'weekly'  },
@@ -117,7 +117,7 @@ async function generateSitemap() {
       loc:        `${BASE_URL}/blog/${slug}`,
       lastmod:    modified,
       changefreq: 'monthly',
-      priority:   '0.8',
+      priority:   '0.7',
     })
   );
 
