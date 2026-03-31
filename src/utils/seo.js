@@ -71,7 +71,7 @@ const PERSON_SCHEMA = {
     name: 'Team Oxygen',
     url: 'https://www.team-oxygen.com/',
   },
-  sponsor: [
+  funder: [
     { '@type': 'GovernmentOrganization', name: 'Parc national des Calanques' },
     { '@type': 'Organization', name: 'Fondation de la Mer' },
     { '@type': 'Organization', name: 'Citeo' },
@@ -771,11 +771,11 @@ export const SEO_PAGES = {
             'statistiques pollution mer',
           ],
           variableMeasured: [
-            'Concentration de microplastiques en Méditerranée (fragments/km²)',
-            'Volume annuel de plastique rejeté en Méditerranée (tonnes/an)',
-            'Nombre d\'espèces marines impactées par la pollution plastique',
-            'Ingestion de nanoplastiques par les humains (g/semaine)',
-            'Part de la Méditerranée dans les microplastiques mondiaux (%)',
+            { '@type': 'PropertyValue', name: 'Concentration de microplastiques en Méditerranée', unitText: 'fragments/km²' },
+            { '@type': 'PropertyValue', name: 'Volume annuel de plastique rejeté en Méditerranée', unitText: 'tonnes/an' },
+            { '@type': 'PropertyValue', name: 'Espèces marines impactées par la pollution plastique', unitText: 'nombre' },
+            { '@type': 'PropertyValue', name: 'Ingestion de nanoplastiques par les humains', unitText: 'g/semaine' },
+            { '@type': 'PropertyValue', name: 'Part de la Méditerranée dans les microplastiques mondiaux', unitText: '%' },
           ],
           about: [
             { '@type': 'Thing', name: 'Pollution plastique' },
@@ -1239,7 +1239,8 @@ export const SEO_PAGES = {
       '@graph': [
         breadcrumb('Contact & Partenariats', '/contact'),
         {
-          '@type': 'PhotographyBusiness',
+          '@type': 'LocalBusiness',
+          additionalType: 'https://schema.org/ProfessionalService',
           '@id': `${BASE_URL}/#business`,
           name: 'Karim SAARI - Photographe Calanques & Marseille',
           url: `${BASE_URL}/`,

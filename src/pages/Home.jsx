@@ -1,7 +1,7 @@
 import { lazy, Suspense, useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence, useReducedMotion, useInView } from 'framer-motion';
 import { Link } from 'react-router-dom';
-import { ArrowRight, Users, ChevronDown, Camera, MapPin, Rss } from 'lucide-react';
+import { ArrowRight, Users, ChevronDown, Camera, MapPin } from 'lucide-react';
 
 import { FADE_IN_UP, STAGGER_CONTAINER, FACEBOOK_GROUP_MEMBERS } from '../utils/constants';
 import { trackEvent } from '../lib/analytics';
@@ -11,6 +11,7 @@ import { SEO_PAGES } from '../utils/seo';
 // Lazy-loaded — rompt la chaîne statique Home → supabase → @supabase/supabase-js
 // Supabase ne sera chargé qu'après le premier rendu de la page (chunk async)
 const NewsletterSection = lazy(() => import('../components/NewsletterSection'));
+const RecentArticles    = lazy(() => import('../components/RecentArticles'));
 
 // Chiffres clés — impact terrain (valeurs statiques de base)
 // La valeur end de la stat 500px est remplacée dynamiquement via Supabase (site_config)
@@ -20,7 +21,7 @@ const KEY_STATS_BASE = [
     suffix: '',
     label: 'Abonnés passionnés par les Calanques',
     sub: 'sur l\'ensemble des réseaux sociaux',
-    detail: 'dont 64 000 sur le groupe Facebook',
+    detail: `dont ${FACEBOOK_GROUP_MEMBERS.toLocaleString('fr-FR')} sur le groupe Facebook`,
     href: '/communaute',
   },
   {
@@ -223,7 +224,7 @@ const Home = () => {
   }, []);
 
   const KEY_STATS = [
-    { ...KEY_STATS_BASE[0], end: communityEnd, detail: communityDetail },
+    { ...KEY_STATS_BASE[0], end: communityEnd, detail: `dont ${fbGroupMembers.toLocaleString('fr-FR')} sur le groupe Facebook` },
     KEY_STATS_BASE[1],
     { ...KEY_STATS_BASE[2], end: localGuidesEnd },
     { ...KEY_STATS_BASE[3], end: impressions500px, href: 'https://500px.com/p/karimsaari' },
@@ -915,57 +916,10 @@ const Home = () => {
         </motion.div>
       </section>
 
-      {/* CTA Actualités Parc National des Calanques */}
-      <section className="container-custom py-8 md:py-12">
-        <motion.div
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true }}
-          variants={FADE_IN_UP}
-          className="glass-strong rounded-3xl overflow-hidden border border-white/10 mb-16"
-        >
-          <div className="grid md:grid-cols-[1fr_1.2fr] gap-0">
-            {/* Contenu - Gauche */}
-            <div className="p-8 md:p-12 flex flex-col justify-center order-1 md:order-1">
-
-              <div className="mb-6 inline-flex items-center gap-2 px-4 py-2 bg-ocean-teal/10 rounded-full border border-ocean-teal/30 w-fit">
-                <Rss className="w-5 h-5 text-ocean-teal" />
-                <span className="text-sm font-semibold text-ocean-teal">Parc National des Calanques</span>
-              </div>
-
-              <h2 className="text-3xl md:text-4xl font-bold text-white mb-6">
-                En direct des Calanques
-              </h2>
-
-              <p className="text-gray-300 text-lg mb-8 leading-[1.8]">
-                Suivez l'actualité officielle du Parc National des Calanques — espèces protégées, réglementation, événements et alertes environnementales en Méditerranée.
-              </p>
-
-              <Link
-                to="/actualites"
-                className="btn-primary inline-flex items-center gap-2 w-fit"
-              >
-                <span>Voir les actualités</span>
-                <ArrowRight className="w-5 h-5" />
-              </Link>
-            </div>
-
-            {/* Image - Droite */}
-            <div className="relative h-64 md:h-auto min-h-[380px] order-first md:order-2">
-              <img
-                src="/images/portfolio/Mer/karim-saari-marseille-kayakistes-calanque-arbre-tordu.webp"
-                srcSet="/images/portfolio/Mer/karim-saari-marseille-kayakistes-calanque-arbre-tordu_400w.webp 400w, /images/portfolio/Mer/karim-saari-marseille-kayakistes-calanque-arbre-tordu_800w.webp 800w, /images/portfolio/Mer/karim-saari-marseille-kayakistes-calanque-arbre-tordu.webp 1920w"
-                sizes="(max-width: 768px) 100vw, 50vw"
-                alt="Kayakistes dans les Calanques de Marseille — Parc National des Calanques"
-                className="absolute inset-0 w-full h-full object-cover"
-                loading="lazy"
-                decoding="async"
-              />
-              <div className="absolute inset-0 bg-gradient-to-l from-transparent to-black/30" />
-            </div>
-          </div>
-        </motion.div>
-      </section>
+      {/* Derniers articles du blog — maillage interne + contenu frais */}
+      <Suspense fallback={<section className="container-custom py-8 md:py-12" />}>
+        <RecentArticles title="Derniers articles" count={3} />
+      </Suspense>
 
       {/* Section FAQ — rich results FAQPage + contenu statique pour crawlers */}
       <section className="container-custom pb-12 md:pb-16">

@@ -6,13 +6,17 @@ on:
   workflow_dispatch:
     inputs:
       backfill_days:
-        description: 'Jours à backfiller pour gsc_daily (ex: 28)'
+        description: 'Jours à backfiller (ex: 90 pour depuis le 1er janvier)'
         required: false
         default: '1'
       backfill_weeks:
         description: 'Semaines à backfiller pour gsc_weekly_queries (ex: 12)'
         required: false
         default: '1'
+      skip_report:
+        description: 'Ne pas envoyer le rapport email (true/false)'
+        required: false
+        default: 'false'
 
 env:
   FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
@@ -44,3 +48,11 @@ jobs:
           BACKFILL_DAYS:        ${{ github.event.inputs.backfill_days || '1' }}
           BACKFILL_WEEKS:       ${{ github.event.inputs.backfill_weeks || '1' }}
         run: node scripts/gsc-collect.js
+
+      - name: Rapport GSC journalier → Brevo
+        if: ${{ github.event.inputs.skip_report != 'true' }}
+        env:
+          VITE_SUPABASE_URL:      ${{ secrets.VITE_SUPABASE_URL }}
+          VITE_SUPABASE_ANON_KEY: ${{ secrets.VITE_SUPABASE_ANON_KEY }}
+          BREVO_API_KEY:          ${{ secrets.BREVO_API_KEY }}
+        run: node scripts/gsc-daily-report.js

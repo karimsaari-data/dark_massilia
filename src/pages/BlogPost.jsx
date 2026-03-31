@@ -19,12 +19,30 @@ import { FADE_IN_UP } from '../utils/constants';
 
 const BASE_URL = 'https://karimsaari.com';
 
-// Post-traite le HTML WordPress : lazy loading images + rétrogradation h1→h2
-function lazyLoadContent(html) {
+// Génère un alt de secours depuis l'URL d'une image (nom de fichier sans extension)
+function altFromSrc(imgTag, postTitle = '') {
+  const src = imgTag.match(/src=["']([^"']+)["']/i)?.[1] ?? '';
+  const filename = src.split('/').pop().replace(/\.[^.]+$/, '').replace(/[-_x]/g, ' ').replace(/\s+/g, ' ').trim();
+  return filename || postTitle || 'Image Dark Massilia';
+}
+
+// Post-traite le HTML WordPress : lazy loading images + rétrogradation h1→h2 + alt manquants
+function lazyLoadContent(html, postTitle = '') {
   return html
     .replace(/<h1(\s[^>]*)?>/gi, '<h2$1>')
     .replace(/<\/h1>/gi, '</h2>')
-    .replace(/<img(?![^>]*\bloading=)([^>]*>)/gi, '<img loading="lazy" decoding="async"$1');
+    // Ajoute lazy/decoding si absent
+    .replace(/<img(?![^>]*\bloading=)([^>]*>)/gi, '<img loading="lazy" decoding="async"$1')
+    // Injecte alt de secours sur les <img> sans alt ou avec alt=""
+    .replace(/<img([^>]*)>/gi, (match, attrs) => {
+      if (/\balt=["'][^"']+["']/.test(attrs)) return match; // alt non vide → OK
+      const fallback = altFromSrc(match, postTitle);
+      // Remplace alt="" existant ou ajoute alt=""
+      if (/\balt=/.test(attrs)) {
+        return `<img${attrs.replace(/\balt=["'][^"']*["']/i, `alt="${fallback}"`)}>`;
+      }
+      return `<img alt="${fallback}"${attrs}>`;
+    });
 }
 
 // Lire les données pré-injectées par prerender.js lors du rendu SSR
@@ -40,40 +58,46 @@ function getSSRPost() {
 function buildSchema(post, slug) {
   return {
     '@context': 'https://schema.org',
-    '@type': 'BlogPosting',
-    headline: post.title,
-    description: post.excerpt,
-    image: post.image ?? `${BASE_URL}/assets/og-social-card.jpg`,
-    datePublished: post.date,
-    dateModified: post.modified ?? post.date,
-    url: `${BASE_URL}/blog/${slug}`,
-    author: {
-      '@type': 'Person',
-      name: 'Karim Saari',
-      alternateName: 'Dark Massilia',
-      url: BASE_URL,
-    },
-    publisher: {
-      '@type': 'Organization',
-      name: 'Dark Massilia',
-      url: BASE_URL,
-      logo: {
-        '@type': 'ImageObject',
-        url: `${BASE_URL}/assets/dark-massilia-logo.webp`,
+    '@graph': [
+      {
+        '@type': 'BreadcrumbList',
+        itemListElement: [
+          { '@type': 'ListItem', position: 1, name: 'Accueil', item: `${BASE_URL}/` },
+          { '@type': 'ListItem', position: 2, name: 'Blog', item: `${BASE_URL}/blog` },
+          { '@type': 'ListItem', position: 3, name: post.title, item: `${BASE_URL}/blog/${slug}` },
+        ],
       },
-    },
-    mainEntityOfPage: {
-      '@type': 'WebPage',
-      '@id': `${BASE_URL}/blog/${slug}`,
-    },
-    breadcrumb: {
-      '@type': 'BreadcrumbList',
-      itemListElement: [
-        { '@type': 'ListItem', position: 1, name: 'Accueil', item: `${BASE_URL}/` },
-        { '@type': 'ListItem', position: 2, name: 'Blog', item: `${BASE_URL}/blog/` },
-        { '@type': 'ListItem', position: 3, name: post.title, item: `${BASE_URL}/blog/${slug}/` },
-      ],
-    },
+      {
+        '@type': 'BlogPosting',
+        '@id': `${BASE_URL}/blog/${slug}#article`,
+        headline: post.title,
+        description: post.excerpt,
+        image: post.image ?? `${BASE_URL}/assets/og-social-card.jpg`,
+        datePublished: post.date,
+        dateModified: post.modified ?? post.date,
+        url: `${BASE_URL}/blog/${slug}`,
+        inLanguage: 'fr-FR',
+        author: {
+          '@type': 'Person',
+          name: 'Karim Saari',
+          alternateName: 'Dark Massilia',
+          url: BASE_URL,
+        },
+        publisher: {
+          '@type': 'Organization',
+          name: 'Dark Massilia',
+          url: BASE_URL,
+          logo: {
+            '@type': 'ImageObject',
+            url: `${BASE_URL}/assets/dark-massilia-logo.webp`,
+          },
+        },
+        mainEntityOfPage: {
+          '@type': 'WebPage',
+          '@id': `${BASE_URL}/blog/${slug}`,
+        },
+      },
+    ],
   };
 }
 
@@ -220,7 +244,7 @@ export default function BlogPost() {
               {/* Contenu HTML WordPress — les h1 WP sont rétrogradés en h2 pour éviter les doublons */}
               <div
                 className="prose-blog"
-                dangerouslySetInnerHTML={{ __html: lazyLoadContent(post.content) }}
+                dangerouslySetInnerHTML={{ __html: lazyLoadContent(post.content, post.title) }}
               />
 
               {/* Partage */}

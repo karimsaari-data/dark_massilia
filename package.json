@@ -18,6 +18,7 @@
     "lint": "eslint .",
     "preview": "vite preview",
     "gsc-collect": "node --env-file-if-exists=.env scripts/gsc-collect.js",
+    "gsc-daily-report": "node --env-file-if-exists=.env scripts/gsc-daily-report.js",
     "seo-digest": "node scripts/weekly-seo-digest.js",
     "psi-audit": "node --env-file-if-exists=.env scripts/psi-audit.js",
     "ga-report": "node scripts/ga-report.js",

@@ -1,3 +1,4 @@
+import { lazy, Suspense } from 'react';
 import { motion } from 'framer-motion';
 import { ExternalLink, BookOpen, Globe, FileText, ArrowLeft } from 'lucide-react';
 import { Link } from 'react-router-dom';
@@ -5,6 +6,8 @@ import { FADE_IN_UP, STAGGER_CONTAINER } from '../utils/constants';
 import SEO from '../components/SEO';
 import { SEO_PAGES } from '../utils/seo';
 import VideoPlayer from '../components/media/VideoPlayer';
+
+const RecentArticles = lazy(() => import('../components/RecentArticles'));
 
 const Sources = () => {
   const sources = [
@@ -546,6 +549,13 @@ const Sources = () => {
                 </p>
               </div>
             </div>
+            {/* Articles liés — maillage interne */}
+            <div className="mt-10 pt-8 border-t border-white/10">
+              <Suspense fallback={null}>
+                <RecentArticles title="Articles sur ce thème" count={3} />
+              </Suspense>
+            </div>
+
             <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mt-8 pt-6 border-t border-white/8">
               <Link
                 to="/sauver-marseille-documentaire-arte"

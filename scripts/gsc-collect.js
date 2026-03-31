@@ -1,7 +1,11 @@
 /**
  * gsc-collect.js — Collecte GSC → Supabase
- *   · gsc_daily          : agrégat global quotidien (clics, impressions, CTR, position)
- *   · gsc_weekly_queries : détail par mot-clé tracé sur 7 jours (dimanche uniquement)
+ *   · gsc_daily           : agrégat global quotidien (clics, impressions, CTR, position)
+ *   · gsc_daily_queries   : top 50 requêtes par jour
+ *   · gsc_daily_pages     : top 20 pages par jour
+ *   · gsc_daily_countries : top pays par jour
+ *   · gsc_daily_devices   : appareils par jour
+ *   · gsc_weekly_queries  : détail par mot-clé tracé sur 7 jours (dimanche uniquement)
  *
  * Usage quotidien  : node scripts/gsc-collect.js
  * Backfill jours   : BACKFILL_DAYS=28 node scripts/gsc-collect.js
@@ -71,6 +75,90 @@ async function collectGlobal(token, date) {
   console.log(`  ✅ global — ${row.clicks} clics / ${row.impressions} impr. / pos. ${row.position.toFixed(1)}`);
 }
 
+// ── Collecte top requêtes journalières ───────────────────────────────────────
+async function collectDailyQueries(token, date) {
+  const data = await gscQuery(token, {
+    startDate: date, endDate: date,
+    dimensions: ['query'],
+    rowLimit: 50,
+  });
+  if (data.error) throw new Error(`GSC API queries: ${JSON.stringify(data.error)}`);
+  const rows = (data.rows || []).map(r => ({
+    date,
+    query:       r.keys[0],
+    clicks:      r.clicks,
+    impressions: r.impressions,
+    ctr:         +(r.ctr.toFixed(5)),
+    position:    +(r.position.toFixed(2)),
+  }));
+  if (rows.length === 0) { console.log(`  ⚠️  ${date} — aucune requête`); return; }
+  const { error } = await supabase.from('gsc_daily_queries').upsert(rows, { onConflict: 'date,query' });
+  if (error) throw new Error(`gsc_daily_queries ${date}: ${error.message}`);
+  console.log(`  ✅ requêtes — ${rows.length} lignes`);
+}
+
+// ── Collecte top pages journalières ──────────────────────────────────────────
+async function collectDailyPages(token, date) {
+  const data = await gscQuery(token, {
+    startDate: date, endDate: date,
+    dimensions: ['page'],
+    rowLimit: 20,
+  });
+  if (data.error) throw new Error(`GSC API pages: ${JSON.stringify(data.error)}`);
+  const rows = (data.rows || []).map(r => ({
+    date,
+    page:        r.keys[0],
+    clicks:      r.clicks,
+    impressions: r.impressions,
+    ctr:         +(r.ctr.toFixed(5)),
+    position:    +(r.position.toFixed(2)),
+  }));
+  if (rows.length === 0) { console.log(`  ⚠️  ${date} — aucune page`); return; }
+  const { error } = await supabase.from('gsc_daily_pages').upsert(rows, { onConflict: 'date,page' });
+  if (error) throw new Error(`gsc_daily_pages ${date}: ${error.message}`);
+  console.log(`  ✅ pages — ${rows.length} lignes`);
+}
+
+// ── Collecte pays journaliers ─────────────────────────────────────────────────
+async function collectDailyCountries(token, date) {
+  const data = await gscQuery(token, {
+    startDate: date, endDate: date,
+    dimensions: ['country'],
+    rowLimit: 20,
+  });
+  if (data.error) throw new Error(`GSC API countries: ${JSON.stringify(data.error)}`);
+  const rows = (data.rows || []).map(r => ({
+    date,
+    country:     r.keys[0],
+    clicks:      r.clicks,
+    impressions: r.impressions,
+  }));
+  if (rows.length === 0) { console.log(`  ⚠️  ${date} — aucun pays`); return; }
+  const { error } = await supabase.from('gsc_daily_countries').upsert(rows, { onConflict: 'date,country' });
+  if (error) throw new Error(`gsc_daily_countries ${date}: ${error.message}`);
+  console.log(`  ✅ pays — ${rows.length} lignes`);
+}
+
+// ── Collecte appareils journaliers ────────────────────────────────────────────
+async function collectDailyDevices(token, date) {
+  const data = await gscQuery(token, {
+    startDate: date, endDate: date,
+    dimensions: ['device'],
+    rowLimit: 5,
+  });
+  if (data.error) throw new Error(`GSC API devices: ${JSON.stringify(data.error)}`);
+  const rows = (data.rows || []).map(r => ({
+    date,
+    device:      r.keys[0],
+    clicks:      r.clicks,
+    impressions: r.impressions,
+  }));
+  if (rows.length === 0) { console.log(`  ⚠️  ${date} — aucun appareil`); return; }
+  const { error } = await supabase.from('gsc_daily_devices').upsert(rows, { onConflict: 'date,device' });
+  if (error) throw new Error(`gsc_daily_devices ${date}: ${error.message}`);
+  console.log(`  ✅ appareils — ${rows.length} lignes`);
+}
+
 // ── Collecte top requêtes réelles (hebdomadaire, fenêtre 7 jours) ────────────
 async function collectWeeklyQueries(token, weekStart) {
   const weekEnd = formatDate(new Date(new Date(weekStart).getTime() + 6 * 86400000));
@@ -120,10 +208,14 @@ async function collectWeeklyQueries(token, weekStart) {
     formatDate(new Date(now - (2 + i) * 86400000))
   ).reverse();
 
-  console.log(`📊 Collecte globale GSC → gsc_daily (${dates.length} jour${dates.length > 1 ? 's' : ''})...`);
+  console.log(`📊 Collecte GSC → Supabase (${dates.length} jour${dates.length > 1 ? 's' : ''})...`);
   for (const date of dates) {
     console.log(`\n📅 ${date}`);
     await collectGlobal(token, date);
+    await collectDailyQueries(token, date);
+    await collectDailyPages(token, date);
+    await collectDailyCountries(token, date);
+    await collectDailyDevices(token, date);
   }
 
   // ── Collecte hebdomadaire requêtes ───────────────────────────────────────
