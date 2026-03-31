@@ -288,6 +288,9 @@ export default function BlogPost() {
               <Link to="/photographie-sous-marine" className="text-text-secondary hover:text-ocean-teal transition-colors inline-flex items-center gap-1">
                 Galerie photos sous-marines <ArrowRight className="w-4 h-4" />
               </Link>
+              <Link to="/photographie-paysage-mer" className="text-text-secondary hover:text-ocean-teal transition-colors inline-flex items-center gap-1">
+                Galerie paysages Marseille <ArrowRight className="w-4 h-4" />
+              </Link>
               <Link to="/communaute" className="text-text-secondary hover:text-ocean-teal transition-colors inline-flex items-center gap-1">
                 Rejoindre la communauté <ArrowRight className="w-4 h-4" />
               </Link>

@@ -102,10 +102,17 @@ function urlEntry(pageUrl, imageEntries) {
 // ── 1. Portfolio Paysage (Mer + Terre) ────────────────────────────────────────
 function buildPortfolioBlock(photos) {
   const entries = photos.map(photo => {
-    const title   = photo.title || photo.alt || `Photographie — Karim Saari`;
-    const caption = photo.alt   || CAPTION;
-    const geo     = photo.lieu  || 'Marseille, France';
-    const loc     = `${BASE_URL}${photo.src}`;
+    const isMer    = photo.categorie === 'mer';
+    const baseTitle = photo.title || photo.alt || `Photographie — Karim Saari`;
+    const title    = isMer
+      ? `${baseTitle} — Photographe Calanques Marseille`
+      : baseTitle;
+    const baseCaption = photo.alt || CAPTION;
+    const caption  = isMer
+      ? `${baseCaption} — © Karim Saari, photographe Calanques Marseille`
+      : baseCaption;
+    const geo      = photo.lieu  || 'Marseille, France';
+    const loc      = `${BASE_URL}${photo.src}`;
     return imageEntry({ loc, title, caption, geo });
   });
   return urlEntry(`${BASE_URL}/photographie-paysage-mer`, entries);
