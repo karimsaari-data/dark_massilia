@@ -740,7 +740,7 @@ export const SEO_PAGES = {
     },
   },
   '/donnees-scientifiques': {
-    title: 'Pollution Plastique Méditerranée — Données Scientifiques',
+    title: 'Pollution Plastique Méditerranée | Données Scientifiques',
     description:
       "7 % des microplastiques mondiaux en Méditerranée. Données scientifiques sur les rejets plastiques, l'impact sur les espèces marines et la santé humaine.",
     canonical: `${BASE_URL}/donnees-scientifiques`,
@@ -1230,7 +1230,7 @@ export const SEO_PAGES = {
     },
   },
   '/contact': {
-    title: 'Contacter Karim Saari | Photographe & Sentinelle des Calanques',
+    title: 'Contact | Photographe & Apnéiste Marseille — Karim Saari',
     description:
       'Collaboration documentaire, exposition photo ou mission de dépollution à Marseille ? Écrivez à Karim Saari — réponse sous 48h.',
     canonical: `${BASE_URL}/contact`,
@@ -1310,7 +1310,7 @@ export const SEO_PAGES = {
     },
   },
   '/carte-calanques': {
-    title: 'Carte des Calanques : Dépollution & Biodiversité',
+    title: 'Carte Calanques — Dépollution & Biodiversité | Karim Saari',
     description:
       'Explorez la carte interactive des Calanques de Marseille. Localisez nos zones de dépollution avec Team Oxygen et découvrez la biodiversité à protéger.',
     canonical: `${BASE_URL}/carte-calanques`,

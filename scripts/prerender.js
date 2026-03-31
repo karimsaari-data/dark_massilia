@@ -55,7 +55,7 @@ async function fetchWPMeta() {
   try {
     do {
       const controller = new AbortController();
-      const timer = setTimeout(() => controller.abort(), 8000);
+      const timer = setTimeout(() => controller.abort(), 15000);
       let res;
       try {
         res = await fetch(

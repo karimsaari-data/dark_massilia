@@ -35,32 +35,10 @@ const ScrollToTop = () => {
   );
 };
 
-// ── Entité Person globale — présente sur toutes les pages ────────────────────
-// Déclare l'identité de Karim Saari à Google via JSON-LD Schema.org.
-// Injecté dans <head> via le hoisting React 19 + extraction prerender.js.
-const GLOBAL_PERSON_SCHEMA = {
-  '@context': 'https://schema.org',
-  '@type':    'Person',
-  name:       'Karim Saari',
-  jobTitle:   'Photographe environnemental à Marseille & Apnéiste',
-  url:        'https://karimsaari.com',
-  description: 'Photographe environnemental à Marseille, photographe de paysages et apnéiste engagé en Méditerranée.',
-  affiliation: {
-    '@type': 'NGO',
-    name:    'Team Oxygen',
-    url:     'https://www.team-oxygen.com/',
-  },
-};
-
 const Layout = () => {
   return (
     <div className="min-h-screen flex flex-col">
-      {/* ── Schema.org global — entité Person (toutes les pages) ── */}
-      <script
-        type="application/ld+json"
-        suppressHydrationWarning
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(GLOBAL_PERSON_SCHEMA) }}
-      />
+      {/* Schema Person géré page par page via SEO_PAGES dans seo.js */}
       {/* Skip link — accessibilité clavier / lecteurs d'écran (WCAG 2.1 AA) */}
       <a
         href="#main-content"

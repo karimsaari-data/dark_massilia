@@ -666,6 +666,10 @@ const PhotoSousMarine = () => {
                     demande une logistique précise. Ces images servent de{' '}
                     <strong className="text-white">preuves visuelles</strong> pour alerter l'opinion publique
                     et montrer que chaque déchet retiré est une victoire immédiate pour l'écosystème local.
+                    Les chiffres derrière ces images sont disponibles dans les{' '}
+                    <Link to="/donnees-scientifiques" className="text-ocean-teal hover:text-white transition-colors">
+                      données scientifiques sur la pollution plastique en Méditerranée
+                    </Link>.
                   </p>
                 </div>
 

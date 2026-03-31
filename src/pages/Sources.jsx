@@ -178,7 +178,7 @@ const Sources = () => {
           transition={{ duration: 0.6 }}
           className="text-3xl md:text-4xl font-bold text-white text-center mb-4 leading-tight"
         >
-          Sources Scientifiques
+          Sources Scientifiques —
           <span className="block text-xl md:text-2xl font-medium text-ocean-teal mt-3">
             Pollution Plastique en Méditerranée & espèces invasives
           </span>
