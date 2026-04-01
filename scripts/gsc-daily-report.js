@@ -226,6 +226,77 @@ function buildHtml({ lastDay, days7, queries, pages, countries, devices }) {
     }), 4
   );
 
+  // ── Graphique 7 jours (SVG inline) ──
+  const chartW = 500, chartH = 120, padL = 28, padR = 8, padT = 10, padB = 24;
+  const innerW = chartW - padL - padR;
+  const innerH = chartH - padT - padB;
+  const maxImpr = Math.max(...days7.map(d => d.impressions), 1);
+  const maxClicks = Math.max(...days7.map(d => d.clicks), 1);
+  const n = days7.length;
+  const barW7 = Math.floor(innerW / n);
+  const barPad = Math.max(2, Math.floor(barW7 * 0.15));
+
+  // Barres impressions (fond)
+  const imprBars = days7.map((d, i) => {
+    const h = Math.round((d.impressions / maxImpr) * innerH);
+    const x = padL + i * barW7 + barPad;
+    const y = padT + innerH - h;
+    const isLast = d.date === date;
+    return `<rect x="${x}" y="${y}" width="${barW7 - barPad * 2}" height="${h}" rx="2"
+      fill="${isLast ? 'rgba(33,196,123,0.25)' : 'rgba(33,196,123,0.12)'}"/>`;
+  }).join('');
+
+  // Ligne clics
+  const clickPoints = days7.map((d, i) => {
+    const x = padL + i * barW7 + Math.floor(barW7 / 2);
+    const y = padT + innerH - Math.round((d.clicks / maxClicks) * innerH);
+    return `${x},${y}`;
+  }).join(' ');
+  const clickDots = days7.map((d, i) => {
+    const x = padL + i * barW7 + Math.floor(barW7 / 2);
+    const y = padT + innerH - Math.round((d.clicks / maxClicks) * innerH);
+    const isLast = d.date === date;
+    return `<circle cx="${x}" cy="${y}" r="${isLast ? 4 : 3}"
+      fill="${isLast ? '#21c47b' : '#fff'}" stroke="#21c47b" stroke-width="2"/>`;
+  }).join('');
+
+  // Labels dates axe X
+  const xLabels = days7.map((d, i) => {
+    const x = padL + i * barW7 + Math.floor(barW7 / 2);
+    const isLast = d.date === date;
+    return `<text x="${x}" y="${chartH - 4}" text-anchor="middle"
+      font-size="9" fill="${isLast ? '#21c47b' : '#999'}"
+      font-weight="${isLast ? '700' : '400'}">${shortDate(d.date)}</text>`;
+  }).join('');
+
+  // Labels axe Y (impressions)
+  const yLabels = [0, Math.round(maxImpr / 2), maxImpr].map(v => {
+    const y = padT + innerH - Math.round((v / maxImpr) * innerH) + 3;
+    return `<text x="${padL - 4}" y="${y}" text-anchor="end" font-size="8" fill="#bbb">${v}</text>`;
+  }).join('');
+
+  const chart7 = `
+    <svg width="${chartW}" height="${chartH}" viewBox="0 0 ${chartW} ${chartH}"
+      xmlns="http://www.w3.org/2000/svg" style="display:block;max-width:100%">
+      <!-- Grille -->
+      <line x1="${padL}" y1="${padT}" x2="${padL}" y2="${padT + innerH}" stroke="#eee" stroke-width="1"/>
+      <line x1="${padL}" y1="${padT + innerH}" x2="${chartW - padR}" y2="${padT + innerH}" stroke="#eee" stroke-width="1"/>
+      <line x1="${padL}" y1="${padT + Math.floor(innerH / 2)}" x2="${chartW - padR}" y2="${padT + Math.floor(innerH / 2)}" stroke="#f5f5f5" stroke-width="1" stroke-dasharray="3,3"/>
+      <!-- Barres impressions -->
+      ${imprBars}
+      <!-- Ligne clics -->
+      <polyline points="${clickPoints}" fill="none" stroke="#21c47b" stroke-width="2" stroke-linejoin="round"/>
+      <!-- Dots clics -->
+      ${clickDots}
+      <!-- Labels -->
+      ${yLabels}
+      ${xLabels}
+    </svg>
+    <div style="display:flex;gap:16px;margin-top:6px;font-size:10px;color:#999">
+      <span><span style="display:inline-block;width:10px;height:10px;background:rgba(33,196,123,0.2);border-radius:2px;vertical-align:middle;margin-right:4px"></span>Impressions</span>
+      <span><span style="display:inline-block;width:16px;height:2px;background:#21c47b;vertical-align:middle;margin-right:4px"></span>Clics</span>
+    </div>`;
+
   // ── Tableau 7 jours ──
   const trend7Rows = days7.map(d => `
     <tr style="border-bottom:1px solid #f0f0f0${d.date === date ? ';background:#f0fbf5' : ''}">
@@ -335,16 +406,21 @@ function buildHtml({ lastDay, days7, queries, pages, countries, devices }) {
             </table>
 
             <!-- 7 jours glissants -->
-            ${section('7 jours glissants', dataTable(
-              [
-                { label: 'Date' },
-                { label: 'Clics', align: 'right' },
-                { label: 'Impr.', align: 'right' },
-                { label: 'CTR', align: 'right' },
-                { label: 'Pos. moy.', align: 'right' },
-              ],
-              trend7Rows
-            ))}
+            ${section('7 jours glissants', `
+              ${chart7}
+              <div style="margin-top:16px">
+                ${dataTable(
+                  [
+                    { label: 'Date' },
+                    { label: 'Clics', align: 'right' },
+                    { label: 'Impr.', align: 'right' },
+                    { label: 'CTR', align: 'right' },
+                    { label: 'Pos. moy.', align: 'right' },
+                  ],
+                  trend7Rows
+                )}
+              </div>
+            `)}
 
           </td>
         </tr>
