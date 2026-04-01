@@ -376,6 +376,9 @@ function buildHtml({ lastDay, days7, queries, pages, countries, devices, generat
               </tr>
             </table>
 
+            <!-- Saut de page PDF -->
+            <div style="page-break-after:always"></div>
+
             <!-- 7 jours glissants -->
             ${section('7 jours glissants', `
               ${chart7}
