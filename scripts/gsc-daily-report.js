@@ -14,6 +14,7 @@
  */
 
 import { createClient } from '@supabase/supabase-js';
+import puppeteer from 'puppeteer';
 
 const SUPABASE_URL = process.env.VITE_SUPABASE_URL;
 const SUPABASE_KEY = process.env.VITE_SUPABASE_ANON_KEY || process.env.SUPABASE_SERVICE_KEY;
@@ -139,7 +140,7 @@ async function fetchDevices(date) {
 
 // ── HTML Email ────────────────────────────────────────────────────────────────
 
-function buildHtml({ lastDay, days7, queries, pages, countries, devices }) {
+function buildHtml({ lastDay, days7, queries, pages, countries, devices, generatedAt }) {
   const date = lastDay.date;
 
   // ── KPI bar ──
@@ -226,76 +227,43 @@ function buildHtml({ lastDay, days7, queries, pages, countries, devices }) {
     }), 4
   );
 
-  // ── Graphique 7 jours (SVG inline) ──
-  const chartW = 500, chartH = 120, padL = 28, padR = 8, padT = 10, padB = 24;
-  const innerW = chartW - padL - padR;
-  const innerH = chartH - padT - padB;
-  const maxImpr = Math.max(...days7.map(d => d.impressions), 1);
+  // ── Graphique 7 jours (HTML/CSS — compatible email + PDF) ───────────────────
+  const maxImpr  = Math.max(...days7.map(d => d.impressions), 1);
   const maxClicks = Math.max(...days7.map(d => d.clicks), 1);
-  const n = days7.length;
-  const barW7 = Math.floor(innerW / n);
-  const barPad = Math.max(2, Math.floor(barW7 * 0.15));
-
-  // Barres impressions (fond)
-  const imprBars = days7.map((d, i) => {
-    const h = Math.round((d.impressions / maxImpr) * innerH);
-    const x = padL + i * barW7 + barPad;
-    const y = padT + innerH - h;
-    const isLast = d.date === date;
-    return `<rect x="${x}" y="${y}" width="${barW7 - barPad * 2}" height="${h}" rx="2"
-      fill="${isLast ? 'rgba(33,196,123,0.25)' : 'rgba(33,196,123,0.12)'}"/>`;
-  }).join('');
-
-  // Ligne clics
-  const clickPoints = days7.map((d, i) => {
-    const x = padL + i * barW7 + Math.floor(barW7 / 2);
-    const y = padT + innerH - Math.round((d.clicks / maxClicks) * innerH);
-    return `${x},${y}`;
-  }).join(' ');
-  const clickDots = days7.map((d, i) => {
-    const x = padL + i * barW7 + Math.floor(barW7 / 2);
-    const y = padT + innerH - Math.round((d.clicks / maxClicks) * innerH);
-    const isLast = d.date === date;
-    return `<circle cx="${x}" cy="${y}" r="${isLast ? 4 : 3}"
-      fill="${isLast ? '#21c47b' : '#fff'}" stroke="#21c47b" stroke-width="2"/>`;
-  }).join('');
-
-  // Labels dates axe X
-  const xLabels = days7.map((d, i) => {
-    const x = padL + i * barW7 + Math.floor(barW7 / 2);
-    const isLast = d.date === date;
-    return `<text x="${x}" y="${chartH - 4}" text-anchor="middle"
-      font-size="9" fill="${isLast ? '#21c47b' : '#999'}"
-      font-weight="${isLast ? '700' : '400'}">${shortDate(d.date)}</text>`;
-  }).join('');
-
-  // Labels axe Y (impressions)
-  const yLabels = [0, Math.round(maxImpr / 2), maxImpr].map(v => {
-    const y = padT + innerH - Math.round((v / maxImpr) * innerH) + 3;
-    return `<text x="${padL - 4}" y="${y}" text-anchor="end" font-size="8" fill="#bbb">${v}</text>`;
+  const chartCols = days7.map(d => {
+    const isLast   = d.date === date;
+    const hImpr    = Math.max(4, Math.round((d.impressions / maxImpr)  * 80));
+    const hClicks  = Math.max(d.clicks > 0 ? 4 : 0, Math.round((d.clicks / maxClicks) * 80));
+    return `
+      <td align="center" valign="bottom" style="width:${Math.floor(100/days7.length)}%;padding:0 2px">
+        <div style="position:relative;height:88px;display:flex;flex-direction:column;justify-content:flex-end;align-items:center">
+          <!-- Barre impressions -->
+          <div style="width:28px;height:${hImpr}px;background:${isLast ? 'rgba(33,196,123,0.35)' : 'rgba(33,196,123,0.15)'};border-radius:3px 3px 0 0;position:relative">
+            ${d.clicks > 0 ? `<!-- Barre clics superposée -->
+            <div style="position:absolute;bottom:0;left:50%;transform:translateX(-50%);width:10px;height:${hClicks}px;background:#21c47b;border-radius:2px 2px 0 0"></div>` : ''}
+          </div>
+        </div>
+        <!-- Label valeur clics -->
+        <div style="font-size:10px;font-weight:${isLast ? '700' : '400'};color:${isLast ? '#21c47b' : '#888'};margin-top:3px">${d.clicks > 0 ? d.clicks : '·'}</div>
+        <!-- Label date -->
+        <div style="font-size:9px;color:${isLast ? '#21c47b' : '#bbb'};font-weight:${isLast ? '700' : '400'};margin-top:2px;white-space:nowrap">${shortDate(d.date)}</div>
+      </td>`;
   }).join('');
 
   const chart7 = `
-    <svg width="${chartW}" height="${chartH}" viewBox="0 0 ${chartW} ${chartH}"
-      xmlns="http://www.w3.org/2000/svg" style="display:block;max-width:100%">
-      <!-- Grille -->
-      <line x1="${padL}" y1="${padT}" x2="${padL}" y2="${padT + innerH}" stroke="#eee" stroke-width="1"/>
-      <line x1="${padL}" y1="${padT + innerH}" x2="${chartW - padR}" y2="${padT + innerH}" stroke="#eee" stroke-width="1"/>
-      <line x1="${padL}" y1="${padT + Math.floor(innerH / 2)}" x2="${chartW - padR}" y2="${padT + Math.floor(innerH / 2)}" stroke="#f5f5f5" stroke-width="1" stroke-dasharray="3,3"/>
-      <!-- Barres impressions -->
-      ${imprBars}
-      <!-- Ligne clics -->
-      <polyline points="${clickPoints}" fill="none" stroke="#21c47b" stroke-width="2" stroke-linejoin="round"/>
-      <!-- Dots clics -->
-      ${clickDots}
-      <!-- Labels -->
-      ${yLabels}
-      ${xLabels}
-    </svg>
-    <div style="display:flex;gap:16px;margin-top:6px;font-size:10px;color:#999">
-      <span><span style="display:inline-block;width:10px;height:10px;background:rgba(33,196,123,0.2);border-radius:2px;vertical-align:middle;margin-right:4px"></span>Impressions</span>
-      <span><span style="display:inline-block;width:16px;height:2px;background:#21c47b;vertical-align:middle;margin-right:4px"></span>Clics</span>
-    </div>`;
+    <table width="100%" cellpadding="0" cellspacing="0" style="border-bottom:2px solid #eee">
+      <tr>${chartCols}</tr>
+    </table>
+    <table width="100%" cellpadding="0" cellspacing="0" style="margin-top:8px">
+      <tr>
+        <td style="font-size:10px;color:#999">
+          <span style="display:inline-block;width:10px;height:10px;background:rgba(33,196,123,0.25);border-radius:2px;vertical-align:middle;margin-right:4px"></span>Impressions
+          &nbsp;
+          <span style="display:inline-block;width:10px;height:10px;background:#21c47b;border-radius:2px;vertical-align:middle;margin-right:4px"></span>Clics
+        </td>
+        <td align="right" style="font-size:10px;color:#bbb">max impr. : ${maxImpr}</td>
+      </tr>
+    </table>`;
 
   // ── Tableau 7 jours ──
   const trend7Rows = days7.map(d => `
@@ -343,7 +311,10 @@ function buildHtml({ lastDay, days7, queries, pages, countries, devices }) {
                 <td>
                   <div style="font-size:11px;color:#21c47b;font-weight:600;letter-spacing:1px;text-transform:uppercase">Dark Massilia — GSC</div>
                   <div style="font-size:20px;font-weight:700;color:#ffffff;margin-top:4px">Rapport journalier</div>
-                  <div style="font-size:13px;color:#8ab4c4;margin-top:4px;text-transform:capitalize">${frDate(date)}</div>
+                  <div style="font-size:13px;color:#8ab4c4;margin-top:6px">
+                    Données du <span style="color:#fff;font-weight:600;text-transform:capitalize">${frDate(date)}</span>
+                  </div>
+                  <div style="font-size:11px;color:#5a7a8a;margin-top:4px">Généré le ${generatedAt}</div>
                 </td>
                 <td align="right">
                   <div style="background:rgba(33,196,123,0.15);border:1px solid rgba(33,196,123,0.3);border-radius:8px;padding:8px 14px;display:inline-block">
@@ -442,22 +413,47 @@ function buildHtml({ lastDay, days7, queries, pages, countries, devices }) {
 </html>`;
 }
 
+// ── PDF via Puppeteer ─────────────────────────────────────────────────────────
+
+async function generatePDF(html) {
+  const browser = await puppeteer.launch({
+    executablePath: process.env.PUPPETEER_EXECUTABLE_PATH || undefined,
+    args: ['--no-sandbox', '--disable-dev-shm-usage', '--disable-gpu'],
+    headless: true,
+  });
+  const page = await browser.newPage();
+  await page.setViewport({ width: 700, height: 900 });
+  await page.setContent(html, { waitUntil: 'networkidle0' });
+  const pdf = await page.pdf({
+    format: 'A4',
+    printBackground: true,
+    margin: { top: '10mm', right: '10mm', bottom: '10mm', left: '10mm' },
+  });
+  await browser.close();
+  return pdf;
+}
+
 // ── Envoi Brevo ───────────────────────────────────────────────────────────────
 
-async function sendEmail(html, lastDate) {
+async function sendEmail(html, lastDate, pdfBuffer) {
   const subject = `📊 GSC — ${frDate(lastDate)}`;
+  const body = {
+    sender: BREVO_FROM,
+    to: [{ email: BREVO_TO }],
+    subject,
+    htmlContent: html,
+  };
+  if (pdfBuffer) {
+    const dateSlug = lastDate.replace(/-/g, '');
+    body.attachment = [{
+      name: `gsc-rapport-${dateSlug}.pdf`,
+      content: Buffer.from(pdfBuffer).toString('base64'),
+    }];
+  }
   const res = await fetch('https://api.brevo.com/v3/smtp/email', {
     method: 'POST',
-    headers: {
-      'api-key': BREVO_API_KEY,
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify({
-      sender: BREVO_FROM,
-      to: [{ email: BREVO_TO }],
-      subject,
-      htmlContent: html,
-    }),
+    headers: { 'api-key': BREVO_API_KEY, 'Content-Type': 'application/json' },
+    body: JSON.stringify(body),
   });
   const json = await res.json();
   if (!res.ok) throw new Error(`Brevo: ${JSON.stringify(json)}`);
@@ -483,10 +479,20 @@ async function sendEmail(html, lastDate) {
 
   console.log(`  📝 ${queries.length} requêtes, ${pages.length} pages, ${countries.length} pays, ${devices.length} appareils`);
 
-  const html = buildHtml({ lastDay, days7, queries, pages, countries, devices });
+  const now = new Date();
+  const generatedAt = now.toLocaleDateString('fr-FR', {
+    weekday: 'long', day: 'numeric', month: 'long', year: 'numeric',
+    hour: '2-digit', minute: '2-digit', timeZone: 'Europe/Paris',
+  });
+
+  const html = buildHtml({ lastDay, days7, queries, pages, countries, devices, generatedAt });
+
+  console.log('\n📄 Génération PDF...');
+  const pdfBuffer = await generatePDF(html);
+  console.log(`  ✅ PDF généré (${Math.round(pdfBuffer.length / 1024)} Ko)`);
 
   console.log('\n📨 Envoi Brevo...');
-  await sendEmail(html, date);
+  await sendEmail(html, date, pdfBuffer);
 
   console.log('\n✅ Rapport envoyé.');
 })().catch(e => { console.error('❌', e.message); process.exit(1); });
