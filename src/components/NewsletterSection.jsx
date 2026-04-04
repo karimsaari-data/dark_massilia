@@ -120,7 +120,7 @@ const NewsletterSection = () => {
                           <span>Envoi…</span>
                         </>
                       ) : (
-                        <span>OK →</span>
+                        <span>Recevoir mon cliché →</span>
                       )}
                     </button>
                   </div>
@@ -133,7 +133,7 @@ const NewsletterSection = () => {
                       onChange={(e) => setConsent(e.target.checked)}
                       className="mt-0.5 w-4 h-4 flex-shrink-0 rounded border border-white/30 bg-white/10 accent-ocean-teal cursor-pointer"
                     />
-                    <span className="text-white/45 text-xs leading-relaxed group-hover:text-white/60 transition-colors">
+                    <span className="text-white/65 text-xs leading-relaxed group-hover:text-white/80 transition-colors">
                       J'accepte de recevoir la newsletter Dark Massilia et les actualités de Karim Saari.{' '}
                       <Link to="/confidentialite" className="underline underline-offset-2 hover:text-ocean-teal transition-colors">
                         Politique de confidentialité

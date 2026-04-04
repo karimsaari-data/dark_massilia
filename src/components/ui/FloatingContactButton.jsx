@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Mail, X, Phone } from 'lucide-react';
 import { APP_CONFIG } from '../../utils/constants';
+import { trackEvent } from '../../lib/analytics';
 
 const FloatingContactButton = () => {
   const [isVisible, setIsVisible] = useState(true);
@@ -53,7 +54,7 @@ const FloatingContactButton = () => {
                 <motion.a
                   href={`mailto:${APP_CONFIG.contactEmail}`}
                   role="menuitem"
-                  onClick={() => setIsExpanded(false)}
+                  onClick={() => { setIsExpanded(false); trackEvent('contact_click', { method: 'email', source: 'floating_button' }); }}
                   className="flex items-center gap-3 glass-strong rounded-full pl-4 pr-5 py-3 hover:bg-ocean-teal/20 hover:border-ocean-teal/30 transition-all duration-300 group whitespace-nowrap"
                   whileHover={{ scale: 1.05, x: -5 }}
                   whileTap={{ scale: 0.95 }}
@@ -72,6 +73,7 @@ const FloatingContactButton = () => {
                   role="menuitem"
                   onClick={() => setIsExpanded(false)}
                   aria-label="Contacter par WhatsApp (ouvre dans un nouvel onglet)"
+                  onClick={() => { setIsExpanded(false); trackEvent('contact_click', { method: 'whatsapp', source: 'floating_button' }); }}
                   className="flex items-center gap-3 glass-strong rounded-full pl-4 pr-5 py-3 hover:bg-ocean-blue/20 hover:border-ocean-blue/30 transition-all duration-300 group whitespace-nowrap"
                   whileHover={{ scale: 1.05, x: -5 }}
                   whileTap={{ scale: 0.95 }}

@@ -411,6 +411,16 @@ const Home = () => {
         </motion.div>
       </section>
 
+      {/* Section Newsletter — lazy (supabase hors bundle initial) */}
+      {/* Placée tôt pour capter les visiteurs après la découverte de Karim */}
+      <Suspense fallback={
+        <section className="container-custom py-8 md:py-12">
+          <div className="rounded-3xl border border-ocean-teal/30 mb-16 min-h-[420px] md:min-h-[480px]" />
+        </section>
+      }>
+        <NewsletterSection />
+      </Suspense>
+
       {/* Section Phrases choc - Impact environnemental */}
       <section className="container-custom py-8 md:py-12">
         {/* Label de section */}
@@ -536,16 +546,6 @@ const Home = () => {
           </div>
         </motion.div>
       </section>
-
-      {/* Section Newsletter — lazy (supabase hors bundle initial) */}
-      {/* fallback réserve la hauteur pour éviter le CLS quand le composant apparaît */}
-      <Suspense fallback={
-        <section className="container-custom py-8 md:py-12">
-          <div className="rounded-3xl border border-ocean-teal/30 mb-16 min-h-[420px] md:min-h-[480px]" />
-        </section>
-      }>
-        <NewsletterSection />
-      </Suspense>
 
       {/* CTA Vidéos */}
       <section className="container-custom py-8 md:py-12">

@@ -1,11 +1,13 @@
 import { motion } from 'framer-motion';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { Mail, Phone, MapPin, Newspaper } from 'lucide-react';
 import { FADE_IN_UP, STAGGER_CONTAINER, APP_CONFIG } from '../utils/constants';
 import SEO from '../components/SEO';
 import { SEO_PAGES } from '../utils/seo';
+import { trackEvent } from '../lib/analytics';
 
 const Contact = () => {
+  const navigate = useNavigate();
   return (
     <div className="min-h-screen py-20">
       <SEO {...SEO_PAGES['/contact']} />
@@ -64,6 +66,7 @@ const Contact = () => {
           <motion.a
             href={`mailto:${APP_CONFIG.contactEmail}`}
             variants={FADE_IN_UP}
+            onClick={() => trackEvent('contact_click', { method: 'email', source: 'contact_page' })}
             className="card hover:border-astroide/30 hover:bg-astroide/5 transition-all duration-300 group"
           >
             <div className="flex flex-col items-center text-center gap-6 py-2">
@@ -85,6 +88,7 @@ const Contact = () => {
             target="_blank"
             rel="noopener noreferrer"
             variants={FADE_IN_UP}
+            onClick={() => trackEvent('contact_click', { method: 'whatsapp', source: 'contact_page' })}
             className="card hover:border-astroide/30 hover:bg-astroide/5 transition-all duration-300 group"
           >
             <div className="flex flex-col items-center text-center gap-6 py-2">
@@ -123,7 +127,7 @@ const Contact = () => {
           <motion.div
             variants={FADE_IN_UP}
             className="card hover:border-astroide/30 hover:bg-astroide/5 transition-all duration-300 group cursor-pointer"
-            onClick={() => { window.location.href = '/#newsletter'; }}
+            onClick={() => { navigate('/'); setTimeout(() => { document.getElementById('newsletter')?.scrollIntoView({ behavior: 'smooth' }); }, 100); }}
           >
             <div className="flex flex-col items-center text-center gap-6 py-2">
               <div className="w-16 h-16 rounded-full bg-gradient-to-br from-astroide to-astroide-dark flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
