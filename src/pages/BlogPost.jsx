@@ -247,6 +247,20 @@ export default function BlogPost() {
                 dangerouslySetInnerHTML={{ __html: lazyLoadContent(post.content, post.title) }}
               />
 
+              {/* Mini-CTA Newsletter — capturer les lecteurs qualifiés */}
+              <div className="mt-10 rounded-2xl bg-ocean-teal/10 border border-ocean-teal/25 p-6 flex flex-col sm:flex-row items-center gap-4">
+                <div className="flex-1 min-w-0">
+                  <p className="text-white font-semibold text-base mb-1">🎁 Un cliché exclusif des fonds marins t'attend</p>
+                  <p className="text-white/60 text-sm">Rejoins la newsletter Dark Massilia et reçois une photo sous-marine des Calanques offerte à l'inscription.</p>
+                </div>
+                <Link
+                  to="/#newsletter"
+                  className="btn-primary flex-shrink-0 whitespace-nowrap text-sm"
+                >
+                  S'inscrire →
+                </Link>
+              </div>
+
               {/* Partage */}
               <div className="mt-10 pt-6 border-t border-white/10">
                 <p className="text-sm font-semibold text-gray-300 mb-4">Partager cet article</p>
