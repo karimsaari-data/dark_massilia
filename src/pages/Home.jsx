@@ -381,6 +381,17 @@ const Home = () => {
                   Pour rendre visible l'<strong className="text-white font-semibold">impact de la pollution plastique</strong>, je participe à des <strong className="text-white font-semibold">documentaires et reportages</strong> sur l'environnement marin, je conçois des <strong className="text-white font-semibold">expositions photos engagées</strong> et je mène des <strong className="text-white font-semibold">missions de dépollution sous-marine</strong> avec mon association.
                 </p>
               </div>
+              <div className="mt-6">
+                <Link
+                  to="/photographe-environnemental-marseille"
+                  className="btn-ghost inline-flex items-center gap-2"
+                  title="Photographe environnemental Marseille — démarche, associations et engagements"
+                  onClick={() => trackEvent('cta_click', { button_name: 'En savoir plus sur ma démarche' })}
+                >
+                  <span>En savoir plus sur ma démarche</span>
+                  <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" /></svg>
+                </Link>
+              </div>
             </div>
 
             {/* Image — Droite */}

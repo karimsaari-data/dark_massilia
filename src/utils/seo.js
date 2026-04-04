@@ -27,9 +27,9 @@ const PERSON_SCHEMA = {
   alternateName: 'Dark Massilia',
   url: 'https://karimsaari.com',
   image: DEFAULT_IMAGE,
-  jobTitle: ['Photographe de paysages à Marseille', 'Photographe environnemental à Marseille', 'Apnéiste', 'Expert environnemental'],
+  jobTitle: ['Photographe environnemental et sous-marin', 'Apnéiste', 'Président de Team Oxygen', 'Militant écologique'],
   description:
-    'Photographe environnemental à Marseille, apnéiste engagé et photographe de paysages salué par National Geographic. Interventions sur TF1, ARTE et Échappées Belles.',
+    'Photographe environnemental et sous-marin à Marseille. Fondateur de Dark Massilia, communauté de 130k personnes engagées pour les Calanques. Président de Team Oxygen. Vu sur TF1, ARTE et M6.',
   address: {
     '@type': 'PostalAddress',
     addressLocality: 'Marseille',
@@ -43,6 +43,7 @@ const PERSON_SCHEMA = {
     'https://www.youtube.com/@dark.massilia',
     'https://www.youtube.com/watch?v=cxjAQtSHHyI',
     'https://www.dailymotion.com/video/x8wzsm2',
+    'https://www.facebook.com/EcoPlongeur/',
     'https://www.facebook.com/Photographie.Marseille',
     'https://www.facebook.com/groups/calanque/',
     'https://www.linkedin.com/in/karimsaari/',
@@ -65,17 +66,58 @@ const PERSON_SCHEMA = {
     'Photographie sous-marine',
     'Dépollution marine',
     'Calanques de Marseille',
+    'Parc National des Calanques',
+    'Apnée',
+    'Freediving',
+    'Pollution plastique',
+    'Projet Sentinelle',
+    'Méditerranée',
+    'Faune marine méditerranéenne',
   ],
   memberOf: {
     '@type': 'Organization',
     name: 'Team Oxygen',
     url: 'https://www.team-oxygen.com/',
   },
-  funder: [
+  founder: [
+    {
+      '@type': 'Organization',
+      name: 'Dark Massilia',
+      url: 'https://karimsaari.com',
+    },
+    {
+      '@type': 'Organization',
+      name: 'Groupe des Amoureux des Calanques de Marseille à Port-Cros',
+      url: 'https://www.facebook.com/groups/calanque/',
+    },
+  ],
+  sponsor: [
     { '@type': 'GovernmentOrganization', name: 'Parc national des Calanques' },
     { '@type': 'Organization', name: 'Fondation de la Mer' },
     { '@type': 'Organization', name: 'Citeo' },
     { '@type': 'GovernmentOrganization', name: 'Ville de Marseille' },
+  ],
+  hasCredential: [
+    {
+      '@type': 'EducationalOccupationalCredential',
+      name: 'Google Street View Trusted',
+      credentialCategory: 'certification',
+      recognizedBy: {
+        '@type': 'Organization',
+        name: 'Google',
+        url: 'https://www.google.com',
+      },
+    },
+    {
+      '@type': 'EducationalOccupationalCredential',
+      name: 'Google Local Guides — Niveau 10',
+      credentialCategory: 'badge',
+      recognizedBy: {
+        '@type': 'Organization',
+        name: 'Google Maps',
+        url: 'https://maps.google.com',
+      },
+    },
   ],
 };
 
@@ -286,6 +328,7 @@ export const SEO_PAGES = {
           },
           sameAs: [
             'https://www.instagram.com/karimsaari/',
+            'https://www.facebook.com/EcoPlongeur/',
             'https://www.facebook.com/groups/calanque/',
             'https://www.tiktok.com/@dark.massilia',
             'https://www.youtube.com/@dark.massilia',
@@ -1016,6 +1059,7 @@ export const SEO_PAGES = {
             url: BASE_URL,
           },
           sameAs: [
+            'https://www.facebook.com/EcoPlongeur/',
             'https://www.facebook.com/groups/calanque/',
             'https://www.instagram.com/karimsaari/',
             'https://www.tiktok.com/@dark.massilia',
@@ -1100,7 +1144,7 @@ export const SEO_PAGES = {
     },
   },
   '/meduses-souveraines-oceans-documentaire-arte': {
-    title: 'Méduses Souveraines des Océans — Documentaire ARTE avec Karim Saari',
+    title: 'Méduses Souveraines des Océans — ARTE · Karim Saari',
     description:
       'Documentaire ARTE Évasion (2024) : plongez dans la prolifération des méduses en Méditerranée. Avec les images exclusives de Karim Saari, apnéiste à Marseille.',
     canonical: `${BASE_URL}/meduses-souveraines-oceans-documentaire-arte`,
@@ -1263,6 +1307,7 @@ export const SEO_PAGES = {
             'https://maps.app.goo.gl/UaF5o6sM2xS5Gaxr6',
             'https://share.google/VAnA0t89Jy0AaR0zC',
             'https://www.instagram.com/karimsaari',
+            'https://www.facebook.com/EcoPlongeur/',
             'https://www.facebook.com/groups/calanque/',
             'https://www.tiktok.com/@dark.massilia',
             'https://www.youtube.com/@dark.massilia',
@@ -1377,6 +1422,75 @@ export const SEO_PAGES = {
             name: 'Marseille',
             addressCountry: 'FR',
           },
+        },
+      ],
+    },
+  },
+
+  '/photographe-environnemental-marseille': {
+    title: 'Photographe Environnemental Marseille | Karim Saari',
+    description:
+      'Karim Saari, photographe environnemental et sous-marin à Marseille. 130 000 personnes engagées pour les Calanques. Galeries, missions terrain, presse.',
+    canonical: `${BASE_URL}/photographe-environnemental-marseille`,
+    schema: {
+      '@context': 'https://schema.org',
+      '@graph': [
+        breadcrumb('Photographe Environnemental Marseille', '/photographe-environnemental-marseille'),
+        {
+          '@type': 'ProfilePage',
+          '@id': `${BASE_URL}/photographe-environnemental-marseille`,
+          name: 'Photographe Environnemental à Marseille — Karim Saari',
+          description:
+            'Page de présentation de Karim Saari, photographe environnemental et sous-marin à Marseille, fondateur de Dark Massilia et président de Team Oxygen.',
+          mainEntity: { '@id': `${BASE_URL}/#person` },
+          about: { '@id': `${BASE_URL}/#person` },
+          url: `${BASE_URL}/photographe-environnemental-marseille`,
+        },
+        PERSON_SCHEMA,
+        {
+          '@type': 'FAQPage',
+          mainEntity: [
+            {
+              '@type': 'Question',
+              name: 'Qu\'est-ce qu\'un photographe environnemental ?',
+              acceptedAnswer: {
+                '@type': 'Answer',
+                text: 'Un photographe environnemental documente les écosystèmes naturels, la faune, la flore et les impacts humains sur la nature. À Marseille, Karim Saari combine photographie sous-marine en apnée et photographie de paysages pour témoigner de l\'état des Calanques et de la Méditerranée.',
+              },
+            },
+            {
+              '@type': 'Question',
+              name: 'Que documente Karim Saari dans les Calanques de Marseille ?',
+              acceptedAnswer: {
+                '@type': 'Answer',
+                text: 'Karim Saari documente la biodiversité sous-marine des Calanques, la pollution plastique des fonds marins méditerranéens et les missions de dépollution en apnée menées par l\'association Team Oxygen dans le cadre du Projet Sentinelle. Ses images ont été diffusées sur TF1, ARTE et M6.',
+              },
+            },
+            {
+              '@type': 'Question',
+              name: 'Comment contacter Karim Saari pour un reportage ou une collaboration ?',
+              acceptedAnswer: {
+                '@type': 'Answer',
+                text: 'Karim Saari est disponible pour des collaborations documentaires, institutionnelles ou médiatiques. Vous pouvez le contacter via la page contact de son site karimsaari.com ou par email à email@karimsaari.com.',
+              },
+            },
+            {
+              '@type': 'Question',
+              name: 'Qu\'est-ce que le Projet Sentinelle ?',
+              acceptedAnswer: {
+                '@type': 'Answer',
+                text: 'Le Projet Sentinelle est une opération annuelle de dépollution sous-marine organisée par l\'association Team Oxygen, présidée par Karim Saari. Depuis 2022, quatre éditions ont permis de collecter plus de 5 700 kg de déchets dans les Calanques, l\'Archipel du Frioul et la Côte Bleue.',
+              },
+            },
+            {
+              '@type': 'Question',
+              name: 'Quelles institutions soutiennent le travail de Karim Saari ?',
+              acceptedAnswer: {
+                '@type': 'Answer',
+                text: 'Le travail de Karim Saari et de Team Oxygen est soutenu par le Parc National des Calanques, la Fondation de la Mer, Citeo et la Ville de Marseille. Il collabore également avec de nombreuses associations environnementales locales : Boud\'mer, Clean My Calanques, Association Merveille, 1 Déchet Par Jour, Team AVA, Sauvage Méditerranée et Mer Terre.',
+              },
+            },
+          ],
         },
       ],
     },
