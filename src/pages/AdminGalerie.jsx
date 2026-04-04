@@ -621,6 +621,216 @@ const PLATFORM_META = {
   '500px_impressions':       { label: '500px — Impressions photos',         unit: 'K impressions' },
 };
 
+/* ── Tab Contrôle EXIF ──────────────────────────────────────── */
+const TabExif = () => {
+  const [rows, setRows]       = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [filter, setFilter]   = useState('all'); // all | non_audit | title_ko | gps_ko | keywords_ko
+  const [expanded, setExpanded] = useState(null); // src de la ligne ouverte
+
+  useEffect(() => {
+    const fetchAll = async () => {
+      const [{ data: paysage }, { data: sousMarine }, { data: exifData }] = await Promise.all([
+        supabase.from('photos_paysage').select('src,title,lat,lng,lieu').eq('visible', true),
+        supabase.from('photos_sous_marine').select('src,title,lat,lng,lieu').eq('visible', true),
+        supabase.from('photos_exif').select('src,xmp_title,xmp_description,xmp_creator,xmp_rights,xmp_keywords,iptc_city,iptc_country,iptc_state,gps_lat,gps_lng,exif_artist,exif_copyright,file_exists,checked_at'),
+      ]);
+      const exifMap = new Map((exifData || []).map(e => [e.src, e]));
+      const merged = [...(paysage || []), ...(sousMarine || [])].map(db => ({
+        db,
+        exif: exifMap.get(db.src) || null,
+      }));
+      setRows(merged);
+      setLoading(false);
+    };
+    fetchAll();
+  }, []);
+
+  const check = (db, exif) => ({
+    titleOk: exif != null && db.title === exif.xmp_title,
+    gpsDb:   db.lat != null,
+    gpsOk:   db.lat != null && exif != null && Math.abs(db.lat - exif.gps_lat) < 0.001,
+    kwOk:    exif != null && Array.isArray(exif.xmp_keywords) && exif.xmp_keywords.length > 0
+             && new Set(exif.xmp_keywords).size === exif.xmp_keywords.length,
+  });
+
+  const stats = rows.reduce((acc, { db, exif }) => {
+    const c = check(db, exif);
+    acc.total++;
+    if (c.titleOk)           acc.titleOk++;
+    if (c.gpsDb && c.gpsOk)  acc.gpsOk++;
+    if (c.kwOk)              acc.kwOk++;
+    return acc;
+  }, { total: 0, titleOk: 0, gpsOk: 0, kwOk: 0 });
+
+  const filtered = rows.filter(({ db, exif }) => {
+    const c = check(db, exif);
+    if (filter === 'non_audit')   return exif === null;
+    if (filter === 'title_ko')    return exif != null && !c.titleOk;
+    if (filter === 'gps_ko')      return exif != null && c.gpsDb && !c.gpsOk;
+    if (filter === 'keywords_ko') return exif != null && !c.kwOk;
+    return true;
+  });
+
+  const Row = ({ label, val, ok, dbVal, colSpan }) => (
+    <div className={colSpan ? 'md:col-span-2' : ''}>
+      <span className={`text-white/30 mr-2 ${dbVal ? 'text-[#21c47b]/50' : ''}`}>{label} :</span>
+      {val != null && val !== ''
+        ? <span className={ok === true ? 'text-[#21c47b]' : ok === false ? 'text-red-400' : 'text-white/70'}>{val}</span>
+        : <span className="text-white/20 italic">vide</span>
+      }
+    </div>
+  );
+
+  const Badge = ({ ok, label }) => (
+    <span className={`inline-flex items-center gap-1 px-1.5 py-0.5 rounded text-xs font-mono ${
+      ok === true  ? 'bg-[#21c47b]/15 text-[#21c47b]' :
+      ok === false ? 'bg-red-500/15 text-red-400' :
+                     'bg-white/5 text-white/30'
+    }`}>
+      {ok === true ? '✓' : ok === false ? '✗' : '—'} {label}
+    </span>
+  );
+
+  if (loading) return (
+    <div className="flex justify-center py-20">
+      <div className="w-8 h-8 border-2 border-[#21c47b] border-t-transparent rounded-full animate-spin" />
+    </div>
+  );
+
+  const gpsKoCount    = rows.filter(({ db, exif }) => { const c = check(db, exif); return exif != null && c.gpsDb && !c.gpsOk; }).length;
+  const nonAuditCount = rows.filter(({ exif }) => exif === null).length;
+
+  const FILTERS = [
+    { key: 'all',         label: `Tout (${rows.length})` },
+    { key: 'non_audit',   label: `Non audité (${nonAuditCount})` },
+    { key: 'title_ko',    label: `Titre KO (${rows.filter(({ db, exif }) => exif != null && !check(db, exif).titleOk).length})` },
+    { key: 'gps_ko',      label: `GPS KO (${gpsKoCount})` },
+    { key: 'keywords_ko', label: `Keywords KO (${rows.filter(({ db, exif }) => exif != null && !check(db, exif).kwOk).length})` },
+  ];
+
+  return (
+    <div>
+      {/* Rappel workflow */}
+      <div className="mb-5 border border-amber-500/30 bg-amber-500/5 rounded-xl px-4 py-3 text-xs text-amber-300/80 font-mono">
+        <span className="font-semibold text-amber-300">Workflow après modification GPS / titre / lieu en DB&nbsp;:</span>
+        <br />
+        <span className="select-all text-amber-200">node scripts/inject-exif.js &amp;&amp; node scripts/audit-exif.js</span>
+        <span className="ml-3 text-amber-300/50">→ injecte les EXIF physiques puis met à jour cette table</span>
+      </div>
+
+      {/* Synthèse */}
+      <div className="grid grid-cols-3 gap-3 mb-5">
+        {[
+          { label: 'Titres OK',   val: stats.titleOk, total: stats.total },
+          { label: 'GPS OK',      val: stats.gpsOk,   total: stats.total },
+          { label: 'Keywords OK', val: stats.kwOk,    total: stats.total },
+        ].map(({ label, val, total }) => {
+          const pct = total ? Math.round(val / total * 100) : 0;
+          return (
+            <div key={label} className="border border-white/10 rounded-xl p-4 bg-white/3">
+              <p className="text-xs text-white/40 mb-1">{label}</p>
+              <p className="text-2xl font-bold text-white">{val}<span className="text-sm text-white/30">/{total}</span></p>
+              <div className="mt-2 h-1 bg-white/10 rounded-full overflow-hidden">
+                <div className="h-full bg-[#21c47b] rounded-full" style={{ width: `${pct}%` }} />
+              </div>
+            </div>
+          );
+        })}
+      </div>
+
+      {/* Filtres */}
+      <div className="flex gap-2 mb-4 flex-wrap">
+        {FILTERS.map(({ key, label }) => (
+          <button key={key} type="button" onClick={() => setFilter(key)}
+            className={`px-3 py-1.5 rounded-lg text-xs font-medium transition-colors border ${
+              filter === key
+                ? 'border-[#21c47b]/60 text-[#21c47b] bg-[#21c47b]/10'
+                : 'border-white/10 text-white/40 hover:text-white hover:border-white/30'
+            }`}>
+            {label}
+          </button>
+        ))}
+      </div>
+
+      {/* Liste */}
+      <div className="space-y-1">
+        {filtered.map(({ db, exif }) => {
+          const c = check(db, exif);
+          const filename = db.src.split('/').pop();
+          const isOpen = expanded === db.src;
+          return (
+            <div key={db.src} className={`border rounded-lg overflow-hidden ${
+              !exif ? 'border-red-500/20 bg-red-500/5' : isOpen ? 'border-[#21c47b]/40 bg-white/5' : 'border-white/8 bg-white/3'
+            }`}>
+              {/* Ligne principale — cliquable */}
+              <div
+                className="px-3 py-2.5 flex items-center gap-3 cursor-pointer hover:bg-white/5 transition-colors"
+                onClick={() => setExpanded(isOpen ? null : db.src)}
+              >
+                <img
+                  src={db.src}
+                  alt=""
+                  className="w-20 h-14 rounded object-cover flex-shrink-0 bg-white/5"
+                  loading="lazy"
+                />
+                <div className="flex-1 min-w-0">
+                  <p className="text-xs text-white/80 font-medium truncate">
+                    {db.title || <span className="text-white/30 italic">sans titre</span>}
+                  </p>
+                  <p className="text-xs text-white/25 font-mono truncate">{filename}</p>
+                </div>
+                <div className="flex items-center gap-1.5 flex-shrink-0">
+                  <Badge ok={exif ? c.titleOk : null}                      label="titre" />
+                  <Badge ok={c.gpsDb ? (exif ? c.gpsOk : null) : undefined} label="gps" />
+                  <Badge ok={exif ? c.kwOk : null}                         label="kw" />
+                  {!exif && <span className="text-xs text-red-400 font-mono">non audité</span>}
+                  <span className="text-white/20 text-xs ml-1">{isOpen ? '▲' : '▼'}</span>
+                </div>
+              </div>
+
+              {/* Panneau de détail EXIF */}
+              {isOpen && (
+                <div className="border-t border-white/8 px-4 py-3 bg-black/20 text-xs font-mono">
+                  {!exif ? (
+                    <p className="text-red-400">Aucune entrée dans photos_exif — lance <code className="bg-white/10 px-1 rounded">node scripts/audit-exif.js</code></p>
+                  ) : (
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-1.5">
+                      {/* ── Titre ── */}
+                      <Row label="DB title"        val={db.title}      dbVal ok={c.titleOk} />
+                      <Row label="XMP title"        val={exif.xmp_title}       ok={c.titleOk} />
+                      {/* ── Description ── */}
+                      <Row label="XMP description"  val={exif.xmp_description} colSpan />
+                      {/* ── GPS ── */}
+                      <Row label="DB lat/lng"       val={db.lat != null ? `${db.lat}, ${db.lng}` : null} dbVal ok={c.gpsOk || !c.gpsDb} />
+                      <Row label="EXIF lat/lng"     val={exif.gps_lat != null ? `${exif.gps_lat}, ${exif.gps_lng}` : null} ok={c.gpsOk || !c.gpsDb} />
+                      {/* ── Lieu ── */}
+                      <Row label="DB lieu"          val={db.lieu}       dbVal />
+                      <Row label="IPTC city"        val={exif.iptc_city || null} />
+                      <Row label="IPTC country"     val={exif.iptc_country || null} />
+                      <Row label="IPTC state"       val={exif.iptc_state || null} />
+                      {/* ── Keywords ── */}
+                      <Row label="XMP keywords"     val={Array.isArray(exif.xmp_keywords) && exif.xmp_keywords.length ? exif.xmp_keywords.join(', ') : null} ok={c.kwOk} colSpan />
+                      {/* ── Auteur / droits ── */}
+                      <Row label="XMP creator"      val={exif.xmp_creator} />
+                      <Row label="XMP rights"       val={exif.xmp_rights} />
+                      <Row label="EXIF artist"      val={exif.exif_artist} />
+                      <Row label="EXIF copyright"   val={exif.exif_copyright} />
+                      {/* ── Fichier ── */}
+                      <Row label="file_exists"      val={exif.file_exists === true ? 'oui' : exif.file_exists === false ? 'non ⚠️' : null} ok={exif.file_exists !== false} />
+                      <Row label="Vérifié le"       val={exif.checked_at ? new Date(exif.checked_at).toLocaleString('fr-FR') : null} />
+                    </div>
+                  )}
+                </div>
+              )}
+            </div>
+          );
+        })}
+      </div>
+    </div>
+  );
+};
+
 /* ── Tab Réseaux ────────────────────────────────────────────── */
 const TabReseaux = () => {
   const [stats, setStats]   = useState([]);
@@ -752,6 +962,7 @@ export default function Admin() {
     { key: 'paysage',     label: 'Galerie Paysage' },
     { key: 'sous_marine', label: 'Galerie Sous-marine' },
     { key: 'reseaux',     label: 'Réseaux' },
+    { key: 'exif',        label: 'Contrôle EXIF' },
   ];
 
   /* ── Fond commun (login + app) ── */
@@ -915,6 +1126,7 @@ export default function Admin() {
         {tab === 'paysage'     && <TabGalerie tableName="photos_paysage" />}
         {tab === 'sous_marine' && <TabGalerie tableName="photos_sous_marine" />}
         {tab === 'reseaux'     && <TabReseaux />}
+        {tab === 'exif'        && <TabExif />}
       </main>
 
       {showImport && (

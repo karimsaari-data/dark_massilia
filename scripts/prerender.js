@@ -39,6 +39,7 @@ const STATIC_ROUTES = [
   '/carte-calanques',
   '/local-guide-marseille',
   '/les-francais-yann-arthus-bertrand',
+  '/photographe-environnemental-marseille',
   '/mentions-legales',
   '/confidentialite',
   '/admin',

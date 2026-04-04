@@ -23,38 +23,39 @@ export const SOCIAL_LINKS = {
 
 export const NAV_LINKS = [
   {
+    name: 'Portfolio',
+    icon: 'Camera',
+    description: 'Photographies sous-marines, paysages du littoral marseillais et démarche de photographe environnemental.',
+    children: [
+      { name: 'Photographe environnemental', path: '/photographe-environnemental-marseille', icon: 'BookOpen',   isHub: true, hubDesc: 'Démarche, univers photographique & partenaires' },
+      { name: 'Photos sous-marines',         path: '/photographie-sous-marine',              icon: 'Camera'     },
+      { name: 'Photos de paysages',          path: '/photographie-paysage-mer',              icon: 'Camera'     },
+      { name: 'Google Local Guide',          path: '/local-guide-marseille',                 icon: 'Navigation' },
+      { name: 'Yann Arthus-Bertrand',        path: '/les-francais-yann-arthus-bertrand',     icon: 'Camera'     },
+    ],
+  },
+  {
     name: 'Missions',
     icon: 'Compass',
     description: 'Dépollution des fonds marins en apnée, documentation scientifique et mobilisation citoyenne dans les Calanques.',
     children: [
-      { name: 'Photos sous-marines',       path: '/photographie-sous-marine', icon: 'Camera'   },
-      { name: 'Dépollution marine',       path: '/depollution-marine',       icon: 'Compass'  },
-      { name: 'Rejoindre la communauté',  path: '/communaute',               icon: 'Share2'   },
-      { name: 'Données scientifiques',    path: '/donnees-scientifiques',    icon: 'BarChart2' },
-    ],
-  },
-  {
-    name: 'Explorer',
-    icon: 'Compass',
-    description: 'Galeries photo paysages & mer, carte interactive des Calanques et guide local de Marseille.',
-    children: [
-      { name: 'Photos de paysages',  path: '/photographie-paysage-mer', icon: 'Camera'     },
-      { name: 'Carte des Calanques', path: '/carte-calanques',          icon: 'MapPin'     },
-      { name: 'Google Local Guide',  path: '/local-guide-marseille',    icon: 'Navigation' },
-      { name: 'Blog',                path: '/blog',                     icon: 'BookOpen'   },
-      { name: 'Actualités',          path: '/actualites',               icon: 'Newspaper'  },
+      { name: 'Dépollution marine',      path: '/depollution-marine',    icon: 'Compass'   },
+      { name: 'Carte des Calanques',     path: '/carte-calanques',       icon: 'MapPin'    },
+      { name: 'Rejoindre la communauté', path: '/communaute',            icon: 'Share2'    },
+      { name: 'Données scientifiques',   path: '/donnees-scientifiques', icon: 'BarChart2' },
     ],
   },
   {
     name: 'Médias',
     icon: 'Film',
-    description: 'Documentaires ARTE, presse nationale, vidéos et actualités sur l\'engagement environnemental à Marseille.',
+    description: 'Documentaires ARTE, presse nationale, vidéos, blog et actualités sur l\'engagement environnemental à Marseille.',
     children: [
-      { name: 'Vidéos',                  path: '/videos',                                        icon: 'Video'     },
-      { name: 'Presse',                  path: '/presse',                                        icon: 'Film'      },
-      { name: 'ARTE — Sauver Marseille', path: '/sauver-marseille-documentaire-arte',            icon: 'Tv'        },
-      { name: 'ARTE — Méduses',          path: '/meduses-souveraines-oceans-documentaire-arte',  icon: 'Tv'        },
-      { name: 'Yann Arthus-Bertrand',    path: '/les-francais-yann-arthus-bertrand',             icon: 'Camera'    },
+      { name: 'Vidéos',                  path: '/videos',                                       icon: 'Video'    },
+      { name: 'Presse',                  path: '/presse',                                       icon: 'Film'     },
+      { name: 'ARTE — Sauver Marseille', path: '/sauver-marseille-documentaire-arte',           icon: 'Tv'       },
+      { name: 'ARTE — Méduses',          path: '/meduses-souveraines-oceans-documentaire-arte', icon: 'Tv'       },
+      { name: 'Blog',                    path: '/blog',                                         icon: 'BookOpen' },
+      { name: 'Actualités',              path: '/actualites',                                   icon: 'Newspaper'},
     ],
   },
   {

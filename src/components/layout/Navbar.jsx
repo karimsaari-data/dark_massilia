@@ -116,44 +116,63 @@ const NavDropdown = ({ item }) => {
               </div>
 
               {/* Colonne droite — blanc crème */}
-              <div className="flex-1 p-6 flex items-center" style={{ background: '#faf8f4' }}>
-                <ul className={`list-none m-0 p-0 w-full grid gap-x-3 gap-y-1 ${
-                  item.children.length >= 5 ? 'grid-cols-2' :
-                  item.children.length >= 3 ? 'grid-cols-2' : 'grid-cols-1'
-                }`}>
-                  {item.children.map((child) => {
+              <div className="flex-1 p-6 flex flex-col justify-center gap-2" style={{ background: '#faf8f4' }}>
+                {(() => {
+                  const hub = item.children.find(c => c.isHub);
+                  const rest = item.children.filter(c => !c.isHub);
+
+                  const renderBtn = (child, extraClass = '') => {
                     const Icon = iconMap[child.icon];
                     const childActive = location.pathname === child.path;
-
-                    const linkClass = `w-full flex items-center gap-3 px-4 py-3.5 rounded-lg text-sm transition-all duration-150 text-left focus-ring group/link ${
-                      childActive
-                        ? 'text-astroide bg-black/10'
-                        : 'text-gray-800 hover:text-astroide hover:bg-black/10'
-                    }`;
-
-                    const content = (
+                    const cls = `w-full flex items-center gap-3 px-4 py-3.5 rounded-lg text-sm transition-all duration-150 text-left focus-ring group/link ${
+                      childActive ? 'text-astroide bg-black/10' : 'text-gray-800 hover:text-astroide hover:bg-black/10'
+                    } ${extraClass}`;
+                    const inner = (
                       <>
-                        {Icon && <Icon className={`w-4 h-4 flex-shrink-0 transition-colors flex-shrink-0 ${childActive ? 'text-astroide' : 'text-gray-400 group-hover/link:text-astroide'}`} aria-hidden="true" />}
+                        {Icon && <Icon className={`w-4 h-4 flex-shrink-0 ${childActive ? 'text-astroide' : 'text-gray-400 group-hover/link:text-astroide'}`} aria-hidden="true" />}
                         <span className="font-semibold">{child.name}</span>
-                        {childActive && (
-                          <div className="ml-auto w-2 h-2 rounded-full bg-astroide flex-shrink-0" aria-hidden="true" />
-                        )}
+                        {childActive && <div className="ml-auto w-2 h-2 rounded-full bg-astroide flex-shrink-0" aria-hidden="true" />}
                       </>
                     );
+                    if (child.path?.startsWith('https://')) return <a href={child.path} target="_blank" rel="noopener noreferrer" className={cls}>{inner}</a>;
+                    if (child.path?.startsWith('/#')) return <Link to={child.path} onClick={() => setOpen(false)} className={cls}>{inner}</Link>;
+                    return <button onClick={() => handleChildClick(child.path)} className={cls}>{inner}</button>;
+                  };
 
-                    return (
-                      <li key={child.path ?? child.name}>
-                        {child.path?.startsWith('mailto:') || child.path?.startsWith('https://') ? (
-                          <a href={child.path} target="_blank" rel="noopener noreferrer" className={linkClass}>{content}</a>
-                        ) : child.path?.startsWith('/#') ? (
-                          <Link to={child.path} onClick={() => setOpen(false)} className={linkClass}>{content}</Link>
-                        ) : (
-                          <button onClick={() => handleChildClick(child.path)} className={linkClass}>{content}</button>
-                        )}
-                      </li>
-                    );
-                  })}
-                </ul>
+                  return (
+                    <ul className="list-none m-0 p-0 w-full space-y-1">
+                      {hub && (
+                        <li className="mb-2">
+                          <button
+                            onClick={() => handleChildClick(hub.path)}
+                            className={`w-full text-left rounded-xl border px-4 py-3 transition-all duration-150 group/hub focus-ring ${
+                              location.pathname === hub.path
+                                ? 'border-astroide bg-astroide/10'
+                                : 'border-astroide/30 bg-astroide/5 hover:border-astroide hover:bg-astroide/10'
+                            }`}
+                          >
+                            <div className="flex items-center justify-between">
+                              <span className={`font-bold text-sm ${location.pathname === hub.path ? 'text-astroide' : 'text-gray-800 group-hover/hub:text-astroide'}`}>
+                                {hub.name}
+                              </span>
+                              <span className={`text-xs font-semibold transition-colors ${location.pathname === hub.path ? 'text-astroide' : 'text-gray-400 group-hover/hub:text-astroide'}`}>
+                                Voir →
+                              </span>
+                            </div>
+                            {hub.hubDesc && (
+                              <p className="text-xs text-gray-400 mt-0.5">{hub.hubDesc}</p>
+                            )}
+                          </button>
+                        </li>
+                      )}
+                      {rest.map(child => (
+                        <li key={child.path ?? child.name} className="pl-3 border-l-2 border-gray-200">
+                          {renderBtn(child)}
+                        </li>
+                      ))}
+                    </ul>
+                  );
+                })()}
               </div>
             </div>
           </motion.div>

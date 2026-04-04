@@ -6,9 +6,10 @@
 
 import { createClient } from '@supabase/supabase-js';
 import sharp from 'sharp';
+import { execSync } from 'node:child_process';
 import { readdir, mkdir, rename, stat } from 'node:fs/promises';
 import { join, extname, basename } from 'node:path';
-import { existsSync } from 'node:fs';
+import { existsSync, statSync } from 'node:fs';
 
 // ── Config ──────────────────────────────────────────────────────────────────
 const SUPABASE_URL = 'https://bzlllfmpojcybuyuemdx.supabase.co';
@@ -72,7 +73,47 @@ const FOLDERS = [
   },
 ];
 
-const IMAGE_EXTS = new Set(['.jpg', '.jpeg', '.png', '.tiff', '.tif']);
+const IMAGE_EXTS = new Set(['.jpg', '.jpeg', '.png', '.tiff', '.tif', '.webp']);
+const WEBP_EXTS  = new Set(['.webp']); // déjà convertis → copie directe sans re-conversion
+
+// ── Thumbnail 800w ──────────────────────────────────────────────────────────
+const THUMB_WIDTH = 800;
+const THUMB_QUALITY = 82;
+
+async function generateThumb(srcPath, destDir, webpName) {
+  const thumbDir = join(destDir, '800w');
+  if (!existsSync(thumbDir)) await mkdir(thumbDir, { recursive: true });
+  const thumbPath = join(thumbDir, webpName);
+  const meta = await sharp(srcPath).metadata();
+  await sharp(srcPath)
+    .resize({ width: THUMB_WIDTH, withoutEnlargement: true })
+    .webp({ quality: THUMB_QUALITY })
+    .toFile(thumbPath);
+  const thumbKB = Math.round(statSync(thumbPath).size / 1024);
+  return { thumbKB, wasResized: meta.width > THUMB_WIDTH };
+}
+
+// ── EXIF injection ───────────────────────────────────────────────────────────
+const EXIF_CREATOR   = 'Karim Saari';
+const EXIF_COPYRIGHT = '(c) Karim Saari - Dark Massilia - karimsaari.com';
+
+function injectExif(filePath) {
+  try {
+    const args = [
+      `-XMP:Creator=${EXIF_CREATOR}`,
+      `-XMP:Rights=${EXIF_COPYRIGHT}`,
+      `-EXIF:Artist=${EXIF_CREATOR}`,
+      `-EXIF:Copyright=${EXIF_COPYRIGHT}`,
+      '-overwrite_original',
+      filePath,
+    ].map(a => `"${a}"`).join(' ');
+    const exiftoolPath = 'C:\\Users\\ksaari\\AppData\\Local\\Programs\\ExifTool\\ExifTool.exe';
+    execSync(`"${exiftoolPath}" ${args}`, { stdio: 'pipe' });
+    return true;
+  } catch {
+    return false;
+  }
+}
 
 // ── Helpers ─────────────────────────────────────────────────────────────────
 
@@ -144,20 +185,40 @@ async function main() {
         continue;
       }
 
-      // Conversion WebP
-      const info = await sharp(srcPath)
-        .webp({ quality: QUALITY })
-        .toFile(destPath);
+      // Conversion WebP (ou copie directe si déjà en webp)
+      let info;
+      if (WEBP_EXTS.has(extname(file).toLowerCase())) {
+        // Déjà en WebP → on relit juste les metadata + on copie via sharp pour normaliser
+        const { copyFile } = await import('node:fs/promises');
+        await copyFile(srcPath, destPath);
+        info = await sharp(destPath).metadata();
+        info.size = statSync(destPath).size;
+      } else {
+        info = await sharp(srcPath)
+          .webp({ quality: QUALITY })
+          .toFile(destPath);
+      }
+
+      // Injection EXIF auteur + copyright
+      const exifOk = injectExif(destPath);
+      if (!exifOk) console.log(`  ⚠️  EXIF non injecté sur ${webpName} (exiftool introuvable ?)`);
+
+      // Thumbnail 800w
+      const { thumbKB, wasResized } = await generateThumb(destPath, folder.destDir, webpName);
+      console.log(`  🖼  800w → ${thumbKB} KB${wasResized ? '' : ' (pas de resize, image déjà ≤800px)'}`);
 
       const uid = `${folder.uidPrefix}-${nextNum}`;
       const dbSrc = `${folder.srcPrefix}/${webpName}`;
 
       // Insertion Supabase
+      // Titre par défaut = slug humanisé (tirets → espaces, 1ère lettre majuscule)
+      const defaultTitle = slug.replace(/-/g, ' ').replace(/^\w/, c => c.toUpperCase());
+
       const { error } = await supabase.from(folder.table).insert({
         uid,
         src: dbSrc,
-        title: '',
-        alt: '',
+        title: defaultTitle,
+        alt: defaultTitle,
         lieu: '',
         visible: false,
         categorie: folder.categorie,
@@ -190,9 +251,14 @@ async function main() {
     console.log('  • public/images/portfolio/New/photos_sous_marine/Biodiversité/');
     console.log('  • public/images/portfolio/New/photos_sous_marine/Caractérisation/\n');
   } else {
-    console.log(`\n🎉 ${totalImported} photo(s) importée(s) avec succès !`);
-    console.log('📝 Prochaine étape : ouvre l\'admin → filtre "Incomplet" → remplis titre/alt/lieu/GPS');
-    console.log('👁️  Toggle "visible" quand c\'est prêt, puis build + FTP\n');
+    console.log(`\n🎉 ${totalImported} photo(s) importée(s) avec succès !\n`);
+    console.log('📋 Workflow complet :');
+    console.log('   1. npm run dev → admin → filtre "Incomplet" → remplis titre/alt/lieu/GPS');
+    console.log('   2. Toggle "visible = true" quand c\'est prêt');
+    console.log('   3. Ctrl+C pour arrêter le serveur dev');
+    console.log('   4. node scripts/inject-exif.js && node scripts/audit-exif.js');
+    console.log('   5. npm run build:full');
+    console.log('   6. FTP\n');
   }
 }
 

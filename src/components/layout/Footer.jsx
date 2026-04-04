@@ -27,31 +27,32 @@ const Px500Icon = ({ className }) => (
 
 const navColumns = [
   {
-    label: 'Missions',
+    label: 'Portfolio',
     links: [
-      { to: '/photographie-sous-marine', text: 'Photos sous-marines' },
-      { to: '/depollution-marine', text: 'Dépollution marine' },
-      { to: '/communaute', text: 'Rejoindre la communauté' },
-      { to: '/donnees-scientifiques', text: 'Données scientifiques' },
+      { to: '/photographe-environnemental-marseille', text: 'Photographe environnemental' },
+      { to: '/photographie-sous-marine',              text: 'Photos sous-marines' },
+      { to: '/photographie-paysage-mer',              text: 'Photos de paysages' },
+      { to: '/local-guide-marseille',                 text: 'Google Local Guide' },
+      { to: '/les-francais-yann-arthus-bertrand',     text: 'Yann Arthus-Bertrand' },
     ],
   },
   {
-    label: 'Explorer',
+    label: 'Missions',
     links: [
-      { to: '/photographie-paysage-mer', text: 'Photos de paysages' },
-      { to: '/carte-calanques', text: 'Carte des Calanques' },
-      { to: '/local-guide-marseille', text: 'Google Local Guide' },
-      { to: '/blog', text: 'Blog', paired: { to: '/actualites', text: 'Actualités' } },
+      { to: '/depollution-marine',    text: 'Dépollution marine' },
+      { to: '/carte-calanques',       text: 'Carte des Calanques' },
+      { to: '/communaute',            text: 'Rejoindre la communauté' },
+      { to: '/donnees-scientifiques', text: 'Données scientifiques' },
     ],
   },
   {
     label: 'Médias',
     links: [
-      { to: '/videos', text: 'Vidéos' },
-      { to: '/presse', text: 'Presse' },
-      { to: '/sauver-marseille-documentaire-arte', text: 'ARTE — Sauver Marseille' },
+      { to: '/videos',                                       text: 'Vidéos' },
+      { to: '/presse',                                       text: 'Presse' },
+      { to: '/sauver-marseille-documentaire-arte',           text: 'ARTE — Sauver Marseille' },
       { to: '/meduses-souveraines-oceans-documentaire-arte', text: 'ARTE — Méduses Souveraines' },
-      { to: '/les-francais-yann-arthus-bertrand', text: 'Yann Arthus-Bertrand' },
+      { to: '/blog', text: 'Blog', paired: { to: '/actualites', text: 'Actualités' } },
     ],
   },
   {

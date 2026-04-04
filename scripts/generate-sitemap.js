@@ -38,6 +38,7 @@ const STATIC_PAGES = [
   { path: '/communaute',                                   priority: '0.8', changefreq: 'monthly' },
   { path: '/photographie-paysage-mer',                     priority: '0.9', changefreq: 'monthly' },
   { path: '/photographie-sous-marine',                     priority: '0.9', changefreq: 'monthly' },
+  { path: '/photographe-environnemental-marseille',         priority: '0.9', changefreq: 'monthly' },
   { path: '/videos',                                       priority: '0.8', changefreq: 'monthly' },
   { path: '/carte-calanques',                              priority: '0.8', changefreq: 'weekly'  },
   { path: '/actualites',                                   priority: '0.6', changefreq: 'weekly'  },
