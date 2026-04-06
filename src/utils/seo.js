@@ -50,6 +50,8 @@ const PERSON_SCHEMA = {
     'https://500px.com/p/karimsaari?view=photos',
     'https://fr.pinterest.com/Photographie_Marseille/',
     'https://www.google.com/maps/contrib/114953930403565163435',
+    'https://maps.app.goo.gl/UaF5o6sM2xS5Gaxr6',
+    'https://share.google/VAnA0t89Jy0AaR0zC',
     'https://www.tf1info.fr/environnement-ecologie/video-greve-des-eboueurs-a-marseille-des-craintes-pour-l-environnement-2208213.html',
     'https://www.tf1info.fr/environnement-ecologie/video-le-scandale-des-decharges-sauvages-dans-les-calanques-marseillaises-2258525.html',
     'https://www.laprovence.com/video/marseille-14-tonne-de-dechets-sortie-des-eaux-du-frioul-par-des-apneistes/14871',

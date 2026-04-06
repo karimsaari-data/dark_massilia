@@ -40,7 +40,7 @@ export const NAV_LINKS = [
     description: 'Dépollution des fonds marins en apnée, documentation scientifique et mobilisation citoyenne dans les Calanques.',
     children: [
       { name: 'Dépollution marine',      path: '/depollution-marine',    icon: 'Compass'   },
-      { name: 'Carte des Calanques',     path: '/carte-calanques',       icon: 'MapPin'    },
+      { name: 'Carte interactive des Calanques', path: '/carte-calanques', icon: 'MapPin'    },
       { name: 'Rejoindre la communauté', path: '/communaute',            icon: 'Share2'    },
       { name: 'Données scientifiques',   path: '/donnees-scientifiques', icon: 'BarChart2' },
     ],
@@ -50,12 +50,12 @@ export const NAV_LINKS = [
     icon: 'Film',
     description: 'Documentaires ARTE, presse nationale, vidéos, blog et actualités sur l\'engagement environnemental à Marseille.',
     children: [
-      { name: 'Vidéos',                  path: '/videos',                                       icon: 'Video'    },
+      { name: 'Vidéos & Documentaires',   path: '/videos',                                       icon: 'Video'    },
       { name: 'Presse',                  path: '/presse',                                       icon: 'Film'     },
       { name: 'ARTE — Sauver Marseille', path: '/sauver-marseille-documentaire-arte',           icon: 'Tv'       },
       { name: 'ARTE — Méduses',          path: '/meduses-souveraines-oceans-documentaire-arte', icon: 'Tv'       },
       { name: 'Blog',                    path: '/blog',                                         icon: 'BookOpen' },
-      { name: 'Actualités',              path: '/actualites',                                   icon: 'Newspaper'},
+      { name: 'News Parc des Calanques',   path: '/actualites',                                   icon: 'Newspaper'},
     ],
   },
   {
@@ -65,8 +65,8 @@ export const NAV_LINKS = [
     children: [
       { name: 'Collaborer avec nous',          path: '/contact',                                              icon: 'Mail'    },
       { name: 'Newsletter',                   path: '/#newsletter',                                          icon: 'Send'    },
-      { name: 'Amoureux des Calanques',       path: 'https://www.facebook.com/groups/calanque/',             icon: 'Share2'  },
-      { name: 'Team Oxygen',                  path: 'https://www.team-oxygen.com/',                          icon: 'Compass' },
+      { name: 'Rejoindre le groupe Facebook',  path: 'https://www.facebook.com/groups/calanque/',             icon: 'Share2'  },
+      { name: 'Team Oxygen — site officiel',  path: 'https://www.team-oxygen.com/',                          icon: 'Compass' },
     ],
   },
 ];

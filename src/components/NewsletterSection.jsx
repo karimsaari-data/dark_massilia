@@ -112,7 +112,7 @@ const NewsletterSection = () => {
                       type="submit"
                       disabled={!consent || status === 'loading'}
                       aria-busy={status === 'loading'}
-                      className="btn-primary flex items-center justify-center gap-2 px-7 py-3.5 whitespace-nowrap disabled:opacity-50 disabled:cursor-not-allowed"
+                      className="btn-primary flex items-center justify-center gap-2 px-7 py-3.5 whitespace-nowrap shrink-0 disabled:opacity-50 disabled:cursor-not-allowed"
                     >
                       {status === 'loading' ? (
                         <>

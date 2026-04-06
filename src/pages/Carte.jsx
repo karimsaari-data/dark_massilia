@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
-import { ExternalLink, MapPin, FileText, Map, ArrowRight } from 'lucide-react';
+import { ExternalLink, MapPin, FileText, Map, ArrowRight, ChevronDown } from 'lucide-react';
 
 const CARTES_TERRESTRES = [
   { label: 'Carte générale du Parc national des Calanques', url: 'https://www.calanques-parcnational.fr/sites/calanques-parcnational.fr/files/thumbnails/image/carte-calanques-marseille-cassis-la-ciotat-3000x1733.jpg' },
@@ -105,8 +105,25 @@ export default function Carte() {
           className="glass rounded-xl border border-white/10 px-4 py-2.5 flex items-center gap-2 text-xs text-text-secondary hover:text-white hover:border-ocean-teal/40 transition-colors duration-200"
         >
           <ExternalLink className="w-3.5 h-3.5" />
-          Ouvrir en plein écran
+          Ouvrir dans Google Maps
         </motion.a>
+
+        {/* Indicateur de scroll — bas centré */}
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.5, delay: 1.2 }}
+          style={{ position: 'absolute', bottom: '1.5rem', left: '50%', transform: 'translateX(-50%)', zIndex: 10 }}
+          className="flex flex-col items-center gap-1 pointer-events-none"
+        >
+          <span className="text-white/50 text-xs tracking-widest uppercase">Voir plus</span>
+          <motion.div
+            animate={{ y: [0, 6, 0] }}
+            transition={{ duration: 1.4, repeat: Infinity, ease: 'easeInOut' }}
+          >
+            <ChevronDown className="w-5 h-5 text-white/50" />
+          </motion.div>
+        </motion.div>
 
         {/* Titre flottant — haut centré */}
         <motion.div
@@ -207,7 +224,7 @@ export default function Carte() {
               className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-orange-400/50 text-orange-400 text-sm font-medium hover:text-orange-300 hover:border-orange-400 transition-all duration-200"
             >
               <MapPin className="w-4 h-4" />
-              Ouvrir la carte en plein écran
+              Ouvrir dans Google Maps
               <ExternalLink className="w-3 h-3 opacity-60" />
             </a>
           </div>
