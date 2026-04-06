@@ -6,12 +6,15 @@
  * Usage: node scripts/inject-exif.js
  */
 
-import { execSync }                                            from 'child_process';
-import { existsSync, readFileSync, writeFileSync, unlinkSync } from 'fs';
-import { join, dirname }                                       from 'path';
-import { fileURLToPath }                                       from 'url';
-import { tmpdir }                                              from 'os';
-import { createClient }                                        from '@supabase/supabase-js';
+import { execSync }                                                        from 'child_process';
+import { existsSync, readFileSync, writeFileSync, unlinkSync, statSync }   from 'fs';
+import { join, dirname }                                                    from 'path';
+import { fileURLToPath }                                                    from 'url';
+import { tmpdir }                                                           from 'os';
+import { createClient }                                                     from '@supabase/supabase-js';
+
+const NEW_ONLY    = process.argv.includes('--new-only');
+const CACHE_FILE  = join(dirname(fileURLToPath(import.meta.url)), '..', '.exif-cache.json');
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname  = dirname(__filename);
@@ -58,6 +61,22 @@ function loadEnv() {
 }
 
 const EXIFTOOL_PATH = 'C:\\Users\\ksaari\\AppData\\Local\\Programs\\ExifTool\\ExifTool.exe';
+
+// ── Cache (mtime) pour --new-only ─────────────────────────────────────────────
+function loadCache() {
+  try { return JSON.parse(readFileSync(CACHE_FILE, 'utf-8')); } catch { return {}; }
+}
+function saveCache(cache) {
+  writeFileSync(CACHE_FILE, JSON.stringify(cache, null, 2), 'utf-8');
+}
+function isAlreadyProcessed(cache, filePath) {
+  if (!NEW_ONLY) return false;
+  const mtime = statSync(filePath).mtimeMs;
+  return cache[filePath] === mtime;
+}
+function markProcessed(cache, filePath) {
+  cache[filePath] = statSync(filePath).mtimeMs;
+}
 
 // ── ExifTool via argfile cp1252 (encodage Windows natif) ─────────────────────
 function runExiftool(filePath, title, description, keywords, geo) {
@@ -162,12 +181,12 @@ function keywordsForPaysage(type) {
 }
 
 // ── Traitement d'une galerie depuis Supabase ──────────────────────────────────
-async function processGallery(sb, tableName, keywordsFn) {
+async function processGallery(sb, tableName, keywordsFn, cache) {
   const { data, error } = await sb.from(tableName).select('src,title,alt,lieu,lat,lng,categorie');
   if (error) { console.error(`❌  ${tableName} : ${error.message}`); return; }
 
   console.log(`\n📁 ${tableName}  (${data.length} photos)`);
-  let ok = 0, skip = 0, err = 0;
+  let ok = 0, skip = 0, cached = 0, err = 0;
 
   for (const row of data) {
     if (!row.src) continue;
@@ -181,6 +200,11 @@ async function processGallery(sb, tableName, keywordsFn) {
       continue;
     }
 
+    if (isAlreadyProcessed(cache, filePath)) {
+      cached++;
+      continue;
+    }
+
     const title       = row.title?.trim() || row.src.split('/').pop().replace('.webp', '');
     const description = row.alt?.trim()   || title;
     const keywords    = keywordsFn(row.categorie);
@@ -189,6 +213,7 @@ async function processGallery(sb, tableName, keywordsFn) {
     try {
       runExiftool(filePath, title, description, keywords, geo);
       const filename = row.src.split('/').pop();
+      markProcessed(cache, filePath);
       console.log(`  ✓  ${filename}`);
       ok++;
 
@@ -197,6 +222,7 @@ async function processGallery(sb, tableName, keywordsFn) {
       const file800w   = path.join(dir800w, filename).replace(/\//g, '\\');
       if (existsSync(file800w)) {
         runExiftool(file800w, title, description, keywords, geo);
+        markProcessed(cache, file800w);
         console.log(`  ✓  800w/${filename}`);
       }
     } catch (e) {
@@ -204,7 +230,8 @@ async function processGallery(sb, tableName, keywordsFn) {
       err++;
     }
   }
-  console.log(`  → ${ok} OK, ${skip} introuvables, ${err} erreurs`);
+  const cachedMsg = cached > 0 ? `, ${cached} déjà traités (cache)` : '';
+  console.log(`  → ${ok} OK, ${skip} introuvables, ${err} erreurs${cachedMsg}`);
 }
 
 // ── MISC_FILES — images presse/médias/divers (hors galeries DB) ───────────────
@@ -253,21 +280,25 @@ if (!env.VITE_SUPABASE_URL || !env.VITE_SUPABASE_ANON_KEY) {
 }
 
 const sb = createClient(env.VITE_SUPABASE_URL, env.VITE_SUPABASE_ANON_KEY);
-console.log('🔧  Injection XMP — source : Supabase\n');
+console.log(`🔧  Injection XMP — source : Supabase${NEW_ONLY ? '  [mode --new-only]' : ''}\n`);
+
+const cache = loadCache();
 
 // Galeries depuis la DB (source de vérité)
-await processGallery(sb, 'photos_sous_marine', keywordsForSousMarine);
-await processGallery(sb, 'photos_paysage',     keywordsForPaysage);
+await processGallery(sb, 'photos_sous_marine', keywordsForSousMarine, cache);
+await processGallery(sb, 'photos_paysage',     keywordsForPaysage,     cache);
 
 // Images presse / médias / divers (hors galeries)
 console.log('\n📁 MISC — presse / médias / divers');
-let okMisc = 0, errMisc = 0;
+let okMisc = 0, cachedMisc = 0, errMisc = 0;
 for (const { file, title, description, keywords, geo } of MISC_FILES) {
   const filePath = path.join(IMAGES_ROOT, file).replace(/\//g, '\\');
   if (!existsSync(filePath)) { console.log(`  ⚠  Introuvable : ${file}`); continue; }
+  if (isAlreadyProcessed(cache, filePath)) { cachedMisc++; continue; }
   const resolvedGeo = geo === null ? null : (geo ?? GEO_MARSEILLE);
   try {
     runExiftool(filePath, title, description, keywords, resolvedGeo);
+    markProcessed(cache, filePath);
     console.log(`  ✓  ${file}`);
     okMisc++;
   } catch (e) {
@@ -275,6 +306,8 @@ for (const { file, title, description, keywords, geo } of MISC_FILES) {
     errMisc++;
   }
 }
-console.log(`  → ${okMisc} OK, ${errMisc} erreurs`);
+const cachedMiscMsg = cachedMisc > 0 ? `, ${cachedMisc} déjà traités (cache)` : '';
+console.log(`  → ${okMisc} OK, ${errMisc} erreurs${cachedMiscMsg}`);
 
+saveCache(cache);
 console.log('\n✅  Terminé — relance npm run build:full + FTP');

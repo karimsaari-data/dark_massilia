@@ -28,7 +28,12 @@
     "backlink-report": "node scripts/backlink-report.js",
     "wp:audit-images": "node --env-file-if-exists=.env scripts/wp-optimize-images.mjs --audit",
     "wp:fix-images": "node --env-file-if-exists=.env scripts/wp-optimize-images.mjs --fix",
-    "wp:fix-images-dry": "node --env-file-if-exists=.env scripts/wp-optimize-images.mjs --fix --dry-run"
+    "wp:fix-images-dry": "node --env-file-if-exists=.env scripts/wp-optimize-images.mjs --fix --dry-run",
+    "exif:inject": "node scripts/inject-exif.js",
+    "exif:inject:new": "node scripts/inject-exif.js --new-only",
+    "exif:audit": "node scripts/audit-exif.js",
+    "exif:audit:new": "node scripts/audit-exif.js --new-only",
+    "build:photos": "node scripts/generate-sitemap-images.js && node scripts/sync-new-images.js"
   },
   "dependencies": {
     "@fancyapps/ui": "^6.1.13",
