@@ -792,6 +792,13 @@
       <image:geo_location>Parc national des calanques</image:geo_location>
     </image:image>
     <image:image>
+      <image:loc>https://karimsaari.com/images/posidonie-calanque-sormiou-marseille.webp</image:loc>
+      <image:title>Posidonie calanque sormiou marseille</image:title>
+      <image:caption>Posidonie calanque sormiou marseille</image:caption>
+      <image:license>https://karimsaari.com/home/contact</image:license>
+      <image:geo_location>Calanques de Marseille, France</image:geo_location>
+    </image:image>
+    <image:image>
       <image:loc>https://karimsaari.com/images/marseille-dark-massilia-caracterisation-dechets-carac-10.webp</image:loc>
       <image:title>Analyse de la collecte — Sentinelle 4</image:title>
       <image:caption>Deux apnéistes de la TEAM OXYGEN présentent un filet de collecte rempli de détritus et un textile gorgé de sédiments sur le sable, lors de l&apos;étape de caractérisation des déchets après une opération de dépollution en Méditerranée, sous l&apos;œil d&apos;une équipe de tournage — Marseille — © Karim Saari</image:caption>
@@ -1455,6 +1462,13 @@
       <image:caption>Kayakiste naviguant sur les eaux cristallines de la plage de la Corbière, avec l&apos;appui technique de l&apos;association Boud&apos;mer pour la préservation du littoral rocheux — [G2] PAYSAGES : A. Littoral/Calanques — © Karim Saari</image:caption>
       <image:license>https://karimsaari.com/home/contact</image:license>
       <image:geo_location>Marseille - Corbière</image:geo_location>
+    </image:image>
+    <image:image>
+      <image:loc>https://karimsaari.com/images/heineken-dans-la-calanque-de-sugiton.webp</image:loc>
+      <image:title>Bouteille de Heineken — Calanque de Sormiou</image:title>
+      <image:caption>Bouteille de bière Heineken abandonnée sur les fonds marins de la Calanque de Sormiou, témoignant de la pollution plastique et urbaine en Méditerranée — © Karim Saari</image:caption>
+      <image:license>https://karimsaari.com/home/contact</image:license>
+      <image:geo_location>Calanques de Marseille, France</image:geo_location>
     </image:image>
     <image:image>
       <image:loc>https://karimsaari.com/images/Marseille-dark-massilia-plastique-pollution-projet-sentinelle-barrière.webp</image:loc>
