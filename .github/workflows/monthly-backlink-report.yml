@@ -2,7 +2,7 @@ name: Monthly Backlink Report (Off-Page Phase 3)
 
 on:
   schedule:
-    - cron: '0 9 1-7 * 0'  # 1er dimanche du mois à 9h UTC = 10h/11h Paris
+    - cron: '0 9 1 * *'  # 1er de chaque mois à 9h UTC = 10h/11h Paris
   workflow_dispatch:        # Déclenchement manuel possible
 
 jobs:
