@@ -37,6 +37,7 @@ const DOMAIN_META = {
   'threehosts.com':      { cat: 'Annuaire spam',            quality: 'Spam',      score: 0 },
   'wopa.fr':             { cat: 'Annuaire',                 quality: 'Faible',    score: 1 },
   'twstalker.com':       { cat: 'Scraper/Spam',             quality: 'Spam',      score: 0 },
+  'mappy.com':           { cat: 'Annuaire local',           quality: 'Moyen',     score: 2 },
 };
 
 function qualityBadge(q) {
@@ -160,7 +161,7 @@ async function generatePDF(html) {
   const spamDomains      = sites.filter(r => (DOMAIN_META[r.Site]?.score ?? 2) === 0);
   const highValueDomains = sites.filter(r => (DOMAIN_META[r.Site]?.score ?? 2) >= 4);
 
-  const homepageLinks = parseInt(pages[0]?.["Liens entrants"] || 0);
+  const homepageLinks = parseInt(pages[0]?.["Liens internes"] || 0);
   const homepagePct   = totalLinks > 0 ? Math.round((homepageLinks / totalLinks) * 100) : 100;
 
   const arteFound = samples?.some(r =>
@@ -213,8 +214,7 @@ async function generatePDF(html) {
     return `
     <tr style="${isHome ? 'background:#fff8f0' : ''}">
       <td style="padding:7px 10px;border-bottom:1px solid #eee;font-size:11px;color:#1a1a1a;word-break:break-all">${shortPage || '/'}</td>
-      <td style="padding:7px 10px;border-bottom:1px solid #eee;text-align:center;font-size:12px;font-weight:600">${r["Liens entrants"] || '-'}</td>
-      <td style="padding:7px 10px;border-bottom:1px solid #eee;text-align:center;font-size:12px">${r["Sites d'origine"] || '-'}</td>
+      <td style="padding:7px 10px;border-bottom:1px solid #eee;text-align:center;font-size:12px;font-weight:600">${r["Liens internes"] || '-'}</td>
     </tr>`;
   }).join('');
 
@@ -230,7 +230,11 @@ async function generatePDF(html) {
     alerts.push(`<li style="margin-bottom:8px"><strong>Aucune ancre sémantique thématique</strong> — Aucun lien avec ancre "Marseille", "pollution marine", "Calanques"… L'autorité topicale n'est pas renforcée via les textes d'ancrage. Mentionner cette priorité lors des prochaines demandes de lien.</li>`);
 
   // ── Opportunités ──
-  const photoPct = Math.round(((41 + 39 + 36 + 18 + 1) / totalLinks) * 100);
+  const PHOTO_COMMUNITY = ['flickr.com', '500px.com', 'fotocommunity.de', 'fotocommunity.com', 'fotocommunity.fr'];
+  const photoLinks = sites
+    .filter(r => PHOTO_COMMUNITY.includes(r.Site))
+    .reduce((s, r) => s + parseInt(r["Pages d'origine"] || 0), 0);
+  const photoPct = totalLinks > 0 ? Math.round((photoLinks / totalLinks) * 100) : 0;
   const opportunities = [
     `<li style="margin-bottom:8px"><strong>Deep links prioritaires</strong> — Demander aux partenaires (madeinmarseille.net, wikimedia.org) de pointer directement vers <code>/photographie-sous-marine</code> et <code>/sauver-marseille-documentaire-arte</code> plutôt que vers la homepage.</li>`,
     `<li style="margin-bottom:8px"><strong>Ancres thématiques</strong> — Lors des prochaines collaborations presse/blog, demander des ancres type "photographe engagé Marseille" ou "pollution plastique Calanques" plutôt que l'URL brute.</li>`,
@@ -309,7 +313,6 @@ async function generatePDF(html) {
       <tr style="background:#1a1a1a;color:#fff;font-size:11px">
         <th style="padding:7px 10px;text-align:left;font-weight:600">Page cible</th>
         <th style="padding:7px 10px;text-align:center;font-weight:600">Liens entrants</th>
-        <th style="padding:7px 10px;text-align:center;font-weight:600">Sites d'origine</th>
       </tr>
     </thead>
     <tbody>${pageRows}</tbody>
