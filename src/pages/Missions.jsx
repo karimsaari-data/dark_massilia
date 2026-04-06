@@ -128,6 +128,27 @@ const Missions = () => {
           </motion.div>
         </motion.div>
 
+        {/* Lien Wikipedia Projet Sentinelle */}
+        <motion.div
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          viewport={{ once: true }}
+          className="mx-auto mb-6 text-center"
+        >
+          <a
+            href="https://fr.wikipedia.org/wiki/Projet_Sentinelle"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center gap-2 text-text-muted hover:text-white transition-colors text-sm"
+          >
+            <svg className="w-4 h-4 flex-shrink-0" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+              <path d="M12 2C6.477 2 2 6.477 2 12s4.477 10 10 10 10-4.477 10-10S17.523 2 12 2zm0 1.5a8.5 8.5 0 1 1 0 17 8.5 8.5 0 0 1 0-17zm-.75 3.5v1.25H9.5v1.5h1.75v5.5H9.5v1.5h5v-1.5h-1.75V7h-1.5z"/>
+            </svg>
+            Projet Sentinelle — article Wikipédia
+            <ExternalLink className="w-3 h-3" aria-hidden="true" />
+          </a>
+        </motion.div>
+
         {/* 5ème édition — Annonce octobre 2026 + lien Team Oxygen */}
         <motion.div
           initial="hidden"

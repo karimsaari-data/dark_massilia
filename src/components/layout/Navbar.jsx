@@ -455,8 +455,8 @@ const Navbar = () => {
                 </button>
 
                 <div className="mb-8 mt-4">
-                  <h2 className="text-xl font-bold text-white" style={{ fontFamily: 'serif' }}>Karim Saari</h2>
-                  <p className="text-xs text-gray-400 mt-1 uppercase tracking-widest">Photographe / Sentinelle des Calanques</p>
+                  <h2 className="text-xl font-bold text-white">Karim Saari</h2>
+                  <p className="text-xs text-gray-400 mt-1 uppercase tracking-widest">Photographe Environnemental</p>
                 </div>
 
                 <nav aria-label="Menu principal">

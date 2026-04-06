@@ -70,13 +70,13 @@ const NewsletterSection = () => {
 
           {/* Titre */}
           <h2 className="text-3xl md:text-4xl font-bold text-white mb-4 leading-tight">
-            Un cliché des profondeurs,{' '}
-            <span className="text-ocean-teal">rien que pour toi</span>
+            Ce que la mer cache,{' '}
+            <span className="text-ocean-teal">je te le montre</span>
           </h2>
 
           {/* Sous-titre */}
           <p className="text-white/70 text-base md:text-lg leading-relaxed mb-8 max-w-lg">
-            Un fragment du royaume de Poséidon, capturé en apnée dans les fonds marins marseillais.
+            Missions de dépollution, clichés inédits, plongées en apnée, faune des Calanques — et une photo exclusive offerte dès l'inscription.
           </p>
 
           {/* Formulaire / États */}
