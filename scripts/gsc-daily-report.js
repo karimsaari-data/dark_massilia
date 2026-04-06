@@ -141,11 +141,15 @@ async function fetchDevices(date) {
 async function fetch28DaysClicks() {
   const { data, error } = await supabase
     .from('gsc_daily')
-    .select('clicks')
+    .select('date, clicks')
     .order('date', { ascending: false })
     .limit(28);
   if (error) throw new Error(`gsc_daily 28j: ${error.message}`);
-  return (data || []).reduce((s, r) => s + (r.clicks || 0), 0);
+  const rows = data || [];
+  return {
+    total: rows.reduce((s, r) => s + (r.clicks || 0), 0),
+    days:  rows.length,
+  };
 }
 
 // ── HTML Email ────────────────────────────────────────────────────────────────
@@ -356,8 +360,9 @@ function buildHtml({ lastDay, days7, queries, pages, countries, devices, clicks2
 
             <!-- Réussites GSC -->
             ${(() => {
-              const ms = getMilestone(clicks28);
-              const barColor = ms.pct >= 100 ? '#21c47b' : ms.pct >= 75 ? '#f59e0b' : '#21c47b';
+              const ms = getMilestone(clicks28.total);
+              const barColor = '#21c47b';
+              const incomplete = clicks28.days < 28;
               return section('Réussites — 28 jours glissants', `
                 <table width="100%" cellpadding="0" cellspacing="0">
                   <tr>
@@ -367,9 +372,10 @@ function buildHtml({ lastDay, days7, queries, pages, countries, devices, clicks2
                       </div>
                       <div style="font-size:11px;color:#666;margin-bottom:8px">
                         Générez ${ms.next} clics depuis la recherche Google en 28 jours
+                        ${incomplete ? `<span style="color:#f59e0b"> · ⚠️ ${clicks28.days}/28 jours disponibles — lancer le backfill</span>` : ''}
                       </div>
                       <div style="background:#e0e0e0;border-radius:4px;height:8px;width:100%">
-                        <div style="background:${barColor};border-radius:4px;height:8px;width:${ms.pct}%;transition:width 0.3s"></div>
+                        <div style="background:${barColor};border-radius:4px;height:8px;width:${ms.pct}%"></div>
                       </div>
                       <div style="font-size:10px;color:#999;margin-top:4px;text-align:right">${ms.pct}% vers l'objectif ${ms.next}</div>
                     </td>
@@ -516,7 +522,7 @@ async function sendEmail(html, lastDate, pdfBuffer) {
   const date = lastDay.date;
   console.log(`📅 Dernier jour disponible : ${date}`);
   console.log(`   Clics: ${lastDay.clicks} | Impr: ${lastDay.impressions} | CTR: ${pct(lastDay.ctr)} | Pos: ${pos(lastDay.position)}`);
-  console.log(`   Réussites 28j : ${clicks28} clics → objectif ${getMilestone(clicks28).next}\n`);
+  console.log(`   Réussites 28j : ${clicks28.total} clics (${clicks28.days} jours) → objectif ${getMilestone(clicks28.total).next}\n`);
 
   const [queries, pages, countries, devices] = await Promise.all([
     fetchQueries(date),
@@ -534,6 +540,7 @@ async function sendEmail(html, lastDate, pdfBuffer) {
   });
 
   const html = buildHtml({ lastDay, days7, queries, pages, countries, devices, clicks28, generatedAt });
+  if (clicks28.days < 28) console.warn(`  ⚠️  Seulement ${clicks28.days}/28 jours en base — lancer le backfill : workflow_dispatch backfill_days=28`);
 
   console.log('\n📄 Génération PDF...');
   const pdfBuffer = await generatePDF(html);
