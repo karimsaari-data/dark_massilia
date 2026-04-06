@@ -138,6 +138,22 @@ async function fetchDevices(date) {
   return data || [];
 }
 
+async function fetchPageQueries(date) {
+  const { data, error } = await supabase
+    .from('gsc_daily_page_queries')
+    .select('page, query, clicks, impressions, ctr, position')
+    .eq('date', date)
+    .order('impressions', { ascending: false });
+  if (error) throw new Error(`gsc_daily_page_queries: ${error.message}`);
+  // Grouper par page → top 3 requêtes par page
+  const map = {};
+  for (const r of (data || [])) {
+    if (!map[r.page]) map[r.page] = [];
+    if (map[r.page].length < 3) map[r.page].push(r);
+  }
+  return map;
+}
+
 async function fetch28DaysClicks() {
   const { data, error } = await supabase
     .from('gsc_daily')
@@ -164,7 +180,7 @@ function getMilestone(total) {
   return { total, next, prev, pct };
 }
 
-function buildHtml({ lastDay, days7, queries, pages, countries, devices, clicks28, generatedAt }) {
+function buildHtml({ lastDay, days7, queries, pages, pageQueries, countries, devices, clicks28, generatedAt }) {
   const date = lastDay.date;
 
   // ── KPI bar ──
@@ -204,16 +220,33 @@ function buildHtml({ lastDay, days7, queries, pages, countries, devices, clicks2
     `), 5
   );
 
-  // ── Top pages ──
-  const pageRows = tableRows(
-    pages.map(r => `
-      <td style="padding:6px 0;font-size:11px;color:#0066cc;max-width:240px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${pageLabel(r.page)}</td>
-      <td style="padding:6px 8px;font-size:12px;text-align:right;font-weight:600">${r.clicks}</td>
-      <td style="padding:6px 8px;font-size:12px;text-align:right;color:#555">${r.impressions}</td>
-      <td style="padding:6px 8px;font-size:12px;text-align:right;color:#555">${pct(r.ctr)}</td>
-      <td style="padding:6px 0;font-size:12px;text-align:right;color:#888">${pos(r.position)}</td>
-    `), 5
-  );
+  // ── Top pages + requêtes associées ──
+  const pageRowsHtml = pages.length === 0
+    ? `<tr><td colspan="5" style="color:#999;font-size:12px;padding:8px 0;font-style:italic">Aucune donnée disponible</td></tr>`
+    : pages.map(r => {
+        const subQueries = pageQueries[r.page] || [];
+        const subRows = subQueries.map(q => `
+          <tr style="background:#f9fffe">
+            <td style="padding:4px 0 4px 16px;font-size:11px;color:#555;max-width:220px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">
+              <span style="color:#bbb;margin-right:4px">└</span>${q.query}
+            </td>
+            <td style="padding:4px 8px;font-size:11px;text-align:right;color:${q.clicks > 0 ? '#21c47b' : '#999'};font-weight:${q.clicks > 0 ? '600' : '400'}">${q.clicks}</td>
+            <td style="padding:4px 8px;font-size:11px;text-align:right;color:#999">${q.impressions}</td>
+            <td style="padding:4px 8px;font-size:11px;text-align:right;color:#999">${pct(q.ctr)}</td>
+            <td style="padding:4px 0;font-size:11px;text-align:right;color:#bbb">${pos(q.position)}</td>
+          </tr>`).join('');
+        return `
+          <tr style="border-bottom:${subQueries.length ? 'none' : '1px solid #f0f0f0'}">
+            <td style="padding:6px 0;font-size:11px;color:#0066cc;max-width:240px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${pageLabel(r.page)}</td>
+            <td style="padding:6px 8px;font-size:12px;text-align:right;font-weight:600">${r.clicks}</td>
+            <td style="padding:6px 8px;font-size:12px;text-align:right;color:#555">${r.impressions}</td>
+            <td style="padding:6px 8px;font-size:12px;text-align:right;color:#555">${pct(r.ctr)}</td>
+            <td style="padding:6px 0;font-size:12px;text-align:right;color:#888">${pos(r.position)}</td>
+          </tr>
+          ${subRows}
+          ${subQueries.length ? '<tr><td colspan="5" style="border-bottom:1px solid #f0f0f0;padding:0"></td></tr>' : ''}
+        `;
+      }).join('');
 
   // ── Pays ──
   const totalImprCountry = countries.reduce((a, r) => a + r.impressions, 0) || 1;
@@ -397,16 +430,20 @@ function buildHtml({ lastDay, days7, queries, pages, countries, devices, clicks2
             ))}
 
             <!-- Top pages -->
-            ${section('Top pages', dataTable(
-              [
-                { label: 'Page' },
-                { label: 'Clics', align: 'right' },
-                { label: 'Impr.', align: 'right' },
-                { label: 'CTR', align: 'right' },
-                { label: 'Pos.', align: 'right' },
-              ],
-              pageRows
-            ))}
+            ${section('Top pages', `
+              <table width="100%" cellpadding="0" cellspacing="0">
+                <thead>
+                  <tr>
+                    <th style="padding:4px 8px 4px 0;font-size:10px;text-transform:uppercase;color:#999;font-weight:600;text-align:left">Page</th>
+                    <th style="padding:4px 8px;font-size:10px;text-transform:uppercase;color:#999;font-weight:600;text-align:right">Clics</th>
+                    <th style="padding:4px 8px;font-size:10px;text-transform:uppercase;color:#999;font-weight:600;text-align:right">Impr.</th>
+                    <th style="padding:4px 8px;font-size:10px;text-transform:uppercase;color:#999;font-weight:600;text-align:right">CTR</th>
+                    <th style="padding:4px 0;font-size:10px;text-transform:uppercase;color:#999;font-weight:600;text-align:right">Pos.</th>
+                  </tr>
+                </thead>
+                <tbody>${pageRowsHtml}</tbody>
+              </table>
+            `)}
 
             <!-- Pays & Appareils côte à côte -->
             <table width="100%" cellpadding="0" cellspacing="0" style="margin-top:24px">
@@ -524,14 +561,16 @@ async function sendEmail(html, lastDate, pdfBuffer) {
   console.log(`   Clics: ${lastDay.clicks} | Impr: ${lastDay.impressions} | CTR: ${pct(lastDay.ctr)} | Pos: ${pos(lastDay.position)}`);
   console.log(`   Réussites 28j : ${clicks28.total} clics (${clicks28.days} jours) → objectif ${getMilestone(clicks28.total).next}\n`);
 
-  const [queries, pages, countries, devices] = await Promise.all([
+  const [queries, pages, pageQueries, countries, devices] = await Promise.all([
     fetchQueries(date),
     fetchPages(date),
+    fetchPageQueries(date),
     fetchCountries(date),
     fetchDevices(date),
   ]);
 
-  console.log(`  📝 ${queries.length} requêtes, ${pages.length} pages, ${countries.length} pays, ${devices.length} appareils`);
+  const pageQueriesCount = Object.values(pageQueries).reduce((s, q) => s + q.length, 0);
+  console.log(`  📝 ${queries.length} requêtes, ${pages.length} pages (${pageQueriesCount} requêtes associées), ${countries.length} pays, ${devices.length} appareils`);
 
   const now = new Date();
   const generatedAt = now.toLocaleDateString('fr-FR', {
@@ -539,7 +578,7 @@ async function sendEmail(html, lastDate, pdfBuffer) {
     hour: '2-digit', minute: '2-digit', timeZone: 'Europe/Paris',
   });
 
-  const html = buildHtml({ lastDay, days7, queries, pages, countries, devices, clicks28, generatedAt });
+  const html = buildHtml({ lastDay, days7, queries, pages, pageQueries, countries, devices, clicks28, generatedAt });
   if (clicks28.days < 28) console.warn(`  ⚠️  Seulement ${clicks28.days}/28 jours en base — lancer le backfill : workflow_dispatch backfill_days=28`);
 
   console.log('\n📄 Génération PDF...');

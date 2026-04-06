@@ -159,6 +159,29 @@ async function collectDailyDevices(token, date) {
   console.log(`  ✅ appareils — ${rows.length} lignes`);
 }
 
+// ── Collecte page × requête (quotidien, top 5 requêtes par page) ─────────────
+async function collectDailyPageQueries(token, date) {
+  const data = await gscQuery(token, {
+    startDate: date, endDate: date,
+    dimensions: ['page', 'query'],
+    rowLimit: 100,
+  });
+  if (data.error) throw new Error(`GSC API page_queries: ${JSON.stringify(data.error)}`);
+  const rows = (data.rows || []).map(r => ({
+    date,
+    page:        r.keys[0],
+    query:       r.keys[1],
+    clicks:      r.clicks,
+    impressions: r.impressions,
+    ctr:         +(r.ctr.toFixed(5)),
+    position:    +(r.position.toFixed(2)),
+  }));
+  if (rows.length === 0) { console.log(`  ⚠️  ${date} — aucune donnée page×requête`); return; }
+  const { error } = await supabase.from('gsc_daily_page_queries').upsert(rows, { onConflict: 'date,page,query' });
+  if (error) throw new Error(`gsc_daily_page_queries ${date}: ${error.message}`);
+  console.log(`  ✅ page×requête — ${rows.length} combinaisons`);
+}
+
 // ── Collecte top requêtes réelles (hebdomadaire, fenêtre 7 jours) ────────────
 async function collectWeeklyQueries(token, weekStart) {
   const weekEnd = formatDate(new Date(new Date(weekStart).getTime() + 6 * 86400000));
@@ -214,6 +237,7 @@ async function collectWeeklyQueries(token, weekStart) {
     await collectGlobal(token, date);
     await collectDailyQueries(token, date);
     await collectDailyPages(token, date);
+    await collectDailyPageQueries(token, date);
     await collectDailyCountries(token, date);
     await collectDailyDevices(token, date);
   }
