@@ -138,9 +138,29 @@ async function fetchDevices(date) {
   return data || [];
 }
 
+async function fetch28DaysClicks() {
+  const { data, error } = await supabase
+    .from('gsc_daily')
+    .select('clicks')
+    .order('date', { ascending: false })
+    .limit(28);
+  if (error) throw new Error(`gsc_daily 28j: ${error.message}`);
+  return (data || []).reduce((s, r) => s + (r.clicks || 0), 0);
+}
+
 // ── HTML Email ────────────────────────────────────────────────────────────────
 
-function buildHtml({ lastDay, days7, queries, pages, countries, devices, generatedAt }) {
+// Paliers GSC "Réussites" (clics / 28 jours glissants)
+const MILESTONES = [10, 25, 50, 100, 120, 150, 200, 300, 500, 750, 1000];
+
+function getMilestone(total) {
+  const next = MILESTONES.find(m => m > total) || MILESTONES[MILESTONES.length - 1];
+  const prev = [...MILESTONES].reverse().find(m => m <= total) || 0;
+  const pct  = Math.min(100, Math.round((total / next) * 100));
+  return { total, next, prev, pct };
+}
+
+function buildHtml({ lastDay, days7, queries, pages, countries, devices, clicks28, generatedAt }) {
   const date = lastDay.date;
 
   // ── KPI bar ──
@@ -334,6 +354,30 @@ function buildHtml({ lastDay, days7, queries, pages, countries, devices, generat
             <!-- KPIs -->
             ${kpiBar}
 
+            <!-- Réussites GSC -->
+            ${(() => {
+              const ms = getMilestone(clicks28);
+              const barColor = ms.pct >= 100 ? '#21c47b' : ms.pct >= 75 ? '#f59e0b' : '#21c47b';
+              return section('Réussites — 28 jours glissants', `
+                <table width="100%" cellpadding="0" cellspacing="0">
+                  <tr>
+                    <td style="padding:10px 14px;background:#f8f9fa;border-radius:8px;border-left:3px solid #21c47b">
+                      <div style="font-size:13px;font-weight:700;color:#1a1a1a;margin-bottom:2px">
+                        Impact de la recherche Google : ${ms.total} / ${ms.next}
+                      </div>
+                      <div style="font-size:11px;color:#666;margin-bottom:8px">
+                        Générez ${ms.next} clics depuis la recherche Google en 28 jours
+                      </div>
+                      <div style="background:#e0e0e0;border-radius:4px;height:8px;width:100%">
+                        <div style="background:${barColor};border-radius:4px;height:8px;width:${ms.pct}%;transition:width 0.3s"></div>
+                      </div>
+                      <div style="font-size:10px;color:#999;margin-top:4px;text-align:right">${ms.pct}% vers l'objectif ${ms.next}</div>
+                    </td>
+                  </tr>
+                </table>
+              `);
+            })()}
+
             <!-- Top requêtes -->
             ${section('Top requêtes', dataTable(
               [
@@ -468,10 +512,11 @@ async function sendEmail(html, lastDate, pdfBuffer) {
 (async () => {
   console.log('📧 Rapport GSC journalier...\n');
 
-  const [lastDay, days7] = await Promise.all([fetchLastDay(), fetch7Days()]);
+  const [lastDay, days7, clicks28] = await Promise.all([fetchLastDay(), fetch7Days(), fetch28DaysClicks()]);
   const date = lastDay.date;
   console.log(`📅 Dernier jour disponible : ${date}`);
-  console.log(`   Clics: ${lastDay.clicks} | Impr: ${lastDay.impressions} | CTR: ${pct(lastDay.ctr)} | Pos: ${pos(lastDay.position)}\n`);
+  console.log(`   Clics: ${lastDay.clicks} | Impr: ${lastDay.impressions} | CTR: ${pct(lastDay.ctr)} | Pos: ${pos(lastDay.position)}`);
+  console.log(`   Réussites 28j : ${clicks28} clics → objectif ${getMilestone(clicks28).next}\n`);
 
   const [queries, pages, countries, devices] = await Promise.all([
     fetchQueries(date),
@@ -488,7 +533,7 @@ async function sendEmail(html, lastDate, pdfBuffer) {
     hour: '2-digit', minute: '2-digit', timeZone: 'Europe/Paris',
   });
 
-  const html = buildHtml({ lastDay, days7, queries, pages, countries, devices, generatedAt });
+  const html = buildHtml({ lastDay, days7, queries, pages, countries, devices, clicks28, generatedAt });
 
   console.log('\n📄 Génération PDF...');
   const pdfBuffer = await generatePDF(html);
