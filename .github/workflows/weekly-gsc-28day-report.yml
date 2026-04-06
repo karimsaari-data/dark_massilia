@@ -1,0 +1,37 @@
+name: Weekly GSC 28-Day Report
+
+on:
+  schedule:
+    - cron: '0 8 * * 1'  # Chaque lundi à 8h UTC = 9h/10h Paris
+  workflow_dispatch:       # Déclenchement manuel possible
+
+jobs:
+  gsc-28day-report:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+          cache: 'npm'
+
+      - name: Installation Chrome (pour Puppeteer PDF)
+        run: |
+          wget -q -O - https://dl.google.com/linux/linux_signing_key.pub | sudo apt-key add -
+          sudo sh -c 'echo "deb [arch=amd64] http://dl.google.com/linux/chrome/deb/ stable main" > /etc/apt/sources.list.d/google-chrome.list'
+          sudo apt-get update -q && sudo apt-get install -y google-chrome-stable
+
+      - name: Installation des dépendances
+        run: npm ci
+
+      - name: Rapport GSC 28 jours glissants → Brevo
+        env:
+          VITE_SUPABASE_URL:      ${{ secrets.VITE_SUPABASE_URL }}
+          VITE_SUPABASE_ANON_KEY: ${{ secrets.VITE_SUPABASE_ANON_KEY }}
+          BREVO_API_KEY:          ${{ secrets.BREVO_API_KEY }}
+          PUPPETEER_EXECUTABLE_PATH: /usr/bin/google-chrome-stable
+        run: npm run gsc-28day-report
