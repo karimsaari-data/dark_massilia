@@ -16,11 +16,13 @@
 import { createClient } from '@supabase/supabase-js';
 import puppeteer from 'puppeteer';
 
-const SUPABASE_URL = process.env.VITE_SUPABASE_URL;
-const SUPABASE_KEY = process.env.VITE_SUPABASE_ANON_KEY || process.env.SUPABASE_SERVICE_KEY;
+const SUPABASE_URL  = process.env.VITE_SUPABASE_URL;
+const SUPABASE_KEY  = process.env.VITE_SUPABASE_ANON_KEY || process.env.SUPABASE_SERVICE_KEY;
 const BREVO_API_KEY = process.env.BREVO_API_KEY;
-const BREVO_TO   = 'email@karimsaari.com';
-const BREVO_FROM = { email: 'contact@karimsaari.com', name: 'Dark Massilia' };
+const BREVO_TO      = 'email@karimsaari.com';
+const BREVO_FROM    = { email: 'contact@karimsaari.com', name: 'Dark Massilia' };
+const CF_API_TOKEN  = process.env.CLOUDFLARE_API_TOKEN;
+const CF_ZONE_ID    = process.env.CLOUDFLARE_ZONE_ID || '5b01c0fff9eea9bfc96073071e8340db';
 
 if (!SUPABASE_URL || !SUPABASE_KEY) {
   console.error('❌ VITE_SUPABASE_URL ou VITE_SUPABASE_ANON_KEY manquant');
@@ -168,6 +170,28 @@ async function fetch28DaysClicks() {
   };
 }
 
+// ── Fetch Cloudflare (depuis Supabase) ────────────────────────────────────────
+
+async function fetchCfDay() {
+  const { data } = await supabase
+    .from('cf_daily')
+    .select('*')
+    .order('date', { ascending: false })
+    .limit(1)
+    .single();
+  return data || null; // graceful si table vide
+}
+
+async function fetchCfCountries(date) {
+  const { data } = await supabase
+    .from('cf_daily_countries')
+    .select('*')
+    .eq('date', date)
+    .order('requests', { ascending: false })
+    .limit(6);
+  return data || [];
+}
+
 // ── HTML Email ────────────────────────────────────────────────────────────────
 
 // Paliers GSC "Réussites" (clics / 28 jours glissants)
@@ -180,7 +204,17 @@ function getMilestone(total) {
   return { total, next, prev, pct };
 }
 
-function buildHtml({ lastDay, days7, queries, pages, pageQueries, countries, devices, clicks28, generatedAt }) {
+const CF_COUNTRY_NAMES = {
+  'France': 'France', 'Belgium': 'Belgique', 'Switzerland': 'Suisse', 'Canada': 'Canada',
+  'Germany': 'Allemagne', 'United Kingdom': 'Royaume-Uni', 'United States': 'États-Unis',
+  'Spain': 'Espagne', 'Italy': 'Italie', 'Portugal': 'Portugal', 'Netherlands': 'Pays-Bas',
+  'Morocco': 'Maroc', 'Tunisia': 'Tunisie', 'Algeria': 'Algérie', 'Luxembourg': 'Luxembourg',
+  'Brazil': 'Brésil', 'Mexico': 'Mexique', 'Australia': 'Australie', 'Japan': 'Japon',
+  'Reunion': 'La Réunion', 'Unknown': '—',
+};
+function cfCountryLabel(name) { return CF_COUNTRY_NAMES[name] || name || '—'; }
+
+function buildHtml({ lastDay, days7, queries, pages, pageQueries, countries, devices, clicks28, cfDay, cfCountries, generatedAt }) {
   const date = lastDay.date;
 
   // ── KPI bar ──
@@ -388,6 +422,62 @@ function buildHtml({ lastDay, days7, queries, pages, pageQueries, countries, dev
         <tr>
           <td style="padding:24px 28px">
 
+            <!-- Cloudflare — Trafic réel (sans cookies) -->
+            ${cfDay ? (() => {
+              const bwMB     = (cfDay.bytes / 1024 / 1024).toFixed(1);
+              const cacheRate = cfDay.requests > 0
+                ? ((cfDay.cached_requests / cfDay.requests) * 100).toFixed(1) + '%'
+                : '—';
+              const cfKpis = [
+                ['Visiteurs uniques', cfDay.unique_visitors.toLocaleString('fr-FR'), '#0ea5e9'],
+                ['Pages vues',        cfDay.page_views.toLocaleString('fr-FR'),      '#0ea5e9'],
+                ['Bande passante',    bwMB + ' MB',                                  '#64748b'],
+                ['Taux de cache',     cacheRate,                                     '#64748b'],
+                ['Menaces bloquées',  cfDay.threats.toLocaleString('fr-FR'),         cfDay.threats > 0 ? '#ef4444' : '#64748b'],
+              ];
+              const cfCountryRows = cfCountries.map(r => {
+                const bar = cfCountries[0]?.requests > 0
+                  ? Math.round((r.requests / cfCountries[0].requests) * 100)
+                  : 0;
+                return `
+                  <tr>
+                    <td style="padding:4px 0;font-size:11px;color:#334155">${cfCountryLabel(r.country)}</td>
+                    <td style="padding:4px 8px;font-size:11px;text-align:right;font-weight:600;color:#0ea5e9">${r.requests.toLocaleString('fr-FR')}</td>
+                    <td style="padding:4px 0;width:60px">
+                      <div style="background:#e0f2fe;border-radius:2px;height:5px;width:100%">
+                        <div style="background:#0ea5e9;border-radius:2px;height:5px;width:${bar}%"></div>
+                      </div>
+                    </td>
+                  </tr>`;
+              }).join('');
+              return `
+              <div style="margin-bottom:20px;border:1px solid #e0f2fe;border-radius:10px;overflow:hidden">
+                <div style="background:linear-gradient(135deg,#0c1a2e 0%,#0f2d4a 100%);padding:10px 16px;display:flex;align-items:center;justify-content:space-between">
+                  <div>
+                    <span style="font-size:10px;color:#0ea5e9;font-weight:700;text-transform:uppercase;letter-spacing:1px">☁️ Cloudflare — Trafic réel</span>
+                    <span style="font-size:10px;color:#5a8a9a;margin-left:8px">${frDate(cfDay.date)} · sans cookies · 100% fiable</span>
+                  </div>
+                </div>
+                <div style="background:#f8fbff;padding:12px 16px">
+                  <table width="100%" cellpadding="0" cellspacing="0">
+                    <tr>
+                      ${cfKpis.map(([label, value, color]) => `
+                        <td align="center" style="padding:8px 4px">
+                          <div style="font-size:18px;font-weight:700;color:${color}">${value}</div>
+                          <div style="font-size:10px;color:#94a3b8;margin-top:2px">${label}</div>
+                        </td>
+                      `).join('')}
+                    </tr>
+                  </table>
+                  ${cfCountryRows ? `
+                  <div style="margin-top:10px;border-top:1px solid #e0f2fe;padding-top:10px">
+                    <div style="font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:0.8px;color:#94a3b8;margin-bottom:6px">Pays</div>
+                    <table width="100%" cellpadding="0" cellspacing="0"><tbody>${cfCountryRows}</tbody></table>
+                  </div>` : ''}
+                </div>
+              </div>`;
+            })() : ''}
+
             <!-- KPIs -->
             ${kpiBar}
 
@@ -555,8 +645,11 @@ async function sendEmail(html, lastDate, pdfBuffer) {
 (async () => {
   console.log('📧 Rapport GSC journalier...\n');
 
-  const [lastDay, days7, clicks28] = await Promise.all([fetchLastDay(), fetch7Days(), fetch28DaysClicks()]);
+  const [lastDay, days7, clicks28, cfDay] = await Promise.all([
+    fetchLastDay(), fetch7Days(), fetch28DaysClicks(), fetchCfDay(),
+  ]);
   const date = lastDay.date;
+  const cfCountries = cfDay ? await fetchCfCountries(cfDay.date) : [];
   console.log(`📅 Dernier jour disponible : ${date}`);
   console.log(`   Clics: ${lastDay.clicks} | Impr: ${lastDay.impressions} | CTR: ${pct(lastDay.ctr)} | Pos: ${pos(lastDay.position)}`);
   console.log(`   Réussites 28j : ${clicks28.total} clics (${clicks28.days} jours) → objectif ${getMilestone(clicks28.total).next}\n`);
@@ -578,7 +671,10 @@ async function sendEmail(html, lastDate, pdfBuffer) {
     hour: '2-digit', minute: '2-digit', timeZone: 'Europe/Paris',
   });
 
-  const html = buildHtml({ lastDay, days7, queries, pages, pageQueries, countries, devices, clicks28, generatedAt });
+  if (cfDay) console.log(`  ☁️  CF ${cfDay.date} — ${cfDay.unique_visitors} visiteurs, ${cfDay.page_views} pages vues, ${cfDay.threats} menaces`);
+  else       console.log('  ☁️  Pas de données Cloudflare en base (lancer cloudflare-collect d\'abord)');
+
+  const html = buildHtml({ lastDay, days7, queries, pages, pageQueries, countries, devices, clicks28, cfDay, cfCountries, generatedAt });
   if (clicks28.days < 28) console.warn(`  ⚠️  Seulement ${clicks28.days}/28 jours en base — lancer le backfill : workflow_dispatch backfill_days=28`);
 
   console.log('\n📄 Génération PDF...');

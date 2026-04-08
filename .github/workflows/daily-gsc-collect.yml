@@ -46,6 +46,15 @@ jobs:
       - name: Installation des dépendances
         run: npm ci
 
+      - name: Collecte Cloudflare → Supabase
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CLOUDFLARE_ZONE_ID:   ${{ secrets.CLOUDFLARE_ZONE_ID }}
+          VITE_SUPABASE_URL:    ${{ secrets.VITE_SUPABASE_URL }}
+          SUPABASE_SERVICE_KEY: ${{ secrets.SUPABASE_SERVICE_KEY }}
+          BACKFILL_DAYS:        ${{ github.event.inputs.backfill_days || '1' }}
+        run: node scripts/cloudflare-collect.js
+
       - name: Collecte GSC → Supabase
         env:
           GSC_CLIENT_ID:        ${{ secrets.GSC_CLIENT_ID }}
@@ -57,7 +66,7 @@ jobs:
           BACKFILL_WEEKS:       ${{ github.event.inputs.backfill_weeks || '1' }}
         run: node scripts/gsc-collect.js
 
-      - name: Rapport GSC journalier → Brevo
+      - name: Rapport journalier (GSC + Cloudflare) → Brevo
         if: ${{ github.event.inputs.skip_report != 'true' }}
         env:
           VITE_SUPABASE_URL:      ${{ secrets.VITE_SUPABASE_URL }}

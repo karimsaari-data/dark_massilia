@@ -19,6 +19,7 @@
     "indexnow": "node scripts/notify-indexnow.js",
     "lint": "eslint .",
     "preview": "vite preview",
+    "cloudflare-collect": "node --env-file-if-exists=.env scripts/cloudflare-collect.js",
     "gsc-collect": "node --env-file-if-exists=.env scripts/gsc-collect.js",
     "gsc-daily-report": "node --env-file-if-exists=.env scripts/gsc-daily-report.js",
     "gsc-28day-report": "node --env-file-if-exists=.env scripts/gsc-28day-report.js",
