@@ -27,7 +27,7 @@ const PERSON_SCHEMA = {
   alternateName: 'Dark Massilia',
   url: 'https://karimsaari.com',
   image: DEFAULT_IMAGE,
-  jobTitle: ['Photographe environnemental et sous-marin', 'Apnéiste', 'Président de Team Oxygen', 'Militant écologique'],
+  jobTitle: 'Photographe environnemental et sous-marin — Apnéiste & Président de Team Oxygen',
   description:
     'Photographe environnemental et sous-marin à Marseille. Fondateur de Dark Massilia, communauté de 130k personnes engagées pour les Calanques. Président de Team Oxygen. Vu sur TF1, ARTE et M6.',
   address: {
@@ -82,7 +82,7 @@ const PERSON_SCHEMA = {
     name: 'Team Oxygen',
     url: 'https://www.team-oxygen.com/',
   },
-  founder: [
+  owns: [
     {
       '@type': 'Organization',
       name: 'Dark Massilia',
@@ -126,7 +126,6 @@ const PERSON_SCHEMA = {
 
 // ── Helper : BreadcrumbList Schema.org ──────────────────────
 const breadcrumb = (name, path) => ({
-  '@context': 'https://schema.org',
   '@type': 'BreadcrumbList',
   itemListElement: [
     { '@type': 'ListItem', position: 1, name: 'Accueil', item: `${BASE_URL}/` },
