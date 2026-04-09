@@ -18,6 +18,13 @@ const videos = [
     description: 'Documentaire de Sébastien Lafont (2024, 43 min) — images Méditerranée fournies par Karim Saari',
   },
   {
+    id: '1023375117',
+    type: 'vimeo',
+    title: 'Pilote Oxygen — Zekefilm',
+    description: 'Film pilote réalisé par Zekefilm sur les actions de dépollution marine de Team Oxygen',
+    thumbnail_url: 'https://i.vimeocdn.com/video/1959544955-a137718c8ecbdfd449d6d417581e46c618125dd3b7317fdc5a3a4bee2e95159e-d_640x360',
+  },
+  {
     id: 'sseo9sf7jow',
     title: '2025, une année de dépollution en apnée à Marseille',
     description: 'Rétrospective 2025 des actions de dépollution en apnée à Marseille',
@@ -97,10 +104,13 @@ const Videos = () => {
             >
               <VideoPlayer
                 media={{
-                  type: 'youtube',
-                  url: `https://www.youtube.com/watch?v=${video.id}`,
+                  type: video.type || 'youtube',
+                  url: video.type === 'vimeo'
+                    ? `https://vimeo.com/${video.id}`
+                    : `https://www.youtube.com/watch?v=${video.id}`,
                   embed_id: video.id,
                   title: video.title,
+                  thumbnail_url: video.thumbnail_url || null,
                 }}
               />
 

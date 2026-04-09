@@ -558,7 +558,7 @@ export const SEO_PAGES = {
   '/videos': {
     title: 'Vidéos — Dépollution en Méditerranée | Karim Saari',
     description:
-      "Visionnez mes documentaires et reportages d'action en immersion. Plongez au cœur des missions de dépollution marine en Méditerranée.",
+      "Visionnez les documentaires et reportages d'action en immersion. Dépollution marine en Méditerranée, Calanques de Marseille — diffusé sur ARTE et TF1.",
     canonical: `${BASE_URL}/videos`,
     schema: {
       '@context': 'https://schema.org',
@@ -607,6 +607,7 @@ export const SEO_PAGES = {
     title: 'Photographe Sous-Marin Marseille | Karim Saari',
     description:
       'Galerie sous-marine de Karim Saari : actions de dépollution, biodiversité et caractérisation des fonds des Calanques de Marseille — photographe apnéiste.',
+    keywords: 'photographie sous-marine méditerranée, photographe apnéiste marseille, dépollution marine calanques, biodiversité sous-marine méditerranée',
     canonical: `${BASE_URL}/photographie-sous-marine`,
     schema: {
       '@context': 'https://schema.org',
@@ -765,6 +766,7 @@ export const SEO_PAGES = {
     title: 'Photographe Paysages Marseille | Calanques',
     description:
       'Calanques, Méditerranée, Provence : des paysages capturés en apnée par Karim Saari. Lumière naturelle, grands formats disponibles à la vente.',
+    keywords: 'photographie paysage marseille, photographe calanques, photographie méditerranée, paysage provence, photographe environnemental',
     canonical: `${BASE_URL}/photographie-paysage-mer`,
     schema: {
       '@context': 'https://schema.org',

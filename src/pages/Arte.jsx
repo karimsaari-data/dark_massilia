@@ -167,11 +167,18 @@ const Arte = () => {
           className="mt-16 flex flex-col sm:flex-row items-center justify-center gap-4"
         >
           <Link
-            to="/donnees-scientifiques"
+            to="/depollution-marine"
             className="btn-primary inline-flex items-center gap-2"
           >
-            <span>Données scientifiques</span>
+            <span>Nos missions de dépollution</span>
             <ArrowLeft className="w-4 h-4 rotate-180" aria-hidden="true" />
+          </Link>
+          <Link
+            to="/videos"
+            className="btn-secondary inline-flex items-center gap-2 group"
+          >
+            <span>Voir tous les documentaires</span>
+            <ArrowLeft className="w-4 h-4 rotate-180 group-hover:translate-x-1 transition-transform" aria-hidden="true" />
           </Link>
           <Link
             to="/presse"

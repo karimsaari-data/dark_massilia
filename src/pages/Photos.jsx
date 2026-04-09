@@ -762,13 +762,13 @@ const Photos = () => {
               </div>
               <div className="space-y-4 text-text-secondary leading-[1.8]">
                 <p>
-                  <strong className="text-ocean-teal">Le Littoral Marseillais & Calanques</strong> — Une immersion au cœur du Parc national des Calanques. Entre falaises calcaires monumentales et eaux turquoises, je documente la splendeur et la fragilité de ce littoral rocheux de la mer Méditerranée. Une géographie d'exception où chaque crique sauvage appelle à la préservation de la faune.
+                  <h3 className="inline text-ocean-teal font-semibold">Le Littoral Marseillais & Calanques</h3> — Une immersion au cœur du Parc national des Calanques. Entre falaises calcaires monumentales et eaux turquoises, je documente la splendeur et la fragilité de ce littoral rocheux de la mer Méditerranée. Une géographie d'exception où chaque crique sauvage appelle à la préservation de la faune.
                 </p>
                 <p>
-                  <strong className="text-ocean-teal">Terres de Provence & Camargue</strong> — Des marais salants de Camargue aux champs de lavande du plateau de Valensole, je parcours l'arrière-pays provençal. Sous les lumières rasantes, les reliefs sauvages du Luberon et des Alpilles révèlent la richesse d'une flore méditerranéenne préservée.
+                  <h3 className="inline text-ocean-teal font-semibold">Terres de Provence & Camargue</h3> — Des marais salants de Camargue aux champs de lavande du plateau de Valensole, je parcours l'arrière-pays provençal. Sous les lumières rasantes, les reliefs sauvages du Luberon et des Alpilles révèlent la richesse d'une flore méditerranéenne préservée.
                 </p>
                 <p>
-                  <strong className="text-ocean-teal">Explorations & Horizons Lointains</strong> — Mes carnets de voyage s'ouvrent sur la diversité culturelle et les paysages du monde. Des ruelles bleues de Chefchaouen aux dunes du Pilat, mon regard de photographe naturaliste cherche à capturer la beauté brute de notre planète, bien au-delà de Marseille.
+                  <h3 className="inline text-ocean-teal font-semibold">Explorations & Horizons Lointains</h3> — Mes carnets de voyage s'ouvrent sur la diversité culturelle et les paysages du monde. Des ruelles bleues de Chefchaouen aux dunes du Pilat, mon regard de photographe naturaliste cherche à capturer la beauté brute de notre planète, bien au-delà de Marseille.
                 </p>
                 <p>Retrouvez l'ensemble de mes photographies en haute résolution sur 500px.</p>
               </div>

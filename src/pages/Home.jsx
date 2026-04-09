@@ -319,12 +319,12 @@ const Home = () => {
                       <ArrowRight className="w-4 h-4" aria-hidden="true" />
                     </a>
                     <Link
-                      to="/depollution-marine"
+                      to="/communaute"
                       className="btn-ghost inline-flex items-center gap-2"
-                      title="En savoir plus sur mes actions de dépollution et mon engagement écologique"
-                      onClick={() => trackEvent('cta_click', { button_name: 'Engagement & Dépollution' })}
+                      title="Rejoindre la communauté Dark Massilia — Calanques de Marseille"
+                      onClick={() => trackEvent('cta_click', { button_name: 'Rejoindre la communauté' })}
                     >
-                      <span>Engagement &amp; Dépollution</span>
+                      <span>Rejoindre la communauté</span>
                       <ArrowRight className="w-4 h-4" aria-hidden="true" />
                     </Link>
                   </div>
@@ -401,6 +401,8 @@ const Home = () => {
                 srcSet="/images/portfolio/Mer/photographe-sous-marin-marseille-frioul-exploration-subaquatique_400w.webp 400w, /images/portfolio/Mer/photographe-sous-marin-marseille-frioul-exploration-subaquatique_800w.webp 800w, /images/portfolio/Mer/photographe-sous-marin-marseille-frioul-exploration-subaquatique_1200w.webp 1200w, /images/portfolio/Mer/photographe-sous-marin-marseille-frioul-exploration-subaquatique.webp 1920w"
                 sizes="(max-width: 768px) 100vw, 50vw"
                 alt="Karim Saari, photographe sous-marin Marseille — apnéiste en exploration subaquatique au Frioul © Karim Saari"
+                width="1200"
+                height="800"
                 className="absolute inset-0 w-full h-full object-cover"
                 loading="lazy"
                 decoding="async"
@@ -535,6 +537,8 @@ const Home = () => {
                 srcSet="/images/Marseille-dark-massilia-plastique-pollution-projet-sentinelle-teamoxygen_400w.webp 400w, /images/Marseille-dark-massilia-plastique-pollution-projet-sentinelle-teamoxygen_800w.webp 800w, /images/Marseille-dark-massilia-plastique-pollution-projet-sentinelle-teamoxygen_1200w.webp 1200w, /images/Marseille-dark-massilia-plastique-pollution-projet-sentinelle-teamoxygen.webp 1920w"
                 sizes="(max-width: 768px) 100vw, 50vw"
                 alt="Team Oxygen - Projet Sentinelle Marseille"
+                width="1200"
+                height="800"
                 className="absolute inset-0 w-full h-full object-cover"
                 style={{ objectPosition: '12% 25%' }}
                 loading="lazy"
@@ -647,6 +651,8 @@ const Home = () => {
               <img
                 src="/images/Karimsaari-portfolio-sous-marin-paysages-calanques-marseille-photographie-photographe-environnemental.webp"
                 alt="Karim Saari — portfolio photographie sous-marine et paysages des Calanques de Marseille, photographe environnemental"
+                width="1200"
+                height="800"
                 className="absolute inset-0 w-full h-full object-cover"
                 loading="lazy"
                 decoding="async"
@@ -771,6 +777,8 @@ const Home = () => {
                 srcSet="/images/portfolio/Mer/karim-saari-marseille-grotte-calanque-turquoise-pins-falaises_400w.webp 400w, /images/portfolio/Mer/karim-saari-marseille-grotte-calanque-turquoise-pins-falaises_800w.webp 800w, /images/portfolio/Mer/karim-saari-marseille-grotte-calanque-turquoise-pins-falaises_1200w.webp 1200w, /images/portfolio/Mer/karim-saari-marseille-grotte-calanque-turquoise-pins-falaises.webp 1920w"
                 sizes="(max-width: 768px) 100vw, 50vw"
                 alt="Karim Saari photographe Marseille — grotte calanque eau turquoise pins et falaises calcaires"
+                width="1200"
+                height="800"
                 className="absolute inset-0 w-full h-full object-cover"
                 loading="lazy"
                 decoding="async"
@@ -853,6 +861,8 @@ const Home = () => {
                 srcSet="/images/groupe%20des%20amoureux%20des%20calanques_400w.webp 400w, /images/groupe%20des%20amoureux%20des%20calanques_800w.webp 800w, /images/groupe%20des%20amoureux%20des%20calanques_1200w.webp 1200w, /images/groupe%20des%20amoureux%20des%20calanques.webp 1920w"
                 sizes="(max-width: 768px) 100vw, 50vw"
                 alt="Groupe Facebook Amoureux des Calanques de Marseille à Port-Cros"
+                width="1200"
+                height="800"
                 className="absolute inset-0 w-full h-full object-cover"
                 style={{ objectPosition: '12% 25%' }}
                 loading="lazy"
@@ -969,6 +979,8 @@ const Home = () => {
                 srcSet="/images/Marseille-dark-massilia-plastique-polluttion-projet-sentinelle-huveaune_400w.webp 400w, /images/Marseille-dark-massilia-plastique-polluttion-projet-sentinelle-huveaune_800w.webp 800w, /images/Marseille-dark-massilia-plastique-polluttion-projet-sentinelle-huveaune_1200w.webp 1200w, /images/Marseille-dark-massilia-plastique-polluttion-projet-sentinelle-huveaune.webp 1920w"
                 sizes="(max-width: 768px) 100vw, 50vw"
                 alt="Pollution plastique dans l'Huveaune à Marseille - Projet Sentinelle Dark Massilia"
+                width="1200"
+                height="800"
                 className="absolute inset-0 w-full h-full object-cover"
                 loading="lazy"
                 decoding="async"

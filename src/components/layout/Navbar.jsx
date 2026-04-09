@@ -28,7 +28,7 @@ const NAV_SOCIALS = [
   { Icon: Instagram,   href: 'https://www.instagram.com/karimsaari',    label: 'Instagram Karim Saari' },
   { Icon: TikTokIcon,  href: 'https://www.tiktok.com/@dark.massilia',   label: 'TikTok Dark Massilia' },
   { Icon: XTwitterIcon,href: 'https://x.com/dark_massilia',            label: 'X Dark Massilia' },
-  { Icon: Facebook,    href: 'https://www.facebook.com/groups/calanque/', label: 'Groupe Facebook Amoureux des Calanques' },
+  { Icon: Facebook,    href: 'https://www.facebook.com/Photographie.Marseille', label: 'Page Facebook Karim Saari - Dark Massilia' },
 ];
 
 /* ─── Icon map pour les dropdowns ───────────────────────── */
@@ -166,8 +166,8 @@ const NavDropdown = ({ item }) => {
                         </li>
                       )}
                       {rest.map(child => (
-                        <li key={child.path ?? child.name} className="pl-3 border-l-2 border-gray-200">
-                          {renderBtn(child)}
+                        <li key={child.path ?? child.name} className={child.sub ? 'pl-8 border-l-2 border-gray-100' : 'pl-3 border-l-2 border-gray-200'}>
+                          {renderBtn(child, child.sub ? 'text-xs py-2.5' : '')}
                         </li>
                       ))}
                     </ul>
@@ -236,7 +236,7 @@ const MobileNavItem = ({ item, onClose }) => {
               const ChildIcon = iconMap[child.icon];
               const childActive = location.pathname === child.path;
               return (
-                <li key={child.path ?? child.name}>
+                <li key={child.path ?? child.name} className={child.sub ? 'ml-4 border-l border-gray-600/40 pl-2' : ''}>
                   <button
                     onClick={() => handleChildClick(child.path)}
                     className={`w-full flex items-center gap-3 px-4 py-2.5 rounded-lg transition-all duration-200 text-left focus-ring relative ${
@@ -245,8 +245,8 @@ const MobileNavItem = ({ item, onClose }) => {
                         : 'text-text-muted hover:text-astroide hover:bg-astroide/10'
                     }`}
                   >
-                    {ChildIcon && <ChildIcon className="w-4 h-4 flex-shrink-0" aria-hidden="true" />}
-                    <span className="text-sm font-medium">{child.name}</span>
+                    {ChildIcon && <ChildIcon className={`flex-shrink-0 ${child.sub ? 'w-3.5 h-3.5' : 'w-4 h-4'}`} aria-hidden="true" />}
+                    <span className={`font-medium ${child.sub ? 'text-xs' : 'text-sm'}`}>{child.name}</span>
                     {childActive && (
                       <div className="absolute left-0 top-1/2 -translate-y-1/2 w-0.5 h-3/4 bg-ocean-teal rounded-r-full" aria-hidden="true" />
                     )}
@@ -367,7 +367,7 @@ const Navbar = () => {
                   alt="Karim Saari - Photographe Marseille"
                   width="1138"
                   height="506"
-                  className="logo-fade-in h-[62px] md:h-[120px] lg:h-[132px] w-auto group-hover:opacity-100 transition-opacity duration-300"
+                  className="logo-fade-in h-[62px] md:h-[140px] lg:h-[160px] w-auto group-hover:opacity-100 transition-opacity duration-300" style={{ filter: 'brightness(0) invert(1)' }}
                   loading="eager"
                   decoding="async"
                 />

@@ -673,6 +673,13 @@ const Medias = () => {
                 <ArrowRight className="w-4 h-4" aria-hidden="true" />
               </Link>
               <Link
+                to="/blog"
+                className="btn-secondary inline-flex items-center gap-2 group"
+              >
+                <span>Lire le blog</span>
+                <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" aria-hidden="true" />
+              </Link>
+              <Link
                 to="/"
                 className="btn-secondary inline-flex items-center gap-2 group"
               >

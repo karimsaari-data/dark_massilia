@@ -214,10 +214,10 @@ const Communaute = () => {
         {/* Rendu natif (pas motion) pour que le H1 et l'image soient visibles immédiatement → LCP */}
         <div className="glass-strong rounded-3xl p-8 md:p-12">
             <h1 className="text-2xl md:text-4xl font-bold text-white mb-4 leading-tight">
-              Rejoignez le mouvement : Devenez bénévole pour la protection de la Méditerranée
+              Suivez les missions en direct — rejoignez la communauté
             </h1>
             <p className="text-ocean-teal text-lg md:text-xl font-semibold mb-6">
-              Une communauté de plus de {totalLabel} sentinelles
+              {totalLabel} personnes mobilisées pour la Méditerranée
             </p>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
               <p className="text-text-secondary leading-[1.8] text-lg">

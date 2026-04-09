@@ -51,9 +51,9 @@ export const NAV_LINKS = [
     description: 'Documentaires ARTE, presse nationale, vidéos, blog et actualités sur l\'engagement environnemental à Marseille.',
     children: [
       { name: 'Vidéos & Documentaires',   path: '/videos',                                       icon: 'Video'    },
+      { name: 'ARTE — Sauver Marseille', path: '/sauver-marseille-documentaire-arte',           icon: 'Tv',  sub: true },
+      { name: 'ARTE — Méduses',          path: '/meduses-souveraines-oceans-documentaire-arte', icon: 'Tv',  sub: true },
       { name: 'Presse',                  path: '/presse',                                       icon: 'Film'     },
-      { name: 'ARTE — Sauver Marseille', path: '/sauver-marseille-documentaire-arte',           icon: 'Tv'       },
-      { name: 'ARTE — Méduses',          path: '/meduses-souveraines-oceans-documentaire-arte', icon: 'Tv'       },
       { name: 'Blog',                    path: '/blog',                                         icon: 'BookOpen' },
       { name: 'News Parc des Calanques',   path: '/actualites',                                   icon: 'Newspaper'},
     ],

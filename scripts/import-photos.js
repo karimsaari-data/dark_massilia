@@ -100,7 +100,9 @@ const EXIF_COPYRIGHT = '(c) Karim Saari - Dark Massilia - karimsaari.com';
 function injectExif(filePath) {
   try {
     const args = [
-      `-XMP:Creator=${EXIF_CREATOR}`,
+      `-XMP-dc:Creator=${EXIF_CREATOR}`,
+      `-XMP-iptcCore:Creator=${EXIF_CREATOR}`,
+      `-IPTC:By-line=${EXIF_CREATOR}`,
       `-XMP:Rights=${EXIF_COPYRIGHT}`,
       `-EXIF:Artist=${EXIF_CREATOR}`,
       `-EXIF:Copyright=${EXIF_COPYRIGHT}`,

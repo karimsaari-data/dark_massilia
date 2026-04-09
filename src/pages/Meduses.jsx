@@ -198,13 +198,27 @@ const Meduses = () => {
           </motion.div>
         </motion.div>
 
-        {/* Back to Presse */}
+        {/* CTAs — Continuer la navigation */}
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 0.6 }}
-          className="text-center"
+          className="flex flex-col sm:flex-row items-center justify-center gap-4"
         >
+          <Link
+            to="/depollution-marine"
+            className="btn-primary inline-flex items-center gap-2"
+          >
+            <span>Nos missions de dépollution</span>
+            <ArrowLeft className="w-4 h-4 rotate-180" aria-hidden="true" />
+          </Link>
+          <Link
+            to="/sauver-marseille-documentaire-arte"
+            className="btn-secondary inline-flex items-center gap-2 group"
+          >
+            <span>ARTE — Sauver Marseille</span>
+            <ArrowLeft className="w-4 h-4 rotate-180 group-hover:translate-x-1 transition-transform" aria-hidden="true" />
+          </Link>
           <Link
             to="/presse"
             className="btn-secondary inline-flex items-center gap-2 group"

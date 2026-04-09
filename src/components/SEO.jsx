@@ -27,7 +27,7 @@ const SEO = ({
   title, description, canonical, image, imageAlt = null,
   imageWidth = 1200, imageHeight = 630,
   noindex = false, robots = null, schema = null,
-  type = 'website',
+  type = 'website', keywords = null,
   // Balises article:* (uniquement si type="article")
   articlePublishedTime = null, articleModifiedTime = null, articleAuthor = null, articleSection = null,
   // Preload image LCP — hoisté dans <head> par React 19
@@ -84,6 +84,9 @@ const SEO = ({
       <meta name="twitter:title"       content={metaTitle} />
       <meta name="twitter:description" content={metaDescription} />
       <meta name="twitter:image"       content={metaImage} />
+
+      {/* ── Keywords (Bing / DuckDuckGo Images) ── */}
+      {keywords && <meta name="keywords" content={keywords} />}
 
       {/* ── Robots (crawl budget / indexation) ── */}
       {robots  && <meta name="robots" content={robots} />}

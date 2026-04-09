@@ -251,7 +251,7 @@ const PhotographeEnvironnemental = () => {
             </p>
             <div className="flex flex-wrap gap-3">
               <Link to="/contact" className="btn-primary inline-flex items-center gap-2">
-                Collaborer avec Karim Saari
+                Me contacter
                 <ArrowRight className="w-4 h-4" aria-hidden="true" />
               </Link>
             </div>

@@ -40,7 +40,7 @@ const navColumns = [
     label: 'Missions',
     links: [
       { to: '/depollution-marine',    text: 'Dépollution marine' },
-      { to: '/carte-calanques',       text: 'Carte des Calanques' },
+      { to: '/carte-calanques',       text: 'Carte interactive des Calanques' },
       { to: '/communaute',            text: 'Rejoindre la communauté' },
       { to: '/donnees-scientifiques', text: 'Données scientifiques' },
     ],
@@ -48,11 +48,11 @@ const navColumns = [
   {
     label: 'Médias',
     links: [
-      { to: '/videos',                                       text: 'Vidéos' },
+      { to: '/videos',                                       text: 'Vidéos & Documentaires' },
       { to: '/presse',                                       text: 'Presse' },
       { to: '/sauver-marseille-documentaire-arte',           text: 'ARTE — Sauver Marseille' },
       { to: '/meduses-souveraines-oceans-documentaire-arte', text: 'ARTE — Méduses Souveraines' },
-      { to: '/blog', text: 'Blog', paired: { to: '/actualites', text: 'Actualités' } },
+      { to: '/blog', text: 'Blog', paired: { to: '/actualites', text: 'News Parc des Calanques' } },
     ],
   },
   {
@@ -60,8 +60,8 @@ const navColumns = [
     links: [
       { to: '/contact', text: 'Collaborer avec nous' },
       { to: '/#newsletter', text: 'Newsletter', anchor: true },
-      { to: 'https://www.facebook.com/groups/calanque/', text: 'Amoureux des Calanques', external: true },
-      { to: 'https://www.team-oxygen.com/', text: 'Team Oxygen', external: true },
+      { to: 'https://www.facebook.com/groups/calanque/', text: 'Rejoindre le groupe Facebook', external: true },
+      { to: 'https://www.team-oxygen.com/', text: 'Team Oxygen — site officiel', external: true },
     ],
   },
 ];
@@ -174,7 +174,7 @@ const Footer = () => {
           <p className="text-xs text-gray-400 leading-relaxed mb-3">
             © {currentYear}{' '}
             <span className="text-gray-300 font-medium">Karim Saari</span>
-            {' '}| Photographe paysages &amp; sous-marin · Sentinelle des Calanques — Fondateur de{' '}
+            {' '}| Photographe environnemental &amp; sous-marin · Sentinelle des Calanques — Fondateur de{' '}
             <span className="text-gray-300">Dark Massilia</span>
             {' '}&amp; Président de{' '}
             <a
