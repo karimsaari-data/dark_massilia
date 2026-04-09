@@ -34,13 +34,14 @@ export default function YouTubeFacade({ videoId, title }) {
       aria-label={`Lancer la vidéo : ${title}`}
     >
       <img
-        src={`https://i.ytimg.com/vi/${videoId}/hqdefault.jpg`}
+        src={`https://i.ytimg.com/vi/${videoId}/maxresdefault.jpg`}
         alt={title}
         className="w-full h-full object-cover"
         loading="lazy"
         decoding="async"
-        width="480"
-        height="360"
+        width="1280"
+        height="720"
+        onError={e => { e.currentTarget.src = `https://i.ytimg.com/vi/${videoId}/hqdefault.jpg`; }}
       />
       {/* Bouton Play */}
       <div className="absolute inset-0 flex items-center justify-center">
