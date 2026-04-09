@@ -202,14 +202,7 @@
     background-image: url('/assets/hero-bg.webp');
     background-size: cover;
     background-position: center;
-    background-attachment: fixed;
-  }
-
-  /* Disable fixed on mobile for performance */
-  @media (max-width: 768px) {
-    .bg-hero-ocean {
-      background-attachment: scroll;
-    }
+    background-attachment: scroll; /* fixed désactivé : force repaint sur scroll, bloque GPU compositing */
   }
 
   /* Background patterns */

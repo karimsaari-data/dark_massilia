@@ -96,8 +96,10 @@
     <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Montserrat:wght@400;500;600;700;800&display=optional" />
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Montserrat:wght@400;500;600;700;800&display=optional" media="print" onload="this.media='all'" />
 
-    <!-- Preload LCP critical image — photo profil (candidat LCP au-dessus du fold) -->
-    <!-- hero-bg.webp (177 KiB background CSS) délibérément non-préchargé : n'est pas candidat LCP -->
+    <!-- hero-bg.webp — background décoratif (aria-hidden), fetchpriority=low (non-LCP, améliore FCP) -->
+    <link rel="preload" as="image" href="/assets/hero-bg.webp" fetchpriority="low" type="image/webp" />
+
+    <!-- Preload LCP critical image — photo profil (candidat LCP, role="img" retiré du div background) -->
     <link rel="preload" as="image" fetchpriority="high"
           href="/images/karim-saari-photo-profil-arte-regard-marseille_300w.webp"
           imagesrcset="/images/karim-saari-photo-profil-arte-regard-marseille_300w.webp 300w, /images/karim-saari-photo-profil-arte-regard-marseille_400w.webp 400w, /images/karim-saari-photo-profil-arte-regard-marseille.webp 472w"

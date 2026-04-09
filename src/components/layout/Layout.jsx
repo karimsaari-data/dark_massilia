@@ -48,12 +48,8 @@ const Layout = () => {
       </a>
       {/* Fixed background image - Calanques de Marseille */}
       <div className="fixed inset-0 pointer-events-none z-0">
-        {/* Background image with parallax effect */}
-        <div
-          className="absolute inset-0 bg-hero-ocean"
-          role="img"
-          aria-label="Photographie d'art sous-marine méduses littoral Marseille — Karim Saari"
-        />
+        {/* Background image — décoratif, pas de role="img" (évite candidature LCP parasite) */}
+        <div className="absolute inset-0 bg-hero-ocean" aria-hidden="true" />
 
         {/* ── Overlays Premium — 3 couches pour laisser l'image respirer ── */}
 
