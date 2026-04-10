@@ -1,7 +1,9 @@
 /**
  * cloudflare-collect.js — Collecte Cloudflare Analytics → Supabase
- *   · cf_daily           : métriques globales quotidiennes (visiteurs, pages vues, bande passante…)
- *   · cf_daily_countries : top 10 pays (requêtes, bande passante, menaces)
+ *   · cf_daily           : métriques globales quotidiennes
+ *   · cf_daily_countries : top 10 pays
+ *   · cf_hourly          : agrégats par heure (0-23) — visiteurs, pages vues, requêtes…
+ *   · cf_daily_bots      : répartition humain / crawlers / bots
  *
  * Usage quotidien  : node scripts/cloudflare-collect.js
  * Backfill jours   : BACKFILL_DAYS=30 node scripts/cloudflare-collect.js
@@ -26,6 +28,10 @@ function daysAgo(n) {
   const d = new Date();
   d.setUTCDate(d.getUTCDate() - n);
   return formatDate(d);
+}
+
+function dateToISO(date, endOfDay = false) {
+  return endOfDay ? `${date}T23:59:59Z` : `${date}T00:00:00Z`;
 }
 
 async function cfGraphQL(query) {
@@ -81,7 +87,7 @@ async function collectDay(date) {
   const { error } = await supabase.from('cf_daily').upsert(row, { onConflict: 'date' });
   if (error) throw new Error(`cf_daily upsert: ${error.message}`);
 
-  // ── Pays (graceful — peut échouer sur plan Free) ──────────────────────────────
+  // ── Pays (graceful) ───────────────────────────────────────────────────────────
   try {
     const dataC = await cfGraphQL(`{
       viewer {
@@ -98,13 +104,9 @@ async function collectDay(date) {
       }
     }`);
 
-    const countryRows = (dataC?.viewer?.zones?.[0]?.httpRequests1dByCountryGroups || []).map(r => ({
-      date,
-      country:  r.dimensions.clientCountryName,
-      requests: r.sum.requests,
-      bytes:    r.sum.bytes,
-      threats:  r.sum.threats,
-    })).filter(r => r.country);
+    const countryRows = (dataC?.viewer?.zones?.[0]?.httpRequests1dByCountryGroups || [])
+      .map(r => ({ date, country: r.dimensions.clientCountryName, requests: r.sum.requests, bytes: r.sum.bytes, threats: r.sum.threats }))
+      .filter(r => r.country);
 
     if (countryRows.length) {
       await supabase.from('cf_daily_countries').delete().eq('date', date);
@@ -115,9 +117,89 @@ async function collectDay(date) {
     console.warn(`  ⚠️  Pays CF ignorés (${e.message})`);
   }
 
-  const cacheRate = row.requests > 0
-    ? ((row.cached_requests / row.requests) * 100).toFixed(1)
-    : '0.0';
+  // ── Heures (graceful) ─────────────────────────────────────────────────────────
+  try {
+    const dataH = await cfGraphQL(`{
+      viewer {
+        zones(filter: {zoneTag: "${CF_ZONE_ID}"}) {
+          httpRequests1hGroups(
+            limit: 24
+            orderBy: [datetimeHour_ASC]
+            filter: {datetimeHour_geq: "${dateToISO(date)}", datetimeHour_leq: "${dateToISO(date, true)}"}
+          ) {
+            dimensions { datetimeHour }
+            sum { requests pageViews cachedRequests bytes threats }
+            uniq { uniques }
+          }
+        }
+      }
+    }`);
+
+    const hourRows = (dataH?.viewer?.zones?.[0]?.httpRequests1hGroups || []).map(r => ({
+      date,
+      hour:            new Date(r.dimensions.datetimeHour).getUTCHours(),
+      unique_visitors: r.uniq.uniques,
+      page_views:      r.sum.pageViews,
+      requests:        r.sum.requests,
+      cached_requests: r.sum.cachedRequests,
+      bytes:           r.sum.bytes,
+      threats:         r.sum.threats,
+    }));
+
+    if (hourRows.length) {
+      await supabase.from('cf_hourly').delete().eq('date', date);
+      const { error: errH } = await supabase.from('cf_hourly').insert(hourRows);
+      if (errH) console.warn(`  ⚠️  cf_hourly: ${errH.message}`);
+      else console.log(`     ⏰ ${hourRows.length} tranches horaires stockées`);
+    }
+  } catch (e) {
+    console.warn(`  ⚠️  Horaires CF ignorés (${e.message})`);
+  }
+
+  // ── Bots (graceful) ───────────────────────────────────────────────────────────
+  try {
+    const dataB = await cfGraphQL(`{
+      viewer {
+        zones(filter: {zoneTag: "${CF_ZONE_ID}"}) {
+          httpRequestsAdaptiveGroups(
+            limit: 10
+            filter: {datetime_geq: "${dateToISO(date)}", datetime_leq: "${dateToISO(date, true)}"}
+            orderBy: [count_DESC]
+          ) {
+            count
+            dimensions { clientIPClass }
+          }
+        }
+      }
+    }`);
+
+    const groups = { human: 0, crawler: 0, bot: 0 };
+    for (const r of (dataB?.viewer?.zones?.[0]?.httpRequestsAdaptiveGroups || [])) {
+      const cls = r.dimensions.clientIPClass || '';
+      if (cls === 'clean')                                                          groups.human   += r.count;
+      else if (['searchEngine','monitoringService','backupService'].includes(cls))  groups.crawler += r.count;
+      else                                                                          groups.bot     += r.count;
+    }
+    const total = groups.human + groups.crawler + groups.bot;
+    if (total > 0) {
+      const { error: errB } = await supabase.from('cf_daily_bots').upsert({
+        date,
+        human_requests:   groups.human,
+        crawler_requests: groups.crawler,
+        bot_requests:     groups.bot,
+        total_requests:   total,
+      }, { onConflict: 'date' });
+      if (errB) console.warn(`  ⚠️  cf_daily_bots: ${errB.message}`);
+      else {
+        const humanPct = Math.round((groups.human / total) * 100);
+        console.log(`     🤖 Bots : humain ${humanPct}%, crawlers ${Math.round((groups.crawler/total)*100)}%, bots ${Math.round((groups.bot/total)*100)}%`);
+      }
+    }
+  } catch (e) {
+    console.warn(`  ⚠️  Bots CF ignorés (${e.message})`);
+  }
+
+  const cacheRate = row.requests > 0 ? ((row.cached_requests / row.requests) * 100).toFixed(1) : '0.0';
   const bw = (row.bytes / 1024 / 1024).toFixed(1);
   console.log(`  ✅ ${date} — ${row.unique_visitors} visiteurs, ${row.page_views} pages vues, ${bw} MB, cache ${cacheRate}%, ${row.threats} menaces`);
 }
@@ -133,9 +215,9 @@ async function collectDay(date) {
     console.log(`🔄 Backfill ${backfillDays} jours (J-1 à J-${backfillDays})...\n`);
     for (let i = 1; i <= backfillDays; i++) {
       const date = daysAgo(i);
-      process.stdout.write(`  📅 ${date} — `);
+      process.stdout.write(`  📅 ${date}\n`);
       try { await collectDay(date); }
-      catch (e) { console.error(`❌ ${e.message}`); }
+      catch (e) { console.error(`  ❌ ${e.message}`); }
     }
   } else {
     const date = daysAgo(1);
