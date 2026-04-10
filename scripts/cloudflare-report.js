@@ -1,18 +1,22 @@
 /**
  * cloudflare-report.js — Rapport hebdomadaire Cloudflare → Brevo
  *
- * Données Supabase   : cf_daily + cf_daily_countries (7j vs 7j préc.)
- * Données CF GraphQL : heures de pointe (httpRequests1hGroups)
- *                      bots vs humains  (httpRequestsAdaptiveGroups)
- * Sortie             : email HTML + PDF en pièce jointe via Brevo
+ * Données : Supabase (cf_daily, cf_daily_countries, cf_hourly, cf_daily_bots)
+ * Graphiques : Chart.js via Puppeteer (line chart, bar chart 24h, doughnut bots)
+ * Sortie : email HTML + PDF en pièce jointe via Brevo
  *
  * Usage : npm run cloudflare-report
- * Variables : VITE_SUPABASE_URL, VITE_SUPABASE_ANON_KEY, BREVO_API_KEY,
- *             CLOUDFLARE_API_TOKEN, CLOUDFLARE_ZONE_ID
+ * Variables : VITE_SUPABASE_URL, VITE_SUPABASE_ANON_KEY, BREVO_API_KEY
  */
 
 import { createClient } from '@supabase/supabase-js';
 import puppeteer from 'puppeteer';
+import { readFileSync } from 'fs';
+import { resolve, dirname } from 'path';
+import { fileURLToPath } from 'url';
+
+const __dirname    = dirname(fileURLToPath(import.meta.url));
+const CHART_JS     = readFileSync(resolve(__dirname, '../node_modules/chart.js/dist/chart.umd.min.js'), 'utf-8');
 
 const SUPABASE_URL  = process.env.VITE_SUPABASE_URL;
 const SUPABASE_KEY  = process.env.VITE_SUPABASE_ANON_KEY || process.env.SUPABASE_SERVICE_KEY;
@@ -34,7 +38,6 @@ function dateRange(startOffset, endOffset) {
   const start = new Date(); start.setUTCDate(start.getUTCDate() - endOffset);
   return { from: formatDate(start), to: formatDate(end) };
 }
-
 
 function shortDate(dateStr) {
   const d = new Date(dateStr + 'T12:00:00Z');
@@ -66,9 +69,8 @@ function delta(curr, prev) {
 
 function deltaHtml(pct) {
   if (pct == null) return '<span style="color:#bbb;font-size:10px">—</span>';
-  const up    = pct >= 0;
-  const color = up ? '#21c47b' : '#e85555';
-  const arrow = up ? '▲' : '▼';
+  const color = pct >= 0 ? '#21c47b' : '#e85555';
+  const arrow = pct >= 0 ? '▲' : '▼';
   return `<span style="color:${color};font-size:10px;font-weight:600">${arrow} ${Math.abs(pct)}%</span>`;
 }
 
@@ -81,43 +83,6 @@ const CF_COUNTRY_NAMES = {
   'Reunion':'La Réunion','Unknown':'—',
 };
 function cfCountryLabel(n) { return CF_COUNTRY_NAMES[n] || n || '—'; }
-
-// ── Fetch Supabase — heures & bots ────────────────────────────────────────────
-
-async function fetchHourlyData(from, to) {
-  const { data } = await supabase
-    .from('cf_hourly').select('hour, unique_visitors, requests')
-    .gte('date', from).lte('date', to);
-  if (!data || !data.length) return null;
-
-  // Agréger par heure UTC (0-23) sur toute la semaine
-  const byHour = Array.from({ length: 24 }, (_, h) => ({ hour: h, requests: 0, uniques: 0 }));
-  for (const r of data) {
-    byHour[r.hour].requests += r.requests        || 0;
-    byHour[r.hour].uniques  += r.unique_visitors || 0;
-  }
-  return byHour;
-}
-
-async function fetchBotData(from, to) {
-  const { data } = await supabase
-    .from('cf_daily_bots').select('human_requests, crawler_requests, bot_requests')
-    .gte('date', from).lte('date', to);
-  if (!data || !data.length) return null;
-
-  const totals = data.reduce((acc, r) => ({
-    human:   acc.human   + (r.human_requests   || 0),
-    crawler: acc.crawler + (r.crawler_requests || 0),
-    bot:     acc.bot     + (r.bot_requests     || 0),
-  }), { human: 0, crawler: 0, bot: 0 });
-
-  const total = totals.human + totals.crawler + totals.bot || 1;
-  return {
-    human:   { count: totals.human,   pct: Math.round((totals.human   / total) * 100) },
-    crawler: { count: totals.crawler, pct: Math.round((totals.crawler / total) * 100) },
-    bot:     { count: totals.bot,     pct: Math.round((totals.bot     / total) * 100) },
-  };
-}
 
 // ── Fetch Supabase ────────────────────────────────────────────────────────────
 
@@ -143,6 +108,37 @@ async function fetchCountriesForWeek(from, to) {
   return Object.values(map).sort((a, b) => b.requests - a.requests).slice(0, 8);
 }
 
+async function fetchHourlyData(from, to) {
+  const { data } = await supabase
+    .from('cf_hourly').select('hour, unique_visitors, requests')
+    .gte('date', from).lte('date', to);
+  if (!data || !data.length) return null;
+  const byHour = Array.from({ length: 24 }, (_, h) => ({ hour: h, requests: 0, uniques: 0 }));
+  for (const r of data) {
+    byHour[r.hour].requests += r.requests        || 0;
+    byHour[r.hour].uniques  += r.unique_visitors || 0;
+  }
+  return byHour;
+}
+
+async function fetchBotData(from, to) {
+  const { data } = await supabase
+    .from('cf_daily_bots').select('human_requests, crawler_requests, bot_requests')
+    .gte('date', from).lte('date', to);
+  if (!data || !data.length) return null;
+  const totals = data.reduce((acc, r) => ({
+    human:   acc.human   + (r.human_requests   || 0),
+    crawler: acc.crawler + (r.crawler_requests || 0),
+    bot:     acc.bot     + (r.bot_requests     || 0),
+  }), { human: 0, crawler: 0, bot: 0 });
+  const total = totals.human + totals.crawler + totals.bot || 1;
+  return {
+    human:   { count: totals.human,   pct: Math.round((totals.human   / total) * 100) },
+    crawler: { count: totals.crawler, pct: Math.round((totals.crawler / total) * 100) },
+    bot:     { count: totals.bot,     pct: Math.round((totals.bot     / total) * 100) },
+  };
+}
+
 function sumWeek(rows) {
   return rows.reduce((acc, r) => ({
     unique_visitors:  acc.unique_visitors  + (r.unique_visitors  || 0),
@@ -161,8 +157,8 @@ function buildHtml({ thisWeek, thisSum, prevSum, countries, hourly, bots, fromDa
 
   function section(title, content) {
     return `
-      <div style="margin-top:24px">
-        <div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:#21c47b;margin-bottom:8px;padding-bottom:4px;border-bottom:1px solid #e8f8f0">${title}</div>
+      <div style="margin-top:28px">
+        <div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:#21c47b;margin-bottom:12px;padding-bottom:4px;border-bottom:1px solid #e8f8f0">${title}</div>
         ${content}
       </div>`;
   }
@@ -200,14 +196,13 @@ function buildHtml({ thisWeek, thisSum, prevSum, countries, hourly, bots, fromDa
       </tr>
     </table>`;
 
-  // ── Métriques secondaires ──
   const secondaryBar = `
     <table width="100%" cellpadding="0" cellspacing="0" style="margin:8px 0 0">
       <tr>
         ${[
-          ['Requêtes totales',             fmtNum(thisSum.requests),           delta(thisSum.requests,         prevSum?.requests)],
-          ['Cache rate',                   cacheRate,                           null],
-          ['BP mise en cache',             fmtBytes(thisSum.cached_bytes),      delta(thisSum.cached_bytes,     prevSum?.cached_bytes)],
+          ['Requêtes totales',   fmtNum(thisSum.requests),      delta(thisSum.requests,     prevSum?.requests)],
+          ['Cache rate',         cacheRate,                      null],
+          ['BP mise en cache',   fmtBytes(thisSum.cached_bytes), delta(thisSum.cached_bytes, prevSum?.cached_bytes)],
         ].map(([label, value, d]) => `
           <td align="center" width="33%" style="padding:6px 4px">
             <div style="background:#f8f9fa;border-radius:6px;padding:10px 8px">
@@ -219,86 +214,201 @@ function buildHtml({ thisWeek, thisSum, prevSum, countries, hourly, bots, fromDa
       </tr>
     </table>`;
 
-  // ── Graphique évolution 7 jours ──
-  const maxReq = Math.max(...thisWeek.map(d => d.requests || 0), 1);
-  const maxVis = Math.max(...thisWeek.map(d => d.unique_visitors || 0), 1);
-  const chartCols = thisWeek.map(d => {
-    const hReq = Math.max(4, Math.round(((d.requests || 0) / maxReq) * 80));
-    const hVis = Math.max((d.unique_visitors||0) > 0 ? 4 : 0, Math.round(((d.unique_visitors||0) / maxVis) * 80));
-    return `
-      <td align="center" valign="bottom" style="width:${Math.floor(100/thisWeek.length)}%;padding:0 2px">
-        <div style="height:88px;display:flex;flex-direction:column;justify-content:flex-end;align-items:center">
-          <div style="width:28px;height:${hReq}px;background:rgba(33,196,123,0.2);border-radius:3px 3px 0 0;position:relative">
-            ${(d.unique_visitors||0) > 0 ? `<div style="position:absolute;bottom:0;left:50%;transform:translateX(-50%);width:10px;height:${hVis}px;background:#21c47b;border-radius:2px 2px 0 0"></div>` : ''}
-          </div>
-        </div>
-        <div style="font-size:10px;font-weight:600;color:#21c47b;margin-top:3px">${fmtNum(d.unique_visitors||0)}</div>
-        <div style="font-size:9px;color:#bbb;margin-top:2px;white-space:nowrap">${shortDate(d.date)}</div>
-      </td>`;
-  }).join('');
+  // ── Données JSON pour Chart.js ──
+  const chartLabels7d  = JSON.stringify(thisWeek.map(d => shortDate(d.date)));
+  const chartVisitors  = JSON.stringify(thisWeek.map(d => d.unique_visitors || 0));
+  const chartPageViews = JSON.stringify(thisWeek.map(d => d.page_views || 0));
+  const chartRequests  = JSON.stringify(thisWeek.map(d => d.requests || 0));
 
-  const chart7 = `
-    <table width="100%" cellpadding="0" cellspacing="0" style="border-bottom:2px solid #eee"><tr>${chartCols}</tr></table>
-    <table width="100%" cellpadding="0" cellspacing="0" style="margin-top:8px">
+  const hourlyReq  = hourly ? JSON.stringify(hourly.map(h => h.requests)) : 'null';
+  const hourLabels = JSON.stringify(Array.from({ length: 24 }, (_, h) => `${String(h).padStart(2,'0')}h`));
+
+  const botsData = bots
+    ? JSON.stringify([bots.human.pct, bots.crawler.pct, bots.bot.pct])
+    : 'null';
+
+  // ── Chart 1 : Line chart 7 jours ──
+  const chart7d = `
+    <div style="background:#fff;border-radius:8px;padding:4px 0 0">
+      <canvas id="chart7d" width="540" height="200" style="display:block"></canvas>
+    </div>
+    <script>
+    (function() {
+      var ctx = document.getElementById('chart7d').getContext('2d');
+      var grad = ctx.createLinearGradient(0, 0, 0, 200);
+      grad.addColorStop(0, 'rgba(33,196,123,0.35)');
+      grad.addColorStop(1, 'rgba(33,196,123,0.02)');
+      var grad2 = ctx.createLinearGradient(0, 0, 0, 200);
+      grad2.addColorStop(0, 'rgba(0,145,255,0.18)');
+      grad2.addColorStop(1, 'rgba(0,145,255,0.0)');
+      new Chart(ctx, {
+        type: 'line',
+        data: {
+          labels: ${chartLabels7d},
+          datasets: [
+            {
+              label: 'Visiteurs uniques',
+              data: ${chartVisitors},
+              borderColor: '#21c47b',
+              backgroundColor: grad,
+              borderWidth: 2.5,
+              tension: 0.4,
+              fill: true,
+              pointBackgroundColor: '#21c47b',
+              pointBorderColor: '#fff',
+              pointBorderWidth: 2,
+              pointRadius: 5,
+              pointHoverRadius: 7,
+            },
+            {
+              label: 'Pages vues',
+              data: ${chartPageViews},
+              borderColor: '#0091ff',
+              backgroundColor: grad2,
+              borderWidth: 1.5,
+              tension: 0.4,
+              fill: true,
+              pointBackgroundColor: '#0091ff',
+              pointBorderColor: '#fff',
+              pointBorderWidth: 1,
+              pointRadius: 3,
+              borderDash: [4, 3],
+            }
+          ]
+        },
+        options: {
+          responsive: false,
+          animation: false,
+          plugins: {
+            legend: {
+              display: true,
+              position: 'top',
+              align: 'end',
+              labels: { font: { size: 10 }, boxWidth: 12, padding: 12, color: '#666' }
+            }
+          },
+          scales: {
+            x: {
+              grid: { display: false },
+              ticks: { font: { size: 10 }, color: '#888' },
+              border: { display: false }
+            },
+            y: {
+              grid: { color: '#f0f0f0', drawBorder: false },
+              ticks: { font: { size: 10 }, color: '#aaa', maxTicksLimit: 5 },
+              border: { display: false },
+              beginAtZero: true,
+            }
+          }
+        }
+      });
+    })();
+    </script>`;
+
+  // ── Chart 2 : Bar chart 24h ──
+  const chart24h = hourly ? `
+    <div style="background:#fff;border-radius:8px;padding:4px 0 0">
+      <canvas id="chart24h" width="540" height="160" style="display:block"></canvas>
+    </div>
+    <script>
+    (function() {
+      var data = ${hourlyReq};
+      if (!data) return;
+      var sorted = data.slice().sort(function(a,b){return b-a;});
+      var top3vals = sorted.slice(0,3);
+      var ctx = document.getElementById('chart24h').getContext('2d');
+      new Chart(ctx, {
+        type: 'bar',
+        data: {
+          labels: ${hourLabels},
+          datasets: [{
+            data: data,
+            backgroundColor: data.map(function(v) {
+              return top3vals.includes(v) ? '#21c47b' : 'rgba(33,196,123,0.2)';
+            }),
+            borderRadius: 3,
+            borderSkipped: false,
+          }]
+        },
+        options: {
+          responsive: false,
+          animation: false,
+          plugins: { legend: { display: false } },
+          scales: {
+            x: {
+              grid: { display: false },
+              ticks: { font: { size: 8 }, color: '#aaa', maxRotation: 0 },
+              border: { display: false }
+            },
+            y: {
+              grid: { color: '#f0f0f0' },
+              ticks: { font: { size: 9 }, color: '#aaa', maxTicksLimit: 4 },
+              border: { display: false },
+              beginAtZero: true,
+            }
+          }
+        }
+      });
+      var peakH = data.indexOf(Math.max.apply(null, data));
+      document.getElementById('peakHour').textContent = String(peakH).padStart(2,'0') + 'h UTC';
+    })();
+    </script>
+    <div style="margin-top:8px;font-size:11px;color:#555">
+      🕐 Pic principal : <strong style="color:#21c47b" id="peakHour">—</strong>
+      <span style="color:#bbb;font-size:10px"> · cumulé sur 7 jours</span>
+    </div>` : `<p style="color:#999;font-size:12px;font-style:italic">Données non disponibles (backfill en attente)</p>`;
+
+  // ── Chart 3 : Doughnut bots ──
+  const chartBots = bots ? `
+    <table width="100%" cellpadding="0" cellspacing="0">
       <tr>
-        <td style="font-size:10px;color:#999">
-          <span style="display:inline-block;width:10px;height:10px;background:rgba(33,196,123,0.2);border-radius:2px;vertical-align:middle;margin-right:4px"></span>Requêtes
-          &nbsp;
-          <span style="display:inline-block;width:10px;height:10px;background:#21c47b;border-radius:2px;vertical-align:middle;margin-right:4px"></span>Visiteurs
+        <td width="180" valign="middle">
+          <canvas id="chartBots" width="160" height="160" style="display:block"></canvas>
         </td>
-        <td align="right" style="font-size:10px;color:#bbb">max req. : ${fmtNum(maxReq)}</td>
-      </tr>
-    </table>`;
-
-  // ── Heures de pointe ──
-  let hourlyHtml = '<p style="color:#999;font-size:12px;font-style:italic">Données non disponibles (CLOUDFLARE_API_TOKEN requis)</p>';
-  if (hourly) {
-    const maxH = Math.max(...hourly.map(h => h.requests), 1);
-    const top3 = [...hourly].sort((a, b) => b.requests - a.requests).slice(0, 3).map(h => h.hour);
-    const bars = hourly.map(h => {
-      const barH  = Math.max(h.requests > 0 ? 3 : 0, Math.round((h.requests / maxH) * 56));
-      const isTop = top3.includes(h.hour);
-      const color = isTop ? '#21c47b' : 'rgba(33,196,123,0.25)';
-      return `
-        <td align="center" valign="bottom" style="width:${Math.floor(100/24)}%;padding:0 1px">
-          <div style="height:60px;display:flex;flex-direction:column;justify-content:flex-end;align-items:center">
-            <div style="width:${isTop ? '10' : '8'}px;height:${barH}px;background:${color};border-radius:2px 2px 0 0"></div>
-          </div>
-          <div style="font-size:8px;color:${isTop ? '#21c47b' : '#ccc'};font-weight:${isTop ? '700' : '400'};margin-top:2px">${String(h.hour).padStart(2,'0')}</div>
-        </td>`;
-    }).join('');
-    const peakLabel = top3.map(h => `${String(h).padStart(2,'0')}h`).join(', ');
-    hourlyHtml = `
-      <table width="100%" cellpadding="0" cellspacing="0" style="border-bottom:2px solid #eee"><tr>${bars}</tr></table>
-      <div style="margin-top:8px;font-size:11px;color:#555">
-        🕐 Pics de trafic : <strong style="color:#21c47b">${peakLabel}</strong> UTC
-        <span style="color:#bbb;font-size:10px"> · cumulé sur 7 jours</span>
-      </div>`;
-  }
-
-  // ── Bots vs Humains ──
-  let botsHtml = '<p style="color:#999;font-size:12px;font-style:italic">Données non disponibles (CLOUDFLARE_API_TOKEN requis)</p>';
-  if (bots) {
-    const categories = [
-      { label: '👤 Trafic humain',          color: '#21c47b', ...bots.human },
-      { label: '🤖 Moteurs & monitoring',   color: '#0091ff', ...bots.crawler },
-      { label: '⚠️ Bots / Scanners',        color: '#e85555', ...bots.bot },
-    ];
-    botsHtml = `
-      <table width="100%" cellpadding="0" cellspacing="0">
-        ${categories.map(c => `
-          <tr style="margin-bottom:8px">
-            <td style="padding:6px 0;font-size:12px;width:180px">${c.label}</td>
-            <td style="padding:6px 8px;font-size:12px;text-align:right;font-weight:700;color:${c.color};width:40px">${c.pct}%</td>
-            <td style="padding:6px 0">
-              <div style="background:#f0f0f0;border-radius:4px;height:8px;width:100%">
-                <div style="background:${c.color};border-radius:4px;height:8px;width:${c.pct}%"></div>
+        <td valign="middle" style="padding-left:24px">
+          ${[
+            { label: '👤 Trafic humain',        color: '#21c47b', pct: bots.human.pct },
+            { label: '🔍 Moteurs & monitoring', color: '#0091ff', pct: bots.crawler.pct },
+            { label: '⚠️ Bots / Scanners',       color: '#e85555', pct: bots.bot.pct },
+          ].map(c => `
+            <div style="margin-bottom:12px">
+              <div style="display:flex;align-items:center;margin-bottom:4px">
+                <span style="display:inline-block;width:10px;height:10px;background:${c.color};border-radius:2px;margin-right:8px;flex-shrink:0"></span>
+                <span style="font-size:12px;color:#333">${c.label}</span>
+                <span style="font-size:13px;font-weight:700;color:${c.color};margin-left:auto">${c.pct}%</span>
               </div>
-            </td>
-          </tr>`).join('')}
-      </table>
-      <div style="font-size:10px;color:#bbb;margin-top:4px">Données échantillonnées · Cloudflare httpRequestsAdaptiveGroups</div>`;
-  }
+              <div style="background:#f0f0f0;border-radius:4px;height:6px">
+                <div style="background:${c.color};border-radius:4px;height:6px;width:${c.pct}%"></div>
+              </div>
+            </div>`).join('')}
+          <div style="font-size:10px;color:#bbb;margin-top:8px">Données échantillonnées · CF Adaptive</div>
+        </td>
+      </tr>
+    </table>
+    <script>
+    (function() {
+      var ctx = document.getElementById('chartBots').getContext('2d');
+      new Chart(ctx, {
+        type: 'doughnut',
+        data: {
+          labels: ['Humain', 'Crawlers', 'Bots'],
+          datasets: [{
+            data: ${botsData},
+            backgroundColor: ['#21c47b', '#0091ff', '#e85555'],
+            borderWidth: 3,
+            borderColor: '#ffffff',
+            hoverOffset: 4,
+          }]
+        },
+        options: {
+          responsive: false,
+          animation: false,
+          cutout: '68%',
+          plugins: { legend: { display: false } }
+        }
+      });
+    })();
+    </script>` : `<p style="color:#999;font-size:12px;font-style:italic">Données non disponibles (backfill en attente)</p>`;
 
   // ── Tableau détaillé 7 jours ──
   const weekRows = thisWeek.map(d => {
@@ -320,14 +430,14 @@ function buildHtml({ thisWeek, thisSum, prevSum, countries, hourly, bots, fromDa
     ? `<tr><td colspan="4" style="color:#999;font-size:12px;padding:8px 0;font-style:italic">Aucune donnée pays disponible</td></tr>`
     : countries.map(r => {
         const barW = Math.round((r.requests / totalReqCountry) * 100);
-        const threatsIcon = r.threats > 0 ? ` <span style="color:#e85555;font-size:10px">(${r.threats} ⚠)</span>` : '';
+        const threat = r.threats > 0 ? ` <span style="color:#e85555;font-size:10px">(${r.threats} ⚠)</span>` : '';
         return `
           <tr style="border-bottom:1px solid #f0f0f0">
-            <td style="padding:5px 0;font-size:12px;width:120px">${cfCountryLabel(r.country)}${threatsIcon}</td>
+            <td style="padding:5px 0;font-size:12px;width:130px">${cfCountryLabel(r.country)}${threat}</td>
             <td style="padding:5px 8px;font-size:12px;text-align:right;font-weight:600;width:60px">${fmtNum(r.requests)}</td>
             <td style="padding:5px 8px;font-size:12px;text-align:right;color:#888;width:60px">${fmtBytes(r.bytes)}</td>
-            <td style="padding:5px 0;width:80px">
-              <div style="background:#e8f8f0;border-radius:3px;height:6px;width:100%">
+            <td style="padding:5px 0">
+              <div style="background:#e8f8f0;border-radius:3px;height:6px">
                 <div style="background:#21c47b;border-radius:3px;height:6px;width:${barW}%"></div>
               </div>
             </td>
@@ -338,7 +448,11 @@ function buildHtml({ thisWeek, thisSum, prevSum, countries, hourly, bots, fromDa
 
   return `<!DOCTYPE html>
 <html lang="fr">
-<head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"></head>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <script>${CHART_JS}<\/script>
+</head>
 <body style="margin:0;padding:0;background:#f4f4f4;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif">
   <table width="100%" cellpadding="0" cellspacing="0" style="background:#f4f4f4;padding:24px 16px">
     <tr><td align="center">
@@ -373,11 +487,11 @@ function buildHtml({ thisWeek, thisSum, prevSum, countries, hourly, bots, fromDa
             ${kpiBar}
             ${secondaryBar}
 
-            ${section('Évolution sur 7 jours', chart7)}
+            ${section('Évolution sur 7 jours', chart7d)}
 
-            ${section('Heures de pointe (UTC)', hourlyHtml)}
+            ${section('Heures de pointe (UTC)', chart24h)}
 
-            ${section('Bots vs Humains', botsHtml)}
+            ${section('Bots vs Humains', chartBots)}
 
             <!-- Saut de page PDF -->
             <div style="page-break-before:always"></div>
@@ -413,7 +527,7 @@ function buildHtml({ thisWeek, thisSum, prevSum, countries, hourly, bots, fromDa
             <table width="100%" cellpadding="0" cellspacing="0">
               <tr>
                 <td style="font-size:10px;color:#bbb">Généré le ${generatedAt} · karimsaari.com</td>
-                <td align="right" style="font-size:10px;color:#bbb">Dark Massilia · Données Cloudflare via Supabase</td>
+                <td align="right" style="font-size:10px;color:#bbb">Dark Massilia · Cloudflare Analytics</td>
               </tr>
             </table>
           </td>
@@ -437,6 +551,8 @@ async function generatePDF(html) {
   const page = await browser.newPage();
   await page.setViewport({ width: 700, height: 900 });
   await page.setContent(html, { waitUntil: 'networkidle0' });
+  // Attendre que les canvas Chart.js soient rendus
+  await page.evaluate(() => new Promise(resolve => setTimeout(resolve, 500)));
   const pdf = await page.pdf({
     format: 'A4',
     printBackground: true,
@@ -509,12 +625,12 @@ async function sendEmail(html, fromDate, pdfBuffer) {
     console.log(`   ⏰ Pic de trafic : ${String(peak.hour).padStart(2,'0')}h UTC (${fmtNum(peak.requests)} req.)`);
   }
   if (bots) {
-    console.log(`   🤖 Trafic humain : ${bots.human.pct}% · crawlers : ${bots.crawler.pct}% · bots : ${bots.bot.pct}%`);
+    console.log(`   🤖 Humain : ${bots.human.pct}% · crawlers : ${bots.crawler.pct}% · bots : ${bots.bot.pct}%`);
   }
 
   const html = buildHtml({ thisWeek, thisSum, prevSum, countries, hourly, bots, fromDate: thisFrom, toDate: thisTo });
 
-  console.log('\n📄 Génération PDF...');
+  console.log('\n📄 Génération PDF (Chart.js + Puppeteer)...');
   const pdfBuffer = await generatePDF(html);
   console.log(`  ✅ PDF généré (${Math.round(pdfBuffer.length / 1024)} Ko)`);
 
