@@ -2,11 +2,13 @@ name: Weekly Cloudflare Report
 
 on:
   schedule:
-    - cron: '0 7 * * 1'   # Chaque lundi à 7h UTC (données jusqu'à dimanche)
+    - cron: '0 8 * * 0'   # Chaque dimanche à 8h UTC = 9h/10h Paris
   workflow_dispatch:
 
 env:
   FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
+  PUPPETEER_SKIP_CHROMIUM_DOWNLOAD: true
+  PUPPETEER_EXECUTABLE_PATH: /usr/bin/google-chrome-stable
 
 jobs:
   cloudflare-report:
@@ -22,12 +24,19 @@ jobs:
           node-version: '24'
           cache: 'npm'
 
+      - name: Installation Chrome (pour Puppeteer PDF)
+        run: |
+          wget -q -O - https://dl.google.com/linux/linux_signing_key.pub | sudo apt-key add -
+          sudo sh -c 'echo "deb [arch=amd64] http://dl.google.com/linux/chrome/deb/ stable main" > /etc/apt/sources.list.d/google-chrome.list'
+          sudo apt-get update -q && sudo apt-get install -y google-chrome-stable
+
       - name: Installation des dépendances
         run: npm ci
 
       - name: Rapport hebdomadaire Cloudflare → Brevo
         env:
-          VITE_SUPABASE_URL:      ${{ secrets.VITE_SUPABASE_URL }}
-          VITE_SUPABASE_ANON_KEY: ${{ secrets.VITE_SUPABASE_ANON_KEY }}
-          BREVO_API_KEY:          ${{ secrets.BREVO_API_KEY }}
+          VITE_SUPABASE_URL:         ${{ secrets.VITE_SUPABASE_URL }}
+          VITE_SUPABASE_ANON_KEY:    ${{ secrets.VITE_SUPABASE_ANON_KEY }}
+          BREVO_API_KEY:             ${{ secrets.BREVO_API_KEY }}
+          PUPPETEER_EXECUTABLE_PATH: /usr/bin/google-chrome-stable
         run: node scripts/cloudflare-report.js
