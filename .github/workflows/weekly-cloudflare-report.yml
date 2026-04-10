@@ -1,0 +1,33 @@
+name: Weekly Cloudflare Report
+
+on:
+  schedule:
+    - cron: '0 7 * * 1'   # Chaque lundi à 7h UTC (données jusqu'à dimanche)
+  workflow_dispatch:
+
+env:
+  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
+
+jobs:
+  cloudflare-report:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js 24
+        uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+          cache: 'npm'
+
+      - name: Installation des dépendances
+        run: npm ci
+
+      - name: Rapport hebdomadaire Cloudflare → Brevo
+        env:
+          VITE_SUPABASE_URL:      ${{ secrets.VITE_SUPABASE_URL }}
+          VITE_SUPABASE_ANON_KEY: ${{ secrets.VITE_SUPABASE_ANON_KEY }}
+          BREVO_API_KEY:          ${{ secrets.BREVO_API_KEY }}
+        run: node scripts/cloudflare-report.js
