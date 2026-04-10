@@ -172,12 +172,11 @@ async function fetch28DaysClicks() {
 
 // ── Fetch Cloudflare (depuis Supabase) ────────────────────────────────────────
 
-async function fetchCfDay() {
+async function fetchCfDay(date) {
   const { data } = await supabase
     .from('cf_daily')
     .select('*')
-    .order('date', { ascending: false })
-    .limit(1)
+    .eq('date', date)
     .single();
   return data || null; // graceful si table vide
 }
@@ -645,11 +644,14 @@ async function sendEmail(html, lastDate, pdfBuffer) {
 (async () => {
   console.log('📧 Rapport GSC journalier...\n');
 
-  const [lastDay, days7, clicks28, cfDay] = await Promise.all([
-    fetchLastDay(), fetch7Days(), fetch28DaysClicks(), fetchCfDay(),
+  const [lastDay, days7, clicks28] = await Promise.all([
+    fetchLastDay(), fetch7Days(), fetch28DaysClicks(),
   ]);
   const date = lastDay.date;
-  const cfCountries = cfDay ? await fetchCfCountries(cfDay.date) : [];
+  const [cfDay, cfCountries] = await Promise.all([
+    fetchCfDay(date),
+    fetchCfCountries(date),
+  ]);
   console.log(`📅 Dernier jour disponible : ${date}`);
   console.log(`   Clics: ${lastDay.clicks} | Impr: ${lastDay.impressions} | CTR: ${pct(lastDay.ctr)} | Pos: ${pos(lastDay.position)}`);
   console.log(`   Réussites 28j : ${clicks28.total} clics (${clicks28.days} jours) → objectif ${getMilestone(clicks28.total).next}\n`);
