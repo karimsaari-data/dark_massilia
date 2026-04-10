@@ -2,7 +2,7 @@ name: Weekly GA Report
 
 on:
   schedule:
-    - cron: '30 7 * * 0'   # Chaque dimanche à 7h30 UTC = 8h30/9h30 Paris
+    - cron: '0 8 * * 0'    # Chaque dimanche à 8h UTC = 9h/10h Paris
   workflow_dispatch:          # Déclenchement manuel possible
 
 env:

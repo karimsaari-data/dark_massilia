@@ -2,7 +2,7 @@ name: Weekly GSC 28-Day Report
 
 on:
   schedule:
-    - cron: '0 8 * * 1'  # Chaque lundi à 8h UTC = 9h/10h Paris
+    - cron: '0 8 * * 0'  # Chaque dimanche à 8h UTC = 9h/10h Paris
   workflow_dispatch:       # Déclenchement manuel possible
 
 jobs:
