@@ -36,6 +36,7 @@ const MentionsLegales = lazy(() => import('./pages/MentionsLegales'));
 const Confidentialite    = lazy(() => import('./pages/Confidentialite'));
 const PhotoSousMarine    = lazy(() => import('./pages/PhotoSousMarine'));
 const PhotographeEnvironnemental = lazy(() => import('./pages/PhotographeEnvironnemental'));
+const BlogCategory               = lazy(() => import('./pages/BlogCategory'));
 
 const PageLoader = () => (
   <div className="min-h-screen flex items-center justify-center">
@@ -74,8 +75,9 @@ export default function AppRoutes() {
           <Route path="/" element={<Layout />}>
             <Route index element={<Home />} />
             {/* Blog WordPress Headless */}
-            <Route path="blog"         element={<Blog />} />
-            <Route path="blog/:slug"   element={<BlogPost />} />
+            <Route path="blog"                      element={<Blog />} />
+            <Route path="blog/categorie/:slug"  element={<BlogCategory />} />
+            <Route path="blog/:slug"            element={<BlogPost />} />
             <Route path="depollution-marine"              element={<Missions />} />
             <Route path="presse"                         element={<Medias />} />
             <Route path="photographie-paysage-mer"       element={<Photos />} />
