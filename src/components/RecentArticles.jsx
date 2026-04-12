@@ -7,6 +7,7 @@ import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { ArrowRight, Calendar } from 'lucide-react';
 import { fetchPosts } from '../utils/api';
+import { CATEGORIES } from '../pages/Blog';
 
 export default function RecentArticles({ title = 'Derniers articles', count = 3, excludeSlug = null }) {
   const [posts, setPosts] = useState([]);
@@ -24,7 +25,8 @@ export default function RecentArticles({ title = 'Derniers articles', count = 3,
 
   return (
     <section className="container-custom pb-12 md:pb-16">
-      <div className="flex items-center justify-between mb-8">
+      {/* Titre + lien "Voir tous" */}
+      <div className="flex items-center justify-between mb-4">
         <h2 className="text-2xl md:text-3xl font-bold text-white">{title}</h2>
         <Link
           to="/blog"
@@ -33,6 +35,19 @@ export default function RecentArticles({ title = 'Derniers articles', count = 3,
           Voir tous les articles
           <ArrowRight className="w-4 h-4" />
         </Link>
+      </div>
+
+      {/* Raccourcis catégories */}
+      <div className="flex flex-wrap gap-2 mb-8">
+        {CATEGORIES.map(cat => (
+          <Link
+            key={cat.id}
+            to={`/blog/categorie/${cat.slug}`}
+            className="px-3 py-1 rounded-full text-xs font-semibold glass text-text-secondary hover:text-white border border-white/10 hover:border-ocean-teal/40 hover:bg-ocean-teal/10 transition-all duration-200"
+          >
+            {cat.name}
+          </Link>
+        ))}
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
@@ -54,15 +69,25 @@ export default function RecentArticles({ title = 'Derniers articles', count = 3,
               </div>
             )}
             <div className="p-5 flex flex-col flex-1">
-              <div className="flex items-center gap-2 text-xs text-text-secondary mb-3">
-                <Calendar className="w-3.5 h-3.5 flex-shrink-0" />
-                <span>
-                  {new Date(post.date).toLocaleDateString('fr-FR', {
-                    day: 'numeric',
-                    month: 'long',
-                    year: 'numeric',
-                  })}
-                </span>
+              <div className="flex items-center justify-between gap-2 text-xs text-text-secondary mb-3">
+                <div className="flex items-center gap-2">
+                  <Calendar className="w-3.5 h-3.5 flex-shrink-0" />
+                  <span>
+                    {new Date(post.date).toLocaleDateString('fr-FR', {
+                      day: 'numeric',
+                      month: 'long',
+                      year: 'numeric',
+                    })}
+                  </span>
+                </div>
+                {(() => {
+                  const cat = CATEGORIES.find(c => post.categories?.includes(c.id));
+                  return cat ? (
+                    <span className="px-2 py-0.5 rounded-full bg-ocean-teal/10 border border-ocean-teal/20 text-ocean-teal font-medium whitespace-nowrap">
+                      {cat.name}
+                    </span>
+                  ) : null;
+                })()}
               </div>
               <h3 className="text-white font-semibold text-base leading-snug mb-2 group-hover:text-ocean-teal transition-colors line-clamp-2 flex-1">
                 {post.title}
