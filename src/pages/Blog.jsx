@@ -24,18 +24,17 @@ export const CATEGORIES = [
 const POSTS_PER_PAGE = 9;
 
 export default function Blog() {
-  const [posts,          setPosts]          = useState([]);
-  const [page,           setPage]           = useState(1);
-  const [totalPages,     setTotalPages]     = useState(1);
-  const [loading,        setLoading]        = useState(true);
-  const [error,          setError]          = useState(null);
-  const [activeCategory, setActiveCategory] = useState(null);
+  const [posts,      setPosts]      = useState([]);
+  const [page,       setPage]       = useState(1);
+  const [totalPages, setTotalPages] = useState(1);
+  const [loading,    setLoading]    = useState(true);
+  const [error,      setError]      = useState(null);
 
   useEffect(() => {
     setLoading(true);
     setError(null);
 
-    fetchPosts({ page, perPage: POSTS_PER_PAGE, categoryId: activeCategory?.id })
+    fetchPosts({ page, perPage: POSTS_PER_PAGE })
       .then(({ posts: data, totalPages: tp }) => {
         setPosts(data);
         setTotalPages(tp);
@@ -45,12 +44,7 @@ export default function Blog() {
         setError(err.message);
         setLoading(false);
       });
-  }, [page, activeCategory]);
-
-  const handleCategoryChange = (cat) => {
-    setActiveCategory(cat);
-    setPage(1);
-  };
+  }, [page]);
 
   return (
     <div className="min-h-screen py-24">
@@ -84,30 +78,20 @@ export default function Blog() {
 
         {/* ── Filtres catégories ─────────────────────────────────────────── */}
         <div className="flex flex-wrap justify-center gap-2 mb-10" role="navigation" aria-label="Filtrer par catégorie">
-          <button
-            onClick={() => handleCategoryChange(null)}
-            aria-pressed={activeCategory === null}
-            className={`px-4 py-1.5 rounded-full text-sm font-semibold transition-all duration-200 ${
-              activeCategory === null
-                ? 'bg-ocean-teal text-[#0a1428]'
-                : 'glass text-text-secondary hover:text-white border border-white/10 hover:border-white/20'
-            }`}
+          <Link
+            to="/blog"
+            className="px-4 py-1.5 rounded-full text-sm font-semibold transition-all duration-200 bg-ocean-teal text-[#0a1428]"
           >
             Tous
-          </button>
+          </Link>
           {CATEGORIES.map(cat => (
-            <button
+            <Link
               key={cat.id}
-              onClick={() => handleCategoryChange(cat)}
-              aria-pressed={activeCategory?.id === cat.id}
-              className={`px-4 py-1.5 rounded-full text-sm font-semibold transition-all duration-200 ${
-                activeCategory?.id === cat.id
-                  ? 'bg-ocean-teal text-[#0a1428]'
-                  : 'glass text-text-secondary hover:text-white border border-white/10 hover:border-white/20'
-              }`}
+              to={`/blog/categorie/${cat.slug}`}
+              className="px-4 py-1.5 rounded-full text-sm font-semibold transition-all duration-200 glass text-text-secondary hover:text-white border border-white/10 hover:border-white/20"
             >
               {cat.name}
-            </button>
+            </Link>
           ))}
         </div>
 
