@@ -2,7 +2,7 @@
  * Blog — Page index des actualités /blog
  *
  * Grille d'articles alimentée par WordPress Headless.
- * Fetch client-side avec pagination.
+ * Fetch client-side avec pagination + filtre par catégorie.
  */
 
 import { useState, useEffect } from 'react';
@@ -14,20 +14,28 @@ import { SEO_PAGES } from '../utils/seo';
 import { fetchPosts } from '../utils/api';
 import { FADE_IN_UP, STAGGER_CONTAINER } from '../utils/constants';
 
+export const CATEGORIES = [
+  { id: 2, name: 'Dépollution & Action',       slug: 'depollution'  },
+  { id: 3, name: 'Biodiversité des calanques',  slug: 'biodiversite' },
+  { id: 4, name: 'Calanques & Littoral',        slug: 'calanques'    },
+  { id: 5, name: 'Pollution & Alertes',         slug: 'pollution'    },
+];
+
 const POSTS_PER_PAGE = 9;
 
 export default function Blog() {
-  const [posts,      setPosts]      = useState([]);
-  const [page,       setPage]       = useState(1);
-  const [totalPages, setTotalPages] = useState(1);
-  const [loading,    setLoading]    = useState(true);
-  const [error,      setError]      = useState(null);
+  const [posts,          setPosts]          = useState([]);
+  const [page,           setPage]           = useState(1);
+  const [totalPages,     setTotalPages]     = useState(1);
+  const [loading,        setLoading]        = useState(true);
+  const [error,          setError]          = useState(null);
+  const [activeCategory, setActiveCategory] = useState(null);
 
   useEffect(() => {
     setLoading(true);
     setError(null);
 
-    fetchPosts({ page, perPage: POSTS_PER_PAGE })
+    fetchPosts({ page, perPage: POSTS_PER_PAGE, categoryId: activeCategory?.id })
       .then(({ posts: data, totalPages: tp }) => {
         setPosts(data);
         setTotalPages(tp);
@@ -37,7 +45,12 @@ export default function Blog() {
         setError(err.message);
         setLoading(false);
       });
-  }, [page]);
+  }, [page, activeCategory]);
+
+  const handleCategoryChange = (cat) => {
+    setActiveCategory(cat);
+    setPage(1);
+  };
 
   return (
     <div className="min-h-screen py-24">
@@ -68,6 +81,35 @@ export default function Blog() {
             de l'équipe Dark Massilia en Méditerranée.
           </motion.p>
         </motion.div>
+
+        {/* ── Filtres catégories ─────────────────────────────────────────── */}
+        <div className="flex flex-wrap justify-center gap-2 mb-10" role="navigation" aria-label="Filtrer par catégorie">
+          <button
+            onClick={() => handleCategoryChange(null)}
+            aria-pressed={activeCategory === null}
+            className={`px-4 py-1.5 rounded-full text-sm font-semibold transition-all duration-200 ${
+              activeCategory === null
+                ? 'bg-ocean-teal text-[#0a1428]'
+                : 'glass text-text-secondary hover:text-white border border-white/10 hover:border-white/20'
+            }`}
+          >
+            Tous
+          </button>
+          {CATEGORIES.map(cat => (
+            <button
+              key={cat.id}
+              onClick={() => handleCategoryChange(cat)}
+              aria-pressed={activeCategory?.id === cat.id}
+              className={`px-4 py-1.5 rounded-full text-sm font-semibold transition-all duration-200 ${
+                activeCategory?.id === cat.id
+                  ? 'bg-ocean-teal text-[#0a1428]'
+                  : 'glass text-text-secondary hover:text-white border border-white/10 hover:border-white/20'
+              }`}
+            >
+              {cat.name}
+            </button>
+          ))}
+        </div>
 
         {/* ── Erreur ──────────────────────────────────────────────────────── */}
         {error && (
@@ -200,7 +242,7 @@ export default function Blog() {
 
 // ── Composant carte article ───────────────────────────────────────────────────
 
-function PostCard({ post, priority = false }) {
+export function PostCard({ post, priority = false }) {
   // La carte prioritaire (LCP) utilise un article natif pour éviter le render delay
   // causé par motion.article qui démarre à opacity:0 (FADE_IN_UP)
   const Tag = priority ? 'article' : motion.article;
@@ -240,10 +282,27 @@ function PostCard({ post, priority = false }) {
         className="flex flex-col flex-1 p-6"
         style={{ background: 'rgba(8, 16, 32, 0.72)', backdropFilter: 'blur(8px)' }}
       >
-        {/* Date */}
-        <div className="flex items-center gap-2 text-ocean-teal text-xs font-semibold uppercase tracking-wider mb-3">
-          <Calendar className="w-3.5 h-3.5 flex-shrink-0" aria-hidden="true" />
-          <time dateTime={post.date}>{post.dateFormatted}</time>
+        {/* Date + catégorie */}
+        <div className="flex items-center justify-between gap-2 mb-3">
+          <div className="flex items-center gap-2 text-ocean-teal text-xs font-semibold uppercase tracking-wider">
+            <Calendar className="w-3.5 h-3.5 flex-shrink-0" aria-hidden="true" />
+            <time dateTime={post.date}>{post.dateFormatted}</time>
+          </div>
+          {(() => {
+            const cat = post.categories?.[0]
+              ? CATEGORIES.find(c => c.id === post.categories[0])
+              : null;
+            return cat ? (
+              <Link
+                to={`/blog/categorie/${cat.slug}`}
+                className="px-2 py-0.5 rounded-full text-xs font-semibold bg-white/8 text-text-secondary hover:bg-ocean-teal/20 hover:text-ocean-teal transition-colors whitespace-nowrap"
+                onClick={e => e.stopPropagation()}
+                aria-label={`Catégorie : ${cat.name}`}
+              >
+                {cat.name}
+              </Link>
+            ) : null;
+          })()}
         </div>
 
         {/* Titre */}

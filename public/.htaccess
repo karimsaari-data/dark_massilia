@@ -38,6 +38,9 @@
   RewriteRule ^medias\.html$ /presse                          [R=301,L]
   RewriteRule ^arte\.html$   /sauver-marseille-documentaire-arte [R=301,L]
 
+  # ── Redirections 301 — slugs WordPress avec emoji (anciens slugs indexés par Google) ──
+  RewriteRule ^blog/%F0%9F%8C%8A-proteger-notre-grande-bleue-4-gestes-simples-pour-sauver-la-mediterranee/?$ /blog/proteger-notre-grande-bleue-4-gestes-simples-pour-sauver-la-mediterranee [R=301,L]
+
   # ── Redirections 301 — legacy URLs avec préfixe /home/ (ex-site statique) ──
   RewriteRule ^home/photos/?$   /photographie-paysage-mer           [R=301,L]
   RewriteRule ^home/videos/?$   /videos                             [R=301,L]

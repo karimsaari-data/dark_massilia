@@ -43,6 +43,10 @@ const STATIC_ROUTES = [
   '/mentions-legales',
   '/confidentialite',
   '/admin',
+  '/blog/categorie/depollution',
+  '/blog/categorie/biodiversite',
+  '/blog/categorie/calanques',
+  '/blog/categorie/pollution',
 ];
 
 // ── Récupération des slugs + dates de modification WP ────────────────────────
@@ -284,7 +288,7 @@ async function prerender() {
     try {
       // Pour les routes /blog/:slug, pré-injecter les données WP dans globalThis
       // BlogPost.jsx lit globalThis.__WP_SSR_DATA__ de façon synchrone lors du render()
-      if (route.startsWith('/blog/')) {
+      if (route.startsWith('/blog/') && !route.startsWith('/blog/categorie/')) {
         const slug = route.slice('/blog/'.length);
 
         // Prérendu incrémental : skip si article inchangé
@@ -311,7 +315,7 @@ async function prerender() {
       // PSI vérifie que la ressource LCP est "visible dans le document initial" :
       // un preload dans <head> garantit que le navigateur démarre le téléchargement
       // AVANT l'exécution de JS, ce qui réduit le LCP de plusieurs secondes.
-      if (route.startsWith('/blog/')) {
+      if (route.startsWith('/blog/') && !route.startsWith('/blog/categorie/')) {
         const slug    = route.slice('/blog/'.length);
         const wpPost  = wpPostCache.get(slug);
         if (wpPost?.image) {
