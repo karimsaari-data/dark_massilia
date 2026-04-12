@@ -32,8 +32,8 @@ export default function Carte() {
     <>
       <SEO {...SEO_PAGES['/carte-calanques']} />
 
-      {/* Carte plein écran — mode immersif */}
-      <div className="relative overflow-hidden h-[calc(100vh-70px)] md:h-[calc(100vh-128px)]">
+      {/* Carte — laisse ~80px de contenu visible en bas pour indiquer le scroll */}
+      <div className="relative overflow-hidden h-[calc(100vh-70px)] md:h-[calc(100vh-128px-80px)]">
 
         {/* Carte Google My Maps — façade au clic pour éviter cookies tiers */}
         <div style={{ position: 'relative', height: '100%', overflow: 'hidden' }}>
@@ -93,7 +93,7 @@ export default function Carte() {
           )}
         </div>
 
-        {/* Bouton plein écran — bas droite */}
+        {/* Bouton plein écran — bas gauche (évite les contrôles Google Maps en bas droite) */}
         <motion.a
           href={FULL_URL}
           target="_blank"
@@ -101,7 +101,7 @@ export default function Carte() {
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5, delay: 0.8 }}
-          style={{ position: 'absolute', bottom: '1.5rem', right: '1.5rem', zIndex: 10 }}
+          style={{ position: 'absolute', bottom: '1.5rem', left: '1.5rem', zIndex: 10 }}
           className="glass rounded-xl border border-white/10 px-4 py-2.5 flex items-center gap-2 text-xs text-text-secondary hover:text-white hover:border-ocean-teal/40 transition-colors duration-200"
         >
           <ExternalLink className="w-3.5 h-3.5" />
@@ -116,12 +116,12 @@ export default function Carte() {
           style={{ position: 'absolute', bottom: '1.5rem', left: '50%', transform: 'translateX(-50%)', zIndex: 10 }}
           className="flex flex-col items-center gap-1 pointer-events-none"
         >
-          <span className="text-white/50 text-xs tracking-widest uppercase">Voir plus</span>
+          <span className="text-white/70 text-xs tracking-widest uppercase font-semibold drop-shadow-lg">Voir plus</span>
           <motion.div
             animate={{ y: [0, 6, 0] }}
             transition={{ duration: 1.4, repeat: Infinity, ease: 'easeInOut' }}
           >
-            <ChevronDown className="w-5 h-5 text-white/50" />
+            <ChevronDown className="w-5 h-5 text-white/70 drop-shadow-lg" />
           </motion.div>
         </motion.div>
 
