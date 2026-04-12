@@ -35,6 +35,7 @@ import LocalGuide    from './pages/LocalGuide';
 import AdminCarteSSR from './pages/AdminCarteSSR';
 import Yab          from './pages/Yab';
 import PhotoSousMarine from './pages/PhotoSousMarine';
+import BlogCategory    from './pages/BlogCategory';
 
 function NotFound() {
   return (
@@ -74,6 +75,7 @@ export function render(url) {
             <Route path="admin"                              element={<AdminCarteSSR />} />
             <Route path="les-francais-yann-arthus-bertrand" element={<Yab />} />
             <Route path="blog"                               element={<Blog />} />
+            <Route path="blog/categorie/:slug"               element={<BlogCategory />} />
             <Route path="blog/:slug"                         element={<BlogPost />} />
             <Route path="home"                               element={<Navigate to="/" replace />} />
             <Route path="*"         element={<NotFound />} />
