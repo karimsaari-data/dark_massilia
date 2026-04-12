@@ -1,0 +1,40 @@
+name: Notify new articles
+
+on:
+  schedule:
+    # Tous les jours à 8h00 heure de Paris (UTC+2 en été / UTC+1 en hiver)
+    # Cron UTC : 6h en été (avril–octobre), 7h en hiver — on choisit 7h UTC (compromise)
+    - cron: '0 7 * * *'
+  workflow_dispatch: # déclenchement manuel possible depuis GitHub UI
+
+jobs:
+  notify:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write   # pour pouvoir commiter .notified-slugs.json
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Notify new articles
+        env:
+          VITE_SUPABASE_URL: ${{ secrets.VITE_SUPABASE_URL }}
+          NOTIFY_SECRET: ${{ secrets.NOTIFY_SECRET }}
+        run: node scripts/notify-new-articles.js
+
+      - name: Commit updated .notified-slugs.json
+        run: |
+          git config user.name  "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add scripts/.notified-slugs.json
+          # Ne commite que si le fichier a changé (nouveaux articles notifiés)
+          git diff --cached --quiet || git commit -m "chore: update .notified-slugs.json [skip ci]"
+          git push
