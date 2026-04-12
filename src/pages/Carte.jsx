@@ -93,15 +93,15 @@ export default function Carte() {
           )}
         </div>
 
-        {/* Bouton plein écran — bas gauche (évite les contrôles Google Maps en bas droite) */}
+        {/* Bouton Google Maps — haut gauche (title centré, légende droite → gauche libre) */}
         <motion.a
           href={FULL_URL}
           target="_blank"
           rel="noopener noreferrer"
-          initial={{ opacity: 0, y: 10 }}
+          initial={{ opacity: 0, y: -10 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5, delay: 0.8 }}
-          style={{ position: 'absolute', bottom: '1.5rem', left: '1.5rem', zIndex: 10 }}
+          style={{ position: 'absolute', top: '1.5rem', left: '1.5rem', zIndex: 10 }}
           className="glass rounded-xl border border-white/10 px-4 py-2.5 flex items-center gap-2 text-xs text-text-secondary hover:text-white hover:border-ocean-teal/40 transition-colors duration-200"
         >
           <ExternalLink className="w-3.5 h-3.5" />
