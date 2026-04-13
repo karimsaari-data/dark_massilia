@@ -24,6 +24,7 @@ export const SOCIAL_LINKS = {
 export const NAV_LINKS = [
   {
     name: 'Portfolio',
+    dropdownTitle: 'Galeries photo — Marseille & Calanques',
     icon: 'Camera',
     description: 'Photographies sous-marines, paysages du littoral marseillais et démarche de photographe environnemental.',
     children: [
@@ -36,6 +37,7 @@ export const NAV_LINKS = [
   },
   {
     name: 'Missions',
+    dropdownTitle: 'Agir pour la mer Méditerranée',
     icon: 'Compass',
     description: 'Dépollution des fonds marins en apnée, documentation scientifique et mobilisation citoyenne dans les Calanques.',
     children: [
@@ -47,6 +49,7 @@ export const NAV_LINKS = [
   },
   {
     name: 'Médias',
+    dropdownTitle: 'Actualités & présence médias',
     icon: 'Film',
     description: 'Documentaires ARTE, presse nationale, vidéos, blog et actualités sur l\'engagement environnemental à Marseille.',
     children: [
@@ -60,6 +63,7 @@ export const NAV_LINKS = [
   },
   {
     name: 'Contact',
+    dropdownTitle: 'Rejoindre le Projet Sentinelle',
     icon: 'Mail',
     description: 'Collaborations, partenariats médias ou institutionnels — rejoignez la mission Dark Massilia.',
     children: [

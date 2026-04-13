@@ -31,6 +31,7 @@ export default {
       fontFamily: {
         sans: ['Inter', 'system-ui', '-apple-system', 'sans-serif'],
         display: ['Montserrat', 'Inter', 'system-ui', 'sans-serif'], // Pour les titres
+        condensed: ['"Barlow Condensed"', 'Montserrat', 'sans-serif'], // Titres mega menu
       },
       animation: {
         'fade-in': 'fadeIn 0.8s ease-out',

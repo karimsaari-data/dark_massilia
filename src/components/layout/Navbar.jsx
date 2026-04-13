@@ -106,7 +106,7 @@ const NavDropdown = ({ item }) => {
               <div className="w-56 flex-shrink-0 p-8 flex flex-col gap-4" style={{ background: '#3c59ab' }}>
                 <div className="flex gap-3 items-start">
                   <div className="w-1 self-stretch rounded-full bg-astroide flex-shrink-0 mt-1" aria-hidden="true" />
-                  <p className="text-white font-extrabold text-2xl leading-tight uppercase tracking-wide">{item.name}</p>
+                  <p className="text-white font-black text-3xl leading-tight uppercase tracking-wide font-condensed">{item.dropdownTitle ?? item.name}</p>
                 </div>
                 <p className="text-white/50 text-sm leading-relaxed">{item.description}</p>
                 <div className="mt-auto">
