@@ -265,8 +265,8 @@ export default function GroupeFacebook() {
             {/* Image */}
             <div className="lg:w-2/5 relative min-h-64 lg:min-h-0">
               <img
-                src="/images/Karimsaari-portfolio-sous-marin-paysages-calanques-marseille-photographie-photographe-environnemental.webp"
-                alt="Karim Saari — photographe environnemental et apnéiste à Marseille"
+                src="/images/biodiversite-calanques-marseille-2.webp"
+                alt="Poulpe en mode camouflage — Parc national des Calanques de Marseille"
                 className="w-full h-full object-cover absolute inset-0"
                 loading="lazy"
               />

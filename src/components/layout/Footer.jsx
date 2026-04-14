@@ -41,8 +41,9 @@ const navColumns = [
     links: [
       { to: '/depollution-marine',    text: 'Dépollution marine' },
       { to: '/carte-calanques',       text: 'Carte interactive des Calanques' },
-      { to: '/communaute',            text: 'Rejoindre la communauté' },
-      { to: '/donnees-scientifiques', text: 'Données scientifiques' },
+      { to: '/communaute',             text: 'Rejoindre la communauté' },
+      { to: '/communaute-calanques',   text: 'Groupe Facebook Calanques' },
+      { to: '/donnees-scientifiques',  text: 'Données scientifiques' },
     ],
   },
   {
