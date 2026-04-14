@@ -93,113 +93,101 @@ export default function GroupeFacebook() {
       <SEO {...SEO_PAGES['/communaute-calanques']} />
       <div className="container-custom space-y-16">
 
-        {/* ── Hero ─────────────────────────────────────────────── */}
+        {/* ── Hero CTA card ─────────────────────────────────────── */}
         <motion.div
           initial="hidden"
           animate="visible"
           variants={STAGGER_CONTAINER}
-          className="text-center"
         >
-          {/* Badge */}
-          <motion.div variants={FADE_IN_UP} className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-blue-500/30 bg-blue-500/10 text-blue-400 text-sm font-medium mb-6">
-            <Users className="w-4 h-4" />
-            Groupe Facebook · Depuis 2018
-          </motion.div>
+          <motion.div variants={FADE_IN_UP} className="glass-strong rounded-3xl overflow-hidden border border-white/10">
+            <div className="grid md:grid-cols-[1fr_1.1fr] gap-0">
 
-          {/* H1 */}
-          <motion.h1
-            variants={FADE_IN_UP}
-            className="text-3xl md:text-5xl font-bold text-white leading-tight mb-4 max-w-3xl mx-auto"
-          >
-            La plus grande communauté en ligne autour des{' '}
-            <span className="text-ocean-teal">Calanques de Marseille</span>
-          </motion.h1>
+              {/* Contenu gauche */}
+              <div className="p-8 md:p-12 flex flex-col justify-center order-2 md:order-1">
+                {/* Badge */}
+                <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full border border-blue-500/30 bg-blue-500/10 text-blue-400 text-xs font-medium mb-6 w-fit">
+                  <Users className="w-3.5 h-3.5" />
+                  Groupe Facebook · Depuis 2018
+                </div>
 
-          <motion.p variants={FADE_IN_UP} className="text-text-secondary text-lg max-w-2xl mx-auto mb-10 leading-relaxed">
-            Un espace de célébration, de partage et de protection de notre patrimoine naturel méditerranéen.
-            Fondé en 2018 par Karim Saari, photographe environnemental et apnéiste marseillais.
-          </motion.p>
+                {/* H1 */}
+                <h1 className="text-2xl md:text-3xl font-bold text-white leading-tight mb-4">
+                  La plus grande communauté en ligne autour des{' '}
+                  <span className="text-ocean-teal">Calanques de Marseille</span>
+                </h1>
 
-          {/* Stat principale */}
-          <motion.div variants={FADE_IN_UP} className="inline-flex flex-col items-center gap-1 mb-10">
-            <span className="text-6xl md:text-7xl font-bold text-white tabular-nums">
-              <StatCounter end={64700} duration={2500} />
-            </span>
-            <span className="text-ocean-teal font-semibold text-lg tracking-wide uppercase">membres</span>
-            <span className="text-white/40 text-sm">Amoureux des Calanques de Marseille à Port-Cros</span>
-          </motion.div>
+                <p className="text-text-secondary text-sm leading-relaxed mb-8">
+                  Un espace de célébration, de partage et de protection de notre patrimoine naturel méditerranéen.
+                  Fondé en 2018 par Karim Saari, photographe environnemental et apnéiste marseillais.
+                </p>
 
-          {/* CTA */}
-          <motion.div variants={FADE_IN_UP} className="flex flex-col sm:flex-row gap-3 justify-center">
-            <a
-              href="https://www.facebook.com/groups/calanque/"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="btn-primary inline-flex items-center gap-2 px-8 py-3.5 text-base"
-            >
-              <Users className="w-4 h-4" />
-              Rejoindre le groupe
-            </a>
-          </motion.div>
-        </motion.div>
+                {/* Stats cards */}
+                <div className="grid grid-cols-2 gap-3 mb-8">
+                  {/* Membres — stat principale */}
+                  <div className="col-span-2 rounded-2xl border border-ocean-teal/25 bg-ocean-teal/8 p-4 flex items-center gap-4">
+                    <div>
+                      <p className="text-3xl font-bold text-white tabular-nums">
+                        <StatCounter end={64700} duration={2000} />
+                      </p>
+                      <p className="text-ocean-teal text-xs font-semibold uppercase tracking-wide mt-0.5">Membres</p>
+                      <p className="text-white/35 text-xs">Amoureux des Calanques de Marseille à Port-Cros</p>
+                    </div>
+                  </div>
+                  {/* Stats 28j depuis Supabase */}
+                  {stats ? (
+                    <>
+                      <div className="rounded-xl border border-blue-500/20 bg-blue-600/10 p-3 text-center">
+                        <p className="text-xl font-bold text-blue-400 tabular-nums">{stats.totalViews.toLocaleString('fr-FR')}</p>
+                        <p className="text-white/40 text-xs mt-0.5">Vues · 28j</p>
+                      </div>
+                      <div className="rounded-xl border border-emerald-500/20 bg-emerald-600/10 p-3 text-center">
+                        <p className="text-xl font-bold text-emerald-400 tabular-nums">+{stats.totalMembers.toLocaleString('fr-FR')}</p>
+                        <p className="text-white/40 text-xs mt-0.5">Nouveaux · 28j</p>
+                      </div>
+                    </>
+                  ) : (
+                    <>
+                      <div className="rounded-xl border border-blue-500/20 bg-blue-600/10 p-3 text-center">
+                        <p className="text-xl font-bold text-blue-400">789K</p>
+                        <p className="text-white/40 text-xs mt-0.5">Vues totales</p>
+                      </div>
+                      <div className="rounded-xl border border-emerald-500/20 bg-emerald-600/10 p-3 text-center">
+                        <p className="text-xl font-bold text-emerald-400">16K/j</p>
+                        <p className="text-white/40 text-xs mt-0.5">Vues / jour moy.</p>
+                      </div>
+                    </>
+                  )}
+                </div>
 
-        {/* ── Image hero ───────────────────────────────────────── */}
-        <motion.div
-          initial={{ opacity: 0, scale: 0.98 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{ duration: 0.8, delay: 0.3 }}
-          className="relative rounded-3xl overflow-hidden aspect-[21/9] max-h-80"
-        >
-          <img
-            src="/images/groupe%20des%20amoureux%20des%20calanques.webp"
-            srcSet="/images/groupe%20des%20amoureux%20des%20calanques_400w.webp 400w, /images/groupe%20des%20amoureux%20des%20calanques_800w.webp 800w, /images/groupe%20des%20amoureux%20des%20calanques_1200w.webp 1200w"
-            sizes="100vw"
-            alt="Groupe Facebook Amoureux des Calanques de Marseille à Port-Cros"
-            className="w-full h-full object-cover"
-            style={{ objectPosition: '12% 25%' }}
-            loading="eager"
-          />
-          <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent" />
-          <div className="absolute bottom-6 left-8 right-8">
-            <p className="text-white/90 text-sm font-medium">
-              Calanques de Marseille — Projet Sentinelle · Karim Saari
-            </p>
-          </div>
-        </motion.div>
-
-        {/* ── Stats 28 jours (live) ─────────────────────────────── */}
-        {stats && (
-          <motion.div
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true, amount: 0.2 }}
-            variants={STAGGER_CONTAINER}
-          >
-            <motion.div variants={FADE_IN_UP} className="text-center mb-6">
-              <p className="text-white/40 text-sm flex items-center gap-2 justify-center">
-                <TrendingUp className="w-3.5 h-3.5 text-emerald-400" />
-                Activité des 28 derniers jours
-              </p>
-            </motion.div>
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-              {[
-                { label: 'Vues',       value: stats.totalViews,    color: 'text-blue-400',    bg: 'from-blue-600/15 to-indigo-600/15',   border: 'border-blue-500/20' },
-                { label: 'Nouveaux membres', value: stats.totalMembers, color: 'text-emerald-400', bg: 'from-emerald-600/15 to-teal-500/15', border: 'border-emerald-500/20' },
-                { label: 'Réactions',  value: stats.totalReact,    color: 'text-orange-400',  bg: 'from-orange-600/15 to-amber-500/15',  border: 'border-orange-500/20' },
-                { label: 'Commentaires', value: stats.totalComments, color: 'text-purple-400', bg: 'from-purple-600/15 to-pink-500/15',   border: 'border-purple-500/20' },
-              ].map(({ label, value, color, bg, border }) => (
-                <motion.div key={label} variants={FADE_IN_UP}
-                  className={`rounded-2xl border bg-gradient-to-br ${bg} ${border} p-5 text-center`}
+                {/* CTA */}
+                <a
+                  href="https://www.facebook.com/groups/calanque/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="btn-primary inline-flex items-center gap-2 w-fit"
                 >
-                  <p className={`text-2xl font-bold ${color} tabular-nums`}>
-                    {value.toLocaleString('fr-FR')}
-                  </p>
-                  <p className="text-white/50 text-xs mt-1">{label}</p>
-                </motion.div>
-              ))}
+                  <Users className="w-4 h-4" />
+                  Rejoindre le groupe
+                </a>
+              </div>
+
+              {/* Image droite */}
+              <div className="relative h-72 md:h-auto min-h-[420px] order-1 md:order-2">
+                <img
+                  src="/images/groupe%20des%20amoureux%20des%20calanques.webp"
+                  srcSet="/images/groupe%20des%20amoureux%20des%20calanques_400w.webp 400w, /images/groupe%20des%20amoureux%20des%20calanques_800w.webp 800w, /images/groupe%20des%20amoureux%20des%20calanques_1200w.webp 1200w"
+                  sizes="(max-width: 768px) 100vw, 50vw"
+                  alt="Groupe Facebook Amoureux des Calanques de Marseille à Port-Cros"
+                  className="absolute inset-0 w-full h-full object-cover"
+                  style={{ objectPosition: '12% 25%' }}
+                  loading="eager"
+                />
+                <div className="absolute inset-0 bg-gradient-to-r from-black/30 to-transparent md:bg-gradient-to-l" />
+              </div>
+
             </div>
           </motion.div>
-        )}
+        </motion.div>
 
         {/* ── Ce que vous pouvez partager ──────────────────────── */}
         <motion.div
