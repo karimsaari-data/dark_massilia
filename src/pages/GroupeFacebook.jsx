@@ -38,8 +38,8 @@ const PILLIERS = [
   {
     icon: Camera,
     emoji: '📸',
-    title: 'Photos & Paysages',
-    desc: 'Partagez vos plus belles photos des Calanques de Marseille jusqu\'à Port-Cros. Chaque cliché est un témoignage de la beauté de notre littoral.',
+    title: 'Vos plus belles captures et rencontres sauvages',
+    desc: 'Des falaises majestueuses des Calanques de Marseille jusqu\'aux eaux cristallines du parc national de Port-Cros, montrez-nous ce qui vous émerveille. Partagez vos photos et vidéos de paysages, mais aussi vos rencontres avec la riche biodiversité de notre littoral — herbiers de posidonie, mérous, oiseaux marins. Chaque image partagée est un rappel de la beauté de ce que nous devons protéger.',
     color: 'from-blue-500/20 to-cyan-500/20',
     border: 'border-blue-500/25',
     iconColor: 'text-blue-400',
@@ -47,8 +47,8 @@ const PILLIERS = [
   {
     icon: Recycle,
     emoji: '♻️',
-    title: 'Actions environnementales',
-    desc: 'Partagez vos nettoyages citoyens et vos engagements pour la mer. Ensemble, on protège ce qu\'on aime.',
+    title: 'Vos actions éco-citoyennes et initiatives de terrain',
+    desc: 'L\'engagement est le cœur battant de cette communauté. Mettez en lumière vos actions concrètes pour la Méditerranée : ramassage de déchets sur les plages, dépollution sous-marine, campagnes de sensibilisation ou alertes environnementales. Partagez vos retours d\'expérience, mobilisez des bonnes volontés et inspirez les autres membres à agir à leur échelle.',
     color: 'from-emerald-500/20 to-teal-500/20',
     border: 'border-emerald-500/25',
     iconColor: 'text-emerald-400',
@@ -56,8 +56,8 @@ const PILLIERS = [
   {
     icon: Footprints,
     emoji: '🥾',
-    title: 'Randonnées & Bons plans',
-    desc: 'Conseils de randonnées, itinéraires respectueux et bons plans pour explorer la nature en laissant zéro trace.',
+    title: 'Vos échappées sauvages et bonnes pratiques',
+    desc: 'Partagez vos idées d\'itinéraires de randonnée, vos parcours d\'exploration en mer et vos conseils pour profiter du littoral dans le plus strict respect de la nature. Approche "zéro trace", zones fragiles à éviter, bonnes pratiques en période de nidification, équipements éco-responsables... Ensemble, promouvons une manière éthique et durable de vivre notre passion pour la côte.',
     color: 'from-orange-500/20 to-amber-500/20',
     border: 'border-orange-500/25',
     iconColor: 'text-orange-400',
@@ -103,7 +103,7 @@ export default function GroupeFacebook() {
             <div className="grid md:grid-cols-[1fr_1.1fr] gap-0">
 
               {/* Contenu gauche */}
-              <div className="p-8 md:p-12 flex flex-col justify-center order-2 md:order-1">
+              <div className="p-8 md:p-12 flex flex-col justify-start order-2 md:order-1">
                 {/* Badge */}
                 <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full border border-blue-500/30 bg-blue-500/10 text-blue-400 text-xs font-medium mb-6 w-fit">
                   <Users className="w-3.5 h-3.5" />
@@ -116,24 +116,33 @@ export default function GroupeFacebook() {
                   <span className="text-ocean-teal">Calanques de Marseille</span>
                 </h1>
 
-                <p className="text-text-secondary text-sm leading-relaxed mb-8">
-                  Un espace de célébration, de partage et de protection de notre patrimoine naturel méditerranéen.
-                  Fondé en 2018 par Karim Saari, photographe environnemental et apnéiste marseillais.
+                <div className="space-y-3 text-text-secondary text-sm leading-relaxed mb-8">
+                  <p>
+                    Plus qu'un simple groupe sur les réseaux sociaux, cet espace est devenu depuis sa création en 2018 le point de rassemblement incontournable de tous les passionnés du littoral méditerranéen. Un véritable écosystème digital fondé sur trois piliers : la <strong className="text-white/80">célébration de la beauté sauvage</strong> de nos côtes, le partage d'expériences authentiques et la <strong className="text-white/80">protection active de notre patrimoine naturel</strong>.
+                  </p>
+                  <p>
+                    Créée et animée par <strong className="text-white/80">Karim Saari</strong>, photographe environnemental et apnéiste marseillais, cette communauté rassemble aujourd'hui toutes celles et ceux qui vivent, respirent et chérissent la mer.
+                  </p>
+                </div>
+
+                {/* Titre stats */}
+                <p className="text-white/50 text-xs font-semibold uppercase tracking-widest mb-3">
+                  Une force collective en quelques chiffres
                 </p>
 
                 {/* Stats cards */}
                 <div className="grid grid-cols-2 gap-3 mb-8">
                   {/* Membres — stat principale */}
-                  <div className="col-span-2 rounded-2xl border border-ocean-teal/25 bg-ocean-teal/8 p-4 flex items-center gap-4">
-                    <div>
-                      <p className="text-3xl font-bold text-white tabular-nums">
-                        <StatCounter end={64700} duration={2000} />
-                      </p>
-                      <p className="text-ocean-teal text-xs font-semibold uppercase tracking-wide mt-0.5">Membres</p>
-                      <p className="text-white/35 text-xs">Groupe des Amoureux des Calanques de Marseille à Port-Cros</p>
-                    </div>
+                  <div className="col-span-2 rounded-2xl border border-ocean-teal/25 bg-ocean-teal/8 p-4">
+                    <p className="text-3xl font-bold text-white tabular-nums">
+                      <StatCounter end={64700} duration={2000} />
+                    </p>
+                    <p className="text-ocean-teal text-xs font-semibold uppercase tracking-wide mt-0.5">Membres</p>
+                    <p className="text-white/35 text-xs mt-0.5">
+                      Une famille immense d'amoureux de la nature, des Calanques de Marseille jusqu'au joyau de Port-Cros
+                    </p>
                   </div>
-                  {/* Stats 28j depuis Supabase */}
+                  {/* Stats live Supabase */}
                   {stats ? (
                     <>
                       <div className="rounded-xl border border-blue-500/20 bg-blue-600/10 p-3 text-center">
@@ -151,8 +160,8 @@ export default function GroupeFacebook() {
                         <p className="text-xl font-bold text-blue-400">789K</p>
                         <p className="text-white/40 text-xs mt-0.5">Vues totales</p>
                       </div>
-                      <div className="rounded-xl border border-emerald-500/20 bg-emerald-600/10 p-3 text-center">
-                        <p className="text-xl font-bold text-emerald-400">16K/j</p>
+                      <div className="rounded-xl border border-amber-500/20 bg-amber-600/10 p-3 text-center">
+                        <p className="text-xl font-bold text-amber-400">16K/j</p>
                         <p className="text-white/40 text-xs mt-0.5">Vues / jour moy.</p>
                       </div>
                     </>
