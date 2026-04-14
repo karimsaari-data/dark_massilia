@@ -842,16 +842,14 @@ const Home = () => {
                 Amoureux des Calanques de Marseille à Port-Cros ? Rejoignez notre communauté pour suivre nos actions et participer à la protection de la Méditerranée.
               </p>
 
-              <a
-                href="https://www.facebook.com/groups/calanque/"
-                target="_blank"
-                rel="noopener noreferrer"
+              <Link
+                to="/communaute-calanques"
                 className="btn-primary inline-flex items-center gap-2 w-fit"
                 onClick={() => trackEvent('cta_click', { button_name: 'Rejoindre le Groupe Facebook' })}
               >
                 <span>Rejoindre le Groupe Facebook</span>
                 <ArrowRight className="w-5 h-5" />
-              </a>
+              </Link>
             </div>
 
             {/* Image du groupe Facebook - Droite */}
