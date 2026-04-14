@@ -2,7 +2,7 @@ import { useState, useEffect, useCallback } from 'react';
 import { supabase } from '../lib/supabase';
 import {
   Lock, LogOut, Search, Save, Eye, EyeOff,
-  ChevronDown, ChevronUp, MapPin, ExternalLink, ArrowUp, X, Upload, Rss, Trash2, Download,
+  ChevronDown, ChevronUp, MapPin, ExternalLink, ArrowUp, X, Upload, Rss, Trash2, Download, BarChart2,
 } from 'lucide-react';
 
 const ADMIN_PASSWORD = import.meta.env.VITE_ADMIN_PASSWORD || 'darkm';
@@ -1110,6 +1110,17 @@ export default function Admin() {
             <Download className="w-3.5 h-3.5" />
             CSV
           </button>
+
+          <a
+            href="/stats-groupe-facebook"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-sm font-medium border border-blue-500/30 text-blue-400 hover:border-blue-400/60 hover:bg-blue-400/10 transition-colors"
+            title="Statistiques du groupe Facebook"
+          >
+            <BarChart2 className="w-3.5 h-3.5" />
+            Stats FB
+          </a>
 
           <button
             type="button"

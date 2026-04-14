@@ -181,11 +181,11 @@ const fmt = (value, decimals, suffix) =>
   parseFloat(value).toFixed(decimals ?? 1).replace('.', ',') + (suffix ?? '');
 
 const Communaute = () => {
-  const [fbGroupLabel,  setFbGroupLabel]  = useState('64\u202f600');
-  const [totalLabel,    setTotalLabel]    = useState('130\u202f000');
+  const [fbGroupLabel,  setFbGroupLabel]  = useState('64\u202f700');
+  const [totalLabel,    setTotalLabel]    = useState('132\u202f000');
   const [instaLabel,    setInstaLabel]    = useState('24,2K');
-  const [tiktokLabel,   setTiktokLabel]   = useState('21,9K');
-  const [fbPagesLabel,  setFbPagesLabel]  = useState('18\u202f000');
+  const [tiktokLabel,   setTiktokLabel]   = useState('22,1K');
+  const [fbPagesLabel,  setFbPagesLabel]  = useState('17\u202f800');
 
   useEffect(() => {
     supabase
@@ -227,7 +227,7 @@ const Communaute = () => {
               </p>
               <p className="text-text-secondary leading-[1.8] text-lg">
                 De mes reportages en immersion sur YouTube à mes alertes environnementales sur
-                Instagram ({instaLabel}), TikTok ({tiktokLabel}) et mes fiches thématiques sur Pinterest, cette
+                Instagram ({instaLabel}), TikTok ({tiktokLabel}) et mes photographies sur 500px, cette
                 audience numérique prolonge le travail de terrain en donnant de la visibilité aux
                 réalités observées sous la surface.
               </p>
@@ -262,7 +262,7 @@ const Communaute = () => {
             {/* Photo de groupe — candidat LCP, chargée en priorité */}
             <img
               src="/images/karim-saari-marseille-130000-sentinelles-calanques-depollution.webp"
-              alt="Karim Saari entouré des bénévoles du Projet Sentinelle — 130 000 sentinelles pour la dépollution des Calanques de Marseille"
+              alt="Karim Saari entouré des bénévoles du Projet Sentinelle — 132 000 sentinelles pour la dépollution des Calanques de Marseille"
               className="w-full rounded-2xl"
               loading="eager"
               fetchPriority="high"
@@ -389,7 +389,7 @@ const Communaute = () => {
                   { label: 'Instagram @karimsaari', href: 'https://www.instagram.com/karimsaari' },
                   { label: 'TikTok @dark.massilia', href: 'https://www.tiktok.com/@dark.massilia' },
                   { label: 'YouTube @dark.massilia', href: 'https://www.youtube.com/@dark.massilia' },
-                  { label: 'Pinterest', href: 'https://fr.pinterest.com/Photographie_Marseille/' },
+                  { label: '500px', href: 'https://500px.com/p/karimsaari?view=photos' },
                 ].map(({ label, href }) => (
                   <a
                     key={label}

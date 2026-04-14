@@ -318,7 +318,7 @@ const Missions = () => {
                 { value: '2018', label: 'Année de fondation' },
                 { value: '5 724 kg', label: 'Déchets collectés' },
                 { value: '4', label: 'Éditions du Projet Sentinelle' },
-                { value: '130 000', label: 'Sentinelles en ligne' },
+                { value: '132 000', label: 'Sentinelles en ligne' },
               ].map((stat) => (
                 <div key={stat.label} className="text-center p-4 rounded-2xl bg-white/5 border border-white/10">
                   <p className="text-xl md:text-2xl font-bold text-ocean-teal">{stat.value}</p>

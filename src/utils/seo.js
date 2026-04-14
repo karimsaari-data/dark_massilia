@@ -1232,10 +1232,21 @@ export const SEO_PAGES = {
       ],
     },
   },
+  '/stats-groupe-facebook': {
+    title: 'Statistiques Groupe Facebook — Amoureux des Calanques | Karim Saari',
+    description: 'Données d\'engagement du groupe Facebook Amoureux des Calanques : vues, réactions, membres actifs. Tableau de bord de la communauté Dark Massilia.',
+    canonical: `${BASE_URL}/stats-groupe-facebook`,
+    schema: {
+      '@context': 'https://schema.org',
+      '@graph': [
+        breadcrumb('Statistiques Groupe Facebook', '/stats-groupe-facebook'),
+      ],
+    },
+  },
   '/communaute': {
     title: 'Bénévolat Dépollution Marseille : Rejoignez Team Oxygen',
     description:
-      "Envie d'agir pour la Méditerranée ? Rejoignez notre communauté de 130 000 sentinelles et participez à nos missions de bénévolat écologique à Marseille.",
+      "Envie d'agir pour la Méditerranée ? Rejoignez notre communauté de 132 000 sentinelles et participez à nos missions de bénévolat écologique à Marseille.",
     canonical: `${BASE_URL}/communaute`,
     schema: {
       '@context': 'https://schema.org',
@@ -1661,7 +1672,7 @@ export const SEO_PAGES = {
   '/photographe-environnemental-marseille': {
     title: 'Photographe Environnemental Marseille | Karim Saari',
     description:
-      'Karim Saari, photographe environnemental et sous-marin à Marseille. 130 000 personnes engagées pour les Calanques. Galeries, missions terrain, presse.',
+      'Karim Saari, photographe environnemental et sous-marin à Marseille. 132 000 personnes engagées pour les Calanques. Galeries, missions terrain, presse.',
     canonical: `${BASE_URL}/photographe-environnemental-marseille`,
     schema: {
       '@context': 'https://schema.org',

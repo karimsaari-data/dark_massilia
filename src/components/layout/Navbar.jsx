@@ -103,15 +103,15 @@ const NavDropdown = ({ item }) => {
             <div className="rounded-2xl overflow-hidden shadow-2xl shadow-black/60 ring-1 ring-[#3c59ab]/60 flex">
 
               {/* Colonne gauche — bleu méduse */}
-              <div className="w-56 flex-shrink-0 p-8 flex flex-col gap-4" style={{ background: '#3c59ab' }}>
+              <div className="w-64 flex-shrink-0 p-8 flex flex-col gap-4" style={{ background: '#dce8f7' }}>
                 <div className="flex gap-3 items-start">
                   <div className="w-1 self-stretch rounded-full bg-astroide flex-shrink-0 mt-1" aria-hidden="true" />
-                  <p className="text-white font-black text-3xl leading-tight uppercase tracking-wide font-condensed">{item.dropdownTitle ?? item.name}</p>
+                  <p className="font-anton text-4xl leading-none uppercase" style={{ color: '#0d2d6e' }}>{item.dropdownTitle ?? item.name}</p>
                 </div>
-                <p className="text-white/50 text-sm leading-relaxed">{item.description}</p>
+                <p className="text-sm leading-relaxed" style={{ color: '#4a6080' }}>{item.description}</p>
                 <div className="mt-auto">
-                  <div className="h-px bg-white/10 mb-3" />
-                  <p className="text-white/30 text-xs uppercase tracking-widest">Karim Saari</p>
+                  <div className="h-px mb-3" style={{ background: '#b0c8e8' }} />
+                  <p className="text-xs uppercase tracking-widest" style={{ color: '#8aaace' }}>Karim Saari</p>
                 </div>
               </div>
 

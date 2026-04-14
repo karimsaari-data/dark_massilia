@@ -63,7 +63,7 @@ export const NAV_LINKS = [
   },
   {
     name: 'Contact',
-    dropdownTitle: 'Rejoindre le Projet Sentinelle',
+    dropdownTitle: 'Découvrir comment agir pour la mer',
     icon: 'Mail',
     description: 'Collaborations, partenariats médias ou institutionnels — rejoignez la mission Dark Massilia.',
     children: [

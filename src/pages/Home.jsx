@@ -17,7 +17,7 @@ const RecentArticles    = lazy(() => import('../components/RecentArticles'));
 // La valeur end de la stat 500px est remplacée dynamiquement via Supabase (site_config)
 const KEY_STATS_BASE = [
   {
-    end: 130000,
+    end: 132000,
     suffix: '',
     label: 'Abonnés passionnés par les Calanques',
     sub: 'sur l\'ensemble des réseaux sociaux',

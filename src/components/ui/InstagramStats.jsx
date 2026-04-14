@@ -114,7 +114,7 @@ const PLATFORM_ICONS = {
 // Ordre : ligne 1 → Amoureux, Instagram, TikTok, Facebook
 //          ligne 2 → YouTube, X, Local Guide, 500px
 const SOCIAL_NETWORKS_STATIC = [
-  { platform: 'facebook_group', name: 'Amoureux des Calanques', handle: 'Groupe Facebook',        end: 64.6, suffix: 'K', decimals: 1, url: 'https://www.facebook.com/groups/calanque/' },
+  { platform: 'facebook_group', name: 'Amoureux des Calanques', handle: 'Groupe Facebook',        end: 64.7, suffix: 'K', decimals: 1, url: 'https://www.facebook.com/groups/calanque/' },
   { platform: 'instagram',      name: 'Instagram',              handle: '@karimsaari',             end: 24.2, suffix: 'K', decimals: 1, url: 'https://www.instagram.com/karimsaari' },
   { platform: 'tiktok',         name: 'TikTok',                 handle: '@dark.massilia',          end: 22.1, suffix: 'K', decimals: 1, url: 'https://www.tiktok.com/@dark.massilia' },
   { platform: 'facebook_pages', name: 'Facebook',               handle: 'Pages pro & perso',       end: 17.8, suffix: 'K', decimals: 1, note: '13K + 4,8K', url: 'https://www.facebook.com/Photographie.Marseille' },
