@@ -132,9 +132,6 @@ export default function GroupeFacebook() {
                   <p>
                     Plus qu'un simple groupe sur les réseaux sociaux, cet espace est devenu depuis sa création en 2018 le point de rassemblement incontournable de tous les passionnés du littoral méditerranéen. Un véritable écosystème digital fondé sur trois piliers : la <strong className="text-white/80">célébration de la beauté sauvage</strong> de nos côtes, le partage d'expériences authentiques et la <strong className="text-white/80">protection active de notre patrimoine naturel</strong>.
                   </p>
-                  <p>
-                    Créée et animée par <strong className="text-white/80">Karim Saari</strong>, photographe environnemental et apnéiste marseillais, cette communauté rassemble aujourd'hui toutes celles et ceux qui vivent, respirent et chérissent la mer.
-                  </p>
                 </div>
 
                 {/* Titre stats */}
@@ -180,16 +177,26 @@ export default function GroupeFacebook() {
                   )}
                 </div>
 
-                {/* CTA */}
-                <a
-                  href="https://www.facebook.com/groups/calanque/"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="btn-primary inline-flex items-center gap-2 w-fit"
-                >
-                  <Users className="w-4 h-4" />
-                  Rejoindre le groupe
-                </a>
+                {/* CTAs */}
+                <div className="flex flex-wrap gap-3">
+                  <a
+                    href="https://www.facebook.com/groups/calanque/"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="btn-primary inline-flex items-center gap-2"
+                  >
+                    <Users className="w-4 h-4" />
+                    Rejoindre le groupe
+                  </a>
+                  <a
+                    href="https://www.facebook.com/groups/calanque/announcements"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl border border-white/15 text-white/70 hover:text-white hover:border-white/30 transition-colors text-sm font-medium"
+                  >
+                    📌 À la une
+                  </a>
+                </div>
               </div>
 
               {/* Image droite */}
@@ -236,20 +243,6 @@ export default function GroupeFacebook() {
               </motion.div>
             ))}
           </div>
-
-          {/* Règle d'or */}
-          <motion.div variants={FADE_IN_UP}
-            className="mt-6 rounded-2xl border border-amber-500/20 bg-amber-500/5 p-5 flex gap-3 items-start"
-          >
-            <span className="text-xl leading-none flex-shrink-0">⚠️</span>
-            <div>
-              <p className="text-amber-300 font-semibold text-sm mb-1">Règle d'or</p>
-              <p className="text-white/60 text-sm leading-relaxed">
-                Afin de préserver la qualité de notre fil d'actualité, merci d'éviter les questions touristiques "générales".
-                Pensez à télécharger l'application officielle <strong className="text-white/80">Mes Calanques</strong> pour préparer vos sorties.
-              </p>
-            </div>
-          </motion.div>
         </motion.div>
 
         {/* ── Pourquoi ce groupe / Histoire de Karim ───────────── */}

@@ -689,7 +689,7 @@ const TabStatsFB = () => {
   );
 
   return (
-    <div className="space-y-8">
+    <div className="rounded-2xl border border-white/8 p-6 space-y-8" style={{ background: 'rgba(6,13,26,0.75)', backdropFilter: 'blur(12px)' }}>
       <div>
         <p className="text-xs text-gray-400 mb-1">
           Période : <span className="text-white">{rows[0].date}</span> → <span className="text-white">{rows[rows.length - 1].date}</span> ({rows.length} jours)
