@@ -1,6 +1,6 @@
 import { motion, useInView, useReducedMotion } from 'framer-motion';
 import { useState, useEffect, useRef } from 'react';
-import { Users, Eye, Camera, Recycle, Footprints, ExternalLink, TrendingUp, BarChart2 } from 'lucide-react';
+import { Users, Camera, Recycle, Footprints, ExternalLink, TrendingUp } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { FADE_IN_UP, STAGGER_CONTAINER } from '../utils/constants';
 import SEO from '../components/SEO';
@@ -140,13 +140,6 @@ export default function GroupeFacebook() {
               <Users className="w-4 h-4" />
               Rejoindre le groupe
             </a>
-            <Link
-              to="/stats-groupe-facebook"
-              className="inline-flex items-center gap-2 px-6 py-3.5 rounded-xl border border-white/15 text-white/70 hover:text-white hover:border-white/30 transition-colors text-base"
-            >
-              <BarChart2 className="w-4 h-4" />
-              Voir les statistiques
-            </Link>
           </motion.div>
         </motion.div>
 
@@ -158,9 +151,12 @@ export default function GroupeFacebook() {
           className="relative rounded-3xl overflow-hidden aspect-[21/9] max-h-80"
         >
           <img
-            src="/images/Marseille-dark-massilia-plastique-pollution-projet-sentinelle-apneiste.webp"
-            alt="Karim Saari, apnéiste et photographe dans les Calanques de Marseille"
+            src="/images/groupe%20des%20amoureux%20des%20calanques.webp"
+            srcSet="/images/groupe%20des%20amoureux%20des%20calanques_400w.webp 400w, /images/groupe%20des%20amoureux%20des%20calanques_800w.webp 800w, /images/groupe%20des%20amoureux%20des%20calanques_1200w.webp 1200w"
+            sizes="100vw"
+            alt="Groupe Facebook Amoureux des Calanques de Marseille à Port-Cros"
             className="w-full h-full object-cover"
+            style={{ objectPosition: '12% 25%' }}
             loading="eager"
           />
           <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent" />

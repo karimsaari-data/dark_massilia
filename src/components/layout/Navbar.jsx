@@ -4,7 +4,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import {
   Compass, Film, Camera, Video, Mail, Send,
   Menu, X as XIcon, BookOpen, Share2, MapPin, Navigation,
-  ChevronDown, Newspaper, Instagram, Facebook, BarChart2, Tv, AtSign,
+  ChevronDown, Newspaper, Instagram, Facebook, BarChart2, Tv, AtSign, Users,
 } from 'lucide-react';
 import { NAV_LINKS, SOCIAL_LINKS } from '../../utils/constants';
 import useFocusTrap from '../../hooks/useFocusTrap';
@@ -33,7 +33,7 @@ const NAV_SOCIALS = [
 
 /* ─── Icon map pour les dropdowns ───────────────────────── */
 const iconMap = {
-  Compass, Film, Camera, Video, Mail, Send, BookOpen, Share2, MapPin, Navigation, Newspaper, BarChart2, Tv, AtSign,
+  Compass, Film, Camera, Video, Mail, Send, BookOpen, Share2, MapPin, Navigation, Newspaper, BarChart2, Tv, AtSign, Users,
 };
 
 /* ─── Desktop mega menu ──────────────────────────────────── */
