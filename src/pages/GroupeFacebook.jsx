@@ -87,15 +87,17 @@ export default function GroupeFacebook() {
       since.setDate(since.getDate() - 28);
       const { data } = await supabase
         .from('facebook_group_insights')
-        .select('total_views, new_members, reactions, comments')
+        .select('date, views, active_members, reactions, comments')
         .gte('date', since.toISOString().slice(0, 10))
-        .order('date', { ascending: false });
+        .order('date', { ascending: true });
       if (!data?.length) return;
-      const totalViews   = data.reduce((s, r) => s + (r.total_views  ?? 0), 0);
-      const totalMembers = data.reduce((s, r) => s + (r.new_members  ?? 0), 0);
-      const totalReact   = data.reduce((s, r) => s + (r.reactions    ?? 0), 0);
-      const totalComments= data.reduce((s, r) => s + (r.comments     ?? 0), 0);
-      setStats({ totalViews, totalMembers, totalReact, totalComments, days: data.length });
+      const totalViews    = data.reduce((s, r) => s + (r.views          ?? 0), 0);
+      const totalMembers  = data.reduce((s, r) => s + (r.active_members ?? 0), 0);
+      const totalReact    = data.reduce((s, r) => s + (r.reactions      ?? 0), 0);
+      const totalComments = data.reduce((s, r) => s + (r.comments       ?? 0), 0);
+      const dateFrom      = data[0].date;
+      const dateTo        = data[data.length - 1].date;
+      setStats({ totalViews, totalMembers, totalReact, totalComments, days: data.length, dateFrom, dateTo });
     };
     load();
   }, []);
@@ -135,9 +137,16 @@ export default function GroupeFacebook() {
                 </div>
 
                 {/* Titre stats */}
-                <p className="text-white/50 text-xs font-semibold uppercase tracking-widest mb-3">
-                  Une force collective en quelques chiffres
-                </p>
+                <div className="flex items-baseline gap-3 mb-3">
+                  <p className="text-white/50 text-xs font-semibold uppercase tracking-widest">
+                    Une force collective en quelques chiffres
+                  </p>
+                  {stats?.dateFrom && (
+                    <p className="text-white/30 text-xs">
+                      {stats.dateFrom} → {stats.dateTo} ({stats.days} j)
+                    </p>
+                  )}
+                </div>
 
                 {/* Stats cards */}
                 <div className="grid grid-cols-2 gap-3 mb-8">
