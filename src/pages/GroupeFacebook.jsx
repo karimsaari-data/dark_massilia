@@ -39,7 +39,12 @@ const PILLIERS = [
     icon: Camera,
     emoji: '📸',
     title: 'Vos plus belles captures et rencontres sauvages',
-    desc: 'Des falaises majestueuses des Calanques de Marseille jusqu\'aux eaux cristallines du parc national de Port-Cros, montrez-nous ce qui vous émerveille. Partagez vos photos et vidéos de paysages, mais aussi vos rencontres avec la riche biodiversité de notre littoral — herbiers de posidonie, mérous, oiseaux marins. Chaque image partagée est un rappel de la beauté de ce que nous devons protéger.',
+    node: <>
+      Des falaises majestueuses des <Link to="/photographie-paysage-mer" className="text-blue-300 hover:text-white transition-colors font-medium">Calanques de Marseille</Link> jusqu'aux eaux cristallines du parc national de Port-Cros, montrez-nous ce qui vous émerveille. Partagez vos{' '}
+      <Link to="/photographie-sous-marine" className="text-blue-300 hover:text-white transition-colors font-medium">photos et vidéos sous-marines</Link>, mais aussi vos rencontres avec la riche{' '}
+      <Link to="/donnees-scientifiques" className="text-blue-300 hover:text-white transition-colors font-medium">biodiversité de notre littoral</Link>{' '}
+      — <strong className="text-white/80">herbiers de posidonie</strong>, mérous, oiseaux marins. Chaque image partagée est un rappel de la beauté de ce que nous devons protéger.
+    </>,
     color: 'from-blue-500/20 to-cyan-500/20',
     border: 'border-blue-500/25',
     iconColor: 'text-blue-400',
@@ -48,7 +53,11 @@ const PILLIERS = [
     icon: Recycle,
     emoji: '♻️',
     title: 'Vos actions éco-citoyennes et initiatives de terrain',
-    desc: 'L\'engagement est le cœur battant de cette communauté. Mettez en lumière vos actions concrètes pour la Méditerranée : ramassage de déchets sur les plages, dépollution sous-marine, campagnes de sensibilisation ou alertes environnementales. Partagez vos retours d\'expérience, mobilisez des bonnes volontés et inspirez les autres membres à agir à leur échelle.',
+    node: <>
+      L'engagement est le cœur battant de cette communauté. Mettez en lumière vos actions concrètes pour la Méditerranée : ramassage de déchets sur les plages,{' '}
+      <Link to="/depollution-marine" className="text-emerald-300 hover:text-white transition-colors font-medium">dépollution sous-marine</Link>,{' '}
+      campagnes de sensibilisation ou <strong className="text-white/80">alertes environnementales</strong>. Partagez vos retours d'expérience, mobilisez des bonnes volontés et inspirez les autres membres à agir à leur échelle.
+    </>,
     color: 'from-emerald-500/20 to-teal-500/20',
     border: 'border-emerald-500/25',
     iconColor: 'text-emerald-400',
@@ -57,7 +66,10 @@ const PILLIERS = [
     icon: Footprints,
     emoji: '🥾',
     title: 'Vos échappées sauvages et bonnes pratiques',
-    desc: 'Partagez vos idées d\'itinéraires de randonnée, vos parcours d\'exploration en mer et vos conseils pour profiter du littoral dans le plus strict respect de la nature. Approche "zéro trace", zones fragiles à éviter, bonnes pratiques en période de nidification, équipements éco-responsables... Ensemble, promouvons une manière éthique et durable de vivre notre passion pour la côte.',
+    node: <>
+      Partagez vos idées d'<Link to="/local-guide-marseille" className="text-orange-300 hover:text-white transition-colors font-medium">itinéraires de randonnée</Link>, vos parcours d'exploration en mer et vos conseils pour profiter du littoral dans le plus strict respect de la nature. Approche <strong className="text-white/80">"zéro trace"</strong>, zones fragiles à éviter, bonnes pratiques en période de nidification, équipements éco-responsables... Ensemble, promouvons une manière éthique et durable de vivre notre passion pour la{' '}
+      <Link to="/carte-calanques" className="text-orange-300 hover:text-white transition-colors font-medium">côte marseillaise</Link>.
+    </>,
     color: 'from-orange-500/20 to-amber-500/20',
     border: 'border-orange-500/25',
     iconColor: 'text-orange-400',
@@ -209,7 +221,7 @@ export default function GroupeFacebook() {
             Un espace pour célébrer et protéger notre littoral
           </motion.h2>
           <div className="grid md:grid-cols-3 gap-6">
-            {PILLIERS.map(({ icon: Icon, emoji, title, desc, color, border, iconColor }) => (
+            {PILLIERS.map(({ icon: Icon, emoji, title, node, color, border, iconColor }) => (
               <motion.div
                 key={title}
                 variants={FADE_IN_UP}
@@ -220,7 +232,7 @@ export default function GroupeFacebook() {
                   <Icon className={`w-5 h-5 ${iconColor}`} />
                 </div>
                 <h3 className="text-white font-semibold text-lg">{title}</h3>
-                <p className="text-white/60 text-sm leading-relaxed">{desc}</p>
+                <p className="text-white/60 text-sm leading-relaxed">{node}</p>
               </motion.div>
             ))}
           </div>
