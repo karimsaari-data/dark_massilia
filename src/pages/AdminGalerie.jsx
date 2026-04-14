@@ -1,9 +1,13 @@
-import { useState, useEffect, useCallback } from 'react';
-import { Link } from 'react-router-dom';
+import { useState, useEffect, useCallback, useMemo } from 'react';
+import {
+  AreaChart, Area, BarChart, Bar,
+  XAxis, YAxis, CartesianGrid, Tooltip,
+  ResponsiveContainer, ReferenceLine,
+} from 'recharts';
 import { supabase } from '../lib/supabase';
 import {
   Lock, LogOut, Search, Save, Eye, EyeOff,
-  ChevronDown, ChevronUp, MapPin, ExternalLink, ArrowUp, X, Upload, Rss, Trash2, Download, BarChart2,
+  ChevronDown, ChevronUp, MapPin, ExternalLink, ArrowUp, X, Upload, Rss, Trash2, Download,
 } from 'lucide-react';
 
 const ADMIN_PASSWORD = import.meta.env.VITE_ADMIN_PASSWORD || 'darkm';
@@ -622,6 +626,165 @@ const PLATFORM_META = {
   '500px_impressions':       { label: '500px — Impressions photos',         unit: 'K impressions' },
 };
 
+/* ── Tab Stats FB ────────────────────────────────────────────── */
+const fmt  = n => n?.toLocaleString('fr-FR') ?? '—';
+const fmtK = n => n >= 1000 ? `${(n / 1000).toFixed(1).replace('.', ',')}K` : String(n);
+
+const FbTooltip = ({ active, payload, label }) => {
+  if (!active || !payload?.length) return null;
+  return (
+    <div className="rounded-xl p-3 border border-white/10 text-sm" style={{ background: 'rgba(10,20,44,0.95)' }}>
+      <p className="text-gray-400 mb-1">{label}</p>
+      {payload.map(p => (
+        <p key={p.dataKey} style={{ color: p.color }} className="font-semibold">
+          {p.name} : {fmt(p.value)}
+        </p>
+      ))}
+    </div>
+  );
+};
+
+const KpiCard = ({ label, value, sub, color = 'text-white' }) => (
+  <div className="rounded-2xl p-5 border border-white/10 flex flex-col gap-1" style={{ background: 'rgba(255,255,255,0.04)' }}>
+    <p className="text-xs text-gray-400 uppercase tracking-widest">{label}</p>
+    <p className={`text-2xl font-bold ${color}`}>{value}</p>
+    {sub && <p className="text-xs text-gray-500">{sub}</p>}
+  </div>
+);
+
+const TabStatsFB = () => {
+  const [rows,    setRows]    = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [win,     setWin]     = useState(28);
+
+  useEffect(() => {
+    supabase
+      .from('facebook_group_insights')
+      .select('date, participants, active_members, views, publications, comments, reactions')
+      .order('date', { ascending: true })
+      .then(({ data }) => { if (data) setRows(data); setLoading(false); });
+  }, []);
+
+  const stats = useMemo(() => {
+    if (!rows.length) return null;
+    const totalViews  = rows.reduce((s, r) => s + r.views, 0);
+    const avgViews    = Math.round(totalViews / rows.length);
+    const peak        = rows.reduce((b, r) => r.views > b.views ? r : b, rows[0]);
+    const last28      = rows.slice(-28);
+    const views28     = last28.reduce((s, r) => s + r.views, 0);
+    const active28    = last28.reduce((s, r) => s + r.active_members, 0);
+    return { totalViews, avgViews, peak, views28, active28 };
+  }, [rows]);
+
+  const chartData = useMemo(() =>
+    rows.slice(-win).map(r => ({ ...r, label: r.date.slice(5) })),
+    [rows, win]);
+
+  if (loading) return <div className="flex items-center justify-center py-24"><div className="spinner" /></div>;
+  if (!rows.length) return (
+    <div className="text-center py-24 text-gray-400">
+      <p className="mb-2">Aucune donnée dans <code>facebook_group_insights</code>.</p>
+      <p className="text-sm">Lance <code>node scripts/import-facebook-insights.js</code></p>
+    </div>
+  );
+
+  return (
+    <div className="space-y-8">
+      <div>
+        <p className="text-xs text-gray-400 mb-1">
+          Période : <span className="text-white">{rows[0].date}</span> → <span className="text-white">{rows[rows.length - 1].date}</span> ({rows.length} jours)
+        </p>
+      </div>
+
+      {stats && (
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
+          <KpiCard label="Vues totales"       value={fmt(stats.totalViews)}  sub={`moy. ${fmt(stats.avgViews)} / j`}         color="text-ocean-teal" />
+          <KpiCard label="Vues 28j"           value={fmt(stats.views28)}     sub={`${fmt(Math.round(stats.views28/28))} / j`} color="text-blue-300" />
+          <KpiCard label="Membres actifs 28j" value={fmt(stats.active28)}    sub="ayant publié / commenté"                   color="text-emerald-400" />
+          <KpiCard label="Pic de vues"        value={fmtK(stats.peak.views)} sub={stats.peak.date}                           color="text-astroide" />
+        </div>
+      )}
+
+      <div className="flex gap-2">
+        {[28, 60, 90, rows.length].map(n => (
+          <button key={n} onClick={() => setWin(n)}
+            className={`px-3 py-1 rounded-full text-xs font-semibold transition-all border ${
+              win === n ? 'bg-ocean-teal text-black border-ocean-teal' : 'border-white/10 text-gray-400 hover:text-white'
+            }`}>
+            {n === rows.length ? 'Tout' : `${n}j`}
+          </button>
+        ))}
+      </div>
+
+      <div className="rounded-2xl border border-white/10 p-5" style={{ background: 'rgba(255,255,255,0.03)' }}>
+        <p className="text-sm font-semibold text-white mb-4">Personnes ayant vu</p>
+        <ResponsiveContainer width="100%" height={240}>
+          <AreaChart data={chartData} margin={{ top: 5, right: 10, left: 0, bottom: 5 }}>
+            <defs>
+              <linearGradient id="gV" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="5%"  stopColor="#00ABA8" stopOpacity={0.35} />
+                <stop offset="95%" stopColor="#00ABA8" stopOpacity={0} />
+              </linearGradient>
+            </defs>
+            <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.06)" />
+            <XAxis dataKey="label" tick={{ fill: '#6b7280', fontSize: 11 }} tickLine={false} interval="preserveStartEnd" />
+            <YAxis tick={{ fill: '#6b7280', fontSize: 11 }} tickLine={false} axisLine={false} tickFormatter={fmtK} />
+            <Tooltip content={<FbTooltip />} />
+            {stats?.peak && win >= rows.length && (
+              <ReferenceLine x={stats.peak.date.slice(5)} stroke="#f97316" strokeDasharray="4 2" label={{ value: 'Pic', fill: '#f97316', fontSize: 11 }} />
+            )}
+            <Area type="monotone" dataKey="views" name="Vues" stroke="#00ABA8" strokeWidth={2} fill="url(#gV)" dot={false} activeDot={{ r: 4, fill: '#00ABA8' }} />
+          </AreaChart>
+        </ResponsiveContainer>
+      </div>
+
+      <div className="rounded-2xl border border-white/10 p-5" style={{ background: 'rgba(255,255,255,0.03)' }}>
+        <p className="text-sm font-semibold text-white mb-4">Engagement — réactions & commentaires</p>
+        <ResponsiveContainer width="100%" height={200}>
+          <BarChart data={chartData} margin={{ top: 5, right: 10, left: 0, bottom: 5 }} barGap={2}>
+            <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.06)" />
+            <XAxis dataKey="label" tick={{ fill: '#6b7280', fontSize: 11 }} tickLine={false} interval="preserveStartEnd" />
+            <YAxis tick={{ fill: '#6b7280', fontSize: 11 }} tickLine={false} axisLine={false} />
+            <Tooltip content={<FbTooltip />} />
+            <Bar dataKey="reactions" name="Réactions"    fill="#f59e0b" radius={[2,2,0,0]} />
+            <Bar dataKey="comments"  name="Commentaires" fill="#6366f1" radius={[2,2,0,0]} />
+          </BarChart>
+        </ResponsiveContainer>
+      </div>
+
+      <div className="rounded-2xl border border-white/10 overflow-hidden" style={{ background: 'rgba(255,255,255,0.03)' }}>
+        <p className="text-sm font-semibold text-white px-5 py-4 border-b border-white/10">Détail — 28 derniers jours</p>
+        <div className="overflow-x-auto">
+          <table className="w-full text-xs">
+            <thead>
+              <tr className="text-gray-500 uppercase tracking-widest border-b border-white/10">
+                <th className="text-left px-5 py-2">Date</th>
+                <th className="text-right px-4 py-2">Vues</th>
+                <th className="text-right px-4 py-2">Actifs</th>
+                <th className="text-right px-4 py-2">Publications</th>
+                <th className="text-right px-4 py-2">Commentaires</th>
+                <th className="text-right px-5 py-2">Réactions</th>
+              </tr>
+            </thead>
+            <tbody>
+              {rows.slice(-28).reverse().map((r, i) => (
+                <tr key={r.date} className={`border-b border-white/5 hover:bg-white/5 ${i === 0 ? 'text-white' : 'text-gray-300'}`}>
+                  <td className="px-5 py-2 font-medium">{r.date}</td>
+                  <td className="text-right px-4 py-2 text-ocean-teal font-semibold">{fmt(r.views)}</td>
+                  <td className="text-right px-4 py-2">{fmt(r.active_members)}</td>
+                  <td className="text-right px-4 py-2">{fmt(r.publications)}</td>
+                  <td className="text-right px-4 py-2">{fmt(r.comments)}</td>
+                  <td className="text-right px-5 py-2 text-amber-400">{fmt(r.reactions)}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  );
+};
+
 /* ── Tab Contrôle EXIF ──────────────────────────────────────── */
 const TabExif = () => {
   const [rows, setRows]       = useState([]);
@@ -964,6 +1127,7 @@ export default function Admin() {
     { key: 'sous_marine', label: 'Galerie Sous-marine' },
     { key: 'reseaux',     label: 'Réseaux' },
     { key: 'exif',        label: 'Contrôle EXIF' },
+    { key: 'stats_fb',    label: 'Stats FB' },
   ];
 
   /* ── Fond commun (login + app) ── */
@@ -1112,18 +1276,7 @@ export default function Admin() {
             CSV
           </button>
 
-          <Link
-            to="/stats-groupe-facebook"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-sm font-medium border border-blue-500/30 text-blue-400 hover:border-blue-400/60 hover:bg-blue-400/10 transition-colors"
-            title="Statistiques du groupe Facebook"
-          >
-            <BarChart2 className="w-3.5 h-3.5" />
-            Stats FB
-          </Link>
-
-          <button
+<button
             type="button"
             onClick={logout}
             className="p-2 rounded-lg hover:bg-white/10 text-white/50 hover:text-white transition-colors"
@@ -1139,6 +1292,7 @@ export default function Admin() {
         {tab === 'sous_marine' && <TabGalerie tableName="photos_sous_marine" />}
         {tab === 'reseaux'     && <TabReseaux />}
         {tab === 'exif'        && <TabExif />}
+        {tab === 'stats_fb'    && <TabStatsFB />}
       </main>
 
       {showImport && (
