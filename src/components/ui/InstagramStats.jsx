@@ -118,7 +118,7 @@ const SOCIAL_NETWORKS_STATIC = [
   { platform: 'instagram',      name: 'Instagram',              handle: '@karimsaari',             end: 24.2, suffix: 'K', decimals: 1, url: 'https://www.instagram.com/karimsaari' },
   { platform: 'tiktok',         name: 'TikTok',                 handle: '@dark.massilia',          end: 22.1, suffix: 'K', decimals: 1, url: 'https://www.tiktok.com/@dark.massilia' },
   { platform: 'facebook_pages', name: 'Facebook',               handle: 'Pages pro & perso',       end: 17.8, suffix: 'K', decimals: 1, note: '13K + 4,8K', url: 'https://www.facebook.com/Photographie.Marseille' },
-  { platform: 'youtube',        name: 'YouTube',                handle: '@dark.massilia',          end: 1.33, suffix: 'K', decimals: 2, url: 'https://www.youtube.com/@dark.massilia' },
+  { platform: 'youtube',        name: 'YouTube',                handle: '@dark.massilia',          end: 1.3,  suffix: 'K', decimals: 1, url: 'https://www.youtube.com/@dark.massilia' },
   { platform: 'x',              name: 'X',                      handle: '@dark_massilia',          end: 1.6,  suffix: 'K', decimals: 1, url: 'https://x.com/dark_massilia' },
   { platform: 'local_guides',   name: 'Local Guides',           handle: 'Google Maps · Marseille', end: 143,  suffix: 'M', decimals: 0, unit: 'vues', url: 'https://www.google.com/maps/contrib/114912564832630219145/photos/' },
   { platform: 'pinterest',      name: 'Pinterest',              handle: 'Photographie_Marseille',  end: 16,   suffix: 'K', decimals: 0, unit: 'vues / mois', url: 'https://fr.pinterest.com/Photographie_Marseille/' },

@@ -31,6 +31,8 @@ const STATIC_ROUTES = [
   '/photographie-sous-marine',
   '/videos',
   '/communaute',
+  '/communaute-calanques',
+  '/stats-groupe-facebook',
   '/actualites',
   '/sauver-marseille-documentaire-arte',
   '/meduses-souveraines-oceans-documentaire-arte',

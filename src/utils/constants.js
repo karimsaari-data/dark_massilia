@@ -43,8 +43,9 @@ export const NAV_LINKS = [
     children: [
       { name: 'Dépollution marine',      path: '/depollution-marine',    icon: 'Compass'   },
       { name: 'Carte interactive des Calanques', path: '/carte-calanques', icon: 'MapPin'    },
-      { name: 'Rejoindre la communauté', path: '/communaute',            icon: 'Share2'    },
-      { name: 'Données scientifiques',   path: '/donnees-scientifiques', icon: 'BarChart2' },
+      { name: 'Rejoindre la communauté', path: '/communaute',                icon: 'Share2'   },
+      { name: 'Groupe Facebook Calanques', path: '/communaute-calanques',      icon: 'Users'  },
+      { name: 'Données scientifiques',   path: '/donnees-scientifiques',   icon: 'BarChart2' },
     ],
   },
   {

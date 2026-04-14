@@ -38,6 +38,7 @@ const PhotoSousMarine    = lazy(() => import('./pages/PhotoSousMarine'));
 const PhotographeEnvironnemental = lazy(() => import('./pages/PhotographeEnvironnemental'));
 const BlogCategory               = lazy(() => import('./pages/BlogCategory'));
 const StatsGroupe                = lazy(() => import('./pages/StatsGroupe'));
+const GroupeFacebook             = lazy(() => import('./pages/GroupeFacebook'));
 
 const PageLoader = () => (
   <div className="min-h-screen flex items-center justify-center">
@@ -86,6 +87,7 @@ export default function AppRoutes() {
             <Route path="photographe-environnemental-marseille" element={<PhotographeEnvironnemental />} />
             <Route path="videos"                         element={<Videos />} />
             <Route path="communaute"                     element={<Instagram />} />
+            <Route path="communaute-calanques"              element={<GroupeFacebook />} />
             <Route path="stats-groupe-facebook"          element={<StatsGroupe />} />
             <Route path="actualites"                     element={<Twitter />} />
             <Route path="sauver-marseille-documentaire-arte" element={<Arte />} />
