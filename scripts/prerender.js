@@ -32,7 +32,6 @@ const STATIC_ROUTES = [
   '/videos',
   '/communaute',
   '/communaute-calanques',
-  '/stats-groupe-facebook',
   '/actualites',
   '/sauver-marseille-documentaire-arte',
   '/meduses-souveraines-oceans-documentaire-arte',

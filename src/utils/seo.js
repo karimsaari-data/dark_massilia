@@ -1266,17 +1266,6 @@ export const SEO_PAGES = {
       ],
     },
   },
-  '/stats-groupe-facebook': {
-    title: 'Statistiques Groupe Facebook — Amoureux des Calanques | Karim Saari',
-    description: 'Données d\'engagement du groupe Facebook Amoureux des Calanques : vues, réactions, membres actifs. Tableau de bord de la communauté Dark Massilia.',
-    canonical: `${BASE_URL}/stats-groupe-facebook`,
-    schema: {
-      '@context': 'https://schema.org',
-      '@graph': [
-        breadcrumb('Statistiques Groupe Facebook', '/stats-groupe-facebook'),
-      ],
-    },
-  },
   '/communaute': {
     title: 'Bénévolat Dépollution Marseille : Rejoignez Team Oxygen',
     description:

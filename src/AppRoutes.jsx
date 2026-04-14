@@ -37,7 +37,6 @@ const Confidentialite    = lazy(() => import('./pages/Confidentialite'));
 const PhotoSousMarine    = lazy(() => import('./pages/PhotoSousMarine'));
 const PhotographeEnvironnemental = lazy(() => import('./pages/PhotographeEnvironnemental'));
 const BlogCategory               = lazy(() => import('./pages/BlogCategory'));
-const StatsGroupe                = lazy(() => import('./pages/StatsGroupe'));
 const GroupeFacebook             = lazy(() => import('./pages/GroupeFacebook'));
 
 const PageLoader = () => (
@@ -88,7 +87,6 @@ export default function AppRoutes() {
             <Route path="videos"                         element={<Videos />} />
             <Route path="communaute"                     element={<Instagram />} />
             <Route path="communaute-calanques"              element={<GroupeFacebook />} />
-            <Route path="stats-groupe-facebook"          element={<StatsGroupe />} />
             <Route path="actualites"                     element={<Twitter />} />
             <Route path="sauver-marseille-documentaire-arte" element={<Arte />} />
             <Route path="meduses-souveraines-oceans-documentaire-arte" element={<Meduses />} />
