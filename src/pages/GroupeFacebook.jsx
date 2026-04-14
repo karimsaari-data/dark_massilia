@@ -167,9 +167,9 @@ export default function GroupeFacebook() {
                         <p className="text-xl font-bold text-blue-400 tabular-nums">{stats.totalViews.toLocaleString('fr-FR')}</p>
                         <p className="text-white/40 text-xs mt-0.5">Vues · 28j</p>
                       </div>
-                      <div className="rounded-xl border border-emerald-500/20 bg-emerald-600/10 p-3 text-center">
-                        <p className="text-xl font-bold text-emerald-400 tabular-nums">+{stats.totalMembers.toLocaleString('fr-FR')}</p>
-                        <p className="text-white/40 text-xs mt-0.5">Nouveaux · 28j</p>
+                      <div className="rounded-xl border border-amber-500/20 bg-amber-600/10 p-3 text-center">
+                        <p className="text-xl font-bold text-amber-400 tabular-nums">{stats.totalReact.toLocaleString('fr-FR')}</p>
+                        <p className="text-white/40 text-xs mt-0.5">Réactions · 28j</p>
                       </div>
                     </>
                   ) : (
@@ -179,8 +179,8 @@ export default function GroupeFacebook() {
                         <p className="text-white/40 text-xs mt-0.5">Vues totales</p>
                       </div>
                       <div className="rounded-xl border border-amber-500/20 bg-amber-600/10 p-3 text-center">
-                        <p className="text-xl font-bold text-amber-400">16K/j</p>
-                        <p className="text-white/40 text-xs mt-0.5">Vues / jour moy.</p>
+                        <p className="text-xl font-bold text-amber-400">11 793</p>
+                        <p className="text-white/40 text-xs mt-0.5">Réactions · 28j</p>
                       </div>
                     </>
                   )}
