@@ -1111,16 +1111,15 @@ export default function Admin() {
             CSV
           </button>
 
-          <a
-            href="/stats-groupe-facebook"
-            target="_blank"
-            rel="noopener noreferrer"
+          <button
+            type="button"
+            onClick={() => window.open('/stats-groupe-facebook', '_blank')}
             className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-sm font-medium border border-blue-500/30 text-blue-400 hover:border-blue-400/60 hover:bg-blue-400/10 transition-colors"
             title="Statistiques du groupe Facebook"
           >
             <BarChart2 className="w-3.5 h-3.5" />
             Stats FB
-          </a>
+          </button>
 
           <button
             type="button"
