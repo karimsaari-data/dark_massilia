@@ -1,6 +1,6 @@
 import { motion, useInView, useReducedMotion } from 'framer-motion';
 import { useState, useEffect, useRef } from 'react';
-import { Users, Camera, Recycle, Footprints, ExternalLink, TrendingUp } from 'lucide-react';
+import { Users, Camera, Recycle, Footprints, TrendingUp } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { FADE_IN_UP, STAGGER_CONTAINER } from '../utils/constants';
 import SEO from '../components/SEO';
@@ -130,7 +130,7 @@ export default function GroupeFacebook() {
                         <StatCounter end={64700} duration={2000} />
                       </p>
                       <p className="text-ocean-teal text-xs font-semibold uppercase tracking-wide mt-0.5">Membres</p>
-                      <p className="text-white/35 text-xs">Amoureux des Calanques de Marseille à Port-Cros</p>
+                      <p className="text-white/35 text-xs">Groupe des Amoureux des Calanques de Marseille à Port-Cros</p>
                     </div>
                   </div>
                   {/* Stats 28j depuis Supabase */}
@@ -177,9 +177,9 @@ export default function GroupeFacebook() {
                   src="/images/groupe%20des%20amoureux%20des%20calanques.webp"
                   srcSet="/images/groupe%20des%20amoureux%20des%20calanques_400w.webp 400w, /images/groupe%20des%20amoureux%20des%20calanques_800w.webp 800w, /images/groupe%20des%20amoureux%20des%20calanques_1200w.webp 1200w"
                   sizes="(max-width: 768px) 100vw, 50vw"
-                  alt="Groupe Facebook Amoureux des Calanques de Marseille à Port-Cros"
+                  alt="Groupe des Amoureux des Calanques de Marseille à Port-Cros"
                   className="absolute inset-0 w-full h-full object-cover"
-                  style={{ objectPosition: '12% 25%' }}
+                  style={{ objectPosition: '0% 50%' }}
                   loading="eager"
                 />
                 <div className="absolute inset-0 bg-gradient-to-r from-black/30 to-transparent md:bg-gradient-to-l" />
@@ -285,43 +285,6 @@ export default function GroupeFacebook() {
           </motion.div>
         </motion.div>
 
-        {/* ── CTA final ────────────────────────────────────────── */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6 }}
-          className="text-center"
-        >
-          <div className="glass-strong rounded-3xl p-10 md:p-14 max-w-2xl mx-auto">
-            <p className="text-4xl mb-4">🌊</p>
-            <h2 className="text-2xl md:text-3xl font-bold text-white mb-3">
-              Rejoignez les{' '}
-              <span className="text-ocean-teal">64&nbsp;700 sentinelles</span>
-            </h2>
-            <p className="text-text-secondary mb-8 leading-relaxed">
-              Ensemble, nous formons la plus grande communauté dédiée à la protection et à la célébration du littoral méditerranéen.
-            </p>
-            <div className="flex flex-col sm:flex-row gap-3 justify-center">
-              <a
-                href="https://www.facebook.com/groups/calanque/"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="btn-primary inline-flex items-center gap-2 px-8 py-3.5 text-base"
-              >
-                <Users className="w-4 h-4" />
-                Rejoindre le groupe Facebook
-                <ExternalLink className="w-3.5 h-3.5 opacity-60" />
-              </a>
-              <Link
-                to="/contact"
-                className="inline-flex items-center gap-2 px-6 py-3.5 rounded-xl border border-white/15 text-white/70 hover:text-white hover:border-white/30 transition-colors text-base"
-              >
-                Nous contacter
-              </Link>
-            </div>
-          </div>
-        </motion.div>
 
       </div>
     </div>
