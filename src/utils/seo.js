@@ -1233,34 +1233,71 @@ export const SEO_PAGES = {
     },
   },
   '/communaute-calanques': {
-    title: 'Groupe Facebook Calanques Marseille — 64 700 membres | Karim Saari',
+    title: 'Groupe Facebook Calanques Marseille — 64 700 membres',
     description:
-      'La plus grande communauté en ligne autour des Calanques de Marseille. 64 700 membres passionnés de nature, de photographie et de protection du littoral méditerranéen. Fondé en 2018 par Karim Saari.',
+      'La plus grande communauté en ligne sur les Calanques de Marseille. 64 700 passionnés de nature, photo et protection du littoral méditerranéen. Fondé en 2018 par Karim Saari.',
     canonical: `${BASE_URL}/communaute-calanques`,
+    image: `${BASE_URL}/images/groupe%20des%20amoureux%20des%20calanques_1200w.webp`,
     schema: {
       '@context': 'https://schema.org',
       '@graph': [
         breadcrumb('Groupe Facebook Calanques Marseille', '/communaute-calanques'),
         {
-          '@type': 'OnlineCommunity',
-          name: 'Amoureux des Calanques de Marseille à Port-Cros',
-          url: 'https://www.facebook.com/groups/calanque/',
+          '@type': 'WebPage',
+          '@id': `${BASE_URL}/communaute-calanques`,
+          url: `${BASE_URL}/communaute-calanques`,
+          name: 'Groupe Facebook Calanques Marseille — 64 700 membres',
           description:
             'La plus grande communauté en ligne dédiée aux Calanques de Marseille et au littoral méditerranéen. Photos, actions environnementales, randonnées et sensibilisation à la protection de la mer.',
-          memberCount: 64700,
-          founder: {
-            '@type': 'Person',
-            name: 'Karim Saari',
-            url: `${BASE_URL}/`,
+          isPartOf: { '@id': `${BASE_URL}/#website` },
+          about: {
+            '@type': 'Organization',
+            name: 'Amoureux des Calanques de Marseille à Port-Cros',
+            url: 'https://www.facebook.com/groups/calanque/',
+            foundingDate: '2018',
+            founder: {
+              '@type': 'Person',
+              name: 'Karim Saari',
+              url: `${BASE_URL}/`,
+            },
+            sameAs: 'https://www.facebook.com/groups/calanque/',
           },
-          foundingDate: '2018',
-          sameAs: 'https://www.facebook.com/groups/calanque/',
-          keywords: [
-            'Calanques de Marseille',
-            'groupe Facebook Calanques',
-            'communauté Méditerranée',
-            'protection littoral',
-            'photographie nature',
+        },
+        {
+          '@type': 'FAQPage',
+          mainEntity: [
+            {
+              '@type': 'Question',
+              name: 'Comment rejoindre le groupe Facebook des Calanques de Marseille ?',
+              acceptedAnswer: {
+                '@type': 'Answer',
+                text: 'Rendez-vous sur Facebook et cherchez « Amoureux des Calanques de Marseille à Port-Cros », ou cliquez sur le bouton « Rejoindre le groupe » sur cette page. L\'accès est gratuit et ouvert à tous les passionnés du littoral méditerranéen.',
+              },
+            },
+            {
+              '@type': 'Question',
+              name: 'Combien de membres compte le groupe Calanques ?',
+              acceptedAnswer: {
+                '@type': 'Answer',
+                text: 'Le groupe réunit plus de 64 700 membres actifs, ce qui en fait la plus grande communauté en ligne dédiée aux Calanques de Marseille et au littoral de Port-Cros.',
+              },
+            },
+            {
+              '@type': 'Question',
+              name: 'Quel type de contenu peut-on publier dans le groupe ?',
+              acceptedAnswer: {
+                '@type': 'Answer',
+                text: 'Photos de randonnée dans les Calanques, vidéos sous-marines, alertes environnementales, comptes-rendus de dépollution marine, questions sur la faune et la flore méditerranéenne.',
+              },
+            },
+            {
+              '@type': 'Question',
+              name: 'Le groupe organise-t-il des sorties ou missions de nettoyage ?',
+              acceptedAnswer: {
+                '@type': 'Answer',
+                text: 'Oui, les missions de dépollution marine organisées par Team Oxygen sont annoncées en priorité dans le groupe. Plus de 60 missions ont été réalisées depuis 2018 dans les Calanques et le long du littoral marseillais.',
+              },
+            },
           ],
         },
       ],

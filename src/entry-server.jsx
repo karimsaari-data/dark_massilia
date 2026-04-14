@@ -36,6 +36,7 @@ import AdminCarteSSR from './pages/AdminCarteSSR';
 import Yab          from './pages/Yab';
 import PhotoSousMarine from './pages/PhotoSousMarine';
 import BlogCategory    from './pages/BlogCategory';
+import GroupeFacebook  from './pages/GroupeFacebook';
 
 function NotFound() {
   return (
@@ -65,6 +66,7 @@ export function render(url) {
             <Route path="photographie-sous-marine"           element={<PhotoSousMarine />} />
             <Route path="videos"                             element={<Videos />} />
             <Route path="communaute"                         element={<Instagram />} />
+            <Route path="communaute-calanques"               element={<GroupeFacebook />} />
             <Route path="actualites"                         element={<Twitter />} />
             <Route path="sauver-marseille-documentaire-arte" element={<Arte />} />
             <Route path="meduses-souveraines-oceans-documentaire-arte" element={<Meduses />} />

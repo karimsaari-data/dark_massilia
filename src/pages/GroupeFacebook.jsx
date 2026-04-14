@@ -234,7 +234,7 @@ export default function GroupeFacebook() {
           variants={STAGGER_CONTAINER}
         >
           <motion.h2 variants={FADE_IN_UP} className="text-2xl md:text-3xl font-bold text-white text-center mb-10">
-            Un espace pour célébrer et protéger notre littoral
+            Que partager dans le groupe Calanques de Marseille ?
           </motion.h2>
           <div className="grid md:grid-cols-3 gap-6">
             {PILLIERS.map(({ icon: Icon, emoji, title, node, color, border, iconColor }) => (
@@ -282,7 +282,7 @@ export default function GroupeFacebook() {
                 <span>🌊</span> Pourquoi ce groupe ?
               </p>
               <h2 className="text-2xl md:text-3xl font-bold text-white mb-5 leading-tight">
-                On ne protège bien que ce que l'on aime
+                Pourquoi ce groupe sur les Calanques de Marseille ?
               </h2>
               <div className="space-y-4 text-text-secondary leading-[1.8]">
                 <p>
@@ -308,6 +308,54 @@ export default function GroupeFacebook() {
           </motion.div>
         </motion.div>
 
+
+        {/* ── FAQ ─────────────────────────────────────────────── */}
+        <motion.div
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, amount: 0.15 }}
+          variants={STAGGER_CONTAINER}
+        >
+          <motion.h2 variants={FADE_IN_UP} className="text-2xl md:text-3xl font-bold text-white text-center mb-10">
+            Questions fréquentes sur le groupe Calanques
+          </motion.h2>
+          <div className="space-y-4 max-w-3xl mx-auto">
+            {[
+              {
+                q: 'Comment rejoindre le groupe Facebook des Calanques de Marseille ?',
+                a: 'Rendez-vous sur Facebook et cherchez « Amoureux des Calanques de Marseille à Port-Cros », ou cliquez directement sur le bouton « Rejoindre le groupe » sur cette page. L'accès est gratuit et ouvert à tous les passionnés du littoral méditerranéen.',
+              },
+              {
+                q: 'Combien de membres compte le groupe Calanques ?',
+                a: 'Le groupe réunit plus de 64 700 membres actifs, ce qui en fait la plus grande communauté en ligne dédiée aux Calanques de Marseille et au littoral de Port-Cros.',
+              },
+              {
+                q: 'Quel type de contenu peut-on publier dans le groupe ?',
+                a: 'Photos de randonnée dans les Calanques, vidéos sous-marines, alertes environnementales, comptes-rendus de dépollution marine, questions sur la faune et la flore méditerranéenne. Tout contenu qui célèbre ou protège notre littoral est le bienvenu.',
+              },
+              {
+                q: 'Le groupe organise-t-il des sorties ou missions de nettoyage ?',
+                a: 'Oui, les missions de dépollution marine organisées par Team Oxygen sont annoncées en priorité dans le groupe. Plus de 60 missions ont été réalisées depuis 2018 dans les Calanques et le long du littoral marseillais.',
+              },
+              {
+                q: 'Peut-on proposer des randonnées ou itinéraires dans les Calanques ?',
+                a: 'Absolument. Le partage d'itinéraires, de sentiers de randonnée et de bonnes pratiques pour explorer les Calanques dans le respect de la nature est une des valeurs fondatrices du groupe.',
+              },
+            ].map(({ q, a }) => (
+              <motion.details
+                key={q}
+                variants={FADE_IN_UP}
+                className="glass rounded-2xl border border-white/8 overflow-hidden group"
+              >
+                <summary className="px-6 py-5 cursor-pointer text-white font-semibold text-sm md:text-base flex items-center justify-between gap-4 select-none list-none">
+                  {q}
+                  <span className="text-ocean-teal text-xl shrink-0 group-open:rotate-45 transition-transform duration-200">+</span>
+                </summary>
+                <p className="px-6 pb-5 text-text-secondary text-sm leading-relaxed border-t border-white/8 pt-4">{a}</p>
+              </motion.details>
+            ))}
+          </div>
+        </motion.div>
 
       </div>
     </div>

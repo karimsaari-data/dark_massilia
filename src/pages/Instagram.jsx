@@ -486,6 +486,13 @@ const Communaute = () => {
               <ArrowRight className="w-4 h-4" />
             </Link>
             <Link
+              to="/communaute-calanques"
+              className="text-text-secondary hover:text-ocean-teal transition-colors text-sm inline-flex items-center gap-1"
+            >
+              Groupe Facebook Calanques
+              <ArrowRight className="w-4 h-4" />
+            </Link>
+            <Link
               to="/local-guide-marseille"
               className="text-text-secondary hover:text-ocean-teal transition-colors text-sm inline-flex items-center gap-1"
             >
