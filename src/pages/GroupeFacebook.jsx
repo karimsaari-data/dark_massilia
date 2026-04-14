@@ -323,7 +323,7 @@ export default function GroupeFacebook() {
             {[
               {
                 q: 'Comment rejoindre le groupe Facebook des Calanques de Marseille ?',
-                a: 'Rendez-vous sur Facebook et cherchez « Amoureux des Calanques de Marseille à Port-Cros », ou cliquez directement sur le bouton « Rejoindre le groupe » sur cette page. L'accès est gratuit et ouvert à tous les passionnés du littoral méditerranéen.',
+                a: `Rendez-vous sur Facebook et cherchez « Amoureux des Calanques de Marseille à Port-Cros », ou cliquez directement sur le bouton « Rejoindre le groupe » sur cette page. L'accès est gratuit et ouvert à tous les passionnés du littoral méditerranéen.`,
               },
               {
                 q: 'Combien de membres compte le groupe Calanques ?',
@@ -339,7 +339,7 @@ export default function GroupeFacebook() {
               },
               {
                 q: 'Peut-on proposer des randonnées ou itinéraires dans les Calanques ?',
-                a: 'Absolument. Le partage d'itinéraires, de sentiers de randonnée et de bonnes pratiques pour explorer les Calanques dans le respect de la nature est une des valeurs fondatrices du groupe.',
+                a: `Absolument. Le partage d'itinéraires, de sentiers de randonnée et de bonnes pratiques pour explorer les Calanques dans le respect de la nature est une des valeurs fondatrices du groupe.`,
               },
             ].map(({ q, a }) => (
               <motion.details
