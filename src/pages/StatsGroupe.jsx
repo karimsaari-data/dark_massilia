@@ -89,15 +89,16 @@ export default function StatsGroupe() {
     }));
   }, [rows, window28]);
 
-  if (loading) return (
-    <div className="min-h-screen flex items-center justify-center">
-      <div className="spinner" />
-    </div>
-  );
-
   return (
     <>
       <SEO pageKey="/stats-groupe-facebook" />
+
+      {loading && (
+        <div className="min-h-screen flex items-center justify-center">
+          <div className="spinner" />
+        </div>
+      )}
+      {!loading && <>
 
       <div className="min-h-screen py-24 px-4">
         <div className="max-w-6xl mx-auto space-y-10">
@@ -261,6 +262,7 @@ export default function StatsGroupe() {
 
         </div>
       </div>
+      </>}
     </>
   );
 }
