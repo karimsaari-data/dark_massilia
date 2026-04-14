@@ -1,4 +1,5 @@
 import { useState, useEffect, useCallback } from 'react';
+import { Link } from 'react-router-dom';
 import { supabase } from '../lib/supabase';
 import {
   Lock, LogOut, Search, Save, Eye, EyeOff,
@@ -1111,8 +1112,8 @@ export default function Admin() {
             CSV
           </button>
 
-          <a
-            href="stats-groupe-facebook"
+          <Link
+            to="/stats-groupe-facebook"
             target="_blank"
             rel="noopener noreferrer"
             className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-sm font-medium border border-blue-500/30 text-blue-400 hover:border-blue-400/60 hover:bg-blue-400/10 transition-colors"
@@ -1120,7 +1121,7 @@ export default function Admin() {
           >
             <BarChart2 className="w-3.5 h-3.5" />
             Stats FB
-          </a>
+          </Link>
 
           <button
             type="button"
