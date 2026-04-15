@@ -175,10 +175,10 @@ export default function Carte() {
           className="glass-strong rounded-3xl p-8 md:p-12"
         >
           <h1 className="text-2xl md:text-3xl font-bold text-white mb-3">
-            Carte des Calanques de Marseille : Nos actions environnementales sur le terrain
+            Carte des Calanques de Marseille — Randonnées & Spots du Parc national
           </h1>
           <p className="text-ocean-teal font-semibold mb-6">
-            Cartographie interactive des spots de dépollution et des photographies du littoral marseillais
+            Sentiers, spots de plongée et zones de dépollution de Marseille à Cassis
           </p>
           <div className="space-y-4 text-text-secondary leading-relaxed">
             <p>

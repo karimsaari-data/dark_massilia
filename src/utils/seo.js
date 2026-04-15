@@ -1622,17 +1622,18 @@ export const SEO_PAGES = {
     },
   },
   '/carte-calanques': {
-    title: 'Carte Interactive des Calanques | Karim Saari',
+    title: 'Carte des Calanques de Marseille — Randonnées & Spots du Parc National | Karim Saari',
     description:
-      'Explorez la carte interactive des Calanques de Marseille. Localisez nos zones de dépollution avec Team Oxygen et découvrez la biodiversité à protéger.',
+      'Découvrez le Parc national des Calanques avec la carte interactive de Karim Saari : sentiers de randonnée, spots de plongée, accès à Sormiou, En-Vau, Sugiton, Frioul. De Marseille à Cassis.',
     canonical: `${BASE_URL}/carte-calanques`,
+    keywords: 'carte calanques marseille, randonnée parc national des calanques, sentiers calanques, découvrir calanques marseille, spots calanques, Sormiou Morgiou En-Vau Sugiton',
     schema: {
       '@context': 'https://schema.org',
       '@graph': [
-        breadcrumb('Carte Interactive des Calanques', '/carte-calanques'),
+        breadcrumb('Carte des Calanques — Randonnées & Spots', '/carte-calanques'),
         {
           '@type': 'Dataset',
-          name: 'Carte interactive — Calanques de Marseille : Dépollution & Photographie',
+          name: 'Carte interactive — Calanques de Marseille : Randonnées, Spots & Dépollution',
           description:
             "Cartographie des zones de dépollution marine menées par Team Oxygen et des sites de photographie documentaire dans les Calanques de Marseille. Spots couverts : Sormiou, Morgiou, Sugiton, En-Vau, Callelongue, Cap Croisette, Archipel du Frioul.",
           url: `${BASE_URL}/carte-calanques`,
