@@ -41,7 +41,13 @@ const useParcRss = () => {
           return true;
         });
 
-        const parsed = unique.slice(0, 9).map((item) => ({
+        const sorted = unique.sort((a, b) => {
+          const da = a.pubDate ? new Date(a.pubDate).getTime() : 0;
+          const db = b.pubDate ? new Date(b.pubDate).getTime() : 0;
+          return db - da;
+        });
+
+        const parsed = sorted.slice(0, 9).map((item) => ({
           title: item.title || '',
           link: item.link,
           date: formatDate(item.pubDate),
