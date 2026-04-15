@@ -1,6 +1,6 @@
 import { motion, useInView, useReducedMotion } from 'framer-motion';
 import { useState, useEffect, useRef } from 'react';
-import { Users, Camera, Recycle, Footprints, TrendingUp, Map, Car, AlertTriangle, Smartphone } from 'lucide-react';
+import { Users, Camera, Recycle, Footprints, Smartphone } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { FADE_IN_UP, STAGGER_CONTAINER } from '../utils/constants';
 import SEO from '../components/SEO';
@@ -375,38 +375,11 @@ export default function GroupeFacebook() {
             Les outils et infos indispensables avant de partir — régulièrement partagés dans le groupe.
           </motion.p>
 
-          {/* 1 — Carte risque incendie (priorité max) */}
-          <motion.div variants={FADE_IN_UP} className="mb-6">
-            <div className="flex items-center gap-3 mb-3">
-              <div className="w-8 h-8 rounded-lg bg-red-500/15 border border-red-500/20 flex items-center justify-center shrink-0">
-                <span className="text-sm">🔥</span>
-              </div>
-              <div>
-                <h3 className="text-white font-semibold text-sm">Massifs ouverts aujourd'hui ? — mise à jour quotidienne</h3>
-                <p className="text-white/35 text-xs">Source : Préfectures 13, 83, 04, 84, 06 · Vert = accès libre · Jaune = vigilance · Orange/Rouge/Noir = fermé</p>
-              </div>
-            </div>
-            <div className="rounded-2xl overflow-hidden border border-white/10" style={{ height: '380px' }}>
-              <iframe
-                src="https://www.frequence-sud.fr/selection/carterisque.php"
-                title="Carte des risques incendie PACA — accès aux massifs forestiers"
-                className="w-full h-full"
-                style={{ border: 'none' }}
-                loading="lazy"
-              />
-            </div>
-            <p className="text-white/25 text-xs mt-1.5 px-1">
-              Dans tous les cas, il est <strong className="text-white/45">interdit de fumer</strong> dans les massifs. Le camping sauvage, le ramassage de plantes et l'usage du feu sont également interdits.
-            </p>
-          </motion.div>
+          {/* App Mes Calanques — bloc unique avec vidéo intégrée */}
+          <motion.div variants={FADE_IN_UP}>
+            <div className="glass rounded-2xl border border-emerald-500/20 bg-gradient-to-br from-emerald-500/6 to-teal-500/6 p-6 flex flex-col gap-5">
 
-          {/* 2 — App + Accès routier (deux colonnes compactes) */}
-          <div className="grid md:grid-cols-2 gap-4 mb-6">
-
-            {/* App PNC */}
-            <motion.div variants={FADE_IN_UP}
-              className="glass rounded-2xl border border-emerald-500/20 bg-gradient-to-br from-emerald-500/6 to-teal-500/6 p-5 flex flex-col gap-4"
-            >
+              {/* En-tête */}
               <div className="flex items-center gap-3">
                 <div className="w-9 h-9 rounded-xl bg-emerald-500/15 border border-emerald-500/25 flex items-center justify-center shrink-0">
                   <Smartphone className="w-4 h-4 text-emerald-400" />
@@ -416,11 +389,21 @@ export default function GroupeFacebook() {
                   <p className="text-emerald-400 text-xs">Parc National — gratuite</p>
                 </div>
               </div>
-              <ul className="space-y-1.5 text-xs text-white/55 flex-1">
+
+              {/* Features */}
+              <ul className="space-y-1.5 text-xs text-white/55">
                 <li className="flex items-start gap-2"><span className="text-emerald-400 shrink-0">✓</span> Sentiers GR® et chemins côtiers hors-ligne</li>
                 <li className="flex items-start gap-2"><span className="text-emerald-400 shrink-0">✓</span> Zones réglementées et espèces protégées</li>
                 <li className="flex items-start gap-2"><span className="text-emerald-400 shrink-0">✓</span> Alertes fermetures en temps réel</li>
               </ul>
+
+              {/* Vidéo intégrée */}
+              <VideoFacade
+                videoId="WMuqAqOvXMA"
+                title="L'application mobile Mes Calanques débarque en V2 ! — Parc national des Calanques"
+              />
+
+              {/* Boutons store */}
               <div className="flex gap-2">
                 <a href="https://apps.apple.com/fr/app/rando-calanques/id1448768736" target="_blank" rel="noopener noreferrer"
                   className="flex-1 text-center px-3 py-2 rounded-lg bg-emerald-500/12 border border-emerald-500/20 text-emerald-300 hover:bg-emerald-500/22 transition-colors text-xs font-medium">
@@ -431,55 +414,8 @@ export default function GroupeFacebook() {
                   Google Play
                 </a>
               </div>
-            </motion.div>
 
-            {/* Accès routier */}
-            <motion.div variants={FADE_IN_UP}
-              className="glass rounded-2xl border border-amber-500/20 bg-gradient-to-br from-amber-500/6 to-orange-500/6 p-5 flex flex-col gap-4"
-            >
-              <div className="flex items-center gap-3">
-                <div className="w-9 h-9 rounded-xl bg-amber-500/15 border border-amber-500/25 flex items-center justify-center shrink-0">
-                  <Car className="w-4 h-4 text-amber-400" />
-                </div>
-                <div>
-                  <h3 className="text-white font-semibold text-sm">Accès routier & restrictions</h3>
-                  <p className="text-amber-400 text-xs">Vérifier avant de partir</p>
-                </div>
-              </div>
-              <div className="space-y-2 flex-1">
-                <div className="rounded-lg border border-amber-500/15 bg-amber-500/6 p-3">
-                  <p className="text-amber-300 text-xs font-semibold mb-0.5 flex items-center gap-1.5">
-                    <AlertTriangle className="w-3 h-3" /> Sugiton — quota visiteurs
-                  </p>
-                  <p className="text-white/50 text-xs">Réservation obligatoire mai–sept. Limité à 400 pers./jour.</p>
-                </div>
-                <div className="rounded-lg border border-orange-500/15 bg-orange-500/6 p-3">
-                  <p className="text-orange-300 text-xs font-semibold mb-0.5 flex items-center gap-1.5">
-                    <AlertTriangle className="w-3 h-3" /> Route D559a — fermetures estivales
-                  </p>
-                  <p className="text-white/50 text-xs">Fermée selon risque incendie ou grand vent. Vérifier le matin.</p>
-                </div>
-              </div>
-              <div className="flex gap-2">
-                <a href="https://www.calanques-parcnational.fr/fr/venir-dans-le-parc" target="_blank" rel="noopener noreferrer"
-                  className="flex-1 text-center px-3 py-2 rounded-lg bg-amber-500/12 border border-amber-500/20 text-amber-300 hover:bg-amber-500/22 transition-colors text-xs font-medium">
-                  Site PNC
-                </a>
-                <a href="https://share.google/mufwnPbFpp2le3m8k" target="_blank" rel="noopener noreferrer"
-                  className="flex-1 text-center px-3 py-2 rounded-lg bg-amber-500/12 border border-amber-500/20 text-amber-300 hover:bg-amber-500/22 transition-colors text-xs font-medium">
-                  Calanques ouvertes ?
-                </a>
-              </div>
-            </motion.div>
-
-          </div>
-
-          {/* 3 — Vidéo app (facade compacte) */}
-          <motion.div variants={FADE_IN_UP}>
-            <VideoFacade
-              videoId="WMuqAqOvXMA"
-              title="L'application mobile Mes Calanques débarque en V2 ! — Parc national des Calanques"
-            />
+            </div>
           </motion.div>
 
         </motion.div>

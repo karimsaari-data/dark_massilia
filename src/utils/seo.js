@@ -1656,6 +1656,26 @@ export const SEO_PAGES = {
       ],
     },
   },
+  '/acces-massifs-calanques': {
+    title: 'Accès aux Massifs Forestiers Calanques — Risque Incendie en temps réel',
+    description:
+      'Carte officielle en temps réel de l\'accès aux massifs forestiers des Bouches-du-Rhône. Consultez le risque incendie avant toute sortie dans les Calanques de Marseille.',
+    canonical: `${BASE_URL}/acces-massifs-calanques`,
+    schema: {
+      '@context': 'https://schema.org',
+      '@graph': [
+        breadcrumb('Accès Massifs Forestiers — Risque Incendie', '/acces-massifs-calanques'),
+        {
+          '@type': 'WebPage',
+          name: 'Accès aux massifs forestiers des Calanques — Carte risque incendie',
+          description:
+            'Carte interactive officielle du risque incendie pour les massifs forestiers des Bouches-du-Rhône, mise à jour quotidiennement par la DFCI.',
+          url: `${BASE_URL}/acces-massifs-calanques`,
+          isPartOf: { '@id': `${BASE_URL}/#website` },
+        },
+      ],
+    },
+  },
   '/carte-calanques': {
     title: 'Carte Interactive des Calanques | Karim Saari',
     description:

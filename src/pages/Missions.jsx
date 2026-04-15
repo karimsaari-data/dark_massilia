@@ -1,6 +1,6 @@
 import { motion, useInView, useReducedMotion } from 'framer-motion';
 import { useState, useEffect, useRef } from 'react';
-import { ArrowLeft, ArrowRight, ExternalLink, Camera } from 'lucide-react';
+import { ArrowLeft, ArrowRight, ExternalLink, Camera, Flame } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { FADE_IN_UP, STAGGER_CONTAINER } from '../utils/constants';
 import SEO from '../components/SEO';
@@ -360,6 +360,36 @@ const Missions = () => {
               <strong className="text-white">nettoyage sous-marin</strong> à Marseille permet d'atteindre des
               zones inaccessibles aux dispositifs classiques de ramassage en mer.
             </p>
+          </div>
+        </motion.div>
+
+        {/* Accès aux massifs forestiers — risque incendie */}
+        <motion.div
+          initial={{ opacity: 0, y: 16 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          className="mb-6"
+        >
+          <div className="glass rounded-2xl px-8 py-6 flex flex-col sm:flex-row items-center justify-between gap-4 border border-orange-500/20">
+            <div>
+              <p className="text-xs uppercase tracking-widest text-orange-400 font-semibold mb-1 flex items-center gap-1.5">
+                <Flame className="w-3.5 h-3.5" />
+                Avant chaque mission
+              </p>
+              <p className="text-white font-semibold text-lg leading-snug">
+                Accès aux massifs forestiers des Calanques
+              </p>
+              <p className="text-text-secondary text-sm mt-1">
+                Carte officielle du risque incendie en temps réel — consultez avant toute sortie.
+              </p>
+            </div>
+            <Link
+              to="/acces-massifs-calanques"
+              className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full border border-orange-500/40 text-orange-400 text-sm font-semibold hover:bg-orange-500/10 transition-colors whitespace-nowrap flex-shrink-0"
+            >
+              <Flame className="w-4 h-4" />
+              Voir la carte risque
+            </Link>
           </div>
         </motion.div>
 
