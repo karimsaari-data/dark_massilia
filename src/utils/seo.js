@@ -1265,6 +1265,41 @@ export const SEO_PAGES = {
             'photographie nature',
           ],
         },
+        {
+          '@type': 'FAQPage',
+          mainEntity: [
+            {
+              '@type': 'Question',
+              name: 'Quels sont les incontournables des Calanques à ne pas manquer ?',
+              acceptedAnswer: { '@type': 'Answer', text: 'Les incontournables sont En-Vau (souvent élue plus belle calanque de France), Sugiton pour ses eaux turquoise et falaises vertigineuses, Sormiou pour son authenticité, et le Frioul accessible en ferry depuis le Vieux-Port de Marseille.' },
+            },
+            {
+              '@type': 'Question',
+              name: 'Quelle est la meilleure période pour visiter les Calanques ?',
+              acceptedAnswer: { '@type': 'Answer', text: 'Le printemps (avril-juin) est idéal : températures douces, végétation en fleurs, sentiers accessibles et mer agréable. L\'automne (septembre-octobre) est tout aussi beau et moins fréquenté. L\'été est magnifique mais chargé avec des routes fermées.' },
+            },
+            {
+              '@type': 'Question',
+              name: 'Les routes des Calanques sont-elles accessibles en voiture ?',
+              acceptedAnswer: { '@type': 'Answer', text: 'De juillet à début septembre, les routes de Sormiou, Morgiou et des Goudes sont fermées aux véhicules particuliers en raison du risque incendie. Les fermetures sont décidées chaque matin selon la météo. Consultez le site du Parc national des Calanques la veille.' },
+            },
+            {
+              '@type': 'Question',
+              name: 'Comment accéder aux Calanques sans voiture ?',
+              acceptedAnswer: { '@type': 'Answer', text: 'Lignes RTM depuis Marseille : B1 pour les Goudes et Callelongue, L21 pour Luminy (accès Sugiton et Morgiou), ligne 20 pour Mazargues. Pour le Frioul, des ferries partent du Vieux-Port toute l\'année.' },
+            },
+            {
+              '@type': 'Question',
+              name: 'Quelle application utiliser pour visiter le Parc national des Calanques ?',
+              acceptedAnswer: { '@type': 'Answer', text: 'L\'application officielle "Mes Calanques" du Parc national est indispensable : cartes des sentiers hors connexion, réglementation par zone, guide des espèces, et alertes incendie et fermetures en temps réel. Disponible gratuitement sur iOS et Android.' },
+            },
+            {
+              '@type': 'Question',
+              name: 'L\'accès au Parc national des Calanques est-il payant ?',
+              acceptedAnswer: { '@type': 'Answer', text: 'Non, l\'accès est entièrement gratuit. Certaines calanques comme Sugiton expérimentent des systèmes de réservation gratuite mais obligatoire en haute saison pour limiter la surfréquentation.' },
+            },
+          ],
+        },
       ],
     },
   },

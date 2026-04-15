@@ -1,6 +1,6 @@
 import { motion, useInView, useReducedMotion } from 'framer-motion';
 import { useState, useEffect, useRef } from 'react';
-import { Users, Camera, Recycle, Footprints, TrendingUp, MapPin, Info, Compass } from 'lucide-react';
+import { Users, Camera, Recycle, Footprints, TrendingUp, MapPin, Info, Compass, Smartphone, Car, ChevronDown, ExternalLink } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { FADE_IN_UP, STAGGER_CONTAINER } from '../utils/constants';
 import SEO from '../components/SEO';
@@ -124,6 +124,60 @@ const REGLES = [
   { emoji: '⛺', texte: 'Bivouac et camping interdits dans le parc national' },
   { emoji: '🐟', texte: 'Pêche sous-marine interdite dans les zones de protection intégrale' },
 ];
+
+/* ── FAQ ─────────────────────────────────────────────────────── */
+const FAQ_ITEMS = [
+  {
+    q: 'Quels sont les incontournables des Calanques à ne pas manquer ?',
+    a: 'Les membres du groupe citent régulièrement En-Vau (souvent élue plus belle calanque de France), Sugiton pour ses eaux turquoise et ses falaises vertigineuses, Sormiou pour son authenticité et son restaurant les pieds dans l\'eau, et le Frioul accessible en ferry depuis le Vieux-Port. Si vous n\'avez qu\'une journée, Sormiou le matin + le GR® 98 pour des vues panoramiques reste le classique indémodable.',
+  },
+  {
+    q: 'Quelle est la meilleure période pour visiter les Calanques ?',
+    a: 'Le printemps (avril-juin) est idéal : températures douces, végétation en fleurs, sentiers accessibles et mer déjà agréable. L\'automne (septembre-octobre) est tout aussi beau et moins fréquenté. L\'été est magnifique mais chargé — routes fermées, sentiers régulés, forte chaleur. L\'hiver offre une sérénité rare et des lumières magnifiques pour la photo.',
+  },
+  {
+    q: 'Les routes des Calanques sont-elles accessibles en voiture ?',
+    a: 'De juillet à début septembre, la plupart des routes d\'accès sont fermées aux véhicules particuliers en raison du risque incendie : route de Sormiou, route de Morgiou, route des Goudes. Ces fermetures sont décidées au jour le jour selon les conditions météo. Consultez le site du Parc national ou son application la veille de votre visite.',
+  },
+  {
+    q: 'Comment accéder aux Calanques sans voiture ?',
+    a: 'Plusieurs lignes RTM desservent le massif : ligne B1 pour les Goudes et Callelongue, ligne L21 pour Luminy (accès Sugiton et Morgiou), ligne 20 pour Mazargues. Pour le Frioul, des ferries partent régulièrement du Vieux-Port toute l\'année. C\'est souvent le moyen le plus serein en été.',
+  },
+  {
+    q: 'Peut-on se baigner librement dans les Calanques ?',
+    a: 'La baignade est autorisée dans la quasi-totalité des calanques. Certaines zones peuvent être temporairement fermées pour la nidification des oiseaux marins. En haute saison, l\'accès à Sugiton est limité et nécessite une réservation gratuite via la plateforme du parc. Vérifiez les conditions avant de partir.',
+  },
+  {
+    q: 'Quelle application utiliser pour préparer sa visite ?',
+    a: 'L\'application officielle du Parc national des Calanques est indispensable : cartes des sentiers utilisables hors connexion, réglementation par zone, espèces à observer, alertes incendie et fermetures en temps réel. Disponible gratuitement sur iOS et Android.',
+  },
+  {
+    q: 'L\'accès au Parc national des Calanques est-il payant ?',
+    a: 'Non, l\'accès est entièrement gratuit. En revanche, certaines calanques expérimentent des systèmes de réservation obligatoire (mais gratuite) en haute saison pour limiter la surfréquentation. Pensez à vérifier avant de partir.',
+  },
+];
+
+/* ── FaqItem accordion ───────────────────────────────────────── */
+const FaqItem = ({ question, answer }) => {
+  const [open, setOpen] = useState(false);
+  return (
+    <div className="border border-white/10 rounded-2xl overflow-hidden">
+      <button
+        onClick={() => setOpen(o => !o)}
+        className="w-full flex items-center justify-between p-5 text-left gap-4 hover:bg-white/5 transition-colors"
+        aria-expanded={open}
+      >
+        <span className="text-white font-medium leading-snug">{question}</span>
+        <ChevronDown className={`w-4 h-4 text-white/40 flex-shrink-0 transition-transform duration-200 ${open ? 'rotate-180' : ''}`} />
+      </button>
+      {open && (
+        <div className="px-5 pb-5 text-text-secondary text-sm leading-relaxed border-t border-white/8 pt-4">
+          {answer}
+        </div>
+      )}
+    </div>
+  );
+};
 
 /* ── Page principale ─────────────────────────────────────────── */
 export default function GroupeFacebook() {
@@ -391,6 +445,126 @@ export default function GroupeFacebook() {
             </motion.div>
 
           </div>
+        </motion.div>
+
+        {/* ── Ressources pratiques : App PNC + Accès routier ───── */}
+        <motion.div
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, amount: 0.1 }}
+          variants={STAGGER_CONTAINER}
+        >
+          <motion.div variants={FADE_IN_UP} className="text-center mb-8">
+            <h2 className="text-2xl md:text-3xl font-bold text-white mb-3">
+              Ressources essentielles avant de partir
+            </h2>
+            <p className="text-text-secondary max-w-xl mx-auto leading-relaxed">
+              Les deux réflexes à avoir avant chaque sortie dans les Calanques.
+            </p>
+          </motion.div>
+
+          <div className="grid md:grid-cols-2 gap-6">
+
+            {/* App PNC */}
+            <motion.div variants={FADE_IN_UP} className="glass-strong rounded-2xl p-7 border border-green-500/20 flex flex-col gap-5">
+              <div className="flex items-center gap-3">
+                <div className="w-10 h-10 rounded-xl bg-green-500/15 border border-green-500/25 flex items-center justify-center flex-shrink-0">
+                  <Smartphone className="w-5 h-5 text-green-400" />
+                </div>
+                <div>
+                  <p className="text-green-400 text-xs font-semibold uppercase tracking-widest">Application officielle</p>
+                  <p className="text-white font-semibold">Mes Calanques</p>
+                </div>
+              </div>
+              <p className="text-text-secondary text-sm leading-relaxed">
+                <strong className="text-white/80">Mes Calanques</strong>, l'appli officielle du Parc national, est une vraie mine d'or : cartes des sentiers
+                <strong className="text-white/80"> utilisables hors connexion</strong>, réglementation
+                zone par zone, guide des espèces à observer, actualités et — surtout —
+                les <strong className="text-white/80">alertes incendie et fermetures en temps réel</strong>.
+              </p>
+              <ul className="space-y-1.5 text-sm text-text-secondary">
+                {['Cartes offline de tous les sentiers balisés', 'Faune & flore à identifier sur le terrain', 'Réglementation par secteur (baignade, bivouac…)', 'Alertes et fermetures en temps réel'].map(item => (
+                  <li key={item} className="flex items-center gap-2">
+                    <span className="w-1.5 h-1.5 rounded-full bg-green-400 flex-shrink-0" />
+                    {item}
+                  </li>
+                ))}
+              </ul>
+              <a
+                href="https://www.calanques-parcnational.fr/fr/application-mobile"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl border border-green-500/30 text-green-400 hover:text-white hover:border-green-400 transition-colors text-sm font-medium w-fit mt-auto"
+              >
+                <ExternalLink className="w-3.5 h-3.5" />
+                Télécharger l'application
+              </a>
+            </motion.div>
+
+            {/* Accès routier & risque incendie */}
+            <motion.div variants={FADE_IN_UP} className="glass-strong rounded-2xl p-7 border border-amber-500/20 flex flex-col gap-5">
+              <div className="flex items-center gap-3">
+                <div className="w-10 h-10 rounded-xl bg-amber-500/15 border border-amber-500/25 flex items-center justify-center flex-shrink-0">
+                  <Car className="w-5 h-5 text-amber-400" />
+                </div>
+                <div>
+                  <p className="text-amber-400 text-xs font-semibold uppercase tracking-widest">Accès routier</p>
+                  <p className="text-white font-semibold">Ouvert ou fermé aujourd'hui ?</p>
+                </div>
+              </div>
+              <p className="text-text-secondary text-sm leading-relaxed">
+                En période de <strong className="text-white/80">risque incendie</strong> (généralement
+                juillet–début septembre), les routes d'accès sont fermées aux véhicules particuliers
+                au jour le jour selon la météo. La décision tombe chaque matin.
+              </p>
+              <ul className="space-y-1.5 text-sm text-text-secondary">
+                {[
+                  'Route de Sormiou — fermée en période rouge',
+                  'Route de Morgiou — fermée en période rouge',
+                  'Route des Goudes — fermée en période rouge',
+                  'Luminy → Sugiton/Morgiou — fermée en période rouge',
+                ].map(item => (
+                  <li key={item} className="flex items-center gap-2">
+                    <span className="w-1.5 h-1.5 rounded-full bg-amber-400 flex-shrink-0" />
+                    {item}
+                  </li>
+                ))}
+              </ul>
+              <a
+                href="https://www.calanques-parcnational.fr/fr/risque-incendie-calanques-ouvertes-ou-fermees"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl border border-amber-500/30 text-amber-400 hover:text-white hover:border-amber-400 transition-colors text-sm font-medium w-fit mt-auto"
+              >
+                <ExternalLink className="w-3.5 h-3.5" />
+                Vérifier les accès aujourd'hui
+              </a>
+            </motion.div>
+
+          </div>
+        </motion.div>
+
+        {/* ── FAQ ──────────────────────────────────────────────────── */}
+        <motion.div
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, amount: 0.1 }}
+          variants={STAGGER_CONTAINER}
+        >
+          <motion.div variants={FADE_IN_UP} className="text-center mb-8">
+            <h2 className="text-2xl md:text-3xl font-bold text-white mb-3">
+              Questions fréquentes du groupe
+            </h2>
+            <p className="text-text-secondary max-w-xl mx-auto leading-relaxed">
+              Les questions qui reviennent le plus souvent — résumées pour vous faire gagner du temps.
+            </p>
+          </motion.div>
+
+          <motion.div variants={FADE_IN_UP} className="space-y-3 max-w-3xl mx-auto">
+            {FAQ_ITEMS.map(({ q, a }) => (
+              <FaqItem key={q} question={q} answer={a} />
+            ))}
+          </motion.div>
         </motion.div>
 
         {/* ── Pourquoi ce groupe / Histoire de Karim ───────────── */}
