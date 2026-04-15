@@ -41,8 +41,8 @@ export const NAV_LINKS = [
     icon: 'Compass',
     description: 'Dépollution des fonds marins en apnée, documentation scientifique et mobilisation citoyenne dans les Calanques.',
     children: [
-      { name: 'Dépollution marine',      path: '/depollution-marine',    icon: 'Compass',   isHub: true, hubDesc: 'Team Oxygen — nettoyage sous-marin depuis 2018' },
-      { name: 'Rejoindre la communauté', path: '/communaute',            icon: 'Share2'   },
+      { name: 'Rejoindre la communauté', path: '/communaute',            icon: 'Share2',  isHub: true, hubDesc: 'Rejoins la mission — bénévoles, plongeurs, partenaires' },
+      { name: 'Dépollution marine',      path: '/depollution-marine',    icon: 'Compass'  },
       { name: 'Données scientifiques',   path: '/donnees-scientifiques', icon: 'BarChart2' },
     ],
   },
