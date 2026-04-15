@@ -255,6 +255,26 @@ const Twitter = () => {
                 {items.map((item, i) => (
                   <RssCard key={i} {...item} priority={i === 0} />
                 ))}
+                {/* CTA card pour combler le trou si nombre impair */}
+                {items.length % 3 !== 0 && (
+                  <a
+                    href="https://calanques-parcnational.fr/fr/actualites"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="group flex flex-col items-center justify-center rounded-2xl border border-ocean-teal/20 border-dashed bg-ocean-teal/5 hover:bg-ocean-teal/10 hover:border-ocean-teal/40 transition-all duration-300 p-8 text-center gap-3"
+                  >
+                    <Rss className="w-8 h-8 text-ocean-teal/60 group-hover:text-ocean-teal transition-colors" />
+                    <p className="text-sm font-semibold text-white group-hover:text-ocean-teal transition-colors">
+                      Toutes les actualités
+                    </p>
+                    <p className="text-xs text-gray-500">
+                      calanques-parcnational.fr
+                    </p>
+                    <span className="inline-flex items-center gap-1.5 text-xs text-ocean-teal border border-ocean-teal/30 rounded-lg px-3 py-1.5 group-hover:bg-ocean-teal/20 transition-colors">
+                      Voir le site <ExternalLink className="w-3 h-3" />
+                    </span>
+                  </a>
+                )}
               </div>
             )}
 
@@ -320,6 +340,25 @@ const Twitter = () => {
                 {agendaItems.map((item, i) => (
                   <AgendaCard key={i} {...item} />
                 ))}
+                {agendaItems.length % 3 !== 0 && (
+                  <a
+                    href="https://calanques-parcnational.fr/fr/agenda"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="group flex flex-col items-center justify-center rounded-2xl border border-ocean-teal/20 border-dashed bg-ocean-teal/5 hover:bg-ocean-teal/10 hover:border-ocean-teal/40 transition-all duration-300 p-8 text-center gap-3"
+                  >
+                    <CalendarDays className="w-8 h-8 text-ocean-teal/60 group-hover:text-ocean-teal transition-colors" />
+                    <p className="text-sm font-semibold text-white group-hover:text-ocean-teal transition-colors">
+                      Tous les événements
+                    </p>
+                    <p className="text-xs text-gray-500">
+                      calanques-parcnational.fr
+                    </p>
+                    <span className="inline-flex items-center gap-1.5 text-xs text-ocean-teal border border-ocean-teal/30 rounded-lg px-3 py-1.5 group-hover:bg-ocean-teal/20 transition-colors">
+                      Voir l'agenda <ExternalLink className="w-3 h-3" />
+                    </span>
+                  </a>
+                )}
               </div>
             )}
 
