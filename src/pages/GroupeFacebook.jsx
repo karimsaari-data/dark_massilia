@@ -542,6 +542,26 @@ export default function GroupeFacebook() {
             </motion.div>
 
           </div>
+
+          {/* Vidéo de présentation de l'appli */}
+          <motion.div variants={FADE_IN_UP} className="mt-6 glass rounded-2xl overflow-hidden border border-white/8">
+            <div className="relative w-full" style={{ paddingBottom: '56.25%' }}>
+              <iframe
+                src="https://www.youtube.com/embed/WMuqAqOvXMA"
+                title="Application Mes Calanques — Parc national des Calanques"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                allowFullScreen
+                loading="lazy"
+                className="absolute inset-0 w-full h-full"
+              />
+            </div>
+            <div className="px-6 py-4 border-t border-white/8">
+              <p className="text-white/50 text-sm">
+                Présentation de l'application officielle <strong className="text-white/70">Mes Calanques</strong> par le Parc national des Calanques — cartes, sentiers, faune & flore, alertes incendie.
+              </p>
+            </div>
+          </motion.div>
+
         </motion.div>
 
         {/* ── FAQ ──────────────────────────────────────────────────── */}
