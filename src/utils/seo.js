@@ -1233,17 +1233,18 @@ export const SEO_PAGES = {
     },
   },
   '/communaute-calanques': {
-    title: 'Groupe Facebook Calanques Marseille — 64 700 membres | Karim Saari',
+    title: 'Groupe des Amoureux des Calanques de Marseille — 64 700 membres | Karim Saari',
     description:
-      'La plus grande communauté en ligne autour des Calanques de Marseille. 64 700 membres passionnés de nature, de photographie et de protection du littoral méditerranéen. Fondé en 2018 par Karim Saari.',
+      'Groupe des Amoureux des Calanques de Marseille à Port-Cros : la plus grande communauté en ligne du littoral méditerranéen, 64 700 membres. Fondé en 2018 par Karim Saari pour célébrer et protéger nos côtes.',
     canonical: `${BASE_URL}/communaute-calanques`,
+    keywords: 'groupe des amoureux des calanques, groupe Facebook calanques Marseille, amoureux des calanques Port-Cros, communauté Méditerranée, protection littoral méditerranéen',
     schema: {
       '@context': 'https://schema.org',
       '@graph': [
-        breadcrumb('Groupe Facebook Calanques Marseille', '/communaute-calanques'),
+        breadcrumb('Groupe des Amoureux des Calanques de Marseille', '/communaute-calanques'),
         {
           '@type': 'OnlineCommunity',
-          name: 'Amoureux des Calanques de Marseille à Port-Cros',
+          name: 'Groupe des Amoureux des Calanques de Marseille à Port-Cros',
           url: 'https://www.facebook.com/groups/calanque/',
           description:
             'La plus grande communauté en ligne dédiée aux Calanques de Marseille et au littoral méditerranéen. Photos, actions environnementales, randonnées et sensibilisation à la protection de la mer.',
@@ -1256,6 +1257,7 @@ export const SEO_PAGES = {
           foundingDate: '2018',
           sameAs: 'https://www.facebook.com/groups/calanque/',
           keywords: [
+            'groupe des amoureux des calanques',
             'Calanques de Marseille',
             'groupe Facebook Calanques',
             'communauté Méditerranée',

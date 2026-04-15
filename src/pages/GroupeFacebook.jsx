@@ -125,10 +125,15 @@ export default function GroupeFacebook() {
                 </div>
 
                 {/* H1 */}
-                <h1 className="text-2xl md:text-3xl font-bold text-white leading-tight mb-4">
-                  La plus grande communauté en ligne autour des{' '}
-                  <span className="text-ocean-teal">Calanques de Marseille</span>
+                <h1 className="text-2xl md:text-3xl font-bold text-white leading-tight mb-2">
+                  Groupe des Amoureux des{' '}
+                  <span className="text-ocean-teal">Calanques de Marseille</span>{' '}
+                  à Port-Cros
                 </h1>
+
+                <p className="text-white/50 text-sm mb-4">
+                  La plus grande communauté en ligne autour du littoral méditerranéen
+                </p>
 
                 <div className="space-y-3 text-text-secondary text-sm leading-relaxed mb-8">
                   <p>
