@@ -41,11 +41,9 @@ export const NAV_LINKS = [
     icon: 'Compass',
     description: 'Dépollution des fonds marins en apnée, documentation scientifique et mobilisation citoyenne dans les Calanques.',
     children: [
-      { name: 'Dépollution marine',      path: '/depollution-marine',    icon: 'Compass'   },
-      { name: 'Carte interactive des Calanques', path: '/carte-calanques', icon: 'MapPin'    },
-      { name: 'Rejoindre la communauté', path: '/communaute',                icon: 'Share2'   },
-      { name: 'Groupe Facebook Calanques', path: '/communaute-calanques',      icon: 'Users'  },
-      { name: 'Données scientifiques',   path: '/donnees-scientifiques',   icon: 'BarChart2' },
+      { name: 'Dépollution marine',      path: '/depollution-marine',    icon: 'Compass',   isHub: true, hubDesc: 'Team Oxygen — nettoyage sous-marin depuis 2018' },
+      { name: 'Rejoindre la communauté', path: '/communaute',            icon: 'Share2'   },
+      { name: 'Données scientifiques',   path: '/donnees-scientifiques', icon: 'BarChart2' },
     ],
   },
   {
@@ -54,12 +52,11 @@ export const NAV_LINKS = [
     icon: 'Film',
     description: 'Documentaires ARTE, presse nationale, vidéos, blog et actualités sur l\'engagement environnemental à Marseille.',
     children: [
-      { name: 'Vidéos & Documentaires',   path: '/videos',                                       icon: 'Video'    },
+      { name: 'Vidéos & Documentaires',  path: '/videos',                                       icon: 'Video',   isHub: true, hubDesc: 'ARTE, M6, France Télévisions, YouTube' },
       { name: 'ARTE — Sauver Marseille', path: '/sauver-marseille-documentaire-arte',           icon: 'Tv',  sub: true },
       { name: 'ARTE — Méduses',          path: '/meduses-souveraines-oceans-documentaire-arte', icon: 'Tv',  sub: true },
       { name: 'Presse',                  path: '/presse',                                       icon: 'Film'     },
       { name: 'Blog',                    path: '/blog',                                         icon: 'BookOpen' },
-      { name: 'News Parc des Calanques',   path: '/actualites',                                   icon: 'Newspaper'},
     ],
   },
   {
@@ -68,10 +65,10 @@ export const NAV_LINKS = [
     icon: 'MapPin',
     description: 'Carte interactive, accès aux massifs, actualités du Parc national et communauté des amoureux des Calanques.',
     children: [
-      { name: 'Carte interactive des Calanques', path: '/carte-calanques',         icon: 'MapPin',    isHub: true, hubDesc: 'Spots photographiés & actions de dépollution' },
+      { name: 'Groupe Facebook Calanques',       path: '/communaute-calanques',    icon: 'Users',     isHub: true, hubDesc: '64 700 membres — la plus grande communauté des Calanques' },
+      { name: 'Carte interactive des Calanques', path: '/carte-calanques',         icon: 'MapPin'     },
       { name: 'Accès aux massifs forestiers',    path: '/acces-massifs-calanques', icon: 'Navigation' },
       { name: 'News Parc des Calanques',         path: '/actualites',              icon: 'Newspaper'  },
-      { name: 'Groupe Facebook Calanques',       path: '/communaute-calanques',    icon: 'Users'      },
     ],
   },
   {
@@ -80,10 +77,9 @@ export const NAV_LINKS = [
     icon: 'Mail',
     description: 'Collaborations, partenariats médias ou institutionnels — rejoignez la mission Dark Massilia.',
     children: [
-      { name: 'Collaborer avec nous',          path: '/contact',                                              icon: 'Mail'    },
-      { name: 'Newsletter',                   path: '/#newsletter',                                          icon: 'Send'    },
-      { name: 'Rejoindre le groupe Facebook',  path: 'https://www.facebook.com/groups/calanque/',             icon: 'Share2'  },
-      { name: 'Team Oxygen — site officiel',  path: 'https://www.team-oxygen.com/',                          icon: 'Compass' },
+      { name: 'Collaborer avec nous',         path: '/contact',                         icon: 'Mail'    },
+      { name: 'Newsletter',                   path: '/#newsletter',                     icon: 'Send'    },
+      { name: 'Team Oxygen — site officiel',  path: 'https://www.team-oxygen.com/',     icon: 'Compass' },
     ],
   },
 ];

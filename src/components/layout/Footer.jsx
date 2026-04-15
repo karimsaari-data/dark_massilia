@@ -39,11 +39,9 @@ const navColumns = [
   {
     label: 'Missions',
     links: [
-      { to: '/depollution-marine',    text: 'Dépollution marine' },
-      { to: '/carte-calanques',       text: 'Carte interactive des Calanques' },
-      { to: '/communaute',             text: 'Rejoindre la communauté' },
-      { to: '/communaute-calanques',   text: 'Groupe Facebook Calanques' },
-      { to: '/donnees-scientifiques',  text: 'Données scientifiques' },
+      { to: '/depollution-marine',   text: 'Dépollution marine' },
+      { to: '/communaute',           text: 'Rejoindre la communauté' },
+      { to: '/donnees-scientifiques', text: 'Données scientifiques' },
     ],
   },
   {
@@ -52,17 +50,25 @@ const navColumns = [
       { to: '/videos',                                       text: 'Vidéos & Documentaires' },
       { to: '/presse',                                       text: 'Presse' },
       { to: '/sauver-marseille-documentaire-arte',           text: 'ARTE — Sauver Marseille' },
-      { to: '/meduses-souveraines-oceans-documentaire-arte', text: 'ARTE — Méduses Souveraines' },
-      { to: '/blog', text: 'Blog', paired: { to: '/actualites', text: 'News Parc des Calanques' } },
+      { to: '/meduses-souveraines-oceans-documentaire-arte', text: 'ARTE — Méduses' },
+      { to: '/blog',                                         text: 'Blog' },
+    ],
+  },
+  {
+    label: 'Calanques',
+    links: [
+      { to: '/communaute-calanques',    text: 'Groupe Facebook Calanques' },
+      { to: '/carte-calanques',         text: 'Carte interactive' },
+      { to: '/acces-massifs-calanques', text: 'Accès aux massifs' },
+      { to: '/actualites',              text: 'News Parc des Calanques' },
     ],
   },
   {
     label: 'Contact',
     links: [
-      { to: '/contact', text: 'Collaborer avec nous' },
-      { to: '/#newsletter', text: 'Newsletter', anchor: true },
-      { to: 'https://www.facebook.com/groups/calanque/', text: 'Rejoindre le groupe Facebook', external: true },
-      { to: 'https://www.team-oxygen.com/', text: 'Team Oxygen — site officiel', external: true },
+      { to: '/contact',                     text: 'Collaborer avec nous' },
+      { to: '/#newsletter',                 text: 'Newsletter', anchor: true },
+      { to: 'https://www.team-oxygen.com/', text: 'Team Oxygen', external: true },
     ],
   },
 ];
@@ -87,7 +93,7 @@ const Footer = () => {
 
         {/* Navigation secondaire — maillage interne SEO */}
         <nav aria-label="Navigation secondaire" className="mb-10 pb-8 border-b border-white/5">
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
+          <div className="grid grid-cols-2 md:grid-cols-5 gap-6 text-center">
             {navColumns.map((col) => (
               <div key={col.label}>
                 <p className="text-xs font-semibold text-gray-400 uppercase tracking-widest mb-4">
