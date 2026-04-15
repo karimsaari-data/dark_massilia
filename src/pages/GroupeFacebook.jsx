@@ -375,46 +375,54 @@ export default function GroupeFacebook() {
             Les outils et infos indispensables avant de partir — régulièrement partagés dans le groupe.
           </motion.p>
 
-          {/* App Mes Calanques — bloc unique avec vidéo intégrée */}
+          {/* App Mes Calanques — layout 2 colonnes : texte gauche / vidéo droite */}
           <motion.div variants={FADE_IN_UP}>
-            <div className="glass rounded-2xl border border-emerald-500/20 bg-gradient-to-br from-emerald-500/6 to-teal-500/6 p-6 flex flex-col gap-5">
+            <div className="glass rounded-2xl border border-emerald-500/20 bg-gradient-to-br from-emerald-500/6 to-teal-500/6 p-6 md:p-8">
+              <div className="flex flex-col md:flex-row gap-8 items-start">
 
-              {/* En-tête */}
-              <div className="flex items-center gap-3">
-                <div className="w-9 h-9 rounded-xl bg-emerald-500/15 border border-emerald-500/25 flex items-center justify-center shrink-0">
-                  <Smartphone className="w-4 h-4 text-emerald-400" />
+                {/* Colonne gauche — texte + stores */}
+                <div className="flex flex-col gap-5 md:w-2/5 shrink-0">
+
+                  {/* En-tête */}
+                  <div className="flex items-center gap-3">
+                    <div className="w-9 h-9 rounded-xl bg-emerald-500/15 border border-emerald-500/25 flex items-center justify-center shrink-0">
+                      <Smartphone className="w-4 h-4 text-emerald-400" />
+                    </div>
+                    <div>
+                      <h3 className="text-white font-semibold">App Mes Calanques</h3>
+                      <p className="text-emerald-400 text-xs">Parc National — gratuite</p>
+                    </div>
+                  </div>
+
+                  {/* Features */}
+                  <ul className="space-y-2 text-sm text-white/60">
+                    <li className="flex items-start gap-2"><span className="text-emerald-400 shrink-0 mt-0.5">✓</span> Sentiers GR® et chemins côtiers hors-ligne</li>
+                    <li className="flex items-start gap-2"><span className="text-emerald-400 shrink-0 mt-0.5">✓</span> Zones réglementées et espèces protégées</li>
+                    <li className="flex items-start gap-2"><span className="text-emerald-400 shrink-0 mt-0.5">✓</span> Alertes fermetures en temps réel</li>
+                  </ul>
+
+                  {/* Boutons store */}
+                  <div className="flex flex-col sm:flex-row md:flex-col gap-2 mt-auto">
+                    <a href="https://apps.apple.com/fr/app/rando-calanques/id1448768736" target="_blank" rel="noopener noreferrer"
+                      className="flex-1 text-center px-4 py-2.5 rounded-lg bg-emerald-500/12 border border-emerald-500/20 text-emerald-300 hover:bg-emerald-500/22 transition-colors text-sm font-medium">
+                      App Store
+                    </a>
+                    <a href="https://play.google.com/store/apps/details?id=fr.calanques.randonnee" target="_blank" rel="noopener noreferrer"
+                      className="flex-1 text-center px-4 py-2.5 rounded-lg bg-emerald-500/12 border border-emerald-500/20 text-emerald-300 hover:bg-emerald-500/22 transition-colors text-sm font-medium">
+                      Google Play
+                    </a>
+                  </div>
                 </div>
-                <div>
-                  <h3 className="text-white font-semibold text-sm">App Mes Calanques</h3>
-                  <p className="text-emerald-400 text-xs">Parc National — gratuite</p>
+
+                {/* Colonne droite — vidéo */}
+                <div className="flex-1 w-full">
+                  <VideoFacade
+                    videoId="WMuqAqOvXMA"
+                    title="L'application mobile Mes Calanques débarque en V2 ! — Parc national des Calanques"
+                  />
                 </div>
+
               </div>
-
-              {/* Features */}
-              <ul className="space-y-1.5 text-xs text-white/55">
-                <li className="flex items-start gap-2"><span className="text-emerald-400 shrink-0">✓</span> Sentiers GR® et chemins côtiers hors-ligne</li>
-                <li className="flex items-start gap-2"><span className="text-emerald-400 shrink-0">✓</span> Zones réglementées et espèces protégées</li>
-                <li className="flex items-start gap-2"><span className="text-emerald-400 shrink-0">✓</span> Alertes fermetures en temps réel</li>
-              </ul>
-
-              {/* Vidéo intégrée */}
-              <VideoFacade
-                videoId="WMuqAqOvXMA"
-                title="L'application mobile Mes Calanques débarque en V2 ! — Parc national des Calanques"
-              />
-
-              {/* Boutons store */}
-              <div className="flex gap-2">
-                <a href="https://apps.apple.com/fr/app/rando-calanques/id1448768736" target="_blank" rel="noopener noreferrer"
-                  className="flex-1 text-center px-3 py-2 rounded-lg bg-emerald-500/12 border border-emerald-500/20 text-emerald-300 hover:bg-emerald-500/22 transition-colors text-xs font-medium">
-                  App Store
-                </a>
-                <a href="https://play.google.com/store/apps/details?id=fr.calanques.randonnee" target="_blank" rel="noopener noreferrer"
-                  className="flex-1 text-center px-3 py-2 rounded-lg bg-emerald-500/12 border border-emerald-500/20 text-emerald-300 hover:bg-emerald-500/22 transition-colors text-xs font-medium">
-                  Google Play
-                </a>
-              </div>
-
             </div>
           </motion.div>
 
