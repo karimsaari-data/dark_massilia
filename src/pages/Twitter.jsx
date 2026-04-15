@@ -6,8 +6,9 @@ import { FADE_IN_UP, STAGGER_CONTAINER } from '../utils/constants';
 import SEO from '../components/SEO';
 import { SEO_PAGES } from '../utils/seo';
 
-// ── RSS Parc National des Calanques ─────────────────────────────────────────
-const RSS_PROXY = 'https://bzlllfmpojcybuyuemdx.supabase.co/functions/v1/rss-parc-calanques';
+// ── RSS Actualités Parc National ────────────────────────────────────────────
+const RSS_PROXY    = 'https://bzlllfmpojcybuyuemdx.supabase.co/functions/v1/rss-parc-calanques';
+const AGENDA_PROXY = 'https://bzlllfmpojcybuyuemdx.supabase.co/functions/v1/agenda-parc-calanques';
 
 const formatDate = (dateStr) => {
   try {
@@ -69,6 +70,71 @@ const useParcRss = () => {
   return { items, loading, error };
 };
 
+// ── Hook Agenda ──────────────────────────────────────────────────────────────
+const useAgenda = () => {
+  const [items, setItems]   = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError]   = useState(null);
+
+  useEffect(() => {
+    fetch(AGENDA_PROXY, { signal: AbortSignal.timeout(10000), cache: 'no-store' })
+      .then((r) => { if (!r.ok) throw new Error(`HTTP ${r.status}`); return r.json(); })
+      .then((data) => {
+        if (data.status !== 'ok') throw new Error(data.message || 'Indisponible');
+        setItems(data.items);
+      })
+      .catch((e) => setError(e.message))
+      .finally(() => setLoading(false));
+  }, []);
+
+  return { items, loading, error };
+};
+
+// ── Composant carte Agenda ───────────────────────────────────────────────────
+const AgendaCard = ({ title, link, day, month, adverb, location, image }) => (
+  <a
+    href={link}
+    target="_blank"
+    rel="noopener noreferrer"
+    className="group flex flex-col rounded-2xl overflow-hidden border border-white/10 hover:border-ocean-teal/30 bg-white/5 hover:bg-white/[0.08] transition-all duration-300"
+  >
+    <div className="relative aspect-video w-full overflow-hidden bg-white/5 flex-shrink-0">
+      {image ? (
+        <img
+          src={image}
+          alt={title}
+          className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+          loading="lazy"
+        />
+      ) : (
+        <div className="w-full h-full flex items-center justify-center">
+          <CalendarDays className="w-10 h-10 text-white/10" />
+        </div>
+      )}
+      {/* Badge date */}
+      {(day || month) && (
+        <div className="absolute top-3 left-3 flex flex-col items-center justify-center bg-ocean-teal text-white rounded-xl px-2.5 py-1.5 text-center shadow-lg min-w-[44px]">
+          <span className="text-lg font-bold leading-none">{day}</span>
+          <span className="text-[10px] font-semibold uppercase tracking-wide leading-none mt-0.5">{month}</span>
+        </div>
+      )}
+    </div>
+    <div className="flex flex-col flex-1 p-4 gap-2">
+      <h3 className="text-sm font-semibold text-white group-hover:text-ocean-teal transition-colors leading-snug line-clamp-2 flex-1">
+        {title}
+      </h3>
+      {location && (
+        <p className="text-xs text-gray-400 flex items-center gap-1">
+          <span>📍</span>{location}
+        </p>
+      )}
+      <span className="inline-flex items-center gap-1.5 text-xs font-semibold text-white bg-ocean-teal/20 border border-ocean-teal/30 rounded-lg px-3 py-1.5 w-fit group-hover:bg-ocean-teal/30 transition-colors">
+        Lire la suite <ExternalLink className="w-3 h-3" />
+      </span>
+    </div>
+  </a>
+);
+
 // ── Composant carte RSS — style Parc ─────────────────────────────────────────
 const RssCard = ({ title, link, date, description, image, priority }) => (
   <a
@@ -120,12 +186,23 @@ const RssCard = ({ title, link, date, description, image, priority }) => (
 
 // ── Page principale ──────────────────────────────────────────────────────────
 const Twitter = () => {
-  const { items, loading, error } = useParcRss();
+  const { items, loading, error }                     = useParcRss();
+  const { items: agendaItems, loading: agendaLoading, error: agendaError } = useAgenda();
 
   return (
     <div className="min-h-screen py-24">
       <SEO {...SEO_PAGES['/actualites']} />
       <div className="container-custom">
+
+        {/* ── Titre de page ─────────────────────────────────────────────── */}
+        <div className="mb-8 text-center">
+          <h1 className="text-2xl md:text-3xl font-bold text-white mb-2">
+            Actualités des Calanques
+          </h1>
+          <p className="text-text-secondary text-sm max-w-lg mx-auto">
+            Dernières nouvelles du Parc National des Calanques — espèces protégées, réglementation, événements.
+          </p>
+        </div>
 
         {/* ── Section RSS Parc National ─────────────────────────────────── */}
         <div className="mb-10">
@@ -193,6 +270,63 @@ const Twitter = () => {
                 rel="noopener noreferrer"
                 className="hover:text-gray-400 transition-colors"
               >
+                calanques-parcnational.fr
+              </a>
+            </p>
+          </div>
+        </div>
+
+        {/* ── Section Agenda ────────────────────────────────────────────── */}
+        <div className="mb-10">
+          <div className="glass-strong rounded-2xl p-6 md:p-8 border border-white/10">
+            <div className="flex items-center justify-between mb-7">
+              <div className="flex items-center gap-2">
+                <CalendarDays className="w-4 h-4 text-ocean-teal" />
+                <h2 className="text-base font-semibold text-white">Agenda</h2>
+              </div>
+              <a
+                href="https://calanques-parcnational.fr/fr/agenda"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-1.5 text-xs text-ocean-teal hover:text-white transition-colors font-medium"
+              >
+                Tous les événements
+                <ExternalLink className="w-3.5 h-3.5" />
+              </a>
+            </div>
+
+            {agendaLoading && (
+              <div className="flex items-center justify-center text-gray-400" style={{ minHeight: '200px' }}>
+                <Loader2 className="w-5 h-5 animate-spin mr-2" />
+                <span className="text-sm">Chargement…</span>
+              </div>
+            )}
+
+            {agendaError && !agendaLoading && (
+              <div className="flex items-start gap-2 text-gray-400 py-6 px-2">
+                <AlertCircle className="w-4 h-4 flex-shrink-0 mt-0.5 text-amber-400" />
+                <p className="text-sm">
+                  Impossible de charger l'agenda.{' '}
+                  <a href="https://calanques-parcnational.fr/fr/agenda" target="_blank" rel="noopener noreferrer"
+                    className="text-ocean-teal underline underline-offset-2 hover:text-white">
+                    Consulter directement le site du Parc
+                  </a>.
+                </p>
+              </div>
+            )}
+
+            {!agendaLoading && !agendaError && agendaItems.length > 0 && (
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                {agendaItems.map((item, i) => (
+                  <AgendaCard key={i} {...item} />
+                ))}
+              </div>
+            )}
+
+            <p className="text-xs text-gray-600 mt-6 text-right">
+              Source :{' '}
+              <a href="https://calanques-parcnational.fr" target="_blank" rel="noopener noreferrer"
+                className="hover:text-gray-400 transition-colors">
                 calanques-parcnational.fr
               </a>
             </p>
