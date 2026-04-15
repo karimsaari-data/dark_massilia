@@ -1,24 +1,17 @@
 /**
  * AccesMassifs — Carte en temps réel des accès aux massifs forestiers
  * Route : /acces-massifs-calanques
- * Données : WMS public DFCI Bouches-du-Rhône (opendfci.fr)
+ * Source : opendfci.fr — carte Lizmap officielle DFCI Bouches-du-Rhône
  * Vert = massif ouvert · Rouge = massif fermé (risque incendie)
  */
 import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
-import { MapContainer, TileLayer, WMSTileLayer } from 'react-leaflet';
-import 'leaflet/dist/leaflet.css';
 import { ArrowLeft, ExternalLink, Flame, Info, CheckCircle, XCircle } from 'lucide-react';
 import SEO from '../components/SEO';
 import { SEO_PAGES } from '../utils/seo';
 
-// WMS officiel DFCI 13 — paramètres Lizmap dans l'URL
-const WMS_URL =
-  'https://opendfci.fr/13/index.php/lizmap/service?repository=openmassifs&project=open_massifs';
-
-// Centre sur les Calanques / Bouches-du-Rhône
-const CENTER = [43.42, 5.25];
-const ZOOM = 10;
+const IFRAME_URL =
+  'https://opendfci.fr/13/index.php/view/map?repository=openmassifs&project=open_massifs';
 
 export default function AccesMassifs() {
   return (
@@ -74,7 +67,7 @@ export default function AccesMassifs() {
             </a>
           </motion.div>
 
-          {/* Carte Leaflet */}
+          {/* Carte DFCI — iframe Lizmap officiel */}
           <motion.div
             initial={{ opacity: 0, scale: 0.99 }}
             animate={{ opacity: 1, scale: 1 }}
@@ -82,26 +75,14 @@ export default function AccesMassifs() {
             className="rounded-2xl overflow-hidden border border-white/10 shadow-2xl shadow-black/40 mb-8"
             style={{ height: '520px' }}
           >
-            <MapContainer
-              center={CENTER}
-              zoom={ZOOM}
-              style={{ height: '100%', width: '100%' }}
-              scrollWheelZoom={false}
-            >
-              <TileLayer
-                attribution='© <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-                url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-              />
-              <WMSTileLayer
-                url={WMS_URL}
-                layers="vue_acces_massifs_13"
-                format="image/png"
-                transparent={true}
-                version="1.3.0"
-                opacity={0.82}
-                attribution='© <a href="https://opendfci.fr/13" target="_blank" rel="noopener">DFCI / opendfci.fr</a>'
-              />
-            </MapContainer>
+            <iframe
+              src={IFRAME_URL}
+              title="Carte des accès aux massifs forestiers — DFCI Bouches-du-Rhône"
+              className="w-full h-full"
+              style={{ border: 'none' }}
+              loading="lazy"
+              allowFullScreen
+            />
           </motion.div>
 
           {/* Info pratique */}
