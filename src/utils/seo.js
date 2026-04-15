@@ -1255,7 +1255,7 @@ export const SEO_PAGES = {
             url: `${BASE_URL}/`,
           },
           foundingDate: '2018',
-          sameAs: 'https://www.facebook.com/groups/calanque/',
+          sameAs: [`${BASE_URL}/communaute-calanques`],
           keywords: [
             'groupe des amoureux des calanques',
             'Calanques de Marseille',
