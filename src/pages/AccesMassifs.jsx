@@ -4,7 +4,7 @@
  * Source : opendfci.fr — carte Lizmap officielle DFCI Bouches-du-Rhône
  */
 import { Link } from 'react-router-dom';
-import { ArrowLeft, ExternalLink, Flame, Info } from 'lucide-react';
+import { ArrowLeft, ExternalLink, Info } from 'lucide-react';
 import SEO from '../components/SEO';
 import { SEO_PAGES } from '../utils/seo';
 
@@ -16,19 +16,8 @@ export default function AccesMassifs() {
     <>
       <SEO {...SEO_PAGES['/acces-massifs-calanques']} />
 
-      {/* En-tête compact */}
-      <div className="pt-24 pb-4 text-center px-4">
-        <span className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-orange-500/15 border border-orange-500/30 text-orange-400 text-xs font-semibold mb-3">
-          <Flame className="w-3 h-3" />
-          Données officielles DFCI — actualisées chaque matin
-        </span>
-        <h1 className="text-xl md:text-2xl font-bold text-white">
-          Accès aux massifs forestiers des Calanques
-        </h1>
-      </div>
-
-      {/* Carte pleine largeur */}
-      <div style={{ height: '72vh', minHeight: '520px' }}>
+      {/* Carte pleine largeur — flush sous la navbar, même pattern que /carte-calanques */}
+      <div className="relative overflow-hidden h-[calc(100vh-70px)] md:h-[calc(100vh-128px-80px)]">
         <iframe
           src={IFRAME_URL}
           title="Carte des accès aux massifs forestiers — DFCI Bouches-du-Rhône"
