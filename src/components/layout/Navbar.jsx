@@ -375,7 +375,7 @@ const Navbar = () => {
             </div>
 
             {/* Colonne 2 — Nav dropdowns (centré) */}
-            <nav aria-label="Menu principal" className="hidden md:flex flex-1 items-center justify-center gap-8 lg:gap-14">
+            <nav aria-label="Menu principal" className="hidden md:flex flex-1 items-center justify-center gap-4 lg:gap-8">
               {NAV_LINKS.map((item) => (
                 <NavDropdown key={item.name} item={item} />
               ))}

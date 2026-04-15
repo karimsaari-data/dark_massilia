@@ -63,6 +63,18 @@ export const NAV_LINKS = [
     ],
   },
   {
+    name: 'Calanques',
+    dropdownTitle: 'Explorer les Calanques de Marseille',
+    icon: 'MapPin',
+    description: 'Carte interactive, accès aux massifs, actualités du Parc national et communauté des amoureux des Calanques.',
+    children: [
+      { name: 'Carte interactive des Calanques', path: '/carte-calanques',         icon: 'MapPin',    isHub: true, hubDesc: 'Spots photographiés & actions de dépollution' },
+      { name: 'Accès aux massifs forestiers',    path: '/acces-massifs-calanques', icon: 'Navigation' },
+      { name: 'News Parc des Calanques',         path: '/actualites',              icon: 'Newspaper'  },
+      { name: 'Groupe Facebook Calanques',       path: '/communaute-calanques',    icon: 'Users'      },
+    ],
+  },
+  {
     name: 'Contact',
     dropdownTitle: 'Découvrir comment agir pour la mer',
     icon: 'Mail',
