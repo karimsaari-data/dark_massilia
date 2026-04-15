@@ -38,6 +38,7 @@ const STATIC_ROUTES = [
   '/donnees-scientifiques',
   '/contact',
   '/carte-calanques',
+  '/acces-massifs-calanques',
   '/local-guide-marseille',
   '/les-francais-yann-arthus-bertrand',
   '/photographe-environnemental-marseille',
