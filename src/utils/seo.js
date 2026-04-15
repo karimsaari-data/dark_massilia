@@ -1295,7 +1295,7 @@ export const SEO_PAGES = {
               name: 'Le groupe organise-t-il des sorties ou missions de nettoyage ?',
               acceptedAnswer: {
                 '@type': 'Answer',
-                text: 'Oui, les missions de dépollution marine organisées par Team Oxygen sont annoncées en priorité dans le groupe. Plus de 60 missions ont été réalisées depuis 2018 dans les Calanques et le long du littoral marseillais.',
+                text: "Le groupe n'organise pas directement de sorties, mais c'est un espace de partage des actions environnementales des différentes associations marseillaises engagées pour la protection du littoral. Team Oxygen et d'autres collectifs y annoncent leurs missions de dépollution, ramassages de déchets et initiatives éco-citoyennes.",
               },
             },
           ],

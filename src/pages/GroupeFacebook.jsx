@@ -1,6 +1,6 @@
 import { motion, useInView, useReducedMotion } from 'framer-motion';
 import { useState, useEffect, useRef } from 'react';
-import { Users, Camera, Recycle, Footprints, TrendingUp } from 'lucide-react';
+import { Users, Camera, Recycle, Footprints, TrendingUp, Map, Car, AlertTriangle, Smartphone } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { FADE_IN_UP, STAGGER_CONTAINER } from '../utils/constants';
 import SEO from '../components/SEO';
@@ -309,6 +309,134 @@ export default function GroupeFacebook() {
         </motion.div>
 
 
+        {/* ── Ressources pratiques ─────────────────────────────── */}
+        <motion.div
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, amount: 0.15 }}
+          variants={STAGGER_CONTAINER}
+        >
+          <motion.h2 variants={FADE_IN_UP} className="text-2xl md:text-3xl font-bold text-white text-center mb-3">
+            Ressources pratiques pour visiter les Calanques
+          </motion.h2>
+          <motion.p variants={FADE_IN_UP} className="text-text-secondary text-center text-sm mb-10 max-w-xl mx-auto">
+            Les outils et infos indispensables avant de partir — régulièrement partagés dans le groupe.
+          </motion.p>
+
+          <div className="grid md:grid-cols-2 gap-6">
+
+            {/* App PNC */}
+            <motion.div variants={FADE_IN_UP}
+              className="glass-strong rounded-2xl border border-emerald-500/20 bg-gradient-to-br from-emerald-500/8 to-teal-500/8 p-7 flex flex-col gap-5"
+            >
+              <div className="flex items-center gap-3">
+                <div className="w-10 h-10 rounded-xl bg-emerald-500/15 border border-emerald-500/25 flex items-center justify-center shrink-0">
+                  <Smartphone className="w-5 h-5 text-emerald-400" />
+                </div>
+                <div>
+                  <h3 className="text-white font-semibold text-base">App officielle du Parc National</h3>
+                  <p className="text-emerald-400 text-xs font-medium">Mes Calanques — gratuite</p>
+                </div>
+              </div>
+              <p className="text-text-secondary text-sm leading-relaxed">
+                L'application officielle du <strong className="text-white/80">Parc National des Calanques</strong> regroupe toutes les randonnées balisées, les zones réglementées, les espèces protégées à observer et les alertes en temps réel (fermetures, risque incendie).
+              </p>
+              <ul className="space-y-2 text-sm text-white/60">
+                <li className="flex items-start gap-2"><span className="text-emerald-400 mt-0.5">✓</span> Carte hors-ligne des sentiers GR® et chemins côtiers</li>
+                <li className="flex items-start gap-2"><span className="text-emerald-400 mt-0.5">✓</span> Signalement d'espèces et points d'intérêt naturaliste</li>
+                <li className="flex items-start gap-2"><span className="text-emerald-400 mt-0.5">✓</span> Alertes fermetures et conditions météo</li>
+              </ul>
+              <div className="flex flex-wrap gap-3 mt-auto pt-2">
+                <a
+                  href="https://apps.apple.com/fr/app/rando-calanques/id1448768736"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-emerald-500/15 border border-emerald-500/25 text-emerald-300 hover:bg-emerald-500/25 transition-colors text-xs font-medium"
+                >
+                  <Map className="w-3.5 h-3.5" /> App Store
+                </a>
+                <a
+                  href="https://play.google.com/store/apps/details?id=fr.calanques.randonnee"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-emerald-500/15 border border-emerald-500/25 text-emerald-300 hover:bg-emerald-500/25 transition-colors text-xs font-medium"
+                >
+                  <Map className="w-3.5 h-3.5" /> Google Play
+                </a>
+              </div>
+            </motion.div>
+
+            {/* Accès routier */}
+            <motion.div variants={FADE_IN_UP}
+              className="glass-strong rounded-2xl border border-amber-500/20 bg-gradient-to-br from-amber-500/8 to-orange-500/8 p-7 flex flex-col gap-5"
+            >
+              <div className="flex items-center gap-3">
+                <div className="w-10 h-10 rounded-xl bg-amber-500/15 border border-amber-500/25 flex items-center justify-center shrink-0">
+                  <Car className="w-5 h-5 text-amber-400" />
+                </div>
+                <div>
+                  <h3 className="text-white font-semibold text-base">Accès routier & restrictions</h3>
+                  <p className="text-amber-400 text-xs font-medium">Vérifier avant de partir</p>
+                </div>
+              </div>
+              <p className="text-text-secondary text-sm leading-relaxed">
+                La <strong className="text-white/80">route des Calanques (D559a)</strong> entre Marseille et Cassis est régulièrement fermée en période estivale et par grand vent. Certaines calanques imposent une <strong className="text-white/80">réservation obligatoire</strong> en haute saison.
+              </p>
+              <div className="space-y-3">
+                <div className="rounded-xl border border-amber-500/15 bg-amber-500/8 p-3.5">
+                  <p className="text-amber-300 text-xs font-semibold mb-1 flex items-center gap-1.5">
+                    <AlertTriangle className="w-3.5 h-3.5" /> Calanque de Sugiton — quota visiteurs
+                  </p>
+                  <p className="text-white/55 text-xs leading-relaxed">Réservation obligatoire de mai à septembre via le site du PNC. Places limitées à 400 personnes/jour.</p>
+                </div>
+                <div className="rounded-xl border border-orange-500/15 bg-orange-500/8 p-3.5">
+                  <p className="text-orange-300 text-xs font-semibold mb-1 flex items-center gap-1.5">
+                    <AlertTriangle className="w-3.5 h-3.5" /> Risque incendie — fermetures préfectorales
+                  </p>
+                  <p className="text-white/55 text-xs leading-relaxed">Entre juin et septembre, les massifs peuvent être fermés selon le niveau de risque. Vérifier le matin même sur le site de la Préfecture 13.</p>
+                </div>
+              </div>
+              <div className="flex flex-wrap gap-3 mt-auto pt-2">
+                <a
+                  href="https://www.calanques-parcnational.fr/fr/venir-dans-le-parc"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-amber-500/15 border border-amber-500/25 text-amber-300 hover:bg-amber-500/25 transition-colors text-xs font-medium"
+                >
+                  <Car className="w-3.5 h-3.5" /> Site officiel PNC
+                </a>
+                <a
+                  href="https://share.google/mufwnPbFpp2le3m8k"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-amber-500/15 border border-amber-500/25 text-amber-300 hover:bg-amber-500/25 transition-colors text-xs font-medium"
+                >
+                  <AlertTriangle className="w-3.5 h-3.5" /> Calanques ouvertes ?
+                </a>
+              </div>
+            </motion.div>
+
+          </div>
+
+          {/* ── Vidéo présentation app ─────────────────────────── */}
+          <motion.div variants={FADE_IN_UP} className="mt-8">
+            <div className="relative w-full rounded-2xl overflow-hidden border border-white/10" style={{ paddingTop: '56.25%' }}>
+              <iframe
+                className="absolute inset-0 w-full h-full"
+                src="https://www.youtube.com/embed/WMuqAqOvXMA"
+                title="Application Mes Calanques — Parc National des Calanques de Marseille"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                allowFullScreen
+                loading="lazy"
+              />
+            </div>
+            <p className="text-white/35 text-xs text-center mt-3">
+              Présentation de l'application officielle <strong className="text-white/50">Mes Calanques</strong> du Parc National
+            </p>
+          </motion.div>
+
+        </motion.div>
+
         {/* ── FAQ ─────────────────────────────────────────────── */}
         <motion.div
           initial="hidden"
@@ -335,7 +463,7 @@ export default function GroupeFacebook() {
               },
               {
                 q: 'Le groupe organise-t-il des sorties ou missions de nettoyage ?',
-                a: 'Oui, les missions de dépollution marine organisées par Team Oxygen sont annoncées en priorité dans le groupe. Plus de 60 missions ont été réalisées depuis 2018 dans les Calanques et le long du littoral marseillais.',
+                a: `Le groupe n'organise pas directement de sorties, mais c'est un espace de partage des actions environnementales des différentes associations marseillaises engagées pour la protection du littoral. Team Oxygen, mais aussi d'autres collectifs, y annoncent leurs missions de dépollution, ramassages de déchets et initiatives éco-citoyennes.`,
               },
               {
                 q: 'Peut-on proposer des randonnées ou itinéraires dans les Calanques ?',
