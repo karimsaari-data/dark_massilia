@@ -7,53 +7,96 @@ import SEO from '../components/SEO';
 import { SEO_PAGES } from '../utils/seo';
 import { supabase } from '../lib/supabase';
 
-/* ── Facade YouTube compacte ─────────────────────────────────── */
-const VideoFacade = ({ videoId, title }) => {
+/* ── Bloc App Mes Calanques — texte gauche / vidéo droite ───── */
+const AppMesCalanques = ({ videoId }) => {
   const [playing, setPlaying] = useState(false);
   return (
-    <div className="flex flex-col sm:flex-row gap-4 items-center glass rounded-2xl border border-white/8 p-4">
-      {/* Thumbnail */}
-      <div
-        className="relative w-full sm:w-64 shrink-0 rounded-xl overflow-hidden cursor-pointer group"
-        style={{ aspectRatio: '16/9' }}
-        onClick={() => setPlaying(true)}
-      >
-        {playing ? (
-          <iframe
-            className="absolute inset-0 w-full h-full"
-            src={`https://www.youtube.com/embed/${videoId}?autoplay=1`}
-            title={title}
-            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-            allowFullScreen
-          />
-        ) : (
-          <>
-            <img
-              src={`https://img.youtube.com/vi/${videoId}/mqdefault.jpg`}
-              alt={title}
-              className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
-            />
-            <div className="absolute inset-0 bg-black/30 flex items-center justify-center group-hover:bg-black/20 transition-colors">
-              <div className="w-10 h-10 rounded-full bg-white/90 flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform">
-                <svg className="w-4 h-4 text-gray-900 ml-0.5" fill="currentColor" viewBox="0 0 24 24">
-                  <path d="M8 5v14l11-7z"/>
-                </svg>
-              </div>
+    <div className="glass rounded-2xl border border-white/10 overflow-hidden">
+      <div className="flex flex-col md:flex-row min-h-[260px]">
+
+        {/* Gauche — infos app */}
+        <div className="md:w-[42%] shrink-0 p-7 flex flex-col gap-5 border-b md:border-b-0 md:border-r border-white/8">
+          {/* Header */}
+          <div className="flex items-center gap-3">
+            <div className="w-10 h-10 rounded-xl bg-emerald-500/15 border border-emerald-500/25 flex items-center justify-center shrink-0">
+              <Smartphone className="w-5 h-5 text-emerald-400" />
             </div>
-          </>
-        )}
-      </div>
-      {/* Texte */}
-      <div className="flex-1 min-w-0">
-        <p className="text-white/40 text-xs font-semibold uppercase tracking-wide mb-1">Vidéo · Parc National des Calanques</p>
-        <p className="text-white/80 text-sm font-medium leading-snug mb-3">{title}</p>
-        <button
+            <div>
+              <h3 className="text-white font-semibold text-base leading-tight">App Mes Calanques</h3>
+              <p className="text-emerald-400 text-xs mt-0.5">Parc National des Calanques — gratuite</p>
+            </div>
+          </div>
+
+          {/* Features */}
+          <ul className="space-y-2.5 flex-1">
+            {[
+              'Sentiers GR® et chemins côtiers hors-ligne',
+              'Zones réglementées et espèces protégées',
+              'Alertes fermetures en temps réel',
+            ].map(f => (
+              <li key={f} className="flex items-start gap-2.5 text-sm text-white/65">
+                <span className="text-emerald-400 shrink-0 mt-0.5 text-base leading-none">✓</span>
+                {f}
+              </li>
+            ))}
+          </ul>
+
+          {/* Store buttons */}
+          <div className="flex gap-2">
+            <a href="https://apps.apple.com/fr/app/rando-calanques/id1448768736"
+              target="_blank" rel="noopener noreferrer"
+              className="flex-1 text-center py-2.5 rounded-xl bg-white/6 border border-white/12 text-white/70 hover:text-white hover:bg-white/10 transition-colors text-sm font-medium">
+              App Store
+            </a>
+            <a href="https://play.google.com/store/apps/details?id=fr.calanques.randonnee"
+              target="_blank" rel="noopener noreferrer"
+              className="flex-1 text-center py-2.5 rounded-xl bg-white/6 border border-white/12 text-white/70 hover:text-white hover:bg-white/10 transition-colors text-sm font-medium">
+              Google Play
+            </a>
+          </div>
+        </div>
+
+        {/* Droite — vidéo plein panneau */}
+        <div
+          className="flex-1 relative cursor-pointer group"
+          style={{ minHeight: '220px' }}
           onClick={() => setPlaying(true)}
-          className="inline-flex items-center gap-2 px-3 py-1.5 rounded-lg bg-white/8 border border-white/12 text-white/60 hover:text-white hover:bg-white/12 transition-colors text-xs font-medium"
         >
-          <svg className="w-3 h-3" fill="currentColor" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
-          Regarder
-        </button>
+          {playing ? (
+            <iframe
+              className="absolute inset-0 w-full h-full"
+              src={`https://www.youtube.com/embed/${videoId}?autoplay=1`}
+              title="L'application mobile Mes Calanques débarque en V2 !"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+              allowFullScreen
+            />
+          ) : (
+            <>
+              <img
+                src={`https://img.youtube.com/vi/${videoId}/hqdefault.jpg`}
+                alt="Vidéo — App Mes Calanques V2"
+                className="absolute inset-0 w-full h-full object-cover group-hover:scale-[1.03] transition-transform duration-500"
+              />
+              {/* Overlay sombre */}
+              <div className="absolute inset-0 bg-black/40 group-hover:bg-black/30 transition-colors" />
+              {/* Bouton play centré */}
+              <div className="absolute inset-0 flex flex-col items-center justify-center gap-3">
+                <div className="w-14 h-14 rounded-full bg-white/90 flex items-center justify-center shadow-xl group-hover:scale-110 group-hover:bg-white transition-transform duration-200">
+                  <svg className="w-6 h-6 text-gray-900 ml-1" fill="currentColor" viewBox="0 0 24 24">
+                    <path d="M8 5v14l11-7z"/>
+                  </svg>
+                </div>
+                <p className="text-white/80 text-xs font-medium uppercase tracking-widest">Regarder</p>
+              </div>
+              {/* Titre en bas */}
+              <div className="absolute bottom-0 left-0 right-0 p-4 bg-gradient-to-t from-black/70 to-transparent">
+                <p className="text-white/50 text-[10px] uppercase tracking-wider mb-1">Vidéo · Parc National des Calanques</p>
+                <p className="text-white text-sm font-medium leading-snug">L'application mobile Mes Calanques débarque en V2 !</p>
+              </div>
+            </>
+          )}
+        </div>
+
       </div>
     </div>
   );
@@ -375,55 +418,9 @@ export default function GroupeFacebook() {
             Les outils et infos indispensables avant de partir — régulièrement partagés dans le groupe.
           </motion.p>
 
-          {/* App Mes Calanques — layout 2 colonnes : texte gauche / vidéo droite */}
+          {/* App Mes Calanques */}
           <motion.div variants={FADE_IN_UP}>
-            <div className="glass rounded-2xl border border-emerald-500/20 bg-gradient-to-br from-emerald-500/6 to-teal-500/6 p-6 md:p-8">
-              <div className="flex flex-col md:flex-row gap-8 items-start">
-
-                {/* Colonne gauche — texte + stores */}
-                <div className="flex flex-col gap-5 md:w-2/5 shrink-0">
-
-                  {/* En-tête */}
-                  <div className="flex items-center gap-3">
-                    <div className="w-9 h-9 rounded-xl bg-emerald-500/15 border border-emerald-500/25 flex items-center justify-center shrink-0">
-                      <Smartphone className="w-4 h-4 text-emerald-400" />
-                    </div>
-                    <div>
-                      <h3 className="text-white font-semibold">App Mes Calanques</h3>
-                      <p className="text-emerald-400 text-xs">Parc National — gratuite</p>
-                    </div>
-                  </div>
-
-                  {/* Features */}
-                  <ul className="space-y-2 text-sm text-white/60">
-                    <li className="flex items-start gap-2"><span className="text-emerald-400 shrink-0 mt-0.5">✓</span> Sentiers GR® et chemins côtiers hors-ligne</li>
-                    <li className="flex items-start gap-2"><span className="text-emerald-400 shrink-0 mt-0.5">✓</span> Zones réglementées et espèces protégées</li>
-                    <li className="flex items-start gap-2"><span className="text-emerald-400 shrink-0 mt-0.5">✓</span> Alertes fermetures en temps réel</li>
-                  </ul>
-
-                  {/* Boutons store */}
-                  <div className="flex flex-col sm:flex-row md:flex-col gap-2 mt-auto">
-                    <a href="https://apps.apple.com/fr/app/rando-calanques/id1448768736" target="_blank" rel="noopener noreferrer"
-                      className="flex-1 text-center px-4 py-2.5 rounded-lg bg-emerald-500/12 border border-emerald-500/20 text-emerald-300 hover:bg-emerald-500/22 transition-colors text-sm font-medium">
-                      App Store
-                    </a>
-                    <a href="https://play.google.com/store/apps/details?id=fr.calanques.randonnee" target="_blank" rel="noopener noreferrer"
-                      className="flex-1 text-center px-4 py-2.5 rounded-lg bg-emerald-500/12 border border-emerald-500/20 text-emerald-300 hover:bg-emerald-500/22 transition-colors text-sm font-medium">
-                      Google Play
-                    </a>
-                  </div>
-                </div>
-
-                {/* Colonne droite — vidéo */}
-                <div className="flex-1 w-full">
-                  <VideoFacade
-                    videoId="WMuqAqOvXMA"
-                    title="L'application mobile Mes Calanques débarque en V2 ! — Parc national des Calanques"
-                  />
-                </div>
-
-              </div>
-            </div>
+            <AppMesCalanques videoId="WMuqAqOvXMA" />
           </motion.div>
 
         </motion.div>
