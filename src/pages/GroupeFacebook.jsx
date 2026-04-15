@@ -1,6 +1,6 @@
 import { motion, useInView, useReducedMotion } from 'framer-motion';
 import { useState, useEffect, useRef } from 'react';
-import { Users, Camera, Recycle, Footprints, TrendingUp } from 'lucide-react';
+import { Users, Camera, Recycle, Footprints, TrendingUp, MapPin, Info, Compass } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { FADE_IN_UP, STAGGER_CONTAINER } from '../utils/constants';
 import SEO from '../components/SEO';
@@ -74,6 +74,55 @@ const PILLIERS = [
     border: 'border-orange-500/25',
     iconColor: 'text-orange-400',
   },
+];
+
+/* ── Spots du parc national ──────────────────────────────────── */
+const SPOTS = [
+  {
+    name: 'Sormiou',
+    emoji: '⚓',
+    acces: 'Voiture (hors juillet–août) ou bus + marche 45 min',
+    infos: 'La plus grande calanque habitée. Fond sableux, posidonie dense, restaurant les pieds dans l\'eau. Idéale pour une première découverte.',
+  },
+  {
+    name: 'Sugiton',
+    emoji: '🏔️',
+    acces: 'À pied depuis Luminy — 45 min (accès limité en été)',
+    infos: 'Eaux turquoise, falaises verticales, biodiversité exceptionnelle. Accès régulé par le parc pour préserver l\'écosystème.',
+  },
+  {
+    name: 'En-Vau',
+    emoji: '💎',
+    acces: 'À pied depuis Col de la Gardiole (1h30) ou en bateau',
+    infos: 'Souvent classée parmi les plus belles calanques de France. Fond sableux blanc, parois calcaires à pic, eau cristalline.',
+  },
+  {
+    name: 'Morgiou',
+    emoji: '🎣',
+    acces: 'Voiture (hors juillet–août) ou marche depuis Luminy',
+    infos: 'Village de pêcheurs authentique au fond de la calanque. Ambiance locale préservée, bonne entrée en mer pour les apnéistes.',
+  },
+  {
+    name: 'Archipel du Frioul',
+    emoji: '🏝️',
+    acces: 'Ferry depuis le Vieux-Port de Marseille (25 min)',
+    infos: 'Quatre îles face à Marseille. Eaux claires, gorgones, posidonie protégée. Idéal pour la journée avec pique-nique.',
+  },
+  {
+    name: 'Callelongue & Cap Croisette',
+    emoji: '🌅',
+    acces: 'Bus depuis Marseille centre ou voiture',
+    infos: 'Porte sud de Marseille, bout du monde urbain. Départ de nombreux sentiers côtiers et plongées en apnée avec Team Oxygen.',
+  },
+];
+
+const REGLES = [
+  { emoji: '🔥', texte: 'Feux et barbecues strictement interdits dans tout le massif' },
+  { emoji: '🐾', texte: 'Chiens interdits dans le cœur du parc (toléré en laisse sur certains sentiers)' },
+  { emoji: '🌿', texte: 'Ne rien cueillir, ne rien ramasser — laisser la nature intacte' },
+  { emoji: '🚗', texte: 'Accès motorisés restreints en juillet–août sur la plupart des routes' },
+  { emoji: '⛺', texte: 'Bivouac et camping interdits dans le parc national' },
+  { emoji: '🐟', texte: 'Pêche sous-marine interdite dans les zones de protection intégrale' },
 ];
 
 /* ── Page principale ─────────────────────────────────────────── */
@@ -256,6 +305,91 @@ export default function GroupeFacebook() {
                 <p className="text-white/60 text-sm leading-relaxed">{node}</p>
               </motion.div>
             ))}
+          </div>
+        </motion.div>
+
+        {/* ── Découvrir le Parc national des Calanques ─────────── */}
+        <motion.div
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, amount: 0.1 }}
+          variants={STAGGER_CONTAINER}
+        >
+          <motion.div variants={FADE_IN_UP} className="text-center mb-10">
+            <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full border border-ocean-teal/30 bg-ocean-teal/10 text-ocean-teal text-xs font-medium mb-4">
+              <Compass className="w-3.5 h-3.5" />
+              Guide pratique
+            </div>
+            <h2 className="text-2xl md:text-3xl font-bold text-white mb-3">
+              Découvrir le Parc national des Calanques
+            </h2>
+            <p className="text-text-secondary max-w-2xl mx-auto leading-relaxed">
+              Le groupe est aussi une mine d'or de conseils pratiques. Voici les spots incontournables
+              partagés par les membres — de Marseille à Cassis, 20 km de côte sauvage à explorer.
+            </p>
+          </motion.div>
+
+          {/* Grille des spots */}
+          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5 mb-10">
+            {SPOTS.map(({ name, emoji, acces, infos }) => (
+              <motion.div
+                key={name}
+                variants={FADE_IN_UP}
+                className="glass rounded-2xl p-6 border border-white/8 hover:border-ocean-teal/30 transition-colors flex flex-col gap-3"
+              >
+                <div className="flex items-center gap-3">
+                  <span className="text-2xl leading-none">{emoji}</span>
+                  <h3 className="text-white font-semibold">{name}</h3>
+                </div>
+                <p className="text-text-secondary text-sm leading-relaxed">{infos}</p>
+                <div className="flex items-start gap-2 mt-auto pt-3 border-t border-white/8">
+                  <MapPin className="w-3.5 h-3.5 text-ocean-teal flex-shrink-0 mt-0.5" />
+                  <p className="text-white/40 text-xs leading-relaxed">{acces}</p>
+                </div>
+              </motion.div>
+            ))}
+          </div>
+
+          {/* CTA carte + règles */}
+          <div className="grid md:grid-cols-[1fr_1.2fr] gap-6">
+
+            {/* CTA vers la carte */}
+            <motion.div variants={FADE_IN_UP} className="glass rounded-2xl p-6 border border-white/8 flex flex-col justify-between gap-4">
+              <div>
+                <p className="text-ocean-teal text-xs font-semibold uppercase tracking-widest mb-2">Carte interactive</p>
+                <p className="text-white font-semibold text-lg leading-snug mb-2">
+                  Tous les spots géolocalisés sur une seule carte
+                </p>
+                <p className="text-text-secondary text-sm leading-relaxed">
+                  Retrouvez l'ensemble des calanques, sentiers et zones de dépollution sur la carte
+                  interactive — avec les accès et points de repère.
+                </p>
+              </div>
+              <Link
+                to="/carte-calanques"
+                className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl border border-ocean-teal/40 text-ocean-teal hover:text-white hover:border-ocean-teal transition-colors text-sm font-medium w-fit"
+              >
+                <MapPin className="w-4 h-4" />
+                Voir la carte des Calanques
+              </Link>
+            </motion.div>
+
+            {/* Règles essentielles */}
+            <motion.div variants={FADE_IN_UP} className="glass rounded-2xl p-6 border border-white/8">
+              <div className="flex items-center gap-2 mb-4">
+                <Info className="w-4 h-4 text-amber-400" />
+                <p className="text-amber-400 text-xs font-semibold uppercase tracking-widest">Règles essentielles du parc</p>
+              </div>
+              <ul className="space-y-2.5">
+                {REGLES.map(({ emoji, texte }) => (
+                  <li key={texte} className="flex items-start gap-2.5 text-sm text-text-secondary leading-relaxed">
+                    <span className="text-base leading-none flex-shrink-0 mt-0.5">{emoji}</span>
+                    {texte}
+                  </li>
+                ))}
+              </ul>
+            </motion.div>
+
           </div>
         </motion.div>
 
