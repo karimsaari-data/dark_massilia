@@ -32,16 +32,16 @@ const navColumns = [
       { to: '/photographe-environnemental-marseille', text: 'Photographe environnemental' },
       { to: '/photographie-sous-marine',              text: 'Photos sous-marines' },
       { to: '/photographie-paysage-mer',              text: 'Photos de paysages' },
-      { to: '/local-guide-marseille',                 text: 'Google Local Guide' },
       { to: '/les-francais-yann-arthus-bertrand',     text: 'Yann Arthus-Bertrand' },
     ],
   },
   {
     label: 'Missions',
     links: [
-      { to: '/depollution-marine',   text: 'Dépollution marine' },
-      { to: '/communaute',           text: 'Rejoindre la communauté' },
+      { to: '/depollution-marine',    text: 'Dépollution marine' },
+      { to: '/communaute',            text: 'Rejoindre la communauté' },
       { to: '/donnees-scientifiques', text: 'Données scientifiques' },
+      { to: '/local-guide-marseille', text: 'Google Local Guide' },
     ],
   },
   {

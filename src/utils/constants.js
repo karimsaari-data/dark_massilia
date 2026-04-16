@@ -31,7 +31,6 @@ export const NAV_LINKS = [
       { name: 'Photographe environnemental', path: '/photographe-environnemental-marseille', icon: 'BookOpen',   isHub: true, hubDesc: 'Démarche, univers photographique & partenaires' },
       { name: 'Photos sous-marines',         path: '/photographie-sous-marine',              icon: 'Camera'     },
       { name: 'Photos de paysages',          path: '/photographie-paysage-mer',              icon: 'Camera'     },
-      { name: 'Google Local Guide',          path: '/local-guide-marseille',                 icon: 'Navigation' },
       { name: 'Yann Arthus-Bertrand',        path: '/les-francais-yann-arthus-bertrand',     icon: 'Camera'     },
     ],
   },
@@ -44,6 +43,7 @@ export const NAV_LINKS = [
       { name: 'Rejoindre la communauté', path: '/communaute',            icon: 'Share2',  isHub: true, hubDesc: 'Rejoins la mission — bénévoles, plongeurs, partenaires' },
       { name: 'Dépollution marine',      path: '/depollution-marine',    icon: 'Compass'  },
       { name: 'Données scientifiques',   path: '/donnees-scientifiques', icon: 'BarChart2' },
+      { name: 'Google Local Guide',      path: '/local-guide-marseille', icon: 'Navigation' },
     ],
   },
   {

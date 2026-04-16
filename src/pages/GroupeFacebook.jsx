@@ -27,12 +27,20 @@ const AppMesCalanques = ({ videoId }) => {
             </div>
           </div>
 
+          {/* Description */}
+          <p className="text-sm text-white/60 leading-relaxed">
+            L'app citoyenne officielle du Parc national — pour explorer les Calanques en connaissance de cause
+            et participer activement à leur préservation.
+          </p>
+
           {/* Features */}
           <ul className="space-y-2.5 flex-1">
             {[
-              'Sentiers GR® et chemins côtiers hors-ligne',
-              'Zones réglementées et espèces protégées',
-              'Alertes fermetures en temps réel',
+              'Ouverture des massifs & route des crêtes en temps réel',
+              'Réglementation par activité : plongée, escalade, randonnée, kayak…',
+              '23 itinéraires géolocalisés + faune & flore des Calanques',
+              'Signalement participatif & projets citoyens',
+              'Disponible en français et en anglais',
             ].map(f => (
               <li key={f} className="flex items-start gap-2.5 text-sm text-white/65">
                 <span className="text-emerald-400 shrink-0 mt-0.5 text-base leading-none">✓</span>
@@ -43,12 +51,12 @@ const AppMesCalanques = ({ videoId }) => {
 
           {/* Store buttons */}
           <div className="flex gap-2">
-            <a href="https://apps.apple.com/fr/app/rando-calanques/id1448768736"
+            <a href="https://apps.apple.com/fr/app/mes-calanques/id1418542125"
               target="_blank" rel="noopener noreferrer"
               className="flex-1 text-center py-2.5 rounded-xl bg-white/6 border border-white/12 text-white/70 hover:text-white hover:bg-white/10 transition-colors text-sm font-medium">
               App Store
             </a>
-            <a href="https://play.google.com/store/apps/details?id=fr.calanques.randonnee"
+            <a href="https://play.google.com/store/apps/details?id=fr.setavoo.infoparcpnc&hl=fr"
               target="_blank" rel="noopener noreferrer"
               className="flex-1 text-center py-2.5 rounded-xl bg-white/6 border border-white/12 text-white/70 hover:text-white hover:bg-white/10 transition-colors text-sm font-medium">
               Google Play
@@ -414,10 +422,6 @@ export default function GroupeFacebook() {
           <motion.h2 variants={FADE_IN_UP} className="text-2xl md:text-3xl font-bold text-white text-center mb-3">
             Ressources pratiques pour visiter les Calanques
           </motion.h2>
-          <motion.p variants={FADE_IN_UP} className="text-text-secondary text-center text-sm mb-10 max-w-xl mx-auto">
-            Les outils et infos indispensables avant de partir — régulièrement partagés dans le groupe.
-          </motion.p>
-
           {/* App Mes Calanques */}
           <motion.div variants={FADE_IN_UP}>
             <AppMesCalanques videoId="WMuqAqOvXMA" />
