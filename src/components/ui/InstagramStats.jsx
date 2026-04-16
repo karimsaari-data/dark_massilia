@@ -134,8 +134,22 @@ const SocialStats = () => {
   const [networks, setNetworks] = useState(
     SOCIAL_NETWORKS_STATIC.map(n => ({ ...n, ...toVisual(n.platform, n.unit) }))
   );
+  const [fbViews28j, setFbViews28j] = useState(null);
 
   useEffect(() => {
+    // Fetch vues Facebook groupe · 28j
+    const since = new Date();
+    since.setDate(since.getDate() - 28);
+    supabase
+      .from('facebook_group_insights')
+      .select('views')
+      .gte('date', since.toISOString().slice(0, 10))
+      .then(({ data }) => {
+        if (!data?.length) return;
+        const total = data.reduce((s, r) => s + (r.views ?? 0), 0);
+        if (total > 0) setFbViews28j(total);
+      });
+
     // On ne fetch que value + note (colonnes sûres en DB)
     // Le reste (suffix, decimals, name, handle, url) vient du fallback statique
     Promise.all([
@@ -238,6 +252,34 @@ const SocialStats = () => {
         </div>
         <div className="grid grid-cols-2 gap-4">
           {vues.map(n => <CardLink key={n.name} network={n} />)}
+
+          {/* Vues Facebook groupe · 28j */}
+          {fbViews28j && (
+            <a
+              href="https://www.facebook.com/groups/calanque/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className={`glass-strong rounded-2xl p-5 border border-emerald-500/20 bg-gradient-to-br from-emerald-600/20 to-teal-500/20 hover:scale-[1.02] transition-transform duration-200 flex flex-col gap-3`}
+            >
+              <div className="flex items-center justify-between">
+                <FacebookIcon />
+              </div>
+              <div>
+                <p className="text-2xl md:text-3xl font-bold text-white leading-none">
+                  <StatCounter
+                    end={fbViews28j >= 1000 ? Math.round(fbViews28j / 1000) : fbViews28j}
+                    suffix={fbViews28j >= 1000 ? 'K' : ''}
+                    decimals={0}
+                  />
+                </p>
+                <p className="text-xs text-gray-400 mt-1">vues / 28j</p>
+              </div>
+              <div>
+                <p className="text-sm font-semibold text-white">Groupe Calanques</p>
+                <p className="text-xs text-gray-500">Amoureux des Calanques</p>
+              </div>
+            </a>
+          )}
         </div>
       </div>
 
