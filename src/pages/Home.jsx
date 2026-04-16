@@ -793,7 +793,7 @@ const Home = () => {
               </h2>
 
               <p className="text-gray-300 text-lg mb-8 leading-[1.8]">
-                Explorez les Calanques de Marseille via une carte interactive présentant paysages, spots de plongée et actions de dépollution menées avec Team Oxygen sur le littoral marseillais.
+                Explorez les Calanques de Marseille via une carte interactive présentant paysages, spots de plongée et actions de dépollution menées avec Team Oxygen sur le littoral marseillais. Consultez aussi les conditions d'accès aux massifs avant de partir — ouverture ou fermeture selon le risque incendie du jour.
               </p>
 
               <div className="flex flex-wrap items-center gap-3">
