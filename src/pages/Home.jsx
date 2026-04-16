@@ -749,7 +749,7 @@ const Home = () => {
             className="flex flex-col items-center mt-8 gap-2"
           >
             <p className="text-xs text-white/40 uppercase tracking-widest">Accès Massifs des Calanques</p>
-            <FireRiskBadge />
+            <FireRiskBadge inline />
           </motion.div>
 
         </div>
@@ -796,13 +796,22 @@ const Home = () => {
                 Explorez les Calanques de Marseille via une carte interactive présentant paysages, spots de plongée et actions de dépollution menées avec Team Oxygen sur le littoral marseillais.
               </p>
 
-              <Link
-                to="/carte-calanques"
-                className="btn-primary inline-flex items-center gap-2 w-fit"
-              >
-                <span>Explorer la carte</span>
-                <ArrowRight className="w-5 h-5" />
-              </Link>
+              <div className="flex flex-wrap items-center gap-3">
+                <Link
+                  to="/carte-calanques"
+                  className="btn-primary inline-flex items-center gap-2 w-fit"
+                >
+                  <span>Explorer la carte</span>
+                  <ArrowRight className="w-5 h-5" />
+                </Link>
+                <Link
+                  to="/acces-massifs-calanques"
+                  className="btn inline-flex items-center gap-2 w-fit text-sm"
+                >
+                  <span>Accès aux massifs</span>
+                  <ArrowRight className="w-4 h-4" />
+                </Link>
+              </div>
             </div>
           </div>
         </motion.div>
