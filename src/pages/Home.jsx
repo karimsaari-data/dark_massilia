@@ -682,7 +682,7 @@ const Home = () => {
               Impact
             </span>
             <h2 className="text-3xl md:text-4xl font-bold text-white">
-              10 ans d'engagement sur Marseille
+              10 ans d'engagement — Marseille & Calanques
             </h2>
           </motion.div>
 
@@ -873,6 +873,11 @@ const Home = () => {
         </motion.div>
       </section>
 
+      {/* Derniers articles du blog — maillage interne + contenu frais */}
+      <Suspense fallback={<section className="container-custom py-8 md:py-12" />}>
+        <RecentArticles title="Derniers articles" count={3} />
+      </Suspense>
+
       {/* Card Yann Arthus-Bertrand — Les Français */}
       <section className="container-custom py-8 md:py-12">
         <motion.div
@@ -934,11 +939,6 @@ const Home = () => {
           </div>
         </motion.div>
       </section>
-
-      {/* Derniers articles du blog — maillage interne + contenu frais */}
-      <Suspense fallback={<section className="container-custom py-8 md:py-12" />}>
-        <RecentArticles title="Derniers articles" count={3} />
-      </Suspense>
 
       {/* Section FAQ — rich results FAQPage + contenu statique pour crawlers */}
       <section className="container-custom pb-12 md:pb-16">

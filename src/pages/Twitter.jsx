@@ -4,6 +4,7 @@ import { ArrowLeft, ArrowRight, ExternalLink, Rss, CalendarDays, AlertCircle, Lo
 import { Link } from 'react-router-dom';
 import { FADE_IN_UP, STAGGER_CONTAINER } from '../utils/constants';
 import SEO from '../components/SEO';
+import FireRiskBanner from '../components/FireRiskBanner';
 import { SEO_PAGES } from '../utils/seo';
 
 // ── RSS Actualités Parc National ────────────────────────────────────────────
@@ -190,8 +191,10 @@ const Twitter = () => {
   const { items: agendaItems, loading: agendaLoading, error: agendaError } = useAgenda();
 
   return (
-    <div className="min-h-screen py-24">
+    <div className="min-h-screen">
       <SEO {...SEO_PAGES['/actualites']} />
+      <FireRiskBanner />
+      <div className="py-24">
       <div className="container-custom">
 
         {/* ── Titre + bloc X en avant ──────────────────────────────────── */}
@@ -415,6 +418,7 @@ const Twitter = () => {
             <ArrowLeft className="w-4 h-4" /> Accueil
           </Link>
         </motion.div>
+      </div>
       </div>
     </div>
   );
