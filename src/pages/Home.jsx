@@ -686,10 +686,6 @@ const Home = () => {
               10 ans d'engagement — Marseille & Calanques
             </h2>
 
-            {/* Badge accès massifs — signal frais quotidien + cohérence inter-pages */}
-            <div className="flex justify-center mt-5">
-              <FireRiskBadge />
-            </div>
           </motion.div>
 
           {/* Grille 4 chiffres */}
@@ -747,13 +743,24 @@ const Home = () => {
             ))}
           </motion.div>
 
+          {/* Badge accès massifs — signal frais quotidien + cohérence inter-pages */}
+          <motion.div
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true }}
+            variants={FADE_IN_UP}
+            className="flex justify-center mt-8"
+          >
+            <FireRiskBadge />
+          </motion.div>
+
           {/* Lien discret vers la page missions */}
           <motion.div
             initial="hidden"
             whileInView="visible"
             viewport={{ once: true }}
             variants={FADE_IN_UP}
-            className="text-center mt-10"
+            className="text-center mt-6"
           >
             <Link
               to="/depollution-marine"
