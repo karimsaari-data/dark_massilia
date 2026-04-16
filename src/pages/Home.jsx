@@ -665,7 +665,7 @@ const Home = () => {
       </section>
 
       {/* ── CHIFFRES CLÉS ── */}
-      <section className="py-16 md:py-24 relative overflow-hidden">
+      <section className="py-10 md:py-16 relative overflow-hidden">
         {/* Fond distinct : gradient radial teal */}
         <div className="absolute inset-0 bg-gradient-to-b from-abyss via-abyss-light to-abyss pointer-events-none" />
         <div className="absolute inset-0 bg-[radial-gradient(ellipse_80%_60%_at_50%_50%,rgba(0,171,168,0.08),transparent)] pointer-events-none" />
@@ -677,11 +677,8 @@ const Home = () => {
             whileInView="visible"
             viewport={{ once: true }}
             variants={FADE_IN_UP}
-            className="text-center mb-14"
+            className="text-center mb-8"
           >
-            <span className="inline-block px-4 py-1.5 rounded-full text-xs font-semibold tracking-widest uppercase bg-ocean-teal/10 text-ocean-teal border border-ocean-teal/20 mb-4">
-              Impact
-            </span>
             <h2 className="text-3xl md:text-4xl font-bold text-white">
               10 ans d'engagement — Marseille & Calanques
             </h2>
@@ -761,7 +758,7 @@ const Home = () => {
             whileInView="visible"
             viewport={{ once: true }}
             variants={FADE_IN_UP}
-            className="text-center mt-6"
+            className="text-center mt-4"
           >
             <Link
               to="/depollution-marine"

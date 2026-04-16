@@ -37,6 +37,10 @@ import Yab          from './pages/Yab';
 import PhotoSousMarine from './pages/PhotoSousMarine';
 import BlogCategory    from './pages/BlogCategory';
 import GroupeFacebook  from './pages/GroupeFacebook';
+import PhotographeEnvironnemental from './pages/PhotographeEnvironnemental';
+import AccesMassifs  from './pages/AccesMassifs';
+import MentionsLegales  from './pages/MentionsLegales';
+import Confidentialite  from './pages/Confidentialite';
 
 function NotFound() {
   return (
@@ -76,6 +80,10 @@ export function render(url) {
             <Route path="local-guide-marseille"              element={<LocalGuide />} />
             <Route path="admin"                              element={<AdminCarteSSR />} />
             <Route path="les-francais-yann-arthus-bertrand" element={<Yab />} />
+            <Route path="photographe-environnemental-marseille" element={<PhotographeEnvironnemental />} />
+            <Route path="acces-massifs-calanques"           element={<AccesMassifs />} />
+            <Route path="mentions-legales"                  element={<MentionsLegales />} />
+            <Route path="confidentialite"                   element={<Confidentialite />} />
             <Route path="blog"                               element={<Blog />} />
             <Route path="blog/categorie/:slug"               element={<BlogCategory />} />
             <Route path="blog/:slug"                         element={<BlogPost />} />
