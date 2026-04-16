@@ -17,7 +17,7 @@ export default function AccesMassifs() {
     <>
       <SEO {...SEO_PAGES['/acces-massifs-calanques']} />
 
-      {/* Carte pleine largeur — flush sous la navbar, même pattern que /carte-calanques */}
+      {/* Carte pleine largeur + badge superposé sur la bande opendfci */}
       <div className="relative overflow-hidden h-[calc(100vh-70px)] md:h-[calc(100vh-128px-80px)]">
         <iframe
           src={IFRAME_URL}
@@ -26,16 +26,17 @@ export default function AccesMassifs() {
           loading="lazy"
           allowFullScreen
         />
+        {/* Badge superposé à droite de la bande grise opendfci (~38px de haut) */}
+        <div
+          className="absolute top-0 right-0 flex items-center h-[38px] px-3 pointer-events-none"
+          style={{ background: 'rgba(30,30,30,0.55)', backdropFilter: 'blur(4px)' }}
+        >
+          <FireRiskBadge inline />
+        </div>
       </div>
 
       {/* Info + navigation */}
       <div className="container-custom py-6">
-        {/* Statut risque incendie en temps réel */}
-        <div className="mb-4">
-          <p className="text-xs text-white/40 mb-2 font-semibold uppercase tracking-widest">Accès Massif · Calanques</p>
-          <FireRiskBadge />
-        </div>
-
         <div className="glass rounded-2xl p-5 border border-white/8 mb-6">
           <div className="flex items-start gap-3">
             <Info className="w-4 h-4 text-ocean-teal flex-shrink-0 mt-0.5" />

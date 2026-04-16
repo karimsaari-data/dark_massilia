@@ -7,7 +7,7 @@ const PROXY_URL = 'https://bzlllfmpojcybuyuemdx.supabase.co/functions/v1/fire-ri
  * FireRiskBadge — Affiche le niveau de risque incendie pour le massif des Calanques
  * Source : Préfecture / Frequence-sud.fr (mis à jour quotidiennement)
  */
-export default function FireRiskBadge({ className = '' }) {
+export default function FireRiskBadge({ className = '', inline = false }) {
   const [data, setData]       = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError]     = useState(false);
@@ -36,9 +36,9 @@ export default function FireRiskBadge({ className = '' }) {
   /* ── Skeleton ── */
   if (loading) {
     return (
-      <div className={`inline-flex items-center gap-3 rounded-xl border border-white/10 bg-white/5 px-4 py-3 animate-pulse ${className}`}>
-        <div className="w-3.5 h-3.5 rounded-full bg-white/20 shrink-0" />
-        <div className="h-3.5 w-48 rounded bg-white/15" />
+      <div className={`inline-flex items-center gap-3 animate-pulse ${inline ? '' : 'rounded-xl border border-white/10 bg-white/5 px-4 py-3'} ${className}`}>
+        <div className="w-3 h-3 rounded-sm bg-white/20 shrink-0" />
+        <div className="h-3 w-44 rounded bg-white/15" />
       </div>
     );
   }
@@ -46,15 +46,29 @@ export default function FireRiskBadge({ className = '' }) {
   /* ── Erreur silencieuse ── */
   if (error || !data) return null;
 
-  const { label, color, authorized, date, source } = data;
+  const { label, color, date, source } = data;
 
-  const Icon = authorized ? CheckCircle : data.level >= 4 ? XCircle : AlertTriangle;
+  if (inline) {
+    /* Mode bande — compact, horizontal, sans card */
+    // Label court pour mobile (dernier segment après " - ")
+    const shortLabel = label.split(' - ').pop();
+    return (
+      <div className={`inline-flex items-center gap-3 ${className}`}>
+        <span className="w-3 h-3 rounded-sm shrink-0" style={{ backgroundColor: color }} aria-hidden="true" />
+        {/* Mobile : label court — Desktop : label complet */}
+        <span className="text-xs font-medium text-white sm:hidden">{shortLabel}</span>
+        <span className="text-sm font-medium text-white hidden sm:inline">{label}</span>
+        <span className="text-xs text-white/35 hidden md:inline">
+          · {date} · {source}
+        </span>
+      </div>
+    );
+  }
 
   return (
     <div className={`inline-flex flex-col gap-1.5 rounded-xl border border-white/10 bg-white/5 backdrop-blur-sm px-4 py-3 ${className}`}>
       {/* Ligne principale */}
       <div className="flex items-center gap-2.5">
-        {/* Pastille colorée */}
         <span
           className="w-3.5 h-3.5 rounded-sm shrink-0"
           style={{ backgroundColor: color }}

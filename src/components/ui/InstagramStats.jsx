@@ -116,11 +116,11 @@ const PLATFORM_ICONS = {
 const SOCIAL_NETWORKS_STATIC = [
   { platform: 'facebook_group', name: 'Amoureux des Calanques', handle: 'Groupe Facebook',        end: 64.7, suffix: 'K', decimals: 1, url: 'https://www.facebook.com/groups/calanque/' },
   { platform: 'instagram',      name: 'Instagram',              handle: '@karimsaari',             end: 24.2, suffix: 'K', decimals: 1, url: 'https://www.instagram.com/karimsaari' },
-  { platform: 'tiktok',         name: 'TikTok',                 handle: '@dark.massilia',          end: 22.1, suffix: 'K', decimals: 1, url: 'https://www.tiktok.com/@dark.massilia' },
+  { platform: 'tiktok',         name: 'TikTok',                 handle: '@dark.massilia',          end: 22.2, suffix: 'K', decimals: 1, url: 'https://www.tiktok.com/@dark.massilia' },
   { platform: 'facebook_pages', name: 'Facebook',               handle: 'Pages pro & perso',       end: 17.8, suffix: 'K', decimals: 1, note: '13K + 4,8K', url: 'https://www.facebook.com/Photographie.Marseille' },
   { platform: 'youtube',        name: 'YouTube',                handle: '@dark.massilia',          end: 1.3,  suffix: 'K', decimals: 1, url: 'https://www.youtube.com/@dark.massilia' },
   { platform: 'x',              name: 'X',                      handle: '@dark_massilia',          end: 1.6,  suffix: 'K', decimals: 1, url: 'https://x.com/dark_massilia' },
-  { platform: 'local_guides',   name: 'Local Guides',           handle: 'Google Maps · Marseille', end: 143,  suffix: 'M', decimals: 0, unit: 'vues', url: 'https://www.google.com/maps/contrib/114912564832630219145/photos/' },
+  { platform: 'local_guides',   name: 'Local Guides',           handle: 'Google Maps · Marseille', end: 144,  suffix: 'M', decimals: 0, unit: 'vues', url: 'https://www.google.com/maps/contrib/114912564832630219145/photos/' },
   { platform: 'pinterest',      name: 'Pinterest',              handle: 'Photographie_Marseille',  end: 16,   suffix: 'K', decimals: 0, unit: 'vues / mois', url: 'https://fr.pinterest.com/Photographie_Marseille/' },
   { platform: 'px500',          name: '500px',                  handle: 'karimsaari',              end: 800,  suffix: 'K', decimals: 0, unit: 'impressions photos', url: 'https://500px.com/p/karimsaari?view=photos' },
 ];
@@ -136,13 +136,14 @@ const SocialStats = () => {
   );
 
   useEffect(() => {
+    // On ne fetch que value + note (colonnes sûres en DB)
+    // Le reste (suffix, decimals, name, handle, url) vient du fallback statique
     Promise.all([
       supabase
         .from('social_stats')
-        .select('platform, name, handle, value, suffix, decimals, unit, note, url')
+        .select('platform, value, note')
         .eq('visible', true)
-        .neq('platform', 'total_community')
-        .order('sort_order'),
+        .neq('platform', 'total_community'),
       supabase
         .from('social_stats')
         .select('value')
@@ -151,21 +152,34 @@ const SocialStats = () => {
     ]).then(([{ data: cards }, { data: lgViews }]) => {
       if (!cards || cards.length === 0) return;
       const localGuidesValue = lgViews ? parseFloat(lgViews.value) : null;
-      setNetworks(cards.map(row => {
-        const unit = row.unit || undefined;
+      // Index du fallback statique par platform
+      const staticByPlatform = Object.fromEntries(
+        SOCIAL_NETWORKS_STATIC.map(n => [n.platform, n])
+      );
+      setNetworks(prev => prev.map(network => {
+        const row = cards.find(c => c.platform === network.platform);
+        if (!row) return network;
+        const staticRow = staticByPlatform[network.platform] || {};
+        const rawValue = parseFloat(row.value);
+
+        // local_guides utilise local_guide_views_m (déjà en millions)
+        let end;
+        if (network.platform === 'local_guides' && localGuidesValue !== null) {
+          end = localGuidesValue;
+        } else if (staticRow.suffix === 'K') {
+          // DB stocke les abonnés en valeur brute → diviser par 1000
+          end = rawValue >= 1000 ? rawValue / 1000 : rawValue;
+        } else if (staticRow.suffix === 'M') {
+          // DB stocke en valeur brute → diviser par 1 000 000
+          end = rawValue >= 1000000 ? rawValue / 1000000 : rawValue;
+        } else {
+          end = rawValue;
+        }
+
         return {
-          ...toVisual(row.platform, unit),
-          platform: row.platform,
-          name: row.name,
-          handle: row.handle,
-          end: row.platform === 'local_guides' && localGuidesValue !== null
-            ? localGuidesValue
-            : parseFloat(row.value),
-          suffix: row.suffix,
-          decimals: row.decimals,
-          unit,
-          note: row.note || undefined,
-          url: row.url,
+          ...network,
+          end,
+          note: row.note || staticRow.note || undefined,
         };
       }));
     });
