@@ -806,7 +806,7 @@ const Home = () => {
                 </Link>
                 <Link
                   to="/acces-massifs-calanques"
-                  className="btn inline-flex items-center gap-2 w-fit text-sm"
+                  className="btn-ghost inline-flex items-center gap-2 w-fit"
                 >
                   <span>Accès aux massifs</span>
                   <ArrowRight className="w-4 h-4" />
