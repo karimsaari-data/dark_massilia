@@ -13,7 +13,6 @@ const CORS = {
 
 /** Extrait la première URL d'image depuis le HTML encodé de la description */
 function extractImage(description: string): string {
-  // src="https://..."
   const m = description.match(/src=["']([^"']+calanques-parcnational\.fr[^"']+\.(jpg|jpeg|png|webp)[^"']*)["']/i);
   return m ? m[1] : '';
 }
