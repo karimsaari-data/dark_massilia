@@ -1235,7 +1235,7 @@ export const SEO_PAGES = {
   '/communaute-calanques': {
     title: 'Groupe Facebook Calanques Marseille — 64 700 membres',
     description:
-      'La plus grande communauté sur les Calanques de Marseille. 64 700 passionnés de nature, photo et protection du littoral méditerranéen. Fondé par Karim Saari.',
+      'La plus grande communauté sur les Calanques de Marseille — passionnés de nature, photo et protection du littoral méditerranéen. Fondé par Karim Saari.',
     canonical: `${BASE_URL}/communaute-calanques`,
     image: `${BASE_URL}/images/groupe%20des%20amoureux%20des%20calanques_1200w.webp`,
     schema: {
