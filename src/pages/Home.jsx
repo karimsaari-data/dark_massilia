@@ -7,6 +7,7 @@ import { FADE_IN_UP, STAGGER_CONTAINER, FACEBOOK_GROUP_MEMBERS } from '../utils/
 import { trackEvent } from '../lib/analytics';
 import SEO from '../components/SEO';
 import { SEO_PAGES } from '../utils/seo';
+import FireRiskBadge from '../components/FireRiskBadge';
 
 // Lazy-loaded — rompt la chaîne statique Home → supabase → @supabase/supabase-js
 // Supabase ne sera chargé qu'après le premier rendu de la page (chunk async)
@@ -684,6 +685,11 @@ const Home = () => {
             <h2 className="text-3xl md:text-4xl font-bold text-white">
               10 ans d'engagement — Marseille & Calanques
             </h2>
+
+            {/* Badge accès massifs — signal frais quotidien + cohérence inter-pages */}
+            <div className="flex justify-center mt-5">
+              <FireRiskBadge />
+            </div>
           </motion.div>
 
           {/* Grille 4 chiffres */}
