@@ -36,6 +36,8 @@ const STATIC_PAGES = [
   { path: '/depollution-marine',                           priority: '0.9', changefreq: 'monthly' },
   { path: '/blog',                                         priority: '0.9', changefreq: 'weekly'  },
   { path: '/communaute',                                   priority: '0.8', changefreq: 'monthly' },
+  { path: '/communaute-calanques',                         priority: '0.8', changefreq: 'monthly' },
+  { path: '/acces-massifs-calanques',                      priority: '0.7', changefreq: 'daily'   },
   { path: '/photographie-paysage-mer',                     priority: '0.9', changefreq: 'monthly' },
   { path: '/photographie-sous-marine',                     priority: '0.9', changefreq: 'monthly' },
   { path: '/photographe-environnemental-marseille',         priority: '0.9', changefreq: 'monthly' },
@@ -128,11 +130,23 @@ async function generateSitemap() {
     console.log('  ℹ️  Aucun article WP — sitemap statique uniquement');
   }
 
+  // Catégories blog statiques
+  const BLOG_CATEGORIES = ['biodiversite', 'calanques', 'depollution', 'pollution'];
+  const categoryEntries = BLOG_CATEGORIES.map(slug =>
+    urlEntry({
+      loc:        `${BASE_URL}/blog/categorie/${slug}`,
+      lastmod:    TODAY,
+      changefreq: 'weekly',
+      priority:   '0.6',
+    })
+  );
+
   // Assemblage XML
   const xml = [
     '<?xml version="1.0" encoding="UTF-8"?>',
     '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">',
     ...staticEntries,
+    ...categoryEntries,
     ...blogEntries,
     '</urlset>',
   ].join('\n');
