@@ -61,7 +61,7 @@ const NewsletterSection = () => {
         </div>
 
         {/* Contenu centré */}
-        <div className="relative z-10 flex flex-col items-center text-center px-8 py-16 md:py-20 w-full md:max-w-lg md:ml-auto md:pr-8 md:text-left md:items-start">
+        <div className="relative z-10 flex flex-col items-center text-center px-6 py-16 md:py-20 w-full md:max-w-lg md:ml-auto md:pr-6 md:text-left md:items-start">
 
           {/* Badge */}
           <span className="inline-flex items-center gap-1.5 px-4 py-1.5 rounded-full bg-white/15 border border-white/30 text-white text-xs font-semibold mb-6 backdrop-blur-sm">
@@ -93,7 +93,7 @@ const NewsletterSection = () => {
                   className="flex flex-col gap-3"
                 >
                   {/* Champ email + bouton */}
-                  <div className="flex flex-col sm:flex-row gap-3">
+                  <div className="flex flex-col sm:flex-row gap-3 w-full max-w-full">
                     <label htmlFor="newsletter-email" className="sr-only">
                       Adresse email
                     </label>
@@ -112,7 +112,7 @@ const NewsletterSection = () => {
                       type="submit"
                       disabled={!consent || status === 'loading'}
                       aria-busy={status === 'loading'}
-                      className="btn-primary flex items-center justify-center gap-2 px-7 py-3.5 whitespace-nowrap shrink-0 disabled:opacity-50 disabled:cursor-not-allowed"
+                      className="btn-primary flex items-center justify-center gap-2 px-5 py-3.5 whitespace-nowrap shrink-0 text-sm disabled:opacity-50 disabled:cursor-not-allowed"
                     >
                       {status === 'loading' ? (
                         <>

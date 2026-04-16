@@ -1,6 +1,6 @@
 import { motion, useInView, useReducedMotion } from 'framer-motion';
 import { useState, useEffect, useRef } from 'react';
-import { Users, Camera, Recycle, Footprints, Smartphone } from 'lucide-react';
+import { Users, Camera, Recycle, Footprints, Smartphone, ExternalLink } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { FADE_IN_UP, STAGGER_CONTAINER } from '../utils/constants';
 import SEO from '../components/SEO';
@@ -425,6 +425,19 @@ export default function GroupeFacebook() {
           {/* App Mes Calanques */}
           <motion.div variants={FADE_IN_UP}>
             <AppMesCalanques videoId="WMuqAqOvXMA" />
+          </motion.div>
+
+          {/* Lien utile — accès aux Calanques */}
+          <motion.div variants={FADE_IN_UP} className="mt-6 text-center">
+            <a
+              href="https://www.marseille-tourisme.com/decouvrez-marseille/calanques-plages-et-nature/les-calanques-de-marseille/comment-acceder-aux-calanques/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-2 text-sm text-ocean-teal hover:text-ocean-teal/80 transition-colors duration-200 underline underline-offset-4 decoration-ocean-teal/40 hover:decoration-ocean-teal/70"
+            >
+              <ExternalLink className="w-3.5 h-3.5 shrink-0" />
+              Comment accéder aux Calanques — Office de Tourisme de Marseille
+            </a>
           </motion.div>
 
         </motion.div>

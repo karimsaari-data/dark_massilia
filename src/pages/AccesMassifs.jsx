@@ -7,6 +7,7 @@ import { Link } from 'react-router-dom';
 import { ArrowLeft, ExternalLink, Info } from 'lucide-react';
 import SEO from '../components/SEO';
 import { SEO_PAGES } from '../utils/seo';
+import FireRiskBadge from '../components/FireRiskBadge';
 
 const IFRAME_URL =
   'https://opendfci.fr/13/index.php/view/map?repository=openmassifs&project=open_massifs';
@@ -29,6 +30,12 @@ export default function AccesMassifs() {
 
       {/* Info + navigation */}
       <div className="container-custom py-6">
+        {/* Statut risque incendie en temps réel */}
+        <div className="mb-4">
+          <p className="text-xs text-white/40 mb-2 font-semibold uppercase tracking-widest">Accès Massif · Calanques</p>
+          <FireRiskBadge />
+        </div>
+
         <div className="glass rounded-2xl p-5 border border-white/8 mb-6">
           <div className="flex items-start gap-3">
             <Info className="w-4 h-4 text-ocean-teal flex-shrink-0 mt-0.5" />
