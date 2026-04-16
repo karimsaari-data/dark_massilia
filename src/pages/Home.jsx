@@ -749,8 +749,9 @@ const Home = () => {
             whileInView="visible"
             viewport={{ once: true }}
             variants={FADE_IN_UP}
-            className="flex justify-center mt-8"
+            className="flex flex-col items-center mt-8 gap-2"
           >
+            <p className="text-xs text-white/40 uppercase tracking-widest">Accès Massifs des Calanques</p>
             <FireRiskBadge />
           </motion.div>
 
