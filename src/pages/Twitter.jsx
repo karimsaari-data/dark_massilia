@@ -194,15 +194,37 @@ const Twitter = () => {
       <SEO {...SEO_PAGES['/actualites']} />
       <div className="container-custom">
 
-        {/* ── Titre de page ─────────────────────────────────────────────── */}
-        <div className="mb-8 text-center">
-          <h1 className="text-2xl md:text-3xl font-bold text-white mb-2">
-            Actualités des Calanques
-          </h1>
-          <p className="text-text-secondary text-sm max-w-lg mx-auto">
-            Dernières nouvelles du Parc National des Calanques — espèces protégées, réglementation, événements.
-          </p>
-        </div>
+        {/* ── Titre + bloc X en avant ──────────────────────────────────── */}
+        <motion.div
+          initial="hidden"
+          animate="visible"
+          variants={STAGGER_CONTAINER}
+          className="mx-auto mb-10"
+        >
+          <motion.div variants={FADE_IN_UP} className="glass rounded-3xl p-8 md:p-10">
+            <h1 className="text-lg md:text-xl font-bold text-white mb-4">
+              Actualités des Calanques & veille environnementale
+            </h1>
+            <p className="text-text-secondary leading-relaxed text-sm">
+              Deux sources en direct : le fil{' '}
+              <strong className="text-ocean-teal">@dark_massilia</strong> pour les alertes terrain
+              et observations sous-marines, et les actualités officielles du{' '}
+              <strong className="text-white">Parc National des Calanques</strong> pour suivre la
+              vie du parc — espèces protégées, réglementation, événements.
+            </p>
+            <div className="mt-5">
+              <a
+                href="https://x.com/dark_massilia"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-2 text-ocean-teal hover:text-white transition-colors font-medium text-sm"
+              >
+                Voir le profil @dark_massilia sur X
+                <ExternalLink className="w-4 h-4" />
+              </a>
+            </div>
+          </motion.div>
+        </motion.div>
 
         {/* ── Section RSS Parc National ─────────────────────────────────── */}
         <div className="mb-10">
@@ -210,9 +232,7 @@ const Twitter = () => {
             <div className="flex items-center justify-between mb-7">
               <div className="flex items-center gap-2">
                 <Rss className="w-4 h-4 text-ocean-teal" />
-                <h2 className="text-base font-semibold text-white">
-                  Parc National des Calanques
-                </h2>
+                <h2 className="text-base font-semibold text-white">Parc National des Calanques</h2>
               </div>
               <a
                 href="https://calanques-parcnational.fr/fr/actualites"
@@ -371,38 +391,6 @@ const Twitter = () => {
             </p>
           </div>
         </div>
-
-        {/* Header — déplacé en bas */}
-        <motion.div
-          initial="hidden"
-          animate="visible"
-          variants={STAGGER_CONTAINER}
-          className="mx-auto mt-10 mb-8"
-        >
-          <motion.div variants={FADE_IN_UP} className="glass rounded-3xl p-8 md:p-10">
-            <h1 className="text-lg md:text-xl font-bold text-white mb-4">
-              Actualités des Calanques & veille environnementale
-            </h1>
-            <p className="text-text-secondary leading-relaxed text-sm">
-              Deux sources en direct : le fil{' '}
-              <strong className="text-ocean-teal">@dark_massilia</strong> pour les alertes terrain
-              et observations sous-marines, et les actualités officielles du{' '}
-              <strong className="text-white">Parc National des Calanques</strong> pour suivre la
-              vie du parc — espèces protégées, réglementation, événements.
-            </p>
-            <div className="mt-5">
-              <a
-                href="https://x.com/dark_massilia"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 text-ocean-teal hover:text-white transition-colors font-medium text-sm"
-              >
-                Voir le profil @dark_massilia sur X
-                <ExternalLink className="w-4 h-4" />
-              </a>
-            </div>
-          </motion.div>
-        </motion.div>
 
         {/* ── Cluster interne ─────────────────────────────────────────────── */}
         <motion.div
