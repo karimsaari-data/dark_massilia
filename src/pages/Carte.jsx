@@ -19,6 +19,7 @@ const CARTES_MARINES = [
   { label: 'Réglementation en mer — Parc national des Calanques (6 Mo)', url: 'https://www.calanques-parcnational.fr/sites/calanques-parcnational.fr/files/documents/downloads/plaquette-mer-2021-xs.pdf' },
 ];
 import SEO from '../components/SEO';
+import FireRiskBanner from '../components/FireRiskBanner';
 import { SEO_PAGES } from '../utils/seo';
 
 const MAP_ID = '1fu2q9DRyD80m11ejdp8Ivuj5vn2aguM';
@@ -33,7 +34,8 @@ export default function Carte() {
       <SEO {...SEO_PAGES['/carte-calanques']} />
 
       {/* Carte — laisse ~80px de contenu visible en bas pour indiquer le scroll */}
-      <div className="relative overflow-hidden h-[calc(100vh-70px)] md:h-[calc(100vh-128px-80px)]">
+      <FireRiskBanner />
+      <div className="relative overflow-hidden h-[calc(100vh-70px-48px)] md:h-[calc(100vh-128px-80px-48px)]">
 
         {/* Carte Google My Maps — façade au clic pour éviter cookies tiers */}
         <div style={{ position: 'relative', height: '100%', overflow: 'hidden' }}>
