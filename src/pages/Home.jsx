@@ -752,22 +752,6 @@ const Home = () => {
             <FireRiskBadge />
           </motion.div>
 
-          {/* Lien discret vers la page missions */}
-          <motion.div
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true }}
-            variants={FADE_IN_UP}
-            className="text-center mt-4"
-          >
-            <Link
-              to="/depollution-marine"
-              className="inline-flex items-center gap-2 text-sm text-ocean-teal/80 hover:text-ocean-teal transition-colors duration-200"
-            >
-              <span>Voir toutes nos missions Projet Sentinelle</span>
-              <ArrowRight className="w-4 h-4" />
-            </Link>
-          </motion.div>
         </div>
       </section>
 
