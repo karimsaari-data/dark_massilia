@@ -799,6 +799,34 @@
       <image:geo_location>Marseille, calanque de sormiou</image:geo_location>
     </image:image>
     <image:image>
+      <image:loc>https://karimsaari.com/images/biodiversite-marseille-exploration-vie-marine-parc-national-calanques-team-oxygen-karim-saari-dark-massilia-1.webp</image:loc>
+      <image:title>Banc dense de bogues dans le bleu des Moyades</image:title>
+      <image:caption>Immersion au cœur d&apos;un banc de bogues (Boops boops) scintillantes lors d&apos;une exploration sous-marine profonde avec Team Oxygen aux Moyades.</image:caption>
+      <image:license>https://karimsaari.com/home/contact</image:license>
+      <image:geo_location>Marseille, Les moyades</image:geo_location>
+    </image:image>
+    <image:image>
+      <image:loc>https://karimsaari.com/images/biodiversite-marseille-exploration-vie-marine-parc-national-calanques-team-oxygen-karim-saari-dark-massilia-2.webp</image:loc>
+      <image:title>L&apos;art du camouflage d&apos;une rascasse brune aux Moyades</image:title>
+      <image:caption>Rascasse brune (Scorpaena porcus) parfaitement dissimulée sur un récif coralligène coloré lors d&apos;une plongée Team Oxygen.</image:caption>
+      <image:license>https://karimsaari.com/home/contact</image:license>
+      <image:geo_location>Marseille, Les moyades</image:geo_location>
+    </image:image>
+    <image:image>
+      <image:loc>https://karimsaari.com/images/biodiversite-marseille-exploration-vie-marine-parc-national-calanques-team-oxygen-karim-saari-dark-massilia-3.webp</image:loc>
+      <image:title>Éclat solaire des anémones jaunes des Moyades</image:title>
+      <image:caption>Tapis scintillant d&apos;anémones jaunes encroûtantes (Parazoanthus axinellae) déployant leurs tentacules dans l&apos;obscurité d&apos;un tombant.</image:caption>
+      <image:license>https://karimsaari.com/home/contact</image:license>
+      <image:geo_location>Marseille, Les moyades</image:geo_location>
+    </image:image>
+    <image:image>
+      <image:loc>https://karimsaari.com/images/biodiversite-marseille-exploration-vie-marine-parc-national-calanques-team-oxygen-karim-saari-dark-massilia-4.webp</image:loc>
+      <image:title>Sculptures vivantes d&apos;anémones jaunes encroûtantes</image:title>
+      <image:caption>Structure détaillée en relief d&apos;une colonie d&apos;anémones jaunes (Parazoanthus axinellae) s&apos;épanouissant sur un tombant profond des Moyades.</image:caption>
+      <image:license>https://karimsaari.com/home/contact</image:license>
+      <image:geo_location>Marseille, Les moyades</image:geo_location>
+    </image:image>
+    <image:image>
       <image:loc>https://karimsaari.com/images/marseille-dark-massilia-caracterisation-dechets-carac-10.webp</image:loc>
       <image:title>Analyse de la collecte — Sentinelle 4</image:title>
       <image:caption>Deux apnéistes de la TEAM OXYGEN présentent un filet de collecte rempli de détritus et un textile gorgé de sédiments sur le sable, lors de l&apos;étape de caractérisation des déchets après une opération de dépollution en Méditerranée, sous l&apos;œil d&apos;une équipe de tournage — Marseille — © Karim Saari</image:caption>
@@ -888,6 +916,13 @@
       <image:caption>retrait de pneus et macro-déchets sur les fonds marins de la plage de la Corbière, une action de préservation concrète à l&apos;Estaque</image:caption>
       <image:license>https://karimsaari.com/home/contact</image:license>
       <image:geo_location>Marseille - les goudes</image:geo_location>
+    </image:image>
+    <image:image>
+      <image:loc>https://karimsaari.com/images/depollution-j4-marseille-plastic-odyssey-caracterisation.webp</image:loc>
+      <image:title>Dépollution du J4 : Clean My Calanques trie les déchets au quai</image:title>
+      <image:caption>Bénévole de Clean My Calanques, Brigade Verte, analysant et triant les déchets métalliques remontés du port lors de l&apos;escale Plastic Odyssey à Marseille.</image:caption>
+      <image:license>https://karimsaari.com/home/contact</image:license>
+      <image:geo_location>Marseille, esplanade du J4</image:geo_location>
     </image:image>
     <image:image>
       <image:loc>https://karimsaari.com/images/marseille-dark-massilia-caracterisation-dechets-carac-3.webp</image:loc>
@@ -1471,11 +1506,67 @@
       <image:geo_location>Marseille, Calanque de Sormiou</image:geo_location>
     </image:image>
     <image:image>
+      <image:loc>https://karimsaari.com/images/depollution-j4-marseille-plastic-odyssey-1.webp</image:loc>
+      <image:title>Navire Plastic Odyssey et architecture du MuCEM à Marseille</image:title>
+      <image:caption>Contre-plongée saisissante sur la proue bleue du Plastic Odyssey, symbole de l&apos;exploration écologique, devant la dentelle de béton du MuCEM.</image:caption>
+      <image:license>https://karimsaari.com/home/contact</image:license>
+      <image:geo_location>Marseille, J4</image:geo_location>
+    </image:image>
+    <image:image>
       <image:loc>https://karimsaari.com/images/Marseille-dark-massilia-plastique-pollution-projet-sentinelle-barrière.webp</image:loc>
       <image:title>Barrière immergée — Pollution marine Marseille</image:title>
       <image:caption>Mission Projet Sentinelle Marseille — Barrière — © Karim Saari</image:caption>
       <image:license>https://karimsaari.com/home/contact</image:license>
       <image:geo_location>Calanques de Marseille</image:geo_location>
+    </image:image>
+    <image:image>
+      <image:loc>https://karimsaari.com/images/depollution-j4-marseille-plastic-odyssey-2.webp</image:loc>
+      <image:title>Plongeur marins-pompiers en dépollution sous-marine au J4</image:title>
+      <image:caption>Immersion d&apos;un plongeur des marins-pompiers de Marseille lors de la dépollution du J4 avec Plastic Odyssey, extrayant des déchets du fond marin.</image:caption>
+      <image:license>https://karimsaari.com/home/contact</image:license>
+      <image:geo_location>Marseille, J4</image:geo_location>
+    </image:image>
+    <image:image>
+      <image:loc>https://karimsaari.com/images/depollution-j4-marseille-plastic-odyssey-3.webp</image:loc>
+      <image:title>Apnée engagée : la Team Oxygen nettoie les fonds de Marseille</image:title>
+      <image:caption>Apnéiste de la Team Oxygen et marin-pompier en plein effort sous-marin pour libérer des déchets enfouis lors de la dépollution du port J4.</image:caption>
+      <image:license>https://karimsaari.com/home/contact</image:license>
+      <image:geo_location>Marseille, esplanade du J4</image:geo_location>
+    </image:image>
+    <image:image>
+      <image:loc>https://karimsaari.com/images/depollution-j4-marseille-plastic-odyssey-4.webp</image:loc>
+      <image:title>Dépollution du J4 : L&apos;apnée au service de la mer avec l&apos;asso Merveille</image:title>
+      <image:caption>L&apos;apnéiste de l&apos;association Merveille, en bleu avec sa monopalme, guide un plongeur bouteille pour extraire un déchet métallique des fonds du J4 à Marseille.</image:caption>
+      <image:license>https://karimsaari.com/home/contact</image:license>
+      <image:geo_location>Marseille, esplanade du J4</image:geo_location>
+    </image:image>
+    <image:image>
+      <image:loc>https://karimsaari.com/images/depollution-j4-marseille-plastic-odyssey-5.webp</image:loc>
+      <image:title>Coopération Marins-Pompiers et SNC : extraction de barrières Vauban au J4</image:title>
+      <image:caption>Marins-Pompiers et plongeurs de la SNC coordonnant l&apos;extraction de barrières Vauban lourdes, déchet urbain emblématique extrait des eaux marseillaises lors de la dépollution.</image:caption>
+      <image:license>https://karimsaari.com/home/contact</image:license>
+      <image:geo_location>Marseille, esplanade du J4</image:geo_location>
+    </image:image>
+    <image:image>
+      <image:loc>https://karimsaari.com/images/depollution-j4-marseille-plastic-odyssey-6.webp</image:loc>
+      <image:title>Récolte de canettes au J4 : l&apos;action de l&apos;apnéiste Team Oxygen</image:title>
+      <image:caption>Apnéiste de la Team Oxygen remontant avec une poignée de canettes en aluminium récoltées au fond du port J4 lors d&apos;une opération de dépollution à Marseille.</image:caption>
+      <image:license>https://karimsaari.com/home/contact</image:license>
+      <image:geo_location>Marseille, esplanade du J4</image:geo_location>
+    </image:image>
+    <image:image>
+      <image:loc>https://karimsaari.com/images/depollution-j4-marseille-plastic-odyssey-7.webp</image:loc>
+      <image:title>Évaluation sous-marine : Marin-Pompier face à un déchet massif au J4</image:title>
+      <image:caption>Marin-Pompier de Marseille s&apos;agenouillant pour inspecter une structure métallique lourde (barrière Vauban) avant son extraction complexe lors de la dépollution au J4.</image:caption>
+      <image:license>https://karimsaari.com/home/contact</image:license>
+      <image:geo_location>Marseille, esplanade du J4</image:geo_location>
+    </image:image>
+    <image:image>
+      <image:loc>https://karimsaari.com/images/depollution-j4-marseille-plastic-odyssey-8.webp</image:loc>
+      <image:title>Union des associations pour la protection marine à Marseille</image:title>
+      <image:caption>Bénévoles de Plastic Odyssey, 1 Déchet Par Jour et Merveille réunis sur le bateau avant une opération de dépollution au J4.</image:caption>
+      <image:license>https://karimsaari.com/home/contact</image:license>
+      <image:geo_location>Marseille, esplanade du J4</image:geo_location>
     </image:image>
   </url>
   <url>
