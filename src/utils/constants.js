@@ -21,6 +21,9 @@ export const SOCIAL_LINKS = {
   localGuide: import.meta.env.VITE_LOCAL_GUIDE_URL || 'https://www.google.com/maps/contrib/114912564832630219145/photos/',
 };
 
+// Facebook Group Stats — source de vérité pour toute l'app (menu, Home, etc.)
+export const FACEBOOK_GROUP_MEMBERS = 64600;
+
 export const NAV_LINKS = [
   {
     name: 'Portfolio',
@@ -65,7 +68,7 @@ export const NAV_LINKS = [
     icon: 'MapPin',
     description: 'Carte interactive, accès aux massifs, actualités du Parc national et communauté des amoureux des Calanques.',
     children: [
-      { name: 'Groupe Facebook Calanques',       path: '/communaute-calanques',    icon: 'Users',     isHub: true, hubDesc: '64 700 membres — la plus grande communauté des Calanques' },
+      { name: 'Groupe Facebook Calanques',       path: '/communaute-calanques',    icon: 'Users',     isHub: true, hubDesc: `${FACEBOOK_GROUP_MEMBERS.toLocaleString('fr-FR')} membres — la plus grande communauté des Calanques` },
       { name: 'Carte interactive des Calanques', path: '/carte-calanques',         icon: 'MapPin'     },
       { name: 'Accès aux massifs forestiers',    path: '/acces-massifs-calanques', icon: 'Navigation' },
       { name: 'News Parc des Calanques',         path: '/actualites',              icon: 'Newspaper'  },
@@ -77,7 +80,8 @@ export const NAV_LINKS = [
     icon: 'Mail',
     description: 'Collaborations, partenariats médias ou institutionnels — rejoignez la mission Dark Massilia.',
     children: [
-      { name: 'Collaborer avec nous',         path: '/contact',                         icon: 'Mail'    },
+      { name: 'Collaborer avec nous',         path: '/contact',                         icon: 'Mail',    isHub: true, hubDesc: 'Partenariats, médias, institutions' },
+      { name: 'Envoyer un email',             path: 'mailto:email@karimsaari.com',      icon: 'AtSign'  },
       { name: 'Newsletter',                   path: '/#newsletter',                     icon: 'Send'    },
       { name: 'Team Oxygen — site officiel',  path: 'https://www.team-oxygen.com/',     icon: 'Compass' },
     ],
@@ -88,9 +92,6 @@ export const TAGLINE = 'Une Mer · Une Ville · Une Mission';
 
 export const MISSION_STATEMENT =
   "Sentinelle des Calanques, je documente et nettoie les fonds marins de Marseille en apnée. Avec Team Oxygen, chaque plongée devient une mission de dépollution.";
-
-// Facebook Group Stats
-export const FACEBOOK_GROUP_MEMBERS = 64600;
 
 // Media types configuration
 export const MEDIA_TYPES = {

@@ -100,7 +100,7 @@ const NavDropdown = ({ item }) => {
             initial="hidden" animate="visible" exit="exit"
             variants={megaVariants}
             className="fixed left-1/2 -translate-x-1/2 z-60 w-full max-w-2xl px-4"
-            style={{ top: '120px' }}
+            style={{ top: 'var(--navbar-h-md)' }}
             onMouseEnter={openMenu}
             onMouseLeave={closeMenu}
           >
@@ -140,6 +140,7 @@ const NavDropdown = ({ item }) => {
                       </>
                     );
                     if (child.path?.startsWith('https://')) return <a href={child.path} target="_blank" rel="noopener noreferrer" className={cls}>{inner}</a>;
+                    if (child.path?.startsWith('mailto:')) return <a href={child.path} className={cls}>{inner}</a>;
                     if (child.path?.startsWith('/#')) return <Link to={child.path} onClick={() => setOpen(false)} className={cls}>{inner}</Link>;
                     return <button onClick={() => handleChildClick(child.path)} className={cls}>{inner}</button>;
                   };
@@ -247,6 +248,16 @@ const MobileNavItem = ({ item, onClose }) => {
                 (child.path && !child.path.startsWith('/#') && !child.path.startsWith('https') && location.pathname.startsWith(child.path + '/'));
               return (
                 <li key={child.path ?? child.name} className={child.sub ? 'ml-4 border-l border-gray-600/40 pl-2' : ''}>
+                  {child.path?.startsWith('mailto:') ? (
+                    <a
+                      href={child.path}
+                      className={`w-full flex items-center gap-3 px-4 py-2.5 rounded-lg transition-all duration-200 text-left focus-ring relative text-text-muted hover:text-astroide hover:bg-astroide/10`}
+                      onClick={onClose}
+                    >
+                      {ChildIcon && <ChildIcon className={`flex-shrink-0 ${child.sub ? 'w-3.5 h-3.5' : 'w-4 h-4'}`} aria-hidden="true" />}
+                      <span className={`font-medium ${child.sub ? 'text-xs' : 'text-sm'}`}>{child.name}</span>
+                    </a>
+                  ) : (
                   <button
                     onClick={() => handleChildClick(child.path)}
                     className={`w-full flex items-center gap-3 px-4 py-2.5 rounded-lg transition-all duration-200 text-left focus-ring relative ${
@@ -261,6 +272,7 @@ const MobileNavItem = ({ item, onClose }) => {
                       <div className="absolute left-0 top-1/2 -translate-y-1/2 w-0.5 h-3/4 bg-ocean-teal rounded-r-full" aria-hidden="true" />
                     )}
                   </button>
+                  )}
                 </li>
               );
             })}
