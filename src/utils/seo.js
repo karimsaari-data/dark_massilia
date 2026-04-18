@@ -1699,6 +1699,59 @@ export const SEO_PAGES = {
             audienceType: 'Randonneurs, plongeurs, apnéistes et visiteurs des Calanques de Marseille',
           },
         },
+        {
+          '@type': 'FAQPage',
+          mainEntity: [
+            {
+              '@type': 'Question',
+              name: 'Quand les massifs forestiers des Bouches-du-Rhône sont-ils soumis à une réglementation d\'accès ?',
+              acceptedAnswer: {
+                '@type': 'Answer',
+                text: 'Du 1er juin au 30 septembre inclus, l\'accès, la présence et la circulation dans les massifs forestiers font l\'objet d\'une réglementation spécifique définie par l\'arrêté préfectoral du 22 avril 2025. En dehors de cette période, l\'accès est libre mais la vigilance reste de mise toute l\'année, notamment lors de vagues de chaleur printanières ou automnales.',
+              },
+            },
+            {
+              '@type': 'Question',
+              name: 'Les Calanques de Marseille peuvent-elles fermer pour risque incendie ?',
+              acceptedAnswer: {
+                '@type': 'Answer',
+                text: 'Oui. Le Parc National des Calanques, le massif de Marseilleveyre et la Côte Bleue sont soumis à la réglementation préfectorale des massifs forestiers. Chaque jour, selon le niveau de risque évalué par Météo France, la préfecture des Bouches-du-Rhône peut restreindre ou interdire l\'accès à tout ou partie de ces secteurs. La carte officielle de la DFCI est mise à jour quotidiennement.',
+              },
+            },
+            {
+              '@type': 'Question',
+              name: 'Pourquoi les Bouches-du-Rhône sont-elles particulièrement exposées au risque incendie ?',
+              acceptedAnswer: {
+                '@type': 'Answer',
+                text: 'Les Bouches-du-Rhône constituent le département le plus exposé au risque feu de forêt en France métropolitaine. Cette vulnérabilité est liée à un cumul de facteurs : étés chauds et secs, mistral qui accélère la propagation des flammes, végétation de garrigue et de pins d\'Alep très inflammable, et forte densité de population. On dénombre environ 250 départs de feux par an dans le département, pour une surface brûlée d\'environ 1 900 hectares annuels, dont près de 90 % sont d\'origine humaine.',
+              },
+            },
+            {
+              '@type': 'Question',
+              name: 'Quels comportements sont interdits dans les massifs en période à risque ?',
+              acceptedAnswer: {
+                '@type': 'Answer',
+                text: 'En période de risque élevé, il est interdit de fumer, d\'allumer un feu ou un barbecue, de faire fonctionner des engins thermiques, d\'effectuer des travaux de débroussaillement ou tout autre travail générant des étincelles. Ces interdictions s\'appliquent aussi bien aux professionnels qu\'aux particuliers à proximité des massifs forestiers.',
+              },
+            },
+            {
+              '@type': 'Question',
+              name: 'Comment vérifier si les Calanques sont ouvertes avant de partir ?',
+              acceptedAnswer: {
+                '@type': 'Answer',
+                text: 'La méthode la plus fiable est de consulter la carte interactive de la DFCI Bouches-du-Rhône (opendfci.fr/13) ou le site risque-prevention-incendie.fr/13, tous deux mis à jour chaque matin. La page karimsaari.com/acces-massifs-calanques intègre directement la carte officielle et affiche en temps réel l\'état des massifs.',
+              },
+            },
+            {
+              '@type': 'Question',
+              name: 'Team Oxygen peut-elle organiser des missions de dépollution en période de fermeture des massifs ?',
+              acceptedAnswer: {
+                '@type': 'Answer',
+                text: 'Non. Avant chaque mission de dépollution sous-marine dans les Calanques, Team Oxygen vérifie systématiquement l\'état d\'accès aux massifs. En cas de fermeture préfectorale, les sorties terrestres et les mises à l\'eau depuis les calanques sont annulées ou reportées. La sécurité des bénévoles et le respect de la réglementation sont non négociables.',
+              },
+            },
+          ],
+        },
       ],
     },
   },
