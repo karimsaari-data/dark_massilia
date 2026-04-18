@@ -749,7 +749,9 @@ const Home = () => {
             className="flex flex-col items-center mt-8 gap-2"
           >
             <p className="text-xs text-white/40 uppercase tracking-widest">Accès Massifs des Calanques</p>
-            <FireRiskBadge inline />
+            <Link to="/acces-massifs-calanques" className="hover:opacity-80 transition-opacity" title="Consulter les conditions d'accès aux massifs des Calanques">
+              <FireRiskBadge inline />
+            </Link>
           </motion.div>
 
         </div>
@@ -808,7 +810,7 @@ const Home = () => {
                   to="/acces-massifs-calanques"
                   className="btn-ghost inline-flex items-center gap-2 w-fit"
                 >
-                  <span>Accès aux massifs</span>
+                  <span>Accès aux massifs des Calanques</span>
                   <ArrowRight className="w-4 h-4" />
                 </Link>
               </div>

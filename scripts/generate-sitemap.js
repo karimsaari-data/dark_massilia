@@ -155,7 +155,7 @@ async function generateSitemap() {
   fs.mkdirSync(path.dirname(outPath), { recursive: true });
   fs.writeFileSync(outPath, xml, 'utf-8');
 
-  const totalUrls = STATIC_PAGES.length + blogEntries.length;
+  const totalUrls = STATIC_PAGES.length + BLOG_CATEGORIES.length + blogEntries.length;
   console.log(`\n  📄 ${totalUrls} URL(s) écrites dans public/sitemap.xml`);
   console.log('✅ Sitemap généré\n');
 }

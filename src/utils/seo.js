@@ -1673,6 +1673,32 @@ export const SEO_PAGES = {
           url: `${BASE_URL}/acces-massifs-calanques`,
           isPartOf: { '@id': `${BASE_URL}/#website` },
         },
+        {
+          '@type': 'WebApplication',
+          name: 'Carte accès massifs forestiers Calanques — Risque incendie en temps réel',
+          applicationCategory: 'UtilityApplication',
+          operatingSystem: 'All',
+          url: `${BASE_URL}/acces-massifs-calanques`,
+          description:
+            'Outil cartographique officiel de la DFCI Bouches-du-Rhône affichant en temps réel les conditions d\'accès aux massifs forestiers : Calanques, Marseilleveyre, Côte Bleue. Ouverture ou fermeture selon le niveau de risque incendie du jour.',
+          featureList: [
+            'Risque incendie en temps réel',
+            'Ouverture et fermeture des massifs',
+            'Calanques de Marseille',
+            'Côte Bleue',
+            'Massif de Marseilleveyre',
+            'Données DFCI Bouches-du-Rhône',
+          ].join(', '),
+          provider: {
+            '@type': 'GovernmentOrganization',
+            name: 'DFCI Bouches-du-Rhône — opendfci.fr',
+            url: 'https://opendfci.fr/13',
+          },
+          audience: {
+            '@type': 'Audience',
+            audienceType: 'Randonneurs, plongeurs, apnéistes et visiteurs des Calanques de Marseille',
+          },
+        },
       ],
     },
   },
