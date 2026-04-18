@@ -43,7 +43,11 @@ const NavDropdown = ({ item }) => {
   const navigate = useNavigate();
   const timerRef = useRef(null);
 
-  const isActive = item.children?.some(c => location.pathname === c.path);
+  const pathMatches = (childPath) => {
+    if (!childPath || childPath.startsWith('/#') || childPath.startsWith('https')) return false;
+    return location.pathname === childPath || location.pathname.startsWith(childPath + '/');
+  };
+  const isActive = item.children?.some(c => pathMatches(c.path));
   const HeaderIcon = iconMap[item.icon];
 
   const openMenu  = () => { clearTimeout(timerRef.current); setOpen(true); };
@@ -100,36 +104,37 @@ const NavDropdown = ({ item }) => {
             onMouseEnter={openMenu}
             onMouseLeave={closeMenu}
           >
-            <div className="rounded-2xl overflow-hidden shadow-2xl shadow-black/60 ring-1 ring-[#3c59ab]/60 flex">
+            <div className="rounded-2xl overflow-hidden shadow-2xl shadow-black/60 ring-1 ring-white/10 flex">
 
-              {/* Colonne gauche — bleu méduse */}
-              <div className="w-64 flex-shrink-0 p-8 flex flex-col gap-4" style={{ background: '#dce8f7' }}>
+              {/* Colonne gauche — dark abyss */}
+              <div className="w-64 flex-shrink-0 p-8 flex flex-col gap-4" style={{ background: 'rgba(4,14,28,0.98)' }}>
                 <div className="flex gap-3 items-start">
                   <div className="w-1 self-stretch rounded-full bg-astroide flex-shrink-0 mt-1" aria-hidden="true" />
-                  <p className="font-anton text-4xl leading-none uppercase" style={{ color: '#0d2d6e' }}>{item.dropdownTitle ?? item.name}</p>
+                  <p className="font-anton text-4xl leading-none uppercase text-white">{item.dropdownTitle ?? item.name}</p>
                 </div>
-                <p className="text-sm leading-relaxed" style={{ color: '#4a6080' }}>{item.description}</p>
+                <p className="text-sm leading-relaxed text-gray-400">{item.description}</p>
                 <div className="mt-auto">
-                  <div className="h-px mb-3" style={{ background: '#b0c8e8' }} />
-                  <p className="text-xs uppercase tracking-widest" style={{ color: '#8aaace' }}>Karim Saari</p>
+                  <div className="h-px mb-3 bg-white/10" />
+                  <p className="text-xs uppercase tracking-widest text-gray-600">Karim Saari</p>
                 </div>
               </div>
 
-              {/* Colonne droite — blanc crème */}
-              <div className="flex-1 p-6 flex flex-col justify-center gap-2" style={{ background: '#faf8f4' }}>
+              {/* Colonne droite — dark ocean */}
+              <div className="flex-1 p-6 flex flex-col justify-center gap-2" style={{ background: 'rgba(11,28,45,0.97)' }}>
                 {(() => {
                   const hub = item.children.find(c => c.isHub);
                   const rest = item.children.filter(c => !c.isHub);
 
                   const renderBtn = (child, extraClass = '') => {
                     const Icon = iconMap[child.icon];
-                    const childActive = location.pathname === child.path;
+                    const childActive = location.pathname === child.path ||
+                      (child.path && !child.path.startsWith('/#') && !child.path.startsWith('https') && location.pathname.startsWith(child.path + '/'));
                     const cls = `w-full flex items-center gap-3 px-4 py-3.5 rounded-lg text-sm transition-all duration-150 text-left focus-ring group/link ${
-                      childActive ? 'text-astroide bg-black/10' : 'text-gray-800 hover:text-astroide hover:bg-black/10'
+                      childActive ? 'text-astroide bg-white/10' : 'text-gray-200 hover:text-astroide hover:bg-white/10'
                     } ${extraClass}`;
                     const inner = (
                       <>
-                        {Icon && <Icon className={`w-4 h-4 flex-shrink-0 ${childActive ? 'text-astroide' : 'text-gray-400 group-hover/link:text-astroide'}`} aria-hidden="true" />}
+                        {Icon && <Icon className={`w-4 h-4 flex-shrink-0 ${childActive ? 'text-astroide' : 'text-gray-500 group-hover/link:text-astroide'}`} aria-hidden="true" />}
                         <span className="font-semibold">{child.name}</span>
                         {childActive && <div className="ml-auto w-2 h-2 rounded-full bg-astroide flex-shrink-0" aria-hidden="true" />}
                       </>
@@ -152,7 +157,7 @@ const NavDropdown = ({ item }) => {
                             }`}
                           >
                             <div className="flex items-center justify-between">
-                              <span className={`font-bold text-sm ${location.pathname === hub.path ? 'text-astroide' : 'text-gray-800 group-hover/hub:text-astroide'}`}>
+                              <span className={`font-bold text-sm ${location.pathname === hub.path ? 'text-astroide' : 'text-gray-100 group-hover/hub:text-astroide'}`}>
                                 {hub.name}
                               </span>
                               <span className={`text-xs font-semibold transition-colors ${location.pathname === hub.path ? 'text-astroide' : 'text-gray-400 group-hover/hub:text-astroide'}`}>
@@ -166,7 +171,7 @@ const NavDropdown = ({ item }) => {
                         </li>
                       )}
                       {rest.map(child => (
-                        <li key={child.path ?? child.name} className={child.sub ? 'pl-8 border-l-2 border-gray-100' : 'pl-3 border-l-2 border-gray-200'}>
+                        <li key={child.path ?? child.name} className={child.sub ? 'pl-8 border-l-2 border-white/10' : 'pl-3 border-l-2 border-white/15'}>
                           {renderBtn(child, child.sub ? 'text-xs py-2.5' : '')}
                         </li>
                       ))}
@@ -188,7 +193,11 @@ const MobileNavItem = ({ item, onClose }) => {
   const location = useLocation();
   const navigate = useNavigate();
 
-  const isActive = item.children?.some(c => location.pathname === c.path);
+  const pathMatches = (childPath) => {
+    if (!childPath || childPath.startsWith('/#') || childPath.startsWith('https')) return false;
+    return location.pathname === childPath || location.pathname.startsWith(childPath + '/');
+  };
+  const isActive = item.children?.some(c => pathMatches(c.path));
 
   const handleChildClick = (path) => {
     onClose();
@@ -234,7 +243,8 @@ const MobileNavItem = ({ item, onClose }) => {
           >
             {item.children.map((child) => {
               const ChildIcon = iconMap[child.icon];
-              const childActive = location.pathname === child.path;
+              const childActive = location.pathname === child.path ||
+                (child.path && !child.path.startsWith('/#') && !child.path.startsWith('https') && location.pathname.startsWith(child.path + '/'));
               return (
                 <li key={child.path ?? child.name} className={child.sub ? 'ml-4 border-l border-gray-600/40 pl-2' : ''}>
                   <button
