@@ -25,10 +25,9 @@ const ScrollToTop = () => {
           transition={{ duration: 0.2 }}
           onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
           aria-label="Retour en haut de page"
-          className="fixed bottom-28 right-4 md:bottom-6 md:right-6 z-50 w-11 h-11 rounded-full flex items-center justify-center transition-all duration-200 shadow-lg shadow-astroide/30"
-          style={{ background: 'linear-gradient(135deg, #FF9500 0%, #FF7F00 100%)', border: '1px solid rgba(255,127,0,0.4)' }}
+          className="fixed bottom-28 right-4 md:bottom-6 md:right-6 z-50 w-11 h-11 rounded-full flex items-center justify-center transition-all duration-300 bg-white/10 border border-white/20 backdrop-blur-sm hover:bg-astroide/20 hover:border-astroide/50 shadow-lg shadow-black/30 group"
         >
-          <ChevronUp className="w-5 h-5 text-white" strokeWidth={2.5} />
+          <ChevronUp className="w-5 h-5 text-white/70 group-hover:text-astroide transition-colors duration-300" strokeWidth={2.5} />
         </motion.button>
       )}
     </AnimatePresence>
