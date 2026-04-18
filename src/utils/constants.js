@@ -22,7 +22,7 @@ export const SOCIAL_LINKS = {
 };
 
 // Facebook Group Stats — source de vérité pour toute l'app (menu, Home, etc.)
-export const FACEBOOK_GROUP_MEMBERS = 64600;
+export const FACEBOOK_GROUP_MEMBERS = 64700;
 
 export const NAV_LINKS = [
   {
@@ -81,7 +81,7 @@ export const NAV_LINKS = [
     description: 'Collaborations, partenariats médias ou institutionnels — rejoignez la mission Dark Massilia.',
     children: [
       { name: 'Collaborer avec nous',         path: '/contact',                         icon: 'Mail',    isHub: true, hubDesc: 'Partenariats, médias, institutions' },
-      { name: 'Envoyer un email',             path: 'mailto:email@karimsaari.com',      icon: 'AtSign'  },
+      { name: 'Envoyer un email',             path: 'mailto:contact@karimsaari.com',    icon: 'AtSign'  },
       { name: 'Newsletter',                   path: '/#newsletter',                     icon: 'Send'    },
       { name: 'Team Oxygen — site officiel',  path: 'https://www.team-oxygen.com/',     icon: 'Compass' },
     ],
