@@ -74,7 +74,7 @@ const Layout = () => {
       {/* Content */}
       <div className="relative z-10 flex flex-col min-h-screen">
         <Navbar />
-        <main id="main-content" className="flex-grow pt-[70px] md:pt-[128px]">
+        <main id="main-content" className="flex-grow pt-[var(--navbar-h)] md:pt-[var(--navbar-h-md)]">
           <Outlet />
         </main>
         <Footer />

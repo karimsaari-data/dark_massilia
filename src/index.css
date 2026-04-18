@@ -4,6 +4,16 @@
 @tailwind components;
 @tailwind utilities;
 
+/* ── Design tokens globaux ────────────────────────────────────────────────── */
+:root {
+  /* Hauteur de la navbar — source de vérité unique.
+     Mettre à jour ici si la navbar change de hauteur.
+     Mobile  : barre compacte (logo + hamburger)
+     Desktop : barre complète avec méga-menu (≥ md) */
+  --navbar-h: 70px;
+  --navbar-h-md: 128px;
+}
+
 @layer base {
   * {
     @apply box-border;
