@@ -78,26 +78,12 @@ const depollutionPaths = [
   "/images/marseille-dark-massilia-port-goudes-depollution-apnee-projet-sentinelle.webp",
   "/images/marseille-dark-massilia-projet-sentinelle-caracterisation-dechets.webp",
   "/images/marseille-dark-massilia-tf1-reportage-projet-sentinelle-depollution.webp",
-  // Plastic Odyssey j4 — nouvelles missions dépollution 2025
-  "/images/depollution-j4-marseille-plastic-odyssey-1.webp",
-  "/images/depollution-j4-marseille-plastic-odyssey-2.webp",
-  "/images/depollution-j4-marseille-plastic-odyssey-3.webp",
-  "/images/depollution-j4-marseille-plastic-odyssey-4.webp",
-  "/images/depollution-j4-marseille-plastic-odyssey-5.webp",
-  "/images/depollution-j4-marseille-plastic-odyssey-6.webp",
-  "/images/depollution-j4-marseille-plastic-odyssey-7.webp",
-  "/images/depollution-j4-marseille-plastic-odyssey-8.webp",
 ];
 
 const biodiversitePaths = [
   "/images/Marseille-dark-massilia-plastique-pollution-projet-sentinelle-archipel-frioul-barquette-5.webp",
   "/images/Marseille-dark-massilia-plastique-pollution-projet-sentinelle-spirographe.webp",
   "/images/Marseille-dark-massilia-plastique-pollution-projet-sentinelle-poulpe.webp",
-  // Nouvelles photos biodiversité 2025 — vie marine Parc National des Calanques
-  "/images/biodiversite-marseille-vie-marine-calanques-team-oxygen-karim-saari-dark-massilia-1.webp",
-  "/images/biodiversite-marseille-vie-marine-calanques-team-oxygen-karim-saari-dark-massilia-2.webp",
-  "/images/biodiversite-marseille-vie-marine-calanques-team-oxygen-karim-saari-dark-massilia-3.webp",
-  "/images/biodiversite-marseille-vie-marine-calanques-team-oxygen-karim-saari-dark-massilia-4.webp",
 ];
 
 const getAltText = (src) => {
