@@ -167,6 +167,32 @@ export default function AccesMassifs() {
                     </div>
                   ))}
                 </div>
+
+                {/* Photos terrain — pompiers SDIS 13 */}
+                <div className="grid grid-cols-2 gap-3 mt-8">
+                  <img
+                    src="/images/acces-massifs-calanques_2.webp"
+                    srcSet="/images/acces-massifs-calanques_2_400w.webp 400w, /images/acces-massifs-calanques_2_800w.webp 800w, /images/acces-massifs-calanques_2.webp 4000w"
+                    sizes="(max-width: 640px) calc(50vw - 24px), (max-width: 1024px) 380px, 480px"
+                    alt="Véhicules 4x4 du SDIS 13 en patrouille dans les massifs forestiers des Bouches-du-Rhône — surveillance incendie Calanques"
+                    width="4000"
+                    height="2252"
+                    className="rounded-xl w-full object-cover aspect-video"
+                    loading="lazy"
+                    decoding="async"
+                  />
+                  <img
+                    src="/images/acces-massifs-calanques_3.webp"
+                    srcSet="/images/acces-massifs-calanques_3_400w.webp 400w, /images/acces-massifs-calanques_3_800w.webp 800w, /images/acces-massifs-calanques_3.webp 4000w"
+                    sizes="(max-width: 640px) calc(50vw - 24px), (max-width: 1024px) 380px, 480px"
+                    alt="Sapeur-pompier guidant un camion de secours — intervention des pompiers de Marseille face au risque incendie"
+                    width="4000"
+                    height="1848"
+                    className="rounded-xl w-full object-cover aspect-video"
+                    loading="lazy"
+                    decoding="async"
+                  />
+                </div>
               </div>
             </div>
           </div>
@@ -202,6 +228,41 @@ export default function AccesMassifs() {
                 débroussaillement, engins thermiques, travaux agricoles. En cas de risque très sévère ou extrême,
                 même les professionnels doivent cesser toute activité susceptible de provoquer une étincelle.
               </p>
+            </div>
+
+            {/* Panneau fermeture — illustration terrain */}
+            <div className="flex flex-col sm:flex-row gap-6 items-start mb-8">
+              <img
+                src="/images/acces-massifs-calanques_1.webp"
+                srcSet="/images/acces-massifs-calanques_1_400w.webp 400w, /images/acces-massifs-calanques_1_800w.webp 800w, /images/acces-massifs-calanques_1.webp 1080w"
+                sizes="(max-width: 640px) 100vw, 280px"
+                alt="Panneau rouge officiel — Accès au Parc National des Calanques interdit, risque incendie, PV 135 €"
+                width="1080"
+                height="1080"
+                className="rounded-xl w-full sm:w-[280px] flex-shrink-0 object-cover"
+                loading="lazy"
+                decoding="async"
+              />
+              <div className="text-text-secondary text-base leading-relaxed space-y-3">
+                <p>
+                  Ce panneau rouge, vous pouvez le croiser à chaque entrée des Calanques dès que le risque
+                  incendie est jugé trop élevé. Il s'accompagne d'une amende de{' '}
+                  <strong className="text-white">135 € en cas de non-respect</strong>.
+                </p>
+                <p>
+                  La décision de fermeture est publiée chaque matin avant 6h par la préfecture des
+                  Bouches-du-Rhône, sur la base des prévisions Météo France pour la journée.
+                  Elle peut changer d'un jour à l'autre, y compris en plein mois de juillet.
+                </p>
+                <p>
+                  <strong className="text-white">La règle est simple :</strong> avant de partir,
+                  consultez la carte ci-dessus ou le site{' '}
+                  <a href="https://www.risque-prevention-incendie.fr/13" target="_blank" rel="noopener noreferrer"
+                    className="text-ocean-teal hover:text-white transition-colors font-medium">
+                    risque-prevention-incendie.fr/13
+                  </a>.
+                </p>
+              </div>
             </div>
 
             {/* Niveaux de risque */}
