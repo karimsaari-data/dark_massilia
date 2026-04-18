@@ -15,12 +15,31 @@ const formatDate = (dateStr) => {
   try {
     return new Date(dateStr).toLocaleDateString('fr-FR', {
       day: 'numeric',
-      month: 'long',
+      month: 'short', // "avr." au lieu de "avril" — cohérent avec les badges Agenda
       year: 'numeric',
     });
   } catch {
     return '';
   }
+};
+
+// Convertit un item agenda { day, month } en timestamp pour le tri
+// month = "AVR", "MAI", etc. — on reconstruit une Date pour l'année en cours ou l'année suivante
+const MONTH_ABR = {
+  JAN: 1, FEV: 2, MAR: 3, AVR: 4, MAI: 5, JUN: 6,
+  JUI: 7, AOU: 8, SEP: 9, OCT: 10, NOV: 11, DEC: 12,
+};
+const agendaTimestamp = (item) => {
+  const now = new Date();
+  const m = MONTH_ABR[(item.month || '').toUpperCase().slice(0, 3)] || 0;
+  const d = parseInt(item.day, 10) || 0;
+  if (!m || !d) return Infinity;
+  const year = now.getFullYear();
+  const candidate = new Date(year, m - 1, d);
+  // Si la date est passée, on la projette à l'année suivante
+  return candidate.getTime() < now.getTime()
+    ? new Date(year + 1, m - 1, d).getTime()
+    : candidate.getTime();
 };
 
 const useParcRss = () => {
@@ -82,7 +101,11 @@ const useAgenda = () => {
       .then((r) => { if (!r.ok) throw new Error(`HTTP ${r.status}`); return r.json(); })
       .then((data) => {
         if (data.status !== 'ok') throw new Error(data.message || 'Indisponible');
-        setItems(data.items);
+        // Tri croissant : événement le plus proche en premier
+        const sorted = [...data.items].sort(
+          (a, b) => agendaTimestamp(a) - agendaTimestamp(b)
+        );
+        setItems(sorted);
       })
       .catch((e) => setError(e.message))
       .finally(() => setLoading(false));
