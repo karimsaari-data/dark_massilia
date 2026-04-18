@@ -25,7 +25,7 @@ const ScrollToTop = () => {
           transition={{ duration: 0.2 }}
           onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
           aria-label="Retour en haut de page"
-          className="fixed bottom-6 right-6 z-50 w-11 h-11 rounded-full flex items-center justify-center transition-all duration-200 shadow-lg shadow-astroide/30"
+          className="fixed bottom-28 right-4 md:bottom-6 md:right-6 z-50 w-11 h-11 rounded-full flex items-center justify-center transition-all duration-200 shadow-lg shadow-astroide/30"
           style={{ background: 'linear-gradient(135deg, #FF9500 0%, #FF7F00 100%)', border: '1px solid rgba(255,127,0,0.4)' }}
         >
           <ChevronUp className="w-5 h-5 text-white" strokeWidth={2.5} />
@@ -65,7 +65,7 @@ const Layout = () => {
           style={{
             backgroundImage: `
               radial-gradient(ellipse 70% 60% at 60% 38%, rgba(0,0,0,0.18) 0%, transparent 100%),
-              radial-gradient(circle at 8% 0%, rgba(33, 196, 123, 0.10), transparent 42%),
+              radial-gradient(circle at 8% 0%, rgba(0, 171, 168, 0.10), transparent 42%),
               radial-gradient(circle at 92% 98%, rgba(0, 145, 255, 0.10), transparent 42%)
             `,
           }}
