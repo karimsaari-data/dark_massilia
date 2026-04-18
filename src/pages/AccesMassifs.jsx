@@ -5,7 +5,7 @@
  */
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { ArrowLeft, ArrowRight, ExternalLink, Info, ChevronDown, Flame, AlertTriangle, ShieldCheck, TreePine } from 'lucide-react';
+import { ExternalLink, ChevronDown, Flame, AlertTriangle, TreePine } from 'lucide-react';
 import SEO from '../components/SEO';
 import { SEO_PAGES } from '../utils/seo';
 import FireRiskBanner from '../components/FireRiskBanner';
@@ -113,41 +113,7 @@ export default function AccesMassifs() {
         />
       </div>
 
-      {/* Info + navigation */}
       <div className="container-custom py-6">
-        <div className="glass rounded-2xl p-5 border border-white/8 mb-6">
-          <div className="flex items-start gap-3">
-            <Info className="w-4 h-4 text-ocean-teal flex-shrink-0 mt-0.5" />
-            <p className="text-sm text-text-secondary leading-relaxed">
-              En période estivale (juin–septembre), la préfecture peut fermer les massifs selon le niveau de risque incendie.
-              Avant chaque mission <strong className="text-ocean-teal">Team Oxygen</strong>, nous vérifions l'état des massifs —
-              Calanques, Côte Bleue, Marseilleveyre. Sources :&nbsp;
-              <a href="https://www.risque-prevention-incendie.fr/13" target="_blank" rel="noopener noreferrer"
-                className="text-ocean-teal hover:text-white transition-colors font-medium">
-                risque-prevention-incendie.fr/13
-              </a>
-              {' · '}
-              <a href="https://opendfci.fr/13" target="_blank" rel="noopener noreferrer"
-                className="inline-flex items-center gap-1 text-text-muted hover:text-white transition-colors">
-                opendfci.fr/13
-                <ExternalLink className="w-3 h-3" />
-              </a>
-            </p>
-          </div>
-        </div>
-
-        <div className="flex flex-col sm:flex-row justify-between items-center gap-4 mb-16">
-          <Link to="/depollution-marine"
-            className="inline-flex items-center gap-2 text-text-secondary hover:text-white transition-colors text-sm">
-            <ArrowLeft className="w-4 h-4" />
-            Nos missions de dépollution
-          </Link>
-          <Link to="/carte-calanques"
-            className="inline-flex items-center gap-2 text-ocean-teal hover:text-white transition-colors text-sm font-medium">
-            Carte de nos interventions
-            <ExternalLink className="w-4 h-4" />
-          </Link>
-        </div>
 
         {/* ── SECTION 1 : Contexte ── */}
         <section className="mb-16">
@@ -181,9 +147,10 @@ export default function AccesMassifs() {
                     gestes peut déclencher une catastrophe irréversible en quelques minutes.
                   </p>
                   <p>
-                    Ce que je documente sous l'eau depuis dix ans — la biodiversité des Calanques, les posidonies,
-                    les mérous, les grottes marines — peut disparaître à jamais en quelques heures si le feu atteint
-                    les versants. La mer et la forêt forment un seul écosystème. Protéger l'un, c'est protéger l'autre.
+                    Ce que je documente depuis dix ans — les falaises calcaires depuis les sentiers, la lumière
+                    unique des calanques, la biodiversité des fonds marins en apnée, les posidonies, les mérous —
+                    peut disparaître à jamais en quelques heures si le feu atteint les versants.
+                    La mer et la forêt forment un seul écosystème. Protéger l'un, c'est protéger l'autre.
                   </p>
                 </div>
 
@@ -257,57 +224,7 @@ export default function AccesMassifs() {
           </div>
         </section>
 
-        {/* ── SECTION 3 : Angle Team Oxygen ── */}
-        <section className="mb-16">
-          <div className="glass-strong rounded-3xl border border-ocean-teal/20 p-8 md:p-12">
-            <div className="flex items-center gap-3 mb-6">
-              <ShieldCheck className="w-6 h-6 text-ocean-teal flex-shrink-0" />
-              <h2 className="text-2xl md:text-3xl font-bold text-white">
-                Avant chaque mission Team Oxygen : le réflexe obligatoire
-              </h2>
-            </div>
-
-            <div className="space-y-4 text-text-secondary text-lg leading-relaxed">
-              <p>
-                Chaque intervention de{' '}
-                <strong className="text-ocean-teal">Team Oxygen dans les Calanques</strong>{' '}
-                — qu'il s'agisse d'une session de dépollution sous-marine, d'une sortie photo ou d'une reconnaissance
-                de zone — commence par une vérification systématique de l'état d'accès aux massifs.
-              </p>
-              <p>
-                En cas de fermeture préfectorale, toutes nos sorties terrestres depuis les massifs et les mises à
-                l'eau depuis les calanques sont annulées ou reportées, sans exception. La réglementation n'est pas
-                une contrainte administrative : c'est une protection pour nos bénévoles, pour les secours, et pour
-                la forêt elle-même.
-              </p>
-              <p>
-                Si vous souhaitez participer à l'une de nos missions, vérifiez systématiquement cette carte avant
-                de vous déplacer. <strong className="text-white">Un massif fermé, c'est une sortie reportée —
-                jamais annulée définitivement.</strong> La Méditerranée sera encore là quand les conditions
-                seront réunies.
-              </p>
-            </div>
-
-            <div className="mt-8 flex flex-wrap gap-3">
-              <Link
-                to="/depollution-marine"
-                className="btn-primary inline-flex items-center gap-2"
-              >
-                <span>Nos missions de dépollution</span>
-                <ArrowRight className="w-4 h-4" />
-              </Link>
-              <Link
-                to="/contact"
-                className="btn-ghost inline-flex items-center gap-2"
-              >
-                <span>Nous contacter</span>
-                <ArrowRight className="w-4 h-4" />
-              </Link>
-            </div>
-          </div>
-        </section>
-
-        {/* ── SECTION 4 : Bons gestes ── */}
+        {/* ── SECTION 3 : Bons gestes ── */}
         <section className="mb-16">
           <div className="glass-strong rounded-3xl border border-white/10 p-8 md:p-12">
             <div className="flex items-center gap-3 mb-6">
@@ -343,7 +260,7 @@ export default function AccesMassifs() {
           </div>
         </section>
 
-        {/* ── SECTION 5 : FAQ ── */}
+        {/* ── SECTION 4 : FAQ ── */}
         <section className="mb-16">
           <div className="glass-strong rounded-3xl border border-white/10 p-8 md:p-12">
             <h2 className="text-2xl md:text-3xl font-bold text-white mb-8">
