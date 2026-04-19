@@ -171,16 +171,17 @@ const SocialStats = () => {
         SOCIAL_NETWORKS_STATIC.map(n => [n.platform, n])
       );
       setNetworks(prev => prev.map(network => {
+        // local_guides utilise local_guide_views_m (déjà en millions) — indépendant du row cards
+        if (network.platform === 'local_guides' && localGuidesValue !== null) {
+          return { ...network, end: localGuidesValue };
+        }
         const row = cards.find(c => c.platform === network.platform);
         if (!row) return network;
         const staticRow = staticByPlatform[network.platform] || {};
         const rawValue = parseFloat(row.value);
 
-        // local_guides utilise local_guide_views_m (déjà en millions)
         let end;
-        if (network.platform === 'local_guides' && localGuidesValue !== null) {
-          end = localGuidesValue;
-        } else if (staticRow.suffix === 'K') {
+        if (staticRow.suffix === 'K') {
           // DB stocke les abonnés en valeur brute → diviser par 1000
           end = rawValue >= 1000 ? rawValue / 1000 : rawValue;
         } else if (staticRow.suffix === 'M') {

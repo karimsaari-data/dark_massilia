@@ -64,16 +64,16 @@ export default defineConfig({
   plugins: [
     react(),
     importPhotosPlugin,
-    // Brotli — prégénère .br pour CSS/JS (servi par .htaccess si dispo)
+    // Brotli — prégénère .br pour CSS/JS uniquement (images exclues explicitement)
     compression({
       algorithm: 'brotliCompress',
-      exclude: [/\.(png|jpg|jpeg|gif|webp|svg|ico|woff2?)$/i],
-      threshold: 1024,           // ne compresse pas les fichiers < 1 kB
+      include: /\.(js|css|html|json|xml|txt)$/i,
+      threshold: 1024,
     }),
-    // Gzip en fallback (navigateurs sans Brotli — très rares aujourd'hui)
+    // Gzip en fallback
     compression({
       algorithm: 'gzip',
-      exclude: [/\.(png|jpg|jpeg|gif|webp|svg|ico|woff2?)$/i],
+      include: /\.(js|css|html|json|xml|txt)$/i,
       threshold: 1024,
     }),
   ],

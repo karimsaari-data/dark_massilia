@@ -8,7 +8,7 @@ import { trackEvent } from '../lib/analytics';
 
 const NewsletterSection = () => {
   const [email, setEmail] = useState('');
-  const [consent, setConsent] = useState(false);
+  const [consent, setConsent] = useState(true);
   const [status, setStatus] = useState('idle'); // idle | loading | success | already | error
   const [errorMsg, setErrorMsg] = useState('');
 
@@ -112,6 +112,7 @@ const NewsletterSection = () => {
                       type="submit"
                       disabled={!consent || status === 'loading'}
                       aria-busy={status === 'loading'}
+                      title={!consent ? 'Coche la case ci-dessous pour continuer' : undefined}
                       className="btn-primary flex items-center justify-center gap-2 px-5 py-3.5 whitespace-nowrap shrink-0 text-sm disabled:opacity-50 disabled:cursor-not-allowed"
                     >
                       {status === 'loading' ? (
@@ -132,6 +133,7 @@ const NewsletterSection = () => {
                       checked={consent}
                       onChange={(e) => setConsent(e.target.checked)}
                       className="mt-0.5 w-4 h-4 flex-shrink-0 rounded border border-white/30 bg-white/10 accent-ocean-teal cursor-pointer"
+                      required
                     />
                     <span className="text-white/65 text-xs leading-relaxed group-hover:text-white/80 transition-colors">
                       J'accepte de recevoir la newsletter Dark Massilia et les actualités de Karim Saari.{' '}

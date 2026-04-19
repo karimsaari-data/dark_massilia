@@ -38,8 +38,8 @@ const navColumns = [
   {
     label: 'Missions',
     links: [
-      { to: '/depollution-marine',    text: 'Dépollution marine' },
       { to: '/communaute',            text: 'Rejoindre la communauté' },
+      { to: '/depollution-marine',    text: 'Dépollution marine' },
       { to: '/donnees-scientifiques', text: 'Données scientifiques' },
       { to: '/local-guide-marseille', text: 'Google Local Guide' },
     ],
@@ -48,9 +48,9 @@ const navColumns = [
     label: 'Médias',
     links: [
       { to: '/videos',                                       text: 'Vidéos & Documentaires' },
-      { to: '/presse',                                       text: 'Presse' },
       { to: '/sauver-marseille-documentaire-arte',           text: 'ARTE — Sauver Marseille' },
       { to: '/meduses-souveraines-oceans-documentaire-arte', text: 'ARTE — Méduses' },
+      { to: '/presse',                                       text: 'Presse' },
       { to: '/blog',                                         text: 'Blog' },
     ],
   },
