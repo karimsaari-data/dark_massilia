@@ -627,10 +627,10 @@ const Home = () => {
               <p className="text-gray-300 text-lg mb-8 leading-[1.8]">
                 Des falaises calcaires du littoral marseillais aux profondeurs de la Méditerranée, découvrez un témoignage visuel unique. Entre la splendeur des paysages de Provence et l'urgence écologique des fonds marins, chaque image raconte l'équilibre fragile de notre écosystème.
               </p>
-              <div className="flex flex-col gap-3">
+              <div className="flex flex-col gap-3 items-start">
                 <Link
                   to="/photographie-paysage-mer"
-                  className="btn-primary inline-flex items-center justify-between gap-2 w-full"
+                  className="btn-primary inline-flex items-center justify-between gap-2 w-auto min-w-[280px]"
                   title="Voir les photographies de paysages et du littoral marseillais par Karim Saari"
                 >
                   <span>Galerie Paysages &amp; Littoral</span>
@@ -638,7 +638,7 @@ const Home = () => {
                 </Link>
                 <Link
                   to="/photographie-sous-marine"
-                  className="btn-ghost inline-flex items-center justify-between gap-2 w-full"
+                  className="btn-ghost inline-flex items-center justify-between gap-2 w-auto min-w-[280px]"
                   title="Voir les photographies sous-marines et les actions de dépollution par Karim Saari"
                 >
                   <span>Galerie Sous-marine &amp; Dépollution</span>

@@ -688,10 +688,36 @@ const Photos = () => {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
-          className="text-xl md:text-2xl font-bold text-white text-center mb-8 leading-tight"
+          className="text-xl md:text-2xl font-bold text-white text-center mb-6 leading-tight"
         >
           Photographe de Paysages à Marseille — Calanques, Littoral & Méditerranée
         </motion.h1>
+
+        {/* Raccourcis catégories */}
+        <motion.div
+          initial={{ opacity: 0, y: 10 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5, delay: 0.2 }}
+          className="flex flex-wrap justify-center gap-3 mb-10"
+        >
+          {[
+            { href: '#littoral', icon: <Waves className="w-4 h-4" />, label: 'Littoral & Calanques' },
+            { href: '#provence', icon: <TreePine className="w-4 h-4" />, label: 'Terres de Provence' },
+            { href: '#horizons', icon: <Compass className="w-4 h-4" />, label: 'Horizons Lointains' },
+          ].map(({ href, icon, label }) => (
+            <a
+              key={href}
+              href={href}
+              className="inline-flex items-center gap-2 px-4 py-2 rounded-full text-sm font-medium
+                         bg-white/5 border border-white/15 text-text-secondary
+                         hover:bg-ocean-teal/10 hover:border-ocean-teal/40 hover:text-ocean-teal
+                         transition-colors duration-200"
+            >
+              {icon}
+              {label}
+            </a>
+          ))}
+        </motion.div>
 
         {/* Section 1 — Littoral Marseillais & Calanques */}
         <motion.div
