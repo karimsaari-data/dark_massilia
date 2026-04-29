@@ -12,6 +12,7 @@ import { Calendar, ArrowRight, Rss } from 'lucide-react';
 import SEO from '../components/SEO';
 import { SEO_PAGES } from '../utils/seo';
 import { fetchPosts } from '../utils/api';
+import Breadcrumb from '../components/Breadcrumb';
 import { FADE_IN_UP, STAGGER_CONTAINER } from '../utils/constants';
 
 export const CATEGORIES = [
@@ -51,6 +52,7 @@ export default function Blog() {
       <SEO {...SEO_PAGES['/blog']} />
 
       <div className="container-custom">
+        <Breadcrumb label="Actualités" />
 
         {/* ── En-tête ─────────────────────────────────────────────────────── */}
         <motion.div

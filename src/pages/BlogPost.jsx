@@ -28,16 +28,22 @@ function altFromSrc(imgTag, postTitle = '') {
 
 // Post-traite le HTML WordPress : lazy loading images + rétrogradation h1→h2 + alt manquants
 function lazyLoadContent(html, postTitle = '') {
+  let firstImg = true;
   return html
     .replace(/<h1(\s[^>]*)?>/gi, '<h2$1>')
     .replace(/<\/h1>/gi, '</h2>')
-    // Ajoute lazy/decoding si absent
-    .replace(/<img(?![^>]*\bloading=)([^>]*>)/gi, '<img loading="lazy" decoding="async"$1')
+    // Première image → eager + fetchpriority high (LCP) ; les suivantes → lazy
+    .replace(/<img(?![^>]*\bloading=)([^>]*>)/gi, (match, rest) => {
+      if (firstImg) {
+        firstImg = false;
+        return `<img loading="eager" fetchpriority="high" decoding="async"${rest}`;
+      }
+      return `<img loading="lazy" decoding="async"${rest}`;
+    })
     // Injecte alt de secours sur les <img> sans alt ou avec alt=""
     .replace(/<img([^>]*)>/gi, (match, attrs) => {
       if (/\balt=["'][^"']+["']/.test(attrs)) return match; // alt non vide → OK
       const fallback = altFromSrc(match, postTitle);
-      // Remplace alt="" existant ou ajoute alt=""
       if (/\balt=/.test(attrs)) {
         return `<img${attrs.replace(/\balt=["'][^"']*["']/i, `alt="${fallback}"`)}>`;
       }

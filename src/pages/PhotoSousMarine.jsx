@@ -9,6 +9,7 @@ import { FADE_IN_UP, STAGGER_CONTAINER } from '../utils/constants';
 import SEO from '../components/SEO';
 import { SEO_PAGES } from '../utils/seo';
 import { supabase } from '../lib/supabase';
+import Breadcrumb from '../components/Breadcrumb';
 
 const depollutionPaths = [
   "/images/Marseille-dark-massilia-plastique-pollution-projet-sentinelle-apneiste.webp",
@@ -455,33 +456,39 @@ const PhotoGrid = ({ images, gallery }) => (
       const thumbW = Math.min(image.width || 800, 800);
       const thumbH = image.height ? Math.round(image.height * (thumbW / (image.width || 800))) : undefined;
       return (
-      <a
-        key={image.uid}
-        href={image.src}
-        data-fancybox={gallery}
-        data-caption={image.lieu || image.alt}
-        data-title={image.title || ''}
-        data-uid={image.uid}
-        data-slug={image.slug || image.uid}
-        data-hash={image.uid}
-        data-maps={image.maps}
-        data-thumb={thumbSrc}
-        className="block w-full break-inside-avoid cursor-pointer relative overflow-hidden rounded-xl focus-ring mb-4"
-        aria-label={`Ouvrir la photo : ${image.alt}`}
-      >
-        <img
-          src={thumbSrc}
-          srcSet={`${thumbSrc} 800w`}
-          sizes="(min-width: 1280px) 25vw, (min-width: 1024px) 33vw, (min-width: 768px) 50vw, 100vw"
-          alt={image.alt}
-          width={thumbW}
-          height={thumbH}
-          className="w-full h-auto object-cover"
-          loading={index < 4 ? 'eager' : 'lazy'}
-          fetchPriority={index === 0 ? 'high' : undefined}
-          decoding="async"
-        />
-      </a>
+      <figure key={image.uid} className="break-inside-avoid mb-4">
+        <a
+          href={image.src}
+          data-fancybox={gallery}
+          data-caption={image.lieu || image.alt}
+          data-title={image.title || ''}
+          data-uid={image.uid}
+          data-slug={image.slug || image.uid}
+          data-hash={image.uid}
+          data-maps={image.maps}
+          data-thumb={thumbSrc}
+          className="block w-full cursor-pointer relative overflow-hidden rounded-xl focus-ring"
+          aria-label={`Ouvrir la photo : ${image.alt}`}
+        >
+          <img
+            src={thumbSrc}
+            srcSet={`${thumbSrc} 800w`}
+            sizes="(min-width: 1280px) 25vw, (min-width: 1024px) 33vw, (min-width: 768px) 50vw, 100vw"
+            alt={image.alt}
+            width={thumbW}
+            height={thumbH}
+            className="w-full h-auto object-cover"
+            loading={index < 4 ? 'eager' : 'lazy'}
+            fetchPriority={index === 0 ? 'high' : undefined}
+            decoding="async"
+          />
+        </a>
+        {image.lieu && (
+          <figcaption className="text-xs text-gray-500 mt-1 px-1 truncate">
+            {image.lieu}
+          </figcaption>
+        )}
+      </figure>
       );
     })}
   </div>
@@ -562,6 +569,7 @@ const PhotoSousMarine = () => {
     <div className="min-h-screen py-24">
       <SEO {...SEO_PAGES['/photographie-sous-marine']} />
       <div className="container-custom">
+        <Breadcrumb label="Photographe Sous-Marin — Galerie" />
 
         {/* H1 SEO */}
         <motion.h1

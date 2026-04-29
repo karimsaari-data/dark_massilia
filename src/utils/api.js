@@ -68,12 +68,12 @@ export async function fetchAllPostsMeta() {
   let totalPages = 1;
 
   do {
-    const params = new URLSearchParams({ per_page: 100, page, _fields: 'slug,modified', status: 'publish' });
+    const params = new URLSearchParams({ per_page: 100, page, _fields: 'slug,modified,title', status: 'publish' });
     const res = await fetch(`${WP_BASE}/posts?${params}`);
     if (!res.ok) break;
 
     const posts = await res.json();
-    posts.forEach(p => metas.push({ slug: p.slug, modified: p.modified }));
+    posts.forEach(p => metas.push({ slug: p.slug, modified: p.modified, title: p.title?.rendered || '' }));
     totalPages = parseInt(res.headers.get('X-WP-TotalPages') ?? '1', 10);
     page++;
   } while (page <= totalPages);

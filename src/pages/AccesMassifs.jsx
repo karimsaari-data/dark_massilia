@@ -9,6 +9,7 @@ import { ExternalLink, ChevronDown, Flame, AlertTriangle, TreePine } from 'lucid
 import SEO from '../components/SEO';
 import { SEO_PAGES } from '../utils/seo';
 import FireRiskBanner from '../components/FireRiskBanner';
+import Breadcrumb from '../components/Breadcrumb';
 
 const IFRAME_URL =
   'https://opendfci.fr/13/index.php/view/map?repository=openmassifs&project=open_massifs';
@@ -114,6 +115,11 @@ export default function AccesMassifs() {
       </div>
 
       <div className="container-custom py-6">
+        <Breadcrumb label="Accès Massifs Forestiers — Risque Incendie" />
+
+        <h1 className="text-3xl md:text-4xl font-bold text-white mt-4 mb-8">
+          Accès aux Massifs Forestiers des Bouches-du-Rhône
+        </h1>
 
         {/* ── SECTION 1 : Contexte ── */}
         <section className="mb-16">

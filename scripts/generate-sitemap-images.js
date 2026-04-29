@@ -73,7 +73,7 @@ function escXml(str) {
     .replace(/'/g, '&apos;');
 }
 
-const LICENSE_URL = 'https://karimsaari.com/home/contact';
+const LICENSE_URL = 'https://karimsaari.com/contact';
 
 // ── Entrée <image:image> ──────────────────────────────────────────────────────
 function imageEntry({ loc, title, caption = CAPTION, geo = '' }) {
@@ -99,6 +99,12 @@ function urlEntry(pageUrl, imageEntries) {
   ].join('\n');
 }
 
+// ── Détection de captions placeholder (Supabase) ─────────────────────────────
+function isPlaceholderAlt(alt) {
+  const v = (alt || '').trim().toLowerCase();
+  return v === '' || v === 'test' || v === 'test alt text' || v.startsWith('test ');
+}
+
 // ── 1. Portfolio Paysage (Mer + Terre) ────────────────────────────────────────
 function buildPortfolioBlock(photos) {
   const entries = photos.map(photo => {
@@ -107,7 +113,8 @@ function buildPortfolioBlock(photos) {
     const title    = isMer
       ? `${baseTitle} — Photographe Calanques Marseille`
       : baseTitle;
-    const baseCaption = photo.alt || CAPTION;
+    const altClean    = isPlaceholderAlt(photo.alt) ? null : photo.alt;
+    const baseCaption = altClean || CAPTION;
     const caption  = isMer
       ? `${baseCaption} — © Karim Saari, photographe Calanques Marseille`
       : baseCaption;
@@ -122,7 +129,7 @@ function buildPortfolioBlock(photos) {
 function buildSousMarineBlock(photos) {
   const entries = photos.map(photo => {
     const title   = photo.title || photo.alt || `Dépollution marine — Projet Sentinelle Marseille`;
-    const caption = photo.alt   || CAPTION;
+    const caption = isPlaceholderAlt(photo.alt) ? CAPTION : (photo.alt || CAPTION);
     const geo     = photo.lieu  || 'Calanques de Marseille, France';
     const loc     = `${BASE_URL}${photo.src}`;
     return imageEntry({ loc, title, caption, geo });

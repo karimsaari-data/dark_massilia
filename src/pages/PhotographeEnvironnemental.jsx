@@ -1,9 +1,10 @@
 import { motion } from 'framer-motion';
-import { ArrowRight, ExternalLink, Camera } from 'lucide-react';
+import { ArrowRight, ExternalLink, Camera, Mail } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { FADE_IN_UP, STAGGER_CONTAINER } from '../utils/constants';
 import SEO from '../components/SEO';
 import { SEO_PAGES } from '../utils/seo';
+import Breadcrumb from '../components/Breadcrumb';
 
 // Photo portrait — bloc intro
 const PARTNER_PHOTO_INTRO = {
@@ -145,14 +146,14 @@ const UNIVERSES = [
 
 // Médias
 const MEDIA_LOGOS = [
-  { name: 'TF1',         label: 'Reportages TF1',      svg: '/images/Partenaires/svg/TF1_logo_2006.svg' },
-  { name: 'ARTE',        label: 'Documentaires ARTE',   svg: '/images/Partenaires/svg/Arte-Logo.svg' },
-  { name: 'M6',          label: 'Zone Interdite M6',    svg: '/images/Partenaires/svg/Logo_M6_(2020,_fond_clair).svg' },
-  { name: 'La Provence', label: 'La Provence',          svg: '/images/Partenaires/svg/La-provence-2023.svg' },
-  { name: 'France Bleu', label: 'France Bleu',          svg: '/images/Partenaires/svg/France_Bleu_2021.svg' },
-  { name: 'Actu.fr',     label: 'Actu Marseille',       svg: '/images/Partenaires/svg/Actu.fr_logo_2020.svg' },
-  { name: 'France 5',    label: 'France 5',             svg: '/images/Partenaires/svg/France_5_-_logo_2018.svg' },
-  { name: 'Midi Libre',  label: 'Midi Libre',           svg: '/images/Partenaires/svg/midi-libre-logo-vector.svg' },
+  { name: 'TF1',         label: 'Reportages TF1',      svg: '/images/Partenaires/svg/TF1_logo_2006.svg',                    url: '/presse' },
+  { name: 'ARTE',        label: 'Documentaires ARTE',   svg: '/images/Partenaires/svg/Arte-Logo.svg',                        url: '/sauver-marseille-documentaire-arte' },
+  { name: 'M6',          label: 'Zone Interdite M6',    svg: '/images/Partenaires/svg/Logo_M6_(2020,_fond_clair).svg',       url: '/presse' },
+  { name: 'La Provence', label: 'La Provence',          svg: '/images/Partenaires/svg/La-provence-2023.svg',                 url: '/presse' },
+  { name: 'France Bleu', label: 'France Bleu',          svg: '/images/Partenaires/svg/France_Bleu_2021.svg',                 url: '/presse' },
+  { name: 'Actu.fr',     label: 'Actu Marseille',       svg: '/images/Partenaires/svg/Actu.fr_logo_2020.svg',               url: '/presse' },
+  { name: 'France 5',    label: 'France 5',             svg: '/images/Partenaires/svg/France_5_-_logo_2018.svg',             url: '/presse' },
+  { name: 'Midi Libre',  label: 'Midi Libre',           svg: '/images/Partenaires/svg/midi-libre-logo-vector.svg',          url: '/presse' },
 ];
 
 const PhotographeEnvironnemental = () => {
@@ -160,6 +161,7 @@ const PhotographeEnvironnemental = () => {
     <div className="min-h-screen pt-20 pb-24">
       <SEO {...SEO_PAGES['/photographe-environnemental-marseille']} />
       <div className="container-custom">
+        <Breadcrumb label="Photographe Environnemental Marseille" />
 
         {/* H1 + tagline */}
         <motion.div
@@ -225,7 +227,7 @@ const PhotographeEnvironnemental = () => {
           ))}
         </motion.div>
 
-        {/* Bloc texte intro */}
+        {/* Bloc biographie — 600+ mots, E-E-A-T */}
         <motion.div
           initial="hidden"
           whileInView="visible"
@@ -234,24 +236,45 @@ const PhotographeEnvironnemental = () => {
           className="mb-12"
         >
           <motion.div variants={FADE_IN_UP} className="glass-strong rounded-3xl p-8 md:p-12">
-            <p className="text-text-secondary leading-relaxed text-base md:text-lg mb-4">
-              Mon travail de{' '}
-              <strong className="text-white">photographe environnemental</strong> repose sur une dualité assumée.
-              D'un côté, des images de beauté — biodiversité sous-marine, paysages des Calanques, Provence, Atlantique.
-              De l'autre, sur ces mêmes sites : les opérations de dépollution, l'inventaire des déchets remontés,
-              la réalité brute des fonds que nous nettoyons. Les deux faces d'un même territoire —
-              et les deux raisons d'agir.
+            <h2 className="text-xl md:text-2xl font-bold text-white mb-6">
+              Photographe environnemental à Marseille — Qui suis-je ?
+            </h2>
+
+            <p className="text-text-secondary leading-relaxed text-base md:text-lg mb-5">
+              Je suis <strong className="text-white">Karim Saari</strong>, photographe environnemental et sous-marin basé à Marseille. Depuis 2018, mon travail documente le littoral méditerranéen avec un double regard : la beauté brute des Calanques et l'urgence écologique qui les menace. Formé à l'apnée et au freediving, je photographie les fonds marins de la même manière que je les nettoie — en immersion totale, sans bouteilles, au plus proche des espèces et des déchets.
             </p>
-            <p className="text-text-secondary leading-relaxed text-base md:text-lg mb-6">
-              Ce travail ne s'improvise pas seul. Les{' '}
-              <strong className="text-white">associations partenaires</strong> rendent les opérations possibles sur le terrain.
-              Les <strong className="text-white">soutiens institutionnels</strong> en assurent le financement.
-              Les <strong className="text-white">médias</strong> amplifient le message et sensibilisent
-              un public bien plus large.
+
+            <p className="text-text-secondary leading-relaxed text-base md:text-lg mb-5">
+              Mon travail de <strong className="text-white">photographe environnemental</strong> repose sur une dualité assumée. D'un côté, des images de beauté — biodiversité sous-marine, paysages des Calanques, Provence, Atlantique. De l'autre, sur ces mêmes sites : les opérations de dépollution, l'inventaire des déchets remontés, la réalité brute des fonds que nous nettoyons. Les deux faces d'un même territoire — et les deux raisons d'agir.
             </p>
+
+            <p className="text-text-secondary leading-relaxed text-base md:text-lg mb-5">
+              En 2018, j'ai fondé l'association <strong className="text-white">Team Oxygen</strong> et lancé le <strong className="text-white">Projet Sentinelle</strong> : une opération annuelle de dépollution sous-marine en apnée. Quatre éditions (2022, 2023, 2024, 2025) ont mobilisé des dizaines de bénévoles dans les Calanques, l'Archipel du Frioul, la Côte Bleue et la Rade de Marseille. Bilan : <strong className="text-white">5 724 kg de déchets remontés des fonds</strong> — pneus, cordages, filets fantômes, plastiques de toutes tailles — caractérisés, pesés et restitués aux autorités. La méthodologie de caractérisation développée par Team Oxygen sert aujourd'hui de référence pour d'autres opérations de dépollution marine en France.
+            </p>
+
+            <p className="text-text-secondary leading-relaxed text-base md:text-lg mb-5">
+              Parallèlement à l'action terrain, j'anime la communauté en ligne <strong className="text-white">Dark Massilia</strong>. Sur Facebook, le groupe « Amoureux des Calanques de Marseille à Port-Cros » rassemble plus de <strong className="text-white">130 000 membres engagés</strong>. Sur Instagram, TikTok et YouTube, des centaines de milliers de personnes suivent les missions, les photos et les alertes terrain. Cette communauté amplifie le message environnemental, signale les dépôts sauvages et constitue un vivier de bénévoles pour chaque édition du Projet Sentinelle.
+            </p>
+
+            <p className="text-text-secondary leading-relaxed text-base md:text-lg mb-5">
+              Mon équipement principal : un appareil compact étanche emporté en apnée jusqu'à 20 mètres de profondeur. Mes sujets : les macro-déchets plastiques coincés dans les anfractuosités, les espèces méditerranéennes (mérous, murènes, poulpes, girelles), et les paysages des Calanques capturés depuis les hauteurs ou par drone. Les galeries disponibles sur ce site — plus de <strong className="text-white">170 photographies</strong> — couvrent trois univers : dépollution sous-marine, biodiversité, et photographie de paysages (littoral, Provence, horizons). Mes images cumulent plus de 800 000 impressions sur 500px.
+            </p>
+
+            <p className="text-text-secondary leading-relaxed text-base md:text-lg mb-5">
+              Le travail de terrain a été reconnu par les principaux médias nationaux. En 2022, <strong className="text-white">ARTE</strong> me consacre un reportage dans son documentaire <em>Pollution : Il faut sauver Marseille et ses Calanques</em>. La même année, j'interviens dans <em>Méduses, les souveraines des océans</em> diffusé sur ARTE. <strong className="text-white">TF1</strong> couvre les opérations de dépollution à plusieurs reprises depuis 2022. <strong className="text-white">M6</strong> m'intègre dans son magazine Zone Interdite. France 5, France Bleu, La Provence, Midi Libre et Actu.fr relayent régulièrement les missions. Je suis par ailleurs certifié <strong className="text-white">Google Street View Trusted</strong> et Google Local Guides Level 10.
+            </p>
+
+            <p className="text-text-secondary leading-relaxed text-base md:text-lg mb-8">
+              La conviction fondamentale derrière tout ce travail : une image qui émeut change plus de comportements qu'un chiffre statistique. Photographier les Calanques, c'est les défendre. Si vous êtes journaliste, réalisateur, institution ou marque engagée pour le littoral méditerranéen, les opportunités de collaboration sont ouvertes — reportage, exposition, intervention terrain, mission documentaire.
+            </p>
+
             <div className="flex flex-wrap gap-3">
-              <Link to="/contact" className="btn-primary inline-flex items-center gap-2">
-                Me contacter
+              <Link to="/photographie-sous-marine" className="btn inline-flex items-center gap-2">
+                <Camera className="w-4 h-4" aria-hidden="true" />
+                Galerie sous-marine
+              </Link>
+              <Link to="/depollution-marine" className="btn inline-flex items-center gap-2">
+                Projet Sentinelle
                 <ArrowRight className="w-4 h-4" aria-hidden="true" />
               </Link>
             </div>
@@ -274,13 +297,18 @@ const PhotographeEnvironnemental = () => {
               Reportages, documentaires et couvertures presse depuis plus de 10 ans sur le terrain.
             </p>
             <div className="flex flex-wrap justify-center items-center gap-4 mb-8">
-              {MEDIA_LOGOS.map(({ name, label, svg }) => (
-                <div key={name} className="bg-white rounded-md px-3 py-2 flex items-center justify-center opacity-80 hover:opacity-100 transition-opacity duration-300" title={label}>
+              {MEDIA_LOGOS.map(({ name, label, svg, url }) => (
+                <Link
+                  key={name}
+                  to={url}
+                  title={label}
+                  className="bg-white rounded-md px-3 py-2 flex items-center justify-center opacity-80 hover:opacity-100 transition-opacity duration-300"
+                >
                   <img src={svg} alt={label} className="h-6 md:h-8 w-auto object-contain" loading="lazy" />
-                </div>
+                </Link>
               ))}
             </div>
-            <div className="text-center">
+            <div className="text-center mb-8">
               <Link
                 to="/presse"
                 className="inline-flex items-center gap-2 text-ocean-teal hover:text-white transition-colors text-sm font-medium"
@@ -288,6 +316,30 @@ const PhotographeEnvironnemental = () => {
                 Voir toutes les couvertures médias
                 <ArrowRight className="w-4 h-4" aria-hidden="true" />
               </Link>
+            </div>
+
+            {/* Contact presse */}
+            <div className="border-t border-white/10 pt-8">
+              <h3 className="text-base font-semibold text-white mb-2">Contact presse</h3>
+              <p className="text-text-secondary text-sm mb-4">
+                Pour tout reportage, documentaire, exposition ou partenariat institutionnel :
+              </p>
+              <div className="flex flex-wrap gap-3">
+                <a
+                  href="mailto:email@karimsaari.com"
+                  className="inline-flex items-center gap-2 text-ocean-teal hover:text-white transition-colors text-sm font-medium"
+                >
+                  <Mail className="w-4 h-4" aria-hidden="true" />
+                  email@karimsaari.com
+                </a>
+                <Link
+                  to="/contact"
+                  className="inline-flex items-center gap-2 text-sm text-gray-400 hover:text-white transition-colors"
+                >
+                  Formulaire de contact
+                  <ArrowRight className="w-3.5 h-3.5" aria-hidden="true" />
+                </Link>
+              </div>
             </div>
           </motion.div>
         </motion.div>

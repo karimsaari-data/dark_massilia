@@ -4,12 +4,14 @@ import { Link } from 'react-router-dom';
 import { FADE_IN_UP, STAGGER_CONTAINER } from '../utils/constants';
 import SEO from '../components/SEO';
 import { SEO_PAGES } from '../utils/seo';
+import Breadcrumb from '../components/Breadcrumb';
 
 const Yab = () => {
   return (
     <div className="min-h-screen py-32">
       <SEO {...SEO_PAGES['/les-francais-yann-arthus-bertrand']} />
       <div className="container-custom">
+        <Breadcrumb label="Les Français — Yann Arthus-Bertrand" />
 
         {/* H1 */}
         <motion.div

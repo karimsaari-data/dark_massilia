@@ -34,8 +34,10 @@ const Admin = lazy(() => import('./pages/AdminGalerie'));
 const Yab             = lazy(() => import('./pages/Yab'));
 const MentionsLegales = lazy(() => import('./pages/MentionsLegales'));
 const Confidentialite    = lazy(() => import('./pages/Confidentialite'));
+const PlanDuSite         = lazy(() => import('./pages/PlanDuSite'));
 const PhotoSousMarine    = lazy(() => import('./pages/PhotoSousMarine'));
 const PhotographeEnvironnemental = lazy(() => import('./pages/PhotographeEnvironnemental'));
+const DossierPresse              = lazy(() => import('./pages/DossierPresse'));
 const BlogCategory               = lazy(() => import('./pages/BlogCategory'));
 const GroupeFacebook             = lazy(() => import('./pages/GroupeFacebook'));
 const AccesMassifs               = lazy(() => import('./pages/AccesMassifs'));
@@ -85,6 +87,7 @@ export default function AppRoutes() {
             <Route path="photographie-paysage-mer"       element={<Photos />} />
             <Route path="photographie-sous-marine"       element={<PhotoSousMarine />} />
             <Route path="photographe-environnemental-marseille" element={<PhotographeEnvironnemental />} />
+            <Route path="dossier-presse"                        element={<DossierPresse />} />
             <Route path="videos"                         element={<Videos />} />
             <Route path="communaute"                     element={<Instagram />} />
             <Route path="communaute-calanques"              element={<GroupeFacebook />} />
@@ -99,6 +102,7 @@ export default function AppRoutes() {
             <Route path="les-francais-yann-arthus-bertrand" element={<Yab />} />
             <Route path="mentions-legales"                element={<MentionsLegales />} />
             <Route path="confidentialite"                 element={<Confidentialite />} />
+            <Route path="plan-du-site"                    element={<PlanDuSite />} />
             {/* Redirections legacy — anciennes URLs */}
             <Route path="home"        element={<Navigate to="/" replace />} />
             <Route path="missions"    element={<Navigate to="/depollution-marine" replace />} />
