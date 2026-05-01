@@ -1,0 +1,181 @@
+{
+  "indexed": [
+    {
+      "url": "/",
+      "verdict": "Submitted and indexed"
+    },
+    {
+      "url": "/depollution-marine",
+      "verdict": "Submitted and indexed"
+    },
+    {
+      "url": "/blog",
+      "verdict": "Submitted and indexed"
+    },
+    {
+      "url": "/communaute",
+      "verdict": "Submitted and indexed"
+    },
+    {
+      "url": "/communaute-calanques",
+      "verdict": "Submitted and indexed"
+    },
+    {
+      "url": "/acces-massifs-calanques",
+      "verdict": "Submitted and indexed"
+    },
+    {
+      "url": "/photographie-paysage-mer",
+      "verdict": "Submitted and indexed"
+    },
+    {
+      "url": "/photographie-sous-marine",
+      "verdict": "Submitted and indexed"
+    },
+    {
+      "url": "/photographe-environnemental-marseille",
+      "verdict": "Submitted and indexed"
+    },
+    {
+      "url": "/videos",
+      "verdict": "Submitted and indexed"
+    },
+    {
+      "url": "/carte-calanques",
+      "verdict": "Submitted and indexed"
+    },
+    {
+      "url": "/actualites",
+      "verdict": "Submitted and indexed"
+    },
+    {
+      "url": "/presse",
+      "verdict": "Submitted and indexed"
+    },
+    {
+      "url": "/donnees-scientifiques",
+      "verdict": "Submitted and indexed"
+    },
+    {
+      "url": "/local-guide-marseille",
+      "verdict": "Submitted and indexed"
+    },
+    {
+      "url": "/les-francais-yann-arthus-bertrand",
+      "verdict": "Submitted and indexed"
+    },
+    {
+      "url": "/sauver-marseille-documentaire-arte",
+      "verdict": "Submitted and indexed"
+    },
+    {
+      "url": "/meduses-souveraines-oceans-documentaire-arte",
+      "verdict": "Submitted and indexed"
+    },
+    {
+      "url": "/contact",
+      "verdict": "Submitted and indexed"
+    },
+    {
+      "url": "/blog/categorie/biodiversite",
+      "verdict": "Submitted and indexed"
+    },
+    {
+      "url": "/blog/categorie/calanques",
+      "verdict": "Submitted and indexed"
+    },
+    {
+      "url": "/blog/categorie/depollution",
+      "verdict": "Submitted and indexed"
+    },
+    {
+      "url": "/blog/categorie/pollution",
+      "verdict": "Submitted and indexed"
+    },
+    {
+      "url": "/blog/le-fleau-des-bonbonnes-de-protoxyde-dazote-une-menace-sous-estimee-pour-notre-sante-et-nos-espaces-naturels",
+      "verdict": "Submitted and indexed"
+    },
+    {
+      "url": "/blog/balades-et-travaux-en-foret-dans-les-bouches-du-rhone-tout-savoir-sur-la-reglementation-estivale",
+      "verdict": "Submitted and indexed"
+    },
+    {
+      "url": "/blog/depollution-au-j4-quand-plastic-odyssey-reunit-marseille-pour-nettoyer-ce-qui-se-cache-sous-la-surface",
+      "verdict": "Submitted and indexed"
+    },
+    {
+      "url": "/blog/le-poulpe-des-calanques-lanimal-le-plus-intelligent-que-vous-croiserez-sous-leau",
+      "verdict": "Submitted and indexed"
+    },
+    {
+      "url": "/blog/a-la-decouverte-des-parcs-nationaux-de-france-sanctuaires-de-nature-et-territoires-de-vie",
+      "verdict": "Submitted and indexed"
+    },
+    {
+      "url": "/blog/decouverte-des-sentiers-les-especes-communes-qui-parfument-et-colorent-les-calanques",
+      "verdict": "Submitted and indexed"
+    },
+    {
+      "url": "/blog/proteger-notre-grande-bleue-4-gestes-simples-pour-sauver-la-mediterranee",
+      "verdict": "Submitted and indexed"
+    },
+    {
+      "url": "/blog/tresors-caches-et-perils-la-biodiversite-des-calanques-sous-haute-surveillance",
+      "verdict": "Submitted and indexed"
+    },
+    {
+      "url": "/blog/alerte-dans-les-calanques-linvasion-silencieuse-de-lalgue-rugulopteryx-okamurae",
+      "verdict": "Submitted and indexed"
+    },
+    {
+      "url": "/blog/de-cortiou-a-epluchures-beach-pourquoi-la-plage-de-lhuveaune-ferme-ses-portes-pour-un-an",
+      "verdict": "Submitted and indexed"
+    },
+    {
+      "url": "/blog/la-posidonie-notre-meilleure-arme-sous-marine-contre-le-changement-climatique",
+      "verdict": "Submitted and indexed"
+    },
+    {
+      "url": "/blog/le-demarketing-ou-comment-le-parc-des-calanques-vous-incite-a-ne-pas-venir",
+      "verdict": "Submitted and indexed"
+    },
+    {
+      "url": "/blog/mediterranee-rouge-sur-le-plastique-et-pourquoi-il-est-urgent-dagir",
+      "verdict": "Submitted and indexed"
+    }
+  ],
+  "notIndexed": [
+    {
+      "url": "/dossier-presse",
+      "verdict": "URL is unknown to Google",
+      "robotsTxt": "ROBOTS_TXT_STATE_UNSPECIFIED",
+      "indexing": "INDEXING_STATE_UNSPECIFIED"
+    },
+    {
+      "url": "/blog/city-nature-challenge-2026-relevez-le-defi-de-la-biodiversite-avec-marseille",
+      "verdict": "Discovered - currently not indexed",
+      "robotsTxt": "ROBOTS_TXT_STATE_UNSPECIFIED",
+      "indexing": "INDEXING_STATE_UNSPECIFIED"
+    },
+    {
+      "url": "/blog/le-sanglier-des-calanques-un-acteur-discret-mais-central-de-lecosysteme",
+      "verdict": "Discovered - currently not indexed",
+      "robotsTxt": "ROBOTS_TXT_STATE_UNSPECIFIED",
+      "indexing": "INDEXING_STATE_UNSPECIFIED"
+    },
+    {
+      "url": "/blog/calanques-propres-2026-cap-sur-la-23eme-edition-du-grand-nettoyage-citoyen-et-scientifique",
+      "verdict": "Redirect error",
+      "robotsTxt": "ALLOWED",
+      "indexing": "INDEXING_STATE_UNSPECIFIED"
+    },
+    {
+      "url": "/blog/le-paradoxe-de-cortiou-une-calanque-au-bout-du-tuyau-de-la-ville",
+      "verdict": "Discovered - currently not indexed",
+      "robotsTxt": "ROBOTS_TXT_STATE_UNSPECIFIED",
+      "indexing": "INDEXING_STATE_UNSPECIFIED"
+    }
+  ],
+  "error": []
+}
