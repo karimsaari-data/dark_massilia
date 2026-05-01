@@ -1,4 +1,3 @@
-import { useState } from 'react';
 import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import { ExternalLink, MapPin, FileText, Map, ArrowRight, ChevronDown } from 'lucide-react';
@@ -23,80 +22,87 @@ import FireRiskBanner from '../components/FireRiskBanner';
 import { SEO_PAGES } from '../utils/seo';
 
 const MAP_ID = '1fu2q9DRyD80m11ejdp8Ivuj5vn2aguM';
-const EMBED_URL = `https://www.google.com/maps/d/embed?mid=${MAP_ID}&ehbc=2E312F&ll=43.205,5.52&z=13`;
-const FULL_URL  = `https://www.google.com/maps/d/viewer?mid=${MAP_ID}`;
+const FULL_URL = `https://www.google.com/maps/d/viewer?mid=${MAP_ID}`;
 
 export default function Carte() {
-  const [mapLoaded, setMapLoaded] = useState(false);
-
   return (
     <>
       <SEO {...SEO_PAGES['/carte-calanques']} />
 
-      {/* Carte — laisse ~80px de contenu visible en bas pour indiquer le scroll */}
       <FireRiskBanner />
-      <div className="relative overflow-hidden h-[calc(100vh-70px-48px)] md:h-[calc(100vh-128px-80px-48px)]">
+      <div className="relative overflow-hidden h-[calc(100vh-70px-48px)] md:h-[calc(100vh-128px-80px-48px)] flex items-center justify-center">
 
-        {/* Carte Google My Maps — façade au clic pour éviter cookies tiers */}
-        <div style={{ position: 'relative', height: '100%', overflow: 'hidden' }}>
-          {mapLoaded ? (
-            <iframe
-              src={EMBED_URL}
-              title="Carte des sites — Dark Massilia Karim Saari"
-              style={{
-                position: 'absolute',
-                top: '-54px',
-                left: 0,
-                right: 0,
-                bottom: 0,
-                width: '100%',
-                height: 'calc(100% + 54px)',
-                border: 'none',
-              }}
-              allow="fullscreen"
-              allowFullScreen
-              referrerPolicy="no-referrer-when-downgrade"
-            />
-          ) : (
-            <div
-              style={{ position: 'absolute', inset: 0, overflow: 'hidden', cursor: 'pointer' }}
-              onClick={() => setMapLoaded(true)}
-              onKeyDown={e => e.key === 'Enter' && setMapLoaded(true)}
-              role="button"
-              tabIndex={0}
-              aria-label="Charger la carte interactive des Calanques"
-            >
-              {/* Image statique du Parc national des Calanques */}
-              <img
-                src="https://www.calanques-parcnational.fr/sites/calanques-parcnational.fr/files/thumbnails/image/carte-calanques-marseille-cassis-la-ciotat-3000x1733.jpg"
-                alt="Carte du Parc national des Calanques de Marseille — aperçu statique"
-                style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover', filter: 'brightness(0.55) saturate(0.85)' }}
-              />
-              {/* Overlay centré — bouton de chargement */}
-              <div style={{ position: 'absolute', inset: 0, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', gap: '1.25rem', background: 'linear-gradient(to bottom, transparent 20%, rgba(0,0,0,0.35) 100%)' }}>
-                <MapPin className="w-10 h-10 text-ocean-teal drop-shadow-lg" aria-hidden="true" />
-                <div style={{ textAlign: 'center' }}>
-                  <p style={{ color: 'white', fontWeight: 700, fontSize: '1.1rem', marginBottom: '0.35rem', textShadow: '0 1px 6px rgba(0,0,0,0.7)' }}>
-                    Carte interactive des Calanques
-                  </p>
-                  <p style={{ color: 'rgba(255,255,255,0.65)', fontSize: '0.82rem', textShadow: '0 1px 4px rgba(0,0,0,0.6)' }}>
-                    Cliquez pour charger la carte interactive
-                  </p>
-                  <p style={{ color: 'rgba(255,255,255,0.4)', fontSize: '0.72rem', marginTop: '0.15rem', textShadow: '0 1px 4px rgba(0,0,0,0.6)' }}>
-                    Si elle ne s'affiche pas, utilisez le bouton "Ouvrir dans Google Maps" ci-dessous
-                  </p>
-                </div>
-                <button
-                  onClick={e => { e.stopPropagation(); setMapLoaded(true); }}
-                  style={{ background: 'rgba(33,196,123,0.18)', border: '1px solid rgba(33,196,123,0.5)', color: '#21c47b', padding: '0.6rem 1.5rem', borderRadius: '9999px', fontSize: '0.9rem', fontWeight: 600, cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '0.5rem', backdropFilter: 'blur(6px)' }}
-                >
-                  <Map className="w-4 h-4" />
-                  Charger la carte
-                </button>
-              </div>
-            </div>
-          )}
+        {/* Image satellite en fond */}
+        <img
+          src="https://www.calanques-parcnational.fr/sites/calanques-parcnational.fr/files/thumbnails/image/carte-calanques-marseille-cassis-la-ciotat-3000x1733.jpg"
+          alt="Carte du Parc national des Calanques de Marseille"
+          style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover', filter: 'brightness(0.5) saturate(0.8)' }}
+        />
+
+        {/* Contenu centré */}
+        <div style={{ position: 'relative', zIndex: 1, textAlign: 'center', padding: '2rem', maxWidth: '520px' }}>
+          <MapPin className="w-10 h-10 text-ocean-teal drop-shadow-lg mx-auto mb-4" aria-hidden="true" />
+          <h2 style={{ color: 'white', fontWeight: 700, fontSize: '1.4rem', marginBottom: '0.75rem', lineHeight: 1.3, textShadow: '0 2px 8px rgba(0,0,0,0.8)' }}>
+            Carte interactive des Calanques
+          </h2>
+          <p style={{ color: 'rgba(255,255,255,0.65)', fontSize: '0.9rem', marginBottom: '2rem', lineHeight: 1.6, textShadow: '0 1px 4px rgba(0,0,0,0.7)' }}>
+            Spots photographiés & actions de dépollution Team Oxygen.<br />
+            Ouvre directement dans Google Maps.
+          </p>
+          <a
+            href={FULL_URL}
+            target="_blank"
+            rel="noopener noreferrer"
+            style={{
+              display: 'inline-flex', alignItems: 'center', gap: '0.6rem',
+              background: 'rgba(33,196,123,0.9)', color: 'black',
+              padding: '0.9rem 2rem', borderRadius: '9999px',
+              fontWeight: 700, fontSize: '1rem', textDecoration: 'none',
+              boxShadow: '0 0 24px rgba(33,196,123,0.4)',
+            }}
+          >
+            <Map style={{ width: '1.1rem', height: '1.1rem' }} aria-hidden="true" />
+            Ouvrir la carte dans Google Maps
+            <ExternalLink style={{ width: '0.85rem', height: '0.85rem', opacity: 0.7 }} aria-hidden="true" />
+          </a>
         </div>
+
+        {/* Légende */}
+        <motion.div
+          initial={{ opacity: 0, x: 10 }}
+          animate={{ opacity: 1, x: 0 }}
+          transition={{ duration: 0.5, delay: 0.6 }}
+          style={{ position: 'absolute', top: '1.5rem', right: '1.5rem', zIndex: 10, background: 'rgba(10,15,30,0.85)', backdropFilter: 'blur(8px)' }}
+          className="rounded-xl border border-white/15 px-4 py-3"
+        >
+          <p className="text-xs uppercase tracking-widest text-ocean-teal font-semibold mb-2">Légende</p>
+          <div className="space-y-1.5">
+            <div className="flex items-center gap-2 text-xs text-text-secondary">
+              <span className="w-2.5 h-2.5 rounded-full bg-green-500 flex-shrink-0 shadow-[0_0_5px_2px_rgba(34,197,94,0.5)]" />
+              Photographies de paysage
+            </div>
+            <div className="flex items-center gap-2 text-xs text-text-secondary">
+              <span className="w-2.5 h-2.5 rounded-full bg-red-500 flex-shrink-0 shadow-[0_0_5px_2px_rgba(239,68,68,0.5)]" />
+              Actions de dépollution — Team Oxygen
+            </div>
+          </div>
+        </motion.div>
+
+        {/* Indicateur scroll */}
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.5, delay: 1.2 }}
+          style={{ position: 'absolute', bottom: '1.5rem', left: '50%', transform: 'translateX(-50%)', zIndex: 10 }}
+          className="flex flex-col items-center gap-1 pointer-events-none"
+        >
+          <span className="text-white/70 text-xs tracking-widest uppercase font-semibold drop-shadow-lg">Voir plus</span>
+          <motion.div animate={{ y: [0, 6, 0] }} transition={{ duration: 1.4, repeat: Infinity, ease: 'easeInOut' }}>
+            <ChevronDown className="w-5 h-5 text-white/70 drop-shadow-lg" />
+          </motion.div>
+        </motion.div>
+
+      </div>
 
         {/* Bouton Google Maps — haut gauche (title centré, légende droite → gauche libre) */}
         <motion.a
