@@ -83,11 +83,21 @@ function buildSchema(post, slug) {
         dateModified: post.modified ?? post.date,
         url: `${BASE_URL}/blog/${slug}`,
         inLanguage: 'fr-FR',
+        ...(post.categoryName && { articleSection: post.categoryName }),
         author: {
           '@type': 'Person',
+          '@id': `${BASE_URL}/#karim-saari`,
           name: 'Karim Saari',
           alternateName: 'Dark Massilia',
           url: BASE_URL,
+          sameAs: [
+            'https://www.instagram.com/karimsaari',
+            'https://www.tiktok.com/@dark.massilia',
+            'https://www.youtube.com/@dark.massilia',
+            'https://twitter.com/dark_massilia',
+            'https://www.linkedin.com/in/karimsaari',
+            'https://500px.com/karimsaari',
+          ],
         },
         publisher: {
           '@type': 'Organization',
@@ -162,7 +172,7 @@ export default function BlogPost() {
         articlePublishedTime={post?.date ?? null}
         articleModifiedTime={post?.modified ?? post?.date ?? null}
         articleAuthor="Karim Saari"
-        articleSection="Environnement marin"
+        articleSection={post?.categoryName ?? 'Environnement marin'}
         schema={post ? buildSchema(post, slug) : null}
       />
 

@@ -103,6 +103,9 @@ export function normalizePost(post) {
     ? rawImageSrc.replace(/\.(png|jpe?g)$/i, '.webp')
     : null;
 
+  const wpTerms      = post._embedded?.['wp:term'] ?? [];
+  const categoryName = wpTerms[0]?.[0]?.name ?? null;
+
   return {
     id:            post.id,
     slug:          post.slug,
@@ -119,6 +122,7 @@ export function normalizePost(post) {
     imageAlt:      media?.alt_text || decodeEntities(rawTitle),
     author:        author?.name    ?? 'Dark Massilia',
     categories:    post.categories ?? [],
+    categoryName,
   };
 }
 
