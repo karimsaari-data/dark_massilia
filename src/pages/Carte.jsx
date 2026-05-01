@@ -1,6 +1,9 @@
 import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import { ExternalLink, MapPin, FileText, Map, ArrowRight, ChevronDown } from 'lucide-react';
+import SEO from '../components/SEO';
+import FireRiskBanner from '../components/FireRiskBanner';
+import { SEO_PAGES } from '../utils/seo';
 
 const CARTES_TERRESTRES = [
   { label: 'Carte générale du Parc national des Calanques', url: 'https://www.calanques-parcnational.fr/sites/calanques-parcnational.fr/files/thumbnails/image/carte-calanques-marseille-cassis-la-ciotat-3000x1733.jpg' },
@@ -17,9 +20,6 @@ const CARTES_TERRESTRES = [
 const CARTES_MARINES = [
   { label: 'Réglementation en mer — Parc national des Calanques (6 Mo)', url: 'https://www.calanques-parcnational.fr/sites/calanques-parcnational.fr/files/documents/downloads/plaquette-mer-2021-xs.pdf' },
 ];
-import SEO from '../components/SEO';
-import FireRiskBanner from '../components/FireRiskBanner';
-import { SEO_PAGES } from '../utils/seo';
 
 const MAP_ID = '1fu2q9DRyD80m11ejdp8Ivuj5vn2aguM';
 const FULL_URL = `https://www.google.com/maps/d/viewer?mid=${MAP_ID}`;
