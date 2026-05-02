@@ -37,7 +37,9 @@
     "exif:inject:new": "node scripts/inject-exif.js --new-only",
     "exif:audit": "node scripts/audit-exif.js",
     "exif:audit:new": "node scripts/audit-exif.js --new-only",
-    "build:photos": "node scripts/generate-sitemap-images.js && node scripts/sync-new-images.js"
+    "build:photos": "node scripts/generate-sitemap-images.js && node scripts/sync-new-images.js",
+    "ftp:deploy": "node scripts/ftp-deploy.js",
+    "build:deploy": "npm run build:full && node scripts/ftp-deploy.js"
   },
   "dependencies": {
     "@fancyapps/ui": "^6.1.13",
