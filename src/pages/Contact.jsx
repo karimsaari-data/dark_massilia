@@ -1,6 +1,6 @@
 import { motion } from 'framer-motion';
 import { Link, useNavigate } from 'react-router-dom';
-import { Mail, Phone, MapPin, Newspaper, Download, UserPlus } from 'lucide-react';
+import { Mail, Phone, MapPin, Newspaper, UserPlus } from 'lucide-react';
 import QRCode from 'react-qr-code';
 import { FADE_IN_UP, STAGGER_CONTAINER, APP_CONFIG } from '../utils/constants';
 import SEO from '../components/SEO';
@@ -147,34 +147,14 @@ const Contact = () => {
           </motion.div>
         </motion.div>
 
-        {/* Contact Cards - Centered */}
+        {/* Contact Cards - WhatsApp + Newsletter */}
         <motion.div
           initial="hidden"
           animate="visible"
           variants={STAGGER_CONTAINER}
           id="contact-buttons"
-          className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto"
+          className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-2xl mx-auto"
         >
-          {/* Email */}
-          <motion.a
-            href={`mailto:${APP_CONFIG.contactEmail}`}
-            variants={FADE_IN_UP}
-            onClick={() => trackEvent('contact_click', { method: 'email', source: 'contact_page' })}
-            className="card hover:border-astroide/30 hover:bg-astroide/5 transition-all duration-300 group"
-          >
-            <div className="flex flex-col items-center text-center gap-6 py-2">
-              <div className="w-16 h-16 rounded-full bg-gradient-to-br from-astroide to-astroide-dark flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
-                <Mail className="w-8 h-8 text-white" />
-              </div>
-              <div>
-                <h3 className="font-semibold text-white mb-2 text-lg">Email</h3>
-                <p className="text-sm text-gray-400 group-hover:text-astroide transition-colors">
-                  Écrire un message
-                </p>
-              </div>
-            </div>
-          </motion.a>
-
           {/* WhatsApp */}
           <motion.a
             href={`https://wa.me/${APP_CONFIG.contactWhatsApp.replace(/\s/g, '')}`}
@@ -193,25 +173,6 @@ const Contact = () => {
                 <p className="text-sm text-gray-400 group-hover:text-astroide transition-colors">
                   Envoyer un message
                 </p>
-              </div>
-            </div>
-          </motion.a>
-
-          {/* Localisation */}
-          <motion.a
-            href="https://maps.app.goo.gl/UaF5o6sM2xS5Gaxr6"
-            target="_blank"
-            rel="noopener noreferrer"
-            variants={FADE_IN_UP}
-            className="card hover:border-astroide/30 hover:bg-astroide/5 transition-all duration-300 group"
-          >
-            <div className="flex flex-col items-center text-center gap-6 py-2">
-              <div className="w-16 h-16 rounded-full bg-gradient-to-br from-astroide to-astroide-dark flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
-                <MapPin className="w-8 h-8 text-white" />
-              </div>
-              <div>
-                <h3 className="font-semibold text-white mb-2 text-lg">Localisation</h3>
-                <p className="text-sm text-gray-400 group-hover:text-astroide transition-colors">Marseille, France</p>
               </div>
             </div>
           </motion.a>
