@@ -1,14 +1,22 @@
 import { motion } from 'framer-motion';
 import { Link, useNavigate } from 'react-router-dom';
-import { Mail, Phone, MapPin, Newspaper, UserPlus } from 'lucide-react';
+import { Mail, Phone, MapPin, Newspaper, Download, UserPlus } from 'lucide-react';
+import QRCode from 'react-qr-code';
 import { FADE_IN_UP, STAGGER_CONTAINER, APP_CONFIG } from '../utils/constants';
 import SEO from '../components/SEO';
 import { SEO_PAGES } from '../utils/seo';
 import { trackEvent } from '../lib/analytics';
 import Breadcrumb from '../components/Breadcrumb';
 
+const CONTACT_URL = 'https://karimsaari.com/contact';
+
 const Contact = () => {
   const navigate = useNavigate();
+
+  const handleVCardDownload = () => {
+    trackEvent('contact_click', { method: 'vcard', source: 'contact_page' });
+  };
+
   return (
     <div className="min-h-screen py-20">
       <SEO {...SEO_PAGES['/contact']} />
@@ -24,6 +32,89 @@ const Contact = () => {
           <motion.h1 variants={FADE_IN_UP} className="text-3xl md:text-4xl font-bold text-white mb-4">
             Collaborons pour la Méditerranée : Reportages, Expositions et Actions sur le terrain
           </motion.h1>
+        </motion.div>
+
+        {/* Carte de visite digitale */}
+        <motion.div
+          initial="hidden"
+          animate="visible"
+          variants={FADE_IN_UP}
+          className="max-w-sm mx-auto mb-16"
+        >
+          <div className="relative rounded-3xl overflow-hidden p-px"
+            style={{ background: 'linear-gradient(135deg, #21c47b40, #0091ff30, #21c47b20)' }}
+          >
+            <div className="rounded-3xl p-8 flex flex-col items-center gap-6 text-center"
+              style={{ background: 'linear-gradient(160deg, rgba(11,28,45,0.97) 0%, rgba(6,18,30,0.99) 100%)' }}
+            >
+              {/* Avatar */}
+              <div className="relative">
+                <div className="w-24 h-24 rounded-full overflow-hidden ring-2 ring-astroide/40 ring-offset-2 ring-offset-transparent">
+                  <img
+                    src="/images/karim-saari-photo-profil-arte-regard-marseille_300w.webp"
+                    alt="Karim Saari"
+                    width="96"
+                    height="96"
+                    className="w-full h-full object-cover"
+                  />
+                </div>
+                <span className="absolute -bottom-1 -right-1 bg-astroide text-white text-xs font-bold px-2 py-0.5 rounded-full shadow-lg">
+                  🐬
+                </span>
+              </div>
+
+              {/* Identité */}
+              <div>
+                <h2 className="text-xl font-bold text-white">Karim Saari</h2>
+                <p className="text-astroide text-sm font-medium mt-0.5">Dark Massilia</p>
+                <p className="text-gray-400 text-xs mt-1 leading-relaxed">
+                  Photographe environnemental<br />Apnéiste · Marseille
+                </p>
+              </div>
+
+              {/* Infos */}
+              <div className="w-full flex flex-col gap-2 text-sm">
+                <div className="flex items-center gap-3 px-4 py-2.5 rounded-xl" style={{ background: 'rgba(255,255,255,0.04)' }}>
+                  <Phone className="w-4 h-4 text-astroide flex-shrink-0" />
+                  <span className="text-gray-300">+33 6 95 33 13 01</span>
+                </div>
+                <div className="flex items-center gap-3 px-4 py-2.5 rounded-xl" style={{ background: 'rgba(255,255,255,0.04)' }}>
+                  <Mail className="w-4 h-4 text-astroide flex-shrink-0" />
+                  <span className="text-gray-300">contact@karimsaari.com</span>
+                </div>
+                <div className="flex items-center gap-3 px-4 py-2.5 rounded-xl" style={{ background: 'rgba(255,255,255,0.04)' }}>
+                  <MapPin className="w-4 h-4 text-astroide flex-shrink-0" />
+                  <span className="text-gray-300">Marseille, France</span>
+                </div>
+              </div>
+
+              {/* QR code */}
+              <div className="flex flex-col items-center gap-2">
+                <div className="p-3 rounded-2xl bg-white">
+                  <QRCode
+                    value={CONTACT_URL}
+                    size={120}
+                    bgColor="#ffffff"
+                    fgColor="#0B1C2D"
+                    level="M"
+                  />
+                </div>
+                <p className="text-gray-500 text-xs">Scannez pour ouvrir cette page</p>
+              </div>
+
+              {/* CTA */}
+              <a
+                href="/karim-saari.vcf"
+                download="karim-saari.vcf"
+                onClick={handleVCardDownload}
+                className="w-full flex items-center justify-center gap-2 py-3 px-6 rounded-2xl font-semibold text-sm text-white transition-all duration-300 hover:scale-105 hover:shadow-lg"
+                style={{ background: 'linear-gradient(135deg, #21c47b, #18a066)' }}
+              >
+                <UserPlus className="w-4 h-4" />
+                Ajouter à mes contacts
+              </a>
+            </div>
+          </div>
         </motion.div>
 
         {/* Section éditoriale SEO — intentions de contact & mots-clés transactionnels */}
@@ -54,83 +145,6 @@ const Contact = () => {
               <strong className="text-ocean-teal">Projet Sentinelle</strong>.
             </p>
           </motion.div>
-        </motion.div>
-
-        {/* ── Carte de visite digitale — bloc unique ── */}
-        <motion.div
-          initial="hidden"
-          animate="visible"
-          variants={FADE_IN_UP}
-          className="max-w-sm mx-auto mb-12"
-        >
-          <div className="glass-strong rounded-3xl p-8">
-            {/* Photo + identité */}
-            <div className="flex flex-col items-center text-center mb-6">
-              <img
-                src="/images/karim-saari-photo-profil-arte-regard-marseille.webp"
-                alt="Karim Saari — Photographe environnemental Marseille"
-                width="96"
-                height="96"
-                className="w-24 h-24 rounded-full object-cover object-top ring-2 ring-astroide/40 mb-3"
-              />
-              <h2 className="text-white font-bold text-xl">Karim Saari</h2>
-              <p className="text-astroide text-sm font-medium">Dark Massilia</p>
-              <p className="text-text-secondary text-sm mt-0.5">Photographe environnemental · Marseille</p>
-            </div>
-
-            {/* Liens clicables */}
-            <div className="space-y-3 mb-6">
-              <a
-                href={`tel:${APP_CONFIG.contactWhatsApp.replace(/\s/g, '')}`}
-                onClick={() => trackEvent('contact_click', { method: 'phone', source: 'vcard' })}
-                className="flex items-center gap-3 text-text-secondary hover:text-white transition-colors group"
-              >
-                <Phone className="w-4 h-4 text-astroide flex-shrink-0" />
-                <span className="group-hover:text-astroide transition-colors">{APP_CONFIG.contactWhatsApp}</span>
-              </a>
-              <a
-                href={`mailto:${APP_CONFIG.contactEmail}`}
-                onClick={() => trackEvent('contact_click', { method: 'email', source: 'vcard' })}
-                className="flex items-center gap-3 text-text-secondary hover:text-white transition-colors group"
-              >
-                <Mail className="w-4 h-4 text-astroide flex-shrink-0" />
-                <span className="group-hover:text-astroide transition-colors">{APP_CONFIG.contactEmail}</span>
-              </a>
-              <a
-                href="https://maps.app.goo.gl/UaF5o6sM2xS5Gaxr6"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="flex items-center gap-3 text-text-secondary hover:text-white transition-colors group"
-              >
-                <MapPin className="w-4 h-4 text-astroide flex-shrink-0" />
-                <span className="group-hover:text-astroide transition-colors">Marseille, France</span>
-              </a>
-            </div>
-
-            {/* QR code + bouton */}
-            <div className="flex items-center gap-5 border-t border-white/10 pt-5">
-              <img
-                src="https://api.qrserver.com/v1/create-qr-code/?size=100x100&data=https://karimsaari.com/contact&margin=4"
-                alt="QR code carte de visite Karim Saari"
-                width="100"
-                height="100"
-                className="rounded-xl bg-white p-1.5 flex-shrink-0"
-                loading="lazy"
-              />
-              <div className="flex-1 min-w-0">
-                <p className="text-xs text-text-muted mb-3">Scannez pour ouvrir sur mobile</p>
-                <a
-                  href="/karim-saari.vcf"
-                  download
-                  onClick={() => trackEvent('contact_click', { method: 'vcard_download', source: 'contact_page' })}
-                  className="btn-primary inline-flex items-center justify-center gap-2 w-full text-sm py-2.5"
-                >
-                  <UserPlus className="w-4 h-4" />
-                  Ajouter à mes contacts
-                </a>
-              </div>
-            </div>
-          </div>
         </motion.div>
 
         {/* Contact Cards - Centered */}
