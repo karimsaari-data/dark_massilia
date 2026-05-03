@@ -62,6 +62,7 @@ const PERSON_SCHEMA = {
     'https://commons.wikimedia.org/wiki/User:Karim_saari',
     'https://commons.wikimedia.org/wiki/User:Dark_massilia',
     'https://fr.wikipedia.org/wiki/Projet_Sentinelle',
+    'https://www.france.tv/france-5/echappees-belles/saison-18/5875509-speciale-echappee-verte-les-bouches-du-rhone-en-action.html',
   ],
   knowsAbout: [
     'Protection de l\'environnement',
@@ -1422,6 +1423,32 @@ export const SEO_PAGES = {
           about: { '@id': `${BASE_URL}/#person` },
           mentions: { '@id': `${BASE_URL}/#person` },
           author: { '@id': `${BASE_URL}/#person` },
+        },
+      ],
+    },
+  },
+  '/echappees-belles-bouches-du-rhone': {
+    title: 'Échappées Belles — Spéciale Verte Bouches-du-Rhône · France 5',
+    description:
+      'France 5 consacre un épisode d\'Échappées Belles aux acteurs éco-citoyens des Bouches-du-Rhône : Karim Saari, apnéiste et photographe, y présente ses missions de dépollution dans les Calanques de Marseille.',
+    keywords: 'échappées belles bouches-du-rhône, france 5 marseille calanques, karim saari france tv, échappée verte marseille',
+    canonical: `${BASE_URL}/echappees-belles-bouches-du-rhone`,
+    schema: {
+      '@context': 'https://schema.org',
+      '@graph': [
+        breadcrumb('Échappées Belles — France 5', '/echappees-belles-bouches-du-rhone'),
+        PERSON_SCHEMA,
+        {
+          '@type': 'NewsArticle',
+          headline: 'Spéciale Échappée Verte — Les Bouches-du-Rhône en action · France 5',
+          description:
+            'Karim Saari, photographe environnemental et apnéiste, présente ses missions de dépollution marine dans les Calanques de Marseille dans cet épisode spécial Échappée Verte d\'Échappées Belles sur France 5.',
+          datePublished: '2026-05-02',
+          url: 'https://www.france.tv/france-5/echappees-belles/saison-18/5875509-speciale-echappee-verte-les-bouches-du-rhone-en-action.html',
+          image: `${BASE_URL}/images/échappée_verte_0.jpg`,
+          publisher: { '@type': 'Organization', name: 'France Télévisions', url: 'https://www.france.tv' },
+          about: { '@id': `${BASE_URL}/#person` },
+          mentions: { '@id': `${BASE_URL}/#person` },
         },
       ],
     },

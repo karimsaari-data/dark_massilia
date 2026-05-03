@@ -25,7 +25,8 @@ const Videos     = lazy(() => import('./pages/Videos'));
 const Instagram  = lazy(() => import('./pages/Instagram'));
 const Twitter    = lazy(() => import('./pages/Twitter'));
 const Contact    = lazy(() => import('./pages/Contact'));
-const Arte       = lazy(() => import('./pages/Arte'));
+const Arte           = lazy(() => import('./pages/Arte'));
+const EchappeesBelles = lazy(() => import('./pages/EchappeesBelles'));
 const Meduses    = lazy(() => import('./pages/Meduses'));
 const Sources    = lazy(() => import('./pages/Sources'));
 const Carte      = lazy(() => import('./pages/Carte'));
@@ -93,6 +94,7 @@ export default function AppRoutes() {
             <Route path="communaute-calanques"              element={<GroupeFacebook />} />
             <Route path="actualites"                     element={<Twitter />} />
             <Route path="sauver-marseille-documentaire-arte" element={<Arte />} />
+            <Route path="echappees-belles-bouches-du-rhone"  element={<EchappeesBelles />} />
             <Route path="meduses-souveraines-oceans-documentaire-arte" element={<Meduses />} />
             <Route path="donnees-scientifiques"          element={<Sources />} />
             <Route path="contact"                        element={<Contact />} />
