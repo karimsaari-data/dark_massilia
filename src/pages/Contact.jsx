@@ -1,7 +1,8 @@
 import { motion } from 'framer-motion';
 import { Link, useNavigate } from 'react-router-dom';
 import { Mail, Phone, MapPin, Newspaper, UserPlus } from 'lucide-react';
-import QRCode from 'react-qr-code';
+import QRCodeLib from 'react-qr-code';
+const QRCode = QRCodeLib?.default ?? QRCodeLib;
 import { FADE_IN_UP, STAGGER_CONTAINER, APP_CONFIG } from '../utils/constants';
 import SEO from '../components/SEO';
 import { SEO_PAGES } from '../utils/seo';
@@ -34,14 +35,15 @@ const Contact = () => {
           </motion.h1>
         </motion.div>
 
-        {/* Carte de visite digitale */}
+        {/* Carte de visite digitale — 2 colonnes desktop */}
         <motion.div
           initial="hidden"
           animate="visible"
           variants={FADE_IN_UP}
-          className="max-w-sm mx-auto mb-16"
+          className="max-w-4xl mx-auto mb-16 grid grid-cols-1 lg:grid-cols-2 gap-8 items-center"
         >
-          <div className="relative rounded-3xl overflow-hidden p-px"
+          {/* Carte (colonne gauche) */}
+          <div className="relative rounded-3xl overflow-hidden p-px mx-auto w-full max-w-sm lg:max-w-none"
             style={{ background: 'linear-gradient(135deg, #21c47b40, #0091ff30, #21c47b20)' }}
           >
             <div className="rounded-3xl p-8 flex flex-col items-center gap-6 text-center"
@@ -68,38 +70,43 @@ const Contact = () => {
                 <h2 className="text-xl font-bold text-white">Karim Saari</h2>
                 <p className="text-astroide text-sm font-medium mt-0.5">Dark Massilia</p>
                 <p className="text-gray-400 text-xs mt-1 leading-relaxed">
-                  Photographe environnemental<br />Apnéiste · Marseille
+                  Photographe environnemental · Marseille
                 </p>
               </div>
 
               {/* Infos */}
               <div className="w-full flex flex-col gap-2 text-sm">
-                <div className="flex items-center gap-3 px-4 py-2.5 rounded-xl" style={{ background: 'rgba(255,255,255,0.04)' }}>
+                <a
+                  href={`https://wa.me/${APP_CONFIG.contactWhatsApp.replace(/\s/g, '')}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  onClick={() => trackEvent('contact_click', { method: 'whatsapp', source: 'business_card' })}
+                  className="flex items-center gap-3 px-4 py-2.5 rounded-xl transition-colors hover:bg-astroide/10"
+                  style={{ background: 'rgba(255,255,255,0.04)' }}
+                >
                   <Phone className="w-4 h-4 text-astroide flex-shrink-0" />
                   <span className="text-gray-300">+33 6 95 33 13 01</span>
-                </div>
-                <div className="flex items-center gap-3 px-4 py-2.5 rounded-xl" style={{ background: 'rgba(255,255,255,0.04)' }}>
+                </a>
+                <a
+                  href="mailto:contact@karimsaari.com"
+                  onClick={() => trackEvent('contact_click', { method: 'email', source: 'business_card' })}
+                  className="flex items-center gap-3 px-4 py-2.5 rounded-xl transition-colors hover:bg-astroide/10"
+                  style={{ background: 'rgba(255,255,255,0.04)' }}
+                >
                   <Mail className="w-4 h-4 text-astroide flex-shrink-0" />
                   <span className="text-gray-300">contact@karimsaari.com</span>
-                </div>
-                <div className="flex items-center gap-3 px-4 py-2.5 rounded-xl" style={{ background: 'rgba(255,255,255,0.04)' }}>
+                </a>
+                <a
+                  href="https://maps.app.goo.gl/UaF5o6sM2xS5Gaxr6"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  onClick={() => trackEvent('contact_click', { method: 'gmaps', source: 'business_card' })}
+                  className="flex items-center gap-3 px-4 py-2.5 rounded-xl transition-colors hover:bg-astroide/10"
+                  style={{ background: 'rgba(255,255,255,0.04)' }}
+                >
                   <MapPin className="w-4 h-4 text-astroide flex-shrink-0" />
                   <span className="text-gray-300">Marseille, France</span>
-                </div>
-              </div>
-
-              {/* QR code */}
-              <div className="flex flex-col items-center gap-2">
-                <div className="p-3 rounded-2xl bg-white">
-                  <QRCode
-                    value={CONTACT_URL}
-                    size={120}
-                    bgColor="#ffffff"
-                    fgColor="#0B1C2D"
-                    level="M"
-                  />
-                </div>
-                <p className="text-gray-500 text-xs">Scannez pour ouvrir cette page</p>
+                </a>
               </div>
 
               {/* CTA */}
@@ -113,6 +120,39 @@ const Contact = () => {
                 <UserPlus className="w-4 h-4" />
                 Ajouter à mes contacts
               </a>
+            </div>
+          </div>
+
+          {/* Panneau droite — QR + accroche dans une card */}
+          <div className="relative rounded-3xl overflow-hidden p-px mx-auto w-full max-w-sm lg:max-w-none"
+            style={{ background: 'linear-gradient(135deg, #21c47b40, #0091ff30, #21c47b20)' }}
+          >
+            <div className="rounded-3xl p-8 flex flex-col items-center gap-6 h-full"
+              style={{ background: 'linear-gradient(160deg, rgba(11,28,45,0.97) 0%, rgba(6,18,30,0.99) 100%)' }}
+            >
+              {/* QR code */}
+              <div className="flex flex-col items-center gap-3">
+                <div className="p-4 rounded-2xl bg-white shadow-xl">
+                  <QRCode
+                    value={CONTACT_URL}
+                    size={160}
+                    bgColor="#ffffff"
+                    fgColor="#0B1C2D"
+                    level="M"
+                  />
+                </div>
+                <p className="text-gray-400 text-sm text-center">Scannez pour ouvrir cette page sur mobile</p>
+              </div>
+
+              {/* Texte accroche */}
+              <div className="text-center">
+                <p className="text-astroide text-sm font-semibold uppercase tracking-widest mb-3">Carte de visite digitale</p>
+                <p className="text-gray-300 text-base leading-relaxed">
+                  Scannez le QR code ou appuyez sur{' '}
+                  <span className="text-white font-semibold">« Ajouter à mes contacts »</span>{' '}
+                  pour enregistrer directement mes coordonnées sur votre téléphone — sans application, sans formulaire.
+                </p>
+              </div>
             </div>
           </div>
         </motion.div>

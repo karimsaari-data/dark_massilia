@@ -11,6 +11,31 @@ const Medias = () => {
   // Données extraites de l'ancien site medias.html
   const pressLinks = [
     {
+      title: "France Inter — Journal de 7h : les Calanques face au protoxyde d'azote",
+      url: 'https://www.radiofrance.fr/franceinter/podcasts/le-journal-de-7h',
+      featured: false,
+      date: '29 avr. 2026',
+      image: '/images/europe1.png',
+      logo: '/images/Partenaires/svg/France_Inter_logo.svg',
+    },
+    {
+      title: "Échappées Belles — Spéciale Verte : les Bouches-du-Rhône en action",
+      url: '/echappees-belles-bouches-du-rhone',
+      internal: true,
+      featured: true,
+      date: '2 mai 2026',
+      image: '/images/échappée_verte_0.jpg',
+      logo: null,
+    },
+    {
+      title: "Europe 1 — Protoxyde d'azote : des bonbonnes qui polluent les Calanques de Marseille",
+      url: 'https://www.europe1.fr/societe/protoxyde-dazote-des-bonbonnes-qui-polluent-nos-rues-mais-aussi-leau-des-calanques-de-marseille-930515',
+      featured: false,
+      date: '2 mai 2026',
+      image: '/images/europe1.png',
+      logo: '/images/Partenaires/svg/Europe1-logo.svg',
+    },
+    {
       title: 'Interview Presse — Tired Earth (EN/FR)',
       url: 'https://www.tiredearth.com/interviews/interview-de-karim-saari-apneiste-et-photographe-sous-marin#',
       featured: false,

@@ -34,6 +34,7 @@ const STATIC_ROUTES = [
   '/communaute-calanques',
   '/actualites',
   '/sauver-marseille-documentaire-arte',
+  '/echappees-belles-bouches-du-rhone',
   '/meduses-souveraines-oceans-documentaire-arte',
   '/donnees-scientifiques',
   '/contact',
