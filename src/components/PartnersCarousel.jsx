@@ -8,14 +8,15 @@
  */
 
 const logos = [
-  { src: '/images/Partenaires/svg/TF1_logo_2006.svg',                    alt: 'TF1',                  href: 'https://www.tf1.fr/' },
+  { src: '/images/Partenaires/svg/Logo_TF1_Info.svg',                    alt: 'TF1 Info',              href: 'https://www.tf1info.fr/' },
   { src: '/images/Partenaires/svg/France_Bleu_2021.svg',                 alt: 'France Bleu',           href: 'https://www.francebleu.fr/' },
+  { src: '/images/Partenaires/svg/France_Inter_logo.svg',                alt: 'France Inter',          href: 'https://www.radiofrance.fr/franceinter/' },
   { src: '/images/Partenaires/svg/Franceinfo.svg',                       alt: 'Franceinfo',            href: 'https://www.francetvinfo.fr/' },
   { src: '/images/Partenaires/svg/France.tv_-_logo_2022.svg',            alt: 'France.tv',             href: 'https://www.france.tv/' },
   { src: '/images/Partenaires/svg/France_5_-_logo_2018.svg',             alt: 'France 5',              href: 'https://www.france.tv/france-5/' },
   { src: '/images/Partenaires/svg/Arte-Logo.svg',                        alt: 'ARTE',                  href: 'https://www.arte.tv/' },
   { src: '/images/Partenaires/svg/Logo_M6_(2020,_fond_clair).svg',       alt: 'M6',                    href: 'https://www.m6.fr/' },
-  { src: '/images/Partenaires/svg/Logo_TF1_Info.svg',                    alt: 'TF1 Info',              href: 'https://www.tf1info.fr/' },
+  { src: '/images/Partenaires/svg/Europe1-logo.svg',                     alt: 'Europe 1',              href: 'https://www.europe1.fr/' },
   { src: '/images/Partenaires/svg/La-provence-2023.svg',                 alt: 'La Provence',           href: 'https://www.laprovence.com/' },
   { src: '/images/Partenaires/svg/midi-libre-logo-vector.svg',           alt: 'Midi Libre',            href: 'https://www.midilibre.fr/' },
   { src: '/images/Partenaires/svg/Actu.fr_logo_2020.svg',                alt: 'Actu.fr',               href: 'https://actu.fr/' },

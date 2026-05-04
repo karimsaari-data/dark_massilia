@@ -37,4 +37,5 @@ jobs:
           git add scripts/.notified-slugs.json
           # Ne commite que si le fichier a changé (nouveaux articles notifiés)
           git diff --cached --quiet || git commit -m "chore: update .notified-slugs.json [skip ci]"
+          git pull --rebase origin main
           git push
