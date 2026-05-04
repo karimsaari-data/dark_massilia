@@ -11,7 +11,8 @@ const PHOTOS = [
   { src: '/images/échappée_verte_0.jpg', alt: 'Spéciale Échappée verte Bouches-du-Rhône — France 5 Échappées Belles — Karim Saari' },
   { src: '/images/échappée_verte_1.jpg', alt: 'Karim Saari dans Échappées Belles — Dépollution marine Calanques de Marseille' },
   { src: '/images/échappée_verte_2.jpg', alt: 'Échappées Belles Bouches-du-Rhône — Environnement et action terrain' },
-  { src: '/images/échappée_verte_3.jpg', alt: 'Échappées Belles France 5 — Karim Saari photographe et apnéiste Marseille' },
+  { src: '/images/échappée_verte_4.jpg', alt: 'Échappées Belles France 5 — Karim Saari photographe et apnéiste Marseille' },
+  { src: '/images/échappée_verte_5.jpg', alt: 'Échappées Belles Spéciale Verte — Les Bouches-du-Rhône en action, France 5' },
 ];
 
 const EchappeesBelles = () => {
@@ -65,7 +66,7 @@ const EchappeesBelles = () => {
             <img
               src="/images/échappée_verte_0.jpg"
               alt="Karim Saari dans Spéciale Échappée Verte — Bouches-du-Rhône en action — France 5"
-              className="w-full h-auto max-h-[520px] object-cover object-center"
+              className="w-full h-auto"
               loading="eager"
               fetchPriority="high"
               width="1280"

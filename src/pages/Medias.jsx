@@ -15,17 +15,8 @@ const Medias = () => {
       url: 'https://www.radiofrance.fr/franceinter/podcasts/le-journal-de-7h',
       featured: false,
       date: '29 avr. 2026',
-      image: '/images/europe1.png',
+      image: '/images/Partenaires/svg/France_Inter_logo.svg',
       logo: '/images/Partenaires/svg/France_Inter_logo.svg',
-    },
-    {
-      title: "Échappées Belles — Spéciale Verte : les Bouches-du-Rhône en action",
-      url: '/echappees-belles-bouches-du-rhone',
-      internal: true,
-      featured: true,
-      date: '2 mai 2026',
-      image: '/images/échappée_verte_0.jpg',
-      logo: null,
     },
     {
       title: "Europe 1 — Protoxyde d'azote : des bonbonnes qui polluent les Calanques de Marseille",
@@ -282,18 +273,16 @@ const Medias = () => {
               </Link>
             </motion.div>
 
-            {/* Échappées Belles */}
+            {/* Échappées Belles — Spéciale Verte */}
             <motion.div variants={FADE_IN_UP}>
-              <a
-                href="https://www.dailymotion.com/video/x8wzsm2"
-                target="_blank"
-                rel="noopener noreferrer"
+              <Link
+                to="/echappees-belles-bouches-du-rhone"
                 className="glass-strong rounded-xl overflow-hidden border border-white/10 hover:border-ocean-teal/50 transition-all duration-300 group block h-full"
               >
                 <div className="relative aspect-video bg-black overflow-hidden">
                   <img
-                    src="/images/karim-saari-marseille-echappees-belles-reportage-television.webp"
-                    alt="Échappées Belles — Karim Saari avec Ismaël Khelifa et Matthieu Witvoet au Vallon des Auffes, Marseille"
+                    src="/images/échappée_verte_0.jpg"
+                    alt="Échappées Belles Spéciale Verte — Karim Saari dans les Bouches-du-Rhône, France 5"
                     className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                     loading="lazy"
                     decoding="async"
@@ -308,17 +297,17 @@ const Medias = () => {
                 <div className="p-6 flex items-center justify-between">
                   <div>
                     <div className="mb-3 bg-white/90 rounded px-2 py-1 inline-block">
-                      <img src="/images/Partenaires/svg/France.tv_-_logo_2022.svg" alt="France Télévisions" className="h-5 w-auto max-w-[72px]" loading="lazy" />
+                      <img src="/images/Partenaires/svg/France_5_-_logo_2018.svg" alt="France 5" className="h-5 w-auto max-w-[72px]" loading="lazy" />
                     </div>
-                    <p className="text-xs uppercase tracking-widest text-ocean-teal font-semibold mb-1">France Télévisions</p>
+                    <p className="text-xs uppercase tracking-widest text-ocean-teal font-semibold mb-1">France 5 · 2 mai 2026</p>
                     <h3 className="text-lg font-bold text-white group-hover:text-ocean-teal transition-colors">
-                      Échappées Belles — Karim Saari avec Ismaël Khelifa & Matthieu Witvoet
+                      Échappées Belles — Spéciale Verte : les Bouches-du-Rhône en action
                     </h3>
-                    <p className="text-sm text-gray-400 mt-2 leading-snug">Marseille vue d'en bas : Ismaël Khelifa découvre les fonds des Calanques avec Karim et l'équipe Team Oxygen.</p>
+                    <p className="text-sm text-gray-400 mt-2 leading-snug">Karim Saari emmène l'équipe d'Échappées Belles au cœur des Calanques pour montrer l'engagement écologique en Méditerranée.</p>
                   </div>
-                  <ExternalLink className="w-5 h-5 text-gray-400 group-hover:text-ocean-teal group-hover:translate-x-1 group-hover:-translate-y-1 transition-all flex-shrink-0 ml-4" />
+                  <ArrowLeft className="w-5 h-5 rotate-180 text-gray-400 group-hover:text-ocean-teal group-hover:translate-x-1 transition-all flex-shrink-0 ml-4" />
                 </div>
-              </a>
+              </Link>
             </motion.div>
 
             {/* TF1 — Scandale décharges */}
