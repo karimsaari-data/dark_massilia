@@ -1,6 +1,9 @@
 name: Build nocturne & Déploiement FTP
 
 on:
+  push:
+    branches:
+      - main               # déploiement automatique à chaque push/merge sur main
   schedule:
     - cron: '0 3 * * *'   # 3h UTC = 4h/5h heure de Paris
   workflow_dispatch:        # déclenchement manuel depuis GitHub Actions
