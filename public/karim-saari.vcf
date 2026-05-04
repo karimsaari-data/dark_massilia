@@ -1,0 +1,16 @@
+BEGIN:VCARD
+VERSION:3.0
+FN:Karim Saari
+N:Saari;Karim;;;
+NICKNAME:Dark Massilia
+ORG:Team Oxygen
+TITLE:Photographe Environnemental & Sous-Marin
+TEL;TYPE=CELL:+33695331301
+EMAIL;TYPE=INTERNET:contact@karimsaari.com
+URL:https://karimsaari.com
+ADR;TYPE=WORK:;;Marseille;Bouches-du-Rhône;;13000;France
+PHOTO;VALUE=URL:https://karimsaari.com/images/karim-saari-photo-profil-arte-regard-marseille.webp
+X-SOCIALPROFILE;type=instagram:https://www.instagram.com/karimsaari
+X-SOCIALPROFILE;type=youtube:https://www.youtube.com/@dark.massilia
+NOTE:Photographe environnemental et sous-marin à Marseille. Fondateur de Dark Massilia. Président de Team Oxygen — Projet Sentinelle.
+END:VCARD
