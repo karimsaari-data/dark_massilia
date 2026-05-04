@@ -1,6 +1,7 @@
-import { motion } from 'framer-motion';
+import { useState } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
 import { Link, useNavigate } from 'react-router-dom';
-import { Mail, Phone, MapPin, Newspaper, UserPlus } from 'lucide-react';
+import { Mail, Phone, MapPin, Newspaper, UserPlus, X } from 'lucide-react';
 import QRCodeLib from 'react-qr-code';
 const QRCode = QRCodeLib?.default ?? QRCodeLib;
 import { FADE_IN_UP, STAGGER_CONTAINER, APP_CONFIG } from '../utils/constants';
@@ -13,6 +14,7 @@ const CONTACT_URL = 'https://karimsaari.com/contact';
 
 const Contact = () => {
   const navigate = useNavigate();
+  const [qrZoomed, setQrZoomed] = useState(false);
 
   const handleVCardDownload = () => {
     trackEvent('contact_click', { method: 'vcard', source: 'contact_page' });
@@ -35,47 +37,44 @@ const Contact = () => {
           </motion.h1>
         </motion.div>
 
-        {/* Carte de visite digitale — 2 colonnes desktop */}
+        {/* Carte de visite digitale — carte horizontale unifiée */}
         <motion.div
           initial="hidden"
           animate="visible"
           variants={FADE_IN_UP}
-          className="max-w-4xl mx-auto mb-16 grid grid-cols-1 lg:grid-cols-2 gap-8 items-center"
+          className="max-w-4xl mx-auto mb-16"
         >
-          {/* Carte (colonne gauche) */}
-          <div className="relative rounded-3xl overflow-hidden p-px mx-auto w-full max-w-sm lg:max-w-none"
+          <div className="relative rounded-3xl overflow-hidden p-px"
             style={{ background: 'linear-gradient(135deg, #21c47b40, #0091ff30, #21c47b20)' }}
           >
-            <div className="rounded-3xl p-8 flex flex-col items-center gap-6 text-center"
+            <div className="rounded-3xl flex flex-col lg:flex-row"
               style={{ background: 'linear-gradient(160deg, rgba(11,28,45,0.97) 0%, rgba(6,18,30,0.99) 100%)' }}
             >
-              {/* Avatar */}
-              <div className="relative">
-                <div className="w-24 h-24 rounded-full overflow-hidden ring-2 ring-astroide/40 ring-offset-2 ring-offset-transparent">
-                  <img
-                    src="/images/karim-saari-photo-profil-arte-regard-marseille_300w.webp"
-                    alt="Karim Saari"
-                    width="96"
-                    height="96"
-                    className="w-full h-full object-cover"
-                  />
+              {/* Colonne gauche — identité */}
+              <div className="flex flex-col items-center justify-center gap-4 p-8 lg:w-56 lg:border-r border-white/10">
+                <div className="relative">
+                  <div className="w-24 h-24 rounded-full overflow-hidden ring-2 ring-astroide/40 ring-offset-2 ring-offset-transparent">
+                    <img
+                      src="/images/karim-saari-photo-profil-arte-regard-marseille_300w.webp"
+                      alt="Karim Saari"
+                      width="96"
+                      height="96"
+                      className="w-full h-full object-cover"
+                    />
+                  </div>
+                  <span className="absolute -bottom-1 -right-1 bg-astroide text-white text-xs font-bold px-2 py-0.5 rounded-full shadow-lg">
+                    🐬
+                  </span>
                 </div>
-                <span className="absolute -bottom-1 -right-1 bg-astroide text-white text-xs font-bold px-2 py-0.5 rounded-full shadow-lg">
-                  🐬
-                </span>
+                <div className="text-center">
+                  <h2 className="text-lg font-bold text-white">Karim Saari</h2>
+                  <p className="text-astroide text-sm font-medium mt-0.5">Dark Massilia</p>
+                  <p className="text-gray-400 text-xs mt-1">Photographe environnemental · Marseille</p>
+                </div>
               </div>
 
-              {/* Identité */}
-              <div>
-                <h2 className="text-xl font-bold text-white">Karim Saari</h2>
-                <p className="text-astroide text-sm font-medium mt-0.5">Dark Massilia</p>
-                <p className="text-gray-400 text-xs mt-1 leading-relaxed">
-                  Photographe environnemental · Marseille
-                </p>
-              </div>
-
-              {/* Infos */}
-              <div className="w-full flex flex-col gap-2 text-sm">
+              {/* Colonne centre — coordonnées */}
+              <div className="flex flex-col justify-center gap-2 p-8 flex-1 border-t lg:border-t-0 lg:border-r border-white/10 text-sm">
                 <a
                   href={`https://wa.me/${APP_CONFIG.contactWhatsApp.replace(/\s/g, '')}`}
                   target="_blank"
@@ -109,49 +108,32 @@ const Contact = () => {
                 </a>
               </div>
 
-              {/* CTA */}
-              <a
-                href="/karim-saari.vcf"
-                download="karim-saari.vcf"
-                onClick={handleVCardDownload}
-                className="w-full flex items-center justify-center gap-2 py-3 px-6 rounded-2xl font-semibold text-sm text-white transition-all duration-300 hover:scale-105 hover:shadow-lg"
-                style={{ background: 'linear-gradient(135deg, #21c47b, #18a066)' }}
-              >
-                <UserPlus className="w-4 h-4" />
-                Ajouter à mes contacts
-              </a>
-            </div>
-          </div>
-
-          {/* Panneau droite — QR + accroche dans une card */}
-          <div className="relative rounded-3xl overflow-hidden p-px mx-auto w-full max-w-sm lg:max-w-none"
-            style={{ background: 'linear-gradient(135deg, #21c47b40, #0091ff30, #21c47b20)' }}
-          >
-            <div className="rounded-3xl p-8 flex flex-col items-center gap-6 h-full"
-              style={{ background: 'linear-gradient(160deg, rgba(11,28,45,0.97) 0%, rgba(6,18,30,0.99) 100%)' }}
-            >
-              {/* QR code */}
-              <div className="flex flex-col items-center gap-3">
-                <div className="p-4 rounded-2xl bg-white shadow-xl">
+              {/* Colonne droite — QR + CTA */}
+              <div className="flex flex-col items-center justify-center gap-4 p-8 lg:w-56 border-t lg:border-t-0">
+                <button
+                  onClick={() => setQrZoomed(true)}
+                  className="p-3 rounded-2xl bg-white shadow-xl cursor-zoom-in hover:scale-105 transition-transform duration-200"
+                  aria-label="Agrandir le QR code"
+                >
                   <QRCode
                     value={CONTACT_URL}
-                    size={160}
+                    size={120}
                     bgColor="#ffffff"
                     fgColor="#0B1C2D"
                     level="M"
                   />
-                </div>
-                <p className="text-gray-400 text-sm text-center">Scannez pour ouvrir cette page sur mobile</p>
-              </div>
-
-              {/* Texte accroche */}
-              <div className="text-center">
-                <p className="text-astroide text-sm font-semibold uppercase tracking-widest mb-3">Carte de visite digitale</p>
-                <p className="text-gray-300 text-base leading-relaxed">
-                  Scannez le QR code ou appuyez sur{' '}
-                  <span className="text-white font-semibold">« Ajouter à mes contacts »</span>{' '}
-                  pour enregistrer directement mes coordonnées sur votre téléphone — sans application, sans formulaire.
-                </p>
+                </button>
+                <p className="text-gray-400 text-xs text-center">Cliquez pour agrandir · Scanner sur mobile</p>
+                <a
+                  href="/karim-saari.vcf"
+                  download="karim-saari.vcf"
+                  onClick={handleVCardDownload}
+                  className="w-full flex items-center justify-center gap-2 py-2.5 px-4 rounded-2xl font-semibold text-sm text-white transition-all duration-300 hover:scale-105 hover:shadow-lg"
+                  style={{ background: 'linear-gradient(135deg, #21c47b, #18a066)' }}
+                >
+                  <UserPlus className="w-4 h-4" />
+                  Ajouter à mes contacts
+                </a>
               </div>
             </div>
           </div>
@@ -294,6 +276,44 @@ const Contact = () => {
         </motion.div>
 
       </div>
+
+      {/* Overlay zoom QR */}
+      <AnimatePresence>
+        {qrZoomed && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            onClick={() => setQrZoomed(false)}
+            className="fixed inset-0 z-50 flex items-center justify-center p-6"
+            style={{ background: 'rgba(0,0,0,0.85)', backdropFilter: 'blur(8px)' }}
+          >
+            <motion.div
+              initial={{ scale: 0.7, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              exit={{ scale: 0.7, opacity: 0 }}
+              transition={{ type: 'spring', stiffness: 300, damping: 25 }}
+              onClick={e => e.stopPropagation()}
+              className="flex flex-col items-center gap-4 p-8 rounded-3xl bg-white shadow-2xl"
+            >
+              <QRCode
+                value={CONTACT_URL}
+                size={240}
+                bgColor="#ffffff"
+                fgColor="#0B1C2D"
+                level="M"
+              />
+              <p className="text-gray-600 text-sm font-medium">karimsaari.com/contact</p>
+              <button
+                onClick={() => setQrZoomed(false)}
+                className="flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-semibold text-gray-700 hover:bg-gray-100 transition-colors"
+              >
+                <X className="w-4 h-4" /> Fermer
+              </button>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </div>
   );
 };
