@@ -892,25 +892,9 @@ const Home = () => {
           variants={FADE_IN_UP}
           className="glass-strong rounded-3xl overflow-hidden border border-white/10 mb-16"
         >
-          <div className="grid md:grid-cols-[1.2fr_1fr] gap-0">
-            {/* Image - Gauche */}
-            <div className="relative h-64 md:h-auto min-h-[400px] order-1">
-              <img
-                src="/images/portfolio/Mer/karim-saari-marseille-grotte-calanque-turquoise-pins-falaises.webp"
-                srcSet="/images/portfolio/Mer/karim-saari-marseille-grotte-calanque-turquoise-pins-falaises_400w.webp 400w, /images/portfolio/Mer/karim-saari-marseille-grotte-calanque-turquoise-pins-falaises_800w.webp 800w, /images/portfolio/Mer/karim-saari-marseille-grotte-calanque-turquoise-pins-falaises_1200w.webp 1200w, /images/portfolio/Mer/karim-saari-marseille-grotte-calanque-turquoise-pins-falaises.webp 1920w"
-                sizes="(max-width: 768px) 100vw, 50vw"
-                alt="Karim Saari photographe Marseille — grotte calanque eau turquoise pins et falaises calcaires"
-                width="1200"
-                height="800"
-                className="absolute inset-0 w-full h-full object-cover"
-                loading="lazy"
-                decoding="async"
-              />
-              <div className="absolute inset-0 bg-gradient-to-l from-transparent to-black/20" />
-            </div>
-
-            {/* Contenu - Droite */}
-            <div className="p-8 md:p-12 flex flex-col justify-center order-2">
+          <div className="grid md:grid-cols-[1fr_1.2fr] gap-0">
+            {/* Contenu - Gauche */}
+            <div className="p-8 md:p-12 flex flex-col justify-center order-2 md:order-1">
               <div className="mb-6 inline-flex items-center gap-2 px-4 py-2 bg-ocean-teal/10 rounded-full border border-ocean-teal/30 w-fit">
                 <MapPin className="w-5 h-5 text-ocean-teal" />
                 <span className="text-sm font-semibold text-ocean-teal">Calanques · Côte Bleue · Frioul</span>
@@ -940,6 +924,22 @@ const Home = () => {
                   <ArrowRight className="w-4 h-4" />
                 </Link>
               </div>
+            </div>
+
+            {/* Image - Droite */}
+            <div className="relative h-64 md:h-auto min-h-[400px] order-1 md:order-2">
+              <img
+                src="/images/portfolio/Mer/karim-saari-marseille-grotte-calanque-turquoise-pins-falaises.webp"
+                srcSet="/images/portfolio/Mer/karim-saari-marseille-grotte-calanque-turquoise-pins-falaises_400w.webp 400w, /images/portfolio/Mer/karim-saari-marseille-grotte-calanque-turquoise-pins-falaises_800w.webp 800w, /images/portfolio/Mer/karim-saari-marseille-grotte-calanque-turquoise-pins-falaises_1200w.webp 1200w, /images/portfolio/Mer/karim-saari-marseille-grotte-calanque-turquoise-pins-falaises.webp 1920w"
+                sizes="(max-width: 768px) 100vw, 50vw"
+                alt="Karim Saari photographe Marseille — grotte calanque eau turquoise pins et falaises calcaires"
+                width="1200"
+                height="800"
+                className="absolute inset-0 w-full h-full object-cover"
+                loading="lazy"
+                decoding="async"
+              />
+              <div className="absolute inset-0 bg-gradient-to-l from-transparent to-black/20" />
             </div>
           </div>
         </motion.div>
