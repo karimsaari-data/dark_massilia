@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion';
-import { ArrowLeft, ArrowRight, ExternalLink, Play } from 'lucide-react';
+import { ArrowLeft, ArrowRight, ExternalLink, Play, Tv2, Newspaper } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { FADE_IN_UP, STAGGER_CONTAINER } from '../utils/constants';
 import SEO from '../components/SEO';
@@ -168,25 +168,23 @@ const Medias = () => {
           Documentaires et Reportages : Témoigner de l'urgence écologique en Méditerranée
         </motion.h1>
 
-        {/* Barre de stats — crédibilité immédiate */}
+        {/* Stats médias — 2 chiffres clés */}
         <motion.div
           initial={{ opacity: 0, y: 16 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5, delay: 0.2 }}
-          className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-16"
+          className="flex justify-center gap-6 mb-16"
         >
-          {[
-            { value: '6',    label: 'passages TV',          icon: '📺' },
-            { value: '17+',  label: 'articles presse & radio', icon: '📰' },
-            { value: '10 ans', label: 'd\'engagement terrain', icon: '🤿' },
-            { value: '5,7T', label: 'de déchets documentés', icon: '♻️' },
-          ].map(({ value, label, icon }) => (
-            <div key={label} className="glass-strong rounded-2xl p-5 text-center border border-white/10">
-              <div className="text-2xl mb-1">{icon}</div>
-              <div className="text-2xl font-bold text-ocean-teal">{value}</div>
-              <div className="text-xs text-text-muted mt-1 leading-tight">{label}</div>
-            </div>
-          ))}
+          <div className="glass-strong rounded-2xl px-10 py-6 text-center border border-white/10 flex flex-col items-center gap-2">
+            <Tv2 className="w-5 h-5 text-ocean-teal" />
+            <div className="text-3xl font-bold text-white">6</div>
+            <div className="text-xs text-text-muted uppercase tracking-widest">passages TV</div>
+          </div>
+          <div className="glass-strong rounded-2xl px-10 py-6 text-center border border-white/10 flex flex-col items-center gap-2">
+            <Newspaper className="w-5 h-5 text-ocean-teal" />
+            <div className="text-3xl font-bold text-white">17+</div>
+            <div className="text-xs text-text-muted uppercase tracking-widest">articles presse & radio</div>
+          </div>
         </motion.div>
 
         {/* Section: Passage TV — ARTE & Échappées Belles */}
