@@ -14,7 +14,7 @@ const Medias = () => {
       title: "France Inter — Journal de 7h : les Calanques face au protoxyde d'azote",
       url: 'https://www.radiofrance.fr/franceinter/podcasts/le-journal-de-7h',
       date: '29 avr. 2026',
-      image: '/images/europe1.png',
+      image: '/images/france inter.webp',
       logo: '/images/Partenaires/svg/France_Inter_logo.svg',
       desc: "Le Journal de 7h de France Inter consacre un sujet aux bonbonnes de protoxyde d'azote abandonnées dans les Calanques — avec le témoignage de Karim Saari.",
     },
@@ -177,7 +177,7 @@ const Medias = () => {
         >
           {[
             { value: '6',    label: 'passages TV',          icon: '📺' },
-            { value: '15+',  label: 'articles de presse',   icon: '📰' },
+            { value: '17+',  label: 'articles presse & radio', icon: '📰' },
             { value: '10 ans', label: 'd\'engagement terrain', icon: '🤿' },
             { value: '5,7T', label: 'de déchets documentés', icon: '♻️' },
           ].map(({ value, label, icon }) => (
