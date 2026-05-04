@@ -87,47 +87,18 @@ async function collectDay(date) {
   const { error } = await supabase.from('cf_daily').upsert(row, { onConflict: 'date' });
   if (error) throw new Error(`cf_daily upsert: ${error.message}`);
 
-  // ── Pays (graceful) ───────────────────────────────────────────────────────────
-  try {
-    const dataC = await cfGraphQL(`{
-      viewer {
-        zones(filter: {zoneTag: "${CF_ZONE_ID}"}) {
-          httpRequests1dByCountryGroups(
-            limit: 10
-            orderBy: [sum_requests_DESC]
-            filter: {date_geq: "${date}", date_leq: "${date}"}
-          ) {
-            dimensions { clientCountryName }
-            sum { requests bytes threats }
-          }
-        }
-      }
-    }`);
-
-    const countryRows = (dataC?.viewer?.zones?.[0]?.httpRequests1dByCountryGroups || [])
-      .map(r => ({ date, country: r.dimensions.clientCountryName, requests: r.sum.requests, bytes: r.sum.bytes, threats: r.sum.threats }))
-      .filter(r => r.country);
-
-    if (countryRows.length) {
-      await supabase.from('cf_daily_countries').delete().eq('date', date);
-      const { error: errC } = await supabase.from('cf_daily_countries').insert(countryRows);
-      if (errC) console.warn(`  ⚠️  cf_daily_countries: ${errC.message}`);
-    }
-  } catch (e) {
-    console.warn(`  ⚠️  Pays CF ignorés (${e.message})`);
-  }
-
   // ── Heures (graceful) ─────────────────────────────────────────────────────────
+  // Note : httpRequests1dByCountryGroups et clientIPClass requièrent Cloudflare Pro — non disponibles sur Free
   try {
     const dataH = await cfGraphQL(`{
       viewer {
         zones(filter: {zoneTag: "${CF_ZONE_ID}"}) {
           httpRequests1hGroups(
             limit: 24
-            orderBy: [datetimeHour_ASC]
-            filter: {datetimeHour_geq: "${dateToISO(date)}", datetimeHour_leq: "${dateToISO(date, true)}"}
+            orderBy: [datetime_ASC]
+            filter: {datetime_geq: "${dateToISO(date)}", datetime_leq: "${dateToISO(date, true)}"}
           ) {
-            dimensions { datetimeHour }
+            dimensions { datetime }
             sum { requests pageViews cachedRequests bytes threats }
             uniq { uniques }
           }
@@ -137,7 +108,7 @@ async function collectDay(date) {
 
     const hourRows = (dataH?.viewer?.zones?.[0]?.httpRequests1hGroups || []).map(r => ({
       date,
-      hour:            new Date(r.dimensions.datetimeHour).getUTCHours(),
+      hour:            new Date(r.dimensions.datetime).getUTCHours(),
       unique_visitors: r.uniq.uniques,
       page_views:      r.sum.pageViews,
       requests:        r.sum.requests,
@@ -154,49 +125,6 @@ async function collectDay(date) {
     }
   } catch (e) {
     console.warn(`  ⚠️  Horaires CF ignorés (${e.message})`);
-  }
-
-  // ── Bots (graceful) ───────────────────────────────────────────────────────────
-  try {
-    const dataB = await cfGraphQL(`{
-      viewer {
-        zones(filter: {zoneTag: "${CF_ZONE_ID}"}) {
-          httpRequestsAdaptiveGroups(
-            limit: 10
-            filter: {datetime_geq: "${dateToISO(date)}", datetime_leq: "${dateToISO(date, true)}"}
-            orderBy: [count_DESC]
-          ) {
-            count
-            dimensions { clientIPClass }
-          }
-        }
-      }
-    }`);
-
-    const groups = { human: 0, crawler: 0, bot: 0 };
-    for (const r of (dataB?.viewer?.zones?.[0]?.httpRequestsAdaptiveGroups || [])) {
-      const cls = r.dimensions.clientIPClass || '';
-      if (cls === 'clean')                                                          groups.human   += r.count;
-      else if (['searchEngine','monitoringService','backupService'].includes(cls))  groups.crawler += r.count;
-      else                                                                          groups.bot     += r.count;
-    }
-    const total = groups.human + groups.crawler + groups.bot;
-    if (total > 0) {
-      const { error: errB } = await supabase.from('cf_daily_bots').upsert({
-        date,
-        human_requests:   groups.human,
-        crawler_requests: groups.crawler,
-        bot_requests:     groups.bot,
-        total_requests:   total,
-      }, { onConflict: 'date' });
-      if (errB) console.warn(`  ⚠️  cf_daily_bots: ${errB.message}`);
-      else {
-        const humanPct = Math.round((groups.human / total) * 100);
-        console.log(`     🤖 Bots : humain ${humanPct}%, crawlers ${Math.round((groups.crawler/total)*100)}%, bots ${Math.round((groups.bot/total)*100)}%`);
-      }
-    }
-  } catch (e) {
-    console.warn(`  ⚠️  Bots CF ignorés (${e.message})`);
   }
 
   const cacheRate = row.requests > 0 ? ((row.cached_requests / row.requests) * 100).toFixed(1) : '0.0';

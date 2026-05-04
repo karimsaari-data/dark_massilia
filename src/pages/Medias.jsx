@@ -5,6 +5,7 @@ import { FADE_IN_UP, STAGGER_CONTAINER } from '../utils/constants';
 import SEO from '../components/SEO';
 import { SEO_PAGES } from '../utils/seo';
 import PartnersCarousel from '../components/PartnersCarousel';
+import Breadcrumb from '../components/Breadcrumb';
 
 const Medias = () => {
   // Données extraites de l'ancien site medias.html
@@ -128,6 +129,7 @@ const Medias = () => {
     <div className="min-h-screen py-32">
       <SEO {...SEO_PAGES['/presse']} />
       <div className="container-custom">
+        <Breadcrumb label="Presse & Médias" />
         {/* H1 SEO — visible, keyword-rich */}
         <motion.h1
           initial={{ opacity: 0, y: 20 }}

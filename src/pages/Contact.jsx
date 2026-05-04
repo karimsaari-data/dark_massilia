@@ -5,6 +5,7 @@ import { FADE_IN_UP, STAGGER_CONTAINER, APP_CONFIG } from '../utils/constants';
 import SEO from '../components/SEO';
 import { SEO_PAGES } from '../utils/seo';
 import { trackEvent } from '../lib/analytics';
+import Breadcrumb from '../components/Breadcrumb';
 
 const Contact = () => {
   const navigate = useNavigate();
@@ -12,6 +13,7 @@ const Contact = () => {
     <div className="min-h-screen py-20">
       <SEO {...SEO_PAGES['/contact']} />
       <div className="container-custom">
+        <Breadcrumb label="Contact & Partenariats" />
         {/* Header */}
         <motion.div
           initial="hidden"
@@ -160,8 +162,7 @@ const Contact = () => {
                 La Méditerranée pour bureau, l'action pour moteur
               </h2>
               <p className="text-text-secondary leading-relaxed">
-                Apnéiste, photographe et président de{' '}
-                <strong className="text-ocean-teal">Team Oxygen</strong>, Karim Saari documente et
+                Photographe environnemental et sous-marin, Karim Saari documente et
                 combat la pollution marine depuis plus de dix ans sur le littoral marseillais. Chaque
                 plongée est une mission : collecter les données, ramener les déchets, alerter le public.
                 Que vous soyez journaliste, institution, marque engagée ou simple passionné de la mer —

@@ -68,12 +68,12 @@ export async function fetchAllPostsMeta() {
   let totalPages = 1;
 
   do {
-    const params = new URLSearchParams({ per_page: 100, page, _fields: 'slug,modified', status: 'publish' });
+    const params = new URLSearchParams({ per_page: 100, page, _fields: 'slug,modified,title', status: 'publish' });
     const res = await fetch(`${WP_BASE}/posts?${params}`);
     if (!res.ok) break;
 
     const posts = await res.json();
-    posts.forEach(p => metas.push({ slug: p.slug, modified: p.modified }));
+    posts.forEach(p => metas.push({ slug: p.slug, modified: p.modified, title: p.title?.rendered || '' }));
     totalPages = parseInt(res.headers.get('X-WP-TotalPages') ?? '1', 10);
     page++;
   } while (page <= totalPages);
@@ -103,6 +103,9 @@ export function normalizePost(post) {
     ? rawImageSrc.replace(/\.(png|jpe?g)$/i, '.webp')
     : null;
 
+  const wpTerms      = post._embedded?.['wp:term'] ?? [];
+  const categoryName = wpTerms[0]?.[0]?.name ?? null;
+
   return {
     id:            post.id,
     slug:          post.slug,
@@ -119,6 +122,7 @@ export function normalizePost(post) {
     imageAlt:      media?.alt_text || decodeEntities(rawTitle),
     author:        author?.name    ?? 'Dark Massilia',
     categories:    post.categories ?? [],
+    categoryName,
   };
 }
 

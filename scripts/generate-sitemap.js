@@ -31,26 +31,30 @@ const TODAY    = new Date().toISOString().slice(0, 10); // YYYY-MM-DD
 // priority : importance relative pour Googlebot (1.0 = max)
 // changefreq : conseil de fréquence de crawl
 
+// lastmod: null = date du build (TODAY), sinon date fixe ISO YYYY-MM-DD
+// Pages changeant souvent (weekly/daily) → null (date du build = fiable)
+// Pages stables (monthly/yearly) → date de dernière vraie modification
 const STATIC_PAGES = [
-  { path: '/',                                              priority: '1.0', changefreq: 'weekly'  },
-  { path: '/depollution-marine',                           priority: '0.9', changefreq: 'monthly' },
-  { path: '/blog',                                         priority: '0.9', changefreq: 'weekly'  },
-  { path: '/communaute',                                   priority: '0.8', changefreq: 'monthly' },
-  { path: '/communaute-calanques',                         priority: '0.8', changefreq: 'monthly' },
-  { path: '/acces-massifs-calanques',                      priority: '0.7', changefreq: 'daily'   },
-  { path: '/photographie-paysage-mer',                     priority: '0.9', changefreq: 'monthly' },
-  { path: '/photographie-sous-marine',                     priority: '0.9', changefreq: 'monthly' },
-  { path: '/photographe-environnemental-marseille',         priority: '0.9', changefreq: 'monthly' },
-  { path: '/videos',                                       priority: '0.8', changefreq: 'monthly' },
-  { path: '/carte-calanques',                              priority: '0.8', changefreq: 'weekly'  },
-  { path: '/actualites',                                   priority: '0.6', changefreq: 'weekly'  },
-  { path: '/presse',                                       priority: '0.7', changefreq: 'monthly' },
-  { path: '/donnees-scientifiques',                        priority: '0.7', changefreq: 'monthly' },
-  { path: '/local-guide-marseille',                        priority: '0.7', changefreq: 'monthly' },
-  { path: '/les-francais-yann-arthus-bertrand',            priority: '0.7', changefreq: 'yearly'  },
-  { path: '/sauver-marseille-documentaire-arte',           priority: '0.6', changefreq: 'yearly'  },
-  { path: '/meduses-souveraines-oceans-documentaire-arte', priority: '0.6', changefreq: 'yearly' },
-  { path: '/contact',                                      priority: '0.5', changefreq: 'yearly'  },
+  { path: '/',                                              priority: '1.0', changefreq: 'weekly',  lastmod: null          },
+  { path: '/depollution-marine',                           priority: '0.9', changefreq: 'monthly', lastmod: '2026-04-22'  },
+  { path: '/blog',                                         priority: '0.9', changefreq: 'weekly',  lastmod: null          },
+  { path: '/communaute',                                   priority: '0.8', changefreq: 'monthly', lastmod: '2026-04-15'  },
+  { path: '/communaute-calanques',                         priority: '0.8', changefreq: 'monthly', lastmod: '2026-04-22'  },
+  { path: '/acces-massifs-calanques',                      priority: '0.7', changefreq: 'daily',   lastmod: null          },
+  { path: '/photographie-paysage-mer',                     priority: '0.9', changefreq: 'monthly', lastmod: '2026-04-22'  },
+  { path: '/photographie-sous-marine',                     priority: '0.9', changefreq: 'monthly', lastmod: '2026-04-22'  },
+  { path: '/photographe-environnemental-marseille',        priority: '0.9', changefreq: 'monthly', lastmod: '2026-04-22'  },
+  { path: '/videos',                                       priority: '0.8', changefreq: 'monthly', lastmod: '2026-03-01'  },
+  { path: '/carte-calanques',                              priority: '0.8', changefreq: 'weekly',  lastmod: null          },
+  { path: '/actualites',                                   priority: '0.6', changefreq: 'weekly',  lastmod: null          },
+  { path: '/presse',                                       priority: '0.7', changefreq: 'monthly', lastmod: '2026-04-22'  },
+  { path: '/dossier-presse',                               priority: '0.8', changefreq: 'monthly', lastmod: '2026-04-22'  },
+  { path: '/donnees-scientifiques',                        priority: '0.7', changefreq: 'monthly', lastmod: '2026-02-01'  },
+  { path: '/local-guide-marseille',                        priority: '0.7', changefreq: 'monthly', lastmod: '2026-03-15'  },
+  { path: '/les-francais-yann-arthus-bertrand',            priority: '0.7', changefreq: 'yearly',  lastmod: '2024-11-01'  },
+  { path: '/sauver-marseille-documentaire-arte',           priority: '0.6', changefreq: 'yearly',  lastmod: '2023-06-01'  },
+  { path: '/meduses-souveraines-oceans-documentaire-arte', priority: '0.6', changefreq: 'yearly',  lastmod: '2024-03-01'  },
+  { path: '/contact',                                      priority: '0.5', changefreq: 'yearly',  lastmod: '2026-01-01'  },
   // mentions-legales et confidentialite : volontairement absents (noindex implicite)
 ];
 
@@ -101,11 +105,11 @@ function urlEntry({ loc, lastmod, changefreq, priority }) {
 async function generateSitemap() {
   console.log('\n📍 Génération du Sitemap XML — Dark Massilia\n');
 
-  // Routes statiques
+  // Routes statiques — lastmod: null → date du build (TODAY), sinon date fixe
   const staticEntries = STATIC_PAGES.map(p =>
     urlEntry({
       loc:        `${BASE_URL}${p.path}`,
-      lastmod:    TODAY,
+      lastmod:    p.lastmod ?? TODAY,
       changefreq: p.changefreq,
       priority:   p.priority,
     })

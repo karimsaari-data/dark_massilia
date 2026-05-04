@@ -366,7 +366,7 @@ const Home = () => {
             {/* Contenu — Gauche */}
             <div className="p-8 md:p-12 flex flex-col justify-center order-2 md:order-1">
               <h2 className="text-2xl md:text-3xl font-bold text-white mb-6">
-                Karim Saari — Photographe environnemental &amp; Apnéiste
+                Karim Saari — Photographe environnemental &amp; Sentinelle des Calanques
               </h2>
               <div className="text-lg text-text-secondary leading-relaxed space-y-4">
                 <p>
@@ -376,7 +376,7 @@ const Home = () => {
                   En tant que <strong className="text-white font-semibold">photographe environnemental en Méditerranée</strong>, je capture la beauté de nos côtes, en surface comme en apnée, pour témoigner de l'état réel de nos écosystèmes. La photographie environnementale que je pratique n'est pas simplement esthétique : <strong className="text-ocean-teal font-semibold">chaque image est un document, une preuve, un appel à l'action.</strong>
                 </p>
                 <p>
-                  <strong className="text-white font-semibold">Apnéiste engagé depuis plus de 10 ans</strong> et président de <strong className="text-ocean-teal">Team Oxygen</strong>, ma mission se vit sur le terrain et à l'écran.
+                  Fondateur et animateur d'une <strong className="text-white font-semibold">communauté de 130 000 personnes</strong> engagées pour les Calanques, ma mission se vit sur le terrain et à l'écran.
                 </p>
                 <p>
                   Pour rendre visible l'<strong className="text-white font-semibold">impact de la pollution plastique</strong>, je participe à des <strong className="text-white font-semibold">documentaires et reportages</strong> sur l'environnement marin, je conçois des <strong className="text-white font-semibold">expositions photos engagées</strong> et je mène des <strong className="text-white font-semibold">missions de dépollution sous-marine</strong> avec mon association.
@@ -627,10 +627,10 @@ const Home = () => {
               <p className="text-gray-300 text-lg mb-8 leading-[1.8]">
                 Des falaises calcaires du littoral marseillais aux profondeurs de la Méditerranée, découvrez un témoignage visuel unique. Entre la splendeur des paysages de Provence et l'urgence écologique des fonds marins, chaque image raconte l'équilibre fragile de notre écosystème.
               </p>
-              <div className="flex flex-col gap-3">
+              <div className="flex flex-col gap-3 items-start">
                 <Link
                   to="/photographie-paysage-mer"
-                  className="btn-primary inline-flex items-center justify-between gap-2 w-full"
+                  className="btn-primary inline-flex items-center justify-between gap-2 w-auto min-w-[280px]"
                   title="Voir les photographies de paysages et du littoral marseillais par Karim Saari"
                 >
                   <span>Galerie Paysages &amp; Littoral</span>
@@ -638,7 +638,7 @@ const Home = () => {
                 </Link>
                 <Link
                   to="/photographie-sous-marine"
-                  className="btn-ghost inline-flex items-center justify-between gap-2 w-full"
+                  className="btn-ghost inline-flex items-center justify-between gap-2 w-auto min-w-[280px]"
                   title="Voir les photographies sous-marines et les actions de dépollution par Karim Saari"
                 >
                   <span>Galerie Sous-marine &amp; Dépollution</span>

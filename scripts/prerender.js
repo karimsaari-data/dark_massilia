@@ -44,6 +44,7 @@ const STATIC_ROUTES = [
   '/photographe-environnemental-marseille',
   '/mentions-legales',
   '/confidentialite',
+  '/plan-du-site',
   '/admin',
   '/blog/categorie/depollution',
   '/blog/categorie/biodiversite',

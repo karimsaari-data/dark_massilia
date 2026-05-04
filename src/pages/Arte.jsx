@@ -5,12 +5,14 @@ import { FADE_IN_UP, STAGGER_CONTAINER } from '../utils/constants';
 import SEO from '../components/SEO';
 import { SEO_PAGES } from '../utils/seo';
 import YouTubeFacade from '../components/media/YouTubeFacade';
+import Breadcrumb from '../components/Breadcrumb';
 
 const Arte = () => {
   return (
     <div className="min-h-screen py-32">
       <SEO {...SEO_PAGES['/sauver-marseille-documentaire-arte']} preloadImage="/images/karim-saari-arte-regard-documentaire-calanques-marseille_800w.webp" />
       <div className="container-custom">
+        <Breadcrumb label="Documentaire ARTE" />
 
         {/* Header */}
         <motion.div

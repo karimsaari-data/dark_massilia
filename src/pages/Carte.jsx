@@ -27,7 +27,7 @@ const EMBED_URL = `https://www.google.com/maps/d/embed?mid=${MAP_ID}&ehbc=2E312F
 const FULL_URL  = `https://www.google.com/maps/d/viewer?mid=${MAP_ID}`;
 
 export default function Carte() {
-  const [mapLoaded, setMapLoaded] = useState(true);
+  const [mapLoaded, setMapLoaded] = useState(false);
 
   return (
     <>
@@ -80,7 +80,10 @@ export default function Carte() {
                     Carte interactive des Calanques
                   </p>
                   <p style={{ color: 'rgba(255,255,255,0.65)', fontSize: '0.82rem', textShadow: '0 1px 4px rgba(0,0,0,0.6)' }}>
-                    Cliquez pour charger la carte
+                    Cliquez pour charger la carte interactive
+                  </p>
+                  <p style={{ color: 'rgba(255,255,255,0.4)', fontSize: '0.72rem', marginTop: '0.15rem', textShadow: '0 1px 4px rgba(0,0,0,0.6)' }}>
+                    Si elle ne s'affiche pas, utilisez le bouton "Ouvrir dans Google Maps" ci-dessous
                   </p>
                 </div>
                 <button

@@ -9,6 +9,7 @@ import { FADE_IN_UP, STAGGER_CONTAINER } from '../utils/constants';
 import SEO from '../components/SEO';
 import { SEO_PAGES } from '../utils/seo';
 import { supabase } from '../lib/supabase';
+import Breadcrumb from '../components/Breadcrumb';
 
 const depollutionPaths = [
   "/images/Marseille-dark-massilia-plastique-pollution-projet-sentinelle-apneiste.webp",
@@ -455,33 +456,39 @@ const PhotoGrid = ({ images, gallery }) => (
       const thumbW = Math.min(image.width || 800, 800);
       const thumbH = image.height ? Math.round(image.height * (thumbW / (image.width || 800))) : undefined;
       return (
-      <a
-        key={image.uid}
-        href={image.src}
-        data-fancybox={gallery}
-        data-caption={image.lieu || image.alt}
-        data-title={image.title || ''}
-        data-uid={image.uid}
-        data-slug={image.slug || image.uid}
-        data-hash={image.uid}
-        data-maps={image.maps}
-        data-thumb={thumbSrc}
-        className="block w-full break-inside-avoid cursor-pointer relative overflow-hidden rounded-xl focus-ring mb-4"
-        aria-label={`Ouvrir la photo : ${image.alt}`}
-      >
-        <img
-          src={thumbSrc}
-          srcSet={`${thumbSrc} 800w`}
-          sizes="(min-width: 1280px) 25vw, (min-width: 1024px) 33vw, (min-width: 768px) 50vw, 100vw"
-          alt={image.alt}
-          width={thumbW}
-          height={thumbH}
-          className="w-full h-auto object-cover"
-          loading={index < 4 ? 'eager' : 'lazy'}
-          fetchPriority={index === 0 ? 'high' : undefined}
-          decoding="async"
-        />
-      </a>
+      <figure key={image.uid} className="break-inside-avoid mb-4">
+        <a
+          href={image.src}
+          data-fancybox={gallery}
+          data-caption={image.lieu || image.alt}
+          data-title={image.title || ''}
+          data-uid={image.uid}
+          data-slug={image.slug || image.uid}
+          data-hash={image.uid}
+          data-maps={image.maps}
+          data-thumb={thumbSrc}
+          className="block w-full cursor-pointer relative overflow-hidden rounded-xl focus-ring"
+          aria-label={`Ouvrir la photo : ${image.alt}`}
+        >
+          <img
+            src={thumbSrc}
+            srcSet={`${thumbSrc} 800w`}
+            sizes="(min-width: 1280px) 25vw, (min-width: 1024px) 33vw, (min-width: 768px) 50vw, 100vw"
+            alt={image.alt}
+            width={thumbW}
+            height={thumbH}
+            className="w-full h-auto object-cover"
+            loading={index < 4 ? 'eager' : 'lazy'}
+            fetchPriority={index === 0 ? 'high' : undefined}
+            decoding="async"
+          />
+        </a>
+        {image.lieu && (
+          <figcaption className="text-xs text-gray-500 mt-1 px-1 truncate">
+            {image.lieu}
+          </figcaption>
+        )}
+      </figure>
       );
     })}
   </div>
@@ -562,16 +569,43 @@ const PhotoSousMarine = () => {
     <div className="min-h-screen py-24">
       <SEO {...SEO_PAGES['/photographie-sous-marine']} />
       <div className="container-custom">
+        <Breadcrumb label="Photographe Sous-Marin — Galerie" />
 
         {/* H1 SEO */}
         <motion.h1
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
-          className="text-xl md:text-2xl font-bold text-white text-center mb-8 leading-tight"
+          className="text-xl md:text-2xl font-bold text-white text-center mb-6 leading-tight"
         >
           Photographe sous-marin à Marseille — Documenter pour alerter
         </motion.h1>
+
+        {/* Raccourcis catégories */}
+        <motion.div
+          initial={{ opacity: 0, y: 10 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5, delay: 0.2 }}
+          className="flex flex-wrap justify-center gap-3 mb-10"
+        >
+          {[
+            { href: '#depollution', icon: <Trash2 className="w-4 h-4" />, label: 'Actions de dépollution' },
+            { href: '#biodiversite', icon: <Fish className="w-4 h-4" />, label: 'Biodiversité' },
+            { href: '#caracterisation', icon: <ClipboardList className="w-4 h-4" />, label: 'Caractérisation' },
+          ].map(({ href, icon, label }) => (
+            <a
+              key={href}
+              href={href}
+              className="inline-flex items-center gap-2 px-4 py-2 rounded-full text-sm font-medium
+                         bg-white/5 border border-white/15 text-text-secondary
+                         hover:bg-ocean-teal/10 hover:border-ocean-teal/40 hover:text-ocean-teal
+                         transition-colors duration-200"
+            >
+              {icon}
+              {label}
+            </a>
+          ))}
+        </motion.div>
 
         {/* Section Actions de dépollution */}
         <motion.div

@@ -28,16 +28,22 @@ function altFromSrc(imgTag, postTitle = '') {
 
 // Post-traite le HTML WordPress : lazy loading images + rétrogradation h1→h2 + alt manquants
 function lazyLoadContent(html, postTitle = '') {
+  let firstImg = true;
   return html
     .replace(/<h1(\s[^>]*)?>/gi, '<h2$1>')
     .replace(/<\/h1>/gi, '</h2>')
-    // Ajoute lazy/decoding si absent
-    .replace(/<img(?![^>]*\bloading=)([^>]*>)/gi, '<img loading="lazy" decoding="async"$1')
+    // Première image → eager + fetchpriority high (LCP) ; les suivantes → lazy
+    .replace(/<img(?![^>]*\bloading=)([^>]*>)/gi, (match, rest) => {
+      if (firstImg) {
+        firstImg = false;
+        return `<img loading="eager" fetchpriority="high" decoding="async"${rest}`;
+      }
+      return `<img loading="lazy" decoding="async"${rest}`;
+    })
     // Injecte alt de secours sur les <img> sans alt ou avec alt=""
     .replace(/<img([^>]*)>/gi, (match, attrs) => {
       if (/\balt=["'][^"']+["']/.test(attrs)) return match; // alt non vide → OK
       const fallback = altFromSrc(match, postTitle);
-      // Remplace alt="" existant ou ajoute alt=""
       if (/\balt=/.test(attrs)) {
         return `<img${attrs.replace(/\balt=["'][^"']*["']/i, `alt="${fallback}"`)}>`;
       }
@@ -77,11 +83,21 @@ function buildSchema(post, slug) {
         dateModified: post.modified ?? post.date,
         url: `${BASE_URL}/blog/${slug}`,
         inLanguage: 'fr-FR',
+        ...(post.categoryName && { articleSection: post.categoryName }),
         author: {
           '@type': 'Person',
+          '@id': `${BASE_URL}/#karim-saari`,
           name: 'Karim Saari',
           alternateName: 'Dark Massilia',
           url: BASE_URL,
+          sameAs: [
+            'https://www.instagram.com/karimsaari',
+            'https://www.tiktok.com/@dark.massilia',
+            'https://www.youtube.com/@dark.massilia',
+            'https://twitter.com/dark_massilia',
+            'https://www.linkedin.com/in/karimsaari',
+            'https://500px.com/karimsaari',
+          ],
         },
         publisher: {
           '@type': 'Organization',
@@ -156,7 +172,7 @@ export default function BlogPost() {
         articlePublishedTime={post?.date ?? null}
         articleModifiedTime={post?.modified ?? post?.date ?? null}
         articleAuthor="Karim Saari"
-        articleSection="Environnement marin"
+        articleSection={post?.categoryName ?? 'Environnement marin'}
         schema={post ? buildSchema(post, slug) : null}
       />
 
