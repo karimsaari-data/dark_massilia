@@ -385,7 +385,7 @@ const Home = () => {
               <div className="mt-6">
                 <Link
                   to="/photographe-environnemental-marseille"
-                  className="btn-ghost inline-flex items-center gap-2"
+                  className="btn-primary inline-flex items-center gap-2"
                   title="Photographe environnemental Marseille — démarche, associations et engagements"
                   onClick={() => trackEvent('cta_click', { button_name: 'En savoir plus sur ma démarche' })}
                 >
