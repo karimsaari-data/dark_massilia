@@ -77,6 +77,36 @@ const PERSON_SCHEMA = {
     'Méditerranée',
     'Faune marine méditerranéenne',
   ],
+  hasOccupation: [
+    {
+      '@type': 'Occupation',
+      name: 'Photographe Environnemental & Sous-Marin',
+      description: 'Documentation photographique des fonds marins des Calanques de Marseille, des missions de dépollution du Projet Sentinelle et de la faune méditerranéenne.',
+      occupationLocation: {
+        '@type': 'City',
+        name: 'Marseille',
+        sameAs: 'https://www.wikidata.org/wiki/Q23482',
+      },
+      skills: 'Photographie sous-marine, Apnée, Freediving, Photographie de paysages, Photographie environnementale',
+    },
+    {
+      '@type': 'Occupation',
+      name: 'Militant Écologique & Apnéiste',
+      description: 'Fondateur de Dark Massilia et président de Team Oxygen — organisation de missions de dépollution sous-marine dans les Calanques de Marseille, le Frioul, la Côte Bleue et La Ciotat.',
+      occupationLocation: {
+        '@type': 'City',
+        name: 'Marseille',
+        sameAs: 'https://www.wikidata.org/wiki/Q23482',
+      },
+      skills: 'Dépollution marine, Sensibilisation environnementale, Organisation de missions bénévoles, Apnée technique',
+    },
+  ],
+  worksFor: {
+    '@type': 'Organization',
+    name: 'Team Oxygen',
+    url: 'https://www.team-oxygen.com/',
+    description: 'Association de dépollution sous-marine des Calanques de Marseille',
+  },
   memberOf: {
     '@type': 'Organization',
     name: 'Team Oxygen',
