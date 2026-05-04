@@ -1,7 +1,6 @@
-import { useState } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion } from 'framer-motion';
 import { Link, useNavigate } from 'react-router-dom';
-import { Mail, Phone, MapPin, Newspaper, UserPlus, X } from 'lucide-react';
+import { Mail, Phone, MapPin, Newspaper } from 'lucide-react';
 import QRCodeLib from 'react-qr-code';
 const QRCode = QRCodeLib?.default ?? QRCodeLib;
 import { FADE_IN_UP, STAGGER_CONTAINER, APP_CONFIG } from '../utils/constants';
@@ -10,15 +9,10 @@ import { SEO_PAGES } from '../utils/seo';
 import { trackEvent } from '../lib/analytics';
 import Breadcrumb from '../components/Breadcrumb';
 
-const CONTACT_URL = 'https://karimsaari.com/contact';
+const VCARD_URL = 'https://karimsaari.com/karim-saari.vcf';
 
 const Contact = () => {
   const navigate = useNavigate();
-  const [qrZoomed, setQrZoomed] = useState(false);
-
-  const handleVCardDownload = () => {
-    trackEvent('contact_click', { method: 'vcard', source: 'contact_page' });
-  };
 
   return (
     <div className="min-h-screen py-20">
@@ -108,32 +102,24 @@ const Contact = () => {
                 </a>
               </div>
 
-              {/* Colonne droite — QR + CTA */}
-              <div className="flex flex-col items-center justify-center gap-4 p-8 lg:w-56 border-t lg:border-t-0">
-                <button
-                  onClick={() => setQrZoomed(true)}
-                  className="p-3 rounded-2xl bg-white shadow-xl cursor-zoom-in hover:scale-105 transition-transform duration-200"
-                  aria-label="Agrandir le QR code"
+              {/* Colonne droite — QR vCard */}
+              <div className="flex flex-col items-center justify-center gap-3 p-8 lg:w-56 border-t lg:border-t-0">
+                <a
+                  href="/karim-saari.vcf"
+                  download="karim-saari.vcf"
+                  onClick={() => trackEvent('contact_click', { method: 'vcard', source: 'qr_code' })}
+                  className="p-3 rounded-2xl bg-white shadow-xl hover:scale-110 transition-transform duration-200"
+                  aria-label="Télécharger la carte de contact"
                 >
                   <QRCode
-                    value={CONTACT_URL}
+                    value={VCARD_URL}
                     size={120}
                     bgColor="#ffffff"
                     fgColor="#0B1C2D"
                     level="M"
                   />
-                </button>
-                <p className="text-gray-400 text-xs text-center">Cliquez pour agrandir · Scanner sur mobile</p>
-                <a
-                  href="/karim-saari.vcf"
-                  download="karim-saari.vcf"
-                  onClick={handleVCardDownload}
-                  className="w-full flex items-center justify-center gap-2 py-2.5 px-4 rounded-2xl font-semibold text-sm text-white transition-all duration-300 hover:scale-105 hover:shadow-lg"
-                  style={{ background: 'linear-gradient(135deg, #21c47b, #18a066)' }}
-                >
-                  <UserPlus className="w-4 h-4" />
-                  Ajouter à mes contacts
                 </a>
+                <p className="text-gray-400 text-xs text-center leading-relaxed">Scanner pour ajouter aux contacts<br/>ou cliquer pour télécharger</p>
               </div>
             </div>
           </div>
@@ -277,43 +263,6 @@ const Contact = () => {
 
       </div>
 
-      {/* Overlay zoom QR */}
-      <AnimatePresence>
-        {qrZoomed && (
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            onClick={() => setQrZoomed(false)}
-            className="fixed inset-0 z-50 flex items-center justify-center p-6"
-            style={{ background: 'rgba(0,0,0,0.85)', backdropFilter: 'blur(8px)' }}
-          >
-            <motion.div
-              initial={{ scale: 0.7, opacity: 0 }}
-              animate={{ scale: 1, opacity: 1 }}
-              exit={{ scale: 0.7, opacity: 0 }}
-              transition={{ type: 'spring', stiffness: 300, damping: 25 }}
-              onClick={e => e.stopPropagation()}
-              className="flex flex-col items-center gap-4 p-8 rounded-3xl bg-white shadow-2xl"
-            >
-              <QRCode
-                value={CONTACT_URL}
-                size={240}
-                bgColor="#ffffff"
-                fgColor="#0B1C2D"
-                level="M"
-              />
-              <p className="text-gray-600 text-sm font-medium">karimsaari.com/contact</p>
-              <button
-                onClick={() => setQrZoomed(false)}
-                className="flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-semibold text-gray-700 hover:bg-gray-100 transition-colors"
-              >
-                <X className="w-4 h-4" /> Fermer
-              </button>
-            </motion.div>
-          </motion.div>
-        )}
-      </AnimatePresence>
     </div>
   );
 };
