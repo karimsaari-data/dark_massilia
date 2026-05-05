@@ -10,6 +10,10 @@ This is a personal portfolio website for "Dark Massilia" (Karim Saari), an envir
 **Primary Language**: French
 **Tech Stack**: Static HTML/CSS/JS (no build system, no frameworks)
 
+## Déploiement
+
+Tout push sur la branche `main` déclenche automatiquement le workflow GitHub Actions (`.github/workflows/nightly-build-deploy.yml`) qui build le site et le déploie en FTP sur karimsaari.com. **Il suffit de merger sur `main` et pousser — le site est en live en quelques minutes.** Pas besoin de PR ni d'étape manuelle.
+
 ## Architecture
 
 ### Site Structure
