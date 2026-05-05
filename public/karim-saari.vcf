@@ -2,18 +2,22 @@ BEGIN:VCARD
 VERSION:3.0
 FN:Karim Saari
 N:Saari;Karim;;;
+NICKNAME:Dark Massilia
 ORG:Team Oxygen
 TITLE:Photographe environnemental - President de Team Oxygen
 TEL;TYPE=CELL:+33695331301
 TEL;TYPE=WORK:+33695331301
+IMPP;X-SERVICE-TYPE=WhatsApp;TYPE=HOME:whatsapp:+33695331301
 EMAIL;TYPE=INTERNET:contact@karimsaari.com
 URL;TYPE=WORK:https://karimsaari.com
 URL;TYPE=ORG:https://www.team-oxygen.com/
 ADR;TYPE=HOME:;;168 Chemin de Morgiou;;13009;Marseille;France
 NOTE:Sentinelle des Calanques de Marseille. Depollution marine en apnee avec Team Oxygen. Photographe sous-marin et paysagiste.
 X-SOCIALPROFILE;TYPE=instagram:https://www.instagram.com/karimsaari/
+X-SOCIALPROFILE;TYPE=tiktok:https://www.tiktok.com/@dark.massilia
 X-SOCIALPROFILE;TYPE=twitter:https://x.com/dark_massilia
 X-SOCIALPROFILE;TYPE=youtube:https://www.youtube.com/@dark.massilia
+X-SOCIALPROFILE;TYPE=linkedin:https://www.linkedin.com/in/karimsaari/
 PHOTO;ENCODING=b;TYPE=JPEG:/9j/4AAQSkZJRgABAQAAAQABAAD/4gHYSUNDX1BST0ZJTEU
  AAQEAAAHIbGNtcwIQAABtbnRyUkdCIFhZWiAH4gADABQACQAOAB1hY3NwTVNGVAAAAABzYXdzY3
  RybAAAAAAAAAAAAAAAAAAA9tYAAQAAAADTLWhhbmSdkQA9QICwPUB0LIGepSKOAAAAAAAAAAAAA
