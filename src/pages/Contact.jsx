@@ -47,18 +47,15 @@ const Contact = () => {
               {/* Colonne gauche — identité */}
               <div className="flex flex-col items-center justify-center gap-4 p-8 lg:w-56 lg:border-r border-white/10">
                 <div className="relative">
-                  <div className="w-24 h-24 rounded-full overflow-hidden ring-2 ring-astroide/40 ring-offset-2 ring-offset-transparent">
+                  <div className="w-32 h-32 rounded-full overflow-hidden ring-2 ring-astroide/40 ring-offset-2 ring-offset-transparent">
                     <img
                       src="/images/karim-saari-photo-profil-arte-regard-marseille_300w.webp"
                       alt="Karim Saari"
-                      width="96"
-                      height="96"
+                      width="128"
+                      height="128"
                       className="w-full h-full object-cover"
                     />
                   </div>
-                  <span className="absolute -bottom-1 -right-1 bg-astroide text-white text-xs font-bold px-2 py-0.5 rounded-full shadow-lg">
-                    🐬
-                  </span>
                 </div>
                 <div className="text-center">
                   <h2 className="text-lg font-bold text-white">Karim Saari</h2>
