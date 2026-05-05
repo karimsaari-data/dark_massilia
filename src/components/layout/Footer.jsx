@@ -96,7 +96,7 @@ const Footer = () => {
           <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-6 text-center">
             {navColumns.map((col) => (
               <div key={col.label}>
-                <p className="text-xs font-semibold text-gray-400 uppercase tracking-widest mb-4">
+                <p className="text-xs font-semibold text-white uppercase tracking-widest mb-4">
                   {col.label}
                 </p>
                 <ul className="space-y-1">
