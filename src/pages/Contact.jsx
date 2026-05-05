@@ -155,54 +155,31 @@ const Contact = () => {
           </motion.div>
         </motion.div>
 
-        {/* Contact Cards - WhatsApp + Newsletter */}
+        {/* Newsletter CTA */}
         <motion.div
           initial="hidden"
           animate="visible"
-          variants={STAGGER_CONTAINER}
-          id="contact-buttons"
-          className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-2xl mx-auto"
+          variants={FADE_IN_UP}
+          className="max-w-4xl mx-auto"
         >
-          {/* WhatsApp */}
-          <motion.a
-            href={`https://wa.me/${APP_CONFIG.contactWhatsApp.replace(/\s/g, '')}`}
-            target="_blank"
-            rel="noopener noreferrer"
-            variants={FADE_IN_UP}
-            onClick={() => trackEvent('contact_click', { method: 'whatsapp', source: 'contact_page' })}
-            className="card hover:border-astroide/30 hover:bg-astroide/5 transition-all duration-300 group"
-          >
-            <div className="flex flex-col items-center text-center gap-6 py-2">
-              <div className="w-16 h-16 rounded-full bg-gradient-to-br from-astroide to-astroide-dark flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
-                <Phone className="w-8 h-8 text-white" />
-              </div>
-              <div>
-                <h3 className="font-semibold text-white mb-2 text-lg">WhatsApp</h3>
-                <p className="text-sm text-gray-400 group-hover:text-astroide transition-colors">
-                  Envoyer un message
-                </p>
-              </div>
-            </div>
-          </motion.a>
-
-          {/* Newsletter */}
-          <motion.div
-            variants={FADE_IN_UP}
-            className="card hover:border-astroide/30 hover:bg-astroide/5 transition-all duration-300 group cursor-pointer"
+          <div
+            className="rounded-3xl p-8 md:p-10 flex flex-col md:flex-row items-center justify-between gap-6 cursor-pointer group"
+            style={{ background: 'linear-gradient(135deg, rgba(33,196,123,0.12) 0%, rgba(0,145,255,0.10) 100%)', border: '1px solid rgba(33,196,123,0.25)' }}
             onClick={() => { navigate('/'); setTimeout(() => { document.getElementById('newsletter')?.scrollIntoView({ behavior: 'smooth' }); }, 100); }}
           >
-            <div className="flex flex-col items-center text-center gap-6 py-2">
-              <div className="w-16 h-16 rounded-full bg-gradient-to-br from-astroide to-astroide-dark flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
-                <Newspaper className="w-8 h-8 text-white" />
+            <div className="flex items-center gap-5">
+              <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-astroide to-astroide-dark flex items-center justify-center flex-shrink-0 group-hover:scale-110 transition-transform duration-300">
+                <Newspaper className="w-7 h-7 text-white" />
               </div>
               <div>
-                <h3 className="font-semibold text-white mb-2 text-lg">Newsletter</h3>
-                <p className="text-sm text-gray-400 group-hover:text-astroide transition-colors">
-                  S'inscrire aux alertes terrain
-                </p>
+                <h3 className="text-white font-bold text-xl mb-1">Alertes terrain — Newsletter</h3>
+                <p className="text-gray-400 text-sm">Missions de dépollution, reportages et actualités des Calanques directement dans ta boîte mail.</p>
               </div>
             </div>
-          </motion.div>
+            <span className="btn-primary whitespace-nowrap flex-shrink-0">
+              S'inscrire gratuitement →
+            </span>
+          </div>
         </motion.div>
 
         {/* Card engagement — texte + photo côte à côte dans la card */}
