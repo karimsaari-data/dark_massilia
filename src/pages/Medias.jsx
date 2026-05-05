@@ -30,15 +30,6 @@ const Medias = () => {
 
   const pressLinks = [
     {
-      title: "Échappées Belles — Spéciale Verte : les Bouches-du-Rhône en action",
-      url: '/echappees-belles-bouches-du-rhone',
-      internal: true,
-      featured: true,
-      date: '2 mai 2026',
-      image: '/images/échappée_verte_0.jpg',
-      logo: null,
-    },
-    {
       title: 'Interview Presse — Tired Earth (EN/FR)',
       url: 'https://www.tiredearth.com/interviews/interview-de-karim-saari-apneiste-et-photographe-sous-marin#',
       featured: false,
@@ -187,12 +178,35 @@ const Medias = () => {
           </div>
         </motion.div>
 
+        {/* Boutons de navigation ancrée */}
+        <motion.div
+          initial={{ opacity: 0, y: 12 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.4, delay: 0.3 }}
+          className="flex justify-center gap-3 mb-16 flex-wrap"
+        >
+          {[
+            { label: '📺 Passages TV', href: '#tv' },
+            { label: '🎙 Radio', href: '#radio' },
+            { label: '📰 Revue de presse', href: '#presse' },
+          ].map(({ label, href }) => (
+            <a
+              key={href}
+              href={href}
+              className="px-5 py-2 rounded-full glass-strong border border-white/20 text-xs uppercase tracking-widest font-bold text-white hover:border-ocean-teal/60 hover:text-ocean-teal transition-all duration-200 whitespace-nowrap"
+            >
+              {label}
+            </a>
+          ))}
+        </motion.div>
+
         {/* Section: Passage TV — ARTE & Échappées Belles */}
         <motion.div
+          id="tv"
           initial="hidden"
           animate="visible"
           variants={STAGGER_CONTAINER}
-          className="mb-16"
+          className="mb-28"
         >
           <motion.div variants={FADE_IN_UP} className="relative flex items-center mb-10">
             <div className="flex-1 border-t border-white/15" />
@@ -206,6 +220,44 @@ const Medias = () => {
             variants={STAGGER_CONTAINER}
             className="grid grid-cols-1 md:grid-cols-3 gap-8"
           >
+            {/* Échappées Belles — Spéciale Verte (rediffusion récente, en premier) */}
+            <motion.div variants={FADE_IN_UP}>
+              <Link
+                to="/echappees-belles-bouches-du-rhone"
+                className="glass-strong rounded-xl overflow-hidden border border-white/10 hover:border-ocean-teal/50 transition-all duration-300 group block h-full"
+              >
+                <div className="relative aspect-video bg-black overflow-hidden">
+                  <img
+                    src="/images/échappée_verte_0.jpg"
+                    alt="Échappées Belles Spéciale Verte — Karim Saari dans les Calanques de Marseille"
+                    className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                    loading="lazy"
+                    decoding="async"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent" />
+                  <div className="absolute inset-0 flex items-center justify-center">
+                    <div className="w-16 h-16 rounded-full bg-white/20 backdrop-blur-sm border border-white/30 flex items-center justify-center group-hover:bg-ocean-teal/40 group-hover:border-ocean-teal/50 transition-all duration-300">
+                      <Play className="w-7 h-7 text-white ml-1" fill="white" />
+                    </div>
+                  </div>
+                </div>
+                <div className="p-6 flex items-center justify-between">
+                  <div>
+                    <div className="mb-3 bg-white/90 rounded px-2 py-1 inline-block">
+                      <img src="/images/Partenaires/svg/France.tv_-_logo_2022.svg" alt="France Télévisions" className="h-5 w-auto max-w-[72px]" loading="lazy" />
+                    </div>
+                    <p className="text-xs text-text-muted mb-1">2 mai 2026</p>
+                    <p className="text-xs uppercase tracking-widest text-ocean-teal font-semibold mb-1">France 5 — Rediffusion</p>
+                    <h3 className="text-lg font-bold text-white group-hover:text-ocean-teal transition-colors">
+                      Échappées Belles — Spéciale Verte : les Bouches-du-Rhône en action
+                    </h3>
+                    <p className="text-sm text-gray-400 mt-2 leading-snug">Karim Saari plonge dans les Calanques pour la Spéciale Verte d'Échappées Belles — dépollution marine et Méditerranée menacée.</p>
+                  </div>
+                  <ArrowLeft className="w-5 h-5 rotate-180 text-gray-400 group-hover:text-ocean-teal group-hover:translate-x-1 transition-all flex-shrink-0 ml-4" />
+                </div>
+              </Link>
+            </motion.div>
+
             {/* ARTE — Marseille */}
             <motion.div variants={FADE_IN_UP}>
               <Link
@@ -281,45 +333,6 @@ const Medias = () => {
                   <ArrowLeft className="w-5 h-5 rotate-180 text-gray-400 group-hover:text-ocean-teal group-hover:translate-x-1 transition-all flex-shrink-0 ml-4" />
                 </div>
               </Link>
-            </motion.div>
-
-            {/* Échappées Belles */}
-            <motion.div variants={FADE_IN_UP}>
-              <a
-                href="https://www.dailymotion.com/video/x8wzsm2"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="glass-strong rounded-xl overflow-hidden border border-white/10 hover:border-ocean-teal/50 transition-all duration-300 group block h-full"
-              >
-                <div className="relative aspect-video bg-black overflow-hidden">
-                  <img
-                    src="/images/karim-saari-marseille-echappees-belles-reportage-television.webp"
-                    alt="Échappées Belles — Karim Saari avec Ismaël Khelifa et Matthieu Witvoet au Vallon des Auffes, Marseille"
-                    className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                    loading="lazy"
-                    decoding="async"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent" />
-                  <div className="absolute inset-0 flex items-center justify-center">
-                    <div className="w-16 h-16 rounded-full bg-white/20 backdrop-blur-sm border border-white/30 flex items-center justify-center group-hover:bg-ocean-teal/40 group-hover:border-ocean-teal/50 transition-all duration-300">
-                      <Play className="w-7 h-7 text-white ml-1" fill="white" />
-                    </div>
-                  </div>
-                </div>
-                <div className="p-6 flex items-center justify-between">
-                  <div>
-                    <div className="mb-3 bg-white/90 rounded px-2 py-1 inline-block">
-                      <img src="/images/Partenaires/svg/France.tv_-_logo_2022.svg" alt="France Télévisions" className="h-5 w-auto max-w-[72px]" loading="lazy" />
-                    </div>
-                    <p className="text-xs uppercase tracking-widest text-ocean-teal font-semibold mb-1">France Télévisions</p>
-                    <h3 className="text-lg font-bold text-white group-hover:text-ocean-teal transition-colors">
-                      Échappées Belles — Karim Saari avec Ismaël Khelifa & Matthieu Witvoet
-                    </h3>
-                    <p className="text-sm text-gray-400 mt-2 leading-snug">Marseille vue d'en bas : Ismaël Khelifa découvre les fonds des Calanques avec Karim et l'équipe Team Oxygen.</p>
-                  </div>
-                  <ExternalLink className="w-5 h-5 text-gray-400 group-hover:text-ocean-teal group-hover:translate-x-1 group-hover:-translate-y-1 transition-all flex-shrink-0 ml-4" />
-                </div>
-              </a>
             </motion.div>
 
             {/* TF1 — Scandale décharges */}
@@ -482,10 +495,11 @@ const Medias = () => {
 
         {/* Section: Radio */}
         <motion.div
+          id="radio"
           initial="hidden"
           animate="visible"
           variants={STAGGER_CONTAINER}
-          className="mb-16"
+          className="mb-28"
         >
           <motion.div variants={FADE_IN_UP} className="relative flex items-center mb-10">
             <div className="flex-1 border-t border-white/15" />
@@ -537,6 +551,7 @@ const Medias = () => {
 
         {/* Section: Revue de presse */}
         <motion.div
+          id="presse"
           initial="hidden"
           animate="visible"
           variants={STAGGER_CONTAINER}
