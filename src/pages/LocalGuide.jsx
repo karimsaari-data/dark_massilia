@@ -1,36 +1,12 @@
-import { motion, useInView, useReducedMotion } from 'framer-motion';
-import { useRef, useState, useEffect } from 'react';
+import { motion } from 'framer-motion';
+import { useState, useEffect } from 'react';
 import { ExternalLink, Star, MapPin, ThumbsUp, Eye, ArrowRight } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import SEO from '../components/SEO';
 import { SEO_PAGES } from '../utils/seo';
 import { supabase } from '../lib/supabase';
 
-const StatCounter = ({ end, suffix = '', decimals = 0, duration = 2000 }) => {
-  const prefersReducedMotion = useReducedMotion();
-  const ref = useRef(null);
-  const isInView = useInView(ref, { once: true, amount: 0.5 });
-  const [count, setCount] = useState(0);
-  useEffect(() => {
-    if (!isInView) return;
-    if (prefersReducedMotion) { setCount(end); return; }
-    let startTime = null;
-    let raf;
-    const step = (ts) => {
-      if (!startTime) startTime = ts;
-      const progress = Math.min((ts - startTime) / duration, 1);
-      const eased = 1 - (1 - progress) ** 3;
-      setCount(parseFloat((eased * end).toFixed(decimals)));
-      if (progress < 1) raf = requestAnimationFrame(step);
-    };
-    raf = requestAnimationFrame(step);
-    return () => cancelAnimationFrame(raf);
-  }, [isInView, end, duration, decimals, prefersReducedMotion]);
-  const display = decimals > 0
-    ? count.toFixed(decimals).replace('.', ',')
-    : count.toLocaleString('fr-FR');
-  return <span ref={ref}>{display}{suffix}</span>;
-};
+import StatCounter from '../components/ui/StatCounter';
 
 const DEFAULT_STATS = [
   { label: 'Contributions', end: 22000,  suffix: '+', icon: Star,     badge: false },

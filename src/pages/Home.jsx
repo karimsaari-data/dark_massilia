@@ -1,5 +1,5 @@
-import { lazy, Suspense, useState, useEffect, useRef } from 'react';
-import { motion, AnimatePresence, useReducedMotion, useInView } from 'framer-motion';
+import { lazy, Suspense, useState, useEffect } from 'react';
+import { motion, AnimatePresence, useReducedMotion } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import { ArrowRight, Users, ChevronDown, Camera, MapPin } from 'lucide-react';
 
@@ -51,34 +51,7 @@ const KEY_STATS_BASE = [
   },
 ];
 
-// Composant compteur animé — s'active à l'entrée dans le viewport
-const StatCounter = ({ end, suffix = '', duration = 2000, prefersReduced }) => {
-  const ref = useRef(null);
-  const isInView = useInView(ref, { once: true, amount: 0.5 });
-  const [count, setCount] = useState(0);
-
-  useEffect(() => {
-    if (!isInView) return;
-    if (prefersReduced) { setCount(end); return; }
-    let startTime = null;
-    let raf;
-    const step = (ts) => {
-      if (!startTime) startTime = ts;
-      const progress = Math.min((ts - startTime) / duration, 1);
-      const eased = 1 - (1 - progress) ** 3; // ease-out cubic
-      setCount(Math.round(eased * end));
-      if (progress < 1) raf = requestAnimationFrame(step);
-    };
-    raf = requestAnimationFrame(step);
-    return () => cancelAnimationFrame(raf);
-  }, [isInView, end, duration, prefersReduced]);
-
-  return (
-    <span ref={ref}>
-      {count.toLocaleString('fr-FR')}{suffix}
-    </span>
-  );
-};
+import StatCounter from '../components/ui/StatCounter';
 
 // Phrases choc sur la pollution marine
 const IMPACT_FACTS = [
@@ -468,7 +441,6 @@ const Home = () => {
                   <StatCounter
                     end={stat.end}
                     suffix={stat.suffix}
-                    prefersReduced={prefersReducedMotion}
                   />
                 </div>
 

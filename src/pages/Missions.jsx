@@ -1,37 +1,11 @@
-import { motion, useInView, useReducedMotion } from 'framer-motion';
-import { useState, useEffect, useRef } from 'react';
+import { motion } from 'framer-motion';
 import { ArrowLeft, ArrowRight, ExternalLink, Camera, Flame } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { FADE_IN_UP, STAGGER_CONTAINER } from '../utils/constants';
 import SEO from '../components/SEO';
 import { SEO_PAGES } from '../utils/seo';
 import Breadcrumb from '../components/Breadcrumb';
-
-// Compteur animé — s'active à l'entrée dans le viewport
-const StatCounter = ({ end, suffix = ' kg', duration = 2000 }) => {
-  const prefersReducedMotion = useReducedMotion();
-  const ref = useRef(null);
-  const isInView = useInView(ref, { once: true, amount: 0.5 });
-  const [count, setCount] = useState(0);
-
-  useEffect(() => {
-    if (!isInView) return;
-    if (prefersReducedMotion) { setCount(end); return; }
-    let startTime = null;
-    let raf;
-    const step = (ts) => {
-      if (!startTime) startTime = ts;
-      const progress = Math.min((ts - startTime) / duration, 1);
-      const eased = 1 - (1 - progress) ** 3;
-      setCount(Math.round(eased * end));
-      if (progress < 1) raf = requestAnimationFrame(step);
-    };
-    raf = requestAnimationFrame(step);
-    return () => cancelAnimationFrame(raf);
-  }, [isInView, end, duration, prefersReducedMotion]);
-
-  return <span ref={ref}>{count.toLocaleString('fr-FR')}{suffix}</span>;
-};
+import StatCounter from '../components/ui/StatCounter';
 
 const EDITIONS = [
   { year: '2022', waste: 900,  duration: '8 jours', location: 'Côte Bleue, de Martigues à l\'Estaque', color: '#21c47b' },
