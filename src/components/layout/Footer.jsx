@@ -51,7 +51,6 @@ const navColumns = [
       { to: '/sauver-marseille-documentaire-arte',           text: 'ARTE — Sauver Marseille' },
       { to: '/meduses-souveraines-oceans-documentaire-arte', text: 'ARTE — Méduses' },
       { to: '/echappees-belles-bouches-du-rhone',            text: 'Échappées Belles' },
-      { to: '/presse',                                       text: 'Presse' },
       { to: '/blog',                                         text: 'Blog' },
     ],
   },
@@ -67,9 +66,11 @@ const navColumns = [
   {
     label: 'Contact',
     links: [
-      { to: '/contact',                     text: 'Collaborer avec nous' },
-      { to: '/#newsletter',                 text: 'Newsletter', anchor: true },
-      { to: 'https://www.team-oxygen.com/', text: 'Team Oxygen', external: true },
+      { to: '/contact',                        text: 'Collaborer avec nous' },
+      { to: '/presse',                         text: 'Presse & médias' },
+      { to: `mailto:${APP_CONFIG.contactEmail}`, text: 'Email direct', external: true },
+      { to: '/#newsletter',                    text: 'Newsletter', anchor: true },
+      { to: 'https://www.team-oxygen.com/',    text: 'Team Oxygen', external: true },
     ],
   },
 ];
