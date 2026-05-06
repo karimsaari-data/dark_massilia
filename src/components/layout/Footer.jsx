@@ -50,6 +50,7 @@ const navColumns = [
       { to: '/videos',                                       text: 'Vidéos & Documentaires' },
       { to: '/sauver-marseille-documentaire-arte',           text: 'ARTE — Sauver Marseille' },
       { to: '/meduses-souveraines-oceans-documentaire-arte', text: 'ARTE — Méduses' },
+      { to: '/echappees-belles-bouches-du-rhone',            text: 'Échappées Belles' },
       { to: '/presse',                                       text: 'Presse' },
       { to: '/blog',                                         text: 'Blog' },
     ],
