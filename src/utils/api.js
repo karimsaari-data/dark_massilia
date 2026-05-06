@@ -15,9 +15,10 @@ const WP_BASE = 'https://cms.karimsaari.com/wp-json/wp/v2';
 
 // ── Liste des articles (paginée) ─────────────────────────────────────────────
 
-export async function fetchPosts({ page = 1, perPage = 12, categoryId } = {}) {
+export async function fetchPosts({ page = 1, perPage = 12, categoryId, search } = {}) {
   const params = new URLSearchParams({ _embed: '', per_page: perPage, page });
   if (categoryId) params.set('categories', String(categoryId));
+  if (search)     params.set('search', search);
 
   const res = await fetch(`${WP_BASE}/posts?${params}`);
   if (!res.ok) throw new Error(`WP API ${res.status}: ${res.statusText}`);
@@ -68,12 +69,12 @@ export async function fetchAllPostsMeta() {
   let totalPages = 1;
 
   do {
-    const params = new URLSearchParams({ per_page: 100, page, _fields: 'slug,modified', status: 'publish' });
+    const params = new URLSearchParams({ per_page: 100, page, _fields: 'slug,modified,title', status: 'publish' });
     const res = await fetch(`${WP_BASE}/posts?${params}`);
     if (!res.ok) break;
 
     const posts = await res.json();
-    posts.forEach(p => metas.push({ slug: p.slug, modified: p.modified }));
+    posts.forEach(p => metas.push({ slug: p.slug, modified: p.modified, title: p.title?.rendered || '' }));
     totalPages = parseInt(res.headers.get('X-WP-TotalPages') ?? '1', 10);
     page++;
   } while (page <= totalPages);
@@ -103,12 +104,20 @@ export function normalizePost(post) {
     ? rawImageSrc.replace(/\.(png|jpe?g)$/i, '.webp')
     : null;
 
+  const wpTerms      = post._embedded?.['wp:term'] ?? [];
+  const categoryName = wpTerms[0]?.[0]?.name ?? null;
+
+  const plainContent = stripHtml(post.content?.rendered ?? '');
+  const wordCount    = plainContent.split(/\s+/).filter(Boolean).length;
+  const readingTime  = Math.max(1, Math.round(wordCount / 200));
+
   return {
     id:            post.id,
     slug:          post.slug,
     title:         decodeEntities(rawTitle),
     excerpt:       stripHtml(rawExcerpt),
     content:       post.content?.rendered ?? '',
+    readingTime,
     date:          post.date,
     modified:      post.modified,
     dateFormatted: formatDate(post.date),
@@ -119,6 +128,7 @@ export function normalizePost(post) {
     imageAlt:      media?.alt_text || decodeEntities(rawTitle),
     author:        author?.name    ?? 'Dark Massilia',
     categories:    post.categories ?? [],
+    categoryName,
   };
 }
 

@@ -5,6 +5,7 @@ import { FADE_IN_UP, STAGGER_CONTAINER } from '../utils/constants';
 import SEO from '../components/SEO';
 import { SEO_PAGES } from '../utils/seo';
 import YouTubeFacade from '../components/media/YouTubeFacade';
+import Breadcrumb from '../components/Breadcrumb';
 
 const img = (n) =>
   `/images/arte-meduses-souveraines-oceans-documentaire-marseille-${n}`;
@@ -14,6 +15,7 @@ const Meduses = () => {
     <div className="min-h-screen py-32">
       <SEO {...SEO_PAGES['/meduses-souveraines-oceans-documentaire-arte']} />
       <div className="container-custom">
+        <Breadcrumb label="Méduses — Documentaire ARTE" />
 
         {/* Header + H1 */}
         <motion.div

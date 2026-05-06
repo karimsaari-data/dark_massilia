@@ -1,5 +1,5 @@
-import { lazy, Suspense, useState, useEffect, useRef } from 'react';
-import { motion, AnimatePresence, useReducedMotion, useInView } from 'framer-motion';
+import { lazy, Suspense, useState, useEffect } from 'react';
+import { motion, AnimatePresence, useReducedMotion } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import { ArrowRight, Users, ChevronDown, Camera, MapPin } from 'lucide-react';
 
@@ -51,34 +51,7 @@ const KEY_STATS_BASE = [
   },
 ];
 
-// Composant compteur animé — s'active à l'entrée dans le viewport
-const StatCounter = ({ end, suffix = '', duration = 2000, prefersReduced }) => {
-  const ref = useRef(null);
-  const isInView = useInView(ref, { once: true, amount: 0.5 });
-  const [count, setCount] = useState(0);
-
-  useEffect(() => {
-    if (!isInView) return;
-    if (prefersReduced) { setCount(end); return; }
-    let startTime = null;
-    let raf;
-    const step = (ts) => {
-      if (!startTime) startTime = ts;
-      const progress = Math.min((ts - startTime) / duration, 1);
-      const eased = 1 - (1 - progress) ** 3; // ease-out cubic
-      setCount(Math.round(eased * end));
-      if (progress < 1) raf = requestAnimationFrame(step);
-    };
-    raf = requestAnimationFrame(step);
-    return () => cancelAnimationFrame(raf);
-  }, [isInView, end, duration, prefersReduced]);
-
-  return (
-    <span ref={ref}>
-      {count.toLocaleString('fr-FR')}{suffix}
-    </span>
-  );
-};
+import StatCounter from '../components/ui/StatCounter';
 
 // Phrases choc sur la pollution marine
 const IMPACT_FACTS = [
@@ -366,7 +339,7 @@ const Home = () => {
             {/* Contenu — Gauche */}
             <div className="p-8 md:p-12 flex flex-col justify-center order-2 md:order-1">
               <h2 className="text-2xl md:text-3xl font-bold text-white mb-6">
-                Karim Saari — Photographe environnemental &amp; Apnéiste
+                Karim Saari — Photographe environnemental &amp; Sentinelle des Calanques
               </h2>
               <div className="text-lg text-text-secondary leading-relaxed space-y-4">
                 <p>
@@ -376,7 +349,7 @@ const Home = () => {
                   En tant que <strong className="text-white font-semibold">photographe environnemental en Méditerranée</strong>, je capture la beauté de nos côtes, en surface comme en apnée, pour témoigner de l'état réel de nos écosystèmes. La photographie environnementale que je pratique n'est pas simplement esthétique : <strong className="text-ocean-teal font-semibold">chaque image est un document, une preuve, un appel à l'action.</strong>
                 </p>
                 <p>
-                  <strong className="text-white font-semibold">Apnéiste engagé depuis plus de 10 ans</strong> et président de <strong className="text-ocean-teal">Team Oxygen</strong>, ma mission se vit sur le terrain et à l'écran.
+                  Fondateur et animateur d'une <strong className="text-white font-semibold">communauté de 130 000 personnes</strong> engagées pour les Calanques, ma mission se vit sur le terrain et à l'écran.
                 </p>
                 <p>
                   Pour rendre visible l'<strong className="text-white font-semibold">impact de la pollution plastique</strong>, je participe à des <strong className="text-white font-semibold">documentaires et reportages</strong> sur l'environnement marin, je conçois des <strong className="text-white font-semibold">expositions photos engagées</strong> et je mène des <strong className="text-white font-semibold">missions de dépollution sous-marine</strong> avec mon association.
@@ -385,7 +358,7 @@ const Home = () => {
               <div className="mt-6">
                 <Link
                   to="/photographe-environnemental-marseille"
-                  className="btn-ghost inline-flex items-center gap-2"
+                  className="btn-primary inline-flex items-center gap-2"
                   title="Photographe environnemental Marseille — démarche, associations et engagements"
                   onClick={() => trackEvent('cta_click', { button_name: 'En savoir plus sur ma démarche' })}
                 >
@@ -414,8 +387,399 @@ const Home = () => {
         </motion.div>
       </section>
 
+      {/* ── CHIFFRES CLÉS ── */}
+      <section className="py-10 md:py-16 relative overflow-hidden">
+        {/* Fond distinct : gradient radial teal */}
+        <div className="absolute inset-0 bg-gradient-to-b from-abyss via-abyss-light to-abyss pointer-events-none" />
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_80%_60%_at_50%_50%,rgba(0,171,168,0.08),transparent)] pointer-events-none" />
+
+        <div className="container-custom relative">
+          {/* Titre */}
+          <motion.div
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true }}
+            variants={FADE_IN_UP}
+            className="text-center mb-8"
+          >
+            <h2 className="text-3xl md:text-4xl font-bold text-white">
+              10 ans d'engagement — Marseille & Calanques
+            </h2>
+
+          </motion.div>
+
+          {/* Grille 4 chiffres */}
+          <motion.div
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true }}
+            variants={{
+              hidden: { opacity: 0 },
+              visible: { opacity: 1, transition: { staggerChildren: 0.15, delayChildren: 0.1 } },
+            }}
+            className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6"
+          >
+            {KEY_STATS.map((stat) => (
+              <motion.div
+                key={stat.label}
+                variants={FADE_IN_UP}
+                className="relative rounded-2xl border border-ocean-teal/20 bg-white/[0.04] p-6 md:p-8 text-center group hover:border-ocean-teal/40 hover:bg-white/[0.07] transition-all duration-300"
+              >
+                {/* Glow on hover */}
+                <div className="absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none"
+                  style={{ boxShadow: 'inset 0 0 30px rgba(0,171,168,0.06)' }} />
+
+                {/* Lien pleine carte — interne (Link) ou externe (a) */}
+                {stat.href && (
+                  stat.href.startsWith('http')
+                    ? <a href={stat.href} target="_blank" rel="noopener noreferrer" className="absolute inset-0 rounded-2xl z-10" aria-label={stat.label} />
+                    : <Link to={stat.href} className="absolute inset-0 rounded-2xl z-10" aria-label={stat.label} />
+                )}
+
+                {/* Valeur animée */}
+                <div className="text-3xl md:text-4xl lg:text-5xl font-bold gradient-text mb-1 tabular-nums pb-1">
+                  <StatCounter
+                    end={stat.end}
+                    suffix={stat.suffix}
+                  />
+                </div>
+
+                {/* Label principal */}
+                <p className="text-sm md:text-base font-semibold text-white/90 mt-2 mb-1">
+                  {stat.label}
+                </p>
+
+                {/* Sous-titre */}
+                <p className="text-xs text-gray-400 leading-snug">
+                  {stat.sub}
+                </p>
+
+                {/* Détail au survol (desktop) */}
+                <p className="hidden md:block text-xs text-ocean-teal/70 mt-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                  {stat.detail}
+                </p>
+              </motion.div>
+            ))}
+          </motion.div>
+
+          {/* Badge accès massifs — signal frais quotidien + cohérence inter-pages */}
+          <motion.div
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true }}
+            variants={FADE_IN_UP}
+            className="flex flex-col items-center mt-8 gap-2"
+          >
+            <p className="text-xs text-white/40 uppercase tracking-widest">Accès Massifs des Calanques</p>
+            <Link to="/acces-massifs-calanques" className="hover:opacity-80 transition-opacity" title="Consulter les conditions d'accès aux massifs des Calanques">
+              <FireRiskBadge inline />
+            </Link>
+          </motion.div>
+
+        </div>
+      </section>
+
+      {/* Card Yann Arthus-Bertrand — Les Français (image gauche) */}
+      <section className="container-custom py-8 md:py-12">
+        <motion.div
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true }}
+          variants={FADE_IN_UP}
+          className="glass-strong rounded-3xl overflow-hidden border border-white/10 mb-16"
+        >
+          <div className="grid md:grid-cols-[1.2fr_1fr] gap-0">
+            {/* Photo YAB - Gauche */}
+            <div className="relative h-64 md:h-auto min-h-[400px] order-1">
+              <img
+                src="/images/Marseille-2024-342-Les-Francais-copyright-Yann-Arthus-Bertrand.webp"
+                srcSet="/images/Marseille-2024-342-Les-Francais-copyright-Yann-Arthus-Bertrand_400w.webp 400w, /images/Marseille-2024-342-Les-Francais-copyright-Yann-Arthus-Bertrand_800w.webp 800w, /images/Marseille-2024-342-Les-Francais-copyright-Yann-Arthus-Bertrand_1200w.webp 1200w, /images/Marseille-2024-342-Les-Francais-copyright-Yann-Arthus-Bertrand.webp 1920w"
+                sizes="(max-width: 768px) 100vw, 50vw"
+                alt="Team Oxygen photographié par Yann Arthus-Bertrand — projet Les Français, Marseille 2024"
+                className="absolute inset-0 w-full h-full object-cover"
+                style={{ objectPosition: 'center 20%' }}
+                loading="lazy"
+                decoding="async"
+                width="1365"
+                height="910"
+              />
+              <div className="absolute inset-0 bg-gradient-to-r from-transparent to-black/20" />
+              {/* Copyright watermark */}
+              <p className="absolute bottom-3 right-3 text-white/40 text-xs font-medium">
+                © Yann Arthus-Bertrand
+              </p>
+            </div>
+
+            {/* Contenu - Droite */}
+            <div className="p-8 md:p-12 flex flex-col justify-center order-2">
+
+              {/* Badge photographe */}
+              <div className="mb-6 inline-flex items-center gap-2 px-4 py-2 bg-ocean-teal/10 rounded-full border border-ocean-teal/30 w-fit">
+                <Camera className="w-5 h-5 text-ocean-teal" />
+                <span className="text-sm font-semibold text-ocean-teal">
+                  Les Français — Yann Arthus-Bertrand
+                </span>
+              </div>
+
+              <h2 className="text-3xl md:text-4xl font-bold text-white mb-6">
+                Photographiés par Yann Arthus-Bertrand
+              </h2>
+
+              <p className="text-gray-300 text-lg mb-8 leading-[1.8]">
+                Team Oxygen et Dark Massilia ont été sélectionnés par Yann Arthus-Bertrand pour son projet <strong className="text-white">« Les Français »</strong> — une galerie photographique portrait de celles et ceux qui font la France, à Marseille en 2024.
+              </p>
+
+              <Link
+                to="/les-francais-yann-arthus-bertrand"
+                className="btn-primary inline-flex items-center gap-2 w-fit"
+              >
+                <span>Voir le projet</span>
+                <ArrowRight className="w-5 h-5" />
+              </Link>
+            </div>
+          </div>
+        </motion.div>
+      </section>
+
+      {/* Derniers articles du blog — maillage interne + contenu frais */}
+      <Suspense fallback={<section className="container-custom py-8 md:py-12" />}>
+        <RecentArticles title="Derniers articles" count={3} />
+      </Suspense>
+
+      {/* Missions Section - image droite */}
+      <section className="container-custom py-8 md:py-12">
+        <motion.div
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true }}
+          variants={FADE_IN_UP}
+          className="glass-strong rounded-3xl overflow-hidden border border-white/10 mb-16"
+        >
+          <div className="grid md:grid-cols-[1fr_1.2fr] gap-0">
+            {/* Contenu - Gauche */}
+            <div className="p-8 md:p-12 flex flex-col justify-center order-2 md:order-1">
+              <h2 className="text-3xl md:text-4xl font-bold text-white mb-6">
+                Agir pour la Méditerranée.
+              </h2>
+
+              <p className="text-gray-300 text-lg mb-8 leading-[1.8]">
+                À Marseille avec Team Oxygen, nous intervenons en apnée de la surface à 20 mètres pour dépolluer les fonds marins, documenter les déchets et protéger la biodiversité locale. Calanques, Frioul, Côte Bleue, La Ciotat : chaque mission est une action concrète pour notre littoral.
+              </p>
+
+              <div className="flex flex-wrap gap-3">
+                <Link
+                  to="/depollution-marine"
+                  className="btn-primary inline-flex items-center gap-2"
+                  onClick={() => trackEvent('cta_click', { button_name: 'Découvrir nos missions' })}
+                >
+                  <span>Découvrir nos missions</span>
+                  <ArrowRight className="w-5 h-5" />
+                </Link>
+                <Link
+                  to="/presse"
+                  className="btn-ghost inline-flex items-center gap-2"
+                  onClick={() => trackEvent('cta_click', { button_name: 'Couverture médiatique' })}
+                >
+                  <span>Couverture médiatique</span>
+                  <ArrowRight className="w-5 h-5" />
+                </Link>
+              </div>
+            </div>
+
+            {/* Image Team Oxygen - Droite */}
+            <div className="relative h-64 md:h-auto min-h-[400px] order-1 md:order-2">
+              <img
+                src="/images/Marseille-dark-massilia-plastique-pollution-projet-sentinelle-teamoxygen.webp"
+                srcSet="/images/Marseille-dark-massilia-plastique-pollution-projet-sentinelle-teamoxygen_400w.webp 400w, /images/Marseille-dark-massilia-plastique-pollution-projet-sentinelle-teamoxygen_800w.webp 800w, /images/Marseille-dark-massilia-plastique-pollution-projet-sentinelle-teamoxygen_1200w.webp 1200w, /images/Marseille-dark-massilia-plastique-pollution-projet-sentinelle-teamoxygen.webp 1920w"
+                sizes="(max-width: 768px) 100vw, 50vw"
+                alt="Team Oxygen - Projet Sentinelle Marseille"
+                width="1200"
+                height="800"
+                className="absolute inset-0 w-full h-full object-cover"
+                style={{ objectPosition: '12% 25%' }}
+                loading="lazy"
+                decoding="async"
+              />
+              {/* Overlay subtil */}
+              <div className="absolute inset-0 bg-gradient-to-l from-transparent to-black/20" />
+            </div>
+          </div>
+        </motion.div>
+      </section>
+
+      {/* CTA Vidéos - image gauche */}
+      <section className="container-custom py-8 md:py-12">
+        <motion.div
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true }}
+          variants={FADE_IN_UP}
+          className="glass-strong rounded-3xl overflow-hidden border border-white/10 mb-16"
+        >
+          <div className="grid md:grid-cols-[1.2fr_1fr] gap-0">
+            {/* Image - Gauche */}
+            <div className="relative h-64 md:h-auto min-h-[400px] order-1">
+              <img
+                src="/images/portfolio/Mer/photographe-sous-marin-marseille-apnee-grotte-marine-calanques.webp"
+                srcSet="/images/portfolio/Mer/photographe-sous-marin-marseille-apnee-grotte-marine-calanques_400w.webp 400w, /images/portfolio/Mer/photographe-sous-marin-marseille-apnee-grotte-marine-calanques_800w.webp 800w, /images/portfolio/Mer/photographe-sous-marin-marseille-apnee-grotte-marine-calanques_1200w.webp 1200w, /images/portfolio/Mer/photographe-sous-marin-marseille-apnee-grotte-marine-calanques.webp 1920w"
+                sizes="(max-width: 768px) 100vw, 50vw"
+                alt="Photographe sous-marin Marseille — apnée en grotte marine Calanques de Marseille © Karim Saari"
+                width="800"
+                height="534"
+                className="absolute inset-0 w-full h-full object-cover"
+                loading="lazy"
+                decoding="async"
+              />
+              <div className="absolute inset-0 bg-gradient-to-r from-transparent to-black/30" />
+            </div>
+
+            {/* Contenu - Droite */}
+            <div className="p-8 md:p-12 flex flex-col justify-center order-2">
+              <h2 className="text-3xl md:text-4xl font-bold text-white mb-6">
+                Les Vidéos des Missions
+              </h2>
+              <p className="text-gray-300 text-lg mb-8 leading-[1.8]">
+                Documentaires ARTE, reportages de dépollution en apnée, rétrospectives annuelles… Vivez nos missions depuis les profondeurs des Calanques de Marseille.
+              </p>
+              <div className="flex flex-wrap gap-3">
+                <Link
+                  to="/videos"
+                  className="btn-primary inline-flex items-center gap-2"
+                  onClick={() => trackEvent('cta_click', { button_name: 'Voir les vidéos' })}
+                >
+                  <span>Voir les vidéos</span>
+                  <ArrowRight className="w-5 h-5" />
+                </Link>
+                <Link
+                  to="/presse"
+                  className="btn-ghost inline-flex items-center gap-2"
+                  onClick={() => trackEvent('cta_click', { button_name: 'Couverture médiatique' })}
+                >
+                  <span>Couverture médiatique</span>
+                  <ArrowRight className="w-5 h-5" />
+                </Link>
+              </div>
+            </div>
+          </div>
+        </motion.div>
+      </section>
+
+      {/* CTA Photos - image droite */}
+      <section id="galerie" className="container-custom py-8 md:py-12">
+        <motion.div
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true }}
+          variants={FADE_IN_UP}
+          className="glass-strong rounded-3xl overflow-hidden border border-white/10 mb-16"
+        >
+          <div className="grid md:grid-cols-[1fr_1.2fr] gap-0">
+            {/* Contenu - Gauche */}
+            <div className="p-8 md:p-12 flex flex-col justify-center order-2 md:order-1">
+              <h2 className="text-3xl md:text-4xl font-bold text-white mb-6">
+                Deux univers, un même engagement
+              </h2>
+              <p className="text-gray-300 text-lg mb-8 leading-[1.8]">
+                Des falaises calcaires du littoral marseillais aux profondeurs de la Méditerranée, découvrez un témoignage visuel unique. Entre la splendeur des paysages de Provence et l'urgence écologique des fonds marins, chaque image raconte l'équilibre fragile de notre écosystème.
+              </p>
+              <div className="flex flex-col gap-3 items-start">
+                <Link
+                  to="/photographie-paysage-mer"
+                  className="btn-primary inline-flex items-center justify-between gap-2 w-auto min-w-[280px]"
+                  title="Voir les photographies de paysages et du littoral marseillais par Karim Saari"
+                >
+                  <span>Galerie Paysages &amp; Littoral</span>
+                  <ArrowRight className="w-5 h-5" />
+                </Link>
+                <Link
+                  to="/photographie-sous-marine"
+                  className="btn-ghost inline-flex items-center justify-between gap-2 w-auto min-w-[280px]"
+                  title="Voir les photographies sous-marines et les actions de dépollution par Karim Saari"
+                >
+                  <span>Galerie Sous-marine &amp; Dépollution</span>
+                  <ArrowRight className="w-5 h-5" />
+                </Link>
+              </div>
+            </div>
+
+            {/* Image - Droite */}
+            <div className="relative h-64 md:h-auto min-h-[400px] order-1 md:order-2">
+              <img
+                src="/images/Karimsaari-portfolio-sous-marin-paysages-calanques-marseille-photographie-photographe-environnemental.webp"
+                alt="Karim Saari — portfolio photographie sous-marine et paysages des Calanques de Marseille, photographe environnemental"
+                width="1200"
+                height="800"
+                className="absolute inset-0 w-full h-full object-cover"
+                loading="lazy"
+                decoding="async"
+              />
+              <div className="absolute inset-0 bg-gradient-to-l from-transparent to-black/20" />
+            </div>
+          </div>
+        </motion.div>
+      </section>
+
+      {/* Call to Action Communauté - image gauche (alternance) */}
+      <section className="container-custom py-8 md:py-12">
+        <motion.div
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true }}
+          variants={FADE_IN_UP}
+          className="glass-strong rounded-3xl overflow-hidden border border-white/10 mb-16"
+        >
+          <div className="grid md:grid-cols-[1.2fr_1fr] gap-0">
+            {/* Image du groupe Facebook - Gauche */}
+            <div className="relative h-64 md:h-auto min-h-[400px] order-1">
+              <img
+                src="/images/groupe%20des%20amoureux%20des%20calanques.webp"
+                srcSet="/images/groupe%20des%20amoureux%20des%20calanques_400w.webp 400w, /images/groupe%20des%20amoureux%20des%20calanques_800w.webp 800w, /images/groupe%20des%20amoureux%20des%20calanques_1200w.webp 1200w, /images/groupe%20des%20amoureux%20des%20calanques.webp 1920w"
+                sizes="(max-width: 768px) 100vw, 50vw"
+                alt="Groupe Facebook Amoureux des Calanques de Marseille à Port-Cros"
+                width="1200"
+                height="800"
+                className="absolute inset-0 w-full h-full object-cover"
+                style={{ objectPosition: '12% 25%' }}
+                loading="lazy"
+                decoding="async"
+              />
+              {/* Overlay subtil */}
+              <div className="absolute inset-0 bg-gradient-to-r from-transparent to-black/20" />
+            </div>
+
+            {/* Contenu - Droite */}
+            <div className="p-8 md:p-12 flex flex-col justify-center order-2">
+              <h2 className="text-3xl md:text-4xl font-bold text-white mb-6">
+                Rejoignez l'Aventure
+              </h2>
+
+              {/* Badge nombre de membres */}
+              <div className="mb-6 inline-flex items-center gap-2 px-4 py-2 bg-ocean-teal/10 rounded-full border border-ocean-teal/30 w-fit">
+                <Users className="w-5 h-5 text-ocean-teal" />
+                <span className="text-xl font-bold text-white">
+                  {fbGroupMembers.toLocaleString('fr-FR')}
+                </span>
+                <span className="text-gray-300">membres</span>
+              </div>
+
+              <p className="text-gray-300 text-lg mb-8 leading-[1.8]">
+                Amoureux des Calanques de Marseille à Port-Cros ? Rejoignez notre communauté pour suivre nos actions et participer à la protection de la Méditerranée.
+              </p>
+
+              <Link
+                to="/communaute-calanques"
+                className="btn-primary inline-flex items-center gap-2 w-fit"
+                onClick={() => trackEvent('cta_click', { button_name: 'Rejoindre le Groupe Facebook' })}
+              >
+                <span>Rejoindre le Groupe Facebook</span>
+                <ArrowRight className="w-5 h-5" />
+              </Link>
+            </div>
+          </div>
+        </motion.div>
+      </section>
+
       {/* Section Newsletter — lazy (supabase hors bundle initial) */}
-      {/* Placée tôt pour capter les visiteurs après la découverte de Karim */}
       <Suspense fallback={
         <section className="container-custom py-8 md:py-12">
           <div className="rounded-3xl border border-ocean-teal/30 mb-16 min-h-[420px] md:min-h-[480px]" />
@@ -491,272 +855,6 @@ const Home = () => {
         </motion.div>
       </section>
 
-      {/* Missions Section - Card moderne */}
-      <section className="container-custom py-8 md:py-12">
-        <motion.div
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true }}
-          variants={FADE_IN_UP}
-          className="glass-strong rounded-3xl overflow-hidden border border-white/10 mb-16"
-        >
-          <div className="grid md:grid-cols-[1fr_1.2fr] gap-0">
-            {/* Contenu - Gauche */}
-            <div className="p-8 md:p-12 flex flex-col justify-center order-2 md:order-1">
-              <h2 className="text-3xl md:text-4xl font-bold text-white mb-6">
-                Agir pour la Méditerranée.
-              </h2>
-
-              <p className="text-gray-300 text-lg mb-8 leading-[1.8]">
-                À Marseille avec Team Oxygen, nous intervenons en apnée de la surface à 20 mètres pour dépolluer les fonds marins, documenter les déchets et protéger la biodiversité locale. Calanques, Frioul, Côte Bleue, La Ciotat : chaque mission est une action concrète pour notre littoral.
-              </p>
-
-              <div className="flex flex-wrap gap-3">
-                <Link
-                  to="/depollution-marine"
-                  className="btn-primary inline-flex items-center gap-2"
-                  onClick={() => trackEvent('cta_click', { button_name: 'Découvrir nos missions' })}
-                >
-                  <span>Découvrir nos missions</span>
-                  <ArrowRight className="w-5 h-5" />
-                </Link>
-                <Link
-                  to="/presse"
-                  className="btn-ghost inline-flex items-center gap-2"
-                  onClick={() => trackEvent('cta_click', { button_name: 'Couverture médiatique' })}
-                >
-                  <span>Couverture médiatique</span>
-                  <ArrowRight className="w-5 h-5" />
-                </Link>
-              </div>
-            </div>
-
-            {/* Image Team Oxygen - Droite */}
-            <div className="relative h-64 md:h-auto min-h-[400px] order-1 md:order-2">
-              <img
-                src="/images/Marseille-dark-massilia-plastique-pollution-projet-sentinelle-teamoxygen.webp"
-                srcSet="/images/Marseille-dark-massilia-plastique-pollution-projet-sentinelle-teamoxygen_400w.webp 400w, /images/Marseille-dark-massilia-plastique-pollution-projet-sentinelle-teamoxygen_800w.webp 800w, /images/Marseille-dark-massilia-plastique-pollution-projet-sentinelle-teamoxygen_1200w.webp 1200w, /images/Marseille-dark-massilia-plastique-pollution-projet-sentinelle-teamoxygen.webp 1920w"
-                sizes="(max-width: 768px) 100vw, 50vw"
-                alt="Team Oxygen - Projet Sentinelle Marseille"
-                width="1200"
-                height="800"
-                className="absolute inset-0 w-full h-full object-cover"
-                style={{ objectPosition: '12% 25%' }}
-                loading="lazy"
-                decoding="async"
-              />
-              {/* Overlay subtil */}
-              <div className="absolute inset-0 bg-gradient-to-l from-transparent to-black/20" />
-            </div>
-          </div>
-        </motion.div>
-      </section>
-
-      {/* CTA Vidéos */}
-      <section className="container-custom py-8 md:py-12">
-        <motion.div
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true }}
-          variants={FADE_IN_UP}
-          className="glass-strong rounded-3xl overflow-hidden border border-white/10 mb-16"
-        >
-          <div className="grid md:grid-cols-[1.2fr_1fr] gap-0">
-            {/* Image - Gauche */}
-            <div className="relative h-64 md:h-auto min-h-[400px] order-1">
-              <img
-                src="/images/portfolio/Mer/photographe-sous-marin-marseille-apnee-grotte-marine-calanques.webp"
-                srcSet="/images/portfolio/Mer/photographe-sous-marin-marseille-apnee-grotte-marine-calanques_400w.webp 400w, /images/portfolio/Mer/photographe-sous-marin-marseille-apnee-grotte-marine-calanques_800w.webp 800w, /images/portfolio/Mer/photographe-sous-marin-marseille-apnee-grotte-marine-calanques_1200w.webp 1200w, /images/portfolio/Mer/photographe-sous-marin-marseille-apnee-grotte-marine-calanques.webp 1920w"
-                sizes="(max-width: 768px) 100vw, 50vw"
-                alt="Photographe sous-marin Marseille — apnée en grotte marine Calanques de Marseille © Karim Saari"
-                width="800"
-                height="534"
-                className="absolute inset-0 w-full h-full object-cover"
-                loading="lazy"
-                decoding="async"
-              />
-              <div className="absolute inset-0 bg-gradient-to-r from-transparent to-black/30" />
-            </div>
-
-            {/* Contenu - Droite */}
-            <div className="p-8 md:p-12 flex flex-col justify-center order-2">
-              <h2 className="text-3xl md:text-4xl font-bold text-white mb-6">
-                Les Vidéos des Missions
-              </h2>
-              <p className="text-gray-300 text-lg mb-8 leading-[1.8]">
-                Documentaires ARTE, reportages de dépollution en apnée, rétrospectives annuelles… Vivez nos missions depuis les profondeurs des Calanques de Marseille.
-              </p>
-              <div className="flex flex-wrap gap-3">
-                <Link
-                  to="/videos"
-                  className="btn-primary inline-flex items-center gap-2"
-                  onClick={() => trackEvent('cta_click', { button_name: 'Voir les vidéos' })}
-                >
-                  <span>Voir les vidéos</span>
-                  <ArrowRight className="w-5 h-5" />
-                </Link>
-                <Link
-                  to="/presse"
-                  className="btn-ghost inline-flex items-center gap-2"
-                  onClick={() => trackEvent('cta_click', { button_name: 'Couverture médiatique' })}
-                >
-                  <span>Couverture médiatique</span>
-                  <ArrowRight className="w-5 h-5" />
-                </Link>
-              </div>
-            </div>
-          </div>
-        </motion.div>
-      </section>
-
-      {/* CTA Photos */}
-      <section id="galerie" className="container-custom py-8 md:py-12">
-        <motion.div
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true }}
-          variants={FADE_IN_UP}
-          className="glass-strong rounded-3xl overflow-hidden border border-white/10 mb-16"
-        >
-          <div className="grid md:grid-cols-[1fr_1.2fr] gap-0">
-            {/* Contenu - Gauche */}
-            <div className="p-8 md:p-12 flex flex-col justify-center order-2 md:order-1">
-              <h2 className="text-3xl md:text-4xl font-bold text-white mb-6">
-                Deux univers, un même engagement
-              </h2>
-              <p className="text-gray-300 text-lg mb-8 leading-[1.8]">
-                Des falaises calcaires du littoral marseillais aux profondeurs de la Méditerranée, découvrez un témoignage visuel unique. Entre la splendeur des paysages de Provence et l'urgence écologique des fonds marins, chaque image raconte l'équilibre fragile de notre écosystème.
-              </p>
-              <div className="flex flex-col gap-3">
-                <Link
-                  to="/photographie-paysage-mer"
-                  className="btn-primary inline-flex items-center justify-between gap-2 w-full"
-                  title="Voir les photographies de paysages et du littoral marseillais par Karim Saari"
-                >
-                  <span>Galerie Paysages &amp; Littoral</span>
-                  <ArrowRight className="w-5 h-5" />
-                </Link>
-                <Link
-                  to="/photographie-sous-marine"
-                  className="btn-ghost inline-flex items-center justify-between gap-2 w-full"
-                  title="Voir les photographies sous-marines et les actions de dépollution par Karim Saari"
-                >
-                  <span>Galerie Sous-marine &amp; Dépollution</span>
-                  <ArrowRight className="w-5 h-5" />
-                </Link>
-              </div>
-            </div>
-
-            {/* Image - Droite */}
-            <div className="relative h-64 md:h-auto min-h-[400px] order-1 md:order-2">
-              <img
-                src="/images/Karimsaari-portfolio-sous-marin-paysages-calanques-marseille-photographie-photographe-environnemental.webp"
-                alt="Karim Saari — portfolio photographie sous-marine et paysages des Calanques de Marseille, photographe environnemental"
-                width="1200"
-                height="800"
-                className="absolute inset-0 w-full h-full object-cover"
-                loading="lazy"
-                decoding="async"
-              />
-              <div className="absolute inset-0 bg-gradient-to-l from-transparent to-black/20" />
-            </div>
-          </div>
-        </motion.div>
-      </section>
-
-      {/* ── CHIFFRES CLÉS ── */}
-      <section className="py-10 md:py-16 relative overflow-hidden">
-        {/* Fond distinct : gradient radial teal */}
-        <div className="absolute inset-0 bg-gradient-to-b from-abyss via-abyss-light to-abyss pointer-events-none" />
-        <div className="absolute inset-0 bg-[radial-gradient(ellipse_80%_60%_at_50%_50%,rgba(0,171,168,0.08),transparent)] pointer-events-none" />
-
-        <div className="container-custom relative">
-          {/* Titre */}
-          <motion.div
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true }}
-            variants={FADE_IN_UP}
-            className="text-center mb-8"
-          >
-            <h2 className="text-3xl md:text-4xl font-bold text-white">
-              10 ans d'engagement — Marseille & Calanques
-            </h2>
-
-          </motion.div>
-
-          {/* Grille 4 chiffres */}
-          <motion.div
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true }}
-            variants={{
-              hidden: { opacity: 0 },
-              visible: { opacity: 1, transition: { staggerChildren: 0.15, delayChildren: 0.1 } },
-            }}
-            className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6"
-          >
-            {KEY_STATS.map((stat) => (
-              <motion.div
-                key={stat.label}
-                variants={FADE_IN_UP}
-                className="relative rounded-2xl border border-ocean-teal/20 bg-white/[0.04] p-6 md:p-8 text-center group hover:border-ocean-teal/40 hover:bg-white/[0.07] transition-all duration-300"
-              >
-                {/* Glow on hover */}
-                <div className="absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none"
-                  style={{ boxShadow: 'inset 0 0 30px rgba(0,171,168,0.06)' }} />
-
-                {/* Lien pleine carte — interne (Link) ou externe (a) */}
-                {stat.href && (
-                  stat.href.startsWith('http')
-                    ? <a href={stat.href} target="_blank" rel="noopener noreferrer" className="absolute inset-0 rounded-2xl z-10" aria-label={stat.label} />
-                    : <Link to={stat.href} className="absolute inset-0 rounded-2xl z-10" aria-label={stat.label} />
-                )}
-
-                {/* Valeur animée */}
-                <div className="text-3xl md:text-4xl lg:text-5xl font-bold gradient-text mb-1 tabular-nums pb-1">
-                  <StatCounter
-                    end={stat.end}
-                    suffix={stat.suffix}
-                    prefersReduced={prefersReducedMotion}
-                  />
-                </div>
-
-                {/* Label principal */}
-                <p className="text-sm md:text-base font-semibold text-white/90 mt-2 mb-1">
-                  {stat.label}
-                </p>
-
-                {/* Sous-titre */}
-                <p className="text-xs text-gray-400 leading-snug">
-                  {stat.sub}
-                </p>
-
-                {/* Détail au survol (desktop) */}
-                <p className="hidden md:block text-xs text-ocean-teal/70 mt-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                  {stat.detail}
-                </p>
-              </motion.div>
-            ))}
-          </motion.div>
-
-          {/* Badge accès massifs — signal frais quotidien + cohérence inter-pages */}
-          <motion.div
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true }}
-            variants={FADE_IN_UP}
-            className="flex flex-col items-center mt-8 gap-2"
-          >
-            <p className="text-xs text-white/40 uppercase tracking-widest">Accès Massifs des Calanques</p>
-            <Link to="/acces-massifs-calanques" className="hover:opacity-80 transition-opacity" title="Consulter les conditions d'accès aux massifs des Calanques">
-              <FireRiskBadge inline />
-            </Link>
-          </motion.div>
-
-        </div>
-      </section>
-
       {/* CTA Carte Interactive */}
       <section className="container-custom py-8 md:py-12">
         <motion.div
@@ -766,25 +864,9 @@ const Home = () => {
           variants={FADE_IN_UP}
           className="glass-strong rounded-3xl overflow-hidden border border-white/10 mb-16"
         >
-          <div className="grid md:grid-cols-[1.2fr_1fr] gap-0">
-            {/* Image - Gauche */}
-            <div className="relative h-64 md:h-auto min-h-[400px] order-1">
-              <img
-                src="/images/portfolio/Mer/karim-saari-marseille-grotte-calanque-turquoise-pins-falaises.webp"
-                srcSet="/images/portfolio/Mer/karim-saari-marseille-grotte-calanque-turquoise-pins-falaises_400w.webp 400w, /images/portfolio/Mer/karim-saari-marseille-grotte-calanque-turquoise-pins-falaises_800w.webp 800w, /images/portfolio/Mer/karim-saari-marseille-grotte-calanque-turquoise-pins-falaises_1200w.webp 1200w, /images/portfolio/Mer/karim-saari-marseille-grotte-calanque-turquoise-pins-falaises.webp 1920w"
-                sizes="(max-width: 768px) 100vw, 50vw"
-                alt="Karim Saari photographe Marseille — grotte calanque eau turquoise pins et falaises calcaires"
-                width="1200"
-                height="800"
-                className="absolute inset-0 w-full h-full object-cover"
-                loading="lazy"
-                decoding="async"
-              />
-              <div className="absolute inset-0 bg-gradient-to-l from-transparent to-black/20" />
-            </div>
-
-            {/* Contenu - Droite */}
-            <div className="p-8 md:p-12 flex flex-col justify-center order-2">
+          <div className="grid md:grid-cols-[1fr_1.2fr] gap-0">
+            {/* Contenu - Gauche */}
+            <div className="p-8 md:p-12 flex flex-col justify-center order-2 md:order-1">
               <div className="mb-6 inline-flex items-center gap-2 px-4 py-2 bg-ocean-teal/10 rounded-full border border-ocean-teal/30 w-fit">
                 <MapPin className="w-5 h-5 text-ocean-teal" />
                 <span className="text-sm font-semibold text-ocean-teal">Calanques · Côte Bleue · Frioul</span>
@@ -815,132 +897,21 @@ const Home = () => {
                 </Link>
               </div>
             </div>
-          </div>
-        </motion.div>
-      </section>
 
-      {/* Call to Action Section - Card moderne */}
-      <section className="container-custom py-8 md:py-12">
-        <motion.div
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true }}
-          variants={FADE_IN_UP}
-          className="glass-strong rounded-3xl overflow-hidden border border-white/10 mb-16"
-        >
-          <div className="grid md:grid-cols-[1fr_1.2fr] gap-0">
-            {/* Contenu - Gauche */}
-            <div className="p-8 md:p-12 flex flex-col justify-center order-2 md:order-1">
-              <h2 className="text-3xl md:text-4xl font-bold text-white mb-6">
-                Rejoignez l'Aventure
-              </h2>
-
-              {/* Badge nombre de membres */}
-              <div className="mb-6 inline-flex items-center gap-2 px-4 py-2 bg-ocean-teal/10 rounded-full border border-ocean-teal/30 w-fit">
-                <Users className="w-5 h-5 text-ocean-teal" />
-                <span className="text-xl font-bold text-white">
-                  {fbGroupMembers.toLocaleString('fr-FR')}
-                </span>
-                <span className="text-gray-300">membres</span>
-              </div>
-
-              <p className="text-gray-300 text-lg mb-8 leading-[1.8]">
-                Amoureux des Calanques de Marseille à Port-Cros ? Rejoignez notre communauté pour suivre nos actions et participer à la protection de la Méditerranée.
-              </p>
-
-              <Link
-                to="/communaute-calanques"
-                className="btn-primary inline-flex items-center gap-2 w-fit"
-                onClick={() => trackEvent('cta_click', { button_name: 'Rejoindre le Groupe Facebook' })}
-              >
-                <span>Rejoindre le Groupe Facebook</span>
-                <ArrowRight className="w-5 h-5" />
-              </Link>
-            </div>
-
-            {/* Image du groupe Facebook - Droite */}
+            {/* Image - Droite */}
             <div className="relative h-64 md:h-auto min-h-[400px] order-1 md:order-2">
               <img
-                src="/images/groupe%20des%20amoureux%20des%20calanques.webp"
-                srcSet="/images/groupe%20des%20amoureux%20des%20calanques_400w.webp 400w, /images/groupe%20des%20amoureux%20des%20calanques_800w.webp 800w, /images/groupe%20des%20amoureux%20des%20calanques_1200w.webp 1200w, /images/groupe%20des%20amoureux%20des%20calanques.webp 1920w"
+                src="/images/portfolio/Mer/karim-saari-marseille-grotte-calanque-turquoise-pins-falaises.webp"
+                srcSet="/images/portfolio/Mer/karim-saari-marseille-grotte-calanque-turquoise-pins-falaises_400w.webp 400w, /images/portfolio/Mer/karim-saari-marseille-grotte-calanque-turquoise-pins-falaises_800w.webp 800w, /images/portfolio/Mer/karim-saari-marseille-grotte-calanque-turquoise-pins-falaises_1200w.webp 1200w, /images/portfolio/Mer/karim-saari-marseille-grotte-calanque-turquoise-pins-falaises.webp 1920w"
                 sizes="(max-width: 768px) 100vw, 50vw"
-                alt="Groupe Facebook Amoureux des Calanques de Marseille à Port-Cros"
+                alt="Karim Saari photographe Marseille — grotte calanque eau turquoise pins et falaises calcaires"
                 width="1200"
                 height="800"
                 className="absolute inset-0 w-full h-full object-cover"
-                style={{ objectPosition: '12% 25%' }}
                 loading="lazy"
                 decoding="async"
               />
-              {/* Overlay subtil */}
               <div className="absolute inset-0 bg-gradient-to-l from-transparent to-black/20" />
-            </div>
-          </div>
-        </motion.div>
-      </section>
-
-      {/* Derniers articles du blog — maillage interne + contenu frais */}
-      <Suspense fallback={<section className="container-custom py-8 md:py-12" />}>
-        <RecentArticles title="Derniers articles" count={3} />
-      </Suspense>
-
-      {/* Card Yann Arthus-Bertrand — Les Français */}
-      <section className="container-custom py-8 md:py-12">
-        <motion.div
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true }}
-          variants={FADE_IN_UP}
-          className="glass-strong rounded-3xl overflow-hidden border border-white/10 mb-16"
-        >
-          <div className="grid md:grid-cols-[1.2fr_1fr] gap-0">
-            {/* Photo YAB - Gauche */}
-            <div className="relative h-64 md:h-auto min-h-[400px] order-1">
-              <img
-                src="/images/Marseille-2024-342-Les-Francais-copyright-Yann-Arthus-Bertrand.webp"
-                srcSet="/images/Marseille-2024-342-Les-Francais-copyright-Yann-Arthus-Bertrand_400w.webp 400w, /images/Marseille-2024-342-Les-Francais-copyright-Yann-Arthus-Bertrand_800w.webp 800w, /images/Marseille-2024-342-Les-Francais-copyright-Yann-Arthus-Bertrand_1200w.webp 1200w, /images/Marseille-2024-342-Les-Francais-copyright-Yann-Arthus-Bertrand.webp 1920w"
-                sizes="(max-width: 768px) 100vw, 50vw"
-                alt="Team Oxygen photographié par Yann Arthus-Bertrand — projet Les Français, Marseille 2024"
-                className="absolute inset-0 w-full h-full object-cover"
-                style={{ objectPosition: 'center 20%' }}
-                loading="lazy"
-                decoding="async"
-                width="1365"
-                height="910"
-              />
-              <div className="absolute inset-0 bg-gradient-to-r from-transparent to-black/20" />
-              {/* Copyright watermark */}
-              <p className="absolute bottom-3 right-3 text-white/40 text-xs font-medium">
-                © Yann Arthus-Bertrand
-              </p>
-            </div>
-
-            {/* Contenu - Droite */}
-            <div className="p-8 md:p-12 flex flex-col justify-center order-2">
-
-              {/* Badge photographe */}
-              <div className="mb-6 inline-flex items-center gap-2 px-4 py-2 bg-ocean-teal/10 rounded-full border border-ocean-teal/30 w-fit">
-                <Camera className="w-5 h-5 text-ocean-teal" />
-                <span className="text-sm font-semibold text-ocean-teal">
-                  Les Français — Yann Arthus-Bertrand
-                </span>
-              </div>
-
-              <h2 className="text-3xl md:text-4xl font-bold text-white mb-6">
-                Photographiés par Yann Arthus-Bertrand
-              </h2>
-
-              <p className="text-gray-300 text-lg mb-8 leading-[1.8]">
-                Team Oxygen et Dark Massilia ont été sélectionnés par Yann Arthus-Bertrand pour son projet <strong className="text-white">« Les Français »</strong> — une galerie photographique portrait de celles et ceux qui font la France, à Marseille en 2024.
-              </p>
-
-              <Link
-                to="/les-francais-yann-arthus-bertrand"
-                className="btn-primary inline-flex items-center gap-2 w-fit"
-              >
-                <span>Voir le projet</span>
-                <ArrowRight className="w-5 h-5" />
-              </Link>
             </div>
           </div>
         </motion.div>

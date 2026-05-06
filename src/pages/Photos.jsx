@@ -8,6 +8,7 @@ import { FADE_IN_UP, STAGGER_CONTAINER } from '../utils/constants';
 import SEO from '../components/SEO';
 import { SEO_PAGES } from '../utils/seo';
 import { Link, useSearchParams } from 'react-router-dom';
+import Breadcrumb from '../components/Breadcrumb';
 import { supabase } from '../lib/supabase';
 
 const merIds = [2, 4, 6, 10, 12, 13, 14, 20, 22, 23, 30, 32, 33, 35, 39, 44, 45, 46, 47, 50, 51, 52, 54, 55, 56, 57, 58, 59, 60, 61, 62, 63, 64, 66, 67, 68, 70, 72, 73, 74, 75, 76, 78, 79, 80, 81, 82, 83, 86, 87, 89, 90, 91, 92, 94, 95, 97, 98, 99, 100];
@@ -559,33 +560,39 @@ const PhotoGrid = ({ images }) => (
     {images.map((image, index) => {
       const thumbSrc = image.thumbSrc || toThumbSrc(image.src);
       return (
-      <a
-        key={image.uid}
-        href={image.src}
-        data-fancybox="gallery-paysage"
-        data-caption={image.lieu || image.alt}
-        data-title={image.title || ''}
-        data-uid={image.uid}
-        data-slug={image.slug || image.uid}
-        data-hash={image.uid}
-        data-maps={image.maps}
-        data-thumb={thumbSrc}
-        className="block w-full break-inside-avoid cursor-pointer relative overflow-hidden rounded-xl focus-ring mb-4"
-        aria-label={`Ouvrir la photo : ${image.alt}`}
-      >
-        <img
-          src={thumbSrc}
-          srcSet={`${thumbSrc} 800w`}
-          sizes="(min-width: 1280px) 25vw, (min-width: 1024px) 33vw, (min-width: 768px) 50vw, 100vw"
-          alt={image.alt}
-          width={Math.min(image.width, 800)}
-          height={Math.round(image.height * (Math.min(image.width, 800) / image.width))}
-          className="w-full h-auto object-cover"
-          loading={index < 4 ? 'eager' : 'lazy'}
-          fetchPriority={index === 0 ? 'high' : undefined}
-          decoding="async"
-        />
-      </a>
+      <figure key={image.uid} className="break-inside-avoid mb-4">
+        <a
+          href={image.src}
+          data-fancybox="gallery-paysage"
+          data-caption={image.lieu || image.alt}
+          data-title={image.title || ''}
+          data-uid={image.uid}
+          data-slug={image.slug || image.uid}
+          data-hash={image.uid}
+          data-maps={image.maps}
+          data-thumb={thumbSrc}
+          className="block w-full cursor-pointer relative overflow-hidden rounded-xl focus-ring"
+          aria-label={`Ouvrir la photo : ${image.alt}`}
+        >
+          <img
+            src={thumbSrc}
+            srcSet={`${thumbSrc} 800w`}
+            sizes="(min-width: 1280px) 25vw, (min-width: 1024px) 33vw, (min-width: 768px) 50vw, 100vw"
+            alt={image.alt}
+            width={Math.min(image.width, 800)}
+            height={Math.round(image.height * (Math.min(image.width, 800) / image.width))}
+            className="w-full h-auto object-cover"
+            loading={index < 4 ? 'eager' : 'lazy'}
+            fetchPriority={index === 0 ? 'high' : undefined}
+            decoding="async"
+          />
+        </a>
+        {image.lieu && (
+          <figcaption className="text-xs text-gray-500 mt-1 px-1 truncate">
+            {image.lieu}
+          </figcaption>
+        )}
+      </figure>
       );
     })}
   </div>
@@ -683,15 +690,42 @@ const Photos = () => {
     <div className="min-h-screen py-24">
       <SEO {...SEO_PAGES['/photographie-paysage-mer']} />
       <div className="container-custom">
+        <Breadcrumb label="Galerie Paysages Marseille" />
         {/* H1 SEO */}
         <motion.h1
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
-          className="text-xl md:text-2xl font-bold text-white text-center mb-8 leading-tight"
+          className="text-xl md:text-2xl font-bold text-white text-center mb-6 leading-tight"
         >
           Photographe de Paysages à Marseille — Calanques, Littoral & Méditerranée
         </motion.h1>
+
+        {/* Raccourcis catégories */}
+        <motion.div
+          initial={{ opacity: 0, y: 10 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5, delay: 0.2 }}
+          className="flex flex-wrap justify-center gap-3 mb-10"
+        >
+          {[
+            { href: '#littoral', icon: <Waves className="w-4 h-4" />, label: 'Littoral & Calanques' },
+            { href: '#provence', icon: <TreePine className="w-4 h-4" />, label: 'Terres de Provence' },
+            { href: '#horizons', icon: <Compass className="w-4 h-4" />, label: 'Horizons Lointains' },
+          ].map(({ href, icon, label }) => (
+            <a
+              key={href}
+              href={href}
+              className="inline-flex items-center gap-2 px-4 py-2 rounded-full text-sm font-medium
+                         bg-white/5 border border-white/15 text-text-secondary
+                         hover:bg-ocean-teal/10 hover:border-ocean-teal/40 hover:text-ocean-teal
+                         transition-colors duration-200"
+            >
+              {icon}
+              {label}
+            </a>
+          ))}
+        </motion.div>
 
         {/* Section 1 — Littoral Marseillais & Calanques */}
         <motion.div

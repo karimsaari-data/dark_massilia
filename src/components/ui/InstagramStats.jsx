@@ -1,32 +1,6 @@
-import { useRef, useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { supabase } from '../../lib/supabase';
-import { useInView, useReducedMotion } from 'framer-motion';
-
-const StatCounter = ({ end, suffix = '', decimals = 0, duration = 2000 }) => {
-  const prefersReducedMotion = useReducedMotion();
-  const ref = useRef(null);
-  const isInView = useInView(ref, { once: true, amount: 0.5 });
-  const [count, setCount] = useState(0);
-  useEffect(() => {
-    if (!isInView) return;
-    if (prefersReducedMotion) { setCount(end); return; }
-    let startTime = null;
-    let raf;
-    const step = (ts) => {
-      if (!startTime) startTime = ts;
-      const progress = Math.min((ts - startTime) / duration, 1);
-      const eased = 1 - (1 - progress) ** 3;
-      setCount(parseFloat((eased * end).toFixed(decimals)));
-      if (progress < 1) raf = requestAnimationFrame(step);
-    };
-    raf = requestAnimationFrame(step);
-    return () => cancelAnimationFrame(raf);
-  }, [isInView, end, duration, decimals, prefersReducedMotion]);
-  const display = decimals > 0
-    ? count.toFixed(decimals).replace('.', ',')
-    : count.toLocaleString('fr-FR');
-  return <span ref={ref}>{display}{suffix}</span>;
-};
+import StatCounter from './StatCounter';
 
 // SVG icons pour les réseaux sociaux
 const InstagramIcon = () => (
@@ -120,7 +94,7 @@ const SOCIAL_NETWORKS_STATIC = [
   { platform: 'facebook_pages', name: 'Facebook',               handle: 'Pages pro & perso',       end: 17.8, suffix: 'K', decimals: 1, note: '13K + 4,8K', url: 'https://www.facebook.com/Photographie.Marseille' },
   { platform: 'youtube',        name: 'YouTube',                handle: '@dark.massilia',          end: 1.3,  suffix: 'K', decimals: 1, url: 'https://www.youtube.com/@dark.massilia' },
   { platform: 'x',              name: 'X',                      handle: '@dark_massilia',          end: 1.6,  suffix: 'K', decimals: 1, url: 'https://x.com/dark_massilia' },
-  { platform: 'local_guides',   name: 'Local Guides',           handle: 'Google Maps · Marseille', end: 144,  suffix: 'M', decimals: 0, unit: 'vues', url: 'https://www.google.com/maps/contrib/114912564832630219145/photos/' },
+  { platform: 'local_guides',   name: 'Local Guides',           handle: 'Google Maps · Marseille', end: 185,  suffix: 'M', decimals: 0, unit: 'vues', url: 'https://www.google.com/maps/contrib/114912564832630219145/photos/' },
   { platform: 'pinterest',      name: 'Pinterest',              handle: 'Photographie_Marseille',  end: 16,   suffix: 'K', decimals: 0, unit: 'vues / mois', url: 'https://fr.pinterest.com/Photographie_Marseille/' },
   { platform: 'px500',          name: '500px',                  handle: 'karimsaari',              end: 800,  suffix: 'K', decimals: 0, unit: 'impressions photos', url: 'https://500px.com/p/karimsaari?view=photos' },
 ];
@@ -152,52 +126,55 @@ const SocialStats = () => {
 
     // On ne fetch que value + note (colonnes sûres en DB)
     // Le reste (suffix, decimals, name, handle, url) vient du fallback statique
-    Promise.all([
-      supabase
-        .from('social_stats')
-        .select('platform, value, note')
-        .eq('visible', true)
-        .neq('platform', 'total_community'),
-      supabase
-        .from('social_stats')
-        .select('value')
-        .eq('platform', 'local_guide_views_m')
-        .single(),
-    ]).then(([{ data: cards }, { data: lgViews }]) => {
-      if (!cards || cards.length === 0) return;
-      const localGuidesValue = lgViews ? parseFloat(lgViews.value) : null;
-      // Index du fallback statique par platform
-      const staticByPlatform = Object.fromEntries(
-        SOCIAL_NETWORKS_STATIC.map(n => [n.platform, n])
-      );
-      setNetworks(prev => prev.map(network => {
-        // local_guides utilise local_guide_views_m (déjà en millions) — indépendant du row cards
-        if (network.platform === 'local_guides' && localGuidesValue !== null) {
-          return { ...network, end: localGuidesValue };
-        }
-        const row = cards.find(c => c.platform === network.platform);
-        if (!row) return network;
-        const staticRow = staticByPlatform[network.platform] || {};
-        const rawValue = parseFloat(row.value);
+    // ── Vues Local Guides (indépendant du reste) ──────────────────────────────
+    supabase
+      .from('social_stats')
+      .select('value')
+      .eq('platform', 'local_guide_views_m')
+      .single()
+      .then(({ data: lgViews }) => {
+        if (!lgViews) return;
+        const val = parseFloat(lgViews.value);
+        if (isNaN(val)) return;
+        setNetworks(prev => prev.map(n =>
+          n.platform === 'local_guides' ? { ...n, end: val } : n
+        ));
+      });
 
-        let end;
-        if (staticRow.suffix === 'K') {
-          // DB stocke les abonnés en valeur brute → diviser par 1000
-          end = rawValue >= 1000 ? rawValue / 1000 : rawValue;
-        } else if (staticRow.suffix === 'M') {
-          // DB stocke en valeur brute → diviser par 1 000 000
-          end = rawValue >= 1000000 ? rawValue / 1000000 : rawValue;
-        } else {
-          end = rawValue;
-        }
+    // ── Abonnés & autres stats ─────────────────────────────────────────────────
+    supabase
+      .from('social_stats')
+      .select('platform, value, note')
+      .neq('platform', 'total_community')
+      .neq('platform', 'local_guide_views_m')
+      .then(({ data: cards }) => {
+        if (!cards || cards.length === 0) return;
+        const staticByPlatform = Object.fromEntries(
+          SOCIAL_NETWORKS_STATIC.map(n => [n.platform, n])
+        );
+        setNetworks(prev => prev.map(network => {
+          if (network.platform === 'local_guides') return network; // géré séparément
+          const row = cards.find(c => c.platform === network.platform);
+          if (!row) return network;
+          const staticRow = staticByPlatform[network.platform] || {};
+          const rawValue = parseFloat(row.value);
 
-        return {
-          ...network,
-          end,
-          note: row.note || staticRow.note || undefined,
-        };
-      }));
-    });
+          let end;
+          if (staticRow.suffix === 'K') {
+            end = rawValue >= 1000 ? rawValue / 1000 : rawValue;
+          } else if (staticRow.suffix === 'M') {
+            end = rawValue >= 1000000 ? rawValue / 1000000 : rawValue;
+          } else {
+            end = rawValue;
+          }
+
+          return {
+            ...network,
+            end,
+            note: row.note || staticRow.note || undefined,
+          };
+        }));
+      });
   }, []);
 
   const abonnes = networks.filter(n => !isVuesKpi(n.unit));

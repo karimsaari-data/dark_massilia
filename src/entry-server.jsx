@@ -25,8 +25,9 @@ import Videos     from './pages/Videos';
 import Instagram  from './pages/Instagram';
 import Twitter    from './pages/Twitter';
 import Contact    from './pages/Contact';
-import Arte       from './pages/Arte';
-import Meduses    from './pages/Meduses';
+import Arte           from './pages/Arte';
+import EchappeesBelles from './pages/EchappeesBelles';
+import Meduses         from './pages/Meduses';
 import Sources    from './pages/Sources';
 // CarteSSR = version sans Leaflet (pas de window en Node)
 import CarteSSR      from './pages/CarteSSR';
@@ -73,6 +74,7 @@ export function render(url) {
             <Route path="communaute-calanques"               element={<GroupeFacebook />} />
             <Route path="actualites"                         element={<Twitter />} />
             <Route path="sauver-marseille-documentaire-arte" element={<Arte />} />
+            <Route path="echappees-belles-bouches-du-rhone"  element={<EchappeesBelles />} />
             <Route path="meduses-souveraines-oceans-documentaire-arte" element={<Meduses />} />
             <Route path="donnees-scientifiques"              element={<Sources />} />
             <Route path="contact"                            element={<Contact />} />

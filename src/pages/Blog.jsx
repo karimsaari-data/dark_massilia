@@ -5,13 +5,14 @@
  * Fetch client-side avec pagination + filtre par catégorie.
  */
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { Calendar, ArrowRight, Rss } from 'lucide-react';
+import { Calendar, ArrowRight, Rss, Search, X, Clock } from 'lucide-react';
 import SEO from '../components/SEO';
 import { SEO_PAGES } from '../utils/seo';
 import { fetchPosts } from '../utils/api';
+import Breadcrumb from '../components/Breadcrumb';
 import { FADE_IN_UP, STAGGER_CONTAINER } from '../utils/constants';
 
 export const CATEGORIES = [
@@ -24,17 +25,36 @@ export const CATEGORIES = [
 const POSTS_PER_PAGE = 9;
 
 export default function Blog() {
-  const [posts,      setPosts]      = useState([]);
-  const [page,       setPage]       = useState(1);
-  const [totalPages, setTotalPages] = useState(1);
-  const [loading,    setLoading]    = useState(true);
-  const [error,      setError]      = useState(null);
+  const [posts,        setPosts]       = useState([]);
+  const [page,         setPage]        = useState(1);
+  const [totalPages,   setTotalPages]  = useState(1);
+  const [loading,      setLoading]     = useState(true);
+  const [error,        setError]       = useState(null);
+  const [searchInput,  setSearchInput] = useState('');
+  const [search,       setSearch]      = useState('');
+  const searchTimeout  = useRef(null);
+
+  const handleSearchChange = (e) => {
+    const val = e.target.value;
+    setSearchInput(val);
+    clearTimeout(searchTimeout.current);
+    searchTimeout.current = setTimeout(() => {
+      setSearch(val.trim());
+      setPage(1);
+    }, 350);
+  };
+
+  const clearSearch = () => {
+    setSearchInput('');
+    setSearch('');
+    setPage(1);
+  };
 
   useEffect(() => {
     setLoading(true);
     setError(null);
 
-    fetchPosts({ page, perPage: POSTS_PER_PAGE })
+    fetchPosts({ page, perPage: POSTS_PER_PAGE, search: search || undefined })
       .then(({ posts: data, totalPages: tp }) => {
         setPosts(data);
         setTotalPages(tp);
@@ -44,13 +64,14 @@ export default function Blog() {
         setError(err.message);
         setLoading(false);
       });
-  }, [page]);
+  }, [page, search]);
 
   return (
     <div className="min-h-screen py-24">
       <SEO {...SEO_PAGES['/blog']} />
 
       <div className="container-custom">
+        <Breadcrumb label="Actualités" />
 
         {/* ── En-tête ─────────────────────────────────────────────────────── */}
         <motion.div
@@ -75,6 +96,28 @@ export default function Blog() {
             de l'équipe Dark Massilia en Méditerranée.
           </motion.p>
         </motion.div>
+
+        {/* ── Recherche ───────────────────────────────────────────────────── */}
+        <div className="max-w-xl mx-auto mb-8 relative">
+          <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400 pointer-events-none" aria-hidden="true" />
+          <input
+            type="search"
+            placeholder="Rechercher un article…"
+            value={searchInput}
+            onChange={handleSearchChange}
+            className="w-full pl-11 pr-10 py-3 rounded-2xl glass border border-white/10 text-white placeholder-gray-500 text-sm focus:outline-none focus:border-ocean-teal/50 focus:ring-1 focus:ring-ocean-teal/30 transition-all"
+            aria-label="Rechercher dans les articles"
+          />
+          {searchInput && (
+            <button
+              onClick={clearSearch}
+              className="absolute right-3 top-1/2 -translate-y-1/2 p-1 text-gray-400 hover:text-white transition-colors"
+              aria-label="Effacer la recherche"
+            >
+              <X className="w-4 h-4" />
+            </button>
+          )}
+        </div>
 
         {/* ── Filtres catégories ─────────────────────────────────────────── */}
         <div className="flex flex-wrap justify-center gap-2 mb-10" role="navigation" aria-label="Filtrer par catégorie">
@@ -139,10 +182,27 @@ export default function Blog() {
           </motion.div>
         )}
 
+        {/* ── Résultats de recherche ──────────────────────────────────────── */}
+        {!loading && !error && search && (
+          <p className="text-center text-gray-400 text-sm mb-6">
+            {posts.length > 0
+              ? <>{posts.length} résultat{posts.length > 1 ? 's' : ''} pour <span className="text-white font-semibold">« {search} »</span></>
+              : <>Aucun résultat pour <span className="text-white font-semibold">« {search} »</span></>
+            }
+          </p>
+        )}
+
         {/* ── État vide ───────────────────────────────────────────────────── */}
         {!loading && !error && posts.length === 0 && (
           <div className="glass rounded-2xl p-12 text-center">
-            <p className="text-gray-400">Aucun article disponible pour le moment.</p>
+            <p className="text-gray-400 mb-4">
+              {search ? 'Aucun article ne correspond à cette recherche.' : 'Aucun article disponible pour le moment.'}
+            </p>
+            {search && (
+              <button onClick={clearSearch} className="btn-secondary text-sm">
+                Voir tous les articles
+              </button>
+            )}
           </div>
         )}
 
@@ -266,11 +326,20 @@ export function PostCard({ post, priority = false }) {
         className="flex flex-col flex-1 p-6"
         style={{ background: 'rgba(8, 16, 32, 0.72)', backdropFilter: 'blur(8px)' }}
       >
-        {/* Date + catégorie */}
+        {/* Date + temps de lecture + catégorie */}
         <div className="flex items-center justify-between gap-2 mb-3">
           <div className="flex items-center gap-2 text-ocean-teal text-xs font-semibold uppercase tracking-wider">
             <Calendar className="w-3.5 h-3.5 flex-shrink-0" aria-hidden="true" />
             <time dateTime={post.date}>{post.dateFormatted}</time>
+            {post.readingTime && (
+              <>
+                <span className="text-ocean-teal/40" aria-hidden="true">·</span>
+                <span className="flex items-center gap-1 font-normal normal-case tracking-normal text-gray-500">
+                  <Clock className="w-3 h-3" aria-hidden="true" />
+                  {post.readingTime} min
+                </span>
+              </>
+            )}
           </div>
           {(() => {
             const cat = post.categories?.[0]

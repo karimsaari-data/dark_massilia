@@ -6,6 +6,7 @@ import { FADE_IN_UP, STAGGER_CONTAINER } from '../utils/constants';
 import SEO from '../components/SEO';
 import { SEO_PAGES } from '../utils/seo';
 import VideoPlayer from '../components/media/VideoPlayer';
+import Breadcrumb from '../components/Breadcrumb';
 
 const RecentArticles = lazy(() => import('../components/RecentArticles'));
 
@@ -174,6 +175,7 @@ const Sources = () => {
     <div className="min-h-screen py-24">
       <SEO {...SEO_PAGES['/donnees-scientifiques']} />
       <div className="container-custom">
+        <Breadcrumb label="Données Scientifiques" />
         {/* H1 SEO — visible, keyword-rich */}
         <motion.h1
           initial={{ opacity: 0, y: 20 }}

@@ -58,6 +58,7 @@ export const NAV_LINKS = [
       { name: 'Vidéos & Documentaires',  path: '/videos',                                       icon: 'Video',   isHub: true, hubDesc: 'ARTE, M6, France Télévisions, YouTube' },
       { name: 'ARTE — Sauver Marseille', path: '/sauver-marseille-documentaire-arte',           icon: 'Tv',  sub: true },
       { name: 'ARTE — Méduses',          path: '/meduses-souveraines-oceans-documentaire-arte', icon: 'Tv',  sub: true },
+      { name: 'Échappées Belles',        path: '/echappees-belles-bouches-du-rhone',            icon: 'Tv',  sub: true },
       { name: 'Presse',                  path: '/presse',                                       icon: 'Film'     },
       { name: 'Blog',                    path: '/blog',                                         icon: 'BookOpen' },
     ],

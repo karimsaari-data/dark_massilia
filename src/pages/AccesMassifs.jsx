@@ -5,10 +5,11 @@
  */
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { ExternalLink, ChevronDown, Flame, AlertTriangle, TreePine } from 'lucide-react';
+import { ExternalLink, ChevronDown, Flame, AlertTriangle, TreePine, Map } from 'lucide-react';
 import SEO from '../components/SEO';
 import { SEO_PAGES } from '../utils/seo';
 import FireRiskBanner from '../components/FireRiskBanner';
+import Breadcrumb from '../components/Breadcrumb';
 
 const IFRAME_URL =
   'https://opendfci.fr/13/index.php/view/map?repository=openmassifs&project=open_massifs';
@@ -102,18 +103,38 @@ export default function AccesMassifs() {
       {/* Bande statut pleine largeur */}
       <FireRiskBanner />
 
-      {/* Carte pleine largeur */}
-      <div className="relative overflow-hidden h-[calc(100vh-70px-48px)] md:h-[calc(100vh-128px-80px-48px)]">
-        <iframe
-          src={IFRAME_URL}
-          title="Carte des accès aux massifs forestiers — DFCI Bouches-du-Rhône"
-          style={{ width: '100%', height: '100%', border: 'none', display: 'block' }}
-          loading="lazy"
-          allowFullScreen
-        />
-      </div>
-
       <div className="container-custom py-6">
+        <Breadcrumb label="Accès Massifs Forestiers — Risque Incendie" />
+
+        <h1 className="text-3xl md:text-4xl font-bold text-white mt-4 mb-6">
+          Accès aux Massifs Forestiers des Bouches-du-Rhône
+        </h1>
+
+        {/* ── BLOC DFCI — lien direct ── */}
+        <div className="glass rounded-2xl border border-orange-500/20 overflow-hidden mb-10">
+          <div className="flex flex-col sm:flex-row items-center gap-5 p-5 md:p-6">
+            <div className="flex-1 min-w-0">
+              <div className="flex items-center gap-2 mb-1">
+                <Flame className="w-4 h-4 text-orange-400 flex-shrink-0" />
+                <span className="text-orange-400 font-semibold text-xs uppercase tracking-widest">DFCI Bouches-du-Rhône</span>
+              </div>
+              <p className="text-white font-semibold text-base">Carte officielle des accès aux massifs</p>
+              <p className="text-text-secondary text-sm mt-1">
+                Mise à jour chaque matin — état en temps réel de tous les massifs forestiers du 13.
+              </p>
+            </div>
+            <a
+              href={IFRAME_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex-shrink-0 inline-flex items-center gap-2 bg-orange-500 hover:bg-orange-400 text-white font-bold text-sm px-5 py-3 rounded-xl transition-colors"
+            >
+              <Map className="w-4 h-4" />
+              Voir la carte
+              <ExternalLink className="w-3.5 h-3.5 opacity-70" />
+            </a>
+          </div>
+        </div>
 
         {/* ── SECTION 1 : Contexte ── */}
         <section className="mb-16">

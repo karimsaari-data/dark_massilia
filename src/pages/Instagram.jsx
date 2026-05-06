@@ -1,5 +1,5 @@
-import { useState, useEffect, useRef } from 'react';
-import { motion, AnimatePresence, useInView, useReducedMotion } from 'framer-motion';
+import { useState, useEffect } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import {
   ExternalLink,
@@ -15,36 +15,11 @@ import {
   Anchor,
 } from 'lucide-react';
 import InstagramStats from '../components/ui/InstagramStats';
+import StatCounter from '../components/ui/StatCounter';
 import { supabase } from '../lib/supabase';
 import { FADE_IN_UP, STAGGER_CONTAINER } from '../utils/constants';
 import SEO from '../components/SEO';
 import { SEO_PAGES } from '../utils/seo';
-
-// ── Compteur animé — s'active à l'entrée dans le viewport ───────────────────
-const StatCounter = ({ end, suffix = '', duration = 2000 }) => {
-  const prefersReducedMotion = useReducedMotion();
-  const ref = useRef(null);
-  const isInView = useInView(ref, { once: true, amount: 0.3 });
-  const [count, setCount] = useState(0);
-
-  useEffect(() => {
-    if (!isInView) return;
-    if (prefersReducedMotion) { setCount(end); return; }
-    let startTime = null;
-    let raf;
-    const step = (ts) => {
-      if (!startTime) startTime = ts;
-      const progress = Math.min((ts - startTime) / duration, 1);
-      const eased = 1 - (1 - progress) ** 3;
-      setCount(Math.round(eased * end));
-      if (progress < 1) raf = requestAnimationFrame(step);
-    };
-    raf = requestAnimationFrame(step);
-    return () => cancelAnimationFrame(raf);
-  }, [isInView, end, duration, prefersReducedMotion]);
-
-  return <span ref={ref}>{count.toLocaleString('fr-FR')}{suffix}</span>;
-};
 
 // ── Données statiques ───────────────────────────────────────────────────────
 

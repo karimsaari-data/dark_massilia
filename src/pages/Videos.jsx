@@ -5,6 +5,7 @@ import VideoPlayer from '../components/media/VideoPlayer';
 import { FADE_IN_UP, STAGGER_CONTAINER } from '../utils/constants';
 import SEO from '../components/SEO';
 import { SEO_PAGES } from '../utils/seo';
+import Breadcrumb from '../components/Breadcrumb';
 
 const videos = [
   {
@@ -76,6 +77,7 @@ const Videos = () => {
     <div className="min-h-screen py-24">
       <SEO {...SEO_PAGES['/videos']} />
       <div className="container-custom">
+        <Breadcrumb label="Vidéos & Documentaires" />
         {/* H1 SEO — visible, keyword-rich */}
         <motion.h1
           initial={{ opacity: 0, y: 20 }}
@@ -83,7 +85,7 @@ const Videos = () => {
           transition={{ duration: 0.6 }}
           className="text-xl md:text-2xl font-bold text-white text-center mb-8 leading-tight"
         >
-          Vidéos &amp; Documentaires
+          Vidéos &amp; Documentaires{' '}
           <span className="block text-sm md:text-base font-medium text-ocean-teal mt-2">
             Dépollution en Méditerranée — Calanques de Marseille
           </span>

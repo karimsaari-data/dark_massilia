@@ -61,6 +61,15 @@
   RewriteRule ^ index.html [L]
 </IfModule>
 
+# ── Types MIME spéciaux ─────────────────────────────────────────────────────
+<IfModule mod_mime.c>
+  AddType text/vcard .vcf
+</IfModule>
+<Files "*.vcf">
+  Header set Content-Disposition "attachment"
+  Header set Cache-Control "no-cache"
+</Files>
+
 # ── Compression GZIP dynamique ──────────────────────────────────────────────
 <IfModule mod_deflate.c>
   AddOutputFilterByType DEFLATE text/html text/plain text/xml text/css text/javascript application/javascript application/json image/svg+xml

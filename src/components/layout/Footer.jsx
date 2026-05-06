@@ -96,7 +96,7 @@ const Footer = () => {
           <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-6 text-center">
             {navColumns.map((col) => (
               <div key={col.label}>
-                <p className="text-xs font-semibold text-gray-400 uppercase tracking-widest mb-4">
+                <p className="text-xs font-semibold text-white uppercase tracking-widest mb-4">
                   {col.label}
                 </p>
                 <ul className="space-y-1">
@@ -194,6 +194,12 @@ const Footer = () => {
             </a>
           </p>
           <div className="flex flex-wrap justify-center gap-x-4 gap-y-1">
+            <Link
+              to="/plan-du-site"
+              className="text-xs text-gray-400 hover:text-ocean-teal transition-colors duration-200 py-1.5 px-1"
+            >
+              Plan du site
+            </Link>
             <Link
               to="/mentions-legales"
               className="text-xs text-gray-400 hover:text-ocean-teal transition-colors duration-200 py-1.5 px-1"

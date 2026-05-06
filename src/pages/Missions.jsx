@@ -1,36 +1,11 @@
-import { motion, useInView, useReducedMotion } from 'framer-motion';
-import { useState, useEffect, useRef } from 'react';
+import { motion } from 'framer-motion';
 import { ArrowLeft, ArrowRight, ExternalLink, Camera, Flame } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { FADE_IN_UP, STAGGER_CONTAINER } from '../utils/constants';
 import SEO from '../components/SEO';
 import { SEO_PAGES } from '../utils/seo';
-
-// Compteur animé — s'active à l'entrée dans le viewport
-const StatCounter = ({ end, suffix = ' kg', duration = 2000 }) => {
-  const prefersReducedMotion = useReducedMotion();
-  const ref = useRef(null);
-  const isInView = useInView(ref, { once: true, amount: 0.5 });
-  const [count, setCount] = useState(0);
-
-  useEffect(() => {
-    if (!isInView) return;
-    if (prefersReducedMotion) { setCount(end); return; }
-    let startTime = null;
-    let raf;
-    const step = (ts) => {
-      if (!startTime) startTime = ts;
-      const progress = Math.min((ts - startTime) / duration, 1);
-      const eased = 1 - (1 - progress) ** 3;
-      setCount(Math.round(eased * end));
-      if (progress < 1) raf = requestAnimationFrame(step);
-    };
-    raf = requestAnimationFrame(step);
-    return () => cancelAnimationFrame(raf);
-  }, [isInView, end, duration, prefersReducedMotion]);
-
-  return <span ref={ref}>{count.toLocaleString('fr-FR')}{suffix}</span>;
-};
+import Breadcrumb from '../components/Breadcrumb';
+import StatCounter from '../components/ui/StatCounter';
 
 const EDITIONS = [
   { year: '2022', waste: 900,  duration: '8 jours', location: 'Côte Bleue, de Martigues à l\'Estaque', color: '#21c47b' },
@@ -44,6 +19,7 @@ const Missions = () => {
     <div className="min-h-screen py-24">
       <SEO {...SEO_PAGES['/depollution-marine']} />
       <div className="container-custom">
+        <Breadcrumb label="Missions de Dépollution Marine" />
 
         {/* H1 SEO */}
         <motion.h1
@@ -360,6 +336,109 @@ const Missions = () => {
               <strong className="text-white">nettoyage sous-marin</strong> à Marseille permet d'atteindre des
               zones inaccessibles aux dispositifs classiques de ramassage en mer.
             </p>
+          </div>
+        </motion.div>
+
+        {/* Types de déchets — impact écologique */}
+        <motion.div
+          initial={{ opacity: 0, y: 16 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          className="mb-12"
+        >
+          <div className="glass-strong rounded-3xl p-8 md:p-12">
+            <h2 className="text-2xl md:text-3xl font-bold text-white mb-6">
+              Quels déchets menacent les Calanques ? Types de pollution marine
+            </h2>
+            <div className="space-y-4 text-text-secondary leading-[1.8]">
+              <p>
+                Les missions de nettoyage sous-marin révèlent une pollution marine d'une grande
+                diversité. Les déchets les plus fréquemment remontés des fonds des Calanques de
+                Marseille comprennent les{' '}
+                <strong className="text-white">plastiques fragmentés</strong> (sacs, emballages,
+                bouteilles), les{' '}
+                <strong className="text-white">engins de pêche abandonnés</strong> (filets fantômes,
+                hameçons, fils nylon), mais aussi des objets encombrants&nbsp;: scooters, vélos,
+                bouteilles de gaz, mobilier urbain charié par les crues des cours d'eau côtiers.
+              </p>
+              <p>
+                L'impact sur la faune méditerranéenne est documenté à chaque plongée. Les{' '}
+                <strong className="text-white">filets fantômes</strong> continuent de capturer des
+                poissons, des poulpes et des langoustes longtemps après avoir été abandonnés — c'est
+                ce que les biologistes appellent la «&nbsp;pêche fantôme&nbsp;». Le nylon prend{' '}
+                <strong className="text-white">400 à 600 ans pour se dégrader</strong>, relâchant des
+                microplastiques qui intègrent la chaîne alimentaire marine. Les{' '}
+                <strong className="text-white">herbiers de Posidonie</strong>, classés habitat
+                prioritaire par l'Union Européenne, sont étouffés sous les déchets lourds qui
+                bloquent la photosynthèse et accélèrent leur régression.
+              </p>
+              <p>
+                Chaque déchet extrait est <strong className="text-white">pesé, trié et
+                caractérisé</strong>&nbsp;: plastique rigide, film plastique, métal, verre, textile,
+                caoutchouc. Ces données alimentent les rapports scientifiques partenaires et
+                contribuent à la cartographie de la pollution marine dans le Parc National des
+                Calanques. Les missions de Team Oxygen permettent également d'alerter les autorités
+                maritimes sur les zones de dépôt les plus critiques, pour prioriser les interventions
+                futures et mesurer l'efficacité des actions de sensibilisation auprès du grand public.
+              </p>
+            </div>
+          </div>
+        </motion.div>
+
+        {/* Rejoindre une mission — bénévolat */}
+        <motion.div
+          initial={{ opacity: 0, y: 16 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          className="mb-12"
+        >
+          <div className="glass-strong rounded-3xl p-8 md:p-12">
+            <h2 className="text-2xl md:text-3xl font-bold text-white mb-6">
+              Comment participer à une mission de dépollution sous-marine ?
+            </h2>
+            <div className="space-y-4 text-text-secondary leading-[1.8]">
+              <p>
+                Team Oxygen accueille chaque année des bénévoles motivés lors des grandes éditions du{' '}
+                <strong className="text-white">Projet Sentinelle</strong>. La pratique de l'apnée
+                n'est pas obligatoire pour participer&nbsp;: les missions mobilisent également des
+                équipes de surface chargées de la logistique, du tri des déchets, de la pesée et de
+                la documentation visuelle.
+              </p>
+              <p>
+                Pour les <strong className="text-white">plongeurs et apnéistes</strong>, les
+                interventions se déroulent entre 0 et 20 mètres, en binôme, avec un briefing de
+                sécurité systématique avant chaque immersion. Aucun équipement spécifique n'est
+                requis au-delà du matériel standard d'apnée (masque, palmes, combinaison). Team
+                Oxygen fournit les sacs de collecte, les filets de surface et l'organisation
+                logistique complète. Les sessions durent entre 4 et 6 heures et se déroulent chaque
+                matin pendant toute la durée de l'édition.
+              </p>
+              <p>
+                Les candidatures pour la{' '}
+                <strong className="text-ocean-teal">5ème édition — octobre 2026</strong> seront
+                ouvertes prochainement. Inscris-toi à la newsletter pour recevoir le formulaire en
+                avant-première, les dates exactes et les lieux de rendez-vous. Les 130&nbsp;000
+                membres de la communauté Dark Massilia sont la première force de mobilisation
+                citoyenne pour la protection des Calanques de Marseille — chaque bénévole compte,
+                que tu sois apnéiste confirmé ou simple citoyen engagé.
+              </p>
+            </div>
+            <div className="mt-8 flex flex-wrap gap-4">
+              <Link
+                to="/#newsletter"
+                className="btn-primary inline-flex items-center gap-2"
+              >
+                <span>S'inscrire pour participer</span>
+                <ArrowRight className="w-4 h-4" aria-hidden="true" />
+              </Link>
+              <Link
+                to="/communaute"
+                className="btn-secondary inline-flex items-center gap-2"
+              >
+                <span>Rejoindre la communauté</span>
+                <ArrowRight className="w-4 h-4" />
+              </Link>
+            </div>
           </div>
         </motion.div>
 

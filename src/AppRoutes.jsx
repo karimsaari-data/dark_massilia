@@ -25,7 +25,8 @@ const Videos     = lazy(() => import('./pages/Videos'));
 const Instagram  = lazy(() => import('./pages/Instagram'));
 const Twitter    = lazy(() => import('./pages/Twitter'));
 const Contact    = lazy(() => import('./pages/Contact'));
-const Arte       = lazy(() => import('./pages/Arte'));
+const Arte           = lazy(() => import('./pages/Arte'));
+const EchappeesBelles = lazy(() => import('./pages/EchappeesBelles'));
 const Meduses    = lazy(() => import('./pages/Meduses'));
 const Sources    = lazy(() => import('./pages/Sources'));
 const Carte      = lazy(() => import('./pages/Carte'));
@@ -34,8 +35,10 @@ const Admin = lazy(() => import('./pages/AdminGalerie'));
 const Yab             = lazy(() => import('./pages/Yab'));
 const MentionsLegales = lazy(() => import('./pages/MentionsLegales'));
 const Confidentialite    = lazy(() => import('./pages/Confidentialite'));
+const PlanDuSite         = lazy(() => import('./pages/PlanDuSite'));
 const PhotoSousMarine    = lazy(() => import('./pages/PhotoSousMarine'));
 const PhotographeEnvironnemental = lazy(() => import('./pages/PhotographeEnvironnemental'));
+const DossierPresse              = lazy(() => import('./pages/DossierPresse'));
 const BlogCategory               = lazy(() => import('./pages/BlogCategory'));
 const GroupeFacebook             = lazy(() => import('./pages/GroupeFacebook'));
 const AccesMassifs               = lazy(() => import('./pages/AccesMassifs'));
@@ -85,11 +88,13 @@ export default function AppRoutes() {
             <Route path="photographie-paysage-mer"       element={<Photos />} />
             <Route path="photographie-sous-marine"       element={<PhotoSousMarine />} />
             <Route path="photographe-environnemental-marseille" element={<PhotographeEnvironnemental />} />
+            <Route path="dossier-presse"                        element={<DossierPresse />} />
             <Route path="videos"                         element={<Videos />} />
             <Route path="communaute"                     element={<Instagram />} />
             <Route path="communaute-calanques"              element={<GroupeFacebook />} />
             <Route path="actualites"                     element={<Twitter />} />
             <Route path="sauver-marseille-documentaire-arte" element={<Arte />} />
+            <Route path="echappees-belles-bouches-du-rhone"  element={<EchappeesBelles />} />
             <Route path="meduses-souveraines-oceans-documentaire-arte" element={<Meduses />} />
             <Route path="donnees-scientifiques"          element={<Sources />} />
             <Route path="contact"                        element={<Contact />} />
@@ -99,6 +104,7 @@ export default function AppRoutes() {
             <Route path="les-francais-yann-arthus-bertrand" element={<Yab />} />
             <Route path="mentions-legales"                element={<MentionsLegales />} />
             <Route path="confidentialite"                 element={<Confidentialite />} />
+            <Route path="plan-du-site"                    element={<PlanDuSite />} />
             {/* Redirections legacy — anciennes URLs */}
             <Route path="home"        element={<Navigate to="/" replace />} />
             <Route path="missions"    element={<Navigate to="/depollution-marine" replace />} />
