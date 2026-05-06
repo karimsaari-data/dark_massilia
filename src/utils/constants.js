@@ -59,7 +59,6 @@ export const NAV_LINKS = [
       { name: 'ARTE — Sauver Marseille', path: '/sauver-marseille-documentaire-arte',           icon: 'Tv',  sub: true },
       { name: 'ARTE — Méduses',          path: '/meduses-souveraines-oceans-documentaire-arte', icon: 'Tv',  sub: true },
       { name: 'Échappées Belles',        path: '/echappees-belles-bouches-du-rhone',            icon: 'Tv',  sub: true },
-      { name: 'Presse',                  path: '/presse',                                       icon: 'Film'     },
       { name: 'Blog',                    path: '/blog',                                         icon: 'BookOpen' },
     ],
   },
@@ -70,9 +69,9 @@ export const NAV_LINKS = [
     description: 'Carte interactive, accès aux massifs, actualités du Parc national et communauté des amoureux des Calanques.',
     children: [
       { name: 'Groupe Facebook Calanques',       path: '/communaute-calanques',    icon: 'Users',     isHub: true, hubDesc: `${FACEBOOK_GROUP_MEMBERS.toLocaleString('fr-FR')} membres — la plus grande communauté des Calanques` },
+      { name: 'News Parc des Calanques',         path: '/actualites',              icon: 'Newspaper'  },
       { name: 'Carte interactive des Calanques', path: '/carte-calanques',         icon: 'MapPin'     },
       { name: 'Accès aux massifs forestiers',    path: '/acces-massifs-calanques', icon: 'Navigation' },
-      { name: 'News Parc des Calanques',         path: '/actualites',              icon: 'Newspaper'  },
     ],
   },
   {
@@ -82,6 +81,7 @@ export const NAV_LINKS = [
     description: 'Collaborations, partenariats médias ou institutionnels — rejoignez la mission Dark Massilia.',
     children: [
       { name: 'Collaborer avec nous',         path: '/contact',                         icon: 'Mail',    isHub: true, hubDesc: 'Partenariats, médias, institutions' },
+      { name: 'Presse & médias',              path: '/presse',                          icon: 'Newspaper' },
       { name: 'Envoyer un email',             path: 'mailto:contact@karimsaari.com',    icon: 'AtSign'  },
       { name: 'Newsletter',                   path: '/#newsletter',                     icon: 'Send'    },
       { name: 'Team Oxygen — site officiel',  path: 'https://www.team-oxygen.com/',     icon: 'Compass' },
