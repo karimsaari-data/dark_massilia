@@ -15,9 +15,10 @@ const WP_BASE = 'https://cms.karimsaari.com/wp-json/wp/v2';
 
 // ── Liste des articles (paginée) ─────────────────────────────────────────────
 
-export async function fetchPosts({ page = 1, perPage = 12, categoryId } = {}) {
+export async function fetchPosts({ page = 1, perPage = 12, categoryId, search } = {}) {
   const params = new URLSearchParams({ _embed: '', per_page: perPage, page });
   if (categoryId) params.set('categories', String(categoryId));
+  if (search)     params.set('search', search);
 
   const res = await fetch(`${WP_BASE}/posts?${params}`);
   if (!res.ok) throw new Error(`WP API ${res.status}: ${res.statusText}`);
@@ -106,12 +107,17 @@ export function normalizePost(post) {
   const wpTerms      = post._embedded?.['wp:term'] ?? [];
   const categoryName = wpTerms[0]?.[0]?.name ?? null;
 
+  const plainContent = stripHtml(post.content?.rendered ?? '');
+  const wordCount    = plainContent.split(/\s+/).filter(Boolean).length;
+  const readingTime  = Math.max(1, Math.round(wordCount / 200));
+
   return {
     id:            post.id,
     slug:          post.slug,
     title:         decodeEntities(rawTitle),
     excerpt:       stripHtml(rawExcerpt),
     content:       post.content?.rendered ?? '',
+    readingTime,
     date:          post.date,
     modified:      post.modified,
     dateFormatted: formatDate(post.date),

@@ -12,7 +12,7 @@
 import { useState, useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { motion, useReducedMotion } from 'framer-motion';
-import { Calendar, ArrowLeft, ArrowRight, User, Loader2 } from 'lucide-react';
+import { Calendar, ArrowLeft, ArrowRight, User, Loader2, Clock } from 'lucide-react';
 import SEO from '../components/SEO';
 import { fetchPostBySlug } from '../utils/api';
 import { FADE_IN_UP } from '../utils/constants';
@@ -274,7 +274,7 @@ export default function BlogPost() {
                 padding: 'clamp(24px, 5vw, 52px) clamp(20px, 5vw, 52px)',
               }}
             >
-              {/* Méta — date & auteur */}
+              {/* Méta — date, auteur & temps de lecture */}
               <div className="flex flex-wrap items-center gap-4 text-sm mb-6">
                 <span className="flex items-center gap-1.5 text-ocean-teal font-semibold uppercase tracking-wider text-xs">
                   <Calendar className="w-3.5 h-3.5" aria-hidden="true" />
@@ -285,6 +285,15 @@ export default function BlogPost() {
                   <User className="w-3.5 h-3.5" aria-hidden="true" />
                   {post.author}
                 </span>
+                {post.readingTime && (
+                  <>
+                    <span className="text-gray-600" aria-hidden="true">·</span>
+                    <span className="flex items-center gap-1.5 text-gray-400 text-xs">
+                      <Clock className="w-3.5 h-3.5" aria-hidden="true" />
+                      {post.readingTime} min de lecture
+                    </span>
+                  </>
+                )}
               </div>
 
               {/* Titre H1 */}
