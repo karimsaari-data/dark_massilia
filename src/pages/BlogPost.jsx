@@ -11,7 +11,7 @@
 
 import { useState, useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
-import { motion } from 'framer-motion';
+import { motion, useReducedMotion } from 'framer-motion';
 import { Calendar, ArrowLeft, ArrowRight, User, Loader2 } from 'lucide-react';
 import SEO from '../components/SEO';
 import { fetchPostBySlug } from '../utils/api';
@@ -119,12 +119,24 @@ function buildSchema(post, slug) {
 
 export default function BlogPost() {
   const { slug } = useParams();
+  const prefersReducedMotion = useReducedMotion();
 
   // État initial : données SSR si disponibles (prerender), sinon null (client)
-  const [post,    setPost]    = useState(getSSRPost);
-  const [loading, setLoading] = useState(!getSSRPost());
-  const [error,   setError]   = useState(null);
-  const [copied,  setCopied]  = useState(false);
+  const [post,         setPost]        = useState(getSSRPost);
+  const [loading,      setLoading]     = useState(!getSSRPost());
+  const [error,        setError]       = useState(null);
+  const [copied,       setCopied]      = useState(false);
+  const [readProgress, setReadProgress] = useState(0);
+
+  useEffect(() => {
+    const onScroll = () => {
+      const scrollable = document.documentElement.scrollHeight - window.innerHeight;
+      if (scrollable <= 0) return;
+      setReadProgress(Math.min(100, (window.scrollY / scrollable) * 100));
+    };
+    window.addEventListener('scroll', onScroll, { passive: true });
+    return () => window.removeEventListener('scroll', onScroll);
+  }, []);
 
   useEffect(() => {
     // Si les données SSR correspondent déjà au slug courant, pas de refetch
@@ -162,6 +174,27 @@ export default function BlogPost() {
 
   return (
     <div className="min-h-screen py-24">
+      {/* Barre de progression de lecture — fixed en haut du viewport */}
+      {!loading && post && (
+        <div
+          role="progressbar"
+          aria-label="Progression de lecture"
+          aria-valuenow={Math.round(readProgress)}
+          aria-valuemin={0}
+          aria-valuemax={100}
+          style={{
+            position: 'fixed',
+            top: 0,
+            left: 0,
+            height: '3px',
+            width: `${readProgress}%`,
+            background: 'linear-gradient(90deg, #21c47b 0%, #0091ff 100%)',
+            zIndex: 100,
+            transition: prefersReducedMotion ? 'none' : 'width 80ms linear',
+            borderRadius: '0 2px 2px 0',
+          }}
+        />
+      )}
       <SEO
         title={seoTitle}
         description={seoDescription}
