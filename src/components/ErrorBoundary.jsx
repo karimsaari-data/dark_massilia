@@ -11,6 +11,17 @@ class ErrorBoundary extends Component {
   }
 
   componentDidCatch(error, errorInfo) {
+    // Après un déploiement, les anciens chunks Vite n'existent plus.
+    // On recharge silencieusement plutôt que d'afficher l'écran d'erreur.
+    const isChunkError =
+      error?.name === 'ChunkLoadError' ||
+      /Loading chunk|Failed to fetch dynamically imported module|Importing a module script failed/i.test(error?.message ?? '');
+
+    if (isChunkError) {
+      window.location.reload();
+      return;
+    }
+
     console.error('ErrorBoundary caught:', error, errorInfo);
   }
 
