@@ -58,9 +58,9 @@ const navColumns = [
     label: 'Calanques',
     links: [
       { to: '/communaute-calanques',    text: 'Groupe Facebook Calanques' },
+      { to: '/actualites',              text: 'News Parc des Calanques' },
       { to: '/carte-calanques',         text: 'Carte interactive' },
       { to: '/acces-massifs-calanques', text: 'Accès aux massifs' },
-      { to: '/actualites',              text: 'News Parc des Calanques' },
     ],
   },
   {
