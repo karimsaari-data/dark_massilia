@@ -7,7 +7,7 @@ const XTwitterIcon = ({ className }) => (
   </svg>
 );
 import { Link } from 'react-router-dom';
-import { SOCIAL_LINKS, APP_CONFIG, NAV_LINKS } from '../../utils/constants';
+import { SOCIAL_LINKS, APP_CONFIG, NAV_LINKS, CONTACT_MAILTO } from '../../utils/constants';
 import { openConsentBanner } from '../../utils/consent';
 import { trackEvent } from '../../lib/analytics';
 
@@ -68,7 +68,7 @@ const navColumns = [
     links: [
       { to: '/contact',                        text: 'Collaborer avec nous' },
       { to: '/presse',                         text: 'Presse & médias' },
-      { to: `mailto:${APP_CONFIG.contactEmail}`, text: 'Email direct', external: true },
+      { to: CONTACT_MAILTO, text: 'Email direct', external: true },
       { to: '/#newsletter',                    text: 'Newsletter', anchor: true },
       { to: 'https://www.team-oxygen.com/',    text: 'Team Oxygen', external: true },
     ],

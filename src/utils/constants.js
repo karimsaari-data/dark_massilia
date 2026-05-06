@@ -7,6 +7,9 @@ export const APP_CONFIG = {
   contactWhatsApp: import.meta.env.VITE_CONTACT_WHATSAPP || '+33695331301',
 };
 
+const _todayFR = new Date().toLocaleDateString('fr-FR', { day: '2-digit', month: '2-digit', year: 'numeric' });
+export const CONTACT_MAILTO = `mailto:${APP_CONFIG.contactEmail}?subject=${encodeURIComponent(`Prise de contact du ${_todayFR}`)}`;
+
 export const SOCIAL_LINKS = {
   instagram: import.meta.env.VITE_INSTAGRAM_URL || 'https://www.instagram.com/karimsaari/',
   twitter: import.meta.env.VITE_TWITTER_URL || 'https://x.com/dark_massilia',
@@ -82,7 +85,7 @@ export const NAV_LINKS = [
     children: [
       { name: 'Collaborer avec nous',         path: '/contact',                         icon: 'Mail',    isHub: true, hubDesc: 'Partenariats, médias, institutions' },
       { name: 'Presse & médias',              path: '/presse',                          icon: 'Newspaper' },
-      { name: 'Envoyer un email',             path: 'mailto:contact@karimsaari.com',    icon: 'AtSign'  },
+      { name: 'Envoyer un email',             path: CONTACT_MAILTO,                     icon: 'AtSign'  },
       { name: 'Newsletter',                   path: '/#newsletter',                     icon: 'Send'    },
       { name: 'Team Oxygen — site officiel',  path: 'https://www.team-oxygen.com/',     icon: 'Compass' },
     ],
