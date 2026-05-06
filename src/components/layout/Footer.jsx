@@ -105,7 +105,11 @@ const Footer = () => {
                       <button type="button" onClick={l.action} className="text-sm text-gray-300 hover:text-astroide transition-colors duration-200 cursor-pointer py-1.5">
                         {l.text}
                       </button>
-                    ) : l.anchor || l.external ? (
+                    ) : l.external ? (
+                      <a href={l.to} target="_blank" rel="noopener noreferrer" className="text-sm text-gray-300 hover:text-ocean-teal transition-colors duration-200 py-1.5">
+                        {l.text}
+                      </a>
+                    ) : l.anchor ? (
                       <a href={l.to} className="text-sm text-gray-300 hover:text-ocean-teal transition-colors duration-200 py-1.5">
                         {l.text}
                       </a>
@@ -173,10 +177,7 @@ const Footer = () => {
         {/* Copyright + liens légaux — SEO optimisé */}
         <div className="text-center">
           <p className="text-xs text-gray-400 mb-2">
-            <span itemProp="addressLocality">Marseille</span>
-            {', '}
-            <span itemProp="addressRegion">Bouches-du-Rhône</span>
-            {' · France'}
+            Marseille, Bouches-du-Rhône · France
           </p>
           <p className="text-xs text-gray-400 leading-relaxed mb-3">
             © {currentYear}{' '}
