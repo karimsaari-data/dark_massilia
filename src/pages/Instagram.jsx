@@ -156,7 +156,7 @@ const fmt = (value, decimals, suffix) =>
   parseFloat(value).toFixed(decimals ?? 1).replace('.', ',') + (suffix ?? '');
 
 const Communaute = () => {
-  const [fbGroupLabel,  setFbGroupLabel]  = useState('64\u202f700');
+  const [fbGroupLabel,  setFbGroupLabel]  = useState('64\u202f900');
   const [totalLabel,    setTotalLabel]    = useState('132\u202f000');
   const [instaLabel,    setInstaLabel]    = useState('24,2K');
   const [tiktokLabel,   setTiktokLabel]   = useState('22,1K');

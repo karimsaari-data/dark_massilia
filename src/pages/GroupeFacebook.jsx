@@ -233,7 +233,7 @@ export default function GroupeFacebook() {
                   {/* Membres — stat principale */}
                   <div className="col-span-2 rounded-2xl border border-ocean-teal/25 bg-ocean-teal/8 p-4">
                     <p className="text-3xl font-bold text-white tabular-nums">
-                      <StatCounter end={64700} duration={2000} />
+                      <StatCounter end={64900} duration={2000} />
                     </p>
                     <p className="text-ocean-teal text-xs font-semibold uppercase tracking-wide mt-0.5">Membres</p>
                     <p className="text-white/35 text-xs mt-0.5">
@@ -437,7 +437,7 @@ export default function GroupeFacebook() {
               },
               {
                 q: 'Combien de membres compte le groupe Calanques ?',
-                a: 'Le groupe réunit plus de 64 700 membres actifs, ce qui en fait la plus grande communauté en ligne dédiée aux Calanques de Marseille et au littoral de Port-Cros.',
+                a: 'Le groupe réunit plus de 64 900 membres actifs, ce qui en fait la plus grande communauté en ligne dédiée aux Calanques de Marseille et au littoral de Port-Cros.',
               },
               {
                 q: 'Quel type de contenu peut-on publier dans le groupe ?',

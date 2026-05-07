@@ -22,7 +22,7 @@ export const SOCIAL_LINKS = {
 };
 
 // Facebook Group Stats — source de vérité pour toute l'app (menu, Home, etc.)
-export const FACEBOOK_GROUP_MEMBERS = 64700;
+export const FACEBOOK_GROUP_MEMBERS = 64900;
 
 export const NAV_LINKS = [
   {
