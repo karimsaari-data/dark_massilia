@@ -21,8 +21,15 @@ export const SOCIAL_LINKS = {
   localGuide: import.meta.env.VITE_LOCAL_GUIDE_URL || 'https://www.google.com/maps/contrib/114912564832630219145/photos/',
 };
 
-// Facebook Group Stats — source de vérité pour toute l'app (menu, Home, etc.)
+// Statistiques sociales — source de vérité (fallback avant chargement Supabase)
 export const FACEBOOK_GROUP_MEMBERS = 64900;
+
+export const SOCIAL_STATS_DEFAULTS = {
+  total_community: 132000, // abonnés toutes plateformes confondues
+  instagram:        24.2,  // en K (suffix 'K', decimals 1)
+  tiktok:           22.1,  // en K (suffix 'K', decimals 1)
+  facebook_pages:   17.8,  // en milliers (×1 000 pour affichage = 17 800)
+};
 
 export const NAV_LINKS = [
   {
