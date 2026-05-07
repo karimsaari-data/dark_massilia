@@ -17,7 +17,7 @@ import {
 import InstagramStats from '../components/ui/InstagramStats';
 import StatCounter from '../components/ui/StatCounter';
 import { supabase } from '../lib/supabase';
-import { FADE_IN_UP, STAGGER_CONTAINER } from '../utils/constants';
+import { FADE_IN_UP, STAGGER_CONTAINER, FACEBOOK_GROUP_MEMBERS, SOCIAL_STATS_DEFAULTS } from '../utils/constants';
 import SEO from '../components/SEO';
 import { SEO_PAGES } from '../utils/seo';
 
@@ -156,11 +156,11 @@ const fmt = (value, decimals, suffix) =>
   parseFloat(value).toFixed(decimals ?? 1).replace('.', ',') + (suffix ?? '');
 
 const Communaute = () => {
-  const [fbGroupLabel,  setFbGroupLabel]  = useState('64\u202f700');
-  const [totalLabel,    setTotalLabel]    = useState('132\u202f000');
-  const [instaLabel,    setInstaLabel]    = useState('24,2K');
-  const [tiktokLabel,   setTiktokLabel]   = useState('22,1K');
-  const [fbPagesLabel,  setFbPagesLabel]  = useState('17\u202f800');
+  const [fbGroupLabel,  setFbGroupLabel]  = useState(FACEBOOK_GROUP_MEMBERS.toLocaleString('fr-FR'));
+  const [totalLabel,    setTotalLabel]    = useState(SOCIAL_STATS_DEFAULTS.total_community.toLocaleString('fr-FR'));
+  const [instaLabel,    setInstaLabel]    = useState(fmt(SOCIAL_STATS_DEFAULTS.instagram, 1, 'K'));
+  const [tiktokLabel,   setTiktokLabel]   = useState(fmt(SOCIAL_STATS_DEFAULTS.tiktok, 1, 'K'));
+  const [fbPagesLabel,  setFbPagesLabel]  = useState(Math.round(SOCIAL_STATS_DEFAULTS.facebook_pages * 1000).toLocaleString('fr-FR'));
 
   useEffect(() => {
     supabase
@@ -237,7 +237,7 @@ const Communaute = () => {
             {/* Photo de groupe — candidat LCP, chargée en priorité */}
             <img
               src="/images/karim-saari-marseille-130000-sentinelles-calanques-depollution.webp"
-              alt="Karim Saari entouré des bénévoles du Projet Sentinelle — 132 000 sentinelles pour la dépollution des Calanques de Marseille"
+              alt={`Karim Saari entouré des bénévoles du Projet Sentinelle — ${SOCIAL_STATS_DEFAULTS.total_community.toLocaleString('fr-FR')} sentinelles pour la dépollution des Calanques de Marseille`}
               className="w-full rounded-2xl"
               loading="eager"
               fetchPriority="high"

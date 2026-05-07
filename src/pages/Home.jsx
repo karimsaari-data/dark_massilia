@@ -3,7 +3,7 @@ import { motion, AnimatePresence, useReducedMotion } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import { ArrowRight, Users, ChevronDown, Camera, MapPin } from 'lucide-react';
 
-import { FADE_IN_UP, STAGGER_CONTAINER, FACEBOOK_GROUP_MEMBERS } from '../utils/constants';
+import { FADE_IN_UP, STAGGER_CONTAINER, FACEBOOK_GROUP_MEMBERS, SOCIAL_STATS_DEFAULTS } from '../utils/constants';
 import { trackEvent } from '../lib/analytics';
 import SEO from '../components/SEO';
 import { SEO_PAGES } from '../utils/seo';
@@ -18,7 +18,7 @@ const RecentArticles    = lazy(() => import('../components/RecentArticles'));
 // La valeur end de la stat 500px est remplacée dynamiquement via Supabase (site_config)
 const KEY_STATS_BASE = [
   {
-    end: 132000,
+    end: SOCIAL_STATS_DEFAULTS.total_community,
     suffix: '',
     label: 'Abonnés passionnés par les Calanques',
     sub: 'sur l\'ensemble des réseaux sociaux',
