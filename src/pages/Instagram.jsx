@@ -17,7 +17,7 @@ import {
 import InstagramStats from '../components/ui/InstagramStats';
 import StatCounter from '../components/ui/StatCounter';
 import { supabase } from '../lib/supabase';
-import { FADE_IN_UP, STAGGER_CONTAINER } from '../utils/constants';
+import { FADE_IN_UP, STAGGER_CONTAINER, FACEBOOK_GROUP_MEMBERS } from '../utils/constants';
 import SEO from '../components/SEO';
 import { SEO_PAGES } from '../utils/seo';
 
@@ -156,7 +156,7 @@ const fmt = (value, decimals, suffix) =>
   parseFloat(value).toFixed(decimals ?? 1).replace('.', ',') + (suffix ?? '');
 
 const Communaute = () => {
-  const [fbGroupLabel,  setFbGroupLabel]  = useState('64\u202f900');
+  const [fbGroupLabel,  setFbGroupLabel]  = useState(FACEBOOK_GROUP_MEMBERS.toLocaleString('fr-FR'));
   const [totalLabel,    setTotalLabel]    = useState('132\u202f000');
   const [instaLabel,    setInstaLabel]    = useState('24,2K');
   const [tiktokLabel,   setTiktokLabel]   = useState('22,1K');

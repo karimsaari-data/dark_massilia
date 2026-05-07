@@ -2,7 +2,7 @@ import { motion } from 'framer-motion';
 import { useState, useEffect } from 'react';
 import { Users, Camera, Recycle, Footprints, Smartphone, ExternalLink } from 'lucide-react';
 import { Link } from 'react-router-dom';
-import { FADE_IN_UP, STAGGER_CONTAINER } from '../utils/constants';
+import { FADE_IN_UP, STAGGER_CONTAINER, FACEBOOK_GROUP_MEMBERS } from '../utils/constants';
 import SEO from '../components/SEO';
 import FireRiskBanner from '../components/FireRiskBanner';
 import { SEO_PAGES } from '../utils/seo';
@@ -233,7 +233,7 @@ export default function GroupeFacebook() {
                   {/* Membres — stat principale */}
                   <div className="col-span-2 rounded-2xl border border-ocean-teal/25 bg-ocean-teal/8 p-4">
                     <p className="text-3xl font-bold text-white tabular-nums">
-                      <StatCounter end={64900} duration={2000} />
+                      <StatCounter end={FACEBOOK_GROUP_MEMBERS} duration={2000} />
                     </p>
                     <p className="text-ocean-teal text-xs font-semibold uppercase tracking-wide mt-0.5">Membres</p>
                     <p className="text-white/35 text-xs mt-0.5">
