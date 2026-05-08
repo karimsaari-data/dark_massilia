@@ -521,22 +521,50 @@ async function prerender() {
       // Injecter le HTML rendu dans le placeholder <!--app-html-->
       let pageHtml = finalTemplate.replace('<!--app-html-->', appHtmlClean);
 
-      // ── /blog : injecter les liens d'articles pour les crawlers non-JS ──────
+      // ── /blog : injecter les liens d'articles pour les crawlers ─────────────
       // Blog.jsx charge les articles en client-side → le HTML prérendu est vide
       // de liens → Ahrefs/Bing voient les articles comme "orphelins" (0 inlinks).
-      // On injecte un <noscript> avec tous les slugs connus pour que les crawlers
-      // puissent les découvrir via la page index.
+      // On injecte un <nav> visuellement masqué (sr-only) avec tous les slugs :
+      //   • hors <div id="root"> → React n'y touche PAS lors de l'hydratation
+      //   • toujours dans le DOM (pas <noscript>) → visible pour les crawlers JS
+      //   • technique sr-only standard : pas de cloaking, 1 px dans le flux
       if (route === '/blog' && BLOG_ROUTES.length > 0) {
         const articleLinks = BLOG_ROUTES
           .map(r => {
             const slug = r.replace('/blog/', '');
             const meta = wpMetas.find(m => m.slug === slug);
-            const label = meta ? slug.replace(/-/g, ' ') : slug;
+            const label = meta
+              ? slug.replace(/-/g, ' ').replace(/^\w/, c => c.toUpperCase())
+              : slug;
             return `<a href="${r}">${label}</a>`;
           })
           .join('\n        ');
-        const noscriptNav = `\n  <noscript><nav aria-label="Articles du blog">\n        ${articleLinks}\n      </nav></noscript>`;
-        pageHtml = pageHtml.replace('</body>', `${noscriptNav}\n</body>`);
+        const srOnlyNav = `\n  <nav aria-label="Articles du blog" style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;">\n        ${articleLinks}\n      </nav>`;
+        pageHtml = pageHtml.replace('</body>', `${srOnlyNav}\n</body>`);
+      }
+
+      // ── /blog/:slug : injecter des liens vers les articles récents ───────────
+      // RecentArticles utilise useEffect → invisible pour les crawlers non-JS.
+      // On injecte statiquement les 3 premiers articles (hors article courant)
+      // pour que les crawlers JS et non-JS voient les liens inter-articles.
+      if (route.startsWith('/blog/') && !route.startsWith('/blog/categorie/') && BLOG_ROUTES.length > 1) {
+        const currentSlug = route.slice('/blog/'.length);
+        const relatedLinks = BLOG_ROUTES
+          .filter(r => r !== route)
+          .slice(0, 3)
+          .map(r => {
+            const slug = r.replace('/blog/', '');
+            const meta = wpMetas.find(m => m.slug === slug);
+            const label = meta
+              ? slug.replace(/-/g, ' ').replace(/^\w/, c => c.toUpperCase())
+              : slug;
+            return `<a href="${r}">${label}</a>`;
+          })
+          .join('\n        ');
+        if (relatedLinks) {
+          const srOnlyRelated = `\n  <nav aria-label="Articles similaires" style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;">\n        ${relatedLinks}\n      </nav>`;
+          pageHtml = pageHtml.replace('</body>', `${srOnlyRelated}\n</body>`);
+        }
       }
 
       // Déterminer le chemin de sortie

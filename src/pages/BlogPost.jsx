@@ -16,6 +16,7 @@ import { Calendar, ArrowLeft, ArrowRight, User, Loader2, Clock } from 'lucide-re
 import SEO from '../components/SEO';
 import { fetchPostBySlug } from '../utils/api';
 import { FADE_IN_UP } from '../utils/constants';
+import RecentArticles from '../components/RecentArticles';
 
 const BASE_URL = 'https://karimsaari.com';
 
@@ -417,6 +418,13 @@ export default function BlogPost() {
         )}
 
       </div>
+
+      {/* ── Articles similaires ─────────────────────────────────────────────── */}
+      {!loading && post && (
+        <div className="mt-16">
+          <RecentArticles title="Articles similaires" count={3} excludeSlug={slug} />
+        </div>
+      )}
     </div>
   );
 }
