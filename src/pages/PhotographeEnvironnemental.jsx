@@ -1,7 +1,7 @@
 import { motion } from 'framer-motion';
 import { ArrowRight, ExternalLink, Camera, Mail } from 'lucide-react';
 import { Link } from 'react-router-dom';
-import { FADE_IN_UP, STAGGER_CONTAINER } from '../utils/constants';
+import { FADE_IN_UP, STAGGER_CONTAINER, SOCIAL_STATS_DEFAULTS } from '../utils/constants';
 import SEO from '../components/SEO';
 import { SEO_PAGES } from '../utils/seo';
 import Breadcrumb from '../components/Breadcrumb';
@@ -253,7 +253,7 @@ const PhotographeEnvironnemental = () => {
             </p>
 
             <p className="text-text-secondary leading-relaxed text-base md:text-lg mb-5">
-              Parallèlement à l'action terrain, j'anime la communauté en ligne <strong className="text-white">Dark Massilia</strong>. Sur Facebook, le groupe « Amoureux des Calanques de Marseille à Port-Cros » rassemble plus de <strong className="text-white">130 000 membres engagés</strong>. Sur Instagram, TikTok et YouTube, des centaines de milliers de personnes suivent les missions, les photos et les alertes terrain. Cette communauté amplifie le message environnemental, signale les dépôts sauvages et constitue un vivier de bénévoles pour chaque édition du Projet Sentinelle.
+              Parallèlement à l'action terrain, j'anime la communauté en ligne <strong className="text-white">Dark Massilia</strong>. Sur Facebook, le groupe « Amoureux des Calanques de Marseille à Port-Cros » rassemble plus de <strong className="text-white">{SOCIAL_STATS_DEFAULTS.total_community.toLocaleString('fr-FR')} membres engagés</strong>. Sur Instagram, TikTok et YouTube, des centaines de milliers de personnes suivent les missions, les photos et les alertes terrain. Cette communauté amplifie le message environnemental, signale les dépôts sauvages et constitue un vivier de bénévoles pour chaque édition du Projet Sentinelle.
             </p>
 
             <p className="text-text-secondary leading-relaxed text-base md:text-lg mb-5">
