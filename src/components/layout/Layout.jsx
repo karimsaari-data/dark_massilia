@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Outlet } from 'react-router-dom';
+import { Outlet, useLocation } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ChevronUp } from 'lucide-react';
 import Navbar from './Navbar';
@@ -34,7 +34,14 @@ const ScrollToTop = () => {
   );
 };
 
+const pageVariants = {
+  initial: { opacity: 0, y: 14 },
+  animate: { opacity: 1, y: 0, transition: { duration: 0.28, ease: [0.4, 0, 0.2, 1] } },
+  exit:    { opacity: 0, y: -8, transition: { duration: 0.18, ease: [0.4, 0, 1, 1] } },
+};
+
 const Layout = () => {
+  const location = useLocation();
   return (
     <div className="min-h-screen flex flex-col">
       {/* Schema Person géré page par page via SEO_PAGES dans seo.js */}
@@ -75,7 +82,17 @@ const Layout = () => {
       <div className="relative z-10 flex flex-col min-h-screen">
         <Navbar />
         <main id="main-content" className="flex-grow pt-[var(--navbar-h)] md:pt-[var(--navbar-h-md)]">
-          <Outlet />
+          <AnimatePresence mode="wait" initial={false}>
+            <motion.div
+              key={location.pathname}
+              variants={pageVariants}
+              initial="initial"
+              animate="animate"
+              exit="exit"
+            >
+              <Outlet />
+            </motion.div>
+          </AnimatePresence>
         </main>
         <Footer />
         <CookieBanner />
