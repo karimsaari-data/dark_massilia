@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { supabase } from '../../lib/supabase';
 import StatCounter from './StatCounter';
+import { SOCIAL_STATS_DEFAULTS, FACEBOOK_GROUP_MEMBERS } from '../../utils/constants';
 
 // SVG icons pour les réseaux sociaux
 const InstagramIcon = () => (
@@ -88,10 +89,10 @@ const PLATFORM_ICONS = {
 // Ordre : ligne 1 → Amoureux, Instagram, TikTok, Facebook
 //          ligne 2 → YouTube, X, Local Guide, 500px
 const SOCIAL_NETWORKS_STATIC = [
-  { platform: 'facebook_group', name: 'Amoureux des Calanques', handle: 'Groupe Facebook',        end: 64.7, suffix: 'K', decimals: 1, url: 'https://www.facebook.com/groups/calanque/' },
-  { platform: 'instagram',      name: 'Instagram',              handle: '@karimsaari',             end: 24.2, suffix: 'K', decimals: 1, url: 'https://www.instagram.com/karimsaari' },
-  { platform: 'tiktok',         name: 'TikTok',                 handle: '@dark.massilia',          end: 22.2, suffix: 'K', decimals: 1, url: 'https://www.tiktok.com/@dark.massilia' },
-  { platform: 'facebook_pages', name: 'Facebook',               handle: 'Pages pro & perso',       end: 17.8, suffix: 'K', decimals: 1, note: '13K + 4,8K', url: 'https://www.facebook.com/Photographie.Marseille' },
+  { platform: 'facebook_group', name: 'Amoureux des Calanques', handle: 'Groupe Facebook',        end: FACEBOOK_GROUP_MEMBERS / 1000,         suffix: 'K', decimals: 1, url: 'https://www.facebook.com/groups/calanque/' },
+  { platform: 'instagram',      name: 'Instagram',              handle: '@karimsaari',             end: SOCIAL_STATS_DEFAULTS.instagram,        suffix: 'K', decimals: 1, url: 'https://www.instagram.com/karimsaari' },
+  { platform: 'tiktok',         name: 'TikTok',                 handle: '@dark.massilia',          end: SOCIAL_STATS_DEFAULTS.tiktok,           suffix: 'K', decimals: 1, url: 'https://www.tiktok.com/@dark.massilia' },
+  { platform: 'facebook_pages', name: 'Facebook',               handle: 'Pages pro & perso',       end: SOCIAL_STATS_DEFAULTS.facebook_pages,   suffix: 'K', decimals: 1, note: '13K + 4,8K', url: 'https://www.facebook.com/Photographie.Marseille' },
   { platform: 'youtube',        name: 'YouTube',                handle: '@dark.massilia',          end: 1.3,  suffix: 'K', decimals: 1, url: 'https://www.youtube.com/@dark.massilia' },
   { platform: 'x',              name: 'X',                      handle: '@dark_massilia',          end: 1.6,  suffix: 'K', decimals: 1, url: 'https://x.com/dark_massilia' },
   { platform: 'local_guides',   name: 'Local Guides',           handle: 'Google Maps · Marseille', end: 185,  suffix: 'M', decimals: 0, unit: 'vues', url: 'https://www.google.com/maps/contrib/114912564832630219145/photos/' },
