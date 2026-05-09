@@ -113,13 +113,14 @@ export const MEDIA_TYPES = {
   INSTAGRAM: 'instagram',
 };
 
-// Animation variants for Framer Motion
+// Animation variants for Framer Motion — spring physics
+// stiffness = rigidité du ressort  |  damping = amortissement
 export const FADE_IN_UP = {
-  hidden: { opacity: 0, y: 30 },
+  hidden: { opacity: 0, y: 22 },
   visible: {
     opacity: 1,
     y: 0,
-    transition: { duration: 0.6, ease: 'easeOut' }
+    transition: { type: 'spring', stiffness: 300, damping: 28 }
   }
 };
 
@@ -127,7 +128,7 @@ export const FADE_IN = {
   hidden: { opacity: 0 },
   visible: {
     opacity: 1,
-    transition: { duration: 0.8, ease: 'easeOut' }
+    transition: { type: 'spring', stiffness: 200, damping: 30 }
   }
 };
 
@@ -135,17 +136,17 @@ export const STAGGER_CONTAINER = {
   hidden: {},
   visible: {
     transition: {
-      staggerChildren: 0.1,
-      delayChildren: 0.2
+      staggerChildren: 0.08,
+      delayChildren: 0.1
     }
   }
 };
 
 export const SCALE_IN = {
-  hidden: { opacity: 0, scale: 0.8 },
+  hidden: { opacity: 0, scale: 0.88 },
   visible: {
     opacity: 1,
     scale: 1,
-    transition: { duration: 0.5, ease: 'easeOut' }
+    transition: { type: 'spring', stiffness: 380, damping: 28 }
   }
 };
