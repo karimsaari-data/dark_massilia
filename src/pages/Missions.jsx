@@ -1,7 +1,7 @@
 import { motion } from 'framer-motion';
 import { ArrowLeft, ArrowRight, ExternalLink, Camera, Flame } from 'lucide-react';
 import { Link } from 'react-router-dom';
-import { FADE_IN_UP, STAGGER_CONTAINER } from '../utils/constants';
+import { FADE_IN_UP, STAGGER_CONTAINER, SOCIAL_STATS_DEFAULTS } from '../utils/constants';
 import SEO from '../components/SEO';
 import { SEO_PAGES } from '../utils/seo';
 import Breadcrumb from '../components/Breadcrumb';
@@ -294,7 +294,7 @@ const Missions = () => {
                 { value: '2018', label: 'Année de fondation' },
                 { value: '5 724 kg', label: 'Déchets collectés' },
                 { value: '4', label: 'Éditions du Projet Sentinelle' },
-                { value: '132 000', label: 'Sentinelles en ligne' },
+                { value: SOCIAL_STATS_DEFAULTS.total_community.toLocaleString('fr-FR'), label: 'Sentinelles en ligne' },
               ].map((stat) => (
                 <div key={stat.label} className="text-center p-4 rounded-2xl bg-white/5 border border-white/10">
                   <p className="text-xl md:text-2xl font-bold text-ocean-teal">{stat.value}</p>

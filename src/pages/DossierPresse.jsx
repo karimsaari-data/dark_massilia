@@ -1,14 +1,14 @@
 import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import { Mail, ArrowRight, Download, Camera, ExternalLink, FileText } from 'lucide-react';
-import { FADE_IN_UP, STAGGER_CONTAINER } from '../utils/constants';
+import { FADE_IN_UP, STAGGER_CONTAINER, SOCIAL_STATS_DEFAULTS } from '../utils/constants';
 import SEO from '../components/SEO';
 import { SEO_PAGES } from '../utils/seo';
 import Breadcrumb from '../components/Breadcrumb';
 
 const STATS = [
   { value: '5 724 kg', label: 'de déchets extraits des fonds', sub: '4 éditions · 2022–2025' },
-  { value: '130 000', label: 'membres dans la communauté', sub: 'Groupe Facebook Dark Massilia' },
+  { value: SOCIAL_STATS_DEFAULTS.total_community.toLocaleString('fr-FR'), label: 'membres dans la communauté', sub: 'Toutes plateformes confondues' },
   { value: '3 chaînes', label: 'de diffusion nationale', sub: 'ARTE · TF1 · M6' },
   { value: '170+', label: 'photographies en ligne', sub: 'Galeries sous-marine & paysages' },
 ];
@@ -20,7 +20,7 @@ const ANGLES = [
   },
   {
     title: 'La communauté des Sentinelles',
-    desc: '130 000 personnes engagées autour de la protection des Calanques de Marseille. Un modèle de mobilisation citoyenne digitale au service de l\'action terrain.',
+    desc: `${SOCIAL_STATS_DEFAULTS.total_community.toLocaleString('fr-FR')} personnes engagées autour de la protection des Calanques de Marseille. Un modèle de mobilisation citoyenne digitale au service de l'action terrain.`,
   },
   {
     title: 'Photographie environnementale & plaidoyer',
@@ -105,7 +105,7 @@ const DossierPresse = () => (
             <strong className="text-white">Karim Saari</strong>, alias <strong className="text-white">Dark Massilia</strong>, est photographe environnemental et sous-marin basé à Marseille. Depuis 2018, il documente la beauté et la fragilité des Calanques en pratiquant l'apnée, et coordonne avec son association <strong className="text-white">Team Oxygen</strong> le <strong className="text-white">Projet Sentinelle</strong> — opération annuelle de dépollution sous-marine qui a permis de retirer <strong className="text-white">5 724 kg de déchets</strong> des fonds méditerranéens en quatre éditions (2022–2025).
           </p>
           <p className="text-text-secondary leading-relaxed mb-4">
-            Il anime la communauté Dark Massilia — plus de <strong className="text-white">130 000 membres</strong> engagés pour la protection des Calanques. Ses images et ses missions ont été diffusées sur <strong className="text-white">ARTE</strong> (documentaires <em>Sauver Marseille</em> et <em>Méduses, les souveraines des océans</em>), <strong className="text-white">TF1</strong> et <strong className="text-white">M6 Zone Interdite</strong>. Certifié Google Street View Trusted et Google Local Guides Level 10.
+            Il anime la communauté Dark Massilia — plus de <strong className="text-white">{SOCIAL_STATS_DEFAULTS.total_community.toLocaleString('fr-FR')} membres</strong> engagés pour la protection des Calanques. Ses images et ses missions ont été diffusées sur <strong className="text-white">ARTE</strong> (documentaires <em>Sauver Marseille</em> et <em>Méduses, les souveraines des océans</em>), <strong className="text-white">TF1</strong> et <strong className="text-white">M6 Zone Interdite</strong>. Certifié Google Street View Trusted et Google Local Guides Level 10.
           </p>
           <p className="text-text-secondary leading-relaxed">
             Son travail repose sur une dualité : la beauté documentée des fonds marins méditerranéens, et l'urgence écologique qui les menace. 170+ photographies accessibles en ligne, régulièrement mises à jour depuis les missions de terrain.
