@@ -120,6 +120,30 @@
     @apply max-w-screen-2xl mx-auto px-4 sm:px-6 lg:px-10 xl:px-16;
   }
 
+  /* Séparateur visuel automatique entre sections adjacentes à fond partagé.
+     Ne s'applique qu'aux section.container-custom consécutives — exclut
+     naturellement le hero (min-h-screen) et les sections à fond propre. */
+  section.container-custom + section.container-custom {
+    position: relative;
+  }
+  section.container-custom + section.container-custom::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: min(calc(100% - 2rem), 1400px);
+    height: 1px;
+    background: linear-gradient(
+      to right,
+      transparent 0%,
+      rgba(255, 255, 255, 0.07) 20%,
+      rgba(255, 255, 255, 0.07) 80%,
+      transparent 100%
+    );
+    pointer-events: none;
+  }
+
   /* Button styles */
   /* ── Orange Astroïde — Astroides calycularis (CTA primaire) ── */
   .btn-primary {
