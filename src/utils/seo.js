@@ -1847,6 +1847,31 @@ export const SEO_PAGES = {
       ],
     },
   },
+  '/carte-photos': {
+    title: 'Carte des photos — Lieux de prise de vue | Karim Saari',
+    description:
+      'Carte interactive des lieux de prise de vue de Karim Saari : paysages de Provence et Méditerranée, photographie sous-marine dans les Calanques de Marseille.',
+    canonical: `${BASE_URL}/carte-photos`,
+    schema: {
+      '@context': 'https://schema.org',
+      '@graph': [
+        breadcrumb('Carte des photos', '/carte-photos'),
+        {
+          '@type': 'WebApplication',
+          name: 'Carte interactive des photos — Karim Saari',
+          description:
+            'Carte des lieux de prise de vue de Karim Saari : photographies de paysages (Provence, littoral méditerranéen) et photographie sous-marine (Calanques de Marseille).',
+          url: `${BASE_URL}/carte-photos`,
+          applicationCategory: 'PhotographyApplication',
+          operatingSystem: 'All',
+          browserRequirements: 'Requires JavaScript',
+          offers: { '@type': 'Offer', price: '0', priceCurrency: 'EUR' },
+          author: { '@id': `${BASE_URL}/#person` },
+        },
+      ],
+    },
+  },
+
   '/carte-calanques': {
     title: 'Carte Interactive des Calanques | Karim Saari',
     description:
