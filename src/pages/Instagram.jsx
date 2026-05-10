@@ -165,18 +165,34 @@ const Communaute = () => {
   useEffect(() => {
     supabase
       .from('social_stats')
-      .select('platform, value, suffix, decimals')
-      .in('platform', ['facebook_group', 'total_community', 'instagram', 'tiktok', 'facebook_pages'])
+      .select('platform, value')
+      .in('platform', ['facebook_group', 'instagram', 'tiktok', 'facebook_page',
+                       'facebook_perso', 'youtube', 'x', 'pinterest'])
       .then(({ data }) => {
-        if (!data) return;
-        data.forEach(row => {
-          const { platform, value, suffix, decimals } = row;
-          if (platform === 'facebook_group')  setFbGroupLabel(fmt(value, decimals, suffix));
-          if (platform === 'total_community') setTotalLabel(Math.round(parseFloat(value)).toLocaleString('fr-FR'));
-          if (platform === 'instagram')       setInstaLabel(fmt(value, decimals, suffix));
-          if (platform === 'tiktok')          setTiktokLabel(fmt(value, decimals, suffix));
-          if (platform === 'facebook_pages')  setFbPagesLabel(Math.round(parseFloat(value) * 1000).toLocaleString('fr-FR'));
-        });
+        if (!data?.length) return;
+
+        // Accumulate numeric values to recompute total_community
+        const map = Object.fromEntries(data.map(r => [r.platform, parseFloat(r.value)]));
+
+        if (map.instagram != null) {
+          setInstaLabel(fmt(map.instagram / 1000, 1, 'K'));
+        }
+        if (map.tiktok != null) {
+          setTiktokLabel(fmt(map.tiktok / 1000, 1, 'K'));
+        }
+        if (map.facebook_group != null) {
+          setFbGroupLabel(Math.round(map.facebook_group).toLocaleString('fr-FR'));
+        }
+        // Cumul pages Facebook (page + perso)
+        const fbPages = (map.facebook_page ?? 0) + (map.facebook_perso ?? 0);
+        if (fbPages > 0) {
+          setFbPagesLabel(Math.round(fbPages).toLocaleString('fr-FR'));
+        }
+        // Total communauté = somme de toutes les plateformes disponibles
+        const total = Object.values(map).reduce((s, v) => s + v, 0);
+        if (total > 0) {
+          setTotalLabel(Math.round(total).toLocaleString('fr-FR'));
+        }
       });
   }, []);
 
