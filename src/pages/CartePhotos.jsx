@@ -6,7 +6,7 @@ import { supabase } from '../lib/supabase';
 import SEO from '../components/SEO';
 import { SEO_PAGES } from '../utils/seo';
 
-const TILE_URL  = 'https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png';
+const TILE_URL  = 'https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png';
 const TILE_ATTR = '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>';
 
 const MARKER_COLORS = { paysage: '#00ABA8', sous_marine: '#0091ff' };
@@ -47,13 +47,14 @@ function toThumb(src) {
 }
 
 function popupHtml(photo) {
-  const c    = MARKER_COLORS[photo.type];
-  const href = photo.type === 'paysage' ? '/photographie-paysage-mer' : '/photographie-sous-marine';
+  const c     = MARKER_COLORS[photo.type];
+  const base  = photo.type === 'paysage' ? '/photographie-paysage-mer' : '/photographie-sous-marine';
+  const href  = photo.uid ? `${base}?photo=${encodeURIComponent(photo.uid)}` : base;
   const thumb = toThumb(photo.src);
   return `
     <div style="padding:14px;width:220px;box-sizing:border-box">
-      ${thumb ? `<img src="${thumb}" alt="" loading="lazy"
-        style="width:100%;height:130px;object-fit:cover;border-radius:8px;margin-bottom:10px;display:block"/>` : ''}
+      ${thumb ? `<a href="${href}" style="display:block;margin-bottom:10px"><img src="${thumb}" alt="" loading="lazy"
+        style="width:100%;height:130px;object-fit:cover;border-radius:8px;display:block"/></a>` : ''}
       ${photo.title ? `<p style="font-weight:600;font-size:13px;line-height:1.4;margin:0 0 4px;color:white">${photo.title}</p>` : ''}
       ${photo.lieu  ? `<p style="font-size:12px;color:rgba(255,255,255,0.45);margin:0 0 10px">📍 ${photo.lieu}</p>` : ''}
       <a href="${href}" style="
@@ -61,7 +62,7 @@ function popupHtml(photo) {
         background:${c}22;border:1px solid ${c}66;
         border-radius:8px;font-size:12px;color:${c};
         text-decoration:none;font-weight:500">
-        Voir la galerie →
+        Voir la photo →
       </a>
     </div>`;
 }
@@ -205,8 +206,8 @@ export default function CartePhotos() {
             </div>
           ) : (
             <MapContainer
-              center={[44.0, 5.5]}
-              zoom={6}
+              center={[43.25, 5.45]}
+              zoom={9}
               style={{ height: '100%', width: '100%' }}
             >
               <TileLayer url={TILE_URL} attribution={TILE_ATTR} />
@@ -217,6 +218,27 @@ export default function CartePhotos() {
 
         {!loading && photos.length === 0 && (
           <p className="text-center text-text-muted py-8">Aucune photo géolocalisée disponible pour l'instant.</p>
+        )}
+
+        {!loading && photos.length > 0 && (
+          <div className="border-t border-white/8 pt-6 space-y-3 text-text-secondary text-sm leading-relaxed max-w-3xl">
+            <p>
+              Cette carte recense les {photos.length} lieux de prise de vue de Karim Saari — des{' '}
+              <a href="/photographie-paysage-mer" className="text-white/70 hover:text-white underline underline-offset-2 transition-colors">
+                paysages de Provence et du littoral méditerranéen
+              </a>{' '}
+              aux{' '}
+              <a href="/photographie-sous-marine" className="text-white/70 hover:text-white underline underline-offset-2 transition-colors">
+                photographies sous-marines dans les Calanques de Marseille
+              </a>.
+              Chaque marqueur correspond à un lieu réel : calanque, épave, spot de plongée ou site naturel.
+            </p>
+            <p>
+              Cliquez sur un marqueur pour voir la photo et accéder directement à l'image dans la galerie.
+              Les points <span className="font-medium" style={{ color: '#00ABA8' }}>teal</span> représentent les paysages,
+              les points <span className="font-medium" style={{ color: '#0091ff' }}>bleus</span> la photographie sous-marine.
+            </p>
+          </div>
         )}
 
       </section>
