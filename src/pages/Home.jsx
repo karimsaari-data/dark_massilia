@@ -288,7 +288,7 @@ const Home = () => {
                       <span className="text-ocean-teal font-bold text-lg tabular-nums leading-none">
                         <StatCounter end={communityEnd} suffix="" />
                       </span>
-                      <span className="text-white/70 text-sm font-medium">personnes engagées pour la Méditerranée</span>
+                      <span className="text-white/70 text-sm font-medium">abonnés & membres de la communauté</span>
                     </div>
                   </div>
 
