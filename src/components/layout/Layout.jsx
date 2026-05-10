@@ -41,9 +41,8 @@ const ScrollToTop = () => {
 };
 
 const pageVariants = {
-  initial: { opacity: 0, y: 18 },
+  initial: { opacity: 0, y: 14 },
   animate: { opacity: 1, y: 0, transition: { type: 'spring', stiffness: 280, damping: 26 } },
-  exit:    { opacity: 0, y: -10, transition: { duration: 0.16, ease: [0.4, 0, 1, 1] } },
 };
 
 const Layout = () => {
@@ -89,13 +88,12 @@ const Layout = () => {
         <Navbar />
         <main id="main-content" className="flex-grow pt-[var(--navbar-h)] md:pt-[var(--navbar-h-md)]">
           <Suspense fallback={<PageLoader />}>
-            <AnimatePresence mode="wait" initial={false}>
+            <AnimatePresence initial={false}>
               <motion.div
                 key={location.pathname}
                 variants={pageVariants}
                 initial="initial"
                 animate="animate"
-                exit="exit"
               >
                 <Outlet />
               </motion.div>
