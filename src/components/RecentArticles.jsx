@@ -10,16 +10,50 @@ import { fetchPosts } from '../utils/api';
 import { CATEGORIES } from '../pages/Blog';
 
 export default function RecentArticles({ title = 'Derniers articles', count = 3, excludeSlug = null }) {
-  const [posts, setPosts] = useState([]);
+  const [posts,   setPosts]   = useState([]);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
+    setLoading(true);
     fetchPosts({ perPage: excludeSlug ? count + 1 : count })
       .then(({ posts: raw }) => {
         const filtered = excludeSlug ? raw.filter(p => p.slug !== excludeSlug) : raw;
         setPosts(filtered.slice(0, count));
       })
-      .catch(() => {});
+      .catch(() => {})
+      .finally(() => setLoading(false));
   }, [count, excludeSlug]);
+
+  /* ── Skeleton shimmer ── */
+  if (loading) {
+    return (
+      <section className="container-custom pb-12 md:pb-16" aria-hidden="true">
+        <div className="flex items-center justify-between mb-4">
+          <div className="h-8 w-48 bg-white/8 rounded-lg animate-pulse" />
+          <div className="h-5 w-36 bg-white/5 rounded-lg animate-pulse" />
+        </div>
+        <div className="flex flex-wrap gap-2 mb-8">
+          {Array.from({ length: 4 }).map((_, i) => (
+            <div key={i} className="h-7 w-28 bg-white/5 rounded-full animate-pulse" style={{ animationDelay: `${i * 60}ms` }} />
+          ))}
+        </div>
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          {Array.from({ length: count }).map((_, i) => (
+            <div key={i} className="glass-strong rounded-2xl overflow-hidden border border-white/8 flex flex-col animate-pulse" style={{ animationDelay: `${i * 80}ms` }}>
+              <div className="aspect-video bg-white/5" />
+              <div className="p-5 flex flex-col gap-3 flex-1">
+                <div className="h-3 w-24 bg-white/5 rounded" />
+                <div className="h-4 w-full bg-white/8 rounded" />
+                <div className="h-4 w-4/5 bg-white/8 rounded" />
+                <div className="h-3 w-full bg-white/5 rounded mt-1" />
+                <div className="h-3 w-3/4 bg-white/5 rounded" />
+              </div>
+            </div>
+          ))}
+        </div>
+      </section>
+    );
+  }
 
   if (posts.length === 0) return null;
 

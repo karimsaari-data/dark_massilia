@@ -82,8 +82,10 @@ const NavDropdown = ({ item }) => {
         aria-haspopup="true"
         aria-expanded={open}
         onClick={() => setOpen(o => !o)}
-        className={`flex items-center gap-1.5 px-2 py-1.5 transition-all duration-300 text-[14px] lg:text-[15px] font-extrabold tracking-[0.15em] uppercase font-display focus-ring whitespace-nowrap relative group ${
-          isActive ? 'text-astroide' : 'text-white hover:text-astroide'
+        className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg transition-all duration-300 text-[14px] lg:text-[15px] font-extrabold tracking-[0.15em] uppercase font-display focus-ring whitespace-nowrap relative group ${
+          isActive
+            ? 'text-astroide bg-astroide/10 ring-1 ring-astroide/20'
+            : 'text-white hover:text-astroide hover:bg-white/5'
         }`}
       >
         {item.name}
