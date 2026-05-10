@@ -423,11 +423,13 @@ const Home = () => {
               <motion.div
                 key={stat.label}
                 variants={FADE_IN_UP}
-                className="relative rounded-2xl border border-ocean-teal/20 bg-white/[0.04] p-6 md:p-8 text-center group hover:border-ocean-teal/40 hover:bg-white/[0.07] transition-all duration-300"
+                whileHover={{ scale: 1.04, y: -5, transition: { type: 'spring', stiffness: 350, damping: 22 } }}
+                whileTap={{ scale: 0.97, transition: { type: 'spring', stiffness: 400, damping: 25 } }}
+                className="relative rounded-2xl border border-ocean-teal/20 bg-white/[0.04] p-6 md:p-8 text-center group hover:border-ocean-teal/50 hover:bg-white/[0.07] transition-colors duration-300 cursor-pointer"
               >
                 {/* Glow on hover */}
                 <div className="absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none"
-                  style={{ boxShadow: 'inset 0 0 30px rgba(0,171,168,0.06)' }} />
+                  style={{ boxShadow: 'inset 0 0 40px rgba(0,171,168,0.10), 0 8px 32px rgba(0,171,168,0.08)' }} />
 
                 {/* Lien pleine carte — interne (Link) ou externe (a) */}
                 {stat.href && (
@@ -436,8 +438,8 @@ const Home = () => {
                     : <Link to={stat.href} className="absolute inset-0 rounded-2xl z-10" aria-label={stat.label} />
                 )}
 
-                {/* Valeur animée */}
-                <div className="text-3xl md:text-4xl lg:text-5xl font-bold gradient-text mb-1 tabular-nums pb-1">
+                {/* Valeur animée — scale léger au hover via group */}
+                <div className="text-3xl md:text-4xl lg:text-5xl font-bold gradient-text mb-1 tabular-nums pb-1 transition-transform duration-200 group-hover:scale-110 origin-center">
                   <StatCounter
                     end={stat.end}
                     suffix={stat.suffix}
