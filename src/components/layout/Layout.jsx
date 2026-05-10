@@ -1,10 +1,16 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, Suspense } from 'react';
 import { Outlet, useLocation } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ChevronUp } from 'lucide-react';
 import Navbar from './Navbar';
 import Footer from './Footer';
 import CookieBanner from '../CookieBanner';
+
+const PageLoader = () => (
+  <div className="min-h-[60vh] flex items-center justify-center">
+    <div className="spinner" />
+  </div>
+);
 
 const ScrollToTop = () => {
   const [visible, setVisible] = useState(false);
@@ -82,17 +88,19 @@ const Layout = () => {
       <div className="relative z-10 flex flex-col min-h-screen">
         <Navbar />
         <main id="main-content" className="flex-grow pt-[var(--navbar-h)] md:pt-[var(--navbar-h-md)]">
-          <AnimatePresence mode="wait" initial={false}>
-            <motion.div
-              key={location.pathname}
-              variants={pageVariants}
-              initial="initial"
-              animate="animate"
-              exit="exit"
-            >
-              <Outlet />
-            </motion.div>
-          </AnimatePresence>
+          <Suspense fallback={<PageLoader />}>
+            <AnimatePresence mode="wait" initial={false}>
+              <motion.div
+                key={location.pathname}
+                variants={pageVariants}
+                initial="initial"
+                animate="animate"
+                exit="exit"
+              >
+                <Outlet />
+              </motion.div>
+            </AnimatePresence>
+          </Suspense>
         </main>
         <Footer />
         <CookieBanner />
