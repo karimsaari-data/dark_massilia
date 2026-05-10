@@ -27,11 +27,13 @@ export const SOCIAL_LINKS = {
 // Statistiques sociales — source de vérité (fallback avant chargement Supabase)
 export const FACEBOOK_GROUP_MEMBERS = 64900;
 
+// ⚠️  Ces valeurs sont le fallback affiché AVANT que Supabase ne réponde.
+// Mets-les à jour ici chaque mois OU via l'admin (/admin → Stats réseaux).
 export const SOCIAL_STATS_DEFAULTS = {
   total_community: 132000, // abonnés toutes plateformes confondues
-  instagram:        24.2,  // en K (suffix 'K', decimals 1)
-  tiktok:           22.1,  // en K (suffix 'K', decimals 1)
-  facebook_pages:   17.8,  // en milliers (×1 000 pour affichage = 17 800)
+  instagram:        23.8,  // en K (suffix 'K', decimals 1)
+  tiktok:           22.3,  // en K (suffix 'K', decimals 1)
+  facebook_pages:   17.8,  // en milliers (page + perso cumulé)
 };
 
 export const NAV_LINKS = [
