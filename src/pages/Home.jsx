@@ -281,6 +281,17 @@ const Home = () => {
                     pour préserver durablement la biodiversité de notre Méditerranée.
                   </p>
 
+                  {/* Compteur communauté — animé au chargement */}
+                  <div className="flex items-center justify-center md:justify-start mb-8">
+                    <div className="inline-flex items-center gap-3 px-5 py-2.5 rounded-full glass border border-ocean-teal/25 shadow-[0_0_20px_rgba(0,171,168,0.08)]">
+                      <span className="w-2 h-2 rounded-full bg-ocean-teal animate-pulse flex-shrink-0" aria-hidden="true" />
+                      <span className="text-ocean-teal font-bold text-lg tabular-nums leading-none">
+                        <StatCounter end={communityEnd} suffix="" />
+                      </span>
+                      <span className="text-white/70 text-sm font-medium">personnes engagées pour la Méditerranée</span>
+                    </div>
+                  </div>
+
                   {/* Hero CTAs */}
                   <div className="flex flex-col sm:flex-row items-center justify-center md:justify-start gap-4 mt-2">
                     <a
