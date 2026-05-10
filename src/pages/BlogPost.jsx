@@ -256,6 +256,11 @@ export default function BlogPost() {
                   decoding="sync"
                   width={post.imageWidth ?? 1280}
                   height={post.imageHeight ?? 720}
+                  onError={(e) => {
+                    if (post.imageFallback && e.target.src !== post.imageFallback) {
+                      e.target.src = post.imageFallback;
+                    }
+                  }}
                 />
               </div>
             )}

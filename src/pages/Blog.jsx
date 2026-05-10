@@ -313,6 +313,11 @@ export function PostCard({ post, priority = false }) {
             decoding={priority ? 'sync' : 'async'}
             width="640"
             height="360"
+            onError={(e) => {
+              if (post.imageFallback && e.target.src !== post.imageFallback) {
+                e.target.src = post.imageFallback;
+              }
+            }}
           />
         </Link>
       ) : (

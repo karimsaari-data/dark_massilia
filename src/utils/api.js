@@ -103,6 +103,8 @@ export function normalizePost(post) {
   const imageSrc = rawImageSrc
     ? rawImageSrc.replace(/\.(png|jpe?g)$/i, '.webp')
     : null;
+  // URL originale conservée comme fallback si le WebP n'existe pas (ShortPixel non traité)
+  const imageFallback = rawImageSrc ?? null;
 
   const wpTerms      = post._embedded?.['wp:term'] ?? [];
   const categoryName = wpTerms[0]?.[0]?.name ?? null;
@@ -122,10 +124,11 @@ export function normalizePost(post) {
     modified:      post.modified,
     dateFormatted: formatDate(post.date),
     image:         imageSrc,
+    imageFallback,
     imageSrcset:   buildSrcset(media),
     imageWidth:    media?.media_details?.width  ?? 1280,
     imageHeight:   media?.media_details?.height ?? 720,
-    imageAlt:      media?.alt_text || decodeEntities(rawTitle),
+    imageAlt:      decodeEntities(media?.alt_text || rawTitle),
     author:        author?.name    ?? 'Dark Massilia',
     categories:    post.categories ?? [],
     categoryName,

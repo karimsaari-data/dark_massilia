@@ -100,6 +100,11 @@ export default function RecentArticles({ title = 'Derniers articles', count = 3,
                   className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                   loading="lazy"
                   decoding="async"
+                  onError={(e) => {
+                    if (post.imageFallback && e.target.src !== post.imageFallback) {
+                      e.target.src = post.imageFallback;
+                    }
+                  }}
                 />
               ) : (
                 <div
