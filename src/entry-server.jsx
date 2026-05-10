@@ -30,7 +30,8 @@ import EchappeesBelles from './pages/EchappeesBelles';
 import Meduses         from './pages/Meduses';
 import Sources    from './pages/Sources';
 // CarteSSR = version sans Leaflet (pas de window en Node)
-import CarteSSR      from './pages/CarteSSR';
+import CarteSSR         from './pages/CarteSSR';
+import CartePhotosSSR   from './pages/CartePhotosSSR';
 import LocalGuide    from './pages/LocalGuide';
 // AdminCarteSSR = version statique (pas de sessionStorage en Node)
 import AdminCarteSSR from './pages/AdminCarteSSR';
@@ -79,6 +80,7 @@ export function render(url) {
             <Route path="donnees-scientifiques"              element={<Sources />} />
             <Route path="contact"                            element={<Contact />} />
             <Route path="carte-calanques"                    element={<CarteSSR />} />
+            <Route path="carte-photos"                        element={<CartePhotosSSR />} />
             <Route path="local-guide-marseille"              element={<LocalGuide />} />
             <Route path="admin"                              element={<AdminCarteSSR />} />
             <Route path="les-francais-yann-arthus-bertrand" element={<Yab />} />

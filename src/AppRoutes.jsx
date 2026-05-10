@@ -42,6 +42,7 @@ const DossierPresse              = lazy(() => import('./pages/DossierPresse'));
 const BlogCategory               = lazy(() => import('./pages/BlogCategory'));
 const GroupeFacebook             = lazy(() => import('./pages/GroupeFacebook'));
 const AccesMassifs               = lazy(() => import('./pages/AccesMassifs'));
+const CartePhotos                = lazy(() => import('./pages/CartePhotos'));
 
 const PageLoader = () => (
   <div className="min-h-screen flex items-center justify-center">
@@ -99,6 +100,7 @@ export default function AppRoutes() {
             <Route path="donnees-scientifiques"          element={<Sources />} />
             <Route path="contact"                        element={<Contact />} />
             <Route path="carte-calanques"                element={<Carte />} />
+            <Route path="carte-photos"                   element={<CartePhotos />} />
             <Route path="acces-massifs-calanques"        element={<AccesMassifs />} />
             <Route path="local-guide-marseille"          element={<LocalGuide />} />
             <Route path="les-francais-yann-arthus-bertrand" element={<Yab />} />

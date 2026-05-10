@@ -47,6 +47,7 @@ export const NAV_LINKS = [
       { name: 'Photos sous-marines',         path: '/photographie-sous-marine',              icon: 'Camera'     },
       { name: 'Photos de paysages',          path: '/photographie-paysage-mer',              icon: 'Camera'     },
       { name: 'Yann Arthus-Bertrand',        path: '/les-francais-yann-arthus-bertrand',     icon: 'Camera'     },
+      { name: 'Carte des photos',            path: '/carte-photos',                          icon: 'MapPin'     },
     ],
   },
   {
