@@ -351,14 +351,6 @@ export const SEO_PAGES = {
           name: 'Karim Saari — Dark Massilia',
           url: BASE_URL,
           inLanguage: 'fr-FR',
-          potentialAction: {
-            '@type': 'SearchAction',
-            target: {
-              '@type': 'EntryPoint',
-              urlTemplate: `${BASE_URL}/blog?q={search_term_string}`,
-            },
-            'query-input': 'required name=search_term_string',
-          },
         },
       ],
     },

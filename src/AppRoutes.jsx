@@ -114,6 +114,7 @@ export default function AppRoutes() {
             <Route path="photos"      element={<Navigate to="/photographie-paysage-mer" replace />} />
             <Route path="reseaux"     element={<Navigate to="/communaute" replace />} />
             <Route path="twitter"     element={<Navigate to="/actualites" replace />} />
+            <Route path="actu-x"      element={<Navigate to="/actualites" replace />} />
             <Route path="arte"        element={<Navigate to="/sauver-marseille-documentaire-arte" replace />} />
             <Route path="sources"     element={<Navigate to="/donnees-scientifiques" replace />} />
             <Route path="carte"       element={<Navigate to="/carte-calanques" replace />} />

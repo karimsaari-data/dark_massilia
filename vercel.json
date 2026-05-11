@@ -1,12 +1,33 @@
 {
   "redirects": [
-    { "source": "/home",         "destination": "/", "permanent": true },
-    { "source": "/home/",        "destination": "/", "permanent": true },
-    { "source": "/index.html",   "destination": "/", "permanent": true },
-    { "source": "/photos.html",  "destination": "/photos", "permanent": true },
-    { "source": "/videos.html",  "destination": "/videos", "permanent": true },
-    { "source": "/medias.html",  "destination": "/medias", "permanent": true },
-    { "source": "/arte.html",    "destination": "/arte", "permanent": true }
+    { "source": "/home",              "destination": "/",                                        "permanent": true },
+    { "source": "/home/",             "destination": "/",                                        "permanent": true },
+    { "source": "/home/:path*",       "destination": "/",                                        "permanent": true },
+    { "source": "/index.html",   "destination": "/",                                        "permanent": true },
+    { "source": "/index",        "destination": "/",                                        "permanent": true },
+
+    { "source": "/photos.html",  "destination": "/photographie-paysage-mer",               "permanent": true },
+    { "source": "/photos",       "destination": "/photographie-paysage-mer",               "permanent": true },
+
+    { "source": "/videos.html",  "destination": "/videos",                                 "permanent": true },
+
+    { "source": "/medias.html",  "destination": "/presse",                                 "permanent": true },
+    { "source": "/medias",       "destination": "/presse",                                 "permanent": true },
+
+    { "source": "/arte.html",    "destination": "/sauver-marseille-documentaire-arte",     "permanent": true },
+    { "source": "/arte",         "destination": "/sauver-marseille-documentaire-arte",     "permanent": true },
+
+    { "source": "/missions",     "destination": "/depollution-marine",                     "permanent": true },
+    { "source": "/sources",      "destination": "/donnees-scientifiques",                  "permanent": true },
+    { "source": "/local-guide",  "destination": "/local-guide-marseille",                  "permanent": true },
+    { "source": "/carte",        "destination": "/carte-calanques",                        "permanent": true },
+    { "source": "/reseaux",      "destination": "/communaute",                             "permanent": true },
+    { "source": "/twitter",      "destination": "/actualites",                             "permanent": true },
+    { "source": "/actu-x",       "destination": "/actualites",                             "permanent": true },
+    { "source": "/actu-x.html",  "destination": "/actualites",                             "permanent": true },
+
+    { "source": "/blog/🌊-proteger-notre-grande-bleue-4-gestes-simples-pour-sauver-la-mediterranee",  "destination": "/blog/proteger-notre-grande-bleue-4-gestes-simples-pour-sauver-la-mediterranee", "permanent": true },
+    { "source": "/blog/%F0%9F%8C%8A-proteger-notre-grande-bleue-4-gestes-simples-pour-sauver-la-mediterranee", "destination": "/blog/proteger-notre-grande-bleue-4-gestes-simples-pour-sauver-la-mediterranee", "permanent": true }
   ],
   "rewrites": [
     { "source": "/(.*)", "destination": "/index.html" }
