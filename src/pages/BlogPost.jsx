@@ -171,7 +171,7 @@ export default function BlogPost() {
   const rawExcerpt     = post?.excerpt ?? 'Actualités et actions de dépollution marine par Dark Massilia.';
   const seoDescription = rawExcerpt.length > 155 ? rawExcerpt.slice(0, 152) + '…' : rawExcerpt;
   const seoImage       = post?.image   ?? `${BASE_URL}/assets/og-social-card.jpg`;
-  const seoCanonical   = `${BASE_URL}/blog/${slug}/`;
+  const seoCanonical   = `${BASE_URL}/blog/${slug}`;
 
   return (
     <div className="min-h-screen py-24">

@@ -1,7 +1,8 @@
 {
   "redirects": [
-    { "source": "/home",         "destination": "/",                                        "permanent": true },
-    { "source": "/home/",        "destination": "/",                                        "permanent": true },
+    { "source": "/home",              "destination": "/",                                        "permanent": true },
+    { "source": "/home/",             "destination": "/",                                        "permanent": true },
+    { "source": "/home/:path*",       "destination": "/",                                        "permanent": true },
     { "source": "/index.html",   "destination": "/",                                        "permanent": true },
     { "source": "/index",        "destination": "/",                                        "permanent": true },
 
@@ -23,7 +24,10 @@
     { "source": "/reseaux",      "destination": "/communaute",                             "permanent": true },
     { "source": "/twitter",      "destination": "/actualites",                             "permanent": true },
     { "source": "/actu-x",       "destination": "/actualites",                             "permanent": true },
-    { "source": "/actu-x.html",  "destination": "/actualites",                             "permanent": true }
+    { "source": "/actu-x.html",  "destination": "/actualites",                             "permanent": true },
+
+    { "source": "/blog/🌊-proteger-notre-grande-bleue-4-gestes-simples-pour-sauver-la-mediterranee",  "destination": "/blog/proteger-notre-grande-bleue-4-gestes-simples-pour-sauver-la-mediterranee", "permanent": true },
+    { "source": "/blog/%F0%9F%8C%8A-proteger-notre-grande-bleue-4-gestes-simples-pour-sauver-la-mediterranee", "destination": "/blog/proteger-notre-grande-bleue-4-gestes-simples-pour-sauver-la-mediterranee", "permanent": true }
   ],
   "rewrites": [
     { "source": "/(.*)", "destination": "/index.html" }
