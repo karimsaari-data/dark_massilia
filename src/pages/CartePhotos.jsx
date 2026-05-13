@@ -243,8 +243,8 @@ export default function CartePhotos() {
         )}
       </section>
 
-      {/* Carte pleine largeur */}
-      <div style={{ height: '70vh', minHeight: 450 }}>
+      {/* Carte pleine largeur — isolate confine les z-index Leaflet sous la navbar */}
+      <div className="isolate" style={{ height: '70vh', minHeight: 450 }}>
         {(loading || !isMounted) ? (
           <div className="w-full h-full bg-white/5 flex items-center justify-center">
             <div className="spinner" />
