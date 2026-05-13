@@ -1220,9 +1220,9 @@ export const SEO_PAGES = {
     },
   },
   '/communaute-calanques': {
-    title: 'Groupe Facebook Calanques Marseille — La plus grande communauté',
+    title: 'Groupe Facebook Calanques Marseille — Plus de 65 000 membres',
     description:
-      'La plus grande communauté en ligne dédiée aux Calanques de Marseille — passionnés de nature, photo et protection du littoral méditerranéen. Fondé par Karim Saari.',
+      'Plus de 65 000 passionnés des Calanques de Marseille — nature, photo et protection du littoral méditerranéen. La plus grande communauté en ligne, fondée par Karim Saari.',
     keywords: 'groupe facebook calanques marseille, amoureux calanques, communauté calanques en ligne, dark massilia groupe',
     canonical: `${BASE_URL}/communaute-calanques`,
     image: `${BASE_URL}/images/groupe%20des%20amoureux%20des%20calanques_1200w.webp`,
@@ -1234,7 +1234,7 @@ export const SEO_PAGES = {
           '@type': 'WebPage',
           '@id': `${BASE_URL}/communaute-calanques`,
           url: `${BASE_URL}/communaute-calanques`,
-          name: 'Groupe Facebook Calanques Marseille — La plus grande communauté',
+          name: 'Groupe Facebook Calanques Marseille — Plus de 65 000 membres',
           description:
             'La plus grande communauté en ligne dédiée aux Calanques de Marseille et au littoral méditerranéen. Photos, actions environnementales, randonnées et sensibilisation à la protection de la mer.',
           isPartOf: { '@id': `${BASE_URL}/#website` },
