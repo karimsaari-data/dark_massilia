@@ -128,20 +128,34 @@ const POPUP_CSS = `
   .marker-cluster { background: transparent !important; }
 `;
 
+const SUBCATS = {
+  paysage:     [
+    { key: 'mer',       label: 'Mer'          },
+    { key: 'terre',     label: 'Terre'        },
+    { key: 'horizons',  label: 'Horizons'     },
+  ],
+  sous_marine: [
+    { key: 'depollution',      label: 'Dépollution'     },
+    { key: 'biodiversite',     label: 'Biodiversité'    },
+    { key: 'caracterisation',  label: 'Caractérisation' },
+  ],
+};
+
 export default function CartePhotos() {
   const [photos, setPhotos]       = useState([]);
   const [loading, setLoading]     = useState(true);
   const [filter, setFilter]       = useState('all');
+  const [subFilter, setSubFilter] = useState(null);
   const [isMounted, setIsMounted] = useState(false);
 
   useEffect(() => {
     setIsMounted(true);
     Promise.all([
       supabase.from('photos_paysage')
-        .select('uid,src,title,lieu,lat,lng')
+        .select('uid,src,title,lieu,lat,lng,categorie')
         .eq('visible', true).not('lat','is',null).not('lng','is',null),
       supabase.from('photos_sous_marine')
-        .select('uid,src,title,lieu,lat,lng')
+        .select('uid,src,title,lieu,lat,lng,categorie')
         .eq('visible', true).not('lat','is',null).not('lng','is',null),
     ]).then(([{ data: paysage }, { data: sousMarine }]) => {
       setPhotos([
@@ -152,16 +166,25 @@ export default function CartePhotos() {
     });
   }, []);
 
-  const filtered        = filter === 'all' ? photos : photos.filter(p => p.type === filter);
+  function handleMainFilter(key) {
+    setFilter(key);
+    setSubFilter(null);
+  }
+
+  const byType      = filter === 'all' ? photos : photos.filter(p => p.type === filter);
+  const filtered    = subFilter ? byType.filter(p => p.categorie === subFilter) : byType;
+
   const paysageCount    = photos.filter(p => p.type === 'paysage').length;
   const sousMarineCount = photos.filter(p => p.type === 'sous_marine').length;
+
+  const subcats = SUBCATS[filter] ?? [];
 
   return (
     <>
       <SEO {...SEO_PAGES['/carte-photos']} />
       <style>{POPUP_CSS}</style>
 
-      <section className="container-custom pt-8 pb-4 space-y-4">
+      <section className="container-custom pt-8 pb-4 space-y-3">
         <div>
           <h1 className="text-3xl md:text-4xl font-bold text-white mb-2">Carte des photos</h1>
           <p className="text-text-secondary text-lg">
@@ -169,15 +192,16 @@ export default function CartePhotos() {
           </p>
         </div>
 
+        {/* Niveau 1 — type principal */}
         <div className="flex flex-wrap items-center gap-2">
           {[
-            { key: 'all',         label: `Tout (${photos.length})`,          color: null         },
-            { key: 'paysage',     label: `Paysages (${paysageCount})`,       color: '#00ABA8'    },
-            { key: 'sous_marine', label: `Sous-marine (${sousMarineCount})`, color: '#0091ff'    },
+            { key: 'all',         label: `Tout (${photos.length})`,          color: null      },
+            { key: 'paysage',     label: `Paysages (${paysageCount})`,       color: '#00ABA8' },
+            { key: 'sous_marine', label: `Sous-marine (${sousMarineCount})`, color: '#0091ff' },
           ].map(({ key, label, color }) => (
             <button
               key={key}
-              onClick={() => setFilter(key)}
+              onClick={() => handleMainFilter(key)}
               className={`px-4 py-1.5 rounded-full text-sm font-medium border transition-colors flex items-center gap-2 ${
                 filter === key
                   ? 'bg-white/15 border-white/40 text-white'
@@ -194,6 +218,29 @@ export default function CartePhotos() {
             </button>
           ))}
         </div>
+
+        {/* Niveau 2 — sous-catégories */}
+        {subcats.length > 0 && (
+          <div className="flex flex-wrap items-center gap-2 pl-1">
+            <span className="text-text-muted text-xs mr-1">Affiner :</span>
+            {subcats.map(({ key, label }) => {
+              const count = byType.filter(p => p.categorie === key).length;
+              return (
+                <button
+                  key={key}
+                  onClick={() => setSubFilter(subFilter === key ? null : key)}
+                  className={`px-3 py-1 rounded-full text-xs font-medium border transition-colors ${
+                    subFilter === key
+                      ? 'bg-white/20 border-white/50 text-white'
+                      : 'border-white/10 text-text-muted hover:border-white/25 hover:text-white'
+                  }`}
+                >
+                  {label} ({count})
+                </button>
+              );
+            })}
+          </div>
+        )}
       </section>
 
       {/* Carte pleine largeur */}
