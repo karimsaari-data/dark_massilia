@@ -251,8 +251,8 @@ export default function CartePhotos() {
           </div>
         ) : (
           <MapContainer
-            center={[43.25, 5.45]}
-            zoom={9}
+            center={[43.22, 5.45]}
+            zoom={11}
             style={{ height: '100%', width: '100%' }}
           >
             <TileLayer url={TILE_URL} attribution={TILE_ATTR} />
