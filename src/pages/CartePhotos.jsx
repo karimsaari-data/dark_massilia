@@ -449,29 +449,25 @@ export default function CartePhotos() {
         </div>
       </div>
 
-      {/* ── Texte éditorial sous la carte ── */}
-      <section className="container-custom py-6">
-        {!loading && photos.length > 0 && (
-          <div className="border-t border-white/8 pt-6 space-y-3 text-text-secondary text-sm leading-relaxed max-w-3xl">
-            <p>
-              Cette carte recense les {photos.length} lieux de prise de vue de Karim Saari — des{' '}
-              <a href="/photographie-paysage-mer" className="text-white/70 hover:text-white underline underline-offset-2 transition-colors">
-                paysages de Provence et du littoral méditerranéen
-              </a>{' '}
-              aux{' '}
-              <a href="/photographie-sous-marine" className="text-white/70 hover:text-white underline underline-offset-2 transition-colors">
-                photographies sous-marines dans les Calanques de Marseille
-              </a>.
-              Chaque marqueur correspond à un lieu réel : calanque, épave, spot de plongée ou site naturel.
-            </p>
-            <p>
-              Cliquez sur un marqueur pour voir la photo et accéder directement à l'image dans la galerie.
-              Les points <span className="font-medium" style={{ color: '#00ABA8' }}>teal</span> représentent les paysages,
-              les points <span className="font-medium" style={{ color: '#0091ff' }}>bleus</span> la photographie sous-marine.
-            </p>
-          </div>
-        )}
-      </section>
+      {/* ── Barre légende ── */}
+      {!loading && photos.length > 0 && (
+        <div className="border-t border-white/8 px-6 py-3 flex flex-wrap items-center gap-x-6 gap-y-2"
+          style={{ background: 'rgba(4,12,24,0.85)' }}>
+          <span className="text-white/30 text-xs">{photos.length} lieux cartographiés</span>
+          <span className="flex items-center gap-2 text-xs text-white/50">
+            <span className="w-2.5 h-2.5 rounded-full flex-shrink-0" style={{ background: '#00ABA8', boxShadow: '0 0 6px #00ABA8' }} />
+            Paysages
+          </span>
+          <span className="flex items-center gap-2 text-xs text-white/50">
+            <span className="w-2.5 h-2.5 rounded-full flex-shrink-0" style={{ background: '#0091ff', boxShadow: '0 0 6px #0091ff' }} />
+            Sous-marine
+          </span>
+          <span className="ml-auto flex items-center gap-3 text-xs text-white/30">
+            <a href="/photographie-paysage-mer" className="hover:text-white/70 transition-colors">Galerie paysages →</a>
+            <a href="/photographie-sous-marine" className="hover:text-white/70 transition-colors">Galerie sous-marine →</a>
+          </span>
+        </div>
+      )}
     </>
   );
 }
