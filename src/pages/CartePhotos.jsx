@@ -53,11 +53,11 @@ function popupHtml(photo) {
   const thumb = toThumb(photo.src);
   return `
     <div style="padding:14px;width:220px;box-sizing:border-box">
-      ${thumb ? `<a href="${href}" style="display:block;margin-bottom:10px"><img src="${thumb}" alt="" loading="lazy"
+      ${thumb ? `<a href="${href}" target="_blank" rel="noopener" style="display:block;margin-bottom:10px"><img src="${thumb}" alt="" loading="lazy"
         style="width:100%;height:130px;object-fit:cover;border-radius:8px;display:block"/></a>` : ''}
       ${photo.title ? `<p style="font-weight:600;font-size:13px;line-height:1.4;margin:0 0 4px;color:white">${photo.title}</p>` : ''}
       ${photo.lieu  ? `<p style="font-size:12px;color:rgba(255,255,255,0.45);margin:0 0 10px">📍 ${photo.lieu}</p>` : ''}
-      <a href="${href}" style="
+      <a href="${href}" target="_blank" rel="noopener" style="
         display:block;text-align:center;padding:6px 12px;
         background:${c}22;border:1px solid ${c}66;
         border-radius:8px;font-size:12px;color:${c};
