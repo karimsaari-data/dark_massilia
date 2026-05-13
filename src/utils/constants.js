@@ -81,7 +81,7 @@ export const NAV_LINKS = [
     icon: 'MapPin',
     description: 'Carte interactive, accès aux massifs, actualités du Parc national et communauté des amoureux des Calanques.',
     children: [
-      { name: 'Groupe Facebook Calanques',       path: '/communaute-calanques',    icon: 'Users',     isHub: true, hubDesc: `${FACEBOOK_GROUP_MEMBERS.toLocaleString('fr-FR')} membres — la plus grande communauté des Calanques` },
+      { name: 'Groupe Facebook Calanques',       path: '/communaute-calanques',    icon: 'Users',     isHub: true, hubDesc: `Plus de ${FACEBOOK_GROUP_MEMBERS.toLocaleString('fr-FR')} membres — la plus grande communauté des Calanques` },
       { name: 'News Parc des Calanques',         path: '/actualites',              icon: 'Newspaper'  },
       { name: 'Carte interactive des Calanques', path: '/carte-calanques',         icon: 'MapPin'     },
       { name: 'Accès aux massifs forestiers',    path: '/acces-massifs-calanques', icon: 'Navigation' },

@@ -437,7 +437,7 @@ export default function GroupeFacebook() {
               },
               {
                 q: 'Combien de membres compte le groupe Calanques ?',
-                a: 'Le groupe réunit plus de 64 900 membres actifs, ce qui en fait la plus grande communauté en ligne dédiée aux Calanques de Marseille et au littoral de Port-Cros.',
+                a: 'Le groupe réunit plus de 65 000 membres actifs, ce qui en fait la plus grande communauté en ligne dédiée aux Calanques de Marseille et au littoral de Port-Cros.',
               },
               {
                 q: 'Quel type de contenu peut-on publier dans le groupe ?',
