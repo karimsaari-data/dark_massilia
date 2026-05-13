@@ -161,8 +161,7 @@ export default function CartePhotos() {
       <SEO {...SEO_PAGES['/carte-photos']} />
       <style>{POPUP_CSS}</style>
 
-      <section className="container-custom py-8 space-y-6">
-
+      <section className="container-custom pt-8 pb-4 space-y-4">
         <div>
           <h1 className="text-3xl md:text-4xl font-bold text-white mb-2">Carte des photos</h1>
           <p className="text-text-secondary text-lg">
@@ -195,27 +194,27 @@ export default function CartePhotos() {
             </button>
           ))}
         </div>
+      </section>
 
-        <div
-          className="rounded-2xl overflow-hidden border border-white/10"
-          style={{ height: '68vh', minHeight: 400 }}
-        >
-          {(loading || !isMounted) ? (
-            <div className="w-full h-full bg-white/5 flex items-center justify-center">
-              <div className="spinner" />
-            </div>
-          ) : (
-            <MapContainer
-              center={[43.25, 5.45]}
-              zoom={9}
-              style={{ height: '100%', width: '100%' }}
-            >
-              <TileLayer url={TILE_URL} attribution={TILE_ATTR} />
-              <ClusterLayer photos={filtered} />
-            </MapContainer>
-          )}
-        </div>
+      {/* Carte pleine largeur */}
+      <div style={{ height: '70vh', minHeight: 450 }}>
+        {(loading || !isMounted) ? (
+          <div className="w-full h-full bg-white/5 flex items-center justify-center">
+            <div className="spinner" />
+          </div>
+        ) : (
+          <MapContainer
+            center={[43.25, 5.45]}
+            zoom={9}
+            style={{ height: '100%', width: '100%' }}
+          >
+            <TileLayer url={TILE_URL} attribution={TILE_ATTR} />
+            <ClusterLayer photos={filtered} />
+          </MapContainer>
+        )}
+      </div>
 
+      <section className="container-custom py-6">
         {!loading && photos.length === 0 && (
           <p className="text-center text-text-muted py-8">Aucune photo géolocalisée disponible pour l'instant.</p>
         )}
@@ -240,7 +239,6 @@ export default function CartePhotos() {
             </p>
           </div>
         )}
-
       </section>
     </>
   );
