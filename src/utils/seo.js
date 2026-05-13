@@ -1220,7 +1220,7 @@ export const SEO_PAGES = {
     },
   },
   '/communaute-calanques': {
-    title: 'Groupe Facebook Calanques Marseille — 64 900 membres',
+    title: 'Groupe Facebook Calanques Marseille — 65 000 membres',
     description:
       'La plus grande communauté sur les Calanques de Marseille — passionnés de nature, photo et protection du littoral méditerranéen. Fondé par Karim Saari.',
     keywords: 'groupe facebook calanques marseille, amoureux calanques, communauté calanques en ligne, dark massilia groupe',
@@ -1234,7 +1234,7 @@ export const SEO_PAGES = {
           '@type': 'WebPage',
           '@id': `${BASE_URL}/communaute-calanques`,
           url: `${BASE_URL}/communaute-calanques`,
-          name: 'Groupe Facebook Calanques Marseille — 64 900 membres',
+          name: 'Groupe Facebook Calanques Marseille — 65 000 membres',
           description:
             'La plus grande communauté en ligne dédiée aux Calanques de Marseille et au littoral méditerranéen. Photos, actions environnementales, randonnées et sensibilisation à la protection de la mer.',
           isPartOf: { '@id': `${BASE_URL}/#website` },
@@ -1267,7 +1267,7 @@ export const SEO_PAGES = {
               name: 'Combien de membres compte le groupe Calanques ?',
               acceptedAnswer: {
                 '@type': 'Answer',
-                text: 'Le groupe réunit plus de 64 900 membres actifs, ce qui en fait la plus grande communauté en ligne dédiée aux Calanques de Marseille et au littoral de Port-Cros.',
+                text: 'Le groupe réunit plus de 65 000 membres actifs, ce qui en fait la plus grande communauté en ligne dédiée aux Calanques de Marseille et au littoral de Port-Cros.',
               },
             },
             {

@@ -25,7 +25,7 @@ export const SOCIAL_LINKS = {
 };
 
 // Statistiques sociales — source de vérité (fallback avant chargement Supabase)
-export const FACEBOOK_GROUP_MEMBERS = 64900;
+export const FACEBOOK_GROUP_MEMBERS = 65000;
 
 // ⚠️  Ces valeurs sont le fallback affiché AVANT que Supabase ne réponde.
 // Mets-les à jour ici chaque mois OU via l'admin (/admin → Stats réseaux).
