@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { MapContainer, TileLayer, useMap } from 'react-leaflet';
 import L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
+import { ChevronLeft, ChevronRight } from 'lucide-react';
 import { supabase } from '../lib/supabase';
 import SEO from '../components/SEO';
 import { SEO_PAGES } from '../utils/seo';
@@ -67,7 +68,6 @@ function popupHtml(photo) {
     </div>`;
 }
 
-/* Composant interne — charge le plugin via import() dynamique (UMD attend L global) */
 function ClusterLayer({ photos }) {
   const map = useMap();
 
@@ -75,7 +75,7 @@ function ClusterLayer({ photos }) {
     if (!photos.length) return;
     let group;
 
-    window.L = L; // exposer L globalement pour le plugin UMD
+    window.L = L;
     import('leaflet.markercluster').then(() => {
       group = L.markerClusterGroup({
         iconCreateFunction: clusterIcon,
@@ -126,6 +126,26 @@ const POPUP_CSS = `
   .leaflet-control-attribution { background: rgba(11,28,45,0.8) !important; color: rgba(255,255,255,0.35) !important; }
   .leaflet-control-attribution a { color: rgba(255,255,255,0.5) !important; }
   .marker-cluster { background: transparent !important; }
+
+  /* Layout sidebar + carte */
+  .carte-layout {
+    height: calc(100dvh - var(--navbar-h));
+  }
+  @media (min-width: 768px) {
+    .carte-layout {
+      height: calc(100dvh - var(--navbar-h-md));
+    }
+  }
+  /* Mobile : sidebar en overlay */
+  @media (max-width: 767px) {
+    .carte-sidebar {
+      position: absolute !important;
+      top: 0;
+      left: 0;
+      z-index: 500;
+      height: 100%;
+    }
+  }
 `;
 
 const SUBCATS = {
@@ -147,6 +167,9 @@ export default function CartePhotos() {
   const [filter, setFilter]       = useState('all');
   const [subFilter, setSubFilter] = useState(null);
   const [isMounted, setIsMounted] = useState(false);
+  const [sidebarOpen, setSidebarOpen] = useState(
+    () => typeof window !== 'undefined' ? window.innerWidth >= 768 : true
+  );
 
   useEffect(() => {
     setIsMounted(true);
@@ -171,8 +194,8 @@ export default function CartePhotos() {
     setSubFilter(null);
   }
 
-  const byType      = filter === 'all' ? photos : photos.filter(p => p.type === filter);
-  const filtered    = subFilter ? byType.filter(p => p.categorie === subFilter) : byType;
+  const byType   = filter === 'all' ? photos : photos.filter(p => p.type === filter);
+  const filtered = subFilter ? byType.filter(p => p.categorie === subFilter) : byType;
 
   const paysageCount    = photos.filter(p => p.type === 'paysage').length;
   const sousMarineCount = photos.filter(p => p.type === 'sous_marine').length;
@@ -184,88 +207,250 @@ export default function CartePhotos() {
       <SEO {...SEO_PAGES['/carte-photos']} />
       <style>{POPUP_CSS}</style>
 
-      <section className="container-custom pt-8 pb-4 space-y-3">
-        <div>
-          <h1 className="text-3xl md:text-4xl font-bold text-white mb-2">Carte des photos</h1>
-          <p className="text-text-secondary text-lg">
-            Tous les lieux de prise de vue — Méditerranée, Provence & ailleurs
-          </p>
-        </div>
+      {/* ── Layout pleine hauteur : sidebar + carte ── */}
+      <div className="carte-layout relative flex overflow-hidden">
 
-        {/* Niveau 1 — type principal */}
-        <div className="flex flex-wrap items-center gap-2">
-          {[
-            { key: 'all',         label: `Tout (${photos.length})`,          color: null      },
-            { key: 'paysage',     label: `Paysages (${paysageCount})`,       color: '#00ABA8' },
-            { key: 'sous_marine', label: `Sous-marine (${sousMarineCount})`, color: '#0091ff' },
-          ].map(({ key, label, color }) => (
-            <button
-              key={key}
-              onClick={() => handleMainFilter(key)}
-              className={`px-4 py-1.5 rounded-full text-sm font-medium border transition-colors flex items-center gap-2 ${
-                filter === key
-                  ? 'bg-white/15 border-white/40 text-white'
-                  : 'border-white/10 text-text-muted hover:border-white/25 hover:text-white'
-              }`}
-            >
-              {color && (
-                <span
-                  className="w-2.5 h-2.5 rounded-full inline-block flex-shrink-0"
-                  style={{ background: color, boxShadow: `0 0 6px ${color}` }}
-                />
+        {/* Backdrop mobile (ferme la sidebar au clic) */}
+        {sidebarOpen && (
+          <div
+            className="md:hidden absolute inset-0 bg-black/50 z-[499]"
+            onClick={() => setSidebarOpen(false)}
+          />
+        )}
+
+        {/* ── SIDEBAR ── */}
+        <aside
+          className="carte-sidebar flex-shrink-0 border-r border-white/10 transition-[width] duration-300 ease-in-out overflow-hidden"
+          style={{ width: sidebarOpen ? 300 : 0, background: 'rgba(4,12,24,0.98)' }}
+        >
+          <div className="w-[300px] h-full flex flex-col">
+
+            {/* En-tête */}
+            <div className="px-5 pt-6 pb-5 border-b border-white/8 flex-shrink-0">
+              <h1 className="text-xs font-black uppercase tracking-[0.15em] text-white/50 mb-1">
+                Carte des photos
+              </h1>
+              <p className="text-white text-lg font-bold leading-tight">
+                Filtrez vos recherches
+              </p>
+            </div>
+
+            {/* ── Filtres principaux ── */}
+            <div className="px-5 py-5 border-b border-white/8 flex-shrink-0">
+              <p className="text-[11px] font-black uppercase tracking-[0.12em] text-white/40 mb-3">
+                Filtrer par type :
+              </p>
+              <div className="space-y-1">
+                {[
+                  { key: 'all',         label: 'Toutes les photos', count: photos.length,   color: null,      desc: 'Paysage & sous-marine' },
+                  { key: 'paysage',     label: 'Paysages',          count: paysageCount,    color: '#00ABA8', desc: 'Littoral & nature'     },
+                  { key: 'sous_marine', label: 'Sous-marine',       count: sousMarineCount, color: '#0091ff', desc: 'Plongée & dépollution' },
+                ].map(({ key, label, count, color, desc }) => (
+                  <button
+                    key={key}
+                    onClick={() => handleMainFilter(key)}
+                    className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-left transition-all ${
+                      filter === key
+                        ? 'bg-white/10 border border-white/20'
+                        : 'border border-transparent hover:bg-white/5 hover:border-white/10'
+                    }`}
+                  >
+                    {/* Icône colorée — inspirée des pictogrammes Fondation de la Mer */}
+                    <span
+                      className="w-8 h-8 rounded-full flex-shrink-0 flex items-center justify-center"
+                      style={{
+                        background: color ? `${color}22` : 'rgba(255,255,255,0.08)',
+                        border: `2px solid ${color ?? 'rgba(255,255,255,0.15)'}`,
+                        boxShadow: color && filter === key ? `0 0 10px ${color}55` : 'none',
+                      }}
+                    >
+                      <span
+                        className="w-3 h-3 rounded-full"
+                        style={{ background: color ?? 'rgba(255,255,255,0.3)' }}
+                      />
+                    </span>
+                    <span className="flex-1 min-w-0">
+                      <span className={`block text-sm font-semibold leading-tight ${filter === key ? 'text-white' : 'text-white/70'}`}>
+                        {label}
+                      </span>
+                      <span className="block text-[11px] text-white/35 mt-0.5">{desc}</span>
+                    </span>
+                    <span
+                      className="text-xs font-bold tabular-nums px-2 py-0.5 rounded-full flex-shrink-0"
+                      style={{
+                        background: color ? `${color}22` : 'rgba(255,255,255,0.08)',
+                        color: color ?? 'rgba(255,255,255,0.5)',
+                      }}
+                    >
+                      {count}
+                    </span>
+                  </button>
+                ))}
+              </div>
+            </div>
+
+            {/* ── Sous-filtres ── */}
+            {subcats.length > 0 && (
+              <div className="px-5 py-4 border-b border-white/8 flex-shrink-0">
+                <p className="text-[11px] font-black uppercase tracking-[0.12em] text-white/40 mb-3">
+                  Affiner par catégorie :
+                </p>
+                <div className="flex flex-wrap gap-2">
+                  {subcats.map(({ key, label }) => {
+                    const count = byType.filter(p => p.categorie === key).length;
+                    const active = subFilter === key;
+                    return (
+                      <button
+                        key={key}
+                        onClick={() => setSubFilter(active ? null : key)}
+                        className={`flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-semibold border transition-all ${
+                          active
+                            ? 'bg-white/15 border-white/40 text-white'
+                            : 'border-white/15 text-white/50 hover:border-white/30 hover:text-white/80'
+                        }`}
+                      >
+                        {label}
+                        <span className={`text-[10px] ${active ? 'text-white/70' : 'text-white/30'}`}>{count}</span>
+                      </button>
+                    );
+                  })}
+                </div>
+              </div>
+            )}
+
+            {/* ── Badge catégorie active + résultats ── */}
+            <div className="flex-1 overflow-y-auto overscroll-contain">
+
+              {/* Badge type actif — comme le bandeau orange "COLLECTE DE DÉCHETS" */}
+              {!loading && filtered.length > 0 && (
+                <div className="px-5 py-3 sticky top-0 z-10 border-b border-white/5"
+                  style={{ background: 'rgba(4,12,24,0.98)' }}>
+                  <div
+                    className="inline-flex items-center gap-2 px-3 py-1.5 rounded-lg text-xs font-bold uppercase tracking-wider"
+                    style={{
+                      background: filter === 'paysage' ? '#00ABA822' : filter === 'sous_marine' ? '#0091ff22' : 'rgba(255,255,255,0.06)',
+                      borderLeft: `3px solid ${filter === 'paysage' ? '#00ABA8' : filter === 'sous_marine' ? '#0091ff' : 'rgba(255,255,255,0.2)'}`,
+                      color: filter === 'paysage' ? '#00ABA8' : filter === 'sous_marine' ? '#0091ff' : 'rgba(255,255,255,0.6)',
+                    }}
+                  >
+                    <span className="w-1.5 h-1.5 rounded-full flex-shrink-0" style={{
+                      background: filter === 'paysage' ? '#00ABA8' : filter === 'sous_marine' ? '#0091ff' : 'rgba(255,255,255,0.4)'
+                    }} />
+                    {filter === 'paysage' ? 'Paysages' : filter === 'sous_marine' ? 'Sous-marine' : 'Toutes les photos'}
+                    {subFilter && ` — ${subcats.find(s => s.key === subFilter)?.label}`}
+                  </div>
+                </div>
               )}
-              {label}
-            </button>
-          ))}
+
+              {/* Cartes résultats */}
+              {loading ? (
+                <div className="flex items-center justify-center h-24">
+                  <div className="spinner" />
+                </div>
+              ) : filtered.length === 0 ? (
+                <p className="text-center text-white/30 text-sm py-10 px-5">Aucune photo pour ce filtre.</p>
+              ) : (
+                <ul className="py-2">
+                  {filtered.map(photo => {
+                    const c     = MARKER_COLORS[photo.type];
+                    const base  = photo.type === 'paysage' ? '/photographie-paysage-mer' : '/photographie-sous-marine';
+                    const href  = photo.uid ? `${base}?photo=${encodeURIComponent(photo.uid)}` : base;
+                    const thumb = toThumb(photo.src);
+                    return (
+                      <li key={photo.uid ?? photo.src} className="px-4 py-2">
+                        {/* Carte résultat — structure inspirée des fiches événements FdlM */}
+                        <div className="rounded-xl border border-white/8 overflow-hidden hover:border-white/20 transition-colors group"
+                          style={{ background: 'rgba(255,255,255,0.03)' }}>
+                          {/* Vignette */}
+                          {thumb && (
+                            <a href={href} target="_blank" rel="noopener noreferrer">
+                              <img
+                                src={thumb}
+                                alt={photo.title || ''}
+                                loading="lazy"
+                                className="w-full h-28 object-cover opacity-80 group-hover:opacity-100 transition-opacity"
+                              />
+                            </a>
+                          )}
+                          <div className="px-3 py-2.5 space-y-1.5">
+                            {/* Titre */}
+                            {photo.title && (
+                              <p className="text-white/90 text-xs font-semibold leading-snug line-clamp-2">
+                                {photo.title}
+                              </p>
+                            )}
+                            {/* Lieu */}
+                            {photo.lieu && (
+                              <p className="flex items-center gap-1.5 text-[11px] text-white/40">
+                                <span className="w-1.5 h-1.5 rounded-full flex-shrink-0" style={{ background: c }} />
+                                {photo.lieu}
+                              </p>
+                            )}
+                            {/* CTA */}
+                            <a
+                              href={href}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="mt-1 flex items-center justify-center w-full py-1.5 rounded-lg text-[11px] font-bold uppercase tracking-wider transition-colors"
+                              style={{
+                                background: `${c}20`,
+                                border: `1px solid ${c}50`,
+                                color: c,
+                              }}
+                              onMouseEnter={e => { e.currentTarget.style.background = `${c}35`; }}
+                              onMouseLeave={e => { e.currentTarget.style.background = `${c}20`; }}
+                            >
+                              Voir la photo →
+                            </a>
+                          </div>
+                        </div>
+                      </li>
+                    );
+                  })}
+                </ul>
+              )}
+            </div>
+          </div>
+        </aside>
+
+        {/* ── BOUTON TOGGLE ── */}
+        <button
+          onClick={() => setSidebarOpen(o => !o)}
+          className="absolute z-[1000] top-1/2 -translate-y-1/2 w-5 h-12 flex items-center justify-center border border-white/15 rounded-r-lg hover:bg-white/10 transition-all text-white/60 hover:text-white"
+          style={{
+            left: sidebarOpen ? 280 : 0,
+            background: 'rgba(5,15,30,0.9)',
+            transition: 'left 0.3s ease-in-out, background 0.2s',
+          }}
+          aria-label={sidebarOpen ? 'Masquer le panneau' : 'Afficher le panneau'}
+        >
+          {sidebarOpen
+            ? <ChevronLeft  className="w-3.5 h-3.5" />
+            : <ChevronRight className="w-3.5 h-3.5" />
+          }
+        </button>
+
+        {/* ── CARTE ── */}
+        <div className="flex-1 isolate min-w-0">
+          {(loading || !isMounted) ? (
+            <div className="w-full h-full bg-white/5 flex items-center justify-center">
+              <div className="spinner" />
+            </div>
+          ) : (
+            <MapContainer
+              center={[43.22, 5.45]}
+              zoom={11}
+              style={{ height: '100%', width: '100%' }}
+            >
+              <TileLayer url={TILE_URL} attribution={TILE_ATTR} />
+              <ClusterLayer photos={filtered} />
+            </MapContainer>
+          )}
         </div>
-
-        {/* Niveau 2 — sous-catégories */}
-        {subcats.length > 0 && (
-          <div className="flex flex-wrap items-center gap-2 pl-1">
-            <span className="text-text-muted text-xs mr-1">Affiner :</span>
-            {subcats.map(({ key, label }) => {
-              const count = byType.filter(p => p.categorie === key).length;
-              return (
-                <button
-                  key={key}
-                  onClick={() => setSubFilter(subFilter === key ? null : key)}
-                  className={`px-3 py-1 rounded-full text-xs font-medium border transition-colors ${
-                    subFilter === key
-                      ? 'bg-white/20 border-white/50 text-white'
-                      : 'border-white/10 text-text-muted hover:border-white/25 hover:text-white'
-                  }`}
-                >
-                  {label} ({count})
-                </button>
-              );
-            })}
-          </div>
-        )}
-      </section>
-
-      {/* Carte pleine largeur — isolate confine les z-index Leaflet sous la navbar */}
-      <div className="isolate" style={{ height: '70vh', minHeight: 450 }}>
-        {(loading || !isMounted) ? (
-          <div className="w-full h-full bg-white/5 flex items-center justify-center">
-            <div className="spinner" />
-          </div>
-        ) : (
-          <MapContainer
-            center={[43.22, 5.45]}
-            zoom={11}
-            style={{ height: '100%', width: '100%' }}
-          >
-            <TileLayer url={TILE_URL} attribution={TILE_ATTR} />
-            <ClusterLayer photos={filtered} />
-          </MapContainer>
-        )}
       </div>
 
+      {/* ── Texte éditorial sous la carte ── */}
       <section className="container-custom py-6">
-        {!loading && photos.length === 0 && (
-          <p className="text-center text-text-muted py-8">Aucune photo géolocalisée disponible pour l'instant.</p>
-        )}
-
         {!loading && photos.length > 0 && (
           <div className="border-t border-white/8 pt-6 space-y-3 text-text-secondary text-sm leading-relaxed max-w-3xl">
             <p>
