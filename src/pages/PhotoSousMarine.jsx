@@ -574,7 +574,7 @@ const PhotoSousMarine = () => {
       FB.bind('[data-fancybox="gallery-depollution"]', buildOpts());
       FB.bind('[data-fancybox="gallery-biodiversite"]', buildOpts());
       FB.bind('[data-fancybox="gallery-caracterisation"]', buildOpts());
-    });
+    }).catch(err => console.error('[Fancybox] Erreur chargement galerie sous-marine :', err));
     return () => {
       FB?.unbind('[data-fancybox="gallery-depollution"]');
       FB?.unbind('[data-fancybox="gallery-biodiversite"]');
