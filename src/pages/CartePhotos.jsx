@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef, useCallback } from 'react';
 import { MapContainer, TileLayer, useMap } from 'react-leaflet';
 import L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
@@ -77,7 +77,7 @@ function popupHtml(photo) {
     </div>`;
 }
 
-function ClusterLayer({ photos, markersRef, clusterGroupRef }) {
+function ClusterLayer({ photos, markersRef, clusterGroupRef, onReady }) {
   const map = useMap();
 
   useEffect(() => {
@@ -105,6 +105,7 @@ function ClusterLayer({ photos, markersRef, clusterGroupRef }) {
       clusterGroupRef.current = group;
 
       map.addLayer(group);
+      onReady?.(newMarkers, group);
     });
 
     return () => {
@@ -317,6 +318,16 @@ export default function CartePhotos() {
   const mapRef = useRef(null);
   const markersRef = useRef({});
   const clusterGroupRef = useRef(null);
+  const targetUid = useRef(
+    typeof window !== 'undefined' ? new URLSearchParams(window.location.search).get('photo') : null
+  );
+
+  const handleMarkersReady = useCallback((markers, group) => {
+    const uid = targetUid.current;
+    if (!uid || !markers[uid]) return;
+    targetUid.current = null;
+    group.zoomToShowLayer(markers[uid], () => markers[uid].openPopup());
+  }, []);
   const [photos, setPhotos]       = useState([]);
   const [loading, setLoading]     = useState(true);
   const [filter, setFilter]       = useState('all');
@@ -656,7 +667,7 @@ export default function CartePhotos() {
               <FullscreenControl />
               {heatMode
                 ? <HeatLayer photos={filtered} />
-                : <ClusterLayer photos={filtered} markersRef={markersRef} clusterGroupRef={clusterGroupRef} />
+                : <ClusterLayer photos={filtered} markersRef={markersRef} clusterGroupRef={clusterGroupRef} onReady={handleMarkersReady} />
               }
             </MapContainer>
           )}

@@ -519,6 +519,29 @@ a.fb-caption-maps:hover svg {
   border-color: rgba(255, 255, 255, 0.4);
   color: rgba(255, 255, 255, 0.9);
 }
+.fb-caption-map {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  background: none;
+  border: 1px solid rgba(0, 171, 168, 0.3);
+  color: rgba(0, 171, 168, 0.7);
+  padding: 3px 10px 3px 8px;
+  border-radius: 20px;
+  font-size: 10px;
+  font-weight: 500;
+  font-family: inherit;
+  cursor: pointer;
+  transition: border-color 0.15s, color 0.15s;
+  white-space: nowrap;
+  letter-spacing: 0.04em;
+  flex-shrink: 0;
+  text-decoration: none;
+}
+.fb-caption-map:hover {
+  border-color: rgba(0, 171, 168, 0.7);
+  color: #00ABA8;
+}
 /* Mobile : caption en colonne */
 @media (max-width: 480px) {
   .fb-caption-wrapper {
