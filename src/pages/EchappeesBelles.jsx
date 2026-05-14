@@ -99,9 +99,8 @@ const EchappeesBelles = () => {
                 <strong className="text-ocean-teal">Calanques</strong>. Au programme : la rencontre avec les éco-citoyens du territoire, inspirés par la beauté des paysages et déterminés à les préserver.
               </p>
               <p>
-                Parmi eux, <strong className="text-white">Karim Saari</strong>, photographe environnemental et apnéiste, fondateur du{' '}
-                <strong className="text-ocean-teal">Projet Sentinelle</strong> et président de{' '}
-                <strong className="text-ocean-teal">Team Oxygen</strong>. Depuis plus de dix ans, il documente et combat la pollution plastique dans les fonds marins des Calanques à travers ses plongées en apnée — et cette diffusion nationale sur France 5 donne une nouvelle visibilité à ce combat.
+                Parmi eux, <strong className="text-white">Karim Saari</strong>, photographe environnemental et apnéiste, engagé depuis plus de dix ans dans des actions de dépollution en mer et président de{' '}
+                <strong className="text-ocean-teal">Team Oxygen</strong>. Depuis dix ans, il documente et combat la pollution plastique dans les fonds marins des Calanques à travers ses plongées en apnée — et cette diffusion nationale sur France 5 donne une nouvelle visibilité à ce combat.
               </p>
             </div>
           </motion.div>
