@@ -459,7 +459,7 @@ const PhotoGrid = ({ images, gallery }) => {
       const thumbW = Math.min(image.width || 800, 800);
       const thumbH = image.height ? Math.round(image.height * (thumbW / (image.width || 800))) : undefined;
       // Titre descriptif en priorité sur le lieu pour le SEO et l'overlay
-      const caption = image.title || image.lieu;
+      const caption = image.title || null;
       // Entrance animation uniquement sur les 12 premières images (fold visible)
       const Tag = (!prefersReducedMotion && index < 12) ? motion.figure : 'figure';
       const motionProps = (!prefersReducedMotion && index < 12) ? {
