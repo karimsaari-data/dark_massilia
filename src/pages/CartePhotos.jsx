@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { MapContainer, TileLayer, useMap } from 'react-leaflet';
 import L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
@@ -160,6 +160,12 @@ function LocateControl() {
   return null;
 }
 
+function MapRefCapture({ mapRef }) {
+  const map = useMap();
+  useEffect(() => { mapRef.current = map; }, [map, mapRef]);
+  return null;
+}
+
 function FullscreenControl() {
   const map = useMap();
 
@@ -300,6 +306,7 @@ const SUBCATS = {
 };
 
 export default function CartePhotos() {
+  const mapRef = useRef(null);
   const [photos, setPhotos]       = useState([]);
   const [loading, setLoading]     = useState(true);
   const [filter, setFilter]       = useState('all');
@@ -553,21 +560,39 @@ export default function CartePhotos() {
                                 {photo.lieu}
                               </p>
                             )}
-                            <a
-                              href={href}
-                              target="_blank"
-                              rel="noopener noreferrer"
-                              className="mt-1 flex items-center justify-center w-full py-1.5 rounded-lg text-[11px] font-bold uppercase tracking-wider transition-colors"
-                              style={{
-                                background: `${c}20`,
-                                border: `1px solid ${c}50`,
-                                color: c,
-                              }}
-                              onMouseEnter={e => { e.currentTarget.style.background = `${c}35`; }}
-                              onMouseLeave={e => { e.currentTarget.style.background = `${c}20`; }}
-                            >
-                              Voir la photo →
-                            </a>
+                            <div className="mt-1 flex gap-1.5">
+                              <a
+                                href={href}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="flex-1 flex items-center justify-center py-1.5 rounded-lg text-[11px] font-bold uppercase tracking-wider transition-colors"
+                                style={{
+                                  background: `${c}20`,
+                                  border: `1px solid ${c}50`,
+                                  color: c,
+                                }}
+                                onMouseEnter={e => { e.currentTarget.style.background = `${c}35`; }}
+                                onMouseLeave={e => { e.currentTarget.style.background = `${c}20`; }}
+                              >
+                                Voir la photo →
+                              </a>
+                              <button
+                                onClick={() => {
+                                  mapRef.current?.flyTo([photo.lat, photo.lng], 14, { duration: 1.2 });
+                                  if (window.innerWidth < 768) setSidebarOpen(false);
+                                }}
+                                title="Voir sur la carte"
+                                className="flex-shrink-0 flex items-center justify-center w-9 py-1.5 rounded-lg text-[14px] transition-colors"
+                                style={{
+                                  background: 'rgba(255,255,255,0.05)',
+                                  border: '1px solid rgba(255,255,255,0.15)',
+                                }}
+                                onMouseEnter={e => { e.currentTarget.style.background = 'rgba(255,255,255,0.12)'; }}
+                                onMouseLeave={e => { e.currentTarget.style.background = 'rgba(255,255,255,0.05)'; }}
+                              >
+                                🎯
+                              </button>
+                            </div>
                           </div>
                         </div>
                       </li>
@@ -610,6 +635,7 @@ export default function CartePhotos() {
               gestureHandling={true}
             >
               <TileLayer url={TILE_URL} attribution={TILE_ATTR} />
+              <MapRefCapture mapRef={mapRef} />
               <LocateControl />
               <FullscreenControl />
               {heatMode
