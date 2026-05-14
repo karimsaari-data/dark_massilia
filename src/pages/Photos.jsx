@@ -561,7 +561,7 @@ const PhotoGrid = ({ images }) => {
   <div className="columns-1 md:columns-2 lg:columns-3 xl:columns-4 gap-4">
     {images.map((image, index) => {
       const thumbSrc = image.thumbSrc || toThumbSrc(image.src);
-      const caption = image.title || image.lieu;
+      const caption = image.title || null;
       const Tag = (!prefersReducedMotion && index < 12) ? motion.figure : 'figure';
       const motionProps = (!prefersReducedMotion && index < 12) ? {
         initial: { opacity: 0, y: 14 },
