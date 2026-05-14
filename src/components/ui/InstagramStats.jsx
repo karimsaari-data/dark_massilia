@@ -113,12 +113,14 @@ const SocialStats = () => {
 
   useEffect(() => {
     // Fetch vues Facebook groupe · 28j
-    const since = new Date();
-    since.setDate(since.getDate() - 28);
+    // On prend les 28 dernières lignes de la table (même logique que l'admin)
+    // plutôt qu'un rolling calendaire (today-28j) qui exclut les jours
+    // non encore importés et crée un écart avec le backoffice.
     supabase
       .from('facebook_group_insights')
       .select('views')
-      .gte('date', since.toISOString().slice(0, 10))
+      .order('date', { ascending: false })
+      .limit(28)
       .then(({ data }) => {
         if (!data?.length) return;
         const total = data.reduce((s, r) => s + (r.views ?? 0), 0);
