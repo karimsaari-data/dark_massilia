@@ -1,4 +1,5 @@
 import { motion } from 'framer-motion';
+import { useCardHover } from '../hooks/useCardHover';
 import { ArrowLeft, ArrowRight, ExternalLink, Camera, Flame } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { FADE_IN_UP, STAGGER_CONTAINER, SOCIAL_STATS_DEFAULTS } from '../utils/constants';
@@ -15,6 +16,7 @@ const EDITIONS = [
 ];
 
 const Missions = () => {
+  const cardHover = useCardHover();
   return (
     <div className="min-h-screen py-24">
       <SEO {...SEO_PAGES['/depollution-marine']} />
@@ -22,14 +24,24 @@ const Missions = () => {
         <Breadcrumb label="Missions de Dépollution Marine" />
 
         {/* H1 SEO */}
-        <motion.h1
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6 }}
-          className="text-xl md:text-2xl font-bold text-white text-center mb-3 leading-tight"
-        >
-          Team Oxygen : Association de dépollution marine et nettoyage sous-marin à Marseille
-        </motion.h1>
+        <div className="flex items-stretch gap-4 mb-3">
+          <motion.div
+            initial={{ scaleY: 0 }}
+            animate={{ scaleY: 1 }}
+            transition={{ duration: 0.7, ease: 'easeOut', delay: 0.4 }}
+            style={{ transformOrigin: 'top' }}
+            className="w-[3px] bg-ocean-teal rounded-full flex-shrink-0"
+            aria-hidden="true"
+          />
+          <motion.h1
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6 }}
+            className="text-xl md:text-2xl font-bold text-white leading-tight"
+          >
+            Team Oxygen : Association de dépollution marine et nettoyage sous-marin à Marseille
+          </motion.h1>
+        </div>
         <p className="text-center text-xs text-gray-500 mb-8">
           Mis à jour le <time dateTime="2026-03-19">19 mars 2026</time>
         </p>
@@ -41,7 +53,7 @@ const Missions = () => {
           variants={STAGGER_CONTAINER}
           className="mx-auto mb-12"
         >
-          <motion.div variants={FADE_IN_UP} className="glass-strong rounded-3xl overflow-hidden flex flex-col lg:flex-row">
+          <motion.div {...cardHover} variants={FADE_IN_UP} className="glass-strong rounded-3xl overflow-hidden flex flex-col lg:flex-row">
             {/* Texte */}
             <div className="p-8 md:p-12 lg:flex-1 flex flex-col justify-center">
               <h2 className="text-2xl md:text-3xl font-bold text-white mb-2">
@@ -133,6 +145,7 @@ const Missions = () => {
           className="mx-auto mb-12"
         >
           <motion.div
+            {...cardHover}
             variants={FADE_IN_UP}
             className="glass-strong rounded-3xl p-8 md:p-12 border border-ocean-teal/30 text-center"
           >
@@ -199,7 +212,7 @@ const Missions = () => {
           variants={STAGGER_CONTAINER}
           className="mx-auto mb-12"
         >
-          <motion.div variants={FADE_IN_UP} className="glass-strong rounded-3xl overflow-hidden flex flex-col lg:flex-row">
+          <motion.div {...cardHover} variants={FADE_IN_UP} className="glass-strong rounded-3xl overflow-hidden flex flex-col lg:flex-row">
             <div className="p-8 md:p-12 lg:flex-1 flex flex-col justify-center">
               <h2 className="text-2xl md:text-3xl font-bold text-white mb-6">
                 Agir à la source : Les Calanques et la Côte Bleue
@@ -249,7 +262,7 @@ const Missions = () => {
           variants={STAGGER_CONTAINER}
           className="mx-auto mb-12"
         >
-          <motion.div variants={FADE_IN_UP} className="glass-strong rounded-3xl overflow-hidden flex flex-col lg:flex-row-reverse">
+          <motion.div {...cardHover} variants={FADE_IN_UP} className="glass-strong rounded-3xl overflow-hidden flex flex-col lg:flex-row-reverse">
             <div className="lg:w-[38%] flex-shrink-0 min-h-[260px] lg:min-h-0">
               <img
                 src="/images/Marseille-dark-massilia-plastique-pollution-projet-sentinelle-teamoxygen-freediving.webp"

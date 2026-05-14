@@ -1,5 +1,6 @@
 import { lazy, Suspense, useState, useEffect } from 'react';
 import { motion, AnimatePresence, useReducedMotion } from 'framer-motion';
+import { useCardHover } from '../hooks/useCardHover';
 import { Link } from 'react-router-dom';
 import { ArrowRight, Users, ChevronDown, Camera, MapPin } from 'lucide-react';
 
@@ -163,6 +164,8 @@ const FaqItem = ({ question, answer }) => {
 
 const Home = () => {
   const prefersReducedMotion = useReducedMotion();
+  const cardHover = useCardHover();
+  const [showScroll, setShowScroll] = useState(true);
   const [currentFactIndex, setCurrentFactIndex] = useState(0);
 
   // Stats réseaux — valeurs dynamiques depuis Supabase (fallback sur KEY_STATS_BASE)
@@ -215,6 +218,12 @@ const Home = () => {
     return () => clearInterval(interval);
   }, [factsPaused, factsTimerKey]);
 
+  useEffect(() => {
+    const onScroll = () => setShowScroll(window.scrollY < 80);
+    window.addEventListener('scroll', onScroll, { passive: true });
+    return () => window.removeEventListener('scroll', onScroll);
+  }, []);
+
   const goToFact = (index) => {
     setCurrentFactIndex(index);
     setFactsTimerKey((k) => k + 1); // reset le timer
@@ -248,18 +257,23 @@ const Home = () => {
             >
               {/* Photo profil — Mobile uniquement (au-dessus du texte) */}
               <div className="flex justify-center mb-6 md:hidden">
-                <img
-                  src="/images/karim-saari-photo-profil-arte-regard-marseille.webp"
-                  srcSet="/images/karim-saari-photo-profil-arte-regard-marseille_300w.webp 300w, /images/karim-saari-photo-profil-arte-regard-marseille.webp 472w"
-                  sizes="192px"
-                  alt="Karim Saari - Apnéiste et photographe à Marseille"
-                  width="472"
-                  height="488"
-                  className="h-48 w-auto rounded-xl border border-white/20 shadow-lg shadow-ocean-teal/20"
-                  loading="eager"
-                  fetchpriority="high"
-                  decoding="async"
-                />
+                <motion.div
+                  animate={prefersReducedMotion ? {} : { y: [0, -10, 0] }}
+                  transition={{ duration: 6, repeat: Infinity, ease: 'easeInOut' }}
+                >
+                  <img
+                    src="/images/karim-saari-photo-profil-arte-regard-marseille.webp"
+                    srcSet="/images/karim-saari-photo-profil-arte-regard-marseille_300w.webp 300w, /images/karim-saari-photo-profil-arte-regard-marseille.webp 472w"
+                    sizes="192px"
+                    alt="Karim Saari - Apnéiste et photographe à Marseille"
+                    width="472"
+                    height="488"
+                    className="h-48 w-auto rounded-xl border border-white/20 shadow-lg shadow-ocean-teal/20"
+                    loading="eager"
+                    fetchpriority="high"
+                    decoding="async"
+                  />
+                </motion.div>
               </div>
 
               {/* Grille 2 colonnes desktop : texte gauche, photo droite */}
@@ -268,7 +282,14 @@ const Home = () => {
                 <div className="text-center md:text-left">
                   {/* Trait vertical + titre — style Fondation de la Mer */}
                   <div className="flex items-stretch gap-5 mb-8">
-                    <div className="w-[3px] bg-ocean-teal rounded-full flex-shrink-0" aria-hidden="true" />
+                    <motion.div
+                      initial={prefersReducedMotion ? {} : { scaleY: 0 }}
+                      animate={{ scaleY: 1 }}
+                      transition={{ duration: 0.7, ease: 'easeOut', delay: 0.5 }}
+                      style={{ transformOrigin: 'top' }}
+                      className="w-[3px] bg-ocean-teal rounded-full flex-shrink-0"
+                      aria-hidden="true"
+                    />
                     <h1 className="font-display text-3xl md:text-4xl lg:text-5xl font-extrabold text-white uppercase tracking-[0.08em] leading-[1.15]">
                       Photographie &amp; Engagement : Révéler et Protéger les Calanques de Marseille
                     </h1>
@@ -317,29 +338,55 @@ const Home = () => {
 
                 {/* Photo profil — Desktop uniquement (colonne droite) */}
                 <div className="hidden md:flex items-center justify-center">
-                  <img
-                    src="/images/karim-saari-photo-profil-arte-regard-marseille.webp"
-                    srcSet="/images/karim-saari-photo-profil-arte-regard-marseille_300w.webp 300w, /images/karim-saari-photo-profil-arte-regard-marseille_400w.webp 400w, /images/karim-saari-photo-profil-arte-regard-marseille.webp 472w"
-                    sizes="(max-width: 1024px) 280px, 360px"
-                    alt="Karim Saari - Apnéiste et photographe à Marseille"
-                    width="472"
-                    height="488"
-                    className="h-[380px] lg:h-[460px] w-auto rounded-xl border border-white/20 shadow-lg shadow-ocean-teal/20"
-                    loading="eager"
-                    fetchpriority="high"
-                    decoding="async"
-                  />
+                  <motion.div
+                    animate={prefersReducedMotion ? {} : { y: [0, -10, 0] }}
+                    transition={{ duration: 6, repeat: Infinity, ease: 'easeInOut' }}
+                  >
+                    <img
+                      src="/images/karim-saari-photo-profil-arte-regard-marseille.webp"
+                      srcSet="/images/karim-saari-photo-profil-arte-regard-marseille_300w.webp 300w, /images/karim-saari-photo-profil-arte-regard-marseille_400w.webp 400w, /images/karim-saari-photo-profil-arte-regard-marseille.webp 472w"
+                      sizes="(max-width: 1024px) 280px, 360px"
+                      alt="Karim Saari - Apnéiste et photographe à Marseille"
+                      width="472"
+                      height="488"
+                      className="h-[380px] lg:h-[460px] w-auto rounded-xl border border-white/20 shadow-lg shadow-ocean-teal/20"
+                      loading="eager"
+                      fetchpriority="high"
+                      decoding="async"
+                    />
+                  </motion.div>
                 </div>
               </div>
             </motion.div>
           </motion.div>
         </div>
 
+        {/* Scroll indicator — disparaît dès le premier scroll */}
+        <AnimatePresence>
+          {showScroll && !prefersReducedMotion && (
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0, transition: { duration: 0.4 } }}
+              transition={{ delay: 1.5, duration: 0.5 }}
+              className="absolute bottom-8 left-1/2 -translate-x-1/2 pointer-events-none"
+              aria-hidden="true"
+            >
+              <motion.div
+                animate={{ y: [0, 8, 0] }}
+                transition={{ duration: 1.5, repeat: Infinity, ease: 'easeInOut', delay: 0.5 }}
+              >
+                <ChevronDown className="w-7 h-7 text-white/40" />
+              </motion.div>
+            </motion.div>
+          )}
+        </AnimatePresence>
       </section>
 
       {/* Section bio — identité & engagement */}
       <section className="container-custom py-8 md:py-12">
         <motion.div
+          {...cardHover}
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true }}
@@ -495,6 +542,7 @@ const Home = () => {
       {/* Card Yann Arthus-Bertrand — Les Français (image gauche) */}
       <section className="container-custom py-8 md:py-12">
         <motion.div
+          {...cardHover}
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true }}
@@ -562,6 +610,7 @@ const Home = () => {
       {/* Missions Section - image droite */}
       <section className="container-custom py-8 md:py-12">
         <motion.div
+          {...cardHover}
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true }}
@@ -623,6 +672,7 @@ const Home = () => {
       {/* CTA Vidéos - image gauche */}
       <section className="container-custom py-8 md:py-12">
         <motion.div
+          {...cardHover}
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true }}
@@ -680,6 +730,7 @@ const Home = () => {
       {/* CTA Photos - image droite */}
       <section id="galerie" className="container-custom py-8 md:py-12">
         <motion.div
+          {...cardHover}
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true }}
@@ -735,6 +786,7 @@ const Home = () => {
       {/* Call to Action Communauté - image gauche (alternance) */}
       <section className="container-custom py-8 md:py-12">
         <motion.div
+          {...cardHover}
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true }}
@@ -871,6 +923,7 @@ const Home = () => {
       {/* CTA Carte Interactive */}
       <section className="container-custom py-8 md:py-12">
         <motion.div
+          {...cardHover}
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true }}
@@ -953,6 +1006,7 @@ const Home = () => {
       {/* Section éditoriale SEO — contexte Méditerranée (après FAQ) */}
       <section className="container-custom pb-12 md:pb-16">
         <motion.div
+          {...cardHover}
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true }}

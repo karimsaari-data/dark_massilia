@@ -1,4 +1,5 @@
 import { motion } from 'framer-motion';
+import { useCardHover } from '../hooks/useCardHover';
 import { ArrowLeft, ArrowRight, ExternalLink, Play, Tv2, Newspaper } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { FADE_IN_UP, STAGGER_CONTAINER } from '../utils/constants';
@@ -8,6 +9,7 @@ import PartnersCarousel from '../components/PartnersCarousel';
 import Breadcrumb from '../components/Breadcrumb';
 
 const Medias = () => {
+  const cardHover = useCardHover();
   // Données extraites de l'ancien site medias.html
   const radioLinks = [
     {
@@ -150,14 +152,24 @@ const Medias = () => {
       <div className="container-custom">
         <Breadcrumb label="Presse & Médias" />
         {/* H1 SEO — visible, keyword-rich */}
-        <motion.h1
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6 }}
-          className="text-xl md:text-2xl font-bold text-white text-center mb-8 leading-tight"
-        >
-          Documentaires et Reportages : Témoigner de l'urgence écologique en Méditerranée
-        </motion.h1>
+        <div className="flex items-stretch gap-4 mb-8">
+          <motion.div
+            initial={{ scaleY: 0 }}
+            animate={{ scaleY: 1 }}
+            transition={{ duration: 0.7, ease: 'easeOut', delay: 0.4 }}
+            style={{ transformOrigin: 'top' }}
+            className="w-[3px] bg-ocean-teal rounded-full flex-shrink-0"
+            aria-hidden="true"
+          />
+          <motion.h1
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6 }}
+            className="text-xl md:text-2xl font-bold text-white leading-tight"
+          >
+            Documentaires et Reportages : Témoigner de l'urgence écologique en Méditerranée
+          </motion.h1>
+        </div>
 
         {/* Stats médias — 2 chiffres clés */}
         <motion.div
@@ -221,7 +233,7 @@ const Medias = () => {
             className="grid grid-cols-1 md:grid-cols-3 gap-8"
           >
             {/* Échappées Belles — Spéciale Verte (rediffusion récente, en premier) */}
-            <motion.div variants={FADE_IN_UP}>
+            <motion.div {...cardHover} variants={FADE_IN_UP}>
               <Link
                 to="/echappees-belles-bouches-du-rhone"
                 className="glass-strong rounded-xl overflow-hidden border border-white/10 hover:border-ocean-teal/50 transition-all duration-300 group block h-full"
@@ -259,7 +271,7 @@ const Medias = () => {
             </motion.div>
 
             {/* ARTE — Marseille */}
-            <motion.div variants={FADE_IN_UP}>
+            <motion.div {...cardHover} variants={FADE_IN_UP}>
               <Link
                 to="/sauver-marseille-documentaire-arte"
                 className="glass-strong rounded-xl overflow-hidden border border-white/10 hover:border-ocean-teal/50 transition-all duration-300 group block h-full"
@@ -296,7 +308,7 @@ const Medias = () => {
             </motion.div>
 
             {/* ARTE Évasion — Méduses */}
-            <motion.div variants={FADE_IN_UP}>
+            <motion.div {...cardHover} variants={FADE_IN_UP}>
               <Link
                 to="/meduses-souveraines-oceans-documentaire-arte"
                 className="glass-strong rounded-xl overflow-hidden border border-white/10 hover:border-ocean-teal/50 transition-all duration-300 group block h-full"
@@ -336,7 +348,7 @@ const Medias = () => {
             </motion.div>
 
             {/* TF1 — Scandale décharges */}
-            <motion.div variants={FADE_IN_UP}>
+            <motion.div {...cardHover} variants={FADE_IN_UP}>
               <a
                 href="https://www.tf1info.fr/environnement-ecologie/video-dechets-ordures-marseille-le-scandale-des-decharges-sauvages-dans-les-calanques-marseillaises-2258467.html"
                 target="_blank"
@@ -375,7 +387,7 @@ const Medias = () => {
             </motion.div>
 
             {/* TF1 — Grève des éboueurs */}
-            <motion.div variants={FADE_IN_UP}>
+            <motion.div {...cardHover} variants={FADE_IN_UP}>
               <a
                 href="https://www.tf1info.fr/environnement-ecologie/video-greve-des-eboueurs-a-marseille-des-craintes-pour-l-environnement-2208213.html"
                 target="_blank"
@@ -414,7 +426,7 @@ const Medias = () => {
             </motion.div>
 
             {/* Novo19 — La Méditerranée, la mer la plus polluée du monde */}
-            <motion.div variants={FADE_IN_UP}>
+            <motion.div {...cardHover} variants={FADE_IN_UP}>
               <a
                 href="https://www.ouest-france.fr/medias/novo19/video-la-mediterranee-la-mer-la-plus-polluee-du-monde-1b92d963-4a84-4bed-95ce-093b6595b564"
                 target="_blank"
@@ -453,7 +465,7 @@ const Medias = () => {
             </motion.div>
 
             {/* La Provence — Frioul vidéo */}
-            <motion.div variants={FADE_IN_UP}>
+            <motion.div {...cardHover} variants={FADE_IN_UP}>
               <a
                 href="https://www.laprovence.com/videos/marseille-1-4-tonne-de-dchets-sortie-des-eaux-du-frioul-par-des-apnistes/10321076"
                 target="_blank"

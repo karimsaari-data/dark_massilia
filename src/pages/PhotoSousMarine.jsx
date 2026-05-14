@@ -1,5 +1,6 @@
 import { useState, useEffect, useRef } from 'react';
 import { motion } from 'framer-motion';
+import { useCardHover } from '../hooks/useCardHover';
 import { ArrowLeft, ArrowRight, Trash2, Fish, ClipboardList } from 'lucide-react';
 import { Link, useSearchParams } from 'react-router-dom';
 // Référence Fancybox — peuplée dynamiquement côté client uniquement
@@ -496,6 +497,7 @@ const PhotoGrid = ({ images, gallery }) => (
 
 /* ─── Composant principal ─────────────────────────────────── */
 const PhotoSousMarine = () => {
+  const cardHover = useCardHover();
   const [depollImages, setDepollImages] = useState(baseDepollution);
   const [biodivImages, setBiodivImages] = useState(baseBiodiversite);
   const [caracImages, setCaracImages] = useState([]);
@@ -653,7 +655,7 @@ const PhotoSousMarine = () => {
           variants={STAGGER_CONTAINER}
           className="mx-auto mb-12"
         >
-          <motion.div variants={FADE_IN_UP} className="glass-strong rounded-3xl overflow-hidden flex flex-col lg:flex-row">
+          <motion.div {...cardHover} variants={FADE_IN_UP} className="glass-strong rounded-3xl overflow-hidden flex flex-col lg:flex-row">
             {/* Texte */}
             <div className="p-8 md:p-12 lg:flex-1 flex flex-col justify-center">
               <h2 className="text-2xl md:text-3xl font-bold text-white mb-2">

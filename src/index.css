@@ -101,9 +101,20 @@
     @apply bg-black/40 backdrop-blur-xl border border-white/20;
   }
 
-  /* Gradient text */
+  /* Gradient text — shimmer sweep */
   .gradient-text {
-    @apply bg-gradient-to-r from-ocean-teal to-ocean-blue bg-clip-text text-transparent;
+    background: linear-gradient(90deg, #00ABA8 0%, #0091ff 35%, #7de8e6 50%, #0091ff 65%, #00ABA8 100%);
+    background-size: 300% auto;
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    color: transparent;
+    animation: shimmer-text 4s linear infinite;
+  }
+
+  @keyframes shimmer-text {
+    from { background-position: 100% center; }
+    to   { background-position: -200% center; }
   }
 
   /* Glow effect */

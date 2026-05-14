@@ -1,4 +1,5 @@
 import { motion } from 'framer-motion';
+import { useCardHover } from '../hooks/useCardHover';
 import { ArrowRight, ExternalLink, Camera, Mail } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { FADE_IN_UP, STAGGER_CONTAINER, SOCIAL_STATS_DEFAULTS } from '../utils/constants';
@@ -157,6 +158,7 @@ const MEDIA_LOGOS = [
 ];
 
 const PhotographeEnvironnemental = () => {
+  const cardHover = useCardHover();
   return (
     <div className="min-h-screen pt-20 pb-24">
       <SEO {...SEO_PAGES['/photographe-environnemental-marseille']} />
@@ -168,14 +170,24 @@ const PhotographeEnvironnemental = () => {
           initial="hidden"
           animate="visible"
           variants={STAGGER_CONTAINER}
-          className="text-center mb-6"
+          className="mb-6"
         >
-          <motion.h1
-            variants={FADE_IN_UP}
-            className="text-2xl md:text-4xl font-bold text-white leading-tight mb-2"
-          >
-            Photographe Environnemental à Marseille
-          </motion.h1>
+          <div className="flex items-stretch gap-4 mb-2">
+            <motion.div
+              initial={{ scaleY: 0 }}
+              animate={{ scaleY: 1 }}
+              transition={{ duration: 0.7, ease: 'easeOut', delay: 0.4 }}
+              style={{ transformOrigin: 'top' }}
+              className="w-[3px] bg-ocean-teal rounded-full flex-shrink-0"
+              aria-hidden="true"
+            />
+            <motion.h1
+              variants={FADE_IN_UP}
+              className="text-2xl md:text-4xl font-bold text-white leading-tight"
+            >
+              Photographe Environnemental à Marseille
+            </motion.h1>
+          </div>
           <motion.p variants={FADE_IN_UP} className="text-base md:text-lg text-ocean-teal font-medium">
             Documenter l'urgence, célébrer la beauté
           </motion.p>
@@ -235,7 +247,7 @@ const PhotographeEnvironnemental = () => {
           variants={STAGGER_CONTAINER}
           className="mb-12"
         >
-          <motion.div variants={FADE_IN_UP} className="glass-strong rounded-3xl p-8 md:p-12">
+          <motion.div {...cardHover} variants={FADE_IN_UP} className="glass-strong rounded-3xl p-8 md:p-12">
             <h2 className="text-xl md:text-2xl font-bold text-white mb-6">
               Photographe environnemental à Marseille — Qui suis-je ?
             </h2>
@@ -289,7 +301,7 @@ const PhotographeEnvironnemental = () => {
           variants={STAGGER_CONTAINER}
           className="mb-12"
         >
-          <motion.div variants={FADE_IN_UP} className="glass-strong rounded-3xl p-8 md:p-12">
+          <motion.div {...cardHover} variants={FADE_IN_UP} className="glass-strong rounded-3xl p-8 md:p-12">
             <h2 className="text-xl md:text-2xl font-bold text-white text-center mb-3">
               Reconnu par les médias et les institutions
             </h2>
@@ -352,7 +364,7 @@ const PhotographeEnvironnemental = () => {
           variants={STAGGER_CONTAINER}
           className="mb-12"
         >
-          <motion.div variants={FADE_IN_UP} className="glass-strong rounded-3xl p-8 md:p-10">
+          <motion.div {...cardHover} variants={FADE_IN_UP} className="glass-strong rounded-3xl p-8 md:p-10">
             <h2 className="text-xl md:text-2xl font-bold text-white text-center mb-2">
               Partenaires associatifs — agir ensemble sur le terrain
             </h2>
@@ -463,7 +475,7 @@ const PhotographeEnvironnemental = () => {
           variants={STAGGER_CONTAINER}
           className="mb-12"
         >
-          <motion.div variants={FADE_IN_UP} className="glass-strong rounded-3xl p-8 md:p-10">
+          <motion.div {...cardHover} variants={FADE_IN_UP} className="glass-strong rounded-3xl p-8 md:p-10">
             <h2 className="text-xl md:text-2xl font-bold text-white text-center mb-2">
               Soutiens institutionnels
             </h2>
