@@ -587,7 +587,7 @@ const Home = () => {
               </h2>
 
               <p className="text-gray-300 text-lg mb-8 leading-[1.8]">
-                Team Oxygen et Dark Massilia ont été sélectionnés par Yann Arthus-Bertrand pour son projet <strong className="text-white">« Les Français »</strong> — une galerie photographique portrait de celles et ceux qui font la France, à Marseille en 2024.
+                Karim Saari et Team Oxygen ont été sélectionnés par Yann Arthus-Bertrand pour son projet <strong className="text-white">« Les Français »</strong> — une galerie photographique portrait de celles et ceux qui font la France, à Marseille en 2024.
               </p>
 
               <Link
