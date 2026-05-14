@@ -560,12 +560,12 @@ export default function CartePhotos() {
                                 {photo.lieu}
                               </p>
                             )}
-                            <div className="mt-1 flex gap-1.5">
+                            <div className="mt-1 flex flex-col gap-1.5">
                               <a
                                 href={href}
                                 target="_blank"
                                 rel="noopener noreferrer"
-                                className="flex-1 flex items-center justify-center py-1.5 rounded-lg text-[11px] font-bold uppercase tracking-wider transition-colors"
+                                className="flex items-center justify-center w-full py-1.5 rounded-lg text-[11px] font-bold uppercase tracking-wider transition-colors"
                                 style={{
                                   background: `${c}20`,
                                   border: `1px solid ${c}50`,
@@ -581,16 +581,16 @@ export default function CartePhotos() {
                                   mapRef.current?.flyTo([photo.lat, photo.lng], 14, { duration: 1.2 });
                                   if (window.innerWidth < 768) setSidebarOpen(false);
                                 }}
-                                title="Voir sur la carte"
-                                className="flex-shrink-0 flex items-center justify-center w-9 py-1.5 rounded-lg text-[14px] transition-colors"
+                                className="flex items-center justify-center w-full py-1.5 rounded-lg text-[11px] font-bold uppercase tracking-wider transition-colors"
                                 style={{
                                   background: 'rgba(255,255,255,0.05)',
                                   border: '1px solid rgba(255,255,255,0.15)',
+                                  color: 'rgba(255,255,255,0.55)',
                                 }}
-                                onMouseEnter={e => { e.currentTarget.style.background = 'rgba(255,255,255,0.12)'; }}
-                                onMouseLeave={e => { e.currentTarget.style.background = 'rgba(255,255,255,0.05)'; }}
+                                onMouseEnter={e => { e.currentTarget.style.background = 'rgba(255,255,255,0.12)'; e.currentTarget.style.color = 'white'; }}
+                                onMouseLeave={e => { e.currentTarget.style.background = 'rgba(255,255,255,0.05)'; e.currentTarget.style.color = 'rgba(255,255,255,0.55)'; }}
                               >
-                                🎯
+                                Voir sur la carte →
                               </button>
                             </div>
                           </div>
