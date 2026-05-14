@@ -204,9 +204,19 @@ const Communaute = () => {
         {/* ── 1. HERO — H1 + accroche + CTA ── */}
         {/* Rendu natif (pas motion) pour que le H1 et l'image soient visibles immédiatement → LCP */}
         <div className="glass-strong rounded-3xl p-8 md:p-12">
-            <h1 className="text-2xl md:text-4xl font-bold text-white mb-4 leading-tight">
-              Suivez les missions en direct — rejoignez la communauté
-            </h1>
+            <div className="flex items-stretch gap-4 mb-4">
+              <motion.div
+                initial={{ scaleY: 0 }}
+                animate={{ scaleY: 1 }}
+                transition={{ duration: 0.7, ease: 'easeOut', delay: 0.5 }}
+                style={{ transformOrigin: 'top' }}
+                className="w-[3px] bg-ocean-teal rounded-full flex-shrink-0"
+                aria-hidden="true"
+              />
+              <h1 className="text-2xl md:text-4xl font-bold text-white leading-tight">
+                Suivez les missions en direct — rejoignez la communauté
+              </h1>
+            </div>
             <p className="text-ocean-teal text-lg md:text-xl font-semibold mb-6">
               {totalLabel} personnes mobilisées pour la Méditerranée
             </p>
