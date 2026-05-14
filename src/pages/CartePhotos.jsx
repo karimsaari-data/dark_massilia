@@ -138,13 +138,19 @@ function LocateControl() {
       cacheLocation: true,
       drawCircle: true,
       drawMarker: true,
-      locateOptions: { maxZoom: 14, enableHighAccuracy: true },
+      showCompass: true,
+      setView: 'untilPan',
+      locateOptions: { maxZoom: 14, enableHighAccuracy: true, timeout: 10000 },
       strings: {
         title: 'Ma position',
         metersUnit: 'm',
         feetUnit: 'ft',
         popup: 'Vous êtes ici (±{distance} {unit})',
         outsideMapBoundsMsg: 'Position hors de la carte',
+      },
+      onLocationError(err) {
+        if (err.code === 1) return; // permission refusée — silencieux
+        map.fire('locatecontrol:error', { message: err.message });
       },
     });
     lc.addTo(map);
