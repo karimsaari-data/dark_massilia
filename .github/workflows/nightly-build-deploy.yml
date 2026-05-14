@@ -83,8 +83,22 @@ jobs:
           echo "$RESULT" | jq -r 'if .success then "✅ Cache Cloudflare purgé" else "❌ Échec: \(.errors[0].message // .errors)" end'
           echo "$RESULT" | jq -e '.success == true' > /dev/null || exit 1
 
-      # ── 6b. Alerte email si purge échouée ────────────────────────────────────
-      - name: Alerte purge Cloudflare échouée
+      # ── 6b. Email notification purge ─────────────────────────────────────────
+      - name: Email — purge Cloudflare réussie
+        if: steps.purge_cf.outcome == 'success'
+        run: |
+          curl -s -X POST https://api.brevo.com/v3/smtp/email \
+            -H "api-key: ${{ secrets.BREVO_API_KEY }}" \
+            -H "Content-Type: application/json" \
+            --data '{
+              "sender":  { "name": "GitHub Actions", "email": "contact@karimsaari.com" },
+              "to":      [{ "email": "contact@karimsaari.com" }],
+              "subject": "✅ Déploiement réussi — cache Cloudflare purgé",
+              "textContent": "Le site karimsaari.com a été déployé et le cache Cloudflare purgé avec succès.\n\nLogs : https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}"
+            }' > /dev/null
+          echo "📧 Email succès envoyé"
+
+      - name: Email — purge Cloudflare échouée
         if: steps.purge_cf.outcome == 'failure'
         run: |
           curl -s -X POST https://api.brevo.com/v3/smtp/email \
@@ -92,11 +106,11 @@ jobs:
             -H "Content-Type: application/json" \
             --data '{
               "sender":  { "name": "GitHub Actions", "email": "contact@karimsaari.com" },
-              "to":      [{ "email": "karimsaari.com@gmail.com" }],
+              "to":      [{ "email": "contact@karimsaari.com" }],
               "subject": "⚠️ Purge cache Cloudflare échouée — karimsaari.com",
-              "textContent": "La purge automatique du cache Cloudflare a échoué lors du dernier déploiement.\n\nVérifie le token API dans GitHub Secrets (CLOUDFLARE_API_TOKEN) ou l état de l API Cloudflare.\n\nLogs : https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}"
+              "textContent": "La purge automatique du cache Cloudflare a échoué lors du dernier déploiement.\n\nVérifie le token dans GitHub Secrets (CLOUDFLARE_API_TOKEN).\n\nLogs : https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}"
             }' > /dev/null
-          echo "📧 Alerte email envoyée"
+          echo "📧 Email alerte envoyé"
 
       # ── 7. Notification Brevo (nouveaux articles seulement) ─────────────────
       - name: Notify nouveaux articles (Brevo)
