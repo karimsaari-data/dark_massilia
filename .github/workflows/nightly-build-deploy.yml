@@ -70,7 +70,18 @@ jobs:
             **/.git*/**
             **/node_modules/**
 
-      # ── 6. Notification Brevo (nouveaux articles seulement) ──────────────────
+      # ── 6. Purge cache Cloudflare ────────────────────────────────────────────
+      - name: Purge cache Cloudflare
+        continue-on-error: true   # ne bloque pas le workflow si CF est indisponible
+        run: |
+          RESULT=$(curl -s -X POST \
+            "https://api.cloudflare.com/client/v4/zones/${{ secrets.CLOUDFLARE_ZONE_ID }}/purge_cache" \
+            -H "Authorization: Bearer ${{ secrets.CLOUDFLARE_API_TOKEN }}" \
+            -H "Content-Type: application/json" \
+            --data '{"purge_everything":true}')
+          echo "$RESULT" | jq -r 'if .success then "✅ Cache Cloudflare purgé" else "❌ Échec: \(.errors[0].message // .errors)" end'
+
+      # ── 7. Notification Brevo (nouveaux articles seulement) ─────────────────
       - name: Notify nouveaux articles (Brevo)
         continue-on-error: true
         env:
@@ -80,7 +91,7 @@ jobs:
           NOTIFY_SECRET: ${{ secrets.NOTIFY_SECRET }}
         run: npm run notify
 
-      # ── 7. Commit .notified-slugs.json (mémoire des articles notifiés) ────────
+      # ── 8. Commit .notified-slugs.json (mémoire des articles notifiés) ────────
       - name: Commit .notified-slugs.json
         run: |
           git config user.name  "github-actions[bot]"
@@ -96,6 +107,6 @@ jobs:
             git push
           fi
 
-      # ── 8. IndexNow (notifier Google/Bing des nouvelles URLs) ────────────────
+      # ── 9. IndexNow (notifier Google/Bing des nouvelles URLs) ────────────────
       - name: IndexNow
         run: npm run indexnow
