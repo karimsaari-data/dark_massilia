@@ -2,6 +2,8 @@ import { useState, useEffect } from 'react';
 import { MapContainer, TileLayer, useMap } from 'react-leaflet';
 import L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
+import 'leaflet.fullscreen/Control.FullScreen.css';
+import 'leaflet.locatecontrol/dist/L.Control.Locate.min.css';
 import { ChevronLeft } from 'lucide-react';
 import { supabase } from '../lib/supabase';
 import SEO from '../components/SEO';
@@ -100,6 +102,42 @@ function ClusterLayer({ photos }) {
   return null;
 }
 
+function MapControls() {
+  const map = useMap();
+  useEffect(() => {
+    let fsCtrl, locCtrl;
+    // Fullscreen
+    import('leaflet.fullscreen').then(() => {
+      fsCtrl = L.control.fullscreen({
+        position: 'topright',
+        title: { false: 'Plein écran', true: 'Quitter le plein écran' },
+        forceSeparateButton: true,
+      });
+      fsCtrl.addTo(map);
+    });
+    // Locate
+    import('leaflet.locatecontrol').then(mod => {
+      const LC = mod.default ?? mod;
+      locCtrl = new LC({
+        position: 'topright',
+        flyTo: true,
+        keepCurrentZoomLevel: true,
+        strings: {
+          title: 'Me localiser',
+          popup: 'Vous êtes dans un rayon de {distance} {unit} de ce point',
+        },
+        locateOptions: { maxZoom: 14, enableHighAccuracy: true },
+      });
+      locCtrl.addTo(map);
+    });
+    return () => {
+      if (fsCtrl)  try { map.removeControl(fsCtrl);  } catch {}
+      if (locCtrl) try { map.removeControl(locCtrl); } catch {}
+    };
+  }, [map]);
+  return null;
+}
+
 const POPUP_CSS = `
   .leaflet-cluster-anim .leaflet-marker-icon,
   .leaflet-cluster-anim .leaflet-marker-shadow {
@@ -125,6 +163,41 @@ const POPUP_CSS = `
   .leaflet-control-zoom a:hover { background: rgba(0,171,168,0.2) !important; }
   .leaflet-control-attribution { background: rgba(11,28,45,0.8) !important; color: rgba(255,255,255,0.35) !important; }
   .leaflet-control-attribution a { color: rgba(255,255,255,0.5) !important; }
+
+  /* ── Fullscreen & Locate — thème dark ──────────────────────── */
+  .leaflet-control-fullscreen a,
+  .leaflet-bar-part.leaflet-bar-part-single,
+  .leaflet-control-locate a {
+    background-color: rgba(11,28,45,0.95) !important;
+    border-color: rgba(255,255,255,0.1) !important;
+    color: white !important;
+  }
+  .leaflet-control-fullscreen a:hover,
+  .leaflet-control-locate a:hover {
+    background-color: rgba(0,171,168,0.2) !important;
+  }
+  /* Icône fullscreen SVG → blanc */
+  .leaflet-control-fullscreen a {
+    background-image: none !important;
+  }
+  .leaflet-control-fullscreen a::before {
+    content: '';
+    display: block;
+    width: 14px; height: 14px;
+    margin: auto;
+    background: white;
+    -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M3 3h6v2H5v4H3V3zm12 0h6v6h-2V5h-4V3zM3 13h2v4h4v2H3v-6zm16 4h-4v2h6v-6h-2v4z'/%3E%3C/svg%3E") center/14px no-repeat;
+    mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M3 3h6v2H5v4H3V3zm12 0h6v6h-2V5h-4V3zM3 13h2v4h4v2H3v-6zm16 4h-4v2h6v-6h-2v4z'/%3E%3C/svg%3E") center/14px no-repeat;
+  }
+  /* Icône locate → teal quand actif */
+  .leaflet-control-locate.active a {
+    background-color: rgba(0,171,168,0.25) !important;
+    border-color: rgba(0,171,168,0.5) !important;
+  }
+  .leaflet-locate-location-marker-location {
+    background: #00ABA8 !important;
+    border-color: white !important;
+  }
   .marker-cluster { background: transparent !important; }
 
   /* ── Animations ────────────────────────────────────────────── */
@@ -473,6 +546,7 @@ export default function CartePhotos() {
             >
               <TileLayer url={TILE_URL} attribution={TILE_ATTR} />
               <ClusterLayer photos={filtered} />
+              <MapControls />
             </MapContainer>
           )}
         </div>
