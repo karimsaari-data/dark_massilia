@@ -195,24 +195,34 @@ const POPUP_CSS = `
   .leaflet-control-zoom a,
   .leaflet-control-fullscreen a,
   .leaflet-bar a {
-    background: rgba(11,28,45,0.95) !important;
+    background-color: rgba(11,28,45,0.95) !important;
     color: white !important;
     border-color: rgba(255,255,255,0.1) !important;
   }
   .leaflet-control-zoom a:hover,
   .leaflet-control-fullscreen a:hover,
-  .leaflet-bar a:hover { background: rgba(0,171,168,0.2) !important; }
+  .leaflet-bar a:hover { background-color: rgba(0,171,168,0.2) !important; }
   .leaflet-control-attribution { background: rgba(11,28,45,0.8) !important; color: rgba(255,255,255,0.35) !important; }
   .leaflet-control-attribution a { color: rgba(255,255,255,0.5) !important; }
   .marker-cluster { background: transparent !important; }
 
-  /* Locate control */
+  /* Icônes blanches — fullscreen SVG sur :root, locate sur son propre sélecteur */
+  :root {
+    --fullscreen-icon-enter: url("data:image/svg+xml,<svg viewBox='0 0 26 26' xmlns='http://www.w3.org/2000/svg'><path d='M5 10.3V5.9c0-.5.4-.9.9-.9h4.4c.2 0 .4.2.4.4V7c0 .2-.2.4-.4.4h-3v3c0 .2-.2.4-.4.4H5.4a.4.4 0 0 1-.4-.4zm10.3-4.9V7c0 .2.2.4.4.4h3v3c0 .2.2.4.4.4h1.5c.2 0 .4-.2.4-.4V5.9c0-.5-.4-.9-.9-.9h-4.4c-.2 0-.4.2-.4.4zm5.3 9.9H19c-.2 0-.4.2-.4.4v3h-3c-.2 0-.4.2-.4.4v1.5c0 .2.2.4.4.4h4.4c.5 0 .9-.4.9-.9v-4.4c0-.2-.2-.4-.4-.4zm-9.9 5.3V19c0-.2-.2-.4-.4-.4h-3v-3c0-.2-.2-.4-.4-.4H5.4c-.2 0-.4.2-.4.4v4.4c0 .5.4.9.9.9h4.4c.2 0 .4-.2.4-.4z' fill='white'/></svg>");
+    --fullscreen-icon-exit: url("data:image/svg+xml,<svg viewBox='0 0 26 26' xmlns='http://www.w3.org/2000/svg'><path d='M20.6 10.7H16a.9.9 0 0 1-.8-.8v-4.5c0-.2.2-.4.4-.4h1.4c.3 0 .5.2.5.4v3h3c.2 0 .4.2.4.5v1.4c0 .2-.2.4-.4.4zm-9.9-.8V5.4c0-.2-.2-.4-.4-.4H8.9c-.3 0-.5.2-.5.4v3h-3c-.2 0-.4.2-.4.5v1.4c0 .2.2.4.4.4H9.9c.4 0 .8-.4.8-.8zm0 10.7V16c0-.4-.4-.8-.8-.8H5.4c-.2 0-.4.2-.4.4v1.4c0 .3.2.5.4.5h3v3c0 .2.2.4.5.4h1.4c.2 0 .4-.2.4-.4zm6.9 0v-3h3c.2 0 .4-.2.4-.5v-1.4c0-.2-.2-.4-.4-.4H16c-.4 0-.8.4-.8.8v4.5c0 .2.2.4.4.4h1.5c.3 0 .5-.2.5-.4z' fill='white'/></svg>");
+  }
+  /* Locate control — override au même niveau de spécificité que le plugin */
+  .leaflet-control-locate {
+    --locate-control-icon-color: rgba(255,255,255,0.85);
+    --locate-control-active-color: #00ABA8;
+    --locate-control-following-color: #00ABA8;
+  }
   .leaflet-control-locate a {
-    background: rgba(11,28,45,0.95) !important;
+    background-color: rgba(11,28,45,0.95) !important;
     color: white !important;
     border-color: rgba(255,255,255,0.1) !important;
   }
-  .leaflet-control-locate a:hover { background: rgba(0,171,168,0.2) !important; }
+  .leaflet-control-locate a:hover { background-color: rgba(0,171,168,0.2) !important; }
   .leaflet-control-locate.active a { color: #00ABA8 !important; }
 
   /* GestureHandling overlay */
