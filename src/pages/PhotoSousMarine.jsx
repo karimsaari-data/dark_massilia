@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from 'react';
-import { motion } from 'framer-motion';
+import { motion, useReducedMotion } from 'framer-motion';
 import { useCardHover } from '../hooks/useCardHover';
 import { ArrowLeft, ArrowRight, Trash2, Fish, ClipboardList } from 'lucide-react';
 import { Link, useSearchParams } from 'react-router-dom';
@@ -450,14 +450,26 @@ const toThumbSrc = (src) => {
 };
 
 /* ─── Grille photos ────────────────────────────────────────── */
-const PhotoGrid = ({ images, gallery }) => (
+const PhotoGrid = ({ images, gallery }) => {
+  const prefersReducedMotion = useReducedMotion();
+  return (
   <div className="columns-1 md:columns-2 lg:columns-3 xl:columns-4 gap-4">
     {images.filter(image => image.src).map((image, index) => {
       const thumbSrc = toThumbSrc(image.src) || image.src;
       const thumbW = Math.min(image.width || 800, 800);
       const thumbH = image.height ? Math.round(image.height * (thumbW / (image.width || 800))) : undefined;
+      // Titre descriptif en priorité sur le lieu pour le SEO et l'overlay
+      const caption = image.title || image.lieu;
+      // Entrance animation uniquement sur les 12 premières images (fold visible)
+      const Tag = (!prefersReducedMotion && index < 12) ? motion.figure : 'figure';
+      const motionProps = (!prefersReducedMotion && index < 12) ? {
+        initial: { opacity: 0, y: 14 },
+        whileInView: { opacity: 1, y: 0 },
+        viewport: { once: true, amount: 0.1 },
+        transition: { duration: 0.4, ease: 'easeOut', delay: (index % 4) * 0.06 },
+      } : {};
       return (
-      <figure key={image.uid} className="break-inside-avoid mb-4">
+      <Tag key={image.uid} className="break-inside-avoid mb-4" {...motionProps}>
         <a
           href={image.src}
           data-fancybox={gallery}
@@ -468,7 +480,7 @@ const PhotoGrid = ({ images, gallery }) => (
           data-hash={image.uid}
           data-maps={image.maps}
           data-thumb={thumbSrc}
-          className="block w-full cursor-pointer relative overflow-hidden rounded-xl focus-ring"
+          className="block w-full cursor-pointer relative overflow-hidden rounded-xl focus-ring group"
           aria-label={`Ouvrir la photo : ${image.alt}`}
         >
           <img
@@ -478,22 +490,38 @@ const PhotoGrid = ({ images, gallery }) => (
             alt={image.alt}
             width={thumbW}
             height={thumbH}
-            className="w-full h-auto object-cover"
+            className="w-full h-auto object-cover transition-transform duration-500 ease-out group-hover:scale-105"
             loading={index < 4 ? 'eager' : 'lazy'}
             fetchPriority={index === 0 ? 'high' : undefined}
             decoding="async"
           />
+          {/* Overlay au survol — gradient + titre, tronqué à 2 lignes max */}
+          {caption && (
+            <div
+              className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-3 pointer-events-none"
+              aria-hidden="true"
+            >
+              <span className="text-white text-[11px] font-medium leading-snug line-clamp-2">
+                {caption}
+              </span>
+            </div>
+          )}
         </a>
-        {image.lieu && (
-          <figcaption className="text-xs text-gray-500 mt-1 px-1 truncate">
-            {image.lieu}
+        {/* Figcaption : titre descriptif pour le SEO, tronqué à 1 ligne */}
+        {caption && (
+          <figcaption
+            className="text-xs text-gray-500 mt-1 px-1 truncate"
+            title={caption}
+          >
+            {caption}
           </figcaption>
         )}
-      </figure>
+      </Tag>
       );
     })}
   </div>
-);
+  );
+};
 
 /* ─── Composant principal ─────────────────────────────────── */
 const PhotoSousMarine = () => {
