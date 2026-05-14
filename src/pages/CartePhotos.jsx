@@ -77,7 +77,7 @@ function popupHtml(photo) {
     </div>`;
 }
 
-function ClusterLayer({ photos }) {
+function ClusterLayer({ photos, markersRef, clusterGroupRef }) {
   const map = useMap();
 
   useEffect(() => {
@@ -94,17 +94,25 @@ function ClusterLayer({ photos }) {
         animate: true,
       });
 
+      const newMarkers = {};
       photos.forEach(photo => {
         const m = L.marker([photo.lat, photo.lng], { icon: markerIcon(photo.type) });
         m.bindPopup(popupHtml(photo), { minWidth: 220, maxWidth: 240 });
         group.addLayer(m);
+        if (photo.uid) newMarkers[photo.uid] = m;
       });
+      markersRef.current = newMarkers;
+      clusterGroupRef.current = group;
 
       map.addLayer(group);
     });
 
-    return () => { if (group) map.removeLayer(group); };
-  }, [map, photos]);
+    return () => {
+      if (group) map.removeLayer(group);
+      clusterGroupRef.current = null;
+      markersRef.current = {};
+    };
+  }, [map, photos, markersRef, clusterGroupRef]);
 
   return null;
 }
@@ -307,6 +315,8 @@ const SUBCATS = {
 
 export default function CartePhotos() {
   const mapRef = useRef(null);
+  const markersRef = useRef({});
+  const clusterGroupRef = useRef(null);
   const [photos, setPhotos]       = useState([]);
   const [loading, setLoading]     = useState(true);
   const [filter, setFilter]       = useState('all');
@@ -578,8 +588,14 @@ export default function CartePhotos() {
                               </a>
                               <button
                                 onClick={() => {
-                                  mapRef.current?.flyTo([photo.lat, photo.lng], 14, { duration: 1.2 });
                                   if (window.innerWidth < 768) setSidebarOpen(false);
+                                  const marker = markersRef.current[photo.uid];
+                                  const group  = clusterGroupRef.current;
+                                  if (marker && group) {
+                                    group.zoomToShowLayer(marker, () => marker.openPopup());
+                                  } else {
+                                    mapRef.current?.flyTo([photo.lat, photo.lng], 14, { duration: 1.2 });
+                                  }
                                 }}
                                 className="flex items-center justify-center w-full py-1.5 rounded-lg text-[11px] font-bold uppercase tracking-wider transition-colors"
                                 style={{
@@ -640,7 +656,7 @@ export default function CartePhotos() {
               <FullscreenControl />
               {heatMode
                 ? <HeatLayer photos={filtered} />
-                : <ClusterLayer photos={filtered} />
+                : <ClusterLayer photos={filtered} markersRef={markersRef} clusterGroupRef={clusterGroupRef} />
               }
             </MapContainer>
           )}
