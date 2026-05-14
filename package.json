@@ -18,6 +18,7 @@
     "notify": "node scripts/notify-new-articles.js",
     "build:full": "node scripts/generate-sitemap.js && node scripts/generate-sitemap-images.js && vite build && node scripts/prerender.js && node scripts/generate-photo-shares.js && node scripts/notify-new-articles.js",
     "indexnow": "node scripts/notify-indexnow.js",
+    "fb-import": "node scripts/import-facebook-insights.js",
     "lint": "eslint .",
     "preview": "vite preview",
     "cloudflare-collect": "node --env-file-if-exists=.env scripts/cloudflare-collect.js",
