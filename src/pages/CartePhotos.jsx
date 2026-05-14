@@ -2,10 +2,19 @@ import { useState, useEffect } from 'react';
 import { MapContainer, TileLayer, useMap } from 'react-leaflet';
 import L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
-import { ChevronLeft } from 'lucide-react';
+import { GestureHandling } from 'leaflet-gesture-handling';
+import 'leaflet-gesture-handling/dist/leaflet-gesture-handling.css';
+import { locate as leafletLocate } from 'leaflet.locatecontrol';
+import 'leaflet.locatecontrol/dist/L.Control.Locate.css';
+import 'leaflet.fullscreen/dist/Control.FullScreen.css';
+import FullScreenPlugin from 'leaflet.fullscreen';
+import 'leaflet.heat/dist/leaflet-heat.js';
+import { ChevronLeft, Layers } from 'lucide-react';
 import { supabase } from '../lib/supabase';
 import SEO from '../components/SEO';
 import { SEO_PAGES } from '../utils/seo';
+
+L.Map.addInitHook('addHandler', 'gestureHandling', GestureHandling);
 
 const TILE_URL  = 'https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png';
 const TILE_ATTR = '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>';
@@ -100,6 +109,68 @@ function ClusterLayer({ photos }) {
   return null;
 }
 
+function HeatLayer({ photos }) {
+  const map = useMap();
+
+  useEffect(() => {
+    if (!photos.length) return;
+    const points = photos.map(p => [p.lat, p.lng, 1]);
+    const layer = L.heatLayer(points, {
+      radius: 28,
+      blur: 22,
+      maxZoom: 14,
+      gradient: { 0.3: '#0091ff', 0.6: '#00ABA8', 1.0: '#21c47b' },
+    });
+    map.addLayer(layer);
+    return () => map.removeLayer(layer);
+  }, [map, photos]);
+
+  return null;
+}
+
+function LocateControl() {
+  const map = useMap();
+
+  useEffect(() => {
+    const lc = leafletLocate({
+      position: 'topright',
+      flyTo: true,
+      cacheLocation: true,
+      drawCircle: true,
+      drawMarker: true,
+      locateOptions: { maxZoom: 14, enableHighAccuracy: true },
+      strings: {
+        title: 'Ma position',
+        metersUnit: 'm',
+        feetUnit: 'ft',
+        popup: 'Vous êtes ici (±{distance} {unit})',
+        outsideMapBoundsMsg: 'Position hors de la carte',
+      },
+    });
+    lc.addTo(map);
+    return () => lc.remove();
+  }, [map]);
+
+  return null;
+}
+
+function FullscreenControl() {
+  const map = useMap();
+
+  useEffect(() => {
+    const fs = new FullScreenPlugin({
+      position: 'topright',
+      title: 'Plein écran',
+      titleCancel: 'Quitter le plein écran',
+      forceSeparateButton: true,
+    });
+    fs.addTo(map);
+    return () => fs.remove();
+  }, [map]);
+
+  return null;
+}
+
 const POPUP_CSS = `
   .leaflet-cluster-anim .leaflet-marker-icon,
   .leaflet-cluster-anim .leaflet-marker-shadow {
@@ -121,15 +192,39 @@ const POPUP_CSS = `
   .leaflet-popup-tip-container { display: none; }
   .leaflet-popup-close-button { color: rgba(255,255,255,0.45) !important; top: 10px !important; right: 10px !important; font-size: 18px !important; }
   .leaflet-popup-close-button:hover { color: white !important; }
-  .leaflet-control-zoom a { background: rgba(11,28,45,0.95) !important; color: white !important; border-color: rgba(255,255,255,0.1) !important; }
-  .leaflet-control-zoom a:hover { background: rgba(0,171,168,0.2) !important; }
+  .leaflet-control-zoom a,
+  .leaflet-control-fullscreen a,
+  .leaflet-bar a {
+    background: rgba(11,28,45,0.95) !important;
+    color: white !important;
+    border-color: rgba(255,255,255,0.1) !important;
+  }
+  .leaflet-control-zoom a:hover,
+  .leaflet-control-fullscreen a:hover,
+  .leaflet-bar a:hover { background: rgba(0,171,168,0.2) !important; }
   .leaflet-control-attribution { background: rgba(11,28,45,0.8) !important; color: rgba(255,255,255,0.35) !important; }
   .leaflet-control-attribution a { color: rgba(255,255,255,0.5) !important; }
   .marker-cluster { background: transparent !important; }
 
+  /* Locate control */
+  .leaflet-control-locate a {
+    background: rgba(11,28,45,0.95) !important;
+    color: white !important;
+    border-color: rgba(255,255,255,0.1) !important;
+  }
+  .leaflet-control-locate a:hover { background: rgba(0,171,168,0.2) !important; }
+  .leaflet-control-locate.active a { color: #00ABA8 !important; }
+
+  /* GestureHandling overlay */
+  .leaflet-gesture-handling-touch-warning,
+  .leaflet-gesture-handling-scroll-warning {
+    background: rgba(11,28,45,0.85);
+    color: white;
+    font-family: inherit;
+  }
+
   /* ── Animations ────────────────────────────────────────────── */
 
-  /* 1. Popup fade + slide-up à l'ouverture */
   @keyframes popup-in {
     from { opacity: 0; transform: translateY(10px) scale(0.97); }
     to   { opacity: 1; transform: translateY(0)    scale(1);    }
@@ -138,7 +233,6 @@ const POPUP_CSS = `
     animation: popup-in 0.22s ease-out;
   }
 
-  /* 2. Glow pulsé sur le point du filtre actif */
   @keyframes dot-pulse {
     0%, 100% { opacity: 1;   transform: scale(1);    }
     50%       { opacity: 0.7; transform: scale(1.35); }
@@ -147,7 +241,6 @@ const POPUP_CSS = `
     animation: dot-pulse 2s ease-in-out infinite;
   }
 
-  /* 3. Slide-in de la sidebar au premier chargement */
   @keyframes sidebar-enter {
     from { opacity: 0; transform: translateX(-18px); }
     to   { opacity: 1; transform: translateX(0);     }
@@ -196,6 +289,7 @@ export default function CartePhotos() {
   const [filter, setFilter]       = useState('all');
   const [subFilter, setSubFilter] = useState(null);
   const [isMounted, setIsMounted] = useState(false);
+  const [heatMode, setHeatMode]   = useState(false);
   const [sidebarOpen, setSidebarOpen] = useState(
     () => typeof window !== 'undefined' ? window.innerWidth >= 768 : true
   );
@@ -264,6 +358,32 @@ export default function CartePhotos() {
               </p>
             </div>
 
+            {/* ── Vue : Marqueurs / Zones chaudes ── */}
+            <div className="px-5 py-4 border-b border-white/8 flex-shrink-0">
+              <p className="text-[11px] font-black uppercase tracking-[0.12em] text-white/40 mb-3">
+                Vue :
+              </p>
+              <div className="grid grid-cols-2 gap-1.5">
+                {[
+                  { mode: false, label: 'Marqueurs',    icon: '📍' },
+                  { mode: true,  label: 'Zones chaudes', icon: '🔥' },
+                ].map(({ mode, label, icon }) => (
+                  <button
+                    key={String(mode)}
+                    onClick={() => setHeatMode(mode)}
+                    className={`flex items-center justify-center gap-2 px-3 py-2 rounded-xl text-xs font-semibold border transition-all ${
+                      heatMode === mode
+                        ? 'bg-white/10 border-white/25 text-white'
+                        : 'border-white/10 text-white/45 hover:bg-white/5 hover:text-white/70'
+                    }`}
+                  >
+                    <span>{icon}</span>
+                    {label}
+                  </button>
+                ))}
+              </div>
+            </div>
+
             {/* ── Filtres principaux ── */}
             <div className="px-5 py-5 border-b border-white/8 flex-shrink-0">
               <p className="text-[11px] font-black uppercase tracking-[0.12em] text-white/40 mb-3">
@@ -284,7 +404,6 @@ export default function CartePhotos() {
                         : 'border border-transparent hover:bg-white/5 hover:border-white/10'
                     }`}
                   >
-                    {/* Icône colorée — inspirée des pictogrammes Fondation de la Mer */}
                     <span
                       className="w-8 h-8 rounded-full flex-shrink-0 flex items-center justify-center"
                       style={{
@@ -350,7 +469,6 @@ export default function CartePhotos() {
             {/* ── Badge catégorie active + résultats ── */}
             <div className="flex-1 overflow-y-auto overscroll-contain">
 
-              {/* Badge type actif — comme le bandeau orange "COLLECTE DE DÉCHETS" */}
               {!loading && filtered.length > 0 && (
                 <div className="px-5 py-3 sticky top-0 z-10 border-b border-white/5"
                   style={{ background: 'rgba(4,12,24,0.98)' }}>
@@ -371,8 +489,16 @@ export default function CartePhotos() {
                 </div>
               )}
 
-              {/* Cartes résultats */}
-              {loading ? (
+              {/* Liste résultats — masquée en vue heatmap (pas de popup sur les points) */}
+              {heatMode ? (
+                <div className="flex flex-col items-center justify-center gap-3 py-10 px-6 text-center">
+                  <span className="text-3xl">🔥</span>
+                  <p className="text-white/50 text-xs leading-relaxed">
+                    Vue zones chaudes — les couleurs indiquent la densité de photos.
+                    Passez en vue Marqueurs pour accéder aux photos individuelles.
+                  </p>
+                </div>
+              ) : loading ? (
                 <div className="flex items-center justify-center h-24">
                   <div className="spinner" />
                 </div>
@@ -387,10 +513,8 @@ export default function CartePhotos() {
                     const thumb = toThumb(photo.src);
                     return (
                       <li key={photo.uid ?? photo.src} className="px-4 py-2">
-                        {/* Carte résultat — structure inspirée des fiches événements FdlM */}
                         <div className="rounded-xl border border-white/8 overflow-hidden hover:border-white/20 transition-all duration-200 hover:-translate-y-0.5 hover:shadow-lg group"
                           style={{ background: 'rgba(255,255,255,0.03)' }}>
-                          {/* Vignette */}
                           {thumb && (
                             <a href={href} target="_blank" rel="noopener noreferrer">
                               <img
@@ -402,20 +526,17 @@ export default function CartePhotos() {
                             </a>
                           )}
                           <div className="px-3 py-2.5 space-y-1.5">
-                            {/* Titre */}
                             {photo.title && (
                               <p className="text-white/90 text-xs font-semibold leading-snug line-clamp-2">
                                 {photo.title}
                               </p>
                             )}
-                            {/* Lieu */}
                             {photo.lieu && (
                               <p className="flex items-center gap-1.5 text-[11px] text-white/40">
                                 <span className="w-1.5 h-1.5 rounded-full flex-shrink-0" style={{ background: c }} />
                                 {photo.lieu}
                               </p>
                             )}
-                            {/* CTA */}
                             <a
                               href={href}
                               target="_blank"
@@ -470,9 +591,15 @@ export default function CartePhotos() {
               center={[43.22, 5.45]}
               zoom={11}
               style={{ height: '100%', width: '100%' }}
+              gestureHandling={true}
             >
               <TileLayer url={TILE_URL} attribution={TILE_ATTR} />
-              <ClusterLayer photos={filtered} />
+              <LocateControl />
+              <FullscreenControl />
+              {heatMode
+                ? <HeatLayer photos={filtered} />
+                : <ClusterLayer photos={filtered} />
+              }
             </MapContainer>
           )}
         </div>
@@ -483,14 +610,26 @@ export default function CartePhotos() {
         <div className="border-t border-white/8 px-6 py-3 flex flex-wrap items-center gap-x-6 gap-y-2"
           style={{ background: 'rgba(4,12,24,0.85)' }}>
           <span className="text-white/30 text-xs">{photos.length} lieux cartographiés</span>
-          <span className="flex items-center gap-2 text-xs text-white/50">
-            <span className="w-2.5 h-2.5 rounded-full flex-shrink-0" style={{ background: '#00ABA8', boxShadow: '0 0 6px #00ABA8' }} />
-            Paysages
-          </span>
-          <span className="flex items-center gap-2 text-xs text-white/50">
-            <span className="w-2.5 h-2.5 rounded-full flex-shrink-0" style={{ background: '#0091ff', boxShadow: '0 0 6px #0091ff' }} />
-            Sous-marine
-          </span>
+          {heatMode ? (
+            <>
+              <span className="flex items-center gap-2 text-xs text-white/50">
+                <span className="inline-block w-10 h-2 rounded-full flex-shrink-0"
+                  style={{ background: 'linear-gradient(to right, #0091ff, #00ABA8, #21c47b)' }} />
+                Densité de photos
+              </span>
+            </>
+          ) : (
+            <>
+              <span className="flex items-center gap-2 text-xs text-white/50">
+                <span className="w-2.5 h-2.5 rounded-full flex-shrink-0" style={{ background: '#00ABA8', boxShadow: '0 0 6px #00ABA8' }} />
+                Paysages
+              </span>
+              <span className="flex items-center gap-2 text-xs text-white/50">
+                <span className="w-2.5 h-2.5 rounded-full flex-shrink-0" style={{ background: '#0091ff', boxShadow: '0 0 6px #0091ff' }} />
+                Sous-marine
+              </span>
+            </>
+          )}
           <span className="ml-auto flex items-center gap-3 text-xs text-white/30">
             <a href="/photographie-paysage-mer" className="hover:text-white/70 transition-colors">Galerie paysages →</a>
             <a href="/photographie-sous-marine" className="hover:text-white/70 transition-colors">Galerie sous-marine →</a>
