@@ -1,5 +1,5 @@
 import { useState, useEffect, useMemo, useRef } from 'react';
-import { motion } from 'framer-motion';
+import { motion, useReducedMotion } from 'framer-motion';
 import { Waves, TreePine, Compass, ArrowLeft, ZoomIn, ExternalLink } from 'lucide-react';
 // Référence Fancybox — peuplée dynamiquement côté client uniquement
 let _FB = null;
@@ -555,12 +555,22 @@ const SectionTitle = ({ icon: Icon, title, count }) => (
 const toThumbSrc = (src) =>
   src.replace(/\/images\/portfolio\/(Mer|Terre)\//, '/images/portfolio/$1/800w/');
 
-const PhotoGrid = ({ images }) => (
+const PhotoGrid = ({ images }) => {
+  const prefersReducedMotion = useReducedMotion();
+  return (
   <div className="columns-1 md:columns-2 lg:columns-3 xl:columns-4 gap-4">
     {images.map((image, index) => {
       const thumbSrc = image.thumbSrc || toThumbSrc(image.src);
+      const caption = image.title || image.lieu;
+      const Tag = (!prefersReducedMotion && index < 12) ? motion.figure : 'figure';
+      const motionProps = (!prefersReducedMotion && index < 12) ? {
+        initial: { opacity: 0, y: 14 },
+        whileInView: { opacity: 1, y: 0 },
+        viewport: { once: true, amount: 0.1 },
+        transition: { duration: 0.4, ease: 'easeOut', delay: (index % 4) * 0.06 },
+      } : {};
       return (
-      <figure key={image.uid} className="break-inside-avoid mb-4">
+      <Tag key={image.uid} className="break-inside-avoid mb-4" {...motionProps}>
         <a
           href={image.src}
           data-fancybox="gallery-paysage"
@@ -571,7 +581,7 @@ const PhotoGrid = ({ images }) => (
           data-hash={image.uid}
           data-maps={image.maps}
           data-thumb={thumbSrc}
-          className="block w-full cursor-pointer relative overflow-hidden rounded-xl focus-ring"
+          className="block w-full cursor-pointer relative overflow-hidden rounded-xl focus-ring group"
           aria-label={`Ouvrir la photo : ${image.alt}`}
         >
           <img
@@ -581,22 +591,33 @@ const PhotoGrid = ({ images }) => (
             alt={image.alt}
             width={Math.min(image.width, 800)}
             height={Math.round(image.height * (Math.min(image.width, 800) / image.width))}
-            className="w-full h-auto object-cover"
+            className="w-full h-auto object-cover transition-transform duration-500 ease-out group-hover:scale-105"
             loading={index < 4 ? 'eager' : 'lazy'}
             fetchPriority={index === 0 ? 'high' : undefined}
             decoding="async"
           />
+          {caption && (
+            <div
+              className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-3 pointer-events-none"
+              aria-hidden="true"
+            >
+              <span className="text-white text-[11px] font-medium leading-snug line-clamp-2">
+                {caption}
+              </span>
+            </div>
+          )}
         </a>
-        {image.lieu && (
-          <figcaption className="text-xs text-gray-500 mt-1 px-1 truncate">
-            {image.lieu}
+        {caption && (
+          <figcaption className="text-xs text-gray-500 mt-1 px-1 truncate" title={caption}>
+            {caption}
           </figcaption>
         )}
-      </figure>
+      </Tag>
       );
     })}
   </div>
-);
+  );
+};
 
 /* ─── Fusionne les données Supabase avec les dimensions statiques ─── */
 const mergeWithDims = (rows) => {
