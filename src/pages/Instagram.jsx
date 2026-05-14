@@ -188,8 +188,10 @@ const Communaute = () => {
         if (fbPages > 0) {
           setFbPagesLabel(Math.round(fbPages).toLocaleString('fr-FR'));
         }
-        // Total communauté = somme de toutes les plateformes disponibles
-        const total = Object.values(map).reduce((s, v) => s + v, 0);
+        // Total communauté = abonnés/membres uniquement (hors vues & impressions)
+        // Pinterest est exclu : sa valeur en base = vues/mois, pas des abonnés
+        const COMMUNITY_PLATFORMS = ['facebook_group', 'instagram', 'tiktok', 'facebook_page', 'facebook_perso', 'youtube', 'x'];
+        const total = COMMUNITY_PLATFORMS.reduce((s, p) => s + (map[p] ?? 0), 0);
         if (total > 0) {
           setTotalLabel(Math.round(total).toLocaleString('fr-FR'));
         }
