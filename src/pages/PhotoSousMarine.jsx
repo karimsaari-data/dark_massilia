@@ -574,14 +574,24 @@ const PhotoSousMarine = () => {
         <Breadcrumb label="Photographe Sous-Marin — Galerie" />
 
         {/* H1 SEO */}
-        <motion.h1
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6 }}
-          className="text-xl md:text-2xl font-bold text-white text-center mb-6 leading-tight"
-        >
-          Photographe sous-marin à Marseille — Documenter pour alerter
-        </motion.h1>
+        <div className="flex items-stretch gap-4 mb-6">
+          <motion.div
+            initial={{ scaleY: 0 }}
+            animate={{ scaleY: 1 }}
+            transition={{ duration: 0.7, ease: 'easeOut', delay: 0.5 }}
+            style={{ transformOrigin: 'top' }}
+            className="w-[3px] bg-ocean-teal rounded-full flex-shrink-0"
+            aria-hidden="true"
+          />
+          <motion.h1
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6 }}
+            className="text-xl md:text-2xl font-bold text-white leading-tight"
+          >
+            Photographe sous-marin à Marseille — Documenter pour alerter
+          </motion.h1>
+        </div>
 
         {/* Raccourcis catégories */}
         <motion.div
