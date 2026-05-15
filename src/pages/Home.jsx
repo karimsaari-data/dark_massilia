@@ -268,7 +268,7 @@ const Home = () => {
                   poster="/assets/hero-bg.webp"
                   aria-hidden="true"
                 >
-                  <source src="/assets/video/Video_fond.mp4" type="video/mp4" />
+                  <source src="/assets/video/barracuda-hero.mp4" type="video/mp4" />
                 </video>
               )}
               {/* Overlay verre dépoli sur la vidéo */}
