@@ -233,9 +233,9 @@ const Home = () => {
     <div className="min-h-screen">
       <SEO {...SEO_PAGES['/']} />
       {/* Hero Section */}
-      <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
+      <section className="relative min-h-screen flex items-start justify-center overflow-hidden">
         {/* Hero Content — layout 2 colonnes desktop, empilé mobile */}
-        <div className="container-custom relative z-10 w-full px-4 py-16 md:py-10">
+        <div className="container-custom relative z-10 w-full px-4 pt-6 pb-16 md:pt-8 md:pb-16">
           <motion.div
             initial="hidden"
             animate="visible"
