@@ -313,7 +313,7 @@ const Home = () => {
                       animate={{ scaleY: 1 }}
                       transition={{ duration: 0.7, ease: 'easeOut', delay: 0.5 }}
                       style={{ transformOrigin: 'top' }}
-                      className="w-[3px] bg-white rounded-full flex-shrink-0"
+                      className="w-[3px] bg-ocean-teal rounded-full flex-shrink-0"
                       aria-hidden="true"
                     />
                     <h1 className="font-display text-3xl md:text-4xl lg:text-5xl font-extrabold text-white uppercase tracking-[0.08em] leading-[1.15]">
