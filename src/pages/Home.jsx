@@ -763,6 +763,14 @@ const Home = () => {
                   <span>Galerie Sous-marine &amp; Dépollution</span>
                   <ArrowRight className="w-5 h-5" />
                 </Link>
+                <Link
+                  to="/carte-photos"
+                  className="btn-ghost inline-flex items-center justify-between gap-2 w-auto min-w-[280px]"
+                  title="Voir toutes les photos géolocalisées sur la carte interactive"
+                >
+                  <span>Carte des photos</span>
+                  <MapPin className="w-5 h-5" />
+                </Link>
               </div>
             </div>
 
