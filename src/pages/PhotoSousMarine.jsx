@@ -892,6 +892,33 @@ const PhotoSousMarine = () => {
           </motion.div>
         </motion.div>
 
+        {/* CTA — Collaboration / Reportage */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6 }}
+          className="mt-8 mb-12"
+        >
+          <div className="glass-strong rounded-3xl p-8 md:p-10 flex flex-col md:flex-row items-center justify-between gap-6">
+            <div>
+              <h2 className="text-xl md:text-2xl font-bold text-white mb-2">
+                Vous cherchez un photographe sous-marin à Marseille ?
+              </h2>
+              <p className="text-text-secondary text-base max-w-xl">
+                Reportage documentaire, exposition photographique, production institutionnelle ou collaboration presse — je suis basé à Marseille et disponible sur les Calanques et la Méditerranée.
+              </p>
+            </div>
+            <Link
+              to="/contact"
+              className="btn-primary inline-flex items-center gap-2 flex-shrink-0"
+            >
+              <span>Me contacter</span>
+              <ArrowRight className="w-4 h-4" aria-hidden="true" />
+            </Link>
+          </div>
+        </motion.div>
+
       </div>
     </div>
   );
