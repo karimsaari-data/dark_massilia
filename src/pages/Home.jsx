@@ -347,23 +347,22 @@ const Home = () => {
                   {/* Hero CTAs */}
                   <div className="flex flex-col sm:flex-row items-center justify-center md:justify-start gap-4 mt-2">
                     <a
-                      href="#galerie"
+                      href="#newsletter"
                       className="btn-primary inline-flex items-center gap-2"
+                      title="Recevoir une photo exclusive des fonds marins des Calanques"
+                      onClick={() => trackEvent('cta_click', { button_name: 'Recevoir un cliché gratuit' })}
+                    >
+                      <span>🎁 Recevoir un cliché gratuit</span>
+                    </a>
+                    <a
+                      href="#galerie"
+                      className="btn-ghost inline-flex items-center gap-2"
                       title="Voir les photographies des Calanques de Marseille par Karim Saari"
                       onClick={() => trackEvent('cta_click', { button_name: 'Découvrir les Calanques' })}
                     >
                       <span>Découvrir les Calanques</span>
                       <ArrowRight className="w-4 h-4" aria-hidden="true" />
                     </a>
-                    <Link
-                      to="/communaute"
-                      className="btn-ghost inline-flex items-center gap-2"
-                      title="Rejoindre la communauté Dark Massilia — Calanques de Marseille"
-                      onClick={() => trackEvent('cta_click', { button_name: 'Rejoindre la communauté' })}
-                    >
-                      <span>Rejoindre la communauté</span>
-                      <ArrowRight className="w-4 h-4" aria-hidden="true" />
-                    </Link>
                   </div>
                 </div>
 
