@@ -234,7 +234,28 @@ const Home = () => {
       <SEO {...SEO_PAGES['/']} />
       {/* Hero Section */}
       <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
-        {/* Pas d'overlay supplémentaire ici — géré dans Layout.jsx */}
+        {/* Fond vidéo méduses — désactivé si prefers-reduced-motion */}
+        {!prefersReducedMotion && (
+          <video
+            className="absolute inset-0 w-full h-full object-cover z-[1]"
+            autoPlay
+            muted
+            loop
+            playsInline
+            preload="none"
+            poster="/assets/hero-bg.webp"
+            aria-hidden="true"
+          >
+            <source src="/videos/jellyfish-hero.webm" type="video/webm" />
+            <source src="/videos/jellyfish-hero.mp4" type="video/mp4" />
+          </video>
+        )}
+        {/* Overlay sur la vidéo — lisibilité texte + cohérence palette */}
+        <div
+          className="absolute inset-0 z-[2] pointer-events-none"
+          style={{ background: 'linear-gradient(to bottom, rgba(0,5,20,0.60) 0%, rgba(0,10,30,0.42) 50%, rgba(0,5,20,0.75) 100%)' }}
+          aria-hidden="true"
+        />
 
         {/* Hero Content — layout 2 colonnes desktop, empilé mobile */}
         <div className="container-custom relative z-10 w-full px-4 py-16 md:py-12">
