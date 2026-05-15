@@ -23,7 +23,7 @@ const EchappeesBelles = () => {
       {/* Hero — cadre hublot avec image en fond */}
       <section
         className="container-custom"
-        style={{ paddingTop: 'calc(var(--navbar-h-md, 128px) + 1.5rem)', paddingBottom: '2rem' }}
+        style={{ paddingTop: '1rem', paddingBottom: '2rem' }}
       >
         <motion.div
           initial="hidden"

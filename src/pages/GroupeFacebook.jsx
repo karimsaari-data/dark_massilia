@@ -205,7 +205,7 @@ export default function GroupeFacebook() {
             <div className="grid md:grid-cols-[1fr_1.1fr] gap-0">
 
               {/* Contenu gauche */}
-              <div className="p-8 md:p-12 flex flex-col justify-start order-2 md:order-1">
+              <div className="p-8 md:p-12 flex flex-col justify-start order-2 md:order-1 bg-black/55 backdrop-blur-sm">
                 {/* Badge */}
                 <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full border border-blue-500/30 bg-blue-500/10 text-blue-400 text-xs font-medium mb-6 w-fit">
                   <Users className="w-3.5 h-3.5" />

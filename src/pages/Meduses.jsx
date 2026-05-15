@@ -25,15 +25,22 @@ const Meduses = () => {
       {/* Hero — hublot vidéo */}
       <section
         className="container-custom"
-        style={{ paddingTop: 'calc(var(--navbar-h-md, 128px) + 1.5rem)', paddingBottom: '2rem' }}
+        style={{ paddingTop: '1rem', paddingBottom: '2rem' }}
       >
         <motion.div initial="hidden" animate="visible" variants={STAGGER_CONTAINER}>
           <motion.div
             variants={{ hidden: { y: 20 }, visible: { y: 0, transition: { duration: 0.6, ease: 'easeOut' } } }}
             style={HUBLOT_STYLE}
           >
+            {/* Vidéo plein-largeur dans le cadre */}
+            <motion.div variants={FADE_IN_UP}>
+              <YouTubeFacade
+                videoId="yfebiTFOq7E"
+                title="Méduses | Les souveraines des océans — Documentaire ARTE Évasion"
+              />
+            </motion.div>
             {/* Header text */}
-            <div className="p-8 md:p-10 pb-6">
+            <div className="p-8 md:p-10 pt-6">
               <Breadcrumb label="Méduses — Documentaire ARTE" />
               <div className="mt-4 max-w-3xl">
                 <motion.p variants={FADE_IN_UP} className="text-ocean-teal text-sm font-semibold uppercase tracking-widest mb-2">
@@ -50,13 +57,6 @@ const Meduses = () => {
                 </motion.p>
               </div>
             </div>
-            {/* Vidéo plein-largeur dans le cadre */}
-            <motion.div variants={FADE_IN_UP}>
-              <YouTubeFacade
-                videoId="yfebiTFOq7E"
-                title="Méduses | Les souveraines des océans — Documentaire ARTE Évasion"
-              />
-            </motion.div>
           </motion.div>
         </motion.div>
       </section>
