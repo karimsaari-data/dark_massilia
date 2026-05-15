@@ -2,7 +2,7 @@ import { useState, useEffect, useRef } from 'react';
 import { motion, useReducedMotion } from 'framer-motion';
 import { useCardHover } from '../hooks/useCardHover';
 import { ArrowLeft, ArrowRight, Trash2, Fish, ClipboardList } from 'lucide-react';
-import { Link, useSearchParams } from 'react-router-dom';
+import { Link, useSearchParams, useNavigate } from 'react-router-dom';
 // Référence Fancybox — peuplée dynamiquement côté client uniquement
 let _FB = null;
 const getFB = () => _FB;
@@ -370,8 +370,10 @@ const buildOpts = () => ({
       c.addEventListener('click', (e) => {
         const mapBtn = e.target.closest('.fb-caption-map');
         if (mapBtn) {
+          e.stopPropagation();
+          e.preventDefault();
           const uid = mapBtn.dataset.mapUid || '';
-          if (uid) window.location.href = `/carte-photos?photo=${encodeURIComponent(uid)}`;
+          if (uid) window.dispatchEvent(new CustomEvent('carte-navigate', { detail: `/carte-photos?photo=${encodeURIComponent(uid)}` }));
           return;
         }
         const btn = e.target.closest('.fb-caption-buy');
@@ -533,11 +535,22 @@ const PhotoGrid = ({ images, gallery }) => {
 /* ─── Composant principal ─────────────────────────────────── */
 const PhotoSousMarine = () => {
   const cardHover = useCardHover();
+  const navigate = useNavigate();
   const [depollImages, setDepollImages] = useState(baseDepollution);
   const [biodivImages, setBiodivImages] = useState(baseBiodiversite);
   const [caracImages, setCaracImages] = useState([]);
   const [searchParams] = useSearchParams();
   const deepLinkDone = useRef(false);
+
+  // Écoute le custom event émis depuis le handler Fancybox (hors contexte React)
+  useEffect(() => {
+    const handler = (e) => {
+      getFB()?.close();
+      navigate(e.detail, { replace: false });
+    };
+    window.addEventListener('carte-navigate', handler);
+    return () => window.removeEventListener('carte-navigate', handler);
+  }, [navigate]);
 
   // Fetch Supabase — remplace les données statiques si disponible
   useEffect(() => {
