@@ -234,30 +234,8 @@ const Home = () => {
       <SEO {...SEO_PAGES['/']} />
       {/* Hero Section */}
       <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
-        {/* Fond vidéo méduses — désactivé si prefers-reduced-motion */}
-        {!prefersReducedMotion && (
-          <video
-            className="absolute inset-0 w-full h-full object-cover z-[1]"
-            autoPlay
-            muted
-            loop
-            playsInline
-            preload="none"
-            poster="/assets/hero-bg.webp"
-            aria-hidden="true"
-          >
-            <source src="/assets/video/Video_fond.mp4" type="video/mp4" />
-          </video>
-        )}
-        {/* Overlay sur la vidéo — lisibilité texte + cohérence palette */}
-        <div
-          className="absolute inset-0 z-[2] pointer-events-none"
-          style={{ background: 'linear-gradient(to bottom, rgba(0,5,20,0.60) 0%, rgba(0,10,30,0.42) 50%, rgba(0,5,20,0.75) 100%)' }}
-          aria-hidden="true"
-        />
-
         {/* Hero Content — layout 2 colonnes desktop, empilé mobile */}
-        <div className="container-custom relative z-10 w-full px-4 py-16 md:py-12">
+        <div className="container-custom relative z-10 w-full px-4 py-16 md:py-10">
           <motion.div
             initial="hidden"
             animate="visible"
@@ -269,12 +247,38 @@ const Home = () => {
                 visible: { y: 0, transition: { duration: 0.6, ease: 'easeOut' } }
               }}
               style={{
-                background: 'rgba(10, 20, 40, 0.75)',
-                backdropFilter: 'blur(12px)',
-                borderRadius: '20px',
-                padding: 'clamp(40px, 5vw, 72px)',
+                position: 'relative',
+                overflow: 'hidden',
+                background: 'rgba(10, 20, 40, 0.45)',
+                backdropFilter: 'blur(14px)',
+                borderRadius: '24px',
+                padding: 'clamp(48px, 6vw, 88px)',
               }}
             >
+              {/* Fond vidéo méduses dans le cadre — désactivé si prefers-reduced-motion */}
+              {!prefersReducedMotion && (
+                <video
+                  className="absolute inset-0 w-full h-full object-cover"
+                  style={{ zIndex: 0 }}
+                  autoPlay
+                  muted
+                  loop
+                  playsInline
+                  preload="none"
+                  poster="/assets/hero-bg.webp"
+                  aria-hidden="true"
+                >
+                  <source src="/assets/video/Video_fond.mp4" type="video/mp4" />
+                </video>
+              )}
+              {/* Overlay verre dépoli sur la vidéo */}
+              <div
+                className="absolute inset-0 pointer-events-none"
+                style={{ zIndex: 1, background: 'linear-gradient(135deg, rgba(0,8,24,0.52) 0%, rgba(0,15,40,0.38) 50%, rgba(0,8,24,0.55) 100%)' }}
+                aria-hidden="true"
+              />
+              {/* Contenu au-dessus de la vidéo */}
+              <div className="relative" style={{ zIndex: 2 }}>
               {/* Photo profil — Mobile uniquement (au-dessus du texte) */}
               <div className="flex justify-center mb-6 md:hidden">
                 <motion.div
@@ -377,6 +381,7 @@ const Home = () => {
                   </motion.div>
                 </div>
               </div>
+              </div>{/* fin wrapper z-2 */}
             </motion.div>
           </motion.div>
         </div>
