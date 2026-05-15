@@ -300,8 +300,10 @@ const Home = () => {
               <div className="md:grid md:grid-cols-[1fr_auto] md:gap-12 md:items-center">
                 {/* Bloc texte */}
                 <div className="text-center md:text-left">
-                  {/* Trait vertical + titre — style Fondation de la Mer */}
-                  <div className="flex items-stretch gap-5 mb-8">
+                  {/* Grand cadre englobant titre + texte + compteur */}
+                  <div className="rounded-xl px-5 py-5 mb-8" style={{ background: 'rgba(0,0,0,0.28)', backdropFilter: 'blur(6px)' }}>
+                  {/* Trait vertical + titre */}
+                  <div className="flex items-stretch gap-5 mb-5">
                     <div className="flex gap-[3px] flex-shrink-0" aria-hidden="true">
                       <motion.div
                         initial={prefersReducedMotion ? {} : { scaleY: 0 }}
@@ -323,8 +325,8 @@ const Home = () => {
                     </h1>
                   </div>
 
-                  {/* Cadre texte + compteur */}
-                  <div className="rounded-xl px-5 py-4 mb-8" style={{ background: 'rgba(0,0,0,0.28)', backdropFilter: 'blur(6px)' }}>
+                  {/* Texte + compteur */}
+                  <div className="">
                     <p className="font-display text-base md:text-lg font-normal text-white/90 leading-[1.85] mb-4">
                       <strong className="text-white font-semibold">Rendre visible l'invisible.</strong>{' '}
                       Entre photographie d'art et exploration en apnée, je documente la beauté brute du littoral marseillais pour témoigner de l'urgence écologique. En tant que Sentinelle des Calanques, j'allie le pouvoir de l'image aux actions de terrain avec{' '}
@@ -339,7 +341,8 @@ const Home = () => {
                       </span>
                       <span className="text-white/70 text-sm font-medium">abonnés & membres de la communauté</span>
                     </div>
-                  </div>
+                  </div>{/* fin texte+compteur */}
+                  </div>{/* fin grand cadre */}
 
                   {/* Hero CTAs */}
                   <div className="flex flex-col sm:flex-row items-center justify-center md:justify-start gap-4 mt-2">

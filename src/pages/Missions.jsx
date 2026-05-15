@@ -18,7 +18,7 @@ const EDITIONS = [
 const Missions = () => {
   const cardHover = useCardHover();
   return (
-    <div className="min-h-screen py-24">
+    <div className="min-h-screen pt-8 pb-24">
       <SEO {...SEO_PAGES['/depollution-marine']} />
       <div className="container-custom">
         <Breadcrumb label="Missions de Dépollution Marine" />
@@ -53,7 +53,17 @@ const Missions = () => {
           variants={STAGGER_CONTAINER}
           className="mx-auto mb-12"
         >
-          <motion.div {...cardHover} variants={FADE_IN_UP} className="glass-strong rounded-3xl overflow-hidden" style={{ position: 'relative', minHeight: '320px' }}>
+          <motion.div {...cardHover} variants={FADE_IN_UP} style={{
+              position: 'relative',
+              overflow: 'hidden',
+              background: 'rgba(10, 20, 40, 0.45)',
+              backdropFilter: 'blur(14px)',
+              borderRadius: '24px',
+              padding: 'clamp(32px, 5vw, 72px)',
+              border: '2px solid rgba(0,171,168,0.55)',
+              boxShadow: '0 0 0 6px rgba(0,8,24,0.88), 0 0 0 8px rgba(0,171,168,0.35), 0 0 40px rgba(0,171,168,0.18), 0 0 80px rgba(0,120,180,0.10)',
+              minHeight: '360px',
+            }}>
             {/* Vidéo fond */}
             <video
               autoPlay muted loop playsInline preload="none"
