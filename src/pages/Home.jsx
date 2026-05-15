@@ -308,14 +308,22 @@ const Home = () => {
                 <div className="text-center md:text-left">
                   {/* Trait vertical + titre — style Fondation de la Mer */}
                   <div className="flex items-stretch gap-5 mb-8">
-                    <motion.div
-                      initial={prefersReducedMotion ? {} : { scaleY: 0 }}
-                      animate={{ scaleY: 1 }}
-                      transition={{ duration: 0.7, ease: 'easeOut', delay: 0.5 }}
-                      style={{ transformOrigin: 'top' }}
-                      className="w-[3px] bg-black rounded-full flex-shrink-0"
-                      aria-hidden="true"
-                    />
+                    <div className="flex gap-[3px] flex-shrink-0" aria-hidden="true">
+                      <motion.div
+                        initial={prefersReducedMotion ? {} : { scaleY: 0 }}
+                        animate={{ scaleY: 1 }}
+                        transition={{ duration: 0.7, ease: 'easeOut', delay: 0.5 }}
+                        style={{ transformOrigin: 'top' }}
+                        className="w-[3px] bg-black rounded-full"
+                      />
+                      <motion.div
+                        initial={prefersReducedMotion ? {} : { scaleY: 0 }}
+                        animate={{ scaleY: 1 }}
+                        transition={{ duration: 0.7, ease: 'easeOut', delay: 0.65 }}
+                        style={{ transformOrigin: 'top' }}
+                        className="w-[3px] bg-ocean-teal rounded-full"
+                      />
+                    </div>
                     <h1 className="font-display text-3xl md:text-4xl lg:text-5xl font-extrabold text-white uppercase tracking-[0.08em] leading-[1.15]">
                       Photographie &amp; Engagement : Révéler et Protéger les Calanques de Marseille
                     </h1>
