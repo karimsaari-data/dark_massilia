@@ -246,8 +246,7 @@ const Home = () => {
             poster="/assets/hero-bg.webp"
             aria-hidden="true"
           >
-            <source src="/videos/jellyfish-hero.webm" type="video/webm" />
-            <source src="/videos/jellyfish-hero.mp4" type="video/mp4" />
+            <source src="/assets/video/Video_fond.mp4" type="video/mp4" />
           </video>
         )}
         {/* Overlay sur la vidéo — lisibilité texte + cohérence palette */}
