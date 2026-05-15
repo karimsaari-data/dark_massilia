@@ -313,7 +313,7 @@ const Home = () => {
                       animate={{ scaleY: 1 }}
                       transition={{ duration: 0.7, ease: 'easeOut', delay: 0.5 }}
                       style={{ transformOrigin: 'top' }}
-                      className="w-[3px] bg-ocean-teal rounded-full flex-shrink-0"
+                      className="w-[3px] bg-astroide rounded-full flex-shrink-0"
                       aria-hidden="true"
                     />
                     <h1 className="font-display text-3xl md:text-4xl lg:text-5xl font-extrabold text-white uppercase tracking-[0.08em] leading-[1.15]">
@@ -322,17 +322,17 @@ const Home = () => {
                   </div>
 
                   <p className="font-display text-base md:text-lg font-normal text-text-secondary leading-[1.85] mb-10">
-                    <strong className="text-ocean-teal font-semibold">Rendre visible l'invisible.</strong>{' '}
+                    <strong className="text-astroide font-semibold">Rendre visible l'invisible.</strong>{' '}
                     Entre photographie d'art et exploration en apnée, je documente la beauté brute du littoral marseillais pour témoigner de l'urgence écologique. En tant que Sentinelle des Calanques, j'allie le pouvoir de l'image aux actions de terrain avec{' '}
-                    <strong className="text-ocean-teal font-semibold">Team Oxygen</strong>{' '}
+                    <strong className="text-astroide font-semibold">Team Oxygen</strong>{' '}
                     pour préserver durablement la biodiversité de notre Méditerranée.
                   </p>
 
                   {/* Compteur communauté — animé au chargement */}
                   <div className="flex items-center justify-center md:justify-start mb-8">
-                    <div className="inline-flex items-center gap-3 px-5 py-2.5 rounded-full glass border border-ocean-teal/25 shadow-[0_0_20px_rgba(0,171,168,0.08)]">
-                      <span className="w-2 h-2 rounded-full bg-ocean-teal animate-pulse flex-shrink-0" aria-hidden="true" />
-                      <span className="text-ocean-teal font-bold text-lg tabular-nums leading-none">
+                    <div className="inline-flex items-center gap-3 px-5 py-2.5 rounded-full glass border border-astroide/25 shadow-[0_0_20px_rgba(255,127,0,0.10)]">
+                      <span className="w-2 h-2 rounded-full bg-astroide animate-pulse flex-shrink-0" aria-hidden="true" />
+                      <span className="text-astroide font-bold text-lg tabular-nums leading-none">
                         <StatCounter end={communityEnd} suffix="" />
                       </span>
                       <span className="text-white/70 text-sm font-medium">abonnés & membres de la communauté</span>
