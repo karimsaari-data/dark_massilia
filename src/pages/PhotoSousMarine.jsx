@@ -338,6 +338,7 @@ function showShareMenu(_triggerEl, slide) {
 
 /* ─── Config Fancybox ──────────────────────────────────────── */
 const buildOpts = () => ({
+  Hash: false,
   on: {
     initSlides(fancybox) {
       const opts = fancybox.getOptions();
