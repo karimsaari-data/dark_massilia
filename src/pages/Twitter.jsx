@@ -220,38 +220,6 @@ const Twitter = () => {
       <div className="py-24">
       <div className="container-custom">
 
-        {/* ── Titre + bloc X en avant ──────────────────────────────────── */}
-        <motion.div
-          initial="hidden"
-          animate="visible"
-          variants={STAGGER_CONTAINER}
-          className="mx-auto mb-10"
-        >
-          <motion.div variants={FADE_IN_UP} className="glass rounded-3xl p-8 md:p-10">
-            <h1 className="text-lg md:text-xl font-bold text-white mb-4">
-              Actualités des Calanques & veille environnementale
-            </h1>
-            <p className="text-text-secondary leading-relaxed text-sm">
-              Deux sources en direct : le fil{' '}
-              <strong className="text-ocean-teal">@dark_massilia</strong> pour les alertes terrain
-              et observations sous-marines, et les actualités officielles du{' '}
-              <strong className="text-white">Parc National des Calanques</strong> pour suivre la
-              vie du parc — espèces protégées, réglementation, événements.
-            </p>
-            <div className="mt-5">
-              <a
-                href="https://x.com/dark_massilia"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 text-ocean-teal hover:text-white transition-colors font-medium text-sm"
-              >
-                Voir le profil @dark_massilia sur X
-                <ExternalLink className="w-4 h-4" />
-              </a>
-            </div>
-          </motion.div>
-        </motion.div>
-
         {/* ── Section RSS Parc National ─────────────────────────────────── */}
         <div className="mb-10">
           <div className="glass-strong rounded-2xl p-6 md:p-8 border border-white/10">
@@ -417,6 +385,38 @@ const Twitter = () => {
             </p>
           </div>
         </div>
+
+        {/* ── Titre + bloc X ───────────────────────────────────────────── */}
+        <motion.div
+          initial="hidden"
+          animate="visible"
+          variants={STAGGER_CONTAINER}
+          className="mx-auto mb-10"
+        >
+          <motion.div variants={FADE_IN_UP} className="glass rounded-3xl p-8 md:p-10">
+            <h1 className="text-lg md:text-xl font-bold text-white mb-4">
+              Actualités des Calanques & veille environnementale
+            </h1>
+            <p className="text-text-secondary leading-relaxed text-sm">
+              Deux sources en direct : le fil{' '}
+              <strong className="text-ocean-teal">@dark_massilia</strong> pour les alertes terrain
+              et observations sous-marines, et les actualités officielles du{' '}
+              <strong className="text-white">Parc National des Calanques</strong> pour suivre la
+              vie du parc — espèces protégées, réglementation, événements.
+            </p>
+            <div className="mt-5">
+              <a
+                href="https://x.com/dark_massilia"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-2 text-ocean-teal hover:text-white transition-colors font-medium text-sm"
+              >
+                Voir le profil @dark_massilia sur X
+                <ExternalLink className="w-4 h-4" />
+              </a>
+            </div>
+          </motion.div>
+        </motion.div>
 
         {/* ── Cluster interne ─────────────────────────────────────────────── */}
         <motion.div

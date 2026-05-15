@@ -160,84 +160,97 @@ const MEDIA_LOGOS = [
 const PhotographeEnvironnemental = () => {
   const cardHover = useCardHover();
   return (
-    <div className="min-h-screen pt-20 pb-24">
+    <div className="min-h-screen pt-4 pb-16">
       <SEO {...SEO_PAGES['/photographe-environnemental-marseille']} />
       <div className="container-custom">
         <Breadcrumb label="Photographe Environnemental Marseille" />
 
-        {/* H1 + tagline */}
-        <motion.div
-          initial="hidden"
-          animate="visible"
-          variants={STAGGER_CONTAINER}
-          className="mb-6"
+        {/* Cadre hublot — H1 + tagline + 6 blocs galeries */}
+        <div
+          className="p-6 md:p-10 mb-12"
+          style={{
+            overflow: 'hidden',
+            borderRadius: '24px',
+            border: '2px solid rgba(0,171,168,0.55)',
+            boxShadow: '0 0 0 6px rgba(0,8,24,0.88), 0 0 0 8px rgba(0,171,168,0.35), 0 0 40px rgba(0,171,168,0.18), 0 0 80px rgba(0,120,180,0.10)',
+            background: 'rgba(5,15,30,0.75)',
+            backdropFilter: 'blur(16px)',
+          }}
         >
-          <div className="flex items-stretch gap-4 mb-2">
-            <motion.div
-              initial={{ scaleY: 0 }}
-              animate={{ scaleY: 1 }}
-              transition={{ duration: 0.7, ease: 'easeOut', delay: 0.4 }}
-              style={{ transformOrigin: 'top' }}
-              className="w-[3px] bg-ocean-teal rounded-full flex-shrink-0"
-              aria-hidden="true"
-            />
-            <motion.h1
-              variants={FADE_IN_UP}
-              className="text-2xl md:text-4xl font-bold text-white leading-tight"
-            >
-              Photographe Environnemental à Marseille
-            </motion.h1>
-          </div>
-          <motion.p variants={FADE_IN_UP} className="text-base md:text-lg text-ocean-teal font-medium">
-            Documenter l'urgence, célébrer la beauté
-          </motion.p>
-        </motion.div>
+          {/* H1 + tagline */}
+          <motion.div
+            initial="hidden"
+            animate="visible"
+            variants={STAGGER_CONTAINER}
+            className="mb-6"
+          >
+            <div className="flex items-stretch gap-4 mb-2">
+              <motion.div
+                initial={{ scaleY: 0 }}
+                animate={{ scaleY: 1 }}
+                transition={{ duration: 0.7, ease: 'easeOut', delay: 0.4 }}
+                style={{ transformOrigin: 'top' }}
+                className="w-[3px] bg-ocean-teal rounded-full flex-shrink-0"
+                aria-hidden="true"
+              />
+              <motion.h1
+                variants={FADE_IN_UP}
+                className="text-2xl md:text-4xl font-bold text-white leading-tight"
+              >
+                Photographe Environnemental à Marseille
+              </motion.h1>
+            </div>
+            <motion.p variants={FADE_IN_UP} className="text-base md:text-lg text-ocean-teal font-medium">
+              Documenter l'urgence, célébrer la beauté
+            </motion.p>
+          </motion.div>
 
-        {/* H2 — 6 blocs galeries : 2 univers × 3 sous-sections */}
-        <motion.div
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true }}
-          variants={STAGGER_CONTAINER}
-          className="mb-12 space-y-5"
-        >
-          {UNIVERSES.map(({ id, title, galleries }) => (
-            <motion.div key={id} variants={FADE_IN_UP}>
-              <p className="text-xs font-semibold uppercase tracking-widest text-ocean-teal mb-3">{title}</p>
-              <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
-                {galleries.map(({ to, label, desc, cta, img, srcset, sizes, alt }) => (
-                  <Link
-                    key={to}
-                    to={to}
-                    className="group block relative rounded-2xl overflow-hidden ring-1 ring-white/10 hover:ring-ocean-teal/40 transition-all duration-300"
-                  >
-                    <div className="aspect-[16/9] relative">
-                      <img
-                        src={img}
-                        srcSet={srcset}
-                        sizes={sizes}
-                        alt={alt}
-                        width={1920}
-                        height={1080}
-                        className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
-                        loading="lazy"
-                      />
-                      <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/30 to-transparent" aria-hidden="true" />
-                      <div className="absolute bottom-0 left-0 right-0 p-3 md:p-4">
-                        <h3 className="text-sm font-bold text-white mb-0.5">{label}</h3>
-                        <p className="text-white/70 text-xs mb-2 leading-snug">{desc}</p>
-                        <span className="inline-flex items-center gap-2 text-ocean-teal text-xs font-medium group-hover:gap-3 transition-all">
-                          {cta}
-                          <ArrowRight className="w-3.5 h-3.5" aria-hidden="true" />
-                        </span>
+          {/* H2 — 6 blocs galeries : 2 univers × 3 sous-sections */}
+          <motion.div
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true }}
+            variants={STAGGER_CONTAINER}
+            className="space-y-5"
+          >
+            {UNIVERSES.map(({ id, title, galleries }) => (
+              <motion.div key={id} variants={FADE_IN_UP}>
+                <p className="text-xs font-semibold uppercase tracking-widest text-ocean-teal mb-3">{title}</p>
+                <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+                  {galleries.map(({ to, label, desc, cta, img, srcset, sizes, alt }) => (
+                    <Link
+                      key={to}
+                      to={to}
+                      className="group block relative rounded-2xl overflow-hidden ring-1 ring-white/10 hover:ring-ocean-teal/40 transition-all duration-300"
+                    >
+                      <div className="aspect-[16/9] relative">
+                        <img
+                          src={img}
+                          srcSet={srcset}
+                          sizes={sizes}
+                          alt={alt}
+                          width={1920}
+                          height={1080}
+                          className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
+                          loading="lazy"
+                        />
+                        <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/30 to-transparent" aria-hidden="true" />
+                        <div className="absolute bottom-0 left-0 right-0 p-3 md:p-4">
+                          <h3 className="text-sm font-bold text-white mb-0.5">{label}</h3>
+                          <p className="text-white/70 text-xs mb-2 leading-snug">{desc}</p>
+                          <span className="inline-flex items-center gap-2 text-ocean-teal text-xs font-medium group-hover:gap-3 transition-all">
+                            {cta}
+                            <ArrowRight className="w-3.5 h-3.5" aria-hidden="true" />
+                          </span>
+                        </div>
                       </div>
-                    </div>
-                  </Link>
-                ))}
-              </div>
-            </motion.div>
-          ))}
-        </motion.div>
+                    </Link>
+                  ))}
+                </div>
+              </motion.div>
+            ))}
+          </motion.div>
+        </div>
 
         {/* Bloc biographie — 600+ mots, E-E-A-T */}
         <motion.div

@@ -15,7 +15,7 @@ const Contact = () => {
   const navigate = useNavigate();
 
   return (
-    <div className="min-h-screen py-20">
+    <div className="min-h-screen pt-4 pb-16">
       <SEO {...SEO_PAGES['/contact']} />
       <div className="container-custom">
         <Breadcrumb label="Contact & Partenariats" />
@@ -24,7 +24,7 @@ const Contact = () => {
           initial="hidden"
           animate="visible"
           variants={STAGGER_CONTAINER}
-          className="text-center mb-16"
+          className="text-center mb-10"
         >
           <motion.h1 variants={FADE_IN_UP} className="text-3xl md:text-4xl font-bold text-white mb-4">
             Collaborons pour la Méditerranée : Reportages, Expositions et Actions sur le terrain
@@ -37,13 +37,16 @@ const Contact = () => {
           animate="visible"
           variants={FADE_IN_UP}
           className="max-w-4xl mx-auto mb-16"
+          style={{
+            overflow: 'hidden',
+            borderRadius: '24px',
+            border: '2px solid rgba(0,171,168,0.55)',
+            boxShadow: '0 0 0 6px rgba(0,8,24,0.88), 0 0 0 8px rgba(0,171,168,0.35), 0 0 40px rgba(0,171,168,0.18), 0 0 80px rgba(0,120,180,0.10)',
+          }}
         >
-          <div className="relative rounded-3xl overflow-hidden p-px"
-            style={{ background: 'linear-gradient(135deg, #21c47b40, #0091ff30, #21c47b20)' }}
+          <div className="flex flex-col lg:flex-row"
+            style={{ background: 'linear-gradient(160deg, rgba(11,28,45,0.97) 0%, rgba(6,18,30,0.99) 100%)' }}
           >
-            <div className="rounded-3xl flex flex-col lg:flex-row"
-              style={{ background: 'linear-gradient(160deg, rgba(11,28,45,0.97) 0%, rgba(6,18,30,0.99) 100%)' }}
-            >
               {/* Colonne gauche — identité */}
               <div className="flex flex-col items-center justify-center gap-4 p-8 lg:w-56 lg:border-r border-white/10">
                 <div className="relative">
@@ -119,7 +122,6 @@ const Contact = () => {
                 <p className="text-gray-400 text-xs text-center leading-relaxed">Scanner pour ajouter aux contacts<br/>ou cliquer pour télécharger</p>
               </div>
             </div>
-          </div>
         </motion.div>
 
         {/* Section éditoriale SEO — intentions de contact & mots-clés transactionnels */}

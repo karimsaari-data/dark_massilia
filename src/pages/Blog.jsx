@@ -67,19 +67,28 @@ export default function Blog() {
   }, [page, search]);
 
   return (
-    <div className="min-h-screen py-24">
+    <div className="min-h-screen pt-4 pb-16">
       <SEO {...SEO_PAGES['/blog']} />
 
       <div className="container-custom">
         <Breadcrumb label="Actualités" />
 
-        {/* ── En-tête ─────────────────────────────────────────────────────── */}
+        {/* ── Cadre hublot — en-tête + recherche + filtres ─────────────── */}
         <motion.div
-          className="text-center mb-16"
           initial="hidden"
           animate="visible"
           variants={STAGGER_CONTAINER}
+          className="mb-12 p-8 md:p-12 text-center"
+          style={{
+            overflow: 'hidden',
+            borderRadius: '24px',
+            border: '2px solid rgba(0,171,168,0.55)',
+            boxShadow: '0 0 0 6px rgba(0,8,24,0.88), 0 0 0 8px rgba(0,171,168,0.35), 0 0 40px rgba(0,171,168,0.18), 0 0 80px rgba(0,120,180,0.10)',
+            background: 'rgba(5,15,30,0.75)',
+            backdropFilter: 'blur(16px)',
+          }}
         >
+          {/* En-tête */}
           <motion.div variants={FADE_IN_UP} className="flex items-center justify-center gap-2 mb-4">
             <Rss className="w-4 h-4 text-ocean-teal" />
             <p className="text-ocean-teal text-sm font-semibold uppercase tracking-widest">
@@ -91,52 +100,52 @@ export default function Blog() {
             Actualités & Actions
           </motion.h1>
 
-          <motion.p variants={FADE_IN_UP} className="body-large max-w-2xl mx-auto">
+          <motion.p variants={FADE_IN_UP} className="body-large max-w-2xl mx-auto mb-10">
             Suivez en direct les missions de dépollution, les rencontres et les coups de cœur
             de l'équipe Dark Massilia en Méditerranée.
           </motion.p>
-        </motion.div>
 
-        {/* ── Recherche ───────────────────────────────────────────────────── */}
-        <div className="max-w-xl mx-auto mb-8 relative">
-          <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400 pointer-events-none" aria-hidden="true" />
-          <input
-            type="search"
-            placeholder="Rechercher un article…"
-            value={searchInput}
-            onChange={handleSearchChange}
-            className="w-full pl-11 pr-10 py-3 rounded-2xl glass border border-white/10 text-white placeholder-gray-500 text-sm focus:outline-none focus:border-ocean-teal/50 focus:ring-1 focus:ring-ocean-teal/30 transition-all"
-            aria-label="Rechercher dans les articles"
-          />
-          {searchInput && (
-            <button
-              onClick={clearSearch}
-              className="absolute right-3 top-1/2 -translate-y-1/2 p-1 text-gray-400 hover:text-white transition-colors"
-              aria-label="Effacer la recherche"
-            >
-              <X className="w-4 h-4" />
-            </button>
-          )}
-        </div>
+          {/* Recherche */}
+          <motion.div variants={FADE_IN_UP} className="max-w-xl mx-auto mb-8 relative">
+            <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400 pointer-events-none" aria-hidden="true" />
+            <input
+              type="search"
+              placeholder="Rechercher un article…"
+              value={searchInput}
+              onChange={handleSearchChange}
+              className="w-full pl-11 pr-10 py-3 rounded-2xl glass border border-white/10 text-white placeholder-gray-500 text-sm focus:outline-none focus:border-ocean-teal/50 focus:ring-1 focus:ring-ocean-teal/30 transition-all"
+              aria-label="Rechercher dans les articles"
+            />
+            {searchInput && (
+              <button
+                onClick={clearSearch}
+                className="absolute right-3 top-1/2 -translate-y-1/2 p-1 text-gray-400 hover:text-white transition-colors"
+                aria-label="Effacer la recherche"
+              >
+                <X className="w-4 h-4" />
+              </button>
+            )}
+          </motion.div>
 
-        {/* ── Filtres catégories ─────────────────────────────────────────── */}
-        <div className="flex flex-wrap justify-center gap-2 mb-10" role="navigation" aria-label="Filtrer par catégorie">
-          <Link
-            to="/blog"
-            className="px-4 py-1.5 rounded-full text-sm font-semibold transition-all duration-200 bg-ocean-teal text-[#0a1428]"
-          >
-            Tous
-          </Link>
-          {CATEGORIES.map(cat => (
+          {/* Filtres catégories */}
+          <motion.div variants={FADE_IN_UP} className="flex flex-wrap justify-center gap-2" role="navigation" aria-label="Filtrer par catégorie">
             <Link
-              key={cat.id}
-              to={`/blog/categorie/${cat.slug}`}
-              className="px-4 py-1.5 rounded-full text-sm font-semibold transition-all duration-200 glass text-text-secondary hover:text-white border border-white/10 hover:border-white/20"
+              to="/blog"
+              className="px-4 py-1.5 rounded-full text-sm font-semibold transition-all duration-200 bg-ocean-teal text-[#0a1428]"
             >
-              {cat.name}
+              Tous
             </Link>
-          ))}
-        </div>
+            {CATEGORIES.map(cat => (
+              <Link
+                key={cat.id}
+                to={`/blog/categorie/${cat.slug}`}
+                className="px-4 py-1.5 rounded-full text-sm font-semibold transition-all duration-200 glass text-text-secondary hover:text-white border border-white/10 hover:border-white/20"
+              >
+                {cat.name}
+              </Link>
+            ))}
+          </motion.div>
+        </motion.div>
 
         {/* ── Erreur ──────────────────────────────────────────────────────── */}
         {error && (

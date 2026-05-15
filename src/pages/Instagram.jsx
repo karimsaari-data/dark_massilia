@@ -199,13 +199,23 @@ const Communaute = () => {
   }, []);
 
   return (
-    <div className="min-h-screen py-24">
+    <div className="min-h-screen pt-4 pb-16">
       <SEO {...SEO_PAGES['/communaute']} />
       <div className="container-custom space-y-12">
 
         {/* ── 1. HERO — H1 + accroche + CTA ── */}
         {/* Rendu natif (pas motion) pour que le H1 et l'image soient visibles immédiatement → LCP */}
-        <div className="glass-strong rounded-3xl p-8 md:p-12">
+        <div
+          className="p-8 md:p-12"
+          style={{
+            overflow: 'hidden',
+            borderRadius: '24px',
+            border: '2px solid rgba(0,171,168,0.55)',
+            boxShadow: '0 0 0 6px rgba(0,8,24,0.88), 0 0 0 8px rgba(0,171,168,0.35), 0 0 40px rgba(0,171,168,0.18), 0 0 80px rgba(0,120,180,0.10)',
+            background: 'rgba(5,15,30,0.75)',
+            backdropFilter: 'blur(16px)',
+          }}
+        >
             <div className="flex items-stretch gap-4 mb-4">
               <motion.div
                 initial={{ scaleY: 0 }}

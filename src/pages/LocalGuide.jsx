@@ -50,17 +50,26 @@ export default function LocalGuide() {
     <>
       <SEO {...SEO_PAGES['/local-guide-marseille']} />
 
-      <div className="min-h-screen pt-[70px] md:pt-[128px] pb-16">
+      <div className="min-h-screen pt-4 pb-16">
         <div className="container-custom">
 
-          {/* Header */}
+          {/* Cadre hublot — header + anniversaire + stats */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
-            className="py-8"
+            className="mb-12 p-6 md:p-10"
+            style={{
+              overflow: 'hidden',
+              borderRadius: '24px',
+              border: '2px solid rgba(0,171,168,0.55)',
+              boxShadow: '0 0 0 6px rgba(0,8,24,0.88), 0 0 0 8px rgba(0,171,168,0.35), 0 0 40px rgba(0,171,168,0.18), 0 0 80px rgba(0,120,180,0.10)',
+              background: 'rgba(5,15,30,0.75)',
+              backdropFilter: 'blur(16px)',
+            }}
           >
-            <div className="flex items-start gap-4 mb-4">
+            {/* Header */}
+            <div className="flex items-start gap-4 mb-6">
               <div className="w-12 h-12 rounded-full bg-astroide/20 border border-astroide/30 flex items-center justify-center flex-shrink-0">
                 <MapPin className="w-6 h-6 text-astroide" />
               </div>
@@ -73,56 +82,46 @@ export default function LocalGuide() {
                 </p>
               </div>
             </div>
-          </motion.div>
 
-          {/* Carte anniversaire 9 ans */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.15 }}
-            className="glass rounded-2xl p-5 mb-4 flex items-center gap-6 border border-white/5"
-          >
-            <picture>
-              <source srcSet="/images/karim-saari-marseille-dark-massilia-9ans-celebration-projet-sentinelle.webp" type="image/webp" />
-              <img
-                src="/images/karim-saari-marseille-dark-massilia-9ans-celebration-projet-sentinelle.gif"
-                alt="Google Local Guides — email anniversaire 9 ans"
-                className="w-24 md:w-28 flex-shrink-0 rounded-xl"
-              />
-            </picture>
-            <div>
-              <p className="text-xs text-text-muted uppercase tracking-widest mb-1">Anniversaire Google</p>
-              <p className="text-white font-semibold text-lg leading-snug">Ces 9 dernières années</p>
-              <p className="text-text-secondary text-sm mt-1">
-                Email envoyé par Google pour célébrer 9 ans de contributions sur Google Maps.
-              </p>
-            </div>
-          </motion.div>
-
-          {/* Stats */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.2 }}
-            className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-12"
-          >
-            {STATS.map(({ label, end, suffix, decimals = 0, icon: Icon, badge }) => (
-              <div key={label} className="glass rounded-xl p-5 text-center border border-white/5 hover:border-astroide/20 transition-all duration-300">
-                {badge ? (
-                  <img
-                    src="/assets/points-badges_level_ten.png"
-                    alt="Google Local Guides — Niveau 10"
-                    className="w-8 h-8 object-contain mx-auto mb-2"
-                  />
-                ) : (
-                  <Icon className="w-6 h-6 text-astroide mx-auto mb-2" />
-                )}
-                <div className="text-2xl font-bold text-white mb-1">
-                  <StatCounter end={end} suffix={suffix} />
-                </div>
-                <div className="text-xs text-text-muted">{label}</div>
+            {/* Carte anniversaire 9 ans */}
+            <div className="glass rounded-2xl p-5 mb-4 flex items-center gap-6 border border-white/5">
+              <picture>
+                <source srcSet="/images/karim-saari-marseille-dark-massilia-9ans-celebration-projet-sentinelle.webp" type="image/webp" />
+                <img
+                  src="/images/karim-saari-marseille-dark-massilia-9ans-celebration-projet-sentinelle.gif"
+                  alt="Google Local Guides — email anniversaire 9 ans"
+                  className="w-24 md:w-28 flex-shrink-0 rounded-xl"
+                />
+              </picture>
+              <div>
+                <p className="text-xs text-text-muted uppercase tracking-widest mb-1">Anniversaire Google</p>
+                <p className="text-white font-semibold text-lg leading-snug">Ces 9 dernières années</p>
+                <p className="text-text-secondary text-sm mt-1">
+                  Email envoyé par Google pour célébrer 9 ans de contributions sur Google Maps.
+                </p>
               </div>
-            ))}
+            </div>
+
+            {/* Stats */}
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+              {STATS.map(({ label, end, suffix, decimals = 0, icon: Icon, badge }) => (
+                <div key={label} className="glass rounded-xl p-5 text-center border border-white/5 hover:border-astroide/20 transition-all duration-300">
+                  {badge ? (
+                    <img
+                      src="/assets/points-badges_level_ten.png"
+                      alt="Google Local Guides — Niveau 10"
+                      className="w-8 h-8 object-contain mx-auto mb-2"
+                    />
+                  ) : (
+                    <Icon className="w-6 h-6 text-astroide mx-auto mb-2" />
+                  )}
+                  <div className="text-2xl font-bold text-white mb-1">
+                    <StatCounter end={end} suffix={suffix} />
+                  </div>
+                  <div className="text-xs text-text-muted">{label}</div>
+                </div>
+              ))}
+            </div>
           </motion.div>
 
           {/* Texte éditorial + photos intégrées + boutons */}
