@@ -76,9 +76,9 @@ function LogoItem({ src, alt, href }) {
         loading="lazy"
         decoding="async"
         className="h-10 w-auto object-contain
-                   invert grayscale brightness-150 opacity-60
+                   brightness-0 invert opacity-50
                    transition-all duration-300
-                   group-hover/logo:invert-0 group-hover/logo:grayscale-0 group-hover/logo:brightness-100 group-hover/logo:opacity-100"
+                   group-hover/logo:brightness-100 group-hover/logo:invert-0 group-hover/logo:opacity-100"
         style={{ maxWidth: '140px' }}
       />
     </a>
