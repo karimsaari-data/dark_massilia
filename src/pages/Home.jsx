@@ -253,6 +253,8 @@ const Home = () => {
                 backdropFilter: 'blur(14px)',
                 borderRadius: '24px',
                 padding: 'clamp(48px, 6vw, 88px)',
+                border: '2px solid rgba(0,171,168,0.55)',
+                boxShadow: '0 0 0 6px rgba(0,8,24,0.88), 0 0 0 8px rgba(0,171,168,0.35), 0 0 40px rgba(0,171,168,0.18), 0 0 80px rgba(0,120,180,0.10)',
               }}
             >
               {/* Fond vidéo méduses dans le cadre — désactivé si prefers-reduced-motion */}
