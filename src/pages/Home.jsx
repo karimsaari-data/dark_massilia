@@ -276,7 +276,7 @@ const Home = () => {
               {/* Overlay verre dépoli sur la vidéo */}
               <div
                 className="absolute inset-0 pointer-events-none"
-                style={{ zIndex: 1, background: 'linear-gradient(135deg, rgba(0,8,24,0.52) 0%, rgba(0,15,40,0.38) 50%, rgba(0,8,24,0.55) 100%)' }}
+                style={{ zIndex: 1, background: 'linear-gradient(135deg, rgba(0,8,24,0.28) 0%, rgba(0,10,25,0.15) 50%, rgba(0,8,24,0.30) 100%)' }}
                 aria-hidden="true"
               />
               {/* Contenu au-dessus de la vidéo */}
