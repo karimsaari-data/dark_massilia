@@ -61,6 +61,10 @@ const importPhotosPlugin = {
 
 // https://vite.dev/config/
 export default defineConfig({
+  server: {
+    port: process.env.PORT ? parseInt(process.env.PORT) : 5173,
+    strictPort: false,
+  },
   plugins: [
     react(),
     importPhotosPlugin,

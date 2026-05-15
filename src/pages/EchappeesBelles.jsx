@@ -17,64 +17,82 @@ const PHOTOS = [
 
 const EchappeesBelles = () => {
   return (
-    <div className="min-h-screen py-32">
+    <div className="min-h-screen">
       <SEO {...SEO_PAGES['/echappees-belles-bouches-du-rhone']} preloadImage="/images/échappée_verte_0.jpg" />
-      <div className="container-custom">
-        <Breadcrumb label="Échappées Belles — France 5" />
 
-        {/* Header */}
+      {/* Hero — cadre hublot avec image en fond */}
+      <section
+        className="container-custom"
+        style={{ paddingTop: 'calc(var(--navbar-h-md, 128px) + 1.5rem)', paddingBottom: '2rem' }}
+      >
         <motion.div
           initial="hidden"
           animate="visible"
           variants={STAGGER_CONTAINER}
-          className="text-center mb-12"
         >
-          <motion.p variants={FADE_IN_UP} className="text-ocean-teal text-sm font-semibold uppercase tracking-widest mb-3">
-            France 5 · Échappées Belles
-          </motion.p>
-          <motion.h1
-            variants={FADE_IN_UP}
-            className="text-3xl md:text-4xl font-bold text-white mb-4"
-          >
-            Spéciale Échappée Verte — Les Bouches-du-Rhône en action
-          </motion.h1>
-          <motion.p
-            variants={FADE_IN_UP}
-            className="text-text-secondary text-lg max-w-2xl mx-auto mb-8"
-          >
-            France 5 consacre un épisode d'Échappées Belles aux acteurs de terrain qui agissent pour l'environnement dans les Bouches-du-Rhône — dont les missions de dépollution marine de Karim Saari.
-          </motion.p>
-
-          {/* CTA replay */}
-          <motion.a
-            variants={FADE_IN_UP}
-            href={REPLAY_URL}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="btn-primary inline-flex items-center gap-3 mx-auto mb-12 hover:scale-105 transition-all duration-300"
-          >
-            <Tv className="w-5 h-5" />
-            Voir l'émission en replay sur France.tv
-            <ExternalLink className="w-4 h-4" />
-          </motion.a>
-
-          {/* Hero image */}
           <motion.div
-            variants={FADE_IN_UP}
-            className="glass-strong rounded-2xl overflow-hidden border border-white/10 mb-12"
+            variants={{ hidden: { y: 20 }, visible: { y: 0, transition: { duration: 0.6, ease: 'easeOut' } } }}
+            style={{
+              position: 'relative',
+              overflow: 'hidden',
+              borderRadius: '24px',
+              border: '2px solid rgba(0,171,168,0.55)',
+              boxShadow: '0 0 0 6px rgba(0,8,24,0.88), 0 0 0 8px rgba(0,171,168,0.35), 0 0 40px rgba(0,171,168,0.18), 0 0 80px rgba(0,120,180,0.10)',
+              minHeight: '65vh',
+            }}
+            className="flex flex-col justify-end"
           >
+            {/* Image hero en fond */}
             <img
               src="/images/échappée_verte_0.jpg"
               alt="Karim Saari dans Spéciale Échappée Verte — Bouches-du-Rhône en action — France 5"
-              className="w-full h-auto"
+              className="absolute inset-0 w-full h-full object-cover object-center"
+              style={{ zIndex: 0 }}
               loading="eager"
               fetchPriority="high"
               width="1280"
               height="720"
             />
+            {/* Gradient bas → haut */}
+            <div className="absolute inset-0 bg-gradient-to-t from-abyss via-abyss/60 to-transparent" style={{ zIndex: 1 }} />
+
+            {/* Contenu overlaid */}
+            <div className="relative p-8 md:p-12" style={{ zIndex: 2 }}>
+              <Breadcrumb label="Échappées Belles — France 5" />
+              <div className="max-w-3xl mt-3">
+                <motion.p variants={FADE_IN_UP} className="text-ocean-teal text-sm font-semibold uppercase tracking-widest mb-2">
+                  France 5 · Échappées Belles
+                </motion.p>
+                <motion.h1
+                  variants={FADE_IN_UP}
+                  className="text-3xl md:text-5xl font-bold text-white mb-3 leading-tight"
+                >
+                  Spéciale Échappée Verte — Les Bouches-du-Rhône en action
+                </motion.h1>
+                <motion.p
+                  variants={FADE_IN_UP}
+                  className="text-white/80 text-base md:text-lg max-w-2xl mb-5"
+                >
+                  France 5 consacre un épisode d'Échappées Belles aux acteurs de terrain qui agissent pour l'environnement dans les Bouches-du-Rhône — dont les missions de dépollution marine de Karim Saari.
+                </motion.p>
+                <motion.a
+                  variants={FADE_IN_UP}
+                  href={REPLAY_URL}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="btn-primary inline-flex items-center gap-3 hover:scale-105 transition-all duration-300"
+                >
+                  <Tv className="w-5 h-5" />
+                  Voir l'émission en replay sur France.tv
+                  <ExternalLink className="w-4 h-4" />
+                </motion.a>
+              </div>
+            </div>
           </motion.div>
         </motion.div>
+      </section>
 
+      <div className="container-custom py-10">
         {/* Bloc éditorial */}
         <motion.div
           initial="hidden"

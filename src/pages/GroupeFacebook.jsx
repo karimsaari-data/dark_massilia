@@ -185,7 +185,7 @@ export default function GroupeFacebook() {
     <div className="min-h-screen">
       <SEO {...SEO_PAGES['/communaute-calanques']} />
       <FireRiskBanner />
-      <div className="container-custom space-y-16 py-24">
+      <div className="container-custom space-y-16 pt-4 pb-16">
 
         {/* ── Hero CTA card ─────────────────────────────────────── */}
         <motion.div
@@ -193,7 +193,15 @@ export default function GroupeFacebook() {
           animate="visible"
           variants={STAGGER_CONTAINER}
         >
-          <motion.div variants={FADE_IN_UP} className="glass-strong rounded-3xl overflow-hidden border border-white/10">
+          <motion.div
+            variants={FADE_IN_UP}
+            style={{
+              overflow: 'hidden',
+              borderRadius: '24px',
+              border: '2px solid rgba(0,171,168,0.55)',
+              boxShadow: '0 0 0 6px rgba(0,8,24,0.88), 0 0 0 8px rgba(0,171,168,0.35), 0 0 40px rgba(0,171,168,0.18), 0 0 80px rgba(0,120,180,0.10)',
+            }}
+          >
             <div className="grid md:grid-cols-[1fr_1.1fr] gap-0">
 
               {/* Contenu gauche */}

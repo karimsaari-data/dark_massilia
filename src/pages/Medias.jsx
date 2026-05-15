@@ -1,6 +1,6 @@
 import { motion } from 'framer-motion';
 import { useCardHover } from '../hooks/useCardHover';
-import { ArrowLeft, ArrowRight, ExternalLink, Play, Tv2, Newspaper } from 'lucide-react';
+import { ArrowLeft, ArrowRight, ExternalLink, Play } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { FADE_IN_UP, STAGGER_CONTAINER } from '../utils/constants';
 import SEO from '../components/SEO';
@@ -147,7 +147,7 @@ const Medias = () => {
   ];
 
   return (
-    <div className="min-h-screen py-32">
+    <div className="min-h-screen pt-4 pb-16">
       <SEO {...SEO_PAGES['/presse']} />
       <div className="container-custom">
         <Breadcrumb label="Presse & Médias" />
@@ -170,47 +170,6 @@ const Medias = () => {
             Documentaires et Reportages : Témoigner de l'urgence écologique en Méditerranée
           </motion.h1>
         </div>
-
-        {/* Stats médias — 2 chiffres clés */}
-        <motion.div
-          initial={{ opacity: 0, y: 16 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5, delay: 0.2 }}
-          className="flex justify-center gap-6 mb-16"
-        >
-          <div className="glass-strong rounded-2xl px-10 py-6 text-center border border-white/10 flex flex-col items-center gap-2">
-            <Tv2 className="w-5 h-5 text-ocean-teal" />
-            <div className="text-3xl font-bold text-white">6</div>
-            <div className="text-xs text-text-muted uppercase tracking-widest">passages TV</div>
-          </div>
-          <div className="glass-strong rounded-2xl px-10 py-6 text-center border border-white/10 flex flex-col items-center gap-2">
-            <Newspaper className="w-5 h-5 text-ocean-teal" />
-            <div className="text-3xl font-bold text-white">17+</div>
-            <div className="text-xs text-text-muted uppercase tracking-widest">articles presse & radio</div>
-          </div>
-        </motion.div>
-
-        {/* Boutons de navigation ancrée */}
-        <motion.div
-          initial={{ opacity: 0, y: 12 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.4, delay: 0.3 }}
-          className="flex justify-center gap-3 mb-16 flex-wrap"
-        >
-          {[
-            { label: '📺 Passages TV', href: '#tv' },
-            { label: '🎙 Radio', href: '#radio' },
-            { label: '📰 Revue de presse', href: '#presse' },
-          ].map(({ label, href }) => (
-            <a
-              key={href}
-              href={href}
-              className="px-5 py-2 rounded-full glass-strong border border-white/20 text-xs uppercase tracking-widest font-bold text-white hover:border-ocean-teal/60 hover:text-ocean-teal transition-all duration-200 whitespace-nowrap"
-            >
-              {label}
-            </a>
-          ))}
-        </motion.div>
 
         {/* Section: Passage TV — ARTE & Échappées Belles */}
         <motion.div

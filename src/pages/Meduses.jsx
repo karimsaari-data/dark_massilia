@@ -10,41 +10,58 @@ import Breadcrumb from '../components/Breadcrumb';
 const img = (n) =>
   `/images/arte-meduses-souveraines-oceans-documentaire-marseille-${n}`;
 
+const HUBLOT_STYLE = {
+  overflow: 'hidden',
+  borderRadius: '24px',
+  border: '2px solid rgba(0,171,168,0.55)',
+  boxShadow: '0 0 0 6px rgba(0,8,24,0.88), 0 0 0 8px rgba(0,171,168,0.35), 0 0 40px rgba(0,171,168,0.18), 0 0 80px rgba(0,120,180,0.10)',
+};
+
 const Meduses = () => {
   return (
-    <div className="min-h-screen py-32">
+    <div className="min-h-screen">
       <SEO {...SEO_PAGES['/meduses-souveraines-oceans-documentaire-arte']} />
-      <div className="container-custom">
-        <Breadcrumb label="Méduses — Documentaire ARTE" />
 
-        {/* Header + H1 */}
-        <motion.div
-          initial="hidden"
-          animate="visible"
-          variants={STAGGER_CONTAINER}
-          className="text-center mb-12"
-        >
-          <motion.h1
-            variants={FADE_IN_UP}
-            className="text-3xl md:text-4xl font-bold text-white mb-4"
-          >
-            Méduses | Les souveraines des océans
-            <span className="block text-xl md:text-2xl font-medium text-ocean-teal mt-3">
-              Documentaire ARTE Évasion — Sébastien Lafont, 2024
-            </span>
-          </motion.h1>
-
-          {/* YouTube Video Embed */}
+      {/* Hero — hublot vidéo */}
+      <section
+        className="container-custom"
+        style={{ paddingTop: 'calc(var(--navbar-h-md, 128px) + 1.5rem)', paddingBottom: '2rem' }}
+      >
+        <motion.div initial="hidden" animate="visible" variants={STAGGER_CONTAINER}>
           <motion.div
-            variants={FADE_IN_UP}
-            className="glass-strong rounded-2xl overflow-hidden border border-white/10 mb-12"
+            variants={{ hidden: { y: 20 }, visible: { y: 0, transition: { duration: 0.6, ease: 'easeOut' } } }}
+            style={HUBLOT_STYLE}
           >
-            <YouTubeFacade
-              videoId="yfebiTFOq7E"
-              title="Méduses | Les souveraines des océans — Documentaire ARTE Évasion"
-            />
+            {/* Header text */}
+            <div className="p-8 md:p-10 pb-6">
+              <Breadcrumb label="Méduses — Documentaire ARTE" />
+              <div className="mt-4 max-w-3xl">
+                <motion.p variants={FADE_IN_UP} className="text-ocean-teal text-sm font-semibold uppercase tracking-widest mb-2">
+                  ARTE Évasion · Sébastien Lafont, 2024
+                </motion.p>
+                <motion.h1
+                  variants={FADE_IN_UP}
+                  className="text-3xl md:text-5xl font-bold text-white mb-3 leading-tight"
+                >
+                  Méduses — Les souveraines des océans
+                </motion.h1>
+                <motion.p variants={FADE_IN_UP} className="text-white/70 text-base md:text-lg max-w-2xl">
+                  Documentaire ARTE aux images envoûtantes sur la prolifération des méduses — avec des images fournies par Karim Saari, tournées en Méditerranée.
+                </motion.p>
+              </div>
+            </div>
+            {/* Vidéo plein-largeur dans le cadre */}
+            <motion.div variants={FADE_IN_UP}>
+              <YouTubeFacade
+                videoId="yfebiTFOq7E"
+                title="Méduses | Les souveraines des océans — Documentaire ARTE Évasion"
+              />
+            </motion.div>
           </motion.div>
         </motion.div>
+      </section>
+
+      <div className="container-custom pb-12">
 
         {/* Bloc 1 — Description ARTE + photos 2 & 3 */}
         <motion.div
