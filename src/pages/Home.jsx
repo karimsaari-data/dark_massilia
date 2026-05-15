@@ -324,7 +324,7 @@ const Home = () => {
                   </div>
 
                   {/* Cadre texte + compteur */}
-                  <div className="rounded-xl px-5 py-4 mb-8" style={{ background: 'rgba(0,0,0,0.45)', backdropFilter: 'blur(8px)' }}>
+                  <div className="rounded-xl px-5 py-4 mb-8" style={{ background: 'rgba(0,0,0,0.28)', backdropFilter: 'blur(6px)' }}>
                     <p className="font-display text-base md:text-lg font-normal text-white/90 leading-[1.85] mb-4">
                       <strong className="text-white font-semibold">Rendre visible l'invisible.</strong>{' '}
                       Entre photographie d'art et exploration en apnée, je documente la beauté brute du littoral marseillais pour témoigner de l'urgence écologique. En tant que Sentinelle des Calanques, j'allie le pouvoir de l'image aux actions de terrain avec{' '}

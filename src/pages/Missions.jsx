@@ -39,7 +39,7 @@ const Missions = () => {
             transition={{ duration: 0.6 }}
             className="text-xl md:text-2xl font-bold text-white leading-tight"
           >
-            Team Oxygen : Association de dépollution marine et nettoyage sous-marin à Marseille
+            Team Oxygen : Association d'apnéistes engagés pour la mer Méditerranée à Marseille
           </motion.h1>
         </div>
         <p className="text-center text-xs text-gray-500 mb-8">
@@ -53,32 +53,34 @@ const Missions = () => {
           variants={STAGGER_CONTAINER}
           className="mx-auto mb-12"
         >
-          <motion.div {...cardHover} variants={FADE_IN_UP} className="glass-strong rounded-3xl overflow-hidden flex flex-col lg:flex-row">
-            {/* Texte */}
-            <div className="p-8 md:p-12 lg:flex-1 flex flex-col justify-center">
-              <h2 className="text-2xl md:text-3xl font-bold text-white mb-2">
+          <motion.div {...cardHover} variants={FADE_IN_UP} className="glass-strong rounded-3xl overflow-hidden" style={{ position: 'relative', minHeight: '320px' }}>
+            {/* Vidéo fond */}
+            <video
+              autoPlay muted loop playsInline preload="none"
+              className="absolute inset-0 w-full h-full object-cover"
+              style={{ zIndex: 0 }}
+              poster="/images/Marseille-dark-massilia-plastique-pollution-projet-sentinelle-v%C3%A9lo-m%C3%A9tropole.webp"
+            >
+              <source src="/assets/video/pollution-hero.mp4" type="video/mp4" />
+            </video>
+            {/* Contenu */}
+            <div className="relative p-8 md:p-12 flex flex-col justify-center" style={{ zIndex: 1 }}>
+              <h2 className="text-2xl md:text-3xl font-bold text-white mb-4">
                 Notre mission sur le littoral méditerranéen
               </h2>
-              <div className="space-y-4 text-text-secondary leading-[1.8]">
-                <p className="font-medium text-white/80">
-                  Association d'apnéistes éco-engagés basée à Marseille et intervenant sur l'ensemble du littoral marseillais : plages, ports, îles du Frioul, Calanques, Côte Bleue et jusqu'à La Ciotat.
-                </p>
-                <p>
-                  De la surface à 20 mètres de profondeur, <strong className="text-ocean-teal">Team Oxygen</strong> conduit des opérations structurées de dépollution sous-marine en apnée, combinant extraction de déchets, <Link to="/photographie-sous-marine" className="text-ocean-teal hover:text-white transition-colors">documentation photographique des fonds marins des Calanques</Link> et collecte de données environnementales sur les fonds marins de Méditerranée.
-                </p>
-                <p>
-                  L'association est aujourd'hui présidée par <strong className="text-white">Karim Saari</strong>, apnéiste et photographe engagé à Marseille, impliqué dans les actions de dépollution du littoral méditerranéen depuis 10 ans.
-                </p>
+              <div className="rounded-xl px-5 py-4" style={{ background: 'rgba(0,0,0,0.40)', backdropFilter: 'blur(8px)' }}>
+                <div className="space-y-4 text-white/90 leading-[1.8]">
+                  <p className="font-medium">
+                    Association d'apnéistes éco-engagés basée à Marseille — documentation, dépollution et sensibilisation sur l'ensemble du littoral : Calanques, Frioul, Côte Bleue et jusqu'à La Ciotat.
+                  </p>
+                  <p>
+                    De la surface à 20 mètres de profondeur, <strong className="text-ocean-teal">Team Oxygen</strong> conduit des opérations structurées de dépollution sous-marine en apnée, combinant extraction de déchets, <Link to="/photographie-sous-marine" className="text-ocean-teal hover:text-white transition-colors">documentation photographique des fonds marins des Calanques</Link> et collecte de données environnementales sur les fonds marins de Méditerranée.
+                  </p>
+                  <p>
+                    L'association est aujourd'hui présidée par <strong className="text-white font-semibold">Karim Saari</strong>, apnéiste et photographe engagé à Marseille, impliqué dans les actions de dépollution du littoral méditerranéen depuis 10 ans.
+                  </p>
+                </div>
               </div>
-            </div>
-            {/* Photo */}
-            <div className="lg:w-[40%] flex-shrink-0 min-h-[260px] lg:min-h-0">
-              <img
-                src="/images/Marseille-dark-massilia-plastique-pollution-projet-sentinelle-v%C3%A9lo-m%C3%A9tropole.webp"
-                alt="Mission de dépollution Projet Sentinelle — vélo métropole récupéré par Team Oxygen dans les fonds marins de Marseille"
-                className="w-full h-full object-cover"
-                loading="lazy"
-              />
             </div>
           </motion.div>
         </motion.div>
@@ -273,16 +275,15 @@ const Missions = () => {
             </div>
             <div className="p-8 md:p-12 lg:flex-1 flex flex-col justify-center">
             <h2 className="text-2xl md:text-3xl font-bold text-white mb-6">
-              Team Oxygen — association de dépollution loi 1901
+              Team Oxygen — association loi 1901 pour la mer
             </h2>
             <div className="space-y-4 text-text-secondary leading-[1.8]">
               <p>
                 <strong className="text-ocean-teal">Team Oxygen</strong> est une{' '}
-                <strong className="text-white">association de dépollution marine</strong> déclarée
-                sous la loi 1901, fondée en 2018 à Marseille. En tant qu'association à but non
-                lucratif, elle mobilise des bénévoles et des apnéistes certifiés autour d'un
-                objectif commun&nbsp;: extraire les déchets des fonds marins méditerranéens et
-                documenter l'état de la pollution sous-marine.
+                <strong className="text-white">association d'apnéistes éco-engagés</strong> déclarée
+                sous la loi 1901, fondée en 2018 à Marseille. À but non lucratif, elle réunit
+                bénévoles, plongeurs et photographes autour d'une mission commune&nbsp;: documenter,
+                nettoyer et protéger les fonds marins méditerranéens.
               </p>
               <p>
                 L'association intervient sur des zones inaccessibles aux ramassages de surface&nbsp;:
