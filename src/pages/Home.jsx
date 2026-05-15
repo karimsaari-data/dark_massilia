@@ -323,16 +323,16 @@ const Home = () => {
                     </h1>
                   </div>
 
-                  <p className="font-display text-base md:text-lg font-normal text-text-secondary leading-[1.85] mb-10">
-                    <strong className="text-white font-semibold">Rendre visible l'invisible.</strong>{' '}
-                    Entre photographie d'art et exploration en apnée, je documente la beauté brute du littoral marseillais pour témoigner de l'urgence écologique. En tant que Sentinelle des Calanques, j'allie le pouvoir de l'image aux actions de terrain avec{' '}
-                    <strong className="text-white font-semibold">Team Oxygen</strong>{' '}
-                    pour préserver durablement la biodiversité de notre Méditerranée.
-                  </p>
-
-                  {/* Compteur communauté — animé au chargement */}
-                  <div className="flex items-center justify-center md:justify-start mb-8">
-                    <div className="inline-flex items-center gap-3 px-5 py-2.5 rounded-full glass border border-white/25 shadow-[0_0_20px_rgba(255,255,255,0.06)]">
+                  {/* Cadre texte + compteur */}
+                  <div className="rounded-xl px-5 py-4 mb-8" style={{ background: 'rgba(0,0,0,0.45)', backdropFilter: 'blur(8px)' }}>
+                    <p className="font-display text-base md:text-lg font-normal text-white/90 leading-[1.85] mb-4">
+                      <strong className="text-white font-semibold">Rendre visible l'invisible.</strong>{' '}
+                      Entre photographie d'art et exploration en apnée, je documente la beauté brute du littoral marseillais pour témoigner de l'urgence écologique. En tant que Sentinelle des Calanques, j'allie le pouvoir de l'image aux actions de terrain avec{' '}
+                      <strong className="text-white font-semibold">Team Oxygen</strong>{' '}
+                      pour préserver durablement la biodiversité de notre Méditerranée.
+                    </p>
+                    {/* Compteur communauté */}
+                    <div className="flex items-center gap-3">
                       <span className="w-2 h-2 rounded-full bg-white animate-pulse flex-shrink-0" aria-hidden="true" />
                       <span className="text-white font-bold text-lg tabular-nums leading-none">
                         <StatCounter end={communityEnd} suffix="" />
@@ -377,7 +377,7 @@ const Home = () => {
                       alt="Karim Saari - Apnéiste et photographe à Marseille"
                       width="472"
                       height="488"
-                      className="h-[380px] lg:h-[460px] w-auto rounded-xl border border-white/20 shadow-lg shadow-ocean-teal/20"
+                      className="h-[380px] lg:h-[460px] w-auto rounded-xl border-2 border-black shadow-[0_0_0_1px_rgba(0,171,168,0.4),0_8px_32px_rgba(0,0,0,0.5)]"
                       loading="eager"
                       fetchpriority="high"
                       decoding="async"
