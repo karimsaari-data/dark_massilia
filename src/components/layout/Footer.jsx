@@ -31,8 +31,8 @@ const navColumns = [
     links: [
       { to: '/photographe-environnemental-marseille', text: 'Photographe environnemental' },
       { to: '/photographie-sous-marine',              text: 'Photos sous-marines' },
-      { to: '/carte-photos',                          text: 'Carte des photos' },
       { to: '/photographie-paysage-mer',              text: 'Photos de paysages' },
+      { to: '/carte-photos',                          text: 'Carte des photos' },
       { to: '/les-francais-yann-arthus-bertrand',     text: 'Yann Arthus-Bertrand' },
     ],
   },

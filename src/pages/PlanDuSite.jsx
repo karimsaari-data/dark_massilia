@@ -22,8 +22,8 @@ const SECTIONS = [
     pages: [
       { to: '/photographe-environnemental-marseille', text: 'Photographe environnemental à Marseille' },
       { to: '/photographie-sous-marine',              text: 'Photographie sous-marine' },
-      { to: '/carte-photos',                          text: 'Carte des photos' },
       { to: '/photographie-paysage-mer',              text: 'Photographie de paysages' },
+      { to: '/carte-photos',                          text: 'Carte des photos' },
       { to: '/les-francais-yann-arthus-bertrand',     text: 'Les Français — Yann Arthus-Bertrand' },
     ],
   },
