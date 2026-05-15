@@ -274,15 +274,15 @@ const PhotographeEnvironnemental = () => {
             </p>
 
             <p className="text-text-secondary leading-relaxed text-base md:text-lg mb-5">
-              En 2018, j'ai fondé l'association <strong className="text-white">Team Oxygen</strong> et lancé le <strong className="text-white">Projet Sentinelle</strong> : une opération annuelle de dépollution sous-marine en apnée. Quatre éditions (2022, 2023, 2024, 2025) ont mobilisé des dizaines de bénévoles dans les Calanques, l'Archipel du Frioul, la Côte Bleue et la Rade de Marseille. Bilan : <strong className="text-white">5 724 kg de déchets remontés des fonds</strong> — pneus, cordages, filets fantômes, plastiques de toutes tailles — caractérisés, pesés et restitués aux autorités. La méthodologie de caractérisation développée par Team Oxygen sert aujourd'hui de référence pour d'autres opérations de dépollution marine en France.
+              J'ai rejoint l'association <strong className="text-white">Team Oxygen</strong> dès la première édition du <strong className="text-white">Projet Sentinelle</strong> — une opération annuelle de dépollution sous-marine en apnée — dont je suis président depuis janvier 2026, après en avoir été vice-président depuis les origines. Quatre éditions (2022, 2023, 2024, 2025) ont mobilisé des dizaines de bénévoles dans les Calanques, l'Archipel du Frioul, la Côte Bleue et la Rade de Marseille. Bilan : <strong className="text-white">5 724 kg de déchets remontés des fonds</strong> — pneus, cordages, filets fantômes, plastiques de toutes tailles — caractérisés, pesés et restitués aux autorités. La méthodologie de caractérisation développée par Team Oxygen sert aujourd'hui de référence pour d'autres opérations de dépollution marine en France.
             </p>
 
             <p className="text-text-secondary leading-relaxed text-base md:text-lg mb-5">
-              Parallèlement à l'action terrain, j'anime la communauté en ligne <strong className="text-white">Dark Massilia</strong>. Sur Facebook, le groupe « Amoureux des Calanques de Marseille à Port-Cros » rassemble plus de <strong className="text-white">{SOCIAL_STATS_DEFAULTS.total_community.toLocaleString('fr-FR')} membres engagés</strong>. Sur Instagram, TikTok et YouTube, des centaines de milliers de personnes suivent les missions, les photos et les alertes terrain. Cette communauté amplifie le message environnemental, signale les dépôts sauvages et constitue un vivier de bénévoles pour chaque édition du Projet Sentinelle.
+              Parallèlement à l'action terrain, j'anime la communauté en ligne <strong className="text-white">Dark Massilia</strong>. Sur Facebook, le groupe « Amoureux des Calanques de Marseille à Port-Cros » rassemble plus de <strong className="text-white">{SOCIAL_STATS_DEFAULTS.total_community.toLocaleString('fr-FR')} membres engagés</strong>. La communauté est également présente sur Instagram, TikTok et YouTube, où les missions, les photos et les alertes terrain sont relayées. Cette communauté amplifie le message environnemental, signale les dépôts sauvages et constitue un vivier de bénévoles pour chaque édition du Projet Sentinelle.
             </p>
 
             <p className="text-text-secondary leading-relaxed text-base md:text-lg mb-5">
-              Mon équipement principal : un appareil compact étanche emporté en apnée jusqu'à 20 mètres de profondeur. Mes sujets : les macro-déchets plastiques coincés dans les anfractuosités, les espèces méditerranéennes (mérous, murènes, poulpes, girelles), et les paysages des Calanques capturés depuis les hauteurs ou par drone. Les galeries disponibles sur ce site — plus de <strong className="text-white">170 photographies</strong> — couvrent trois univers : dépollution sous-marine, biodiversité, et photographie de paysages (littoral, Provence, horizons). Mes images cumulent plus de 800 000 impressions sur 500px.
+              Mon équipement principal : plusieurs caissons étanches avec appareils photo, et des GoPro pour la vidéo — le tout emporté en apnée jusqu'à 20 mètres de profondeur. Mes sujets : les macro-déchets plastiques coincés dans les anfractuosités, les espèces méditerranéennes (mérous, murènes, poulpes, girelles), et les paysages des Calanques capturés depuis les hauteurs ou par drone. Les galeries disponibles sur ce site — plus de <strong className="text-white">170 photographies</strong> — couvrent trois univers : <Link to="/photographie-sous-marine" className="text-ocean-teal hover:text-white transition-colors">dépollution sous-marine et biodiversité</Link>, et <Link to="/photographie-paysage-mer" className="text-ocean-teal hover:text-white transition-colors">photographie de paysages</Link> (littoral, Provence, horizons). Mes images cumulent plus de 800 000 impressions sur 500px.
             </p>
 
             <p className="text-text-secondary leading-relaxed text-base md:text-lg mb-5">
@@ -296,7 +296,11 @@ const PhotographeEnvironnemental = () => {
             <div className="flex flex-wrap gap-3">
               <Link to="/photographie-sous-marine" className="btn inline-flex items-center gap-2">
                 <Camera className="w-4 h-4" aria-hidden="true" />
-                Galerie sous-marine
+                Photos sous-marines — Calanques
+              </Link>
+              <Link to="/photographie-paysage-mer" className="btn inline-flex items-center gap-2">
+                <Camera className="w-4 h-4" aria-hidden="true" />
+                Photos de paysages
               </Link>
               <Link to="/depollution-marine" className="btn inline-flex items-center gap-2">
                 Projet Sentinelle
