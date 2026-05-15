@@ -273,12 +273,6 @@ const Home = () => {
                   <source src="/assets/video/barracuda-hero.mp4" type="video/mp4" />
                 </video>
               )}
-              {/* Overlay verre dépoli sur la vidéo */}
-              <div
-                className="absolute inset-0 pointer-events-none"
-                style={{ zIndex: 1, background: 'linear-gradient(135deg, rgba(0,8,24,0.28) 0%, rgba(0,10,25,0.15) 50%, rgba(0,8,24,0.30) 100%)' }}
-                aria-hidden="true"
-              />
               {/* Contenu au-dessus de la vidéo */}
               <div className="relative" style={{ zIndex: 2 }}>
               {/* Photo profil — Mobile uniquement (au-dessus du texte) */}
