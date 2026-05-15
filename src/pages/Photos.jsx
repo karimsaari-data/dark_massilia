@@ -7,7 +7,7 @@ const getFB = () => _FB;
 import { FADE_IN_UP, STAGGER_CONTAINER } from '../utils/constants';
 import SEO from '../components/SEO';
 import { SEO_PAGES } from '../utils/seo';
-import { Link, useSearchParams } from 'react-router-dom';
+import { Link, useSearchParams, useNavigate } from 'react-router-dom';
 import Breadcrumb from '../components/Breadcrumb';
 import { supabase } from '../lib/supabase';
 
@@ -482,8 +482,10 @@ const buildOpts = () => ({
       c.addEventListener('click', (e) => {
         const mapBtn = e.target.closest('.fb-caption-map');
         if (mapBtn) {
+          e.stopPropagation();
+          e.preventDefault();
           const uid = mapBtn.dataset.mapUid || '';
-          if (uid) window.location.href = `/carte-photos?photo=${encodeURIComponent(uid)}`;
+          if (uid) window.dispatchEvent(new CustomEvent('carte-navigate', { detail: `/carte-photos?photo=${encodeURIComponent(uid)}` }));
           return;
         }
         const btn = e.target.closest('.fb-caption-buy');
@@ -586,7 +588,6 @@ const PhotoGrid = ({ images }) => {
           data-title={image.title || ''}
           data-uid={image.uid}
           data-slug={image.slug || image.uid}
-          data-hash={image.uid}
           data-maps={image.maps}
           data-thumb={thumbSrc}
           className="block w-full cursor-pointer relative overflow-hidden rounded-xl focus-ring group"
@@ -646,8 +647,19 @@ const Photos = () => {
   const [shuffledMer,      setShuffledMer]      = useState(merImages);
   const [shuffledTerre,    setShuffledTerre]    = useState(terreImages);
   const [shuffledHorizons, setShuffledHorizons] = useState(horizonsImages);
+  const navigate = useNavigate();
   const [searchParams] = useSearchParams();
   const deepLinkDone = useRef(false);
+
+  // Écoute le custom event émis depuis le handler Fancybox (hors contexte React)
+  useEffect(() => {
+    const handler = (e) => {
+      getFB()?.close();
+      navigate(e.detail, { replace: false });
+    };
+    window.addEventListener('carte-navigate', handler);
+    return () => window.removeEventListener('carte-navigate', handler);
+  }, [navigate]);
 
   // Fetch Supabase — remplace les données statiques si disponible
   useEffect(() => {
