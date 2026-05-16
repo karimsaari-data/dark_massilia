@@ -3,6 +3,7 @@ import { useState, useEffect } from 'react';
 import { ExternalLink, Star, MapPin, ThumbsUp, Eye, ArrowRight } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import SEO from '../components/SEO';
+import Breadcrumb from '../components/Breadcrumb';
 import { SEO_PAGES } from '../utils/seo';
 import { supabase } from '../lib/supabase';
 
@@ -52,6 +53,7 @@ export default function LocalGuide() {
 
       <div className="min-h-screen pt-4 pb-16">
         <div className="container-custom">
+          <Breadcrumb label="Local Guide Marseille" />
 
           {/* Cadre hublot — header + anniversaire + stats */}
           <motion.div

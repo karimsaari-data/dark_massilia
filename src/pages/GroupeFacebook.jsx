@@ -4,6 +4,7 @@ import { Users, Camera, Recycle, Footprints, Smartphone, ExternalLink } from 'lu
 import { Link } from 'react-router-dom';
 import { FADE_IN_UP, STAGGER_CONTAINER, FACEBOOK_GROUP_MEMBERS } from '../utils/constants';
 import SEO from '../components/SEO';
+import Breadcrumb from '../components/Breadcrumb';
 import FireRiskBanner from '../components/FireRiskBanner';
 import { SEO_PAGES } from '../utils/seo';
 import { supabase } from '../lib/supabase';
@@ -185,6 +186,9 @@ export default function GroupeFacebook() {
     <div className="min-h-screen">
       <SEO {...SEO_PAGES['/communaute-calanques']} />
       <FireRiskBanner />
+      <div className="container-custom pt-4">
+        <Breadcrumb label="Communauté Calanques" />
+      </div>
       <div className="container-custom space-y-16 pt-4 pb-16">
 
         {/* ── Hero CTA card ─────────────────────────────────────── */}

@@ -1,4 +1,5 @@
 import SEO from '../components/SEO';
+import Breadcrumb from '../components/Breadcrumb';
 
 const Section = ({ title, children }) => (
   <section className="mb-8">
@@ -28,6 +29,9 @@ export default function MentionsLegales() {
         robots="noindex, nofollow"
       />
 
+      <div className="container-custom pt-4">
+        <Breadcrumb label="Mentions légales" />
+      </div>
       <div className="container-custom py-16 md:py-24 max-w-3xl">
 
         {/* En-tête */}
