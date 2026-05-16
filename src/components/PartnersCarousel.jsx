@@ -29,7 +29,7 @@ const logos = [
 export default function PartnersCarousel() {
   return (
     <section
-      className="mt-16 mb-8 py-8 rounded-2xl"
+      className="mb-8 py-8 rounded-2xl"
       style={{ background: 'rgba(255,255,255,0.07)', border: '1px solid rgba(255,255,255,0.12)' }}
       aria-label="Médias et partenaires"
     >
