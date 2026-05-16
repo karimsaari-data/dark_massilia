@@ -30,7 +30,7 @@ const Arte = () => {
             style={HUBLOT_STYLE}
           >
             {/* Vidéo plein-largeur dans le cadre */}
-            <motion.div variants={FADE_IN_UP}>
+            <motion.div variants={FADE_IN_UP} className="max-h-[520px] overflow-hidden">
               <YouTubeFacade
                 videoId="cxjAQtSHHyI"
                 title="Documentaire ARTE — Pollution : Il faut sauver Marseille et ses Calanques"

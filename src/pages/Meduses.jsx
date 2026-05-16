@@ -33,7 +33,7 @@ const Meduses = () => {
             style={HUBLOT_STYLE}
           >
             {/* Vidéo plein-largeur dans le cadre */}
-            <motion.div variants={FADE_IN_UP}>
+            <motion.div variants={FADE_IN_UP} className="max-h-[520px] overflow-hidden">
               <YouTubeFacade
                 videoId="yfebiTFOq7E"
                 title="Méduses | Les souveraines des océans — Documentaire ARTE Évasion"
