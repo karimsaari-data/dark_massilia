@@ -167,11 +167,10 @@ const Communaute = () => {
       .from('social_stats')
       .select('platform, value')
       .in('platform', ['facebook_group', 'instagram', 'tiktok', 'facebook_page',
-                       'facebook_perso', 'youtube', 'x', 'pinterest'])
+                       'facebook_perso', 'youtube', 'x', 'pinterest', 'local_guide'])
       .then(({ data }) => {
         if (!data?.length) return;
 
-        // Accumulate numeric values to recompute total_community
         const map = Object.fromEntries(data.map(r => [r.platform, parseFloat(r.value)]));
 
         if (map.instagram != null) {
@@ -188,12 +187,9 @@ const Communaute = () => {
         if (fbPages > 0) {
           setFbPagesLabel(Math.round(fbPages).toLocaleString('fr-FR'));
         }
-        // Total communauté = abonnés/membres uniquement (hors vues & impressions)
-        // Pinterest est exclu : sa valeur en base = vues/mois, pas des abonnés
-        const COMMUNITY_PLATFORMS = ['facebook_group', 'instagram', 'tiktok', 'facebook_page', 'facebook_perso', 'youtube', 'x'];
-        const total = COMMUNITY_PLATFORMS.reduce((s, p) => s + (map[p] ?? 0), 0);
-        if (total > 0) {
-          setTotalLabel(Math.round(total).toLocaleString('fr-FR'));
+        // Total communauté : valeur arrondie saisie en backoffice (local_guide)
+        if (map.local_guide != null) {
+          setTotalLabel(Math.round(map.local_guide).toLocaleString('fr-FR'));
         }
       });
   }, []);
@@ -344,6 +340,29 @@ const Communaute = () => {
                 </div>
               ))}
             </div>
+            {/* Vidéo — dépollution J4 avec Plastic Odyssey, 11 avril 2026 */}
+            <div className="mt-10">
+              <p className="text-ocean-teal text-sm font-semibold uppercase tracking-widest mb-2">Mission terrain</p>
+              <p className="text-white font-bold text-lg mb-1">
+                Dépollution au J4 — 14 associations réunies à Marseille
+              </p>
+              <p className="text-text-secondary text-sm mb-4">
+                11 avril 2026 · Bassin du J4 (devant le MUCEM) · avec{' '}
+                <Link to="/blog/depollution-au-j4-quand-plastic-odyssey-reunit-marseille-pour-nettoyer-ce-qui-se-cache-sous-la-surface" className="text-ocean-teal hover:underline">
+                  Plastic Odyssey
+                </Link>
+                , Team Oxygen, Clean My Calanques, Parc National des Calanques, Wings of the Ocean et 9 autres structures marseillaises.
+              </p>
+              <video
+                src="/assets/video/communaut%C3%A9.mp4"
+                controls
+                playsInline
+                preload="metadata"
+                className="w-full rounded-2xl"
+                style={{ maxHeight: '540px', background: '#000' }}
+                aria-label="Vidéo de la dépollution sous-marine au bassin du J4 à Marseille — opération Plastic Odyssey du 11 avril 2026 réunissant 14 associations environnementales"
+              />
+            </div>
           </motion.div>
         </motion.div>
 
@@ -455,18 +474,16 @@ const Communaute = () => {
             Prêt à rejoindre le mouvement ?
           </h2>
           <p className="text-text-secondary text-lg mb-8 max-w-xl mx-auto">
-            Suivre nos actions, c'est déjà agir. Rejoignez le groupe pour être informé des prochaines missions et amplifier la cause sur vos réseaux.
+            Suivre nos actions, c'est déjà agir. Rejoignez le groupe Facebook « Amoureux des Calanques » pour être informé des prochaines missions et amplifier la cause sur vos réseaux.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <a
-              href="https://www.facebook.com/groups/calanque/"
-              target="_blank"
-              rel="noopener noreferrer"
+            <Link
+              to="/communaute-calanques"
               className="btn-primary inline-flex items-center justify-center gap-2"
             >
               <Users className="w-5 h-5" />
-              Suivre les missions · {fbGroupLabel} membres
-            </a>
+              Rejoindre le groupe · {fbGroupLabel} membres
+            </Link>
             <Link
               to="/contact"
               className="btn-secondary inline-flex items-center justify-center gap-2 group"
