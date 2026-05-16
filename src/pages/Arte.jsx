@@ -19,6 +19,11 @@ const Arte = () => {
     <div className="min-h-screen">
       <SEO {...SEO_PAGES['/sauver-marseille-documentaire-arte']} preloadImage="/images/karim-saari-arte-regard-documentaire-calanques-marseille_800w.webp" />
 
+      {/* Breadcrumb */}
+      <div className="container-custom pt-4">
+        <Breadcrumb label="Documentaire ARTE" />
+      </div>
+
       {/* Hero — hublot vidéo */}
       <section
         className="container-custom"
@@ -38,7 +43,6 @@ const Arte = () => {
             </motion.div>
             {/* Header text */}
             <div className="p-8 md:p-10 pt-6">
-              <Breadcrumb label="Documentaire ARTE" />
               <div className="mt-4 max-w-3xl">
                 <motion.p variants={FADE_IN_UP} className="text-ocean-teal text-sm font-semibold uppercase tracking-widest mb-2">
                   ARTE Regards · 2024
