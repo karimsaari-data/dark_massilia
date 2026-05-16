@@ -20,6 +20,11 @@ const EchappeesBelles = () => {
     <div className="min-h-screen">
       <SEO {...SEO_PAGES['/echappees-belles-bouches-du-rhone']} preloadImage="/images/échappée_verte_0.jpg" />
 
+      {/* Breadcrumb */}
+      <div className="container-custom pt-4">
+        <Breadcrumb label="Échappées Belles — France 5" />
+      </div>
+
       {/* Hero — cadre hublot avec image en fond */}
       <section
         className="container-custom"
@@ -58,7 +63,6 @@ const EchappeesBelles = () => {
 
             {/* Contenu overlaid */}
             <div className="relative p-8 md:p-12" style={{ zIndex: 2 }}>
-              <Breadcrumb label="Échappées Belles — France 5" />
               <div className="max-w-3xl mt-3">
                 <motion.p variants={FADE_IN_UP} className="text-ocean-teal text-sm font-semibold uppercase tracking-widest mb-2">
                   France 5 · Échappées Belles
