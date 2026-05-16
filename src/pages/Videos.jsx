@@ -182,6 +182,7 @@ const Videos = () => {
           {/* Sauver Marseille */}
           <motion.div
             variants={FADE_IN_UP}
+            whileHover={{ x: 4, transition: { type: 'spring', stiffness: 400, damping: 25 } }}
             className="glass-strong rounded-3xl p-8 border border-ocean-teal/20 flex flex-col gap-4"
           >
             <div className="flex-1">
@@ -205,6 +206,7 @@ const Videos = () => {
           {/* Méduses */}
           <motion.div
             variants={FADE_IN_UP}
+            whileHover={{ x: 4, transition: { type: 'spring', stiffness: 400, damping: 25 } }}
             className="glass-strong rounded-3xl p-8 border border-ocean-teal/20 flex flex-col gap-4"
           >
             <div className="flex-1">

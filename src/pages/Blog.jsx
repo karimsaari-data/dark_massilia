@@ -299,7 +299,7 @@ export function PostCard({ post, priority = false }) {
   // La carte prioritaire (LCP) utilise un article natif pour éviter le render delay
   // causé par motion.article qui démarre à opacity:0 (FADE_IN_UP)
   const Tag = priority ? 'article' : motion.article;
-  const motionProps = priority ? {} : { variants: FADE_IN_UP };
+  const motionProps = priority ? {} : { variants: FADE_IN_UP, whileHover: { x: 4, transition: { type: 'spring', stiffness: 400, damping: 25 } } };
 
   return (
     <Tag
