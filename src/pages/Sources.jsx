@@ -288,6 +288,7 @@ const Sources = () => {
                       <motion.div
                         key={refIndex}
                         variants={FADE_IN_UP}
+                        whileHover={{ x: 4, transition: { type: 'spring', stiffness: 400, damping: 25 } }}
                         className="glass rounded-2xl p-6 border border-white/5 hover:border-ocean-teal/30 transition-all duration-300"
                       >
                         <div className="mb-3">
