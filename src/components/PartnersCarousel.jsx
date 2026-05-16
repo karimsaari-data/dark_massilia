@@ -79,7 +79,7 @@ function LogoItem({ src, alt, href }) {
                    brightness-0 invert opacity-80
                    transition-all duration-300
                    group-hover/logo:brightness-100 group-hover/logo:invert-0 group-hover/logo:opacity-100"
-        style={{ maxWidth: '140px', mixBlendMode: 'screen' }}
+        style={{ maxWidth: '140px' }}
       />
     </a>
   );
