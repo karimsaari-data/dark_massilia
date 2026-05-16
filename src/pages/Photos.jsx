@@ -568,64 +568,104 @@ const toThumbSrc = (src) =>
 
 const PhotoGrid = ({ images }) => {
   const prefersReducedMotion = useReducedMotion();
+  if (!images.length) return null;
+  const [featured, ...rest] = images;
+  const featuredThumb = featured.thumbSrc || toThumbSrc(featured.src);
+  const featuredCaption = featured.title || null;
   return (
-  <div className="columns-1 md:columns-2 lg:columns-3 xl:columns-4 gap-4">
-    {images.map((image, index) => {
-      const thumbSrc = image.thumbSrc || toThumbSrc(image.src);
-      const caption = image.title || null;
-      const Tag = (!prefersReducedMotion && index < 12) ? motion.figure : 'figure';
-      const motionProps = (!prefersReducedMotion && index < 12) ? {
-        initial: { opacity: 0, y: 14 },
-        whileInView: { opacity: 1, y: 0 },
-        viewport: { once: true, amount: 0.1 },
-        transition: { duration: 0.4, ease: 'easeOut', delay: (index % 4) * 0.06 },
-      } : {};
-      return (
-      <Tag key={image.uid} className="break-inside-avoid mb-4" {...motionProps}>
-        <a
-          href={image.src}
-          data-fancybox="gallery-paysage"
-          data-caption={image.lieu || image.alt}
-          data-title={image.title || ''}
-          data-uid={image.uid}
-          data-slug={image.slug || image.uid}
-          data-maps={image.maps}
-          data-thumb={thumbSrc}
-          className="block w-full cursor-pointer relative overflow-hidden rounded-xl focus-ring group"
-          aria-label={`Ouvrir la photo : ${image.alt}`}
+  <>
+    {/* Vignette vedette — pleine largeur, au-dessus de la grille */}
+    <a
+      href={featured.src}
+      data-fancybox="gallery-paysage"
+      data-caption={featured.lieu || featured.alt}
+      data-title={featured.title || ''}
+      data-uid={featured.uid}
+      data-slug={featured.slug || featured.uid}
+      data-maps={featured.maps}
+      data-thumb={featuredThumb}
+      className="block w-full cursor-pointer relative overflow-hidden rounded-sm mb-4 group shadow-[0_0_0_1px_rgba(0,171,168,0.25)] hover:shadow-[0_0_0_2px_rgba(0,171,168,0.7),0_0_20px_rgba(0,171,168,0.15)] transition-shadow duration-300"
+      aria-label={`Ouvrir la photo : ${featured.alt}`}
+    >
+      <img
+        src={featuredThumb}
+        alt={featured.alt}
+        width={Math.min(featured.width, 800)}
+        height={Math.round(featured.height * (Math.min(featured.width, 800) / featured.width))}
+        className="w-full h-64 md:h-80 object-cover brightness-95 saturate-[0.85] group-hover:brightness-100 group-hover:saturate-[1.05] group-hover:scale-105 transition-[transform,filter] duration-500 ease-out"
+        loading="eager"
+        fetchPriority="high"
+        decoding="async"
+      />
+      {featuredCaption && (
+        <div
+          className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/0 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-4 pointer-events-none"
+          aria-hidden="true"
         >
-          <img
-            src={thumbSrc}
-            srcSet={`${thumbSrc} 800w`}
-            sizes="(min-width: 1280px) 25vw, (min-width: 1024px) 33vw, (min-width: 768px) 50vw, 100vw"
-            alt={image.alt}
-            width={Math.min(image.width, 800)}
-            height={Math.round(image.height * (Math.min(image.width, 800) / image.width))}
-            className="w-full h-auto object-cover transition-transform duration-500 ease-out group-hover:scale-105"
-            loading={index < 4 ? 'eager' : 'lazy'}
-            fetchPriority={index === 0 ? 'high' : undefined}
-            decoding="async"
-          />
+          <span className="text-white text-sm font-semibold leading-snug line-clamp-2 translate-y-2 group-hover:translate-y-0 transition-transform duration-300">
+            {featuredCaption}
+          </span>
+        </div>
+      )}
+    </a>
+    {/* Grille masonry */}
+    <div className="columns-1 md:columns-2 lg:columns-3 xl:columns-4 gap-4">
+      {rest.map((image, index) => {
+        const thumbSrc = image.thumbSrc || toThumbSrc(image.src);
+        const caption = image.title || null;
+        const Tag = (!prefersReducedMotion && index < 12) ? motion.figure : 'figure';
+        const motionProps = (!prefersReducedMotion && index < 12) ? {
+          initial: { opacity: 0, y: 14 },
+          whileInView: { opacity: 1, y: 0 },
+          viewport: { once: true, amount: 0.1 },
+          transition: { duration: 0.4, ease: 'easeOut', delay: (index % 4) * 0.06 },
+        } : {};
+        return (
+        <Tag key={image.uid} className="break-inside-avoid mb-4" {...motionProps}>
+          <a
+            href={image.src}
+            data-fancybox="gallery-paysage"
+            data-caption={image.lieu || image.alt}
+            data-title={image.title || ''}
+            data-uid={image.uid}
+            data-slug={image.slug || image.uid}
+            data-maps={image.maps}
+            data-thumb={thumbSrc}
+            className="block w-full cursor-pointer relative overflow-hidden rounded-sm focus-ring group shadow-[0_0_0_1px_rgba(0,171,168,0.25)] hover:shadow-[0_0_0_2px_rgba(0,171,168,0.7),0_0_20px_rgba(0,171,168,0.15)] transition-shadow duration-300"
+            aria-label={`Ouvrir la photo : ${image.alt}`}
+          >
+            <img
+              src={thumbSrc}
+              srcSet={`${thumbSrc} 800w`}
+              sizes="(min-width: 1280px) 25vw, (min-width: 1024px) 33vw, (min-width: 768px) 50vw, 100vw"
+              alt={image.alt}
+              width={Math.min(image.width, 800)}
+              height={Math.round(image.height * (Math.min(image.width, 800) / image.width))}
+              className="w-full h-auto object-cover brightness-95 saturate-[0.85] group-hover:brightness-100 group-hover:saturate-[1.05] group-hover:scale-105 transition-[transform,filter] duration-500 ease-out"
+              loading={(index + 1) < 4 ? 'eager' : 'lazy'}
+              decoding="async"
+            />
+            {caption && (
+              <div
+                className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/0 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-3 pointer-events-none"
+                aria-hidden="true"
+              >
+                <span className="text-white text-[11px] font-medium leading-snug line-clamp-2 translate-y-1.5 group-hover:translate-y-0 transition-transform duration-300">
+                  {caption}
+                </span>
+              </div>
+            )}
+          </a>
           {caption && (
-            <div
-              className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-3 pointer-events-none"
-              aria-hidden="true"
-            >
-              <span className="text-white text-[11px] font-medium leading-snug line-clamp-2">
-                {caption}
-              </span>
-            </div>
+            <figcaption className="text-xs text-gray-500 mt-1 px-1 truncate" title={caption}>
+              {caption}
+            </figcaption>
           )}
-        </a>
-        {caption && (
-          <figcaption className="text-xs text-gray-500 mt-1 px-1 truncate" title={caption}>
-            {caption}
-          </figcaption>
-        )}
-      </Tag>
-      );
-    })}
-  </div>
+        </Tag>
+        );
+      })}
+    </div>
+  </>
   );
 };
 
