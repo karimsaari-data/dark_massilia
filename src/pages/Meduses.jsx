@@ -22,6 +22,11 @@ const Meduses = () => {
     <div className="min-h-screen">
       <SEO {...SEO_PAGES['/meduses-souveraines-oceans-documentaire-arte']} />
 
+      {/* Breadcrumb */}
+      <div className="container-custom pt-4">
+        <Breadcrumb label="Méduses — Documentaire ARTE" />
+      </div>
+
       {/* Hero — hublot vidéo */}
       <section
         className="container-custom"
@@ -41,7 +46,6 @@ const Meduses = () => {
             </motion.div>
             {/* Header text */}
             <div className="p-8 md:p-10 pt-6">
-              <Breadcrumb label="Méduses — Documentaire ARTE" />
               <div className="mt-4 max-w-3xl">
                 <motion.p variants={FADE_IN_UP} className="text-ocean-teal text-sm font-semibold uppercase tracking-widest mb-2">
                   ARTE Évasion · Sébastien Lafont, 2024
