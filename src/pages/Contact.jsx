@@ -11,6 +11,32 @@ import Breadcrumb from '../components/Breadcrumb';
 
 const VCARD_URL = 'https://karimsaari.com/karim-saari.vcf';
 
+const VIEW_OPTS = { once: true, margin: '-80px' };
+
+const CONTACT_ROWS = [
+  {
+    href: (cfg) => `https://wa.me/${cfg.contactWhatsApp.replace(/\s/g, '')}`,
+    icon: Phone,
+    label: '+33 6 95 33 13 01',
+    event: { method: 'whatsapp', source: 'business_card' },
+    external: true,
+  },
+  {
+    href: () => 'mailto:contact@karimsaari.com',
+    icon: Mail,
+    label: 'contact@karimsaari.com',
+    event: { method: 'email', source: 'business_card' },
+    external: false,
+  },
+  {
+    href: () => 'https://maps.app.goo.gl/UaF5o6sM2xS5Gaxr6',
+    icon: MapPin,
+    label: 'Marseille, France',
+    event: { method: 'gmaps', source: 'business_card' },
+    external: true,
+  },
+];
+
 const Contact = () => {
   const navigate = useNavigate();
 
@@ -19,6 +45,7 @@ const Contact = () => {
       <SEO {...SEO_PAGES['/contact']} />
       <div className="container-custom">
         <Breadcrumb label="Contact & Partenariats" />
+
         {/* Header */}
         <motion.div
           initial="hidden"
@@ -26,17 +53,20 @@ const Contact = () => {
           variants={STAGGER_CONTAINER}
           className="text-center mb-10"
         >
-          <motion.h1 variants={FADE_IN_UP} className="text-3xl md:text-4xl font-bold text-white mb-4">
+          <motion.h1
+            variants={FADE_IN_UP}
+            className="text-3xl md:text-4xl font-bold text-white mb-4"
+          >
             Collaborons pour la Méditerranée : Reportages, Expositions et Actions sur le terrain
           </motion.h1>
         </motion.div>
 
-        {/* Carte de visite digitale — carte horizontale unifiée */}
+        {/* ── Carte de visite digitale ─────────────────────────────────── */}
         <motion.div
           initial="hidden"
           animate="visible"
           variants={FADE_IN_UP}
-          className="max-w-4xl mx-auto mb-16"
+          className="max-w-5xl mx-auto mb-16"
           style={{
             overflow: 'hidden',
             borderRadius: '24px',
@@ -44,92 +74,98 @@ const Contact = () => {
             boxShadow: '0 0 0 6px rgba(0,8,24,0.88), 0 0 0 8px rgba(0,171,168,0.35), 0 0 40px rgba(0,171,168,0.18), 0 0 80px rgba(0,120,180,0.10)',
           }}
         >
-          <div className="flex flex-col lg:flex-row"
+          <div
+            className="flex flex-col lg:flex-row"
             style={{ background: 'linear-gradient(160deg, rgba(11,28,45,0.97) 0%, rgba(6,18,30,0.99) 100%)' }}
           >
-              {/* Colonne gauche — identité */}
-              <div className="flex flex-col items-center justify-center gap-4 p-8 lg:w-56 lg:border-r border-white/10">
-                <div className="relative">
-                  <div className="w-32 h-32 rounded-full overflow-hidden ring-2 ring-astroide/40 ring-offset-2 ring-offset-transparent">
-                    <img
-                      src="/images/karim-saari-photo-profil-arte-regard-marseille_300w.webp"
-                      alt="Karim Saari"
-                      width="128"
-                      height="128"
-                      className="w-full h-full object-cover"
-                    />
-                  </div>
-                </div>
-                <div className="text-center">
-                  <h2 className="text-lg font-bold text-white">Karim Saari</h2>
-                  <p className="text-astroide text-sm font-medium mt-0.5">Dark Massilia</p>
-                  <p className="text-gray-400 text-xs mt-1">Photographe environnemental · Marseille</p>
-                </div>
+            {/* Colonne gauche — identité */}
+            <motion.div
+              variants={{ hidden: { opacity: 0, x: -20 }, visible: { opacity: 1, x: 0, transition: { duration: 0.5 } } }}
+              className="flex flex-col items-center justify-center gap-4 p-8 lg:w-64 lg:border-r border-white/10"
+            >
+              <motion.div
+                whileHover={{ scale: 1.05 }}
+                transition={{ type: 'spring', stiffness: 300 }}
+                className="w-32 h-32 rounded-full overflow-hidden ring-2 ring-astroide/40 ring-offset-2 ring-offset-transparent"
+              >
+                <img
+                  src="/images/karim-saari-photo-profil-arte-regard-marseille_300w.webp"
+                  alt="Karim Saari"
+                  width="128"
+                  height="128"
+                  className="w-full h-full object-cover"
+                />
+              </motion.div>
+              <div className="text-center">
+                <h2 className="text-lg font-bold text-white">Karim Saari</h2>
+                <p className="text-astroide text-sm font-medium mt-0.5">Dark Massilia</p>
+                <p className="text-gray-400 text-xs mt-1">Photographe environnemental · Marseille</p>
               </div>
+            </motion.div>
 
-              {/* Colonne centre — coordonnées */}
-              <div className="flex flex-col justify-center gap-2 p-8 flex-1 border-t lg:border-t-0 lg:border-r border-white/10 text-sm">
-                <a
-                  href={`https://wa.me/${APP_CONFIG.contactWhatsApp.replace(/\s/g, '')}`}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  onClick={() => trackEvent('contact_click', { method: 'whatsapp', source: 'business_card' })}
-                  className="flex items-center gap-3 px-4 py-2.5 rounded-xl transition-colors hover:bg-astroide/10"
+            {/* Colonne centre — coordonnées (staggerées) */}
+            <motion.div
+              variants={STAGGER_CONTAINER}
+              className="flex flex-col justify-center gap-2 p-8 flex-1 border-t lg:border-t-0 lg:border-r border-white/10 text-sm"
+            >
+              {CONTACT_ROWS.map(({ href, icon: Icon, label, event, external }) => (
+                <motion.a
+                  key={label}
+                  variants={{
+                    hidden: { opacity: 0, x: -16 },
+                    visible: { opacity: 1, x: 0, transition: { duration: 0.4 } },
+                  }}
+                  href={href(APP_CONFIG)}
+                  target={external ? '_blank' : undefined}
+                  rel={external ? 'noopener noreferrer' : undefined}
+                  onClick={() => trackEvent('contact_click', event)}
+                  className="flex items-center gap-3 px-4 py-3 rounded-xl transition-colors hover:bg-astroide/10"
                   style={{ background: 'rgba(255,255,255,0.04)' }}
+                  whileHover={{ x: 4 }}
+                  transition={{ type: 'spring', stiffness: 400 }}
                 >
-                  <Phone className="w-4 h-4 text-astroide flex-shrink-0" />
-                  <span className="text-gray-300">+33 6 95 33 13 01</span>
-                </a>
-                <a
-                  href="mailto:contact@karimsaari.com"
-                  onClick={() => trackEvent('contact_click', { method: 'email', source: 'business_card' })}
-                  className="flex items-center gap-3 px-4 py-2.5 rounded-xl transition-colors hover:bg-astroide/10"
-                  style={{ background: 'rgba(255,255,255,0.04)' }}
-                >
-                  <Mail className="w-4 h-4 text-astroide flex-shrink-0" />
-                  <span className="text-gray-300">contact@karimsaari.com</span>
-                </a>
-                <a
-                  href="https://maps.app.goo.gl/UaF5o6sM2xS5Gaxr6"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  onClick={() => trackEvent('contact_click', { method: 'gmaps', source: 'business_card' })}
-                  className="flex items-center gap-3 px-4 py-2.5 rounded-xl transition-colors hover:bg-astroide/10"
-                  style={{ background: 'rgba(255,255,255,0.04)' }}
-                >
-                  <MapPin className="w-4 h-4 text-astroide flex-shrink-0" />
-                  <span className="text-gray-300">Marseille, France</span>
-                </a>
-              </div>
+                  <Icon className="w-4 h-4 text-astroide flex-shrink-0" />
+                  <span className="text-gray-300">{label}</span>
+                </motion.a>
+              ))}
+            </motion.div>
 
-              {/* Colonne droite — QR vCard */}
-              <div className="flex flex-col items-center justify-center gap-3 p-8 lg:w-56 border-t lg:border-t-0">
-                <a
-                  href="/karim-saari.vcf"
-                  download="karim-saari.vcf"
-                  onClick={() => trackEvent('contact_click', { method: 'vcard', source: 'qr_code' })}
-                  className="p-3 rounded-2xl bg-white shadow-xl hover:scale-110 transition-transform duration-200"
-                  aria-label="Télécharger la carte de contact"
-                >
-                  <QRCode
-                    value={VCARD_URL}
-                    size={120}
-                    bgColor="#ffffff"
-                    fgColor="#0B1C2D"
-                    level="M"
-                  />
-                </a>
-                <p className="text-gray-400 text-xs text-center leading-relaxed">Scanner pour ajouter aux contacts<br/>ou cliquer pour télécharger</p>
-              </div>
-            </div>
+            {/* Colonne droite — QR vCard */}
+            <motion.div
+              variants={{ hidden: { opacity: 0, x: 20 }, visible: { opacity: 1, x: 0, transition: { duration: 0.5 } } }}
+              className="flex flex-col items-center justify-center gap-3 p-8 lg:w-64 border-t lg:border-t-0"
+            >
+              <motion.a
+                href="/karim-saari.vcf"
+                download="karim-saari.vcf"
+                onClick={() => trackEvent('contact_click', { method: 'vcard', source: 'qr_code' })}
+                className="p-3 rounded-2xl bg-white shadow-xl"
+                aria-label="Télécharger la carte de contact"
+                whileHover={{ scale: 1.08, boxShadow: '0 0 24px rgba(0,171,168,0.5)' }}
+                transition={{ type: 'spring', stiffness: 300 }}
+              >
+                <QRCode
+                  value={VCARD_URL}
+                  size={120}
+                  bgColor="#ffffff"
+                  fgColor="#0B1C2D"
+                  level="M"
+                />
+              </motion.a>
+              <p className="text-gray-400 text-xs text-center leading-relaxed">
+                Scanner pour ajouter aux contacts<br />ou cliquer pour télécharger
+              </p>
+            </motion.div>
+          </div>
         </motion.div>
 
-        {/* Section éditoriale SEO — intentions de contact & mots-clés transactionnels */}
+        {/* ── Section éditoriale SEO ───────────────────────────────────── */}
         <motion.div
           initial="hidden"
-          animate="visible"
+          whileInView="visible"
+          viewport={VIEW_OPTS}
           variants={STAGGER_CONTAINER}
-          className="max-w-4xl mx-auto mb-12"
+          className="max-w-5xl mx-auto mb-12"
         >
           <motion.div variants={FADE_IN_UP} className="glass-strong rounded-3xl p-8 md:p-12">
             <h2 className="text-2xl md:text-3xl font-bold text-white mb-6">
@@ -154,22 +190,29 @@ const Contact = () => {
           </motion.div>
         </motion.div>
 
-        {/* Newsletter CTA */}
+        {/* ── Newsletter CTA ───────────────────────────────────────────── */}
         <motion.div
           initial="hidden"
-          animate="visible"
+          whileInView="visible"
+          viewport={VIEW_OPTS}
           variants={FADE_IN_UP}
-          className="max-w-4xl mx-auto"
+          className="max-w-5xl mx-auto"
         >
-          <div
-            className="rounded-3xl p-8 md:p-10 flex flex-col md:flex-row items-center justify-between gap-6 cursor-pointer group"
+          <motion.div
+            className="rounded-3xl p-8 md:p-10 flex flex-col md:flex-row items-center justify-between gap-6 cursor-pointer"
             style={{ background: 'linear-gradient(135deg, rgba(33,196,123,0.12) 0%, rgba(0,145,255,0.10) 100%)', border: '1px solid rgba(33,196,123,0.25)' }}
             onClick={() => { navigate('/'); setTimeout(() => { document.getElementById('newsletter')?.scrollIntoView({ behavior: 'smooth' }); }, 100); }}
+            whileHover={{ scale: 1.01, borderColor: 'rgba(33,196,123,0.5)' }}
+            transition={{ type: 'spring', stiffness: 300 }}
           >
             <div className="flex items-center gap-5">
-              <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-astroide to-astroide-dark flex items-center justify-center flex-shrink-0 group-hover:scale-110 transition-transform duration-300">
+              <motion.div
+                className="w-14 h-14 rounded-2xl bg-gradient-to-br from-astroide to-astroide-dark flex items-center justify-center flex-shrink-0"
+                whileHover={{ rotate: [0, -8, 8, 0] }}
+                transition={{ duration: 0.4 }}
+              >
                 <Newspaper className="w-7 h-7 text-white" />
-              </div>
+              </motion.div>
               <div>
                 <h3 className="text-white font-bold text-xl mb-1">Alertes terrain — Newsletter</h3>
                 <p className="text-gray-400 text-sm">Missions de dépollution, reportages et actualités des Calanques directement dans ta boîte mail.</p>
@@ -178,52 +221,60 @@ const Contact = () => {
             <span className="btn-primary whitespace-nowrap flex-shrink-0">
               S'inscrire gratuitement →
             </span>
-          </div>
+          </motion.div>
         </motion.div>
 
-        {/* Card engagement — texte + photo côte à côte dans la card */}
+        {/* ── Card engagement ──────────────────────────────────────────── */}
         <motion.div
           initial="hidden"
-          animate="visible"
+          whileInView="visible"
+          viewport={VIEW_OPTS}
           variants={FADE_IN_UP}
-          className="max-w-5xl mx-auto mt-16"
+          className="max-w-6xl mx-auto mt-16"
         >
           <div className="glass-strong rounded-2xl overflow-hidden flex flex-col lg:flex-row">
             {/* Texte */}
-            <div className="flex flex-col gap-6 p-8 lg:flex-1 justify-center">
-              <p className="text-astroide text-sm font-semibold uppercase tracking-widest">
+            <motion.div
+              className="flex flex-col gap-6 p-8 lg:p-12 lg:flex-1 justify-center"
+              variants={STAGGER_CONTAINER}
+            >
+              <motion.p variants={FADE_IN_UP} className="text-astroide text-sm font-semibold uppercase tracking-widest">
                 Un engagement à 360°
-              </p>
-              <h2 className="text-2xl md:text-3xl font-bold text-white leading-tight">
+              </motion.p>
+              <motion.h2 variants={FADE_IN_UP} className="text-2xl md:text-3xl font-bold text-white leading-tight">
                 La Méditerranée pour bureau, l'action pour moteur
-              </h2>
-              <p className="text-text-secondary leading-relaxed">
+              </motion.h2>
+              <motion.p variants={FADE_IN_UP} className="text-text-secondary leading-relaxed">
                 Photographe environnemental et sous-marin, Karim Saari documente et
                 combat la pollution marine depuis plus de dix ans sur le littoral marseillais. Chaque
                 plongée est une mission : collecter les données, ramener les déchets, alerter le public.
                 Que vous soyez journaliste, institution, marque engagée ou simple passionné de la mer —
                 il y a une place pour vous dans ce combat.
-              </p>
-            </div>
+              </motion.p>
+            </motion.div>
             {/* Photo + boutons */}
-            <div className="lg:w-[45%] flex-shrink-0 flex flex-col items-stretch gap-3 p-6 lg:p-8 justify-center">
+            <div className="lg:w-[42%] flex-shrink-0 flex flex-col items-stretch gap-3 p-6 lg:p-8 justify-center">
               <Link
                 to="/depollution-marine"
                 className="btn-secondary inline-flex items-center justify-center gap-2 w-full"
               >
                 Nos missions de dépollution
               </Link>
-              <picture>
+              <motion.picture
+                whileHover={{ scale: 1.02 }}
+                transition={{ type: 'spring', stiffness: 200 }}
+                className="overflow-hidden rounded-xl"
+              >
                 <source srcSet="/images/contact-karim-saari.webp" type="image/webp" />
                 <img
                   src="/images/contact-karim-saari.webp"
                   alt="Karim Saari en action lors d'une mission de dépollution sous-marine dans les Calanques de Marseille avec Team Oxygen"
                   width="1440"
                   height="1212"
-                  className="w-full h-auto rounded-xl"
+                  className="w-full h-auto"
                   loading="lazy"
                 />
-              </picture>
+              </motion.picture>
               <a
                 href="https://www.team-oxygen.com/"
                 target="_blank"
@@ -238,7 +289,6 @@ const Contact = () => {
         </motion.div>
 
       </div>
-
     </div>
   );
 };
