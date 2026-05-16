@@ -171,6 +171,9 @@ const Medias = () => {
           </motion.h1>
         </div>
 
+        {/* Carrousel partenaires / médias */}
+        <PartnersCarousel />
+
         {/* Section: Passage TV — ARTE & Échappées Belles */}
         <motion.div
           id="tv"
@@ -759,8 +762,6 @@ const Medias = () => {
           </motion.div>
         </motion.div>
 
-        {/* Carrousel partenaires / médias */}
-        <PartnersCarousel />
       </div>
     </div>
   );
