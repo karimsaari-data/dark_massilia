@@ -53,6 +53,28 @@ const STATIC_ROUTES = [
   '/blog/categorie/pollution',
 ];
 
+// ── Cache local WP (fallback quand le CMS est inaccessible depuis GitHub Actions) ──
+const WP_CACHE_PATH = path.resolve(__dirname, 'wp-posts-cache.json');
+
+function loadWPCache() {
+  try {
+    if (!fs.existsSync(WP_CACHE_PATH)) return new Map();
+    const raw = JSON.parse(fs.readFileSync(WP_CACHE_PATH, 'utf-8'));
+    const map = new Map();
+    (raw.posts ?? []).forEach(p => map.set(p.slug, p));
+    return map;
+  } catch (_) {
+    return new Map();
+  }
+}
+
+function saveWPCache(postsMap) {
+  try {
+    const posts = Array.from(postsMap.values());
+    fs.writeFileSync(WP_CACHE_PATH, JSON.stringify({ generated: new Date().toISOString(), posts }, null, 2), 'utf-8');
+  } catch (_) {}
+}
+
 // ── Récupération des slugs + dates de modification WP ────────────────────────
 // Retourne [{ slug, modified }] pour permettre le prérendu incrémental
 async function fetchWPMeta() {
@@ -76,7 +98,7 @@ async function fetchWPMeta() {
       }
       if (!res.ok) {
         console.warn(`  ⚠️  WP API ${res.status} — les routes /blog/:slug seront ignorées.`);
-        return [];
+        return null;
       }
       const posts = await res.json();
       posts.forEach(p => metas.push({ slug: p.slug, modified: p.modified }));
@@ -85,8 +107,7 @@ async function fetchWPMeta() {
     } while (page <= totalPages);
   } catch (err) {
     console.warn(`  ⚠️  Impossible de contacter le CMS WP : ${err.message}`);
-    console.warn('      Les routes /blog/:slug seront ignorées pour ce build.');
-    return [];
+    return null;
   }
 
   return metas;
@@ -150,6 +171,7 @@ async function fetchWPPost(slug) {
         year: 'numeric', month: 'long', day: 'numeric',
       }),
       image:         imageSrc,
+      imageOg:       rawSrc,
       imageSrcset:   imageSrcset,
       imageWidth:    media?.media_details?.width  ?? 1280,
       imageHeight:   media?.media_details?.height ?? 720,
@@ -179,19 +201,33 @@ function stripEntities(str) {
 async function prerender() {
   console.log('\n🏗  Prérendu statique — Dark Massilia\n');
 
-  // ── 0. Récupérer les métadonnées WP (slug + modified) ───────────────────
-  console.log('  🌐 Récupération des métadonnées WordPress…');
-  const wpMetas = await fetchWPMeta();
-  const BLOG_ROUTES = wpMetas.map(({ slug }) => `/blog/${slug}`);
-  const ROUTES = [...STATIC_ROUTES, ...BLOG_ROUTES];
+  // ── 0. Charger le cache local WP (fallback si CMS inaccessible) ─────────
+  const localCache = loadWPCache();
+  if (localCache.size > 0) {
+    console.log(`  💾 Cache local : ${localCache.size} article(s) disponibles en fallback`);
+  }
 
-  if (wpMetas.length > 0) {
-    console.log(`  ✅ ${wpMetas.length} article(s) WP trouvé(s)`);
+  // ── 0b. Récupérer les métadonnées WP (slug + modified) ──────────────────
+  console.log('  🌐 Récupération des métadonnées WordPress…');
+  const wpMetasLive = await fetchWPMeta();
+  const wpReachable = wpMetasLive !== null;
+
+  let wpMetas;
+  if (wpReachable) {
+    wpMetas = wpMetasLive;
+    console.log(`  ✅ ${wpMetas.length} article(s) WP trouvé(s) (live)`);
+  } else if (localCache.size > 0) {
+    wpMetas = Array.from(localCache.values()).map(p => ({ slug: p.slug, modified: p.modified }));
+    console.log(`  📦 CMS inaccessible — ${wpMetas.length} article(s) depuis le cache local`);
   } else {
+    wpMetas = [];
     console.log('  ℹ️  Aucun article WP — seul /blog (index) sera prérendu');
   }
 
-  // ── 0b. Prérendu incrémental : détecter les articles à jour ─────────────
+  const BLOG_ROUTES = wpMetas.map(({ slug }) => `/blog/${slug}`);
+  const ROUTES = [...STATIC_ROUTES, ...BLOG_ROUTES];
+
+  // ── 0c. Prérendu incrémental : détecter les articles à jour ─────────────
   // Si dist/blog/{slug}/index.html existe et est plus récent que la date WP
   // → inutile de re-fetcher et re-rendre cet article
   const slugsToUpdate = wpMetas
@@ -212,12 +248,28 @@ async function prerender() {
     console.log(`  🔄 ${slugsToUpdate.length} article(s) à re-rendre`);
   }
 
-  // ── 0c. Pré-fetch parallèle des articles à mettre à jour (batch de 5) ───
+  // ── 0d. Pré-fetch parallèle des articles à mettre à jour ────────────────
+  // Si le CMS est accessible → fetch réseau + mise à jour du cache local
+  // Si CMS inaccessible → utiliser le cache local directement
   let wpPostCache = new Map();
   if (slugsToUpdate.length > 0) {
-    console.log('  📥 Fetch parallèle des articles WP (batch×5)…');
-    wpPostCache = await prefetchWPPosts(slugsToUpdate);
-    console.log(`  ✅ ${slugsToUpdate.length} article(s) fetchés\n`);
+    if (wpReachable) {
+      console.log('  📥 Fetch parallèle des articles WP (batch×5)…');
+      wpPostCache = await prefetchWPPosts(slugsToUpdate);
+      console.log(`  ✅ ${slugsToUpdate.length} article(s) fetchés`);
+      // Mettre à jour le cache local avec les données fraîches
+      const updatedCache = new Map(localCache);
+      wpPostCache.forEach((post, slug) => { if (post) updatedCache.set(slug, post); });
+      saveWPCache(updatedCache);
+      console.log(`  💾 Cache local mis à jour (${updatedCache.size} articles)\n`);
+    } else {
+      // CMS inaccessible → utiliser les données du cache local
+      slugsToUpdate.forEach(slug => {
+        const cached = localCache.get(slug);
+        if (cached) wpPostCache.set(slug, cached);
+      });
+      console.log(`  📦 ${wpPostCache.size} article(s) depuis le cache local\n`);
+    }
   } else {
     console.log('');
   }
