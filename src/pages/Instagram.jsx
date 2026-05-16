@@ -20,6 +20,7 @@ import { supabase } from '../lib/supabase';
 import { FADE_IN_UP, STAGGER_CONTAINER, FACEBOOK_GROUP_MEMBERS, SOCIAL_STATS_DEFAULTS } from '../utils/constants';
 import SEO from '../components/SEO';
 import { SEO_PAGES } from '../utils/seo';
+import Breadcrumb from '../components/Breadcrumb';
 
 // ── Données statiques ───────────────────────────────────────────────────────
 
@@ -197,6 +198,9 @@ const Communaute = () => {
   return (
     <div className="min-h-screen pt-4 pb-16">
       <SEO {...SEO_PAGES['/communaute']} />
+      <div className="container-custom pt-4">
+        <Breadcrumb label="Communauté" />
+      </div>
       <div className="container-custom space-y-12">
 
         {/* ── 1. HERO — H1 + accroche + CTA ── */}

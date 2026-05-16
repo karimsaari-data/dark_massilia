@@ -4,6 +4,7 @@ import { ArrowLeft, ArrowRight, ExternalLink, Rss, CalendarDays, AlertCircle, Lo
 import { Link } from 'react-router-dom';
 import { FADE_IN_UP, STAGGER_CONTAINER } from '../utils/constants';
 import SEO from '../components/SEO';
+import Breadcrumb from '../components/Breadcrumb';
 import FireRiskBanner from '../components/FireRiskBanner';
 import { SEO_PAGES } from '../utils/seo';
 
@@ -217,6 +218,9 @@ const Twitter = () => {
     <div className="min-h-screen">
       <SEO {...SEO_PAGES['/actualites']} />
       <FireRiskBanner />
+      <div className="container-custom pt-4">
+        <Breadcrumb label="Actualités" />
+      </div>
       <div className="py-24">
       <div className="container-custom">
 

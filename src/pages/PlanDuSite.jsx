@@ -9,6 +9,7 @@ import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { BookOpen, Camera, Compass, Film, MapPin, Mail, ExternalLink, Loader2 } from 'lucide-react';
 import SEO from '../components/SEO';
+import Breadcrumb from '../components/Breadcrumb';
 import { SEO_PAGES } from '../utils/seo';
 import { fetchAllPostsMeta } from '../utils/api';
 import { FADE_IN_UP, STAGGER_CONTAINER } from '../utils/constants';
@@ -97,6 +98,9 @@ const PlanDuSite = () => {
         canonical: 'https://karimsaari.com/plan-du-site',
       })} />
 
+      <div className="container-custom pt-4">
+        <Breadcrumb label="Plan du site" />
+      </div>
       <div className="container-custom py-16 md:py-24" style={{ position: 'relative', zIndex: 1 }}>
         {/* Voile pour lisibilité sur fond animé */}
         <div className="absolute inset-0 -z-10 pointer-events-none" style={{ background: 'rgba(5,15,30,0.55)', backdropFilter: 'blur(2px)' }} />
