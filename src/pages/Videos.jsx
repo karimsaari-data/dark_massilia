@@ -161,11 +161,11 @@ const Videos = () => {
                 </a>
               </div>
             </div>
-            <div className="lg:w-[38%] flex-shrink-0 min-h-[260px] lg:min-h-0">
+            <div className="lg:w-[38%] flex-shrink-0 min-h-[260px] lg:min-h-0 overflow-hidden">
               <img
                 src="/images/Marseille-dark-massilia-plastique-pollution-projet-sentinelle-grotte-riou.webp"
                 alt="Grotte sous-marine de Riou photographiée lors d'une mission de dépollution Projet Sentinelle — Karim Saari"
-                className="w-full h-full object-cover"
+                className="w-full h-full object-cover scale-[1.15] object-[center_40%]"
                 loading="lazy"
               />
             </div>
