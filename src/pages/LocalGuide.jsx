@@ -215,12 +215,16 @@ export default function LocalGuide() {
 
             {/* 3 photos empilées */}
             <div className="lg:w-[38%] flex-shrink-0 flex flex-col min-h-[300px] lg:min-h-0">
-              {GALLERY.map(({ src, alt }) => (
+              {GALLERY.map(({ src, alt }, i) => (
                 <div key={src} className="flex-1 overflow-hidden">
                   <img
                     src={src}
                     alt={alt}
-                    className="w-full h-full object-cover hover:scale-105 transition-transform duration-500"
+                    className={`w-full h-full object-cover transition-transform duration-500 ${
+                      i > 0
+                        ? 'scale-[1.12] object-[center_40%] hover:scale-[1.17]'
+                        : 'hover:scale-105'
+                    }`}
                     loading="lazy"
                     decoding="async"
                   />
