@@ -124,6 +124,7 @@ export function normalizePost(post) {
     modified:      post.modified,
     dateFormatted: formatDate(post.date),
     image:         imageSrc,
+    imageOg:       rawImageSrc,
     imageFallback,
     imageSrcset:   buildSrcset(media),
     imageWidth:    media?.media_details?.width  ?? 1280,

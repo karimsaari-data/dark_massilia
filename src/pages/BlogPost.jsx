@@ -171,7 +171,9 @@ export default function BlogPost() {
     : 'Article | Karim Saari';
   const rawExcerpt     = post?.excerpt ?? 'Actualités et actions de dépollution marine par Dark Massilia.';
   const seoDescription = rawExcerpt.length > 155 ? rawExcerpt.slice(0, 152) + '…' : rawExcerpt;
-  const seoImage       = post?.image   ?? `${BASE_URL}/assets/og-social-card.jpg`;
+  // imageOg = URL originale JPEG/PNG pour les réseaux sociaux (LinkedIn, FB…)
+  // image   = URL WebP pour la balise <img> (perf)
+  const seoImage       = post?.imageOg ?? post?.image ?? `${BASE_URL}/assets/og-social-card.jpg`;
   const seoCanonical   = `${BASE_URL}/blog/${slug}`;
 
   return (
