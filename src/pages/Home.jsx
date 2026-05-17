@@ -363,6 +363,15 @@ const Home = () => {
                       <span>Découvrir les Calanques</span>
                       <ArrowRight className="w-4 h-4" aria-hidden="true" />
                     </a>
+                    <Link
+                      to="/contact"
+                      className="btn-ghost inline-flex items-center gap-2"
+                      title="Contacter Karim Saari — collaboration, presse, missions"
+                      onClick={() => trackEvent('cta_click', { button_name: 'Me contacter' })}
+                    >
+                      <span>Me contacter</span>
+                      <ArrowRight className="w-4 h-4" aria-hidden="true" />
+                    </Link>
                   </div>
                 </div>
 
