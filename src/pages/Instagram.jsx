@@ -234,26 +234,26 @@ const Communaute = () => {
             </p>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
               <p className="text-text-secondary leading-[1.8] text-lg">
-                La protection de la Méditerranée repose sur une mobilisation collective et continue.
-                À travers mes réseaux sociaux, je fédère aujourd'hui une communauté de plus de
-                {' '}{totalLabel} personnes sensibilisées aux enjeux environnementaux du littoral marseillais.
+                La protection de la <strong>Méditerranée</strong> repose sur une <strong>mobilisation collective et continue</strong>.
+                À travers mes <strong>réseaux sociaux</strong>, je fédère aujourd'hui une communauté de plus de
+                {' '}<strong>{totalLabel} personnes</strong> sensibilisées aux <strong>enjeux environnementaux</strong> du littoral marseillais.
               </p>
               <p className="text-text-secondary leading-[1.8] text-lg">
-                De mes reportages en immersion sur YouTube à mes alertes environnementales sur
+                De mes <strong>reportages en immersion</strong> sur YouTube à mes <strong>alertes environnementales</strong> sur
                 Instagram ({instaLabel}), TikTok ({tiktokLabel}) et mes photographies sur 500px, cette
-                audience numérique prolonge le travail de terrain en donnant de la visibilité aux
-                réalités observées sous la surface.
+                audience numérique prolonge le <strong>travail de terrain</strong> en donnant de la visibilité aux
+                <strong> réalités observées sous la surface</strong>.
               </p>
               <p className="text-text-secondary leading-[1.8] text-lg">
-                À travers l'animation du groupe incontournable des Amoureux des Calanques (plus de
-                {' '}{fbGroupLabel} membres), ma présence sur Facebook (près de {fbPagesLabel} abonnés cumulés), sur X
-                et en tant que Local Guide Google Maps à Marseille, j'informe, documente et interpelle
-                en temps réel.
+                À travers l'animation du groupe incontournable des <strong>Amoureux des Calanques</strong> (plus de
+                {' '}<strong>{fbGroupLabel} membres</strong>), ma présence sur <strong>Facebook</strong> (près de {fbPagesLabel} abonnés cumulés), sur <strong>X</strong>
+                et en tant que <strong>Local Guide Google Maps</strong> à Marseille, j'informe, documente et <strong>interpelle
+                en temps réel</strong>.
               </p>
               <p className="text-text-secondary leading-[1.8] text-lg">
-                Cette audience n'est pas un indicateur abstrait : elle représente une capacité
-                concrète de sensibilisation et de mobilisation au service de la préservation de
-                la Méditerranée et du littoral marseillais.
+                Cette audience n'est pas un indicateur abstrait : elle représente une <strong>capacité
+                concrète de sensibilisation et de mobilisation</strong> au service de la <strong>préservation de
+                la Méditerranée</strong> et du littoral marseillais.
               </p>
             </div>
             {/* CTA principal */}

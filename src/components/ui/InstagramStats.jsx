@@ -70,6 +70,54 @@ const KPI_COLORS = {
   vues:    { bg: 'from-emerald-600/20 to-teal-500/20',   border: 'border-emerald-500/20' },
 };
 
+// Couleurs de marque pour la vignette mini-mockup
+const PLATFORM_PREVIEW = {
+  instagram:      { from: '#f09433', to: '#bc1888', avatar: '#dc2743' },
+  tiktok:         { from: '#010101', to: '#2d2d2d', avatar: '#ff0050' },
+  facebook_group: { from: '#1877F2', to: '#0a5dc2', avatar: '#1877F2' },
+  facebook_pages: { from: '#1877F2', to: '#0a5dc2', avatar: '#1877F2' },
+  youtube:        { from: '#FF0000', to: '#cc0000', avatar: '#FF0000' },
+  x:              { from: '#14171A', to: '#2d3436', avatar: '#657786' },
+  local_guides:   { from: '#4285F4', to: '#0F9D58', avatar: '#4285F4' },
+  pinterest:      { from: '#E60023', to: '#ad081b', avatar: '#E60023' },
+  px500:          { from: '#1a1a2e', to: '#16213e', avatar: '#00b4d8' },
+};
+
+const MiniPreview = ({ platform, handle }) => {
+  const colors = PLATFORM_PREVIEW[platform] ?? { from: '#1e293b', to: '#0f172a', avatar: '#64748b' };
+  const shortHandle = handle.replace(/^@/, '').substring(0, 10);
+  const initial = shortHandle[0]?.toUpperCase() ?? '?';
+  const squares = [0, 1, 2, 3, 4, 5];
+
+  return (
+    <div
+      className="rounded-xl overflow-hidden flex-shrink-0 w-[72px]"
+      style={{ background: `linear-gradient(135deg, ${colors.from}22, ${colors.to}44)`, border: `1px solid ${colors.avatar}33` }}
+    >
+      {/* Header */}
+      <div className="flex items-center gap-1 px-1.5 py-1">
+        <div
+          className="w-4 h-4 rounded-full flex items-center justify-center text-[7px] font-bold text-white flex-shrink-0"
+          style={{ background: colors.avatar }}
+        >
+          {initial}
+        </div>
+        <span className="text-[6px] text-white/60 truncate leading-none">{shortHandle}</span>
+      </div>
+      {/* Grid de posts */}
+      <div className="grid grid-cols-3 gap-px px-px pb-px">
+        {squares.map(i => (
+          <div
+            key={i}
+            className="aspect-square rounded-[2px]"
+            style={{ background: `${colors.avatar}${i % 2 === 0 ? '55' : '33'}` }}
+          />
+        ))}
+      </div>
+    </div>
+  );
+};
+
 const isVuesKpi = (unit) => unit && (unit.includes('vues') || unit.includes('impressions'));
 
 // Icônes par plateforme (non stockées en DB)
@@ -191,21 +239,24 @@ const SocialStats = () => {
       rel="noopener noreferrer"
       className={`glass-strong rounded-2xl p-5 border ${network.border} bg-gradient-to-br ${network.bg} hover:scale-[1.02] transition-transform duration-200 flex flex-col gap-3`}
     >
-      <div className="flex items-center justify-between">
-        {network.icon}
-      </div>
-      <div>
-        <p className="text-2xl md:text-3xl font-bold text-white leading-none">
-          <StatCounter end={network.end} suffix={network.suffix} decimals={network.decimals} />
-        </p>
-        {network.note && (
-          <p className="text-xs text-gray-500 mt-0.5">{network.note}</p>
-        )}
-        <p className="text-xs text-gray-400 mt-1">{network.unit ?? 'abonnés'}</p>
-      </div>
-      <div>
-        <p className="text-sm font-semibold text-white">{network.name}</p>
-        <p className="text-xs text-gray-500">{network.handle}</p>
+      <div className="flex items-start justify-between gap-2">
+        <div className="flex flex-col gap-3 flex-1 min-w-0">
+          {network.icon}
+          <div>
+            <p className="text-2xl md:text-3xl font-bold text-white leading-none">
+              <StatCounter end={network.end} suffix={network.suffix} decimals={network.decimals} />
+            </p>
+            {network.note && (
+              <p className="text-xs text-gray-500 mt-0.5">{network.note}</p>
+            )}
+            <p className="text-xs text-gray-400 mt-1">{network.unit ?? 'abonnés'}</p>
+          </div>
+          <div>
+            <p className="text-sm font-semibold text-white">{network.name}</p>
+            <p className="text-xs text-gray-500">{network.handle}</p>
+          </div>
+        </div>
+        <MiniPreview platform={network.platform} handle={network.handle} />
       </div>
     </a>
   );
