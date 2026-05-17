@@ -762,7 +762,7 @@ export const SEO_PAGES = {
   '/photographie-paysage-mer': {
     title: 'Photographe Calanques & Paysages Marseille | Karim Saari',
     description:
-      'Calanques, Méditerranée, Provence : des paysages capturés par Karim Saari, photographe calanques basé à Marseille. Lumière naturelle, grands formats disponibles à la vente.',
+      'Paysages des Calanques, Méditerranée et Provence capturés par Karim Saari. Lumière naturelle, grands formats disponibles à la vente.',
     keywords: 'photographe calanques, photographie paysage marseille, photographie méditerranée, paysage provence, photographe sous-marin marseille',
     image: `${BASE_URL}/images/portfolio/Mer/karim-saari-marseille-calanque-sauvage-pins-mediterraneens.webp`,
     canonical: `${BASE_URL}/photographie-paysage-mer`,
