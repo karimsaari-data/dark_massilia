@@ -15,6 +15,8 @@
     "photos:rename-legacy": "node scripts/rename-legacy-photos.js",
     "build:blog": "node --env-file-if-exists=.env scripts/wp-optimize-images.mjs --fix && node scripts/update-wp-alt-text.mjs --apply && node scripts/generate-sitemap.js && node scripts/prerender.js",
     "wp:alt": "node scripts/update-wp-alt-text.mjs --apply",
+    "wp:alt-vision": "node scripts/wp-alt-vision.mjs --apply --posts-only",
+    "wp:alt-vision-dry": "node scripts/wp-alt-vision.mjs --posts-only",
     "post-deploy": "node scripts/notify-new-articles.js && node scripts/notify-indexnow.js",
     "notify": "node scripts/notify-new-articles.js",
     "build:full": "node scripts/generate-sitemap.js && node scripts/generate-sitemap-images.js && vite build && node scripts/prerender.js && node scripts/generate-photo-shares.js && node scripts/notify-new-articles.js",
