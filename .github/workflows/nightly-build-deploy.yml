@@ -38,6 +38,14 @@ jobs:
       - name: Installation des dépendances
         run: npm ci
 
+      # ── 3b. Mise à jour alt text images WordPress ────────────────────────────
+      - name: Mise à jour alt text images WordPress
+        continue-on-error: true
+        env:
+          WP_USER: ${{ secrets.WP_USER }}
+          WP_APP_PASSWORD: ${{ secrets.WP_APP_PASSWORD }}
+        run: node scripts/update-wp-alt-text.mjs --apply
+
       # ── 4. Build complet ─────────────────────────────────────────────────────
       - name: Build (sitemap + vite + prerender)
         env:
