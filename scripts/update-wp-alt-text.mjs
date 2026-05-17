@@ -198,9 +198,9 @@ async function main() {
   }
 
   console.log(`\n─────────────────────────────────────`);
-  console.log(`  À mettre à jour : ${updated}`);
-  console.log(`  Déjà OK         : ${skipped}`);
-  console.log(`  Sans mapping    : ${noMatch}`);
+  console.log(`  ${DRY_RUN ? 'À mettre à jour' : 'Mis à jour      '} : ${updated}`);
+  console.log(`  Déjà OK          : ${skipped}`);
+  console.log(`  Sans mapping     : ${noMatch}`);
   if (DRY_RUN) console.log(`\n  👆 Relance avec --apply pour appliquer.`);
   console.log('');
 }
