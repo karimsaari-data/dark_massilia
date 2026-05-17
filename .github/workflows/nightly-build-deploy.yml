@@ -46,6 +46,17 @@ jobs:
           WP_APP_PASSWORD: ${{ secrets.WP_APP_PASSWORD }}
         run: node scripts/update-wp-alt-text.mjs --apply
 
+      # ── 3c. Alt text Vision (nouvelles images uniquement, cache JSON) ─────────
+      - name: Alt text Vision — nouvelles images
+        continue-on-error: true
+        env:
+          WP_USER: ${{ secrets.WP_USER }}
+          WP_APP_PASSWORD: ${{ secrets.WP_APP_PASSWORD }}
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          VITE_SUPABASE_URL: ${{ secrets.VITE_SUPABASE_URL }}
+          VITE_SUPABASE_ANON_KEY: ${{ secrets.VITE_SUPABASE_ANON_KEY }}
+        run: node scripts/wp-alt-vision.mjs --apply --posts-only
+
       # ── 4. Build complet ─────────────────────────────────────────────────────
       - name: Build (sitemap + vite + prerender)
         env:
@@ -137,7 +148,7 @@ jobs:
         run: |
           git config user.name  "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add scripts/.notified-slugs.json scripts/wp-posts-cache.json
+          git add scripts/.notified-slugs.json scripts/wp-posts-cache.json scripts/wp-alt-vision-cache.json
           if git diff --staged --quiet; then
             echo "Aucun changement, pas de commit."
           else
