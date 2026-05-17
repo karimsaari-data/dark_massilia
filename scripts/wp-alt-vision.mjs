@@ -218,7 +218,7 @@ async function main() {
   const uncached = images.filter(m => !cacheMap.has(m.id));
   console.log(`  📦 ${images.length} images | 💾 ${cacheMap.size} en cache (${cacheLabel}) | 🔍 ${uncached.length} à analyser\n`);
 
-  let analyzed = 0, fromCache = 0, alreadyOk = 0, errors = 0;
+  let analyzed = 0, fromCache = 0, alreadyOk = 0, wpUpdated = 0, errors = 0;
 
   for (const media of images) {
     const filename = media.source_url.split('/').pop();
@@ -264,6 +264,7 @@ async function main() {
         if ((media.alt_text || '').trim() !== generatedAlt.trim()) {
           await wpPatch(media.id, { alt_text: generatedAlt });
           if (USE_SUPABASE) await sbMarkApplied(media.id);
+          wpUpdated++;
         }
         analyzed++;
       } else {
@@ -279,6 +280,7 @@ async function main() {
 
   console.log(`\n─────────────────────────────────────`);
   console.log(`  Analysés (Vision)   : ${analyzed}`);
+  console.log(`  WP mis à jour       : ${DRY_RUN ? '(dry-run)' : wpUpdated}`);
   console.log(`  Appliqués (cache)   : ${fromCache}`);
   console.log(`  Déjà OK             : ${alreadyOk}`);
   if (errors) console.log(`  Erreurs             : ${errors}`);
