@@ -138,45 +138,77 @@ function buildSousMarineBlock(photos) {
 }
 
 // ── 3. Blog WP ────────────────────────────────────────────────────────────────
-async function fetchBlogFeaturedImages() {
-  const results = [];
-  let page = 1;
-  let totalPages = 1;
+async function fetchBlogImages() {
   try {
+    // 1. Récupère tous les articles publiés
+    const posts = [];
+    let page = 1, totalPages = 1;
     do {
       const res = await fetch(
-        `${WP_BASE}/posts?per_page=100&page=${page}&_fields=slug,title,_links&_embed=wp:featuredmedia&status=publish`
+        `${WP_BASE}/posts?per_page=100&page=${page}&_fields=id,slug,title,featured_media&status=publish`
       );
-      if (!res.ok) {
-        console.warn(`  ⚠️  WP API ${res.status} — images blog ignorées`);
-        return [];
-      }
-      const posts = await res.json();
-      for (const post of posts) {
-        const media = post._embedded?.['wp:featuredmedia']?.[0];
-        if (!media?.source_url) continue;
-        results.push({
-          slug:     post.slug,
-          title:    post.title?.rendered?.replace(/<[^>]+>/g, '') || post.slug,
-          imageUrl: media.source_url,
-          imageAlt: media.alt_text || `Illustration — ${post.slug}`,
-        });
-      }
+      if (!res.ok) { console.warn(`  ⚠️  WP API ${res.status} — images blog ignorées`); return []; }
+      const batch = await res.json();
+      posts.push(...batch);
       totalPages = parseInt(res.headers.get('X-WP-TotalPages') ?? '1', 10);
       page++;
     } while (page <= totalPages);
+
+    // 2. Récupère tous les médias images attachés à un article
+    const allMedia = [];
+    let mPage = 1;
+    while (true) {
+      const res = await fetch(
+        `${WP_BASE}/media?per_page=100&page=${mPage}&_fields=id,source_url,alt_text,post,mime_type`
+      );
+      if (!res.ok) break;
+      const batch = await res.json();
+      if (!batch.length) break;
+      allMedia.push(...batch.filter(m => m.mime_type?.startsWith('image/') && m.post > 0));
+      if (batch.length < 100) break;
+      mPage++;
+    }
+
+    // 3. Groupe les médias par post ID
+    const mediaByPost = new Map();
+    for (const m of allMedia) {
+      if (!mediaByPost.has(m.post)) mediaByPost.set(m.post, []);
+      mediaByPost.get(m.post).push(m);
+    }
+
+    // 4. Construit la liste par article : featured en premier, puis les autres
+    return posts.map(post => {
+      const title      = post.title?.rendered?.replace(/<[^>]+>/g, '') || post.slug;
+      const attached   = mediaByPost.get(post.id) || [];
+      const featuredId = post.featured_media;
+
+      // Featured en tête, reste dans l'ordre d'upload
+      const sorted = [
+        ...attached.filter(m => m.id === featuredId),
+        ...attached.filter(m => m.id !== featuredId),
+      ];
+
+      const images = sorted.map(m => ({
+        url: m.source_url,
+        alt: m.alt_text || `${title} — Dark Massilia`,
+      }));
+
+      return { slug: post.slug, title, images };
+    }).filter(p => p.images.length > 0);
+
   } catch (err) {
     console.warn(`  ⚠️  CMS WP inaccessible : ${err.message} — images blog ignorées.`);
     return [];
   }
-  return results;
 }
 
 function buildBlogBlocks(posts) {
-  return posts.map(({ slug, title, imageUrl, imageAlt }) =>
-    urlEntry(`${BASE_URL}/blog/${slug}`, [
-      imageEntry({ loc: imageUrl, title: `${title} — Dark Massilia`, caption: imageAlt || CAPTION }),
-    ])
+  return posts.map(({ slug, title, images }) =>
+    urlEntry(`${BASE_URL}/blog/${slug}`,
+      images.map(({ url, alt }) =>
+        imageEntry({ loc: url, title: `${title} — Dark Massilia`, caption: alt || CAPTION })
+      )
+    )
   );
 }
 
@@ -203,12 +235,13 @@ async function generateSitemapImages() {
     console.log(`  ✅ Sous-marine : ${sousMarine.length} images`);
   }
 
-  // 3. Blog WP
+  // 3. Blog WP — toutes les images (featured + inline)
   console.log('  🌐 Récupération des images blog WordPress…');
-  const blogPosts = await fetchBlogFeaturedImages();
+  const blogPosts  = await fetchBlogImages();
+  const totalBlogImages = blogPosts.reduce((sum, p) => sum + p.images.length, 0);
   if (blogPosts.length > 0) {
     blocks.push(...buildBlogBlocks(blogPosts));
-    console.log(`  ✅ Blog : ${blogPosts.length} article(s) avec image featured`);
+    console.log(`  ✅ Blog : ${blogPosts.length} articles · ${totalBlogImages} images au total`);
   } else {
     console.log('  ℹ️  Aucune image blog — sitemap statique uniquement');
   }
@@ -225,7 +258,7 @@ async function generateSitemapImages() {
   fs.mkdirSync(path.dirname(outPath), { recursive: true });
   fs.writeFileSync(outPath, xml, 'utf-8');
 
-  const total = paysage.length + sousMarine.length + blogPosts.length;
+  const total = paysage.length + sousMarine.length + totalBlogImages;
   console.log(`\n  📄 sitemap-images.xml généré — ${total} images référencées`);
   console.log('✅ Sitemap Images généré\n');
 }
