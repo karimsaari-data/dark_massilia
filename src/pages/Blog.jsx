@@ -315,6 +315,8 @@ export function PostCard({ post, priority = false }) {
         >
           <img
             src={post.image}
+            srcSet={post.imageSrcset ?? undefined}
+            sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
             alt={post.imageAlt}
             className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
             loading={priority ? 'eager' : 'lazy'}
