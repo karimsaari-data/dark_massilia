@@ -119,9 +119,23 @@ async function fetchAllMedia() {
   return all;
 }
 
+const postTitleCache = new Map();
+async function getPostTitle(postId) {
+  if (!postId) return null;
+  if (postTitleCache.has(postId)) return postTitleCache.get(postId);
+  try {
+    const post = await wpGet(`/posts/${postId}?_fields=title`);
+    const title = post.title?.rendered?.replace(/<[^>]+>/g, '') || null;
+    postTitleCache.set(postId, title);
+    return title;
+  } catch {
+    return null;
+  }
+}
+
 // ── Claude Vision ─────────────────────────────────────────────────────────────
 
-async function analyzeImage(imageUrl) {
+async function analyzeImage(imageUrl, articleTitle) {
   const res = await fetch('https://api.anthropic.com/v1/messages', {
     method:  'POST',
     headers: {
@@ -142,7 +156,7 @@ async function analyzeImage(imageUrl) {
 Format STRICT (une seule ligne, sans guillemets) :
 [Sujet précis visible] — [Lieu/contexte : Calanques de Marseille, Méditerranée, Vieux-Port, etc.] — © Karim Saari
 
-Contexte : photos de Karim Saari, apnéiste et activiste à Marseille.
+Contexte : photos de Karim Saari, apnéiste et activiste à Marseille.${articleTitle ? `\nCette image illustre l'article : "${articleTitle}".` : ''}
 Sujets courants : plongée en apnée, dépollution marine, faune sous-marine, paysages Calanques, bénévoles, déchets plastiques.
 Réponds UNIQUEMENT avec le texte alternatif, rien d'autre.`,
           },
@@ -201,9 +215,10 @@ async function main() {
     }
 
     // ── Nouvel appel Vision ──
-    console.log(`  🔍 Analyse ${media.id} — ${filename}`);
+    const articleTitle = await getPostTitle(media.post);
+    console.log(`  🔍 Analyse ${media.id} — ${filename}${articleTitle ? ` (${articleTitle})` : ''}`);
     try {
-      const generatedAlt = await analyzeImage(media.source_url);
+      const generatedAlt = await analyzeImage(media.source_url, articleTitle);
       console.log(`     → "${generatedAlt}"\n`);
 
       if (!DRY_RUN) {
