@@ -46,17 +46,27 @@ const MODEL          = 'claude-haiku-4-5-20251001';
 const DRY_RUN        = !process.argv.includes('--apply');
 const POSTS_ONLY     = process.argv.includes('--posts-only');
 
-// ── Supabase (REST direct, sans SDK) ─────────────────────────────────────────
+// ── Cache (Supabase avec fallback JSON local) ─────────────────────────────────
+
+const CACHE_PATH  = path.resolve(__dirname, 'wp-alt-vision-cache.json');
+let   USE_SUPABASE = !!(SUPABASE_URL && SUPABASE_KEY);
+
+function loadLocalCache() {
+  if (fs.existsSync(CACHE_PATH)) return JSON.parse(fs.readFileSync(CACHE_PATH, 'utf-8'));
+  return {};
+}
+function saveLocalCache(cache) {
+  fs.writeFileSync(CACHE_PATH, JSON.stringify(cache, null, 2), 'utf-8');
+}
 
 async function sbGet(mediaIds) {
-  // Récupère les lignes existantes pour une liste d'IDs
   const ids = mediaIds.join(',');
   const res = await fetch(
     `${SUPABASE_URL}/rest/v1/wp_media_alt?media_id=in.(${ids})&select=media_id,alt_text`,
     { headers: { apikey: SUPABASE_KEY, Authorization: `Bearer ${SUPABASE_KEY}` } }
   );
   if (!res.ok) throw new Error(`Supabase GET → ${res.status}: ${await res.text()}`);
-  return res.json(); // [{ media_id, alt_text }]
+  return res.json();
 }
 
 async function sbUpsert(row) {
@@ -172,9 +182,19 @@ Réponds UNIQUEMENT avec le texte alternatif, rien d'autre.`,
 // ── Main ──────────────────────────────────────────────────────────────────────
 
 async function main() {
-  if (!WP_USER || !WP_PASS)  { console.error('❌  WP_USER ou WP_APP_PASSWORD manquant'); process.exit(1); }
-  if (!ANTHROPIC_KEY)        { console.error('❌  ANTHROPIC_API_KEY manquant dans .env'); process.exit(1); }
-  if (!SUPABASE_URL || !SUPABASE_KEY) { console.error('❌  VITE_SUPABASE_URL ou VITE_SUPABASE_ANON_KEY manquant'); process.exit(1); }
+  if (!WP_USER || !WP_PASS) { console.error('❌  WP_USER ou WP_APP_PASSWORD manquant'); process.exit(1); }
+  if (!ANTHROPIC_KEY)       { console.error('❌  ANTHROPIC_API_KEY manquant dans .env'); process.exit(1); }
+
+  // Teste si Supabase est disponible, sinon bascule sur JSON local
+  if (USE_SUPABASE) {
+    try {
+      await sbGet([0]); // requête test
+    } catch {
+      USE_SUPABASE = false;
+      console.warn('  ⚠️  Supabase indisponible → cache JSON local (wp-alt-vision-cache.json)\n');
+    }
+  }
+  const cacheLabel = USE_SUPABASE ? 'Supabase' : 'JSON local';
 
   console.log(`\n🔬  Alt text Vision — ${DRY_RUN ? 'DRY RUN' : 'MODE APPLY'}${POSTS_ONLY ? ' · articles seulement' : ''}\n`);
 
@@ -184,13 +204,19 @@ async function main() {
     (!POSTS_ONLY || m.post > 0)
   );
 
-  // Charge le cache Supabase en une seule requête
-  const ids        = images.map(m => m.id);
-  const cached     = await sbGet(ids);
-  const cacheMap   = new Map(cached.map(r => [r.media_id, r.alt_text]));
+  // Charge le cache
+  let cacheMap;
+  if (USE_SUPABASE) {
+    const ids    = images.map(m => m.id);
+    const cached = await sbGet(ids);
+    cacheMap = new Map(cached.map(r => [r.media_id, r.alt_text]));
+  } else {
+    const local = loadLocalCache();
+    cacheMap = new Map(Object.entries(local).map(([k, v]) => [Number(k), v]));
+  }
 
-  const uncached   = images.filter(m => !cacheMap.has(m.id));
-  console.log(`  📦 ${images.length} images | 💾 ${cacheMap.size} en cache Supabase | 🔍 ${uncached.length} à analyser\n`);
+  const uncached = images.filter(m => !cacheMap.has(m.id));
+  console.log(`  📦 ${images.length} images | 💾 ${cacheMap.size} en cache (${cacheLabel}) | 🔍 ${uncached.length} à analyser\n`);
 
   let analyzed = 0, fromCache = 0, alreadyOk = 0, errors = 0;
 
@@ -208,7 +234,7 @@ async function main() {
       console.log(`     → "${cachedAlt}"\n`);
       if (!DRY_RUN) {
         await wpPatch(media.id, { alt_text: cachedAlt });
-        await sbMarkApplied(media.id);
+        if (USE_SUPABASE) await sbMarkApplied(media.id);
         fromCache++;
       }
       continue;
@@ -222,16 +248,22 @@ async function main() {
       console.log(`     → "${generatedAlt}"\n`);
 
       if (!DRY_RUN) {
-        await sbUpsert({
-          media_id:    media.id,
-          source_url:  media.source_url,
-          alt_text:    generatedAlt,
-          model:       MODEL,
-          analyzed_at: new Date().toISOString(),
-        });
+        if (USE_SUPABASE) {
+          await sbUpsert({
+            media_id:    media.id,
+            source_url:  media.source_url,
+            alt_text:    generatedAlt,
+            model:       MODEL,
+            analyzed_at: new Date().toISOString(),
+          });
+        } else {
+          const local = loadLocalCache();
+          local[media.id] = generatedAlt;
+          saveLocalCache(local);
+        }
         if ((media.alt_text || '').trim() !== generatedAlt.trim()) {
           await wpPatch(media.id, { alt_text: generatedAlt });
-          await sbMarkApplied(media.id);
+          if (USE_SUPABASE) await sbMarkApplied(media.id);
         }
         analyzed++;
       } else {
