@@ -34,6 +34,7 @@
     "seo-crawl": "node scripts/seo-crawl.js",
     "backlink-report": "node scripts/backlink-report.js",
     "cloudflare-report": "node --env-file-if-exists=.env scripts/cloudflare-report.js",
+    "instagram-report": "node --env-file-if-exists=.env scripts/instagram-daily-report.js",
     "wp:audit-images": "node --env-file-if-exists=.env scripts/wp-optimize-images.mjs --audit",
     "wp:fix-images": "node --env-file-if-exists=.env scripts/wp-optimize-images.mjs --fix",
     "wp:fix-images-dry": "node --env-file-if-exists=.env scripts/wp-optimize-images.mjs --fix --dry-run",

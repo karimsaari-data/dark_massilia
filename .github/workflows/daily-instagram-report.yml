@@ -1,0 +1,35 @@
+name: Daily Instagram Report
+
+on:
+  schedule:
+    - cron: '0 7 * * *'   # Chaque jour à 7h UTC = 8h/9h Paris
+  workflow_dispatch:        # Déclenchement manuel possible
+
+env:
+  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
+  PUPPETEER_SKIP_CHROMIUM_DOWNLOAD: true
+  PUPPETEER_EXECUTABLE_PATH: /usr/bin/google-chrome-stable
+
+jobs:
+  instagram-report:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js 24
+        uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+          cache: 'npm'
+
+      - name: Installation des dépendances
+        run: npm ci
+
+      - name: Générer et envoyer le rapport Instagram
+        env:
+          INSTAGRAM_ACCESS_TOKEN:           ${{ secrets.INSTAGRAM_ACCESS_TOKEN }}
+          INSTAGRAM_BUSINESS_ACCOUNT_ID:    '17841401329930518'
+          BREVO_API_KEY:                    ${{ secrets.BREVO_API_KEY }}
+        run: npm run instagram-report
