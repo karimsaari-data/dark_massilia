@@ -46,7 +46,7 @@ const Meduses = () => {
               />
             </motion.div>
             {/* Header text */}
-            <div className="p-8 md:p-10 pt-6 bg-black/80 backdrop-blur-md">
+            <div className="p-8 md:p-10 pt-6" style={{ background: 'rgba(3, 10, 28, 0.93)', backdropFilter: 'blur(12px)' }}>
               <div className="mt-4 max-w-3xl">
                 <motion.p variants={FADE_IN_UP} className="text-ocean-teal text-sm font-semibold uppercase tracking-widest mb-2">
                   ARTE Évasion · Sébastien Lafont, 2024
