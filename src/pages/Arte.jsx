@@ -39,6 +39,7 @@ const Arte = () => {
               <YouTubeFacade
                 videoId="cxjAQtSHHyI"
                 title="Documentaire ARTE — Pollution : Il faut sauver Marseille et ses Calanques"
+                aspectClass="aspect-[16/8]"
               />
             </motion.div>
             {/* Header text */}

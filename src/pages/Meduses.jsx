@@ -42,6 +42,7 @@ const Meduses = () => {
               <YouTubeFacade
                 videoId="yfebiTFOq7E"
                 title="Méduses | Les souveraines des océans — Documentaire ARTE Évasion"
+                aspectClass="aspect-[16/8]"
               />
             </motion.div>
             {/* Header text */}
