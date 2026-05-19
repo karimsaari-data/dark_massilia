@@ -43,7 +43,7 @@ const Arte = () => {
               />
             </motion.div>
             {/* Header text */}
-            <div className="p-8 md:p-10 pt-6">
+            <div className="p-8 md:p-10 pt-6 bg-black/80 backdrop-blur-md">
               <div className="mt-4 max-w-3xl">
                 <motion.p variants={FADE_IN_UP} className="text-ocean-teal text-sm font-semibold uppercase tracking-widest mb-2">
                   ARTE Regards · 2024
