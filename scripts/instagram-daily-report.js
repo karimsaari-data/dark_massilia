@@ -78,17 +78,30 @@ async function fetchProfile() {
 }
 
 async function fetchAccountInsights() {
-  // Insights sur les dernières 24h
   const now   = Math.floor(Date.now() / 1000);
   const since = now - 86400;
-  const data  = await apiGet(
-    `${ACCOUNT_ID}/insights?metric=reach,profile_views,website_clicks,accounts_engaged&period=day&since=${since}&until=${now}`
-  );
   const result = {};
-  for (const item of (data.data || [])) {
-    const vals = item.values || [];
-    result[item.name] = vals.reduce((sum, v) => sum + (v.value || 0), 0);
-  }
+
+  // reach — period=day, values[]
+  try {
+    const d1 = await apiGet(
+      `${ACCOUNT_ID}/insights?metric=reach&period=day&since=${since}&until=${now}`
+    );
+    for (const item of (d1.data || [])) {
+      result[item.name] = (item.values || []).reduce((s, v) => s + (v.value || 0), 0);
+    }
+  } catch (e) { console.warn('⚠️  reach insights:', e.message); }
+
+  // profile_views, website_clicks, accounts_engaged — metric_type=total_value
+  try {
+    const d2 = await apiGet(
+      `${ACCOUNT_ID}/insights?metric=profile_views,website_clicks,accounts_engaged&metric_type=total_value&period=day&since=${since}&until=${now}`
+    );
+    for (const item of (d2.data || [])) {
+      result[item.name] = item.total_value?.value ?? 0;
+    }
+  } catch (e) { console.warn('⚠️  engagement insights:', e.message); }
+
   return result;
 }
 
