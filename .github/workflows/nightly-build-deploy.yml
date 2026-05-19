@@ -10,6 +10,15 @@ on:
   repository_dispatch:
     types: [wp-article-published]  # déclenché par le webhook WordPress à chaque publication
 
+# ── Anti-collision FTP ────────────────────────────────────────────────────────
+# Un seul déploiement à la fois. Si un nouveau push arrive pendant qu'un run
+# tourne, le run en cours est annulé pour éviter les uploads FTP simultanés
+# qui mélangent les hash d'assets de builds différents (page blanche).
+# Le cron nocturne n'annule pas les deploys push (groupe séparé).
+concurrency:
+  group: deploy-${{ github.event_name == 'schedule' && 'cron' || 'push' }}
+  cancel-in-progress: true
+
 permissions:
   contents: write           # nécessaire pour committer .notified-slugs.json
 
