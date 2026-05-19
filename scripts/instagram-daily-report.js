@@ -191,14 +191,19 @@ async function generatePDF(html) {
   return pdf;
 }
 
-async function sendEmail(html, subject, pdfBuffer, pdfName) {
+async function sendEmail(html, subject, attachments = []) {
   const body = {
     sender: BREVO_FROM,
     to: [{ email: BREVO_TO }],
     subject,
     htmlContent: html,
   };
-  if (pdfBuffer) body.attachment = [{ name: pdfName, content: Buffer.from(pdfBuffer).toString('base64') }];
+  if (attachments.length) {
+    body.attachment = attachments.map(({ name, buffer }) => ({
+      name,
+      content: Buffer.from(buffer).toString('base64'),
+    }));
+  }
   const res = await fetch('https://api.brevo.com/v3/smtp/email', {
     method:'POST',
     headers:{ 'api-key': BREVO_API_KEY, 'Content-Type':'application/json' },
@@ -352,31 +357,33 @@ async function sendEmail(html, subject, pdfBuffer, pdfName) {
       ${td(fmtPct(p.er))}
     </tr>`;
 
-  // ── HTML COMPLET ──────────────────────────────────────────────────────────
+  // ── HTML commun ──────────────────────────────────────────────────────────
+  const htmlStyles = `<style>
+    body { margin:0; padding:20px; background:#fff; font-family:Arial,sans-serif; color:#1a1a1a; }
+    table { border-collapse:collapse; width:100%; }
+  </style>`;
 
-  const html = `<!DOCTYPE html>
-<html><head><meta charset="UTF-8">
-<style>
-  body { margin:0; padding:20px; background:#fff; font-family:Arial,sans-serif; color:#1a1a1a; }
-  table { border-collapse:collapse; width:100%; }
-  @media print { .page-break { page-break-before:always; padding-top:16px; } }
-</style>
-</head><body>
+  // ── HTML INSTAGRAM ────────────────────────────────────────────────────────
+
+  const htmlIG = `<!DOCTYPE html>
+<html><head><meta charset="UTF-8">${htmlStyles}</head><body>
 <div style="max-width:780px;margin:0 auto">
 
   <!-- ══ EN-TÊTE ══ -->
-  <table style="margin-bottom:20px">
-    <tr>
-      <td>
-        <h1 style="margin:0 0 3px;font-size:18px">📊 Dashboard Social Media — Dark Massilia</h1>
-        <p style="margin:0;font-size:11px;color:#666">${today} · Karim Saari / @karimsaari · karimsaari.com</p>
-      </td>
-      <td style="text-align:right;vertical-align:top;white-space:nowrap">
-        <span style="background:#e7f5ee;color:#16a34a;padding:3px 8px;border-radius:4px;font-size:11px;font-weight:600;margin-left:6px">Instagram Creator</span>
-        <span style="background:#e7f0ff;color:#1877f2;padding:3px 8px;border-radius:4px;font-size:11px;font-weight:600;margin-left:6px">Facebook Page</span>
-      </td>
-    </tr>
-  </table>
+  <table style="margin-bottom:20px"><tr>
+    <td>
+      <h1 style="margin:0 0 3px;font-size:18px">📸 Dashboard Instagram — Dark Massilia</h1>
+      <p style="margin:0;font-size:11px;color:#666">${today} · @${igProfile.username} · karimsaari.com</p>
+    </td>
+    <td style="text-align:right;vertical-align:top">
+      <span style="background:#e7f5ee;color:#16a34a;padding:3px 8px;border-radius:4px;font-size:11px;font-weight:600">Instagram Creator</span>
+    </td>
+  </tr></table>
+
+  <div style="background:#e7f5ee;border-left:4px solid #16a34a;padding:8px 14px;margin-bottom:14px;border-radius:0 6px 6px 0">
+    <strong style="color:#16a34a;font-size:13px">@${igProfile.username}</strong>
+    <span style="color:#555;font-size:11px;margin-left:12px">${fmtNum(igProfile.followers_count)} abonnés · ${fmtNum(igProfile.media_count)} publications</span>
+  </div>
 
   <!-- ══════════════════════════════════════════════ -->
   <!-- ══            SECTION INSTAGRAM             ══ -->
@@ -456,38 +463,53 @@ async function sendEmail(html, subject, pdfBuffer, pdfName) {
     </tr>
   </table>
 
-  ${fbProfile ? `
-  <!-- ══════════════════════════════════════════════ -->
-  <!-- ══          SECTION FACEBOOK PAGE           ══ -->
-  <!-- ══════════════════════════════════════════════ -->
+  <!-- ══ PIED DE PAGE ══ -->
+  <hr style="border:none;border-top:1px solid #eee;margin:20px 0">
+  <p style="font-size:10px;color:#aaa;text-align:center;margin:0">
+    Dashboard Instagram · Dark Massilia — Karim Saari · karimsaari.com<br>
+    Instagram Graph API v25 · ${NB_POSTS_IG} posts analysés
+  </p>
+</div></body></html>`;
 
-  <div class="page-break">
+  // ── HTML FACEBOOK PAGE ────────────────────────────────────────────────────
+
+  const htmlFB = fbProfile ? `<!DOCTYPE html>
+<html><head><meta charset="UTF-8">${htmlStyles}</head><body>
+<div style="max-width:780px;margin:0 auto">
+
+  <!-- ══ EN-TÊTE ══ -->
+  <table style="margin-bottom:20px"><tr>
+    <td>
+      <h1 style="margin:0 0 3px;font-size:18px">👤 Dashboard Facebook — Dark Massilia</h1>
+      <p style="margin:0;font-size:11px;color:#666">${today} · ${fbProfile.name} · karimsaari.com</p>
+    </td>
+    <td style="text-align:right;vertical-align:top">
+      <span style="background:#e7f0ff;color:#1877f2;padding:3px 8px;border-radius:4px;font-size:11px;font-weight:600">Facebook Page</span>
+    </td>
+  </tr></table>
+
   <div style="background:#e7f0ff;border-left:4px solid #1877f2;padding:8px 14px;margin-bottom:14px;border-radius:0 6px 6px 0">
-    <strong style="color:#1877f2;font-size:13px">👤 FACEBOOK PAGE — ${fbProfile.name}</strong>
+    <strong style="color:#1877f2;font-size:13px">${fbProfile.name}</strong>
     <span style="color:#555;font-size:11px;margin-left:12px">${fmtNum(fbProfile.fan_count)} fans · ${fbProfile.category||''}</span>
   </div>
 
   ${sectionTitle('', 'Page Facebook — 24h', '#1877f2')}
-  <table style="margin-bottom:20px;border-spacing:6px;border-collapse:separate">
-    <tr>
-      ${kpiCard('Fans (abonnés)', fmtNum(fbProfile.fan_count), `${fmtNum(fbProfile.followers_count||fbProfile.fan_count)} followers`, '#1877f2', '#eff6ff', '#bfdbfe')}
-      ${kpiCard('Impressions 24h', fmtNum(fbInsights.page_impressions||0), 'total vues', '#7c3aed', '#faf5ff', '#ddd6fe')}
-      ${kpiCard('Reach 24h', fmtNum(fbInsights.page_impressions_unique||0), 'comptes uniques', '#0ea5e9', '#f0f9ff', '#bae6fd')}
-      ${kpiCard('Utilisateurs engagés 24h', fmtNum(fbInsights.page_engaged_users||0), 'interactions', '#16a34a', '#f0fdf4', '#bbf7d0')}
-      ${kpiCard('Nouveaux fans 24h', fmtNum(fbInsights.page_fans_adds_unique||0), 'nouveaux abonnés', '#ea580c', '#fff7ed', '#fed7aa')}
-    </tr>
-  </table>
+  <table style="margin-bottom:20px;border-spacing:6px;border-collapse:separate"><tr>
+    ${kpiCard('Fans (abonnés)', fmtNum(fbProfile.fan_count), `${fmtNum(fbProfile.followers_count||fbProfile.fan_count)} followers`, '#1877f2', '#eff6ff', '#bfdbfe')}
+    ${kpiCard('Impressions 24h', fmtNum(fbInsights.page_impressions||0), 'total vues', '#7c3aed', '#faf5ff', '#ddd6fe')}
+    ${kpiCard('Reach 24h', fmtNum(fbInsights.page_impressions_unique||0), 'comptes uniques', '#0ea5e9', '#f0f9ff', '#bae6fd')}
+    ${kpiCard('Utilisateurs engagés 24h', fmtNum(fbInsights.page_engaged_users||0), 'interactions', '#16a34a', '#f0fdf4', '#bbf7d0')}
+    ${kpiCard('Nouveaux fans 24h', fmtNum(fbInsights.page_fans_adds_unique||0), 'nouveaux abonnés', '#ea580c', '#fff7ed', '#fed7aa')}
+  </tr></table>
 
   ${sectionTitle('', `Agrégats — ${NB_POSTS_FB} derniers posts Facebook`, '#1877f2')}
-  <table style="margin-bottom:20px;border-spacing:6px;border-collapse:separate">
-    <tr>
-      ${kpiCard('Reach total', fmtNum(fbTotalReach), `moy. ${fmtNum(Math.round(fbTotalReach/(fbPosts.length||1)))}/post`)}
-      ${kpiCard('Réactions total', fmtNum(fbTotalReact), `moy. ${fmtNum(Math.round(fbTotalReact/(fbPosts.length||1)))}/post`, '#e11d48', '#fff1f2', '#fecdd3')}
-      ${kpiCard('Engagés total', fmtNum(fbTotalEngaged), `moy. ${fmtNum(Math.round(fbTotalEngaged/(fbPosts.length||1)))}/post`, '#16a34a', '#f0fdf4', '#bbf7d0')}
-      ${kpiCard('Partages total', fmtNum(fbTotalShares), `moy. ${fmtNum(Math.round(fbTotalShares/(fbPosts.length||1)))}/post`, '#ca8a04', '#fefce8', '#fef08a')}
-      ${kpiCard('Tx. engagement moy.', fmtPct(fbAvgER), 'engagés / reach', fbAvgER>=3?'#16a34a':'#ca8a04')}
-    </tr>
-  </table>
+  <table style="margin-bottom:20px;border-spacing:6px;border-collapse:separate"><tr>
+    ${kpiCard('Reach total', fmtNum(fbTotalReach), `moy. ${fmtNum(Math.round(fbTotalReach/(fbPosts.length||1)))}/post`)}
+    ${kpiCard('Réactions total', fmtNum(fbTotalReact), `moy. ${fmtNum(Math.round(fbTotalReact/(fbPosts.length||1)))}/post`, '#e11d48', '#fff1f2', '#fecdd3')}
+    ${kpiCard('Engagés total', fmtNum(fbTotalEngaged), `moy. ${fmtNum(Math.round(fbTotalEngaged/(fbPosts.length||1)))}/post`, '#16a34a', '#f0fdf4', '#bbf7d0')}
+    ${kpiCard('Partages total', fmtNum(fbTotalShares), `moy. ${fmtNum(Math.round(fbTotalShares/(fbPosts.length||1)))}/post`, '#ca8a04', '#fefce8', '#fef08a')}
+    ${kpiCard('Tx. engagement moy.', fmtPct(fbAvgER), 'engagés / reach', fbAvgER>=3?'#16a34a':'#ca8a04')}
+  </tr></table>
 
   ${sectionTitle('', `${NB_POSTS_FB} dernières publications Facebook`, '#1877f2')}
   <table style="font-size:12px;margin-bottom:24px">
@@ -505,47 +527,61 @@ async function sendEmail(html, subject, pdfBuffer, pdfName) {
     </tr></tfoot>
   </table>
 
-  <!-- Podiums Facebook -->
-  <table style="margin-bottom:24px">
-    <tr style="vertical-align:top">
-      <td style="width:50%;padding-right:10px">
-        ${sectionTitle('🏆','Top Reach Facebook','#1877f2')}
-        <table><thead><tr>${thFb('','center')}${thFb('','center')}${thFb('Post','left')}${thFb('Reach')}${thFb('Tx.eng.')}</tr></thead>
-        <tbody>${fbTopReach.map((p,i)=>fbPodiumRow(p,i,p.reach,'Reach')).join('')}</tbody></table>
-      </td>
-      <td style="width:50%;padding-left:10px">
-        ${sectionTitle('💬','Top Engagement Facebook','#1877f2')}
-        <table><thead><tr>${thFb('','center')}${thFb('','center')}${thFb('Post','left')}${thFb('Engagés')}${thFb('Tx.eng.')}</tr></thead>
-        <tbody>${fbTopEngaged.map((p,i)=>fbPodiumRow(p,i,p.engaged,'Engagés')).join('')}</tbody></table>
-      </td>
-    </tr>
-  </table>
-  </div>` : `<p style="color:#999;font-size:12px;text-align:center">⚠️ Données Facebook non disponibles</p>`}
+  <table style="margin-bottom:24px"><tr style="vertical-align:top">
+    <td style="width:50%;padding-right:10px">
+      ${sectionTitle('🏆','Top Reach Facebook','#1877f2')}
+      <table><thead><tr>${thFb('','center')}${thFb('','center')}${thFb('Post','left')}${thFb('Reach')}${thFb('Tx.eng.')}</tr></thead>
+      <tbody>${fbTopReach.map((p,i)=>fbPodiumRow(p,i,p.reach,'Reach')).join('')}</tbody></table>
+    </td>
+    <td style="width:50%;padding-left:10px">
+      ${sectionTitle('💬','Top Engagement Facebook','#1877f2')}
+      <table><thead><tr>${thFb('','center')}${thFb('','center')}${thFb('Post','left')}${thFb('Engagés')}${thFb('Tx.eng.')}</tr></thead>
+      <tbody>${fbTopEngaged.map((p,i)=>fbPodiumRow(p,i,p.engaged,'Engagés')).join('')}</tbody></table>
+    </td>
+  </tr></table>
 
-  <!-- ══ PIED DE PAGE ══ -->
   <hr style="border:none;border-top:1px solid #eee;margin:20px 0">
   <p style="font-size:10px;color:#aaa;text-align:center;margin:0">
-    Dashboard généré automatiquement · Dark Massilia — Karim Saari · karimsaari.com<br>
-    Instagram Graph API v25 · ${NB_POSTS_IG} posts IG + ${NB_POSTS_FB} posts FB analysés
+    Dashboard Facebook · Dark Massilia — Karim Saari · karimsaari.com<br>
+    Facebook Graph API v25 · ${NB_POSTS_FB} posts analysés
   </p>
+</div></body></html>` : null;
 
-</div>
-</body></html>`;
-
-  // ── PDF + Envoi ────────────────────────────────────────────────────────────
+  // ── PDFs + Envoi ───────────────────────────────────────────────────────────
   const dateShort = new Date().toLocaleDateString('fr-FR',{day:'2-digit',month:'2-digit',year:'numeric'}).replace(/\//g,'-');
   const subject   = `📊 Social Media Daily — ${dateShort} · IG: ${fmtNum(igProfile.followers_count)} abonnés · FB: ${fmtNum(fbProfile?.fan_count||0)} fans`;
-  const pdfName   = `social-media-report-${dateShort}.pdf`;
 
-  let pdfBuffer = null;
-  try {
-    pdfBuffer = await generatePDF(html);
-    console.log(`✅ PDF généré (${Math.round(pdfBuffer.length/1024)} KB)`);
-  } catch(e) { console.warn('⚠️  PDF:', e.message); }
+  // Générer les deux PDFs en parallèle
+  const [pdfIG, pdfFB] = await Promise.all([
+    generatePDF(htmlIG).then(b => { console.log(`✅ PDF Instagram (${Math.round(b.length/1024)} KB)`); return b; }).catch(e => { console.warn('⚠️ PDF IG:', e.message); return null; }),
+    htmlFB ? generatePDF(htmlFB).then(b => { console.log(`✅ PDF Facebook (${Math.round(b.length/1024)} KB)`); return b; }).catch(e => { console.warn('⚠️ PDF FB:', e.message); return null; }) : Promise.resolve(null),
+  ]);
 
-  const result = await sendEmail(html, subject, pdfBuffer, pdfName);
+  // Email de synthèse (corps simple avec résumé)
+  const emailBody = `<!DOCTYPE html><html><head><meta charset="UTF-8"></head><body style="font-family:Arial,sans-serif;max-width:600px;margin:0 auto;padding:20px;color:#1a1a1a">
+    <h1 style="font-size:16px;margin:0 0 16px">📊 Social Media Daily — ${today}</h1>
+    <table style="width:100%;border-collapse:collapse;margin-bottom:20px">
+      <tr style="background:#e7f5ee">
+        <td style="padding:10px 14px;font-weight:600;color:#16a34a">📸 Instagram @${igProfile.username}</td>
+        <td style="padding:10px 14px;text-align:right">${fmtNum(igProfile.followers_count)} abonnés · reach 24h : ${fmtNum(igInsights.reach||0)}</td>
+      </tr>
+      <tr style="background:#e7f0ff">
+        <td style="padding:10px 14px;font-weight:600;color:#1877f2">👤 Facebook ${fbProfile?.name||'Page'}</td>
+        <td style="padding:10px 14px;text-align:right">${fmtNum(fbProfile?.fan_count||0)} fans · reach 24h : ${fmtNum(fbInsights.page_impressions_unique||0)}</td>
+      </tr>
+    </table>
+    <p style="font-size:12px;color:#666">Les rapports détaillés sont joints en pièces jointes PDF.</p>
+    <hr style="border:none;border-top:1px solid #eee;margin:16px 0">
+    <p style="font-size:10px;color:#aaa;text-align:center">Dark Massilia — Karim Saari · karimsaari.com</p>
+  </body></html>`;
+
+  const attachments = [];
+  if (pdfIG) attachments.push({ name: `instagram-report-${dateShort}.pdf`, buffer: pdfIG });
+  if (pdfFB) attachments.push({ name: `facebook-report-${dateShort}.pdf`,  buffer: pdfFB });
+
+  const result = await sendEmail(emailBody, subject, attachments);
   if (result.messageId) {
-    console.log(`✅ Email envoyé → ${BREVO_TO}${pdfBuffer?' + PDF':''}`);
+    console.log(`✅ Email envoyé → ${BREVO_TO} (${attachments.length} PDF${attachments.length>1?'s':''})`);
   } else {
     console.error('❌ Brevo:', JSON.stringify(result));
     process.exit(1);
