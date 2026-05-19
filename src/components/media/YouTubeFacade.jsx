@@ -5,14 +5,14 @@ import { useState } from 'react';
  * L'iframe (et ses ~500 KB de scripts) ne se charge qu'au clic utilisateur.
  * Gain : supprime l'impact YouTube sur les Core Web Vitals (Perf + BP).
  */
-export default function YouTubeFacade({ videoId, title }) {
+export default function YouTubeFacade({ videoId, title, aspectClass = 'aspect-video' }) {
   const [loaded, setLoaded] = useState(false);
 
   const launch = () => setLoaded(true);
 
   if (loaded) {
     return (
-      <div className="relative aspect-video bg-black">
+      <div className={`relative ${aspectClass} bg-black`}>
         <iframe
           src={`https://www.youtube.com/embed/${videoId}?autoplay=1`}
           title={title}
@@ -26,7 +26,7 @@ export default function YouTubeFacade({ videoId, title }) {
 
   return (
     <div
-      className="relative aspect-video bg-black cursor-pointer group"
+      className={`relative ${aspectClass} bg-black cursor-pointer group`}
       onClick={launch}
       onKeyDown={e => e.key === 'Enter' && launch()}
       role="button"
