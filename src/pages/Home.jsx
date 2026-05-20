@@ -1065,8 +1065,8 @@ const Home = () => {
             {/* Image — Gauche */}
             <div className="relative h-64 md:h-auto min-h-[400px]">
               <img
-                src="/images/Marseille-dark-massilia-plastique-polluttion-projet-sentinelle-huveaune.webp"
-                srcSet="/images/Marseille-dark-massilia-plastique-polluttion-projet-sentinelle-huveaune_400w.webp 400w, /images/Marseille-dark-massilia-plastique-polluttion-projet-sentinelle-huveaune_800w.webp 800w, /images/Marseille-dark-massilia-plastique-polluttion-projet-sentinelle-huveaune_1200w.webp 1200w, /images/Marseille-dark-massilia-plastique-polluttion-projet-sentinelle-huveaune.webp 1920w"
+                src="/images/Marseille-dark-massilia-plastique-pollution-projet-sentinelle-huveaune.webp"
+                srcSet="/images/Marseille-dark-massilia-plastique-pollution-projet-sentinelle-huveaune_400w.webp 400w, /images/Marseille-dark-massilia-plastique-pollution-projet-sentinelle-huveaune_800w.webp 800w, /images/Marseille-dark-massilia-plastique-pollution-projet-sentinelle-huveaune_1200w.webp 1200w, /images/Marseille-dark-massilia-plastique-pollution-projet-sentinelle-huveaune.webp 1920w"
                 sizes="(max-width: 768px) 100vw, 50vw"
                 alt="Pollution plastique dans l'Huveaune à Marseille - Projet Sentinelle Dark Massilia"
                 width="1200"
