@@ -100,6 +100,10 @@ jobs:
             **/.git*
             **/.git*/**
             **/node_modules/**
+            # Les images (626 Mo) sont déjà sur le serveur — on les exclut
+            # pour que les déploiements restent rapides (< 5 min).
+            # Pour forcer un re-upload des images : commenter temporairement ces lignes.
+            images/**
 
       # ── 6. Purge cache Cloudflare ────────────────────────────────────────────
       - name: Purge cache Cloudflare
