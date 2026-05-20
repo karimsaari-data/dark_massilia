@@ -95,10 +95,7 @@ jobs:
           password: ${{ secrets.FTP_PASSWORD }}
           local-dir: ./dist/
           server-dir: home/
-          # Supprime tout le dossier home/ côté serveur avant de tout ré-uploader.
-          # Activé ponctuellement pour corriger une sync state corrompue.
-          # À désactiver après le déploiement de correction.
-          dangerous-clean-slate: true
+          # dangerous-clean-slate: true  # désactivé — sync state corrigée
           exclude: |
             **/.git*
             **/.git*/**
