@@ -233,7 +233,7 @@ const PhotographeEnvironnemental = () => {
               {/* Portrait */}
               <motion.div variants={FADE_IN_UP} className="hidden md:block">
                 <div
-                  className="relative rounded-2xl overflow-hidden ring-1 ring-ocean-teal/40"
+                  className="relative rounded-sm overflow-hidden ring-1 ring-ocean-teal/40"
                   style={{ aspectRatio: '3/4', boxShadow: '0 0 32px rgba(0,171,168,0.22)' }}
                 >
                   <img
@@ -274,7 +274,7 @@ const PhotographeEnvironnemental = () => {
                       <Link
                         key={to}
                         to={to}
-                        className={`group block relative rounded-2xl overflow-hidden ring-1 ring-white/10 hover:ring-ocean-teal/40 transition-all duration-300${idx === 0 ? ' sm:row-span-2' : ''}`}
+                        className={`group block relative rounded-sm overflow-hidden ring-1 ring-white/10 hover:ring-ocean-teal/40 transition-all duration-300${idx === 0 ? ' sm:row-span-2' : ''}`}
                       >
                         {idx === 0 ? (
                           /* Featured */
@@ -324,7 +324,7 @@ const PhotographeEnvironnemental = () => {
                       <Link
                         key={to}
                         to={to}
-                        className="group block relative rounded-2xl overflow-hidden ring-1 ring-white/10 hover:ring-ocean-teal/40 transition-all duration-300"
+                        className="group block relative rounded-sm overflow-hidden ring-1 ring-white/10 hover:ring-ocean-teal/40 transition-all duration-300"
                       >
                         <div className="aspect-[16/9] relative">
                           <img
