@@ -396,16 +396,9 @@ const PhotographeEnvironnemental = () => {
                 Pour tout reportage, documentaire, exposition ou partenariat institutionnel :
               </p>
               <div className="flex flex-wrap gap-3">
-                <a
-                  href="mailto:email@karimsaari.com"
-                  className="inline-flex items-center gap-2 text-ocean-teal hover:text-white transition-colors text-sm font-medium"
-                >
-                  <Mail className="w-4 h-4" aria-hidden="true" />
-                  email@karimsaari.com
-                </a>
                 <Link
                   to="/contact"
-                  className="inline-flex items-center gap-2 text-sm text-gray-400 hover:text-white transition-colors"
+                  className="inline-flex items-center gap-2 text-sm text-ocean-teal hover:text-white transition-colors font-medium"
                 >
                   Formulaire de contact
                   <ArrowRight className="w-3.5 h-3.5" aria-hidden="true" />

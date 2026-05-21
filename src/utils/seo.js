@@ -1998,7 +1998,7 @@ export const SEO_PAGES = {
               name: 'Comment contacter Karim Saari pour un reportage ou une collaboration ?',
               acceptedAnswer: {
                 '@type': 'Answer',
-                text: 'Karim Saari est disponible pour des collaborations documentaires, institutionnelles ou médiatiques. Vous pouvez le contacter via la page contact de son site karimsaari.com ou par email à email@karimsaari.com.',
+                text: 'Karim Saari est disponible pour des collaborations documentaires, institutionnelles ou médiatiques. Vous pouvez le contacter via la page contact de son site karimsaari.com ou par email à contact@karimsaari.com.',
               },
             },
             {

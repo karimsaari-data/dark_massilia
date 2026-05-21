@@ -218,14 +218,7 @@ const DossierPresse = () => (
             Pour tout reportage, documentaire, interview, exposition ou partenariat institutionnel — réponse sous 48h.
           </p>
           <div className="flex flex-col sm:flex-row gap-4">
-            <a
-              href="mailto:email@karimsaari.com"
-              className="btn-primary inline-flex items-center gap-2"
-            >
-              <Mail className="w-4 h-4" aria-hidden="true" />
-              email@karimsaari.com
-            </a>
-            <Link to="/contact" className="btn inline-flex items-center gap-2">
+            <Link to="/contact" className="btn-primary inline-flex items-center gap-2">
               Formulaire de contact
               <ArrowRight className="w-4 h-4" aria-hidden="true" />
             </Link>
