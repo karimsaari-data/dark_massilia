@@ -100,8 +100,7 @@ const Contact = () => {
                 />
               </motion.div>
               <div className="text-center">
-                <h2 className="text-lg font-bold text-white">Karim Saari</h2>
-                <p className="text-astroide text-sm font-medium mt-0.5">Dark Massilia</p>
+                <p className="text-astroide text-sm font-semibold">Dark Massilia</p>
                 <p className="text-gray-400 text-xs mt-1">Photographe environnemental · Marseille</p>
               </div>
             </motion.div>
