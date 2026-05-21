@@ -261,10 +261,22 @@ const PhotographeEnvironnemental = () => {
               Photographe environnemental à Marseille — Qui suis-je ?
             </h2>
 
+            {/* Stats pleine largeur sous le H2 */}
+            <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 mb-5">
+              {HERO_STATS.map(({ end, suffix, label, duration }) => (
+                <div key={label} className="rounded-xl bg-white/5 border border-white/8 p-3 text-center">
+                  <p className="text-sm md:text-base font-bold text-ocean-teal leading-tight tabular-nums">
+                    <StatCounter end={end} suffix={suffix} duration={duration} />
+                  </p>
+                  <p className="text-[10px] text-text-secondary mt-0.5 leading-snug">{label}</p>
+                </div>
+              ))}
+            </div>
+
             {/* Portrait flottant — le texte enveloppe naturellement */}
             <div className="hidden md:block float-right ml-6 mb-4 w-44">
               <div
-                className="relative rounded-sm overflow-hidden ring-1 ring-ocean-teal/40 mb-3"
+                className="relative rounded-sm overflow-hidden ring-1 ring-ocean-teal/40"
                 style={{ aspectRatio: '3/4', boxShadow: '0 0 24px rgba(0,171,168,0.18)' }}
               >
                 <img
@@ -279,17 +291,6 @@ const PhotographeEnvironnemental = () => {
                   <p className="text-white text-xs font-medium">Karim Saari</p>
                   <p className="text-white/50 text-[10px]">© Fougue Photographie</p>
                 </div>
-              </div>
-              {/* Stats empilées sous le portrait */}
-              <div className="grid grid-cols-2 gap-2">
-                {HERO_STATS.map(({ end, suffix, label, duration }) => (
-                  <div key={label} className="rounded-xl bg-white/5 border border-white/8 p-2 text-center">
-                    <p className="text-xs font-bold text-ocean-teal leading-tight tabular-nums">
-                      <StatCounter end={end} suffix={suffix} duration={duration} />
-                    </p>
-                    <p className="text-[9px] text-text-secondary mt-0.5 leading-snug">{label}</p>
-                  </div>
-                ))}
               </div>
             </div>
 
