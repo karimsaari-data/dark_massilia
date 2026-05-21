@@ -4,7 +4,7 @@ const BREVO_API_KEY = Deno.env.get("BREVO_API_KEY") ?? "";
 const BREVO_LIST_ID = Deno.env.get("BREVO_LIST_ID");
 const SUPABASE_URL = Deno.env.get("SUPABASE_URL") ?? "";
 const SUPABASE_SERVICE_ROLE_KEY = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY") ?? "";
-const PHOTO_URL = "https://karimsaari.com/home/Welcome%20Pack.jpg";
+const PHOTO_URL = "https://karimsaari.com/welcome-pack.jpg";
 const SENDER_EMAIL = "newsletter@karimsaari.com";
 const SENDER_NAME = "Karim Saari — Dark Massilia";
 
