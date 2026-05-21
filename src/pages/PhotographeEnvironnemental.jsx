@@ -1,6 +1,7 @@
 import { motion } from 'framer-motion';
 import { useCardHover } from '../hooks/useCardHover';
 import { ArrowRight, ExternalLink, Camera, Mail } from 'lucide-react';
+import StatCounter from '../components/ui/StatCounter';
 import { Link } from 'react-router-dom';
 import { FADE_IN_UP, STAGGER_CONTAINER, SOCIAL_STATS_DEFAULTS } from '../utils/constants';
 import SEO from '../components/SEO';
@@ -145,6 +146,14 @@ const UNIVERSES = [
   },
 ];
 
+// Chiffres clés
+const HERO_STATS = [
+  { end: 5724, suffix: ' kg', label: 'déchets remontés',   duration: 2500 },
+  { end: 185,  suffix: ' M',  label: 'vues Google Maps',   duration: 2000 },
+  { end: 132,  suffix: ' K',  label: 'communauté',         duration: 2000 },
+  { end: 4,    suffix: '',    label: 'éditions Sentinelle', duration: 1000 },
+];
+
 // Médias
 const MEDIA_LOGOS = [
   { name: 'TF1',         label: 'Reportages TF1',      svg: '/images/Partenaires/svg/TF1_logo_2006.svg',                    url: '/presse' },
@@ -183,48 +192,60 @@ const PhotographeEnvironnemental = () => {
           </motion.p>
         </motion.div>
 
-        {/* H2 — 6 blocs galeries : 2 univers × 3 sous-sections */}
-        <motion.div
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true }}
-          variants={STAGGER_CONTAINER}
-          className="mb-12 space-y-5"
+        {/* Cadre hublot — 6 blocs galeries */}
+        <div
+          className="p-6 md:p-8 mb-12"
+          style={{
+            overflow: 'hidden',
+            borderRadius: '24px',
+            border: '2px solid rgba(0,171,168,0.55)',
+            boxShadow: '0 0 0 6px rgba(0,8,24,0.88), 0 0 0 8px rgba(0,171,168,0.35), 0 0 40px rgba(0,171,168,0.18), 0 0 80px rgba(0,120,180,0.10)',
+            background: 'rgba(5,15,30,0.75)',
+            backdropFilter: 'blur(16px)',
+          }}
         >
-          {UNIVERSES.map(({ id, title, galleries }) => (
-            <motion.div key={id} variants={FADE_IN_UP}>
-              <p className="text-xs font-semibold uppercase tracking-widest text-ocean-teal mb-3">{title}</p>
-              <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
-                {galleries.map(({ to, label, desc, cta, img, srcset, sizes, alt }) => (
-                  <Link
-                    key={to}
-                    to={to}
-                    className="group block relative rounded-sm overflow-hidden ring-1 ring-white/10 hover:ring-ocean-teal/40 transition-all duration-300"
-                  >
-                    <div className="aspect-[16/9] relative">
-                      <img
-                        src={img}
-                        srcSet={srcset}
-                        sizes={sizes}
-                        alt={alt}
-                        className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
-                        loading="lazy"
-                      />
-                      <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/30 to-transparent" aria-hidden="true" />
-                      <div className="absolute bottom-0 left-0 right-0 p-3 md:p-4">
-                        <h3 className="text-sm font-bold text-white mb-0.5">{label}</h3>
-                        <p className="text-white/70 text-xs mb-2 leading-snug">{desc}</p>
-                        <span className="inline-flex items-center gap-2 text-ocean-teal text-xs font-medium group-hover:gap-3 transition-all">
-                          {cta} <ArrowRight className="w-3.5 h-3.5" aria-hidden="true" />
-                        </span>
+          <motion.div
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true }}
+            variants={STAGGER_CONTAINER}
+            className="space-y-5"
+          >
+            {UNIVERSES.map(({ id, title, galleries }) => (
+              <motion.div key={id} variants={FADE_IN_UP}>
+                <p className="text-xs font-semibold uppercase tracking-widest text-ocean-teal mb-3">{title}</p>
+                <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+                  {galleries.map(({ to, label, desc, cta, img, srcset, sizes, alt }) => (
+                    <Link
+                      key={to}
+                      to={to}
+                      className="group block relative rounded-sm overflow-hidden ring-1 ring-white/10 hover:ring-ocean-teal/40 transition-all duration-300"
+                    >
+                      <div className="aspect-[16/9] relative">
+                        <img
+                          src={img}
+                          srcSet={srcset}
+                          sizes={sizes}
+                          alt={alt}
+                          className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
+                          loading="lazy"
+                        />
+                        <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/30 to-transparent" aria-hidden="true" />
+                        <div className="absolute bottom-0 left-0 right-0 p-3 md:p-4">
+                          <h3 className="text-sm font-bold text-white mb-0.5">{label}</h3>
+                          <p className="text-white/70 text-xs mb-2 leading-snug">{desc}</p>
+                          <span className="inline-flex items-center gap-2 text-ocean-teal text-xs font-medium group-hover:gap-3 transition-all">
+                            {cta} <ArrowRight className="w-3.5 h-3.5" aria-hidden="true" />
+                          </span>
+                        </div>
                       </div>
-                    </div>
-                  </Link>
-                ))}
-              </div>
-            </motion.div>
-          ))}
-        </motion.div>
+                    </Link>
+                  ))}
+                </div>
+              </motion.div>
+            ))}
+          </motion.div>
+        </div>
 
         {/* Bloc biographie — 600+ mots, E-E-A-T */}
         <motion.div
@@ -235,9 +256,44 @@ const PhotographeEnvironnemental = () => {
           className="mb-12"
         >
           <motion.div {...cardHover} variants={FADE_IN_UP} className="glass-strong rounded-3xl p-8 md:p-12">
-            <h2 className="text-xl md:text-2xl font-bold text-white mb-6">
-              Photographe environnemental à Marseille — Qui suis-je ?
-            </h2>
+
+            {/* En-tête bio : H2 + stats à gauche, portrait à droite */}
+            <div className="grid grid-cols-1 md:grid-cols-[1fr_180px] gap-6 items-start mb-6">
+              <div>
+                <h2 className="text-xl md:text-2xl font-bold text-white mb-4">
+                  Photographe environnemental à Marseille — Qui suis-je ?
+                </h2>
+                <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
+                  {HERO_STATS.map(({ end, suffix, label, duration }) => (
+                    <div key={label} className="rounded-xl bg-white/5 border border-white/8 p-3 text-center">
+                      <p className="text-sm md:text-base font-bold text-ocean-teal leading-tight tabular-nums">
+                        <StatCounter end={end} suffix={suffix} duration={duration} />
+                      </p>
+                      <p className="text-[10px] text-text-secondary mt-0.5 leading-snug">{label}</p>
+                    </div>
+                  ))}
+                </div>
+              </div>
+              <div className="hidden md:block">
+                <div
+                  className="relative rounded-sm overflow-hidden ring-1 ring-ocean-teal/40"
+                  style={{ aspectRatio: '3/4', boxShadow: '0 0 24px rgba(0,171,168,0.18)' }}
+                >
+                  <img
+                    src="/images/Partenaires/partenaires-karim-saari-mer-terre-calanques-propres-2024.webp"
+                    alt="Karim Saari — Calanques Propres 2024, opération Mer Terre"
+                    className="absolute inset-0 w-full h-full object-cover"
+                    style={{ objectPosition: '50% 15%' }}
+                    loading="lazy"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" aria-hidden="true" />
+                  <div className="absolute bottom-0 left-0 right-0 p-2">
+                    <p className="text-white text-xs font-medium">Karim Saari</p>
+                    <p className="text-white/50 text-[10px]">© Fougue Photographie</p>
+                  </div>
+                </div>
+              </div>
+            </div>
 
             <p className="text-text-secondary leading-relaxed text-base md:text-lg mb-5">
               Je suis <strong className="text-white">Karim Saari</strong>, photographe environnemental et sous-marin basé à Marseille. Depuis 2018, mon travail documente le littoral méditerranéen avec un double regard : la beauté brute des Calanques et l'urgence écologique qui les menace. Formé à l'apnée et au freediving, je photographie les fonds marins de la même manière que je les nettoie — en immersion totale, sans bouteilles, au plus proche des espèces et des déchets.
