@@ -234,10 +234,10 @@ const PhotographeEnvironnemental = () => {
                   style={{ aspectRatio: '3/4', boxShadow: '0 0 32px rgba(0,171,168,0.22)' }}
                 >
                   <img
-                    src="/images/Partenaires/partenaires-mer-terre-calanques-propres-2024.webp"
+                    src="/images/Partenaires/partenaires-karim-saari-mer-terre-calanques-propres-2024.webp"
                     alt="Karim Saari — Calanques Propres 2024, opération Mer Terre"
                     className="absolute inset-0 w-full h-full object-cover"
-                    style={{ objectPosition: '60% 20%' }}
+                    style={{ objectPosition: '50% 15%' }}
                     loading="eager"
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" aria-hidden="true" />
