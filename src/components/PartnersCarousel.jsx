@@ -33,10 +33,6 @@ export default function PartnersCarousel() {
       style={{ background: 'rgba(255,255,255,0.07)', border: '1px solid rgba(255,255,255,0.12)' }}
       aria-label="Médias et partenaires"
     >
-      <p className="text-center text-xs uppercase tracking-widest text-text-muted mb-8 font-semibold">
-        Vus dans
-      </p>
-
       {/* Conteneur avec masque de fondu sur les bords */}
       <div
         className="relative overflow-hidden group"
