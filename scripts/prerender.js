@@ -584,11 +584,11 @@ async function prerender() {
         const articleLinks = BLOG_ROUTES
           .map(r => {
             const slug = r.replace('/blog/', '');
-            const meta = wpMetas.find(m => m.slug === slug);
-            const label = meta
-              ? slug.replace(/-/g, ' ').replace(/^\w/, c => c.toUpperCase())
-              : slug;
-            return `<a href="${r}">${label}</a>`;
+            const post = wpPostCache.get(slug) ?? localCache.get(slug);
+            const title = post?.title
+              ?? slug.replace(/-/g, ' ').replace(/^\w/, c => c.toUpperCase());
+            const excerpt = post?.excerpt ? `<p>${post.excerpt}</p>` : '';
+            return `<article><a href="${r}">${title}</a>${excerpt}</article>`;
           })
           .join('\n        ');
         const srOnlyNav = `\n  <nav aria-label="Articles du blog" style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;">\n        ${articleLinks}\n      </nav>`;
@@ -606,10 +606,9 @@ async function prerender() {
           .slice(0, 3)
           .map(r => {
             const slug = r.replace('/blog/', '');
-            const meta = wpMetas.find(m => m.slug === slug);
-            const label = meta
-              ? slug.replace(/-/g, ' ').replace(/^\w/, c => c.toUpperCase())
-              : slug;
+            const post = wpPostCache.get(slug) ?? localCache.get(slug);
+            const label = post?.title
+              ?? slug.replace(/-/g, ' ').replace(/^\w/, c => c.toUpperCase());
             return `<a href="${r}">${label}</a>`;
           })
           .join('\n        ');
