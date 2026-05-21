@@ -281,7 +281,7 @@ const PhotographeEnvironnemental = () => {
                               src={img}
                               alt={alt}
                               className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
-                              style={{ objectPosition: '55% 45%' }}
+                              style={{ objectPosition: '45% 45%' }}
                               loading="lazy"
                             />
                             <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/30 to-transparent" aria-hidden="true" />
