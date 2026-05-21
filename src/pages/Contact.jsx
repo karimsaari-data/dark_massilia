@@ -1,8 +1,9 @@
-import { motion } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 import { Link, useNavigate } from 'react-router-dom';
-import { Mail, Phone, MapPin, Newspaper, UserPlus, MessageCircle } from 'lucide-react';
+import { Mail, Phone, MapPin, Newspaper, UserPlus, MessageCircle, X } from 'lucide-react';
 import QRCodeLib from 'react-qr-code';
 const QRCode = QRCodeLib?.default ?? QRCodeLib;
+import { useState } from 'react';
 import { FADE_IN_UP, STAGGER_CONTAINER, APP_CONFIG } from '../utils/constants';
 import SEO from '../components/SEO';
 import { SEO_PAGES } from '../utils/seo';
@@ -40,6 +41,7 @@ const CONTACT_ROWS = [
 
 const Contact = () => {
   const navigate = useNavigate();
+  const [showQR, setShowQR] = useState(false);
 
   return (
     <div className="min-h-screen pt-4 pb-16">
@@ -139,12 +141,11 @@ const Contact = () => {
               variants={{ hidden: { opacity: 0, x: 20 }, visible: { opacity: 1, x: 0, transition: { duration: 0.5 } } }}
               className="flex flex-col items-center justify-center gap-3 p-8 lg:w-64 border-t lg:border-t-0"
             >
-              <motion.a
-                href="/karim-saari.vcf"
-                download="karim-saari.vcf"
-                onClick={() => trackEvent('contact_click', { method: 'vcard', source: 'qr_code' })}
-                className="p-3 rounded-2xl bg-white shadow-xl"
-                aria-label="Télécharger la carte de contact"
+              <motion.button
+                type="button"
+                onClick={() => { setShowQR(true); trackEvent('contact_click', { method: 'vcard', source: 'qr_code' }); }}
+                className="p-3 rounded-2xl bg-white shadow-xl cursor-pointer"
+                aria-label="Agrandir le QR code"
                 whileHover={{ scale: 1.08, boxShadow: '0 0 24px rgba(0,171,168,0.5)' }}
                 transition={{ type: 'spring', stiffness: 300 }}
               >
@@ -155,9 +156,9 @@ const Contact = () => {
                   fgColor="#0B1C2D"
                   level="M"
                 />
-              </motion.a>
+              </motion.button>
               <p className="text-gray-400 text-xs text-center leading-relaxed">
-                Scanner pour ajouter aux contacts
+                Appuyer pour agrandir · Scanner pour ajouter
               </p>
               <motion.a
                 href="/karim-saari.vcf"
@@ -305,6 +306,51 @@ const Contact = () => {
         </motion.div>
 
       </div>
+
+      {/* ── Modal QR plein écran ─────────────────────────────────────── */}
+      <AnimatePresence>
+        {showQR && (
+          <motion.div
+            key="qr-modal"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.2 }}
+            className="fixed inset-0 z-50 flex flex-col items-center justify-center gap-6 px-6"
+            style={{ background: 'rgba(0,8,24,0.95)', backdropFilter: 'blur(12px)' }}
+            onClick={() => setShowQR(false)}
+          >
+            <motion.div
+              initial={{ scale: 0.7, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              exit={{ scale: 0.7, opacity: 0 }}
+              transition={{ type: 'spring', stiffness: 300, damping: 24 }}
+              className="p-6 rounded-3xl bg-white shadow-2xl"
+              onClick={(e) => e.stopPropagation()}
+            >
+              <QRCode
+                value={VCARD_URL}
+                size={260}
+                bgColor="#ffffff"
+                fgColor="#0B1C2D"
+                level="M"
+              />
+            </motion.div>
+            <p className="text-white text-center text-lg font-semibold">Karim Saari — Dark Massilia</p>
+            <p className="text-gray-400 text-sm text-center">Scannez pour ajouter aux contacts</p>
+            <motion.button
+              type="button"
+              onClick={() => setShowQR(false)}
+              className="mt-2 flex items-center gap-2 px-5 py-2.5 rounded-xl text-sm font-semibold text-white border border-white/20"
+              whileHover={{ scale: 1.05 }}
+              transition={{ type: 'spring', stiffness: 300 }}
+            >
+              <X className="w-4 h-4" />
+              Fermer
+            </motion.button>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </div>
   );
 };
