@@ -108,7 +108,7 @@ const Contact = () => {
               className="flex flex-col justify-center gap-2 p-8 flex-1 border-t lg:border-t-0 lg:border-r border-white/10 text-sm"
             >
               <motion.div variants={FADE_IN_UP} className="mb-2">
-                <p className="text-white font-bold text-base leading-tight">Karim Saari</p>
+                <p className="text-white font-bold text-xl leading-tight">Karim Saari</p>
                 <p className="text-astroide text-sm font-medium">Dark Massilia</p>
                 <p className="text-gray-500 text-xs mt-0.5">Photographe environnemental · Marseille</p>
               </motion.div>
