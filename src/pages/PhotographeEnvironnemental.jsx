@@ -79,6 +79,14 @@ const INSTITUTIONS = [
   { name: 'Ville de Marseille',          url: 'https://www.marseille.fr/',           desc: 'Collectivité territoriale, soutien aux projets environnementaux', logo: '/images/Partenaires/svg/Ville_de_Marseille_(logo).svg' },
 ];
 
+// Chiffres clés — hero
+const HERO_STATS = [
+  { value: '5 724 kg', label: 'déchets remontés' },
+  { value: '4',        label: 'éditions Sentinelle' },
+  { value: '170+',     label: 'photographies' },
+  { value: '132 K',    label: 'communauté' },
+];
+
 // Blocs galeries — 2 univers × 3 sous-sections
 const UNIVERSES = [
   {
@@ -177,32 +185,71 @@ const PhotographeEnvironnemental = () => {
             backdropFilter: 'blur(16px)',
           }}
         >
-          {/* H1 + tagline */}
+          {/* Hero split : texte + portrait */}
           <motion.div
             initial="hidden"
             animate="visible"
             variants={STAGGER_CONTAINER}
-            className="mb-6"
+            className="mb-8"
           >
-            <div className="flex items-stretch gap-4 mb-2">
-              <motion.div
-                initial={{ scaleY: 0 }}
-                animate={{ scaleY: 1 }}
-                transition={{ duration: 0.7, ease: 'easeOut', delay: 0.4 }}
-                style={{ transformOrigin: 'top' }}
-                className="w-[3px] bg-ocean-teal rounded-full flex-shrink-0"
-                aria-hidden="true"
-              />
-              <motion.h1
-                variants={FADE_IN_UP}
-                className="text-2xl md:text-4xl font-bold text-white leading-tight"
-              >
-                Photographe Environnemental à Marseille
-              </motion.h1>
+            <div className="grid grid-cols-1 md:grid-cols-[1fr_210px] gap-6 md:gap-10 items-center">
+
+              {/* Texte : H1 + tagline + stats */}
+              <div>
+                <div className="flex items-stretch gap-4 mb-2">
+                  <motion.div
+                    initial={{ scaleY: 0 }}
+                    animate={{ scaleY: 1 }}
+                    transition={{ duration: 0.7, ease: 'easeOut', delay: 0.4 }}
+                    style={{ transformOrigin: 'top' }}
+                    className="w-[3px] bg-ocean-teal rounded-full flex-shrink-0"
+                    aria-hidden="true"
+                  />
+                  <motion.h1
+                    variants={FADE_IN_UP}
+                    className="text-2xl md:text-4xl font-bold text-white leading-tight"
+                  >
+                    Photographe Environnemental à Marseille
+                  </motion.h1>
+                </div>
+                <motion.p variants={FADE_IN_UP} className="text-base md:text-lg text-ocean-teal font-medium mb-6">
+                  Documenter l'urgence, célébrer la beauté
+                </motion.p>
+
+                {/* Stats strip */}
+                <motion.div variants={FADE_IN_UP} className="grid grid-cols-2 sm:grid-cols-4 gap-2.5">
+                  {HERO_STATS.map(({ value, label }) => (
+                    <div key={label} className="rounded-xl bg-white/5 border border-white/8 p-3 text-center">
+                      <p className="text-base md:text-lg font-bold text-ocean-teal leading-tight">{value}</p>
+                      <p className="text-[10px] text-text-secondary mt-0.5 leading-snug">{label}</p>
+                    </div>
+                  ))}
+                </motion.div>
+              </div>
+
+              {/* Portrait */}
+              <motion.div variants={FADE_IN_UP} className="hidden md:block">
+                <div
+                  className="relative rounded-2xl overflow-hidden ring-1 ring-ocean-teal/40"
+                  style={{ aspectRatio: '3/4', boxShadow: '0 0 32px rgba(0,171,168,0.22)' }}
+                >
+                  <img
+                    src="/images/karim-saari-photo-profil-arte-regard-marseille.webp"
+                    srcSet="/images/karim-saari-photo-profil-arte-regard-marseille_300w.webp 300w, /images/karim-saari-photo-profil-arte-regard-marseille_400w.webp 400w, /images/karim-saari-photo-profil-arte-regard-marseille.webp 472w"
+                    sizes="210px"
+                    alt="Karim Saari, photographe environnemental et apnéiste — Team Oxygen, Marseille"
+                    className="absolute inset-0 w-full h-full object-cover object-top"
+                    loading="eager"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" aria-hidden="true" />
+                  <div className="absolute bottom-0 left-0 right-0 p-3">
+                    <p className="text-white text-xs font-medium">Karim Saari</p>
+                    <p className="text-white/50 text-[10px]">© ARTE</p>
+                  </div>
+                </div>
+              </motion.div>
+
             </div>
-            <motion.p variants={FADE_IN_UP} className="text-base md:text-lg text-ocean-teal font-medium">
-              Documenter l'urgence, célébrer la beauté
-            </motion.p>
           </motion.div>
 
           {/* H2 — 6 blocs galeries : 2 univers × 3 sous-sections */}
@@ -216,37 +263,91 @@ const PhotographeEnvironnemental = () => {
             {UNIVERSES.map(({ id, title, galleries }) => (
               <motion.div key={id} variants={FADE_IN_UP}>
                 <p className="text-xs font-semibold uppercase tracking-widest text-ocean-teal mb-3">{title}</p>
-                <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
-                  {galleries.map(({ to, label, desc, cta, img, srcset, sizes, alt }) => (
-                    <Link
-                      key={to}
-                      to={to}
-                      className="group block relative rounded-2xl overflow-hidden ring-1 ring-white/10 hover:ring-ocean-teal/40 transition-all duration-300"
-                    >
-                      <div className="aspect-[16/9] relative">
-                        <img
-                          src={img}
-                          srcSet={srcset}
-                          sizes={sizes}
-                          alt={alt}
-                          width={1920}
-                          height={1080}
-                          className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
-                          loading="lazy"
-                        />
-                        <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/30 to-transparent" aria-hidden="true" />
-                        <div className="absolute bottom-0 left-0 right-0 p-3 md:p-4">
-                          <h3 className="text-sm font-bold text-white mb-0.5">{label}</h3>
-                          <p className="text-white/70 text-xs mb-2 leading-snug">{desc}</p>
-                          <span className="inline-flex items-center gap-2 text-ocean-teal text-xs font-medium group-hover:gap-3 transition-all">
-                            {cta}
-                            <ArrowRight className="w-3.5 h-3.5" aria-hidden="true" />
-                          </span>
+                {id === 'sous-marin' ? (
+                  /* Univers sous-marin : Dépollution en vedette
+                     Mobile : 1 col, featured en pleine largeur 16/9
+                     sm+    : 2 cols, featured row-span-2 portrait */
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                    {galleries.map(({ to, label, desc, cta, img, alt }, idx) => (
+                      <Link
+                        key={to}
+                        to={to}
+                        className={`group block relative rounded-2xl overflow-hidden ring-1 ring-white/10 hover:ring-ocean-teal/40 transition-all duration-300${idx === 0 ? ' sm:row-span-2' : ''}`}
+                      >
+                        {idx === 0 ? (
+                          /* Featured */
+                          <div className="aspect-[16/9] sm:aspect-auto sm:h-full sm:min-h-[300px]">
+                            <img
+                              src={img}
+                              alt={alt}
+                              className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
+                              style={{ objectPosition: '55% 45%' }}
+                              loading="lazy"
+                            />
+                            <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/30 to-transparent" aria-hidden="true" />
+                            <div className="absolute bottom-0 left-0 right-0 p-3 md:p-4">
+                              <h3 className="text-sm font-bold text-white mb-0.5">{label}</h3>
+                              <p className="text-white/70 text-xs mb-2 leading-snug">{desc}</p>
+                              <span className="inline-flex items-center gap-2 text-ocean-teal text-xs font-medium group-hover:gap-3 transition-all">
+                                {cta} <ArrowRight className="w-3.5 h-3.5" aria-hidden="true" />
+                              </span>
+                            </div>
+                          </div>
+                        ) : (
+                          /* Cards secondaires */
+                          <div className="aspect-[16/9] sm:aspect-[4/3] relative">
+                            <img
+                              src={img}
+                              alt={alt}
+                              className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
+                              loading="lazy"
+                            />
+                            <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/30 to-transparent" aria-hidden="true" />
+                            <div className="absolute bottom-0 left-0 right-0 p-3">
+                              <h3 className="text-sm font-bold text-white mb-0.5">{label}</h3>
+                              <p className="text-white/70 text-xs mb-1.5 leading-snug">{desc}</p>
+                              <span className="inline-flex items-center gap-2 text-ocean-teal text-xs font-medium group-hover:gap-3 transition-all">
+                                {cta} <ArrowRight className="w-3.5 h-3.5" aria-hidden="true" />
+                              </span>
+                            </div>
+                          </div>
+                        )}
+                      </Link>
+                    ))}
+                  </div>
+                ) : (
+                  /* Univers paysages : 3 colonnes égales */
+                  <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+                    {galleries.map(({ to, label, desc, cta, img, srcset, sizes, alt }) => (
+                      <Link
+                        key={to}
+                        to={to}
+                        className="group block relative rounded-2xl overflow-hidden ring-1 ring-white/10 hover:ring-ocean-teal/40 transition-all duration-300"
+                      >
+                        <div className="aspect-[16/9] relative">
+                          <img
+                            src={img}
+                            srcSet={srcset}
+                            sizes={sizes}
+                            alt={alt}
+                            width={1920}
+                            height={1080}
+                            className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
+                            loading="lazy"
+                          />
+                          <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/30 to-transparent" aria-hidden="true" />
+                          <div className="absolute bottom-0 left-0 right-0 p-3 md:p-4">
+                            <h3 className="text-sm font-bold text-white mb-0.5">{label}</h3>
+                            <p className="text-white/70 text-xs mb-2 leading-snug">{desc}</p>
+                            <span className="inline-flex items-center gap-2 text-ocean-teal text-xs font-medium group-hover:gap-3 transition-all">
+                              {cta} <ArrowRight className="w-3.5 h-3.5" aria-hidden="true" />
+                            </span>
+                          </div>
                         </div>
-                      </div>
-                    </Link>
-                  ))}
-                </div>
+                      </Link>
+                    ))}
+                  </div>
+                )}
               </motion.div>
             ))}
           </motion.div>
@@ -276,6 +377,17 @@ const PhotographeEnvironnemental = () => {
             <p className="text-text-secondary leading-relaxed text-base md:text-lg mb-5">
               J'ai rejoint l'association <strong className="text-white">Team Oxygen</strong> dès la première édition du <strong className="text-white">Projet Sentinelle</strong> — une opération annuelle de dépollution sous-marine en apnée — dont je suis président depuis janvier 2026, après en avoir été vice-président depuis les origines. Quatre éditions (2022, 2023, 2024, 2025) ont mobilisé des dizaines de bénévoles dans les Calanques, l'Archipel du Frioul, la Côte Bleue et la Rade de Marseille. Bilan : <strong className="text-white">5 724 kg de déchets remontés des fonds</strong> — pneus, cordages, filets fantômes, plastiques de toutes tailles — caractérisés, pesés et restitués aux autorités. La méthodologie de caractérisation développée par Team Oxygen sert aujourd'hui de référence pour d'autres opérations de dépollution marine en France.
             </p>
+
+            {/* Stat callout */}
+            <div className="flex items-center gap-5 bg-ocean-teal/8 border border-ocean-teal/20 rounded-xl p-4 mb-5">
+              <div className="flex-shrink-0 text-center">
+                <p className="text-2xl md:text-3xl font-bold text-ocean-teal">5 724 kg</p>
+                <p className="text-[10px] text-text-muted uppercase tracking-wider mt-0.5">en 4 éditions</p>
+              </div>
+              <p className="text-text-secondary text-sm leading-relaxed">
+                pneus, cordages, filets fantômes, plastiques de toutes tailles — caractérisés, pesés et restitués aux autorités. La méthodologie de caractérisation sert aujourd'hui de référence nationale.
+              </p>
+            </div>
 
             <p className="text-text-secondary leading-relaxed text-base md:text-lg mb-5">
               Parallèlement à l'action terrain, j'anime la communauté en ligne <strong className="text-white">Dark Massilia</strong>. Sur Facebook, le groupe « Amoureux des Calanques de Marseille à Port-Cros » rassemble plus de <strong className="text-white">{SOCIAL_STATS_DEFAULTS.total_community.toLocaleString('fr-FR')} membres engagés</strong>. La communauté est également présente sur Instagram, TikTok et YouTube, où les missions, les photos et les alertes terrain sont relayées. Cette communauté amplifie le message environnemental, signale les dépôts sauvages et constitue un vivier de bénévoles pour chaque édition du Projet Sentinelle.

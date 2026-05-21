@@ -119,4 +119,6 @@
   Header always set Strict-Transport-Security "max-age=31536000; includeSubDomains"
   # Isolation cross-origin (COOP)
   Header set Cross-Origin-Opener-Policy "same-origin-allow-popups"
+  # Content Security Policy — autorise Google Fonts, GTM/GA, Supabase, YouTube/Vimeo
+  Header always set Content-Security-Policy "default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://www.googletagmanager.com https://www.google-analytics.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: blob: https:; media-src 'self' blob: https:; connect-src 'self' https:; frame-src https://www.youtube.com https://player.vimeo.com https://www.instagram.com; worker-src 'self' blob:; object-src 'none'; base-uri 'self';"
 </IfModule>
