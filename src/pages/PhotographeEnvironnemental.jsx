@@ -84,7 +84,7 @@ const INSTITUTIONS = [
 const HERO_STATS = [
   { end: 5724, suffix: ' kg', label: 'déchets remontés',   duration: 2500 },
   { end: 4,    suffix: '',    label: 'éditions Sentinelle', duration: 1000 },
-  { end: 170,  suffix: '+',   label: 'photographies',       duration: 1800 },
+  { end: 185,  suffix: ' M',  label: 'vues Google Maps',     duration: 2000 },
   { end: 132,  suffix: ' K',  label: 'communauté',          duration: 2000 },
 ];
 
