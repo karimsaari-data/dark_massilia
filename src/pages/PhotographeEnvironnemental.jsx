@@ -1,6 +1,7 @@
 import { motion } from 'framer-motion';
 import { useCardHover } from '../hooks/useCardHover';
 import { ArrowRight, ExternalLink, Camera, Mail } from 'lucide-react';
+import StatCounter from '../components/ui/StatCounter';
 import { Link } from 'react-router-dom';
 import { FADE_IN_UP, STAGGER_CONTAINER, SOCIAL_STATS_DEFAULTS } from '../utils/constants';
 import SEO from '../components/SEO';
@@ -79,12 +80,12 @@ const INSTITUTIONS = [
   { name: 'Ville de Marseille',          url: 'https://www.marseille.fr/',           desc: 'Collectivité territoriale, soutien aux projets environnementaux', logo: '/images/Partenaires/svg/Ville_de_Marseille_(logo).svg' },
 ];
 
-// Chiffres clés — hero
+// Chiffres clés — hero (end = valeur cible pour StatCounter)
 const HERO_STATS = [
-  { value: '5 724 kg', label: 'déchets remontés' },
-  { value: '4',        label: 'éditions Sentinelle' },
-  { value: '170+',     label: 'photographies' },
-  { value: '132 K',    label: 'communauté' },
+  { end: 5724, suffix: ' kg', label: 'déchets remontés',   duration: 2500 },
+  { end: 4,    suffix: '',    label: 'éditions Sentinelle', duration: 1000 },
+  { end: 170,  suffix: '+',   label: 'photographies',       duration: 1800 },
+  { end: 132,  suffix: ' K',  label: 'communauté',          duration: 2000 },
 ];
 
 // Blocs galeries — 2 univers × 3 sous-sections
@@ -218,9 +219,11 @@ const PhotographeEnvironnemental = () => {
 
                 {/* Stats strip */}
                 <motion.div variants={FADE_IN_UP} className="grid grid-cols-2 sm:grid-cols-4 gap-2.5">
-                  {HERO_STATS.map(({ value, label }) => (
+                  {HERO_STATS.map(({ end, suffix, label, duration }) => (
                     <div key={label} className="rounded-xl bg-white/5 border border-white/8 p-3 text-center">
-                      <p className="text-base md:text-lg font-bold text-ocean-teal leading-tight">{value}</p>
+                      <p className="text-base md:text-lg font-bold text-ocean-teal leading-tight tabular-nums">
+                        <StatCounter end={end} suffix={suffix} duration={duration} />
+                      </p>
                       <p className="text-[10px] text-text-secondary mt-0.5 leading-snug">{label}</p>
                     </div>
                   ))}
