@@ -18,7 +18,7 @@ const CONTACT_ROWS = [
   {
     href: (cfg) => `https://wa.me/${cfg.contactWhatsApp.replace(/[\s+]/g, '')}?text=Bonjour%20Karim%2C%20`,
     icon: MessageCircle,
-    label: '+33 6 95 33 13 01 — WhatsApp',
+    label: 'WhatsApp',
     event: { method: 'whatsapp', source: 'business_card' },
     external: true,
     highlight: true,
@@ -26,7 +26,7 @@ const CONTACT_ROWS = [
   {
     href: () => 'mailto:contact@karimsaari.com',
     icon: Mail,
-    label: 'contact@karimsaari.com',
+    label: 'Email',
     event: { method: 'email', source: 'business_card' },
     external: false,
   },
