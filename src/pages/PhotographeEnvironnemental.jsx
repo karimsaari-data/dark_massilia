@@ -234,17 +234,16 @@ const PhotographeEnvironnemental = () => {
                   style={{ aspectRatio: '3/4', boxShadow: '0 0 32px rgba(0,171,168,0.22)' }}
                 >
                   <img
-                    src="/images/karim-saari-photo-profil-arte-regard-marseille.webp"
-                    srcSet="/images/karim-saari-photo-profil-arte-regard-marseille_300w.webp 300w, /images/karim-saari-photo-profil-arte-regard-marseille_400w.webp 400w, /images/karim-saari-photo-profil-arte-regard-marseille.webp 472w"
-                    sizes="210px"
-                    alt="Karim Saari, photographe environnemental et apnéiste — Team Oxygen, Marseille"
-                    className="absolute inset-0 w-full h-full object-cover object-top"
+                    src="/images/Partenaires/partenaires-mer-terre-calanques-propres-2024.webp"
+                    alt="Karim Saari — Calanques Propres 2024, opération Mer Terre"
+                    className="absolute inset-0 w-full h-full object-cover"
+                    style={{ objectPosition: '60% 20%' }}
                     loading="eager"
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" aria-hidden="true" />
                   <div className="absolute bottom-0 left-0 right-0 p-3">
                     <p className="text-white text-xs font-medium">Karim Saari</p>
-                    <p className="text-white/50 text-[10px]">© ARTE</p>
+                    <p className="text-white/50 text-[10px]">© Fougue Photographie</p>
                   </div>
                 </div>
               </motion.div>
