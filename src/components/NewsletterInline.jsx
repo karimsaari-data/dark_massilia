@@ -40,7 +40,7 @@ export default function NewsletterInline({ source = 'blog_article' }) {
   };
 
   return (
-    <div className="mt-10 rounded-2xl bg-ocean-teal/10 border border-ocean-teal/25 p-6 md:p-8">
+    <div className="mt-10 rounded-2xl bg-ocean-teal/10 border border-ocean-teal/25 p-6 md:p-8 animate-border-pulse">
       {/* Badge */}
       <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-white/10 border border-white/20 text-white text-xs font-semibold mb-4">
         🎁 Offert à l'inscription

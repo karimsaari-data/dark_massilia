@@ -211,7 +211,7 @@ const DossierPresse = () => (
       >
         <motion.div
           variants={FADE_IN_UP}
-          className="glass-strong rounded-3xl p-8 md:p-10 border border-ocean-teal/20"
+          className="glass-strong rounded-3xl p-8 md:p-10 border border-ocean-teal/20 animate-border-pulse"
         >
           <h2 className="text-xl font-bold text-white mb-2">Contact presse</h2>
           <p className="text-text-secondary mb-6">

@@ -159,7 +159,7 @@ const Missions = () => {
           <motion.div
             {...cardHover}
             variants={FADE_IN_UP}
-            className="glass-strong rounded-3xl p-8 md:p-12 border border-ocean-teal/30 text-center"
+            className="glass-strong rounded-3xl p-8 md:p-12 border border-ocean-teal/30 text-center animate-border-pulse"
           >
             <span className="inline-flex items-center gap-1.5 px-4 py-1.5 rounded-full bg-ocean-teal/15 border border-ocean-teal/30 text-ocean-teal text-xs font-semibold mb-6">
               📅 Prochaine édition
