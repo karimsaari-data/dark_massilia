@@ -292,6 +292,15 @@
   }
 }
 
+/* Newsletter border pulse */
+@keyframes border-pulse {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(0,171,168,0), 0 0 18px rgba(0,171,168,0.10); }
+  50%       { box-shadow: 0 0 0 4px rgba(0,171,168,0.18), 0 0 32px rgba(0,171,168,0.22); }
+}
+.animate-border-pulse {
+  animation: border-pulse 3.5s ease-in-out infinite;
+}
+
 /* Loading spinner */
 @keyframes spin {
   to { transform: rotate(360deg); }

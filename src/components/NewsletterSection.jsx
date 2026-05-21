@@ -43,7 +43,7 @@ const NewsletterSection = () => {
         whileInView="visible"
         viewport={{ once: true }}
         variants={FADE_IN_UP}
-        className="relative rounded-3xl overflow-hidden border border-ocean-teal/30 mb-16 min-h-[420px] md:min-h-[480px] flex items-center justify-center"
+        className="relative rounded-3xl overflow-hidden border border-ocean-teal/30 mb-16 min-h-[420px] md:min-h-[480px] flex items-center justify-center animate-border-pulse"
       >
         {/* Image plein fond */}
         <div className="absolute inset-0">
