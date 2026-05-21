@@ -5,6 +5,7 @@ import { ChevronUp } from 'lucide-react';
 import Navbar from './Navbar';
 import Footer from './Footer';
 import CookieBanner from '../CookieBanner';
+import NewsletterPopup from '../NewsletterPopup';
 
 const PageLoader = () => (
   <div className="min-h-[60vh] flex items-center justify-center">
@@ -102,6 +103,7 @@ const Layout = () => {
         </main>
         <Footer />
         <CookieBanner />
+        <NewsletterPopup />
       </div>
 
       {/* Bouton retour en haut */}
