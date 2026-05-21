@@ -1,7 +1,6 @@
 import { motion } from 'framer-motion';
 import { useCardHover } from '../hooks/useCardHover';
 import { ArrowRight, ExternalLink, Camera, Mail } from 'lucide-react';
-import StatCounter from '../components/ui/StatCounter';
 import { Link } from 'react-router-dom';
 import { FADE_IN_UP, STAGGER_CONTAINER, SOCIAL_STATS_DEFAULTS } from '../utils/constants';
 import SEO from '../components/SEO';
@@ -78,14 +77,6 @@ const INSTITUTIONS = [
   { name: 'Fondation de la Mer',         url: 'https://www.fondationdelamer.org/',    desc: 'Fondation nationale pour la protection des océans',        logo: '/images/Partenaires/svg/logo fondation de la mer.svg' },
   { name: 'Citeo',                       url: 'https://www.citeo.com/',              desc: 'Organisme agréé pour le recyclage des emballages et papiers', logo: '/images/Partenaires/svg/Logo_Citeo.png' },
   { name: 'Ville de Marseille',          url: 'https://www.marseille.fr/',           desc: 'Collectivité territoriale, soutien aux projets environnementaux', logo: '/images/Partenaires/svg/Ville_de_Marseille_(logo).svg' },
-];
-
-// Chiffres clés — hero (end = valeur cible pour StatCounter)
-const HERO_STATS = [
-  { end: 5724, suffix: ' kg', label: 'déchets remontés',   duration: 2500 },
-  { end: 185,  suffix: ' M',  label: 'vues Google Maps',   duration: 2000 },
-  { end: 132,  suffix: ' K',  label: 'communauté',         duration: 2000 },
-  { end: 4,    suffix: '',    label: 'éditions Sentinelle', duration: 1000 },
 ];
 
 // Blocs galeries — 2 univers × 3 sous-sections
@@ -174,129 +165,66 @@ const PhotographeEnvironnemental = () => {
       <div className="container-custom">
         <Breadcrumb label="Photographe Environnemental Marseille" />
 
-        {/* Cadre hublot — H1 + tagline + 6 blocs galeries */}
-        <div
-          className="p-6 md:p-10 mb-12"
-          style={{
-            overflow: 'hidden',
-            borderRadius: '24px',
-            border: '2px solid rgba(0,171,168,0.55)',
-            boxShadow: '0 0 0 6px rgba(0,8,24,0.88), 0 0 0 8px rgba(0,171,168,0.35), 0 0 40px rgba(0,171,168,0.18), 0 0 80px rgba(0,120,180,0.10)',
-            background: 'rgba(5,15,30,0.75)',
-            backdropFilter: 'blur(16px)',
-          }}
+        {/* H1 + tagline */}
+        <motion.div
+          initial="hidden"
+          animate="visible"
+          variants={STAGGER_CONTAINER}
+          className="text-center mb-6"
         >
-          {/* Hero split : texte + portrait */}
-          <motion.div
-            initial="hidden"
-            animate="visible"
-            variants={STAGGER_CONTAINER}
-            className="mb-8"
+          <motion.h1
+            variants={FADE_IN_UP}
+            className="text-2xl md:text-4xl font-bold text-white leading-tight mb-2"
           >
-            <div className="grid grid-cols-1 md:grid-cols-[1fr_210px] gap-6 md:gap-10 items-center">
+            Photographe Environnemental à Marseille
+          </motion.h1>
+          <motion.p variants={FADE_IN_UP} className="text-base md:text-lg text-ocean-teal font-medium">
+            Documenter l'urgence, célébrer la beauté
+          </motion.p>
+        </motion.div>
 
-              {/* Texte : H1 + tagline + stats */}
-              <div>
-                <div className="flex items-stretch gap-4 mb-2">
-                  <motion.div
-                    initial={{ scaleY: 0 }}
-                    animate={{ scaleY: 1 }}
-                    transition={{ duration: 0.7, ease: 'easeOut', delay: 0.4 }}
-                    style={{ transformOrigin: 'top' }}
-                    className="w-[3px] bg-ocean-teal rounded-full flex-shrink-0"
-                    aria-hidden="true"
-                  />
-                  <motion.h1
-                    variants={FADE_IN_UP}
-                    className="text-2xl md:text-4xl font-bold text-white leading-tight"
+        {/* H2 — 6 blocs galeries : 2 univers × 3 sous-sections */}
+        <motion.div
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true }}
+          variants={STAGGER_CONTAINER}
+          className="mb-12 space-y-5"
+        >
+          {UNIVERSES.map(({ id, title, galleries }) => (
+            <motion.div key={id} variants={FADE_IN_UP}>
+              <p className="text-xs font-semibold uppercase tracking-widest text-ocean-teal mb-3">{title}</p>
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+                {galleries.map(({ to, label, desc, cta, img, srcset, sizes, alt }) => (
+                  <Link
+                    key={to}
+                    to={to}
+                    className="group block relative rounded-sm overflow-hidden ring-1 ring-white/10 hover:ring-ocean-teal/40 transition-all duration-300"
                   >
-                    Photographe Environnemental à Marseille
-                  </motion.h1>
-                </div>
-                <motion.p variants={FADE_IN_UP} className="text-base md:text-lg text-ocean-teal font-medium mb-6">
-                  Documenter l'urgence, célébrer la beauté
-                </motion.p>
-
-                {/* Stats strip */}
-                <motion.div variants={FADE_IN_UP} className="grid grid-cols-2 sm:grid-cols-4 gap-2.5">
-                  {HERO_STATS.map(({ end, suffix, label, duration }) => (
-                    <div key={label} className="rounded-xl bg-white/5 border border-white/8 p-3 text-center">
-                      <p className="text-base md:text-lg font-bold text-ocean-teal leading-tight tabular-nums">
-                        <StatCounter end={end} suffix={suffix} duration={duration} />
-                      </p>
-                      <p className="text-[10px] text-text-secondary mt-0.5 leading-snug">{label}</p>
-                    </div>
-                  ))}
-                </motion.div>
-              </div>
-
-              {/* Portrait */}
-              <motion.div variants={FADE_IN_UP} className="hidden md:block">
-                <div
-                  className="relative rounded-sm overflow-hidden ring-1 ring-ocean-teal/40"
-                  style={{ aspectRatio: '3/4', boxShadow: '0 0 32px rgba(0,171,168,0.22)' }}
-                >
-                  <img
-                    src="/images/Partenaires/partenaires-karim-saari-mer-terre-calanques-propres-2024.webp"
-                    alt="Karim Saari — Calanques Propres 2024, opération Mer Terre"
-                    className="absolute inset-0 w-full h-full object-cover"
-                    style={{ objectPosition: '50% 15%' }}
-                    loading="eager"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" aria-hidden="true" />
-                  <div className="absolute bottom-0 left-0 right-0 p-3">
-                    <p className="text-white text-xs font-medium">Karim Saari</p>
-                    <p className="text-white/50 text-[10px]">© Fougue Photographie</p>
-                  </div>
-                </div>
-              </motion.div>
-
-            </div>
-          </motion.div>
-
-          {/* H2 — 6 blocs galeries : 2 univers × 3 sous-sections */}
-          <motion.div
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true }}
-            variants={STAGGER_CONTAINER}
-            className="space-y-5"
-          >
-            {UNIVERSES.map(({ id, title, galleries }) => (
-              <motion.div key={id} variants={FADE_IN_UP}>
-                <p className="text-xs font-semibold uppercase tracking-widest text-ocean-teal mb-3">{title}</p>
-                <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
-                  {galleries.map(({ to, label, desc, cta, img, srcset, sizes, alt }) => (
-                    <Link
-                      key={to}
-                      to={to}
-                      className="group block relative rounded-sm overflow-hidden ring-1 ring-white/10 hover:ring-ocean-teal/40 transition-all duration-300"
-                    >
-                      <div className="aspect-[16/9] relative">
-                        <img
-                          src={img}
-                          srcSet={srcset}
-                          sizes={sizes}
-                          alt={alt}
-                          className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
-                          loading="lazy"
-                        />
-                        <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/30 to-transparent" aria-hidden="true" />
-                        <div className="absolute bottom-0 left-0 right-0 p-3 md:p-4">
-                          <h3 className="text-sm font-bold text-white mb-0.5">{label}</h3>
-                          <p className="text-white/70 text-xs mb-2 leading-snug">{desc}</p>
-                          <span className="inline-flex items-center gap-2 text-ocean-teal text-xs font-medium group-hover:gap-3 transition-all">
-                            {cta} <ArrowRight className="w-3.5 h-3.5" aria-hidden="true" />
-                          </span>
-                        </div>
+                    <div className="aspect-[16/9] relative">
+                      <img
+                        src={img}
+                        srcSet={srcset}
+                        sizes={sizes}
+                        alt={alt}
+                        className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
+                        loading="lazy"
+                      />
+                      <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/30 to-transparent" aria-hidden="true" />
+                      <div className="absolute bottom-0 left-0 right-0 p-3 md:p-4">
+                        <h3 className="text-sm font-bold text-white mb-0.5">{label}</h3>
+                        <p className="text-white/70 text-xs mb-2 leading-snug">{desc}</p>
+                        <span className="inline-flex items-center gap-2 text-ocean-teal text-xs font-medium group-hover:gap-3 transition-all">
+                          {cta} <ArrowRight className="w-3.5 h-3.5" aria-hidden="true" />
+                        </span>
                       </div>
-                    </Link>
-                  ))}
-                </div>
-              </motion.div>
-            ))}
-          </motion.div>
-        </div>
+                    </div>
+                  </Link>
+                ))}
+              </div>
+            </motion.div>
+          ))}
+        </motion.div>
 
         {/* Bloc biographie — 600+ mots, E-E-A-T */}
         <motion.div
