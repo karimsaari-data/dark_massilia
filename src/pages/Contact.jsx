@@ -84,7 +84,7 @@ const Contact = () => {
             {/* Colonne gauche — photo carrée */}
             <motion.div
               variants={{ hidden: { opacity: 0, x: -20 }, visible: { opacity: 1, x: 0, transition: { duration: 0.5 } } }}
-              className="lg:w-56 lg:border-r border-white/10 overflow-hidden flex-shrink-0"
+              className="lg:w-72 lg:border-r border-white/10 overflow-hidden flex-shrink-0"
             >
               <motion.div
                 whileHover={{ scale: 1.03 }}
