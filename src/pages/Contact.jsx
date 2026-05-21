@@ -1,6 +1,6 @@
 import { motion } from 'framer-motion';
 import { Link, useNavigate } from 'react-router-dom';
-import { Mail, Phone, MapPin, Newspaper } from 'lucide-react';
+import { Mail, Phone, MapPin, Newspaper, UserPlus, MessageCircle } from 'lucide-react';
 import QRCodeLib from 'react-qr-code';
 const QRCode = QRCodeLib?.default ?? QRCodeLib;
 import { FADE_IN_UP, STAGGER_CONTAINER, APP_CONFIG } from '../utils/constants';
@@ -15,11 +15,12 @@ const VIEW_OPTS = { once: true, margin: '-80px' };
 
 const CONTACT_ROWS = [
   {
-    href: (cfg) => `https://wa.me/${cfg.contactWhatsApp.replace(/\s/g, '')}`,
-    icon: Phone,
-    label: '+33 6 95 33 13 01',
+    href: (cfg) => `https://wa.me/${cfg.contactWhatsApp.replace(/[\s+]/g, '')}?text=Bonjour%20Karim%2C%20`,
+    icon: MessageCircle,
+    label: '+33 6 95 33 13 01 — WhatsApp',
     event: { method: 'whatsapp', source: 'business_card' },
     external: true,
+    highlight: true,
   },
   {
     href: () => 'mailto:contact@karimsaari.com',
@@ -108,7 +109,7 @@ const Contact = () => {
               variants={STAGGER_CONTAINER}
               className="flex flex-col justify-center gap-2 p-8 flex-1 border-t lg:border-t-0 lg:border-r border-white/10 text-sm"
             >
-              {CONTACT_ROWS.map(({ href, icon: Icon, label, event, external }) => (
+              {CONTACT_ROWS.map(({ href, icon: Icon, label, event, external, highlight }) => (
                 <motion.a
                   key={label}
                   variants={{
@@ -119,13 +120,16 @@ const Contact = () => {
                   target={external ? '_blank' : undefined}
                   rel={external ? 'noopener noreferrer' : undefined}
                   onClick={() => trackEvent('contact_click', event)}
-                  className="flex items-center gap-3 px-4 py-3 rounded-xl transition-colors hover:bg-astroide/10"
-                  style={{ background: 'rgba(255,255,255,0.04)' }}
+                  className="flex items-center gap-3 px-4 py-3 rounded-xl transition-all hover:scale-[1.02]"
+                  style={highlight
+                    ? { background: 'rgba(37,211,102,0.12)', border: '1px solid rgba(37,211,102,0.3)' }
+                    : { background: 'rgba(255,255,255,0.04)' }
+                  }
                   whileHover={{ x: 4 }}
                   transition={{ type: 'spring', stiffness: 400 }}
                 >
-                  <Icon className="w-4 h-4 text-astroide flex-shrink-0" />
-                  <span className="text-gray-300">{label}</span>
+                  <Icon className={`w-4 h-4 flex-shrink-0 ${highlight ? 'text-[#25D366]' : 'text-astroide'}`} />
+                  <span className={highlight ? 'text-white font-medium' : 'text-gray-300'}>{label}</span>
                 </motion.a>
               ))}
             </motion.div>
@@ -153,8 +157,20 @@ const Contact = () => {
                 />
               </motion.a>
               <p className="text-gray-400 text-xs text-center leading-relaxed">
-                Scanner pour ajouter aux contacts<br />ou cliquer pour télécharger
+                Scanner pour ajouter aux contacts
               </p>
+              <motion.a
+                href="/karim-saari.vcf"
+                download="karim-saari.vcf"
+                onClick={() => trackEvent('contact_click', { method: 'vcard', source: 'button' })}
+                className="flex items-center gap-2 px-5 py-2.5 rounded-xl text-sm font-semibold text-white transition-all"
+                style={{ background: 'rgba(0,171,168,0.85)', boxShadow: '0 0 16px rgba(0,171,168,0.35)' }}
+                whileHover={{ scale: 1.05, boxShadow: '0 0 24px rgba(0,171,168,0.55)' }}
+                transition={{ type: 'spring', stiffness: 300 }}
+              >
+                <UserPlus className="w-4 h-4" />
+                Ajouter aux contacts
+              </motion.a>
             </motion.div>
           </div>
         </motion.div>
