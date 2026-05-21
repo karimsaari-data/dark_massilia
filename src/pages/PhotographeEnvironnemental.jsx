@@ -257,41 +257,39 @@ const PhotographeEnvironnemental = () => {
         >
           <motion.div {...cardHover} variants={FADE_IN_UP} className="glass-strong rounded-3xl p-8 md:p-12">
 
-            {/* En-tête bio : H2 + stats à gauche, portrait à droite */}
-            <div className="grid grid-cols-1 md:grid-cols-[1fr_180px] gap-6 items-start mb-6">
-              <div>
-                <h2 className="text-xl md:text-2xl font-bold text-white mb-4">
-                  Photographe environnemental à Marseille — Qui suis-je ?
-                </h2>
-                <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
-                  {HERO_STATS.map(({ end, suffix, label, duration }) => (
-                    <div key={label} className="rounded-xl bg-white/5 border border-white/8 p-3 text-center">
-                      <p className="text-sm md:text-base font-bold text-ocean-teal leading-tight tabular-nums">
-                        <StatCounter end={end} suffix={suffix} duration={duration} />
-                      </p>
-                      <p className="text-[10px] text-text-secondary mt-0.5 leading-snug">{label}</p>
-                    </div>
-                  ))}
+            <h2 className="text-xl md:text-2xl font-bold text-white mb-4">
+              Photographe environnemental à Marseille — Qui suis-je ?
+            </h2>
+
+            {/* Portrait flottant — le texte enveloppe naturellement */}
+            <div className="hidden md:block float-right ml-6 mb-4 w-44">
+              <div
+                className="relative rounded-sm overflow-hidden ring-1 ring-ocean-teal/40 mb-3"
+                style={{ aspectRatio: '3/4', boxShadow: '0 0 24px rgba(0,171,168,0.18)' }}
+              >
+                <img
+                  src="/images/Partenaires/partenaires-karim-saari-mer-terre-calanques-propres-2024.webp"
+                  alt="Karim Saari — Calanques Propres 2024, opération Mer Terre"
+                  className="absolute inset-0 w-full h-full object-cover"
+                  style={{ objectPosition: '50% 15%' }}
+                  loading="lazy"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" aria-hidden="true" />
+                <div className="absolute bottom-0 left-0 right-0 p-2">
+                  <p className="text-white text-xs font-medium">Karim Saari</p>
+                  <p className="text-white/50 text-[10px]">© Fougue Photographie</p>
                 </div>
               </div>
-              <div className="hidden md:block">
-                <div
-                  className="relative rounded-sm overflow-hidden ring-1 ring-ocean-teal/40"
-                  style={{ aspectRatio: '3/4', boxShadow: '0 0 24px rgba(0,171,168,0.18)' }}
-                >
-                  <img
-                    src="/images/Partenaires/partenaires-karim-saari-mer-terre-calanques-propres-2024.webp"
-                    alt="Karim Saari — Calanques Propres 2024, opération Mer Terre"
-                    className="absolute inset-0 w-full h-full object-cover"
-                    style={{ objectPosition: '50% 15%' }}
-                    loading="lazy"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" aria-hidden="true" />
-                  <div className="absolute bottom-0 left-0 right-0 p-2">
-                    <p className="text-white text-xs font-medium">Karim Saari</p>
-                    <p className="text-white/50 text-[10px]">© Fougue Photographie</p>
+              {/* Stats empilées sous le portrait */}
+              <div className="grid grid-cols-2 gap-2">
+                {HERO_STATS.map(({ end, suffix, label, duration }) => (
+                  <div key={label} className="rounded-xl bg-white/5 border border-white/8 p-2 text-center">
+                    <p className="text-xs font-bold text-ocean-teal leading-tight tabular-nums">
+                      <StatCounter end={end} suffix={suffix} duration={duration} />
+                    </p>
+                    <p className="text-[9px] text-text-secondary mt-0.5 leading-snug">{label}</p>
                   </div>
-                </div>
+                ))}
               </div>
             </div>
 
@@ -306,6 +304,8 @@ const PhotographeEnvironnemental = () => {
             <p className="text-text-secondary leading-relaxed text-base md:text-lg mb-5">
               J'ai rejoint l'association <strong className="text-white">Team Oxygen</strong> dès la première édition du <strong className="text-white">Projet Sentinelle</strong> — une opération annuelle de dépollution sous-marine en apnée — dont je suis président depuis janvier 2026, après en avoir été vice-président depuis les origines. Quatre éditions (2022, 2023, 2024, 2025) ont mobilisé des dizaines de bénévoles dans les Calanques, l'Archipel du Frioul, la Côte Bleue et la Rade de Marseille. Bilan : <strong className="text-white">5 724 kg de déchets remontés des fonds</strong> — pneus, cordages, filets fantômes, plastiques de toutes tailles — caractérisés, pesés et restitués aux autorités. La méthodologie de caractérisation développée par Team Oxygen sert aujourd'hui de référence pour d'autres opérations de dépollution marine en France.
             </p>
+
+            <div className="clear-both" />
 
             {/* Stat callout */}
             <div className="flex items-center gap-5 bg-ocean-teal/8 border border-ocean-teal/20 rounded-xl p-4 mb-5">
