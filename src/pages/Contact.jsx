@@ -81,35 +81,37 @@ const Contact = () => {
             className="flex flex-col lg:flex-row"
             style={{ background: 'linear-gradient(160deg, rgba(11,28,45,0.97) 0%, rgba(6,18,30,0.99) 100%)' }}
           >
-            {/* Colonne gauche — identité */}
+            {/* Colonne gauche — photo carrée */}
             <motion.div
               variants={{ hidden: { opacity: 0, x: -20 }, visible: { opacity: 1, x: 0, transition: { duration: 0.5 } } }}
-              className="flex flex-col items-center justify-center gap-4 p-8 lg:w-64 lg:border-r border-white/10"
+              className="lg:w-56 lg:border-r border-white/10 overflow-hidden flex-shrink-0"
             >
               <motion.div
-                whileHover={{ scale: 1.05 }}
-                transition={{ type: 'spring', stiffness: 300 }}
-                className="w-32 h-32 rounded-full overflow-hidden ring-2 ring-astroide/40 ring-offset-2 ring-offset-transparent"
+                whileHover={{ scale: 1.03 }}
+                transition={{ type: 'spring', stiffness: 200 }}
+                className="w-full h-full"
               >
                 <img
                   src="/images/karim-saari-photo-profil-arte-regard-marseille_300w.webp"
                   alt="Karim Saari"
-                  width="128"
-                  height="128"
-                  className="w-full h-full object-cover"
+                  width="224"
+                  height="224"
+                  className="w-full h-full object-cover aspect-square lg:aspect-auto"
+                  style={{ minHeight: '200px' }}
                 />
               </motion.div>
-              <div className="text-center">
-                <p className="text-astroide text-sm font-semibold">Dark Massilia</p>
-                <p className="text-gray-400 text-xs mt-1">Photographe environnemental · Marseille</p>
-              </div>
             </motion.div>
 
-            {/* Colonne centre — coordonnées (staggerées) */}
+            {/* Colonne centre — identité + coordonnées */}
             <motion.div
               variants={STAGGER_CONTAINER}
               className="flex flex-col justify-center gap-2 p-8 flex-1 border-t lg:border-t-0 lg:border-r border-white/10 text-sm"
             >
+              <motion.div variants={FADE_IN_UP} className="mb-2">
+                <p className="text-white font-bold text-base leading-tight">Karim Saari</p>
+                <p className="text-astroide text-sm font-medium">Dark Massilia</p>
+                <p className="text-gray-500 text-xs mt-0.5">Photographe environnemental · Marseille</p>
+              </motion.div>
               {CONTACT_ROWS.map(({ href, icon: Icon, label, event, external, highlight }) => (
                 <motion.a
                   key={label}
