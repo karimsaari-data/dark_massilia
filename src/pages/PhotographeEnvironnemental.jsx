@@ -265,91 +265,34 @@ const PhotographeEnvironnemental = () => {
             {UNIVERSES.map(({ id, title, galleries }) => (
               <motion.div key={id} variants={FADE_IN_UP}>
                 <p className="text-xs font-semibold uppercase tracking-widest text-ocean-teal mb-3">{title}</p>
-                {id === 'sous-marin' ? (
-                  /* Univers sous-marin : Dépollution en vedette
-                     Mobile : 1 col, featured en pleine largeur 16/9
-                     sm+    : 2 cols, featured row-span-2 portrait */
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                    {galleries.map(({ to, label, desc, cta, img, alt }, idx) => (
-                      <Link
-                        key={to}
-                        to={to}
-                        className={`group block relative rounded-sm overflow-hidden ring-1 ring-white/10 hover:ring-ocean-teal/40 transition-all duration-300${idx === 0 ? ' sm:row-span-2' : ''}`}
-                      >
-                        {idx === 0 ? (
-                          /* Featured */
-                          <div className="aspect-[16/9] sm:aspect-auto sm:h-full sm:min-h-[300px]">
-                            <img
-                              src={img}
-                              alt={alt}
-                              className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
-                              style={{ objectPosition: '45% 45%' }}
-                              loading="lazy"
-                            />
-                            <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/30 to-transparent" aria-hidden="true" />
-                            <div className="absolute bottom-0 left-0 right-0 p-3 md:p-4">
-                              <h3 className="text-sm font-bold text-white mb-0.5">{label}</h3>
-                              <p className="text-white/70 text-xs mb-2 leading-snug">{desc}</p>
-                              <span className="inline-flex items-center gap-2 text-ocean-teal text-xs font-medium group-hover:gap-3 transition-all">
-                                {cta} <ArrowRight className="w-3.5 h-3.5" aria-hidden="true" />
-                              </span>
-                            </div>
-                          </div>
-                        ) : (
-                          /* Cards secondaires */
-                          <div className="aspect-[16/9] sm:aspect-[4/3] relative">
-                            <img
-                              src={img}
-                              alt={alt}
-                              className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
-                              loading="lazy"
-                            />
-                            <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/30 to-transparent" aria-hidden="true" />
-                            <div className="absolute bottom-0 left-0 right-0 p-3">
-                              <h3 className="text-sm font-bold text-white mb-0.5">{label}</h3>
-                              <p className="text-white/70 text-xs mb-1.5 leading-snug">{desc}</p>
-                              <span className="inline-flex items-center gap-2 text-ocean-teal text-xs font-medium group-hover:gap-3 transition-all">
-                                {cta} <ArrowRight className="w-3.5 h-3.5" aria-hidden="true" />
-                              </span>
-                            </div>
-                          </div>
-                        )}
-                      </Link>
-                    ))}
-                  </div>
-                ) : (
-                  /* Univers paysages : 3 colonnes égales */
-                  <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
-                    {galleries.map(({ to, label, desc, cta, img, srcset, sizes, alt }) => (
-                      <Link
-                        key={to}
-                        to={to}
-                        className="group block relative rounded-sm overflow-hidden ring-1 ring-white/10 hover:ring-ocean-teal/40 transition-all duration-300"
-                      >
-                        <div className="aspect-[16/9] relative">
-                          <img
-                            src={img}
-                            srcSet={srcset}
-                            sizes={sizes}
-                            alt={alt}
-                            width={1920}
-                            height={1080}
-                            className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
-                            loading="lazy"
-                          />
-                          <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/30 to-transparent" aria-hidden="true" />
-                          <div className="absolute bottom-0 left-0 right-0 p-3 md:p-4">
-                            <h3 className="text-sm font-bold text-white mb-0.5">{label}</h3>
-                            <p className="text-white/70 text-xs mb-2 leading-snug">{desc}</p>
-                            <span className="inline-flex items-center gap-2 text-ocean-teal text-xs font-medium group-hover:gap-3 transition-all">
-                              {cta} <ArrowRight className="w-3.5 h-3.5" aria-hidden="true" />
-                            </span>
-                          </div>
+                <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+                  {galleries.map(({ to, label, desc, cta, img, srcset, sizes, alt }) => (
+                    <Link
+                      key={to}
+                      to={to}
+                      className="group block relative rounded-sm overflow-hidden ring-1 ring-white/10 hover:ring-ocean-teal/40 transition-all duration-300"
+                    >
+                      <div className="aspect-[16/9] relative">
+                        <img
+                          src={img}
+                          srcSet={srcset}
+                          sizes={sizes}
+                          alt={alt}
+                          className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
+                          loading="lazy"
+                        />
+                        <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/30 to-transparent" aria-hidden="true" />
+                        <div className="absolute bottom-0 left-0 right-0 p-3 md:p-4">
+                          <h3 className="text-sm font-bold text-white mb-0.5">{label}</h3>
+                          <p className="text-white/70 text-xs mb-2 leading-snug">{desc}</p>
+                          <span className="inline-flex items-center gap-2 text-ocean-teal text-xs font-medium group-hover:gap-3 transition-all">
+                            {cta} <ArrowRight className="w-3.5 h-3.5" aria-hidden="true" />
+                          </span>
                         </div>
-                      </Link>
-                    ))}
-                  </div>
-                )}
+                      </div>
+                    </Link>
+                  ))}
+                </div>
               </motion.div>
             ))}
           </motion.div>
