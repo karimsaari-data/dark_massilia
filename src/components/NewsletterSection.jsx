@@ -65,7 +65,7 @@ const NewsletterSection = () => {
 
           {/* Badge */}
           <span className="inline-flex items-center gap-1.5 px-4 py-1.5 rounded-full bg-white/15 border border-white/30 text-white text-xs font-semibold mb-6 backdrop-blur-sm">
-            🎁 Offert à l'inscription
+            🎁 1 photo exclusive offerte
           </span>
 
           {/* Titre */}
@@ -76,7 +76,7 @@ const NewsletterSection = () => {
 
           {/* Sous-titre */}
           <p className="text-white/70 text-base md:text-lg leading-relaxed mb-8 max-w-lg">
-            Missions de dépollution, clichés inédits, plongées en apnée, faune des Calanques — et une photo exclusive offerte dès l'inscription.
+            Reçois une photo exclusive des Calanques dès ton inscription — puis missions de dépollution, clichés inédits, plongées en apnée et faune sous-marine directement dans ta boîte mail.
           </p>
 
           {/* Formulaire / États */}
