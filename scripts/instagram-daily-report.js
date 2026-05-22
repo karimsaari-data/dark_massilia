@@ -285,6 +285,7 @@ async function sendEmail(html, subject, attachments = []) {
   const igTopReach  = [...igPosts].sort((a,b)=>b.reach  -a.reach ).slice(0,3);
   const igTopShares = [...igPosts].sort((a,b)=>b.shares -a.shares).slice(0,3);
   const igTopER     = [...igPosts].sort((a,b)=>b.er     -a.er    ).slice(0,3);
+  const igTopLikes  = [...igPosts].sort((a,b)=>b.likes  -a.likes ).slice(0,3);
 
   // ── Calculs Facebook ──
   const fbTotalReach    = fbPosts.reduce((s,p)=>s+p.reach,0);
@@ -380,11 +381,6 @@ async function sendEmail(html, subject, attachments = []) {
     </td>
   </tr></table>
 
-  <div style="background:#e7f5ee;border-left:4px solid #16a34a;padding:8px 14px;margin-bottom:14px;border-radius:0 6px 6px 0">
-    <strong style="color:#16a34a;font-size:13px">@${igProfile.username}</strong>
-    <span style="color:#555;font-size:11px;margin-left:12px">${fmtNum(igProfile.followers_count)} abonnés · ${fmtNum(igProfile.media_count)} publications</span>
-  </div>
-
   <!-- ══════════════════════════════════════════════ -->
   <!-- ══            SECTION INSTAGRAM             ══ -->
   <!-- ══════════════════════════════════════════════ -->
@@ -456,6 +452,16 @@ async function sendEmail(html, subject, attachments = []) {
         <tbody>${igTopER.map((p,i)=>igPodiumRow(p,i,p.er,p.er)).join('')}</tbody></table>
       </td>
       <td style="width:50%;padding-left:10px">
+        ${sectionTitle('❤️','Top Likes Instagram','#16a34a')}
+        <table><thead><tr>${th('','center')}${th('','center')}${th('Post','left')}${th('Likes')}${th('Reach')}</tr></thead>
+        <tbody>${igTopLikes.map((p,i)=>igPodiumRow(p,i,p.likes,p.reach)).join('')}</tbody></table>
+      </td>
+    </tr>
+  </table>
+
+  <table style="margin-bottom:24px">
+    <tr style="vertical-align:top">
+      <td style="width:100%">
         ${sectionTitle('📊','Performance par type','#16a34a')}
         <table><thead><tr>${th('Type','left')}${th('Posts','center')}${th('Reach moy.')}${th('Tx.eng.moy.')}</tr></thead>
         <tbody>${igTypeRows}</tbody></table>
