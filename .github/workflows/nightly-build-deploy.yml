@@ -104,6 +104,7 @@ jobs:
             # pour que les déploiements restent rapides (< 5 min).
             # Pour forcer un re-upload des images : commenter temporairement ces lignes.
             images/**
+            !images/karim-saari.vcf
 
       # ── 6. Purge cache Cloudflare ────────────────────────────────────────────
       - name: Purge cache Cloudflare
