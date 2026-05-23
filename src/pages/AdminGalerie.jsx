@@ -256,6 +256,7 @@ const PhotoRow = ({ photo, onSave, onToggleVisible, onPreview, onDelete, showCat
   const [saved, setSaved]       = useState(false);
   const [deleting, setDeleting] = useState(false);
   const [expanded, setExpanded] = useState(false);
+  const [imgBroken, setImgBroken] = useState(false);
 
   const dirty = GALERIE_FIELDS.some(f => draft[f.key] !== photo[f.key])
     || draft.lat !== (photo.lat ?? null)
@@ -291,7 +292,19 @@ const PhotoRow = ({ photo, onSave, onToggleVisible, onPreview, onDelete, showCat
           className="relative w-48 h-32 flex-shrink-0 cursor-zoom-in group"
           onClick={e => { e.stopPropagation(); onPreview(photo); }}
         >
-          <img src={photo.src} alt="" className="w-full h-full object-cover rounded-lg bg-white/5 group-hover:brightness-75 transition-all" loading="lazy" />
+          <img
+            src={photo.src}
+            alt=""
+            className={`w-full h-full object-cover rounded-lg bg-white/5 group-hover:brightness-75 transition-all ${imgBroken ? 'opacity-0' : ''}`}
+            loading="lazy"
+            onError={() => setImgBroken(true)}
+          />
+          {imgBroken && (
+            <div className="absolute inset-0 flex flex-col items-center justify-center rounded-lg bg-red-500/10 border border-red-500/30 gap-1.5 pointer-events-none">
+              <span className="text-lg">⚠️</span>
+              <span className="text-[10px] font-semibold text-red-400 text-center px-1 leading-tight">image manquante</span>
+            </div>
+          )}
           <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
             <div className="w-8 h-8 rounded-full bg-black/60 flex items-center justify-center">
               <Eye className="w-4 h-4 text-white" />
