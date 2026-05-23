@@ -18,7 +18,9 @@ const SUPABASE_URL = 'https://bzlllfmpojcybuyuemdx.supabase.co';
 const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImJ6bGxsZm1wb2pjeWJ1eXVlbWR4Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzEwMzQ1NjQsImV4cCI6MjA4NjYxMDU2NH0.A1nGk9fsNgukxo4WggzFF-lgOFHDaCJS0phbeldx6xY';
 const supabase = createClient(SUPABASE_URL, SUPABASE_KEY);
 
-const EXIFTOOL_PATH = 'C:\\Users\\ksaari\\AppData\\Local\\Programs\\ExifTool\\ExifTool.exe';
+// ExifTool — binaire local au projet en priorité, sinon PATH système
+const _EXIFTOOL_LOCAL = join(process.cwd(), 'scripts', 'exiftool', 'ExifTool.exe');
+const EXIFTOOL_PATH = existsSync(_EXIFTOOL_LOCAL) ? _EXIFTOOL_LOCAL : 'exiftool';
 const EXIF_CREATOR   = 'Karim Saari';
 const EXIF_COPYRIGHT = '(c) Karim Saari - Dark Massilia - karimsaari.com';
 

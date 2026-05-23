@@ -798,7 +798,76 @@ const TabStatsFB = () => {
   );
 };
 
-/* ── Tab Contrôle EXIF ──────────────────────────────────────── */
+/* ── Composants utilitaires EXIF (module-level pour ExifRow) ── */
+const ExifBadge = ({ ok, label }) => (
+  <span className={`inline-flex items-center gap-1 px-1.5 py-0.5 rounded text-xs font-mono ${
+    ok === true  ? 'bg-[#21c47b]/15 text-[#21c47b]' :
+    ok === false ? 'bg-red-500/15 text-red-400' :
+                   'bg-white/5 text-white/30'
+  }`}>
+    {ok === true ? '✓' : ok === false ? '✗' : '—'} {label}
+  </span>
+);
+
+const ExifDetailRow = ({ label, val, ok, dbVal, colSpan }) => (
+  <div className={colSpan ? 'md:col-span-2' : ''}>
+    <span className={`text-white/30 mr-2 ${dbVal ? 'text-[#21c47b]/50' : ''}`}>{label} :</span>
+    {val != null && val !== ''
+      ? <span className={ok === true ? 'text-[#21c47b]' : ok === false ? 'text-red-400' : 'text-white/70'}>{val}</span>
+      : <span className="text-white/20 italic">vide</span>
+    }
+  </div>
+);
+
+/* ── Ligne EXIF avec détection image cassée ─────────────────── */
+const ExifRow = ({ db, exif, c, isOpen, onToggle, children }) => {
+  const [imgBroken, setImgBroken] = useState(false);
+  const filename = db.src.split('/').pop();
+  return (
+    <div className={`border rounded-lg overflow-hidden ${
+      imgBroken ? 'border-red-500/40 bg-red-500/5' :
+      !exif ? 'border-red-500/20 bg-red-500/5' : isOpen ? 'border-[#21c47b]/40 bg-white/5' : 'border-white/8 bg-white/3'
+    }`}>
+      <div
+        className="px-3 py-2.5 flex items-center gap-3 cursor-pointer hover:bg-white/5 transition-colors"
+        onClick={onToggle}
+      >
+        <div className="relative w-20 h-14 flex-shrink-0">
+          <img
+            src={db.src}
+            alt=""
+            className={`w-20 h-14 rounded object-cover bg-white/5 ${imgBroken ? 'opacity-0' : ''}`}
+            loading="lazy"
+            onError={() => setImgBroken(true)}
+          />
+          {imgBroken && (
+            <div className="absolute inset-0 flex flex-col items-center justify-center rounded bg-red-500/15 border border-red-500/40 gap-0.5">
+              <span className="text-sm">⚠️</span>
+              <span className="text-[9px] font-semibold text-red-400 text-center leading-tight">image<br/>manquante</span>
+            </div>
+          )}
+        </div>
+        <div className="flex-1 min-w-0">
+          <p className="text-xs text-white/80 font-medium truncate">
+            {db.title || <span className="text-white/30 italic">sans titre</span>}
+          </p>
+          <p className="text-xs text-white/25 font-mono truncate">{filename}</p>
+        </div>
+        <div className="flex items-center gap-1.5 flex-shrink-0">
+          {imgBroken && <span className="text-[10px] font-semibold text-red-400 font-mono">fichier KO</span>}
+          <ExifBadge ok={exif ? c.titleOk : null}                      label="titre" />
+          <ExifBadge ok={c.gpsDb ? (exif ? c.gpsOk : null) : undefined} label="gps" />
+          <ExifBadge ok={exif ? c.kwOk : null}                         label="kw" />
+          {!exif && <span className="text-xs text-red-400 font-mono">non audité</span>}
+          <span className="text-white/20 text-xs ml-1">{isOpen ? '▲' : '▼'}</span>
+        </div>
+      </div>
+      {children}
+    </div>
+  );
+};
+
+/* ── Tab Contrôle EXIF ─────────────────────────────────────── */
 const TabExif = () => {
   const [rows, setRows]       = useState([]);
   const [loading, setLoading] = useState(true);
@@ -849,25 +918,6 @@ const TabExif = () => {
     return true;
   });
 
-  const Row = ({ label, val, ok, dbVal, colSpan }) => (
-    <div className={colSpan ? 'md:col-span-2' : ''}>
-      <span className={`text-white/30 mr-2 ${dbVal ? 'text-[#21c47b]/50' : ''}`}>{label} :</span>
-      {val != null && val !== ''
-        ? <span className={ok === true ? 'text-[#21c47b]' : ok === false ? 'text-red-400' : 'text-white/70'}>{val}</span>
-        : <span className="text-white/20 italic">vide</span>
-      }
-    </div>
-  );
-
-  const Badge = ({ ok, label }) => (
-    <span className={`inline-flex items-center gap-1 px-1.5 py-0.5 rounded text-xs font-mono ${
-      ok === true  ? 'bg-[#21c47b]/15 text-[#21c47b]' :
-      ok === false ? 'bg-red-500/15 text-red-400' :
-                     'bg-white/5 text-white/30'
-    }`}>
-      {ok === true ? '✓' : ok === false ? '✗' : '—'} {label}
-    </span>
-  );
 
   if (loading) return (
     <div className="flex justify-center py-20">
@@ -934,38 +984,16 @@ const TabExif = () => {
       <div className="space-y-1">
         {filtered.map(({ db, exif }) => {
           const c = check(db, exif);
-          const filename = db.src.split('/').pop();
           const isOpen = expanded === db.src;
           return (
-            <div key={db.src} className={`border rounded-lg overflow-hidden ${
-              !exif ? 'border-red-500/20 bg-red-500/5' : isOpen ? 'border-[#21c47b]/40 bg-white/5' : 'border-white/8 bg-white/3'
-            }`}>
-              {/* Ligne principale — cliquable */}
-              <div
-                className="px-3 py-2.5 flex items-center gap-3 cursor-pointer hover:bg-white/5 transition-colors"
-                onClick={() => setExpanded(isOpen ? null : db.src)}
-              >
-                <img
-                  src={db.src}
-                  alt=""
-                  className="w-20 h-14 rounded object-cover flex-shrink-0 bg-white/5"
-                  loading="lazy"
-                />
-                <div className="flex-1 min-w-0">
-                  <p className="text-xs text-white/80 font-medium truncate">
-                    {db.title || <span className="text-white/30 italic">sans titre</span>}
-                  </p>
-                  <p className="text-xs text-white/25 font-mono truncate">{filename}</p>
-                </div>
-                <div className="flex items-center gap-1.5 flex-shrink-0">
-                  <Badge ok={exif ? c.titleOk : null}                      label="titre" />
-                  <Badge ok={c.gpsDb ? (exif ? c.gpsOk : null) : undefined} label="gps" />
-                  <Badge ok={exif ? c.kwOk : null}                         label="kw" />
-                  {!exif && <span className="text-xs text-red-400 font-mono">non audité</span>}
-                  <span className="text-white/20 text-xs ml-1">{isOpen ? '▲' : '▼'}</span>
-                </div>
-              </div>
-
+            <ExifRow
+              key={db.src}
+              db={db}
+              exif={exif}
+              c={c}
+              isOpen={isOpen}
+              onToggle={() => setExpanded(isOpen ? null : db.src)}
+            >
               {/* Panneau de détail EXIF */}
               {isOpen && (
                 <div className="border-t border-white/8 px-4 py-3 bg-black/20 text-xs font-mono">
@@ -974,33 +1002,33 @@ const TabExif = () => {
                   ) : (
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-1.5">
                       {/* ── Titre ── */}
-                      <Row label="DB title"        val={db.title}      dbVal ok={c.titleOk} />
-                      <Row label="XMP title"        val={exif.xmp_title}       ok={c.titleOk} />
+                      <ExifDetailRow label="DB title"        val={db.title}      dbVal ok={c.titleOk} />
+                      <ExifDetailRow label="XMP title"        val={exif.xmp_title}       ok={c.titleOk} />
                       {/* ── Description ── */}
-                      <Row label="XMP description"  val={exif.xmp_description} colSpan />
+                      <ExifDetailRow label="XMP description"  val={exif.xmp_description} colSpan />
                       {/* ── GPS ── */}
-                      <Row label="DB lat/lng"       val={db.lat != null ? `${db.lat}, ${db.lng}` : null} dbVal ok={c.gpsOk || !c.gpsDb} />
-                      <Row label="EXIF lat/lng"     val={exif.gps_lat != null ? `${exif.gps_lat}, ${exif.gps_lng}` : null} ok={c.gpsOk || !c.gpsDb} />
+                      <ExifDetailRow label="DB lat/lng"       val={db.lat != null ? `${db.lat}, ${db.lng}` : null} dbVal ok={c.gpsOk || !c.gpsDb} />
+                      <ExifDetailRow label="EXIF lat/lng"     val={exif.gps_lat != null ? `${exif.gps_lat}, ${exif.gps_lng}` : null} ok={c.gpsOk || !c.gpsDb} />
                       {/* ── Lieu ── */}
-                      <Row label="DB lieu"          val={db.lieu}       dbVal />
-                      <Row label="IPTC city"        val={exif.iptc_city || null} />
-                      <Row label="IPTC country"     val={exif.iptc_country || null} />
-                      <Row label="IPTC state"       val={exif.iptc_state || null} />
+                      <ExifDetailRow label="DB lieu"          val={db.lieu}       dbVal />
+                      <ExifDetailRow label="IPTC city"        val={exif.iptc_city || null} />
+                      <ExifDetailRow label="IPTC country"     val={exif.iptc_country || null} />
+                      <ExifDetailRow label="IPTC state"       val={exif.iptc_state || null} />
                       {/* ── Keywords ── */}
-                      <Row label="XMP keywords"     val={Array.isArray(exif.xmp_keywords) && exif.xmp_keywords.length ? exif.xmp_keywords.join(', ') : null} ok={c.kwOk} colSpan />
+                      <ExifDetailRow label="XMP keywords"     val={Array.isArray(exif.xmp_keywords) && exif.xmp_keywords.length ? exif.xmp_keywords.join(', ') : null} ok={c.kwOk} colSpan />
                       {/* ── Auteur / droits ── */}
-                      <Row label="XMP creator"      val={exif.xmp_creator} />
-                      <Row label="XMP rights"       val={exif.xmp_rights} />
-                      <Row label="EXIF artist"      val={exif.exif_artist} />
-                      <Row label="EXIF copyright"   val={exif.exif_copyright} />
+                      <ExifDetailRow label="XMP creator"      val={exif.xmp_creator} />
+                      <ExifDetailRow label="XMP rights"       val={exif.xmp_rights} />
+                      <ExifDetailRow label="EXIF artist"      val={exif.exif_artist} />
+                      <ExifDetailRow label="EXIF copyright"   val={exif.exif_copyright} />
                       {/* ── Fichier ── */}
-                      <Row label="file_exists"      val={exif.file_exists === true ? 'oui' : exif.file_exists === false ? 'non ⚠️' : null} ok={exif.file_exists !== false} />
-                      <Row label="Vérifié le"       val={exif.checked_at ? new Date(exif.checked_at).toLocaleString('fr-FR') : null} />
+                      <ExifDetailRow label="file_exists"      val={exif.file_exists === true ? 'oui' : exif.file_exists === false ? 'non ⚠️' : null} ok={exif.file_exists !== false} />
+                      <ExifDetailRow label="Vérifié le"       val={exif.checked_at ? new Date(exif.checked_at).toLocaleString('fr-FR') : null} />
                     </div>
                   )}
                 </div>
               )}
-            </div>
+            </ExifRow>
           );
         })}
       </div>
