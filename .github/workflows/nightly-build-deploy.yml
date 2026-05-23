@@ -136,7 +136,7 @@ jobs:
             lftp -e "
               set ftp:passive-mode on
               open -u karimsaari,$FTP_PASS ftp.cluster1.easy-hebergement.net
-              mirror -R dist/images home/images
+              mirror -R dist/images images
               bye
             "
             echo "✅ Toutes les images uploadées"
@@ -172,7 +172,7 @@ jobs:
             echo "open -u karimsaari,$FTP_PASS ftp.cluster1.easy-hebergement.net"
             while IFS= read -r f; do
               local_file="dist/${f#public/}"
-              remote_file="home/${f#public/}"
+              remote_file="${f#public/}"
               remote_dir=$(dirname "$remote_file")
               echo "mkdir -fp $remote_dir"
               echo "put $local_file -o $remote_file"
