@@ -7,6 +7,12 @@ on:
   schedule:
     - cron: '0 3 * * *'   # 3h UTC = 4h/5h heure de Paris
   workflow_dispatch:        # déclenchement manuel depuis GitHub Actions
+    inputs:
+      force_images:
+        description: 'Forcer l''upload de TOUTES les images (626 Mo, ~20 min)'
+        required: false
+        default: 'false'
+        type: boolean
   repository_dispatch:
     types: [wp-article-published]  # déclenché par le webhook WordPress à chaque publication
 
@@ -105,6 +111,68 @@ jobs:
             # Pour forcer un re-upload des images : commenter temporairement ces lignes.
             images/**
             !images/karim-saari.vcf
+
+      # ── 5b. Upload nouvelles images (ajoutées dans ce push) ─────────────────
+      # Le step FTP principal exclut images/** pour la perf (626 Mo).
+      # Ce step détecte les images ajoutées depuis le commit précédent et les
+      # uploade via lftp. Si force_images=true (workflow_dispatch), uploade tout.
+      - name: Upload nouvelles images FTP
+        env:
+          FTP_PASS: ${{ secrets.FTP_PASSWORD }}
+        run: |
+          FORCE="${{ inputs.force_images }}"
+
+          if [ "$FORCE" = "true" ]; then
+            echo "🗂️  Mode force : upload de toutes les images dist/images/"
+            sudo apt-get install -y lftp -q 2>/dev/null
+            lftp -e "
+              set ftp:passive-mode on
+              open -u karimsaari,$FTP_PASS ftp.cluster1.easy-hebergement.net
+              mirror -R dist/images home/images
+              bye
+            "
+            echo "✅ Toutes les images uploadées"
+            exit 0
+          fi
+
+          # Détecte les images ajoutées depuis le commit précédent
+          BEFORE="${{ github.event.before }}"
+          AFTER="${{ github.sha }}"
+
+          if echo "$BEFORE" | grep -q '^0\+$'; then
+            # Premier push : compare juste le commit courant
+            NEW=$(git show --diff-filter=A --name-only --format="" "$AFTER" \
+                  | grep -E '^public/images/.*\.(webp|jpg|jpeg|png|gif)$' || true)
+          else
+            NEW=$(git log --diff-filter=A --name-only --format="" "$BEFORE..$AFTER" \
+                  | grep -E '^public/images/.*\.(webp|jpg|jpeg|png|gif)$' | sort -u || true)
+          fi
+
+          if [ -z "$NEW" ]; then
+            echo "Aucune nouvelle image dans ce push"
+            exit 0
+          fi
+
+          COUNT=$(echo "$NEW" | wc -l)
+          echo "📸 $COUNT nouvelle(s) image(s) à déployer :"
+          echo "$NEW"
+
+          sudo apt-get install -y lftp -q 2>/dev/null
+
+          (
+            echo "set ftp:passive-mode on"
+            echo "open -u karimsaari,$FTP_PASS ftp.cluster1.easy-hebergement.net"
+            while IFS= read -r f; do
+              local_file="dist/${f#public/}"
+              remote_file="home/${f#public/}"
+              remote_dir=$(dirname "$remote_file")
+              echo "mkdir -fp $remote_dir"
+              echo "put $local_file -o $remote_file"
+            done <<< "$NEW"
+            echo "bye"
+          ) | lftp
+
+          echo "✅ $COUNT image(s) uploadée(s)"
 
       # ── 6. Purge cache Cloudflare ────────────────────────────────────────────
       - name: Purge cache Cloudflare
