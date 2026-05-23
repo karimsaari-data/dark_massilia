@@ -19,7 +19,7 @@
     "wp:alt-vision-dry": "node scripts/wp-alt-vision.mjs --posts-only",
     "post-deploy": "node scripts/notify-new-articles.js && node scripts/notify-indexnow.js",
     "notify": "node scripts/notify-new-articles.js",
-    "build:full": "node scripts/generate-sitemap.js && node scripts/generate-sitemap-images.js && vite build && node scripts/prerender.js && node scripts/generate-photo-shares.js && node scripts/notify-new-articles.js",
+    "build:full": "node scripts/generate-sitemap.js && node scripts/generate-sitemap-images.js && vite build && node scripts/prerender.js && node scripts/generate-photo-shares.js",
     "indexnow": "node scripts/notify-indexnow.js",
     "wp:cache": "node scripts/update-wp-cache.js",
     "lint": "eslint .",
