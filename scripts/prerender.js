@@ -16,10 +16,28 @@ import fs   from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath, pathToFileURL } from 'node:url';
 import { build as viteBuild } from 'vite';
+import { createClient } from '@supabase/supabase-js';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const rootDir   = path.resolve(__dirname, '..');
 const distDir   = path.resolve(rootDir, 'dist');
+
+// ── Chargement des variables d'environnement depuis .env ─────────────────────
+function loadEnv() {
+  const envPath = path.resolve(__dirname, '../.env');
+  if (!fs.existsSync(envPath)) return {};
+  const env = {};
+  fs.readFileSync(envPath, 'utf-8').split('\n').forEach(line => {
+    const match = line.replace(/\r$/, '').match(/^([A-Z_][A-Z0-9_]*)=(.*)$/);
+    if (match) env[match[1]] = match[2].replace(/^["']|["']$/g, '').trim();
+  });
+  return env;
+}
+
+const _env    = loadEnv();
+const _sbUrl  = _env.VITE_SUPABASE_URL      ?? process.env.VITE_SUPABASE_URL;
+const _sbKey  = _env.VITE_SUPABASE_ANON_KEY ?? process.env.VITE_SUPABASE_ANON_KEY;
+const sbClient = _sbUrl && _sbKey ? createClient(_sbUrl, _sbKey) : null;
 
 // ── Routes statiques à prérendrer ────────────────────────────────────────────
 const STATIC_ROUTES = [
@@ -47,6 +65,7 @@ const STATIC_ROUTES = [
   '/confidentialite',
   '/plan-du-site',
   '/admin',
+  '/admin-blog',
   '/blog/categorie/depollution',
   '/blog/categorie/biodiversite',
   '/blog/categorie/calanques',
@@ -73,6 +92,111 @@ function saveWPCache(postsMap) {
     const posts = Array.from(postsMap.values());
     fs.writeFileSync(WP_CACHE_PATH, JSON.stringify({ generated: new Date().toISOString(), posts }, null, 2), 'utf-8');
   } catch (_) {}
+}
+
+// ── Cache Supabase (source primaire) ─────────────────────────────────────────
+
+/** Charge tous les articles depuis Supabase et retourne une Map<slug, post>. */
+async function loadSupabaseCache() {
+  if (!sbClient) return new Map();
+  try {
+    const { data, error } = await sbClient
+      .from('blog_posts')
+      .select('*');
+    if (error) {
+      console.warn(`  ⚠️  Supabase loadSupabaseCache : ${error.message}`);
+      return new Map();
+    }
+    const map = new Map();
+    (data ?? []).forEach(row => {
+      // Convertir snake_case → camelCase pour correspondre au format attendu par prerender
+      map.set(row.slug, {
+        id:            row.wp_id,
+        slug:          row.slug,
+        title:         row.title,
+        excerpt:       row.excerpt,
+        content:       row.content,
+        date:          row.date,
+        modified:      row.modified,
+        dateFormatted: row.date_formatted,
+        image:         row.image,
+        imageOg:       row.image_og,
+        imageSrcset:   row.image_srcset,
+        imageWidth:    row.image_width,
+        imageHeight:   row.image_height,
+        imageAlt:      row.image_alt,
+        author:        row.author,
+      });
+    });
+    return map;
+  } catch (err) {
+    console.warn(`  ⚠️  Supabase loadSupabaseCache exception : ${err.message}`);
+    return new Map();
+  }
+}
+
+/** Upsert la Map<slug, post> dans Supabase + met à jour le JSON de fallback. */
+async function saveSupabaseCache(postsMap) {
+  // Maintenir le fichier JSON fallback dans tous les cas
+  saveWPCache(postsMap);
+
+  if (!sbClient) return;
+
+  try {
+    const slugs = Array.from(postsMap.keys());
+
+    // 1. Récupérer les notified_at existants pour ne pas les écraser
+    const { data: existing, error: fetchErr } = await sbClient
+      .from('blog_posts')
+      .select('slug, notified_at')
+      .in('slug', slugs);
+
+    if (fetchErr) {
+      console.warn(`  ⚠️  Supabase saveSupabaseCache (fetch notified_at) : ${fetchErr.message}`);
+    }
+
+    const notifiedMap = new Map(
+      (existing ?? []).map(row => [row.slug, row.notified_at])
+    );
+
+    // 2. Construire les rows Supabase (camelCase → snake_case)
+    const rows = Array.from(postsMap.values()).map(p => ({
+      wp_id:          p.id,
+      slug:           p.slug,
+      title:          p.title,
+      excerpt:        p.excerpt,
+      content:        p.content,
+      date:           p.date,
+      modified:       p.modified,
+      date_formatted: p.dateFormatted,
+      image:          p.image,
+      image_og:       p.imageOg,
+      image_srcset:   p.imageSrcset,
+      image_width:    p.imageWidth,
+      image_height:   p.imageHeight,
+      image_alt:      p.imageAlt,
+      author:         p.author,
+      notified_at:    notifiedMap.get(p.slug) ?? null,
+      synced_at:      new Date().toISOString(),
+    }));
+
+    // 3. Upsert par batch de 50
+    const BATCH = 50;
+    for (let i = 0; i < rows.length; i += BATCH) {
+      const batch = rows.slice(i, i + BATCH);
+      const { error } = await sbClient
+        .from('blog_posts')
+        .upsert(batch, { onConflict: 'slug' });
+      if (error) {
+        console.warn(`  ⚠️  Supabase upsert batch ${i}–${i + batch.length} : ${error.message}`);
+      }
+    }
+
+    console.log(`  ☁️  Supabase mis à jour (${rows.length} articles)`);
+  } catch (err) {
+    console.warn(`  ⚠️  Supabase saveSupabaseCache exception : ${err.message}`);
+    // Ne pas crasher — le fallback JSON a déjà été sauvegardé
+  }
 }
 
 // ── Récupération des slugs + dates de modification WP ────────────────────────
@@ -201,10 +325,14 @@ function stripEntities(str) {
 async function prerender() {
   console.log('\n🏗  Prérendu statique — Dark Massilia\n');
 
-  // ── 0. Charger le cache local WP (fallback si CMS inaccessible) ─────────
-  const localCache = loadWPCache();
+  // ── 0. Charger le cache (Supabase en priorité, fallback JSON si vide) ───
+  let localCache = await loadSupabaseCache();
+  if (localCache.size === 0) {
+    localCache = loadWPCache();
+    if (localCache.size > 0) console.log(`  📦 Supabase vide — fallback JSON (${localCache.size} articles)`);
+  }
   if (localCache.size > 0) {
-    console.log(`  💾 Cache local : ${localCache.size} article(s) disponibles en fallback`);
+    console.log(`  💾 Cache : ${localCache.size} article(s) disponibles en fallback`);
   }
 
   // ── 0b. Récupérer les métadonnées WP (slug + modified) ──────────────────
@@ -257,11 +385,11 @@ async function prerender() {
       console.log('  📥 Fetch parallèle des articles WP (batch×5)…');
       wpPostCache = await prefetchWPPosts(slugsToUpdate);
       console.log(`  ✅ ${slugsToUpdate.length} article(s) fetchés`);
-      // Mettre à jour le cache local avec les données fraîches
+      // Mettre à jour le cache (Supabase + JSON fallback) avec les données fraîches
       const updatedCache = new Map(localCache);
       wpPostCache.forEach((post, slug) => { if (post) updatedCache.set(slug, post); });
-      saveWPCache(updatedCache);
-      console.log(`  💾 Cache local mis à jour (${updatedCache.size} articles)\n`);
+      await saveSupabaseCache(updatedCache);
+      console.log(`  💾 Cache mis à jour (${updatedCache.size} articles)\n`);
     } else {
       // CMS inaccessible → utiliser les données du cache local
       slugsToUpdate.forEach(slug => {

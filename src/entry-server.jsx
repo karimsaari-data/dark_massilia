@@ -33,8 +33,9 @@ import Sources    from './pages/Sources';
 import CarteSSR         from './pages/CarteSSR';
 import CartePhotosSSR   from './pages/CartePhotosSSR';
 import LocalGuide    from './pages/LocalGuide';
-// AdminCarteSSR = version statique (pas de sessionStorage en Node)
+// AdminCarteSSR / AdminBlogSSR = versions statiques (pas de sessionStorage en Node)
 import AdminCarteSSR from './pages/AdminCarteSSR';
+import AdminBlogSSR  from './pages/AdminBlogSSR';
 import Yab          from './pages/Yab';
 import PhotoSousMarine from './pages/PhotoSousMarine';
 import BlogCategory    from './pages/BlogCategory';
@@ -83,6 +84,7 @@ export function render(url) {
             <Route path="carte-photos"                        element={<CartePhotosSSR />} />
             <Route path="local-guide-marseille"              element={<LocalGuide />} />
             <Route path="admin"                              element={<AdminCarteSSR />} />
+            <Route path="admin-blog"                         element={<AdminBlogSSR />} />
             <Route path="les-francais-yann-arthus-bertrand" element={<Yab />} />
             <Route path="photographe-environnemental-marseille" element={<PhotographeEnvironnemental />} />
             <Route path="acces-massifs-calanques"           element={<AccesMassifs />} />

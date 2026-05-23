@@ -1,26 +1,22 @@
 /**
- * notify-new-articles.js — Notifie les abonnés des nouveaux articles WordPress
+ * notify-new-articles.js — Notifie les abonnés des nouveaux articles
  *
- * Fonctionnement :
- *   1. Lit .notified-slugs.json (log local des slugs déjà notifiés)
- *   2. Récupère tous les slugs publiés depuis WordPress
- *   3. Pour chaque nouveau slug → appelle la Edge Function notify-new-article
- *   4. Met à jour .notified-slugs.json
+ * Fonctionnement (version Supabase) :
+ *   1. Query Supabase : SELECT * FROM blog_posts WHERE notified_at IS NULL
+ *   2. Pour chaque article non notifié → appelle la Edge Function notify-new-article
+ *   3. Sur succès → UPDATE blog_posts SET notified_at = NOW() WHERE slug = ?
  *
  * Usage : appelé automatiquement par `npm run build:blog`
  */
 
-import { readFile, writeFile } from 'fs/promises';
 import { existsSync, readFileSync } from 'fs';
 import { resolve, dirname } from 'path';
 import { fileURLToPath } from 'url';
+import { createClient } from '@supabase/supabase-js';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 
 // ── Config ────────────────────────────────────────────────────────────────────
-
-const LOG_FILE   = resolve(__dirname, '.notified-slugs.json');
-const WP_BASE    = 'https://cms.karimsaari.com/wp-json/wp/v2';
 
 // Charge les variables depuis .env (sans dépendance externe)
 function loadEnv() {
@@ -34,9 +30,10 @@ function loadEnv() {
   return env;
 }
 
-const env            = loadEnv();
-const SUPABASE_URL   = env.VITE_SUPABASE_URL   ?? process.env.VITE_SUPABASE_URL;
-const NOTIFY_SECRET  = env.NOTIFY_SECRET        ?? process.env.NOTIFY_SECRET;
+const env           = loadEnv();
+const SUPABASE_URL  = env.VITE_SUPABASE_URL    ?? process.env.VITE_SUPABASE_URL;
+const SUPABASE_KEY  = env.VITE_SUPABASE_ANON_KEY ?? process.env.VITE_SUPABASE_ANON_KEY;
+const NOTIFY_SECRET = env.NOTIFY_SECRET         ?? process.env.NOTIFY_SECRET;
 
 // ── Helpers ───────────────────────────────────────────────────────────────────
 
@@ -46,7 +43,7 @@ function stripHtml(html) {
     .replace(/\s+/g, ' ')
     .replace(/&amp;/g, '&').replace(/&lt;/g, '<').replace(/&gt;/g, '>')
     .replace(/&quot;/g, '"').replace(/&#039;/g, "'")
-    .replace(/&rsquo;/g, '\u2019').replace(/&lsquo;/g, '\u2018')
+    .replace(/&rsquo;/g, '’').replace(/&lsquo;/g, '‘')
     .replace(/&hellip;/g, '…').replace(/&nbsp;/g, ' ')
     .trim();
 }
@@ -55,7 +52,7 @@ function decodeEntities(str) {
   return str
     .replace(/&amp;/g, '&').replace(/&lt;/g, '<').replace(/&gt;/g, '>')
     .replace(/&quot;/g, '"').replace(/&#039;/g, "'")
-    .replace(/&rsquo;/g, '\u2019').replace(/&eacute;/g, 'é')
+    .replace(/&rsquo;/g, '’').replace(/&eacute;/g, 'é')
     .replace(/&egrave;/g, 'è').replace(/&agrave;/g, 'à')
     .replace(/&ccedil;/g, 'ç').replace(/&hellip;/g, '…');
 }
@@ -63,65 +60,42 @@ function decodeEntities(str) {
 // ── Main ──────────────────────────────────────────────────────────────────────
 
 async function main() {
-  if (!SUPABASE_URL || !NOTIFY_SECRET) {
-    console.warn('⚠️  VITE_SUPABASE_URL ou NOTIFY_SECRET manquant dans .env — notification ignorée.');
+  if (!SUPABASE_URL || !SUPABASE_KEY || !NOTIFY_SECRET) {
+    console.warn('⚠️  VITE_SUPABASE_URL, VITE_SUPABASE_ANON_KEY ou NOTIFY_SECRET manquant dans .env — notification ignorée.');
     return;
   }
 
-  // 1. Charger les slugs déjà notifiés
-  let notified = [];
-  if (existsSync(LOG_FILE)) {
-    notified = JSON.parse(await readFile(LOG_FILE, 'utf-8'));
+  const sb = createClient(SUPABASE_URL, SUPABASE_KEY);
+
+  // 1. Récupérer les articles non encore notifiés depuis Supabase
+  const { data: unnotified, error: fetchErr } = await sb
+    .from('blog_posts')
+    .select('*')
+    .is('notified_at', null)
+    .order('date', { ascending: true });
+
+  if (fetchErr) {
+    console.error(`❌ Erreur Supabase lors du fetch : ${fetchErr.message}`);
+    process.exit(1);
   }
 
-  // 2. Récupérer tous les articles WordPress
-  let allPosts = [];
-  let page = 1;
-  let totalPages = 1;
-
-  try {
-    do {
-      const params = new URLSearchParams({
-        per_page: 100,
-        page,
-        status: 'publish',
-        _embed: '',
-      });
-      const res = await fetch(`${WP_BASE}/posts?${params}`);
-      if (!res.ok) {
-        console.warn(`⚠️  WordPress API erreur HTTP ${res.status} — notification ignorée.`);
-        return;
-      }
-      const posts = await res.json();
-      allPosts = allPosts.concat(posts);
-      totalPages = parseInt(res.headers.get('X-WP-TotalPages') ?? '1', 10);
-      page++;
-    } while (page <= totalPages);
-  } catch (err) {
-    console.warn(`⚠️  WordPress injoignable (${err.message}) — notification ignorée.`);
-    return;
-  }
-
-  // 3. Filtrer les nouveaux slugs
-  const newPosts = allPosts.filter(p => !notified.includes(p.slug));
-
-  if (newPosts.length === 0) {
+  if (!unnotified || unnotified.length === 0) {
     console.log('✓ Aucun nouvel article — notification ignorée.');
     return;
   }
 
-  console.log(`📧 ${newPosts.length} nouvel(s) article(s) à notifier…`);
+  console.log(`📧 ${unnotified.length} nouvel(s) article(s) à notifier…`);
 
   let failures = 0;
 
-  // 4. Notifier article par article — sauvegarde immédiate après chaque succès
+  // 2. Notifier article par article — mise à jour immédiate après chaque succès
   //    pour éviter toute double notification en cas d'erreur ultérieure
-  for (const post of newPosts) {
-    const title   = decodeEntities(post.title?.rendered ?? '');
-    const rawExc  = stripHtml(post.excerpt?.rendered ?? '');
+  for (const post of unnotified) {
+    const title   = decodeEntities(post.title ?? '');
+    const rawExc  = stripHtml(post.excerpt ?? '');
     const excerpt = rawExc.length > 220 ? rawExc.slice(0, 220) + '…' : rawExc;
     const url     = `https://karimsaari.com/blog/${post.slug}`;
-    const image   = post._embedded?.['wp:featuredmedia']?.[0]?.source_url ?? null;
+    const image   = post.image ?? post.image_og ?? null;
 
     console.log(`   → ${title}`);
 
@@ -137,23 +111,32 @@ async function main() {
 
       if (!res.ok) {
         const err = await res.text();
-        console.error(`   ❌ Erreur Supabase (HTTP ${res.status}) : ${err}`);
+        console.error(`   ❌ Erreur Edge Function (HTTP ${res.status}) : ${err}`);
         failures++;
       } else {
         const data = await res.json();
         console.log(`   ✅ Campagne Brevo envoyée (id: ${data.campaignId})`);
-        notified.push(post.slug);
-        // Sauvegarde immédiate : si le process est interrompu ensuite,
-        // cet article ne sera jamais notifié en double
-        await writeFile(LOG_FILE, JSON.stringify(notified, null, 2));
+
+        // 3. Marquer l'article comme notifié dans Supabase (mise à jour immédiate)
+        const { error: updateErr } = await sb
+          .from('blog_posts')
+          .update({ notified_at: new Date().toISOString() })
+          .eq('slug', post.slug);
+
+        if (updateErr) {
+          console.warn(`   ⚠️  Impossible de mettre à jour notified_at pour "${post.slug}" : ${updateErr.message}`);
+          // On ne compte pas comme failure car la notification a été envoyée
+          // L'article sera re-tenté au prochain run, ce qui causera un doublon.
+          // C'est intentionnel : mieux vaut signaler que laisser en silence.
+        }
       }
     } catch (err) {
-      console.error(`   ❌ Erreur réseau Supabase (${err.message}) — article ignoré, sera retenté demain`);
+      console.error(`   ❌ Erreur réseau (${err.message}) — article ignoré, sera retenté demain`);
       failures++;
     }
   }
 
-  console.log(`✓ Log à jour.${failures > 0 ? ` ⚠️  ${failures} notification(s) échouée(s).` : ''}`);
+  console.log(`✓ Notifications traitées.${failures > 0 ? ` ⚠️  ${failures} notification(s) échouée(s).` : ''}`);
   if (failures > 0) process.exit(1);
 }
 

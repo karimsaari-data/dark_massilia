@@ -31,7 +31,8 @@ const Meduses    = lazy(() => import('./pages/Meduses'));
 const Sources    = lazy(() => import('./pages/Sources'));
 const Carte      = lazy(() => import('./pages/Carte'));
 const LocalGuide = lazy(() => import('./pages/LocalGuide'));
-const Admin = lazy(() => import('./pages/AdminGalerie'));
+const Admin     = lazy(() => import('./pages/AdminGalerie'));
+const AdminBlog = lazy(() => import('./pages/AdminBlog'));
 const Yab             = lazy(() => import('./pages/Yab'));
 const MentionsLegales = lazy(() => import('./pages/MentionsLegales'));
 const Confidentialite    = lazy(() => import('./pages/Confidentialite'));
@@ -77,6 +78,7 @@ export default function AppRoutes() {
           {/* Backoffice unifié */}
           <Route path="admin"         element={<Admin />} />
           <Route path="admin-galerie" element={<Navigate to="/admin" replace />} />
+          <Route path="admin-blog"    element={<AdminBlog />} />
 
           <Route path="/" element={<Layout />}>
             <Route index element={<Home />} />
