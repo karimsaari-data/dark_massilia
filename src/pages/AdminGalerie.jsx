@@ -652,7 +652,7 @@ const blogFmtLong = iso => {
   catch { return '—'; }
 };
 const blogDecode = s => s
-  .replace(/&rsquo;/g, ''').replace(/&lsquo;/g, ''').replace(/&hellip;/g, '…')
+  .replace(/&rsquo;/g, '\u2019').replace(/&lsquo;/g, '\u2018').replace(/&hellip;/g, '…')
   .replace(/&amp;/g, '&').replace(/&nbsp;/g, ' ').replace(/&quot;/g, '"')
   .replace(/&#039;/g, "'").replace(/&lt;/g, '<').replace(/&gt;/g, '>');
 const blogStrip = h => h.replace(/<[^>]*>/g, '').replace(/\s+/g, ' ').trim();
