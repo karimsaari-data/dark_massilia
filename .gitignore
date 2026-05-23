@@ -41,6 +41,9 @@ build
 # Testing
 coverage
 
+# Scripts — état persistant migré vers Supabase
+scripts/.notified-slugs.json
+
 # Misc
 .turbo
 .vercel

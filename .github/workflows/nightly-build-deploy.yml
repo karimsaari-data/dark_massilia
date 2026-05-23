@@ -53,7 +53,15 @@ jobs:
       - name: Installation des dépendances
         run: npm ci
 
-      # ── 3b. Mise à jour alt text images WordPress ────────────────────────────
+      # ── 3b. Sync WordPress → Supabase blog_posts ────────────────────────────
+      - name: Sync articles WordPress → Supabase
+        continue-on-error: true
+        env:
+          VITE_SUPABASE_URL: ${{ secrets.VITE_SUPABASE_URL }}
+          VITE_SUPABASE_ANON_KEY: ${{ secrets.VITE_SUPABASE_ANON_KEY }}
+        run: node scripts/sync-wp-to-supabase.mjs
+
+      # ── 3c. Mise à jour alt text images WordPress ────────────────────────────
       - name: Mise à jour alt text images WordPress
         continue-on-error: true
         env:
@@ -226,16 +234,17 @@ jobs:
           NOTIFY_SECRET: ${{ secrets.NOTIFY_SECRET }}
         run: npm run notify
 
-      # ── 8. Commit fichiers de persistance (notified-slugs + cache WP) ──────────
+      # ── 8. Commit fichiers de persistance (cache WP JSON + alt vision) ──────────
+      # notified-slugs.json est remplacé par notified_at dans Supabase blog_posts
       - name: Commit scripts persistants
         run: |
           git config user.name  "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add scripts/.notified-slugs.json scripts/wp-posts-cache.json scripts/wp-alt-vision-cache.json
+          git add scripts/wp-posts-cache.json scripts/wp-alt-vision-cache.json
           if git diff --staged --quiet; then
             echo "Aucun changement, pas de commit."
           else
-            git commit -m "chore: update wp-cache + notified-slugs [skip ci]"
+            git commit -m "chore: update wp-cache + alt-vision-cache [skip ci]"
             git stash --include-untracked || true
             git pull --rebase origin main
             git stash pop || true
