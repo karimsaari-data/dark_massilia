@@ -871,7 +871,7 @@ const ExifRow = ({ db, exif, c, isOpen, onToggle, children }) => {
 const TabExif = () => {
   const [rows, setRows]       = useState([]);
   const [loading, setLoading] = useState(true);
-  const [filter, setFilter]   = useState('all'); // all | non_audit | title_ko | gps_ko | keywords_ko
+  const [filter, setFilter]   = useState('all'); // all | non_audit | title_ko | gps_ko | keywords_ko | fichier_ko
   const [expanded, setExpanded] = useState(null); // src de la ligne ouverte
 
   useEffect(() => {
@@ -903,11 +903,12 @@ const TabExif = () => {
   const stats = rows.reduce((acc, { db, exif }) => {
     const c = check(db, exif);
     acc.total++;
-    if (c.titleOk)           acc.titleOk++;
-    if (c.gpsDb && c.gpsOk)  acc.gpsOk++;
-    if (c.kwOk)              acc.kwOk++;
+    if (c.titleOk)                      acc.titleOk++;
+    if (c.gpsDb && c.gpsOk)             acc.gpsOk++;
+    if (c.kwOk)                         acc.kwOk++;
+    if (exif?.file_exists === false)    acc.fileKo++;
     return acc;
-  }, { total: 0, titleOk: 0, gpsOk: 0, kwOk: 0 });
+  }, { total: 0, titleOk: 0, gpsOk: 0, kwOk: 0, fileKo: 0 });
 
   const filtered = rows.filter(({ db, exif }) => {
     const c = check(db, exif);
@@ -915,6 +916,7 @@ const TabExif = () => {
     if (filter === 'title_ko')    return exif != null && !c.titleOk;
     if (filter === 'gps_ko')      return exif != null && c.gpsDb && !c.gpsOk;
     if (filter === 'keywords_ko') return exif != null && !c.kwOk;
+    if (filter === 'fichier_ko')  return exif?.file_exists === false;
     return true;
   });
 
@@ -927,6 +929,7 @@ const TabExif = () => {
 
   const gpsKoCount    = rows.filter(({ db, exif }) => { const c = check(db, exif); return exif != null && c.gpsDb && !c.gpsOk; }).length;
   const nonAuditCount = rows.filter(({ exif }) => exif === null).length;
+  const fichierKoCount = rows.filter(({ exif }) => exif?.file_exists === false).length;
 
   const FILTERS = [
     { key: 'all',         label: `Tout (${rows.length})` },
@@ -934,6 +937,7 @@ const TabExif = () => {
     { key: 'title_ko',    label: `Titre KO (${rows.filter(({ db, exif }) => exif != null && !check(db, exif).titleOk).length})` },
     { key: 'gps_ko',      label: `GPS KO (${gpsKoCount})` },
     { key: 'keywords_ko', label: `Keywords KO (${rows.filter(({ db, exif }) => exif != null && !check(db, exif).kwOk).length})` },
+    { key: 'fichier_ko',  label: `Fichier KO (${fichierKoCount})`, danger: true },
   ];
 
   return (
@@ -947,19 +951,22 @@ const TabExif = () => {
       </div>
 
       {/* Synthèse */}
-      <div className="grid grid-cols-3 gap-3 mb-5">
+      <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 mb-5">
         {[
-          { label: 'Titres OK',   val: stats.titleOk, total: stats.total },
-          { label: 'GPS OK',      val: stats.gpsOk,   total: stats.total },
-          { label: 'Keywords OK', val: stats.kwOk,    total: stats.total },
-        ].map(({ label, val, total }) => {
+          { label: 'Titres OK',   val: stats.titleOk, total: stats.total, danger: false },
+          { label: 'GPS OK',      val: stats.gpsOk,   total: stats.total, danger: false },
+          { label: 'Keywords OK', val: stats.kwOk,    total: stats.total, danger: false },
+          { label: 'Fichiers KO', val: stats.fileKo,  total: stats.total, danger: true  },
+        ].map(({ label, val, total, danger }) => {
           const pct = total ? Math.round(val / total * 100) : 0;
           return (
-            <div key={label} className="border border-white/10 rounded-xl p-4 bg-white/3">
-              <p className="text-xs text-white/40 mb-1">{label}</p>
-              <p className="text-2xl font-bold text-white">{val}<span className="text-sm text-white/30">/{total}</span></p>
+            <div key={label} className={`border rounded-xl p-4 ${danger ? 'border-red-500/30 bg-red-500/5' : 'border-white/10 bg-white/3'}`}>
+              <p className={`text-xs mb-1 ${danger ? 'text-red-400/70' : 'text-white/40'}`}>{label}</p>
+              <p className={`text-2xl font-bold ${danger && val > 0 ? 'text-red-400' : 'text-white'}`}>
+                {val}<span className="text-sm text-white/30">/{total}</span>
+              </p>
               <div className="mt-2 h-1 bg-white/10 rounded-full overflow-hidden">
-                <div className="h-full bg-[#21c47b] rounded-full" style={{ width: `${pct}%` }} />
+                <div className={`h-full rounded-full ${danger ? 'bg-red-500' : 'bg-[#21c47b]'}`} style={{ width: `${pct}%` }} />
               </div>
             </div>
           );
@@ -968,12 +975,16 @@ const TabExif = () => {
 
       {/* Filtres */}
       <div className="flex gap-2 mb-4 flex-wrap">
-        {FILTERS.map(({ key, label }) => (
+        {FILTERS.map(({ key, label, danger }) => (
           <button key={key} type="button" onClick={() => setFilter(key)}
             className={`px-3 py-1.5 rounded-lg text-xs font-medium transition-colors border ${
               filter === key
-                ? 'border-[#21c47b]/60 text-[#21c47b] bg-[#21c47b]/10'
-                : 'border-white/10 text-white/40 hover:text-white hover:border-white/30'
+                ? danger
+                  ? 'border-red-500/60 text-red-400 bg-red-500/10'
+                  : 'border-[#21c47b]/60 text-[#21c47b] bg-[#21c47b]/10'
+                : danger
+                  ? 'border-red-500/30 text-red-400/60 hover:text-red-400 hover:border-red-500/50'
+                  : 'border-white/10 text-white/40 hover:text-white hover:border-white/30'
             }`}>
             {label}
           </button>
