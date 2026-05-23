@@ -1,0 +1,28 @@
+#!/bin/sh
+# Hook pre-push : bloque le push si des images non commitées traînent dans public/images/
+# Les fichiers dans portfolio/New/ sont des sources brutes, volontairement exclus.
+
+UNTRACKED=$(git ls-files --others --exclude-standard public/images/ \
+  | grep -E '\.(webp|jpg|jpeg|png|gif)$' \
+  | grep -v 'portfolio/New/')
+
+if [ -n "$UNTRACKED" ]; then
+  echo ""
+  echo "╔══════════════════════════════════════════════════════════════╗"
+  echo "║  ⚠️  IMAGES NON COMMITÉES — push annulé                     ║"
+  echo "╚══════════════════════════════════════════════════════════════╝"
+  echo ""
+  echo "Ces fichiers existent localement mais NE seront PAS déployés :"
+  echo ""
+  echo "$UNTRACKED" | head -20
+  COUNT=$(echo "$UNTRACKED" | wc -l)
+  if [ "$COUNT" -gt 20 ]; then
+    echo "  ... et $((COUNT - 20)) autres"
+  fi
+  echo ""
+  echo "👉 Pour les inclure avant de pousser :"
+  echo "   git add public/images/ && git commit -m 'images: ajout'"
+  echo "   git push"
+  echo ""
+  exit 1
+fi

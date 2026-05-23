@@ -44,7 +44,8 @@
     "exif:audit:new": "node scripts/audit-exif.js --new-only",
     "build:photos": "node scripts/generate-sitemap-images.js && node scripts/sync-new-images.js",
     "ftp:deploy": "node scripts/ftp-deploy.js",
-    "build:deploy": "npm run build:full && node scripts/ftp-deploy.js"
+    "build:deploy": "npm run build:full && node scripts/ftp-deploy.js",
+    "prepare": "git config core.hooksPath .githooks || true"
   },
   "dependencies": {
     "@fancyapps/ui": "^6.1.13",
