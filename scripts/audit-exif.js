@@ -20,6 +20,10 @@ const path = { join };
 const ROOT     = path.join(__dirname, '..');
 const NEW_ONLY = process.argv.includes('--new-only');
 
+// ExifTool — chemin local en priorité (scripts/exiftool/), sinon PATH système
+const EXIFTOOL_LOCAL = join(__dirname, 'exiftool', 'ExifTool.exe');
+const EXIFTOOL = existsSync(EXIFTOOL_LOCAL) ? `"${EXIFTOOL_LOCAL}"` : 'exiftool';
+
 // ── .env loader ───────────────────────────────────────────────────────────────
 function loadEnv() {
   const envPath = path.join(ROOT, '.env');
@@ -40,26 +44,22 @@ function toSrcKey(filePath) {
 
 // Lit les métadonnées d'un fichier via ExifTool (sortie JSON)
 function readExif(filePath) {
-  const tmpOut = join(tmpdir(), `exiftool-read-${Date.now()}.json`);
   try {
-    // Sortie vers fichier temporaire — élimine tous les problèmes d'encodage pipe cmd.exe
-    execSync(
-      `cmd.exe /c exiftool -json -charset UTF8 -charset IPTC=UTF8 ` +
+    const exiftoolBin = existsSync(EXIFTOOL_LOCAL) ? EXIFTOOL_LOCAL : 'exiftool';
+    const raw = execSync(
+      `"${exiftoolBin}" -json -charset UTF8 -charset IPTC=UTF8 ` +
       `-XMP:Title -XMP:Description -XMP:Creator -XMP:Rights -XMP:Subject ` +
       `-XMP-iptcExt:LocationShownCity -XMP-iptcExt:LocationShownCountryName ` +
       `-IPTC:City -IPTC:Country-PrimaryLocationName -IPTC:Province-State ` +
       `-GPS:GPSLatitude# -GPS:GPSLongitude# ` +
       `-EXIF:Artist -EXIF:Copyright ` +
-      `"${filePath}" > "${tmpOut}"`,
-      { stdio: 'pipe' }
+      `"${filePath}"`,
+      { encoding: 'utf8', stdio: 'pipe' }
     );
-    const raw = readFileSync(tmpOut, 'utf-8');
     const parsed = JSON.parse(raw);
     return parsed[0] || {};
   } catch {
     return null;
-  } finally {
-    if (existsSync(tmpOut)) unlinkSync(tmpOut);
   }
 }
 
@@ -98,7 +98,7 @@ function parseKeywords(val) {
 
 // ── Main ──────────────────────────────────────────────────────────────────────
 try {
-  execSync('cmd.exe /c exiftool -ver', { stdio: 'pipe' });
+  execSync(`"${existsSync(EXIFTOOL_LOCAL) ? EXIFTOOL_LOCAL : 'exiftool'}" -ver`, { stdio: 'pipe' });
 } catch {
   console.error('❌  ExifTool introuvable — installe-le via : winget install OliverBetz.ExifTool');
   process.exit(1);

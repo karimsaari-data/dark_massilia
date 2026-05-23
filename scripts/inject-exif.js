@@ -60,7 +60,11 @@ function loadEnv() {
   );
 }
 
-const EXIFTOOL_PATH = 'C:\\Users\\ksaari\\AppData\\Local\\Programs\\ExifTool\\ExifTool.exe';
+// ExifTool — chemin relatif au projet (scripts/exiftool/) en priorité,
+// sinon fallback vers l'installation utilisateur Windows
+const EXIFTOOL_LOCAL = join(__dirname, 'exiftool', 'ExifTool.exe');
+const EXIFTOOL_USER  = 'C:\\Users\\ksaari\\AppData\\Local\\Programs\\ExifTool\\ExifTool.exe';
+const EXIFTOOL_PATH  = existsSync(EXIFTOOL_LOCAL) ? EXIFTOOL_LOCAL : EXIFTOOL_USER;
 
 // ── Cache (mtime) pour --new-only ─────────────────────────────────────────────
 function loadCache() {

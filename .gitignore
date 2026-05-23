@@ -20,6 +20,9 @@ dist-ssr
 .env.development.local
 .env.test.local
 
+# ExifTool — binaire Windows installé localement (non versionné)
+scripts/exiftool/
+
 # Editor directories and files
 .vscode/*
 !.vscode/extensions.json
