@@ -823,6 +823,8 @@ const ExifDetailRow = ({ label, val, ok, dbVal, colSpan }) => (
 const ExifRow = ({ db, exif, c, isOpen, onToggle, onBroken, children }) => {
   const [imgBroken, setImgBroken] = useState(false);
   const filename = db.src.split('/').pop();
+  // Miniature 800w : on insère /800w/ avant le nom de fichier
+  const thumbSrc = db.src.replace(/\/([^/]+\.webp)$/, '/800w/$1');
   return (
     <div className={`border rounded-lg overflow-hidden ${
       imgBroken ? 'border-red-500/40 bg-red-500/5' :
@@ -834,10 +836,9 @@ const ExifRow = ({ db, exif, c, isOpen, onToggle, onBroken, children }) => {
       >
         <div className="relative w-20 h-14 flex-shrink-0">
           <img
-            src={db.src}
+            src={thumbSrc}
             alt=""
             className={`w-20 h-14 rounded object-cover bg-white/5 ${imgBroken ? 'opacity-0' : ''}`}
-            loading="lazy"
             onError={() => { setImgBroken(true); onBroken?.(db.src); }}
           />
           {imgBroken && (
