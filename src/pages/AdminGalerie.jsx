@@ -820,7 +820,7 @@ const ExifDetailRow = ({ label, val, ok, dbVal, colSpan }) => (
 );
 
 /* ── Ligne EXIF avec détection image cassée ─────────────────── */
-const ExifRow = ({ db, exif, c, isOpen, onToggle, children }) => {
+const ExifRow = ({ db, exif, c, isOpen, onToggle, onBroken, children }) => {
   const [imgBroken, setImgBroken] = useState(false);
   const filename = db.src.split('/').pop();
   return (
@@ -838,7 +838,7 @@ const ExifRow = ({ db, exif, c, isOpen, onToggle, children }) => {
             alt=""
             className={`w-20 h-14 rounded object-cover bg-white/5 ${imgBroken ? 'opacity-0' : ''}`}
             loading="lazy"
-            onError={() => setImgBroken(true)}
+            onError={() => { setImgBroken(true); onBroken?.(db.src); }}
           />
           {imgBroken && (
             <div className="absolute inset-0 flex flex-col items-center justify-center rounded bg-red-500/15 border border-red-500/40 gap-0.5">
@@ -869,10 +869,14 @@ const ExifRow = ({ db, exif, c, isOpen, onToggle, children }) => {
 
 /* ── Tab Contrôle EXIF ─────────────────────────────────────── */
 const TabExif = () => {
-  const [rows, setRows]       = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [filter, setFilter]   = useState('all'); // all | non_audit | title_ko | gps_ko | keywords_ko | fichier_ko
+  const [rows, setRows]         = useState([]);
+  const [loading, setLoading]   = useState(true);
+  const [filter, setFilter]     = useState('all'); // all | non_audit | title_ko | gps_ko | keywords_ko | fichier_ko
   const [expanded, setExpanded] = useState(null); // src de la ligne ouverte
+  const [brokenSrcs, setBrokenSrcs] = useState(new Set());
+  const handleBroken = useCallback((src) => {
+    setBrokenSrcs(prev => { const next = new Set(prev); next.add(src); return next; });
+  }, []);
 
   useEffect(() => {
     const fetchAll = async () => {
@@ -906,7 +910,7 @@ const TabExif = () => {
     if (c.titleOk)                      acc.titleOk++;
     if (c.gpsDb && c.gpsOk)             acc.gpsOk++;
     if (c.kwOk)                         acc.kwOk++;
-    if (exif?.file_exists === false)    acc.fileKo++;
+    if (exif?.file_exists === false || brokenSrcs.has(db.src)) acc.fileKo++;
     return acc;
   }, { total: 0, titleOk: 0, gpsOk: 0, kwOk: 0, fileKo: 0 });
 
@@ -916,7 +920,7 @@ const TabExif = () => {
     if (filter === 'title_ko')    return exif != null && !c.titleOk;
     if (filter === 'gps_ko')      return exif != null && c.gpsDb && !c.gpsOk;
     if (filter === 'keywords_ko') return exif != null && !c.kwOk;
-    if (filter === 'fichier_ko')  return exif?.file_exists === false;
+    if (filter === 'fichier_ko')  return exif?.file_exists === false || brokenSrcs.has(db.src);
     return true;
   });
 
@@ -929,7 +933,7 @@ const TabExif = () => {
 
   const gpsKoCount    = rows.filter(({ db, exif }) => { const c = check(db, exif); return exif != null && c.gpsDb && !c.gpsOk; }).length;
   const nonAuditCount = rows.filter(({ exif }) => exif === null).length;
-  const fichierKoCount = rows.filter(({ exif }) => exif?.file_exists === false).length;
+  const fichierKoCount = rows.filter(({ db, exif }) => exif?.file_exists === false || brokenSrcs.has(db.src)).length;
 
   const FILTERS = [
     { key: 'all',         label: `Tout (${rows.length})` },
@@ -1004,6 +1008,7 @@ const TabExif = () => {
               c={c}
               isOpen={isOpen}
               onToggle={() => setExpanded(isOpen ? null : db.src)}
+              onBroken={handleBroken}
             >
               {/* Panneau de détail EXIF */}
               {isOpen && (
