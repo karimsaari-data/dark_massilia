@@ -97,6 +97,14 @@ async function generateThumb(srcPath, destDir, webpName) {
 const EXIF_CREATOR   = 'Karim Saari';
 const EXIF_COPYRIGHT = '(c) Karim Saari - Dark Massilia - karimsaari.com';
 
+// ExifTool — binaire local en priorité, sinon PATH système
+import { fileURLToPath } from 'node:url';
+import { dirname } from 'node:path';
+const __filename = fileURLToPath(import.meta.url);
+const __dirname  = dirname(__filename);
+const EXIFTOOL_LOCAL = join(__dirname, 'exiftool', 'ExifTool.exe');
+const EXIFTOOL_BIN   = existsSync(EXIFTOOL_LOCAL) ? EXIFTOOL_LOCAL : 'exiftool';
+
 function injectExif(filePath) {
   try {
     const args = [
@@ -109,8 +117,7 @@ function injectExif(filePath) {
       '-overwrite_original',
       filePath,
     ].map(a => `"${a}"`).join(' ');
-    const exiftoolPath = 'C:\\Users\\ksaari\\AppData\\Local\\Programs\\ExifTool\\ExifTool.exe';
-    execSync(`"${exiftoolPath}" ${args}`, { stdio: 'pipe' });
+    execSync(`"${EXIFTOOL_BIN}" ${args}`, { stdio: 'pipe' });
     return true;
   } catch {
     return false;
