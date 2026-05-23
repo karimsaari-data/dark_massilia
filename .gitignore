@@ -48,9 +48,21 @@ coverage
 
 # Claude Code (configs locales, worktrees)
 .claude/
+.playwright-mcp/
 backup/
 nul
 brevo.txt
 gsc-credentials.json
 gsc-token.json
 ga-token.json
+
+# Screenshots de debug (générés par les sessions Claude)
+page-*.png
+v[0-9]-*.png
+v[0-9][0-9]-*.png
+
+# Sources brutes avant traitement (JPG originaux, non versionnés)
+public/images/portfolio/New/
+
+# Données analytics locales
+data/
