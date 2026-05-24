@@ -149,10 +149,10 @@ jobs:
 
           if echo "$BEFORE" | grep -q '^0\+$'; then
             # Premier push : compare juste le commit courant
-            NEW=$(git show --diff-filter=A --name-only --format="" "$AFTER" \
+            NEW=$(git show --diff-filter=AM --name-only --format="" "$AFTER" \
                   | grep -E '^public/images/.*\.(webp|jpg|jpeg|png|gif)$' || true)
           else
-            NEW=$(git log --diff-filter=A --name-only --format="" "$BEFORE..$AFTER" \
+            NEW=$(git log --diff-filter=AM --name-only --format="" "$BEFORE..$AFTER" \
                   | grep -E '^public/images/.*\.(webp|jpg|jpeg|png|gif)$' | sort -u || true)
           fi
 
