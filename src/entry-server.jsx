@@ -41,6 +41,7 @@ import PhotoSousMarine from './pages/PhotoSousMarine';
 import BlogCategory    from './pages/BlogCategory';
 import GroupeFacebook  from './pages/GroupeFacebook';
 import PhotographeEnvironnemental from './pages/PhotographeEnvironnemental';
+import DossierPresse from './pages/DossierPresse';
 import AccesMassifs  from './pages/AccesMassifs';
 import MentionsLegales  from './pages/MentionsLegales';
 import Confidentialite  from './pages/Confidentialite';
@@ -87,6 +88,7 @@ export function render(url) {
             <Route path="admin-blog"                         element={<AdminBlogSSR />} />
             <Route path="les-francais-yann-arthus-bertrand" element={<Yab />} />
             <Route path="photographe-environnemental-marseille" element={<PhotographeEnvironnemental />} />
+            <Route path="dossier-presse"                    element={<DossierPresse />} />
             <Route path="acces-massifs-calanques"           element={<AccesMassifs />} />
             <Route path="mentions-legales"                  element={<MentionsLegales />} />
             <Route path="confidentialite"                   element={<Confidentialite />} />
