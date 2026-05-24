@@ -251,7 +251,7 @@ const PhotoPreviewModal = ({ photo, onClose }) => {
 };
 
 /* ── PhotoRow (galerie) ─────────────────────────────────────── */
-const PhotoRow = ({ photo, onSave, onToggleVisible, onPreview, onDelete, showCategorie, categorieOptions }) => {
+const PhotoRow = ({ photo, onSave, onToggleVisible, onPreview, onDelete, onBroken, showCategorie, categorieOptions }) => {
   const [draft, setDraft]       = useState({ title: photo.title, alt: photo.alt, lieu: photo.lieu, lat: photo.lat ?? null, lng: photo.lng ?? null, categorie: photo.categorie ?? null });
   const [saving, setSaving]     = useState(false);
   const [saved, setSaved]       = useState(false);
@@ -298,7 +298,7 @@ const PhotoRow = ({ photo, onSave, onToggleVisible, onPreview, onDelete, showCat
             alt=""
             className={`w-full h-full object-cover rounded-lg bg-white/5 group-hover:brightness-75 transition-all ${imgBroken ? 'opacity-0' : ''}`}
             loading="lazy"
-            onError={() => setImgBroken(true)}
+            onError={() => { setImgBroken(true); onBroken?.(photo.uid); }}
           />
           {imgBroken && (
             <div className="absolute inset-0 flex flex-col items-center justify-center rounded-lg bg-red-500/10 border border-red-500/30 gap-1.5 pointer-events-none">
@@ -322,6 +322,7 @@ const PhotoRow = ({ photo, onSave, onToggleVisible, onPreview, onDelete, showCat
             {photo.title || <span className="text-white/30 italic">Sans titre</span>}
           </p>
           <p className="text-xs text-white/40 truncate mt-0.5">{photo.uid}</p>
+          <p className="text-[10px] font-mono text-white/20 truncate mt-0.5">{photo.src}</p>
           {photo.lieu && (
             <p className="text-xs text-white/50 truncate mt-0.5 flex items-center gap-1">
               <MapPin className="w-3 h-3 text-white/25 flex-shrink-0" />
@@ -426,6 +427,8 @@ const TabGalerie = ({ tableName }) => {
   const [incompleteOnly, setIncompleteOnly] = useState(false);
   const [hiddenOnly,     setHiddenOnly]     = useState(false);
   const [noTitleOnly,    setNoTitleOnly]    = useState(false);
+  const [brokenOnly,     setBrokenOnly]     = useState(false);
+  const [brokenUids,     setBrokenUids]     = useState(() => new Set());
   const [search, setSearch]                = useState('');
   const [photos, setPhotos]                = useState([]);
   const [loading, setLoading]              = useState(false);
@@ -436,6 +439,10 @@ const TabGalerie = ({ tableName }) => {
     !p.title || !p.alt || !p.lieu || !p.lat || !p.lng;
   const isPaysage    = tableName === 'photos_paysage';
   const isSousMarine = tableName === 'photos_sous_marine';
+
+  const handleBroken = useCallback((uid) => {
+    setBrokenUids(prev => { const n = new Set(prev); n.add(uid); return n; });
+  }, []);
 
   const load = useCallback(async () => {
     setLoading(true);
@@ -464,6 +471,7 @@ const TabGalerie = ({ tableName }) => {
     if (incompleteOnly && !isIncomplete(p)) return false;
     if (hiddenOnly && p.visible !== false) return false;
     if (noTitleOnly && p.title) return false;
+    if (brokenOnly && !brokenUids.has(p.uid)) return false;
     const q = search.toLowerCase();
     if (!q) return true;
     return (
@@ -537,6 +545,13 @@ const TabGalerie = ({ tableName }) => {
         >
           Sans titre {noTitleOnly && `(${filtered.length})`}
         </button>
+        <button type="button" onClick={() => setBrokenOnly(v => !v)}
+          className={`px-3 py-1.5 rounded-lg text-xs font-medium transition-colors flex items-center gap-1.5 ${
+            brokenOnly ? 'bg-red-500/20 border border-red-500/50 text-red-300' : 'bg-white/5 border border-white/10 text-white/50 hover:text-white'
+          }`}
+        >
+          ⚠ Images KO{brokenUids.size > 0 ? ` (${brokenUids.size})` : ''}
+        </button>
         <span className="ml-auto text-xs text-white/30">{loading ? 'Chargement…' : `${filtered.length} photo${filtered.length > 1 ? 's' : ''}`}</span>
       </div>
 
@@ -565,6 +580,7 @@ const TabGalerie = ({ tableName }) => {
             onToggleVisible={handleToggleVisible}
             onPreview={setPreview}
             onDelete={handleDelete}
+            onBroken={handleBroken}
             showCategorie={isPaysage || isSousMarine}
             categorieOptions={catOptions}
           />
