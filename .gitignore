@@ -69,3 +69,4 @@ public/images/portfolio/New/
 
 # Données analytics locales
 data/
+.mcp.json
