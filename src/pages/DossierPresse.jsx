@@ -1,122 +1,134 @@
+import { motion } from 'framer-motion';
+import { Link } from 'react-router-dom';
+import { FileDown, Mail, MessageCircle } from 'lucide-react';
+import { FADE_IN_UP, STAGGER_CONTAINER } from '../utils/constants';
+import SEO from '../components/SEO';
+import { SEO_PAGES } from '../utils/seo';
+import Breadcrumb from '../components/Breadcrumb';
+
+const VIEW_OPTS = { once: true, margin: '-80px' };
+const PDF = '/assets/Dossier_presse_karim-saari-dark-massilia-marseille.pdf';
+
 export default function DossierPresse() {
   return (
-    <>
-      {/* Hero */}
-      <section style={{
-        minHeight: '55vh',
-        background: 'linear-gradient(rgba(0,0,0,0.55) 0%, rgba(12,34,48,0.85) 100%), url(https://cms.karimsaari.com/wp-content/uploads/2026/05/fight-scaled.jpg) center/cover no-repeat',
-        display: 'flex',
-        flexDirection: 'column',
-        alignItems: 'center',
-        justifyContent: 'center',
-        textAlign: 'center',
-        padding: '80px 24px 60px',
-        gap: '24px',
-      }}>
-        <p style={{ color: '#21c47b', letterSpacing: '0.2em', fontSize: '0.85rem', textTransform: 'uppercase', margin: 0 }}>
-          Dark Massilia — Karim Saari
-        </p>
-        <h1 style={{ margin: 0, fontSize: 'clamp(2rem, 6vw, 3.5rem)', fontWeight: 800, lineHeight: 1.1, color: '#fff' }}>
-          Dossier de Presse
-        </h1>
-        <p style={{ margin: 0, maxWidth: '540px', color: 'rgba(255,255,255,0.75)', fontSize: '1.1rem', lineHeight: 1.6 }}>
-          Photographe environnemental, apnéiste et militant pour la protection
-          des Calanques de Marseille depuis 10 ans.
-        </p>
-        <div style={{ display: 'flex', gap: '16px', flexWrap: 'wrap', justifyContent: 'center' }}>
-          <a
-            href="/assets/Dossier_presse_karim-saari-dark-massilia-marseille.pdf"
-            download="Dossier-Presse-Dark-Massilia-Karim-Saari.pdf"
-            style={{
-              display: 'inline-flex',
-              alignItems: 'center',
-              gap: '10px',
-              background: 'linear-gradient(135deg, #21c47b, #0fa869)',
-              color: '#fff',
-              padding: '14px 32px',
-              borderRadius: '50px',
-              fontWeight: 700,
-              fontSize: '1rem',
-              textDecoration: 'none',
-              boxShadow: '0 4px 20px rgba(33,196,123,0.4)',
-            }}
-          >
-            <svg width="20" height="20" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
-              <path d="M12 15V3m0 12-4-4m4 4 4-4M2 17l.621 2.485A2 2 0 0 0 4.561 21h14.878a2 2 0 0 0 1.94-1.515L22 17"/>
-            </svg>
-            Télécharger le PDF
-          </a>
-          <a
-            href="mailto:contact@karimsaari.com?subject=Demande%20presse%20—%20Dark%20Massilia"
-            style={{
-              display: 'inline-flex',
-              alignItems: 'center',
-              gap: '10px',
-              background: 'rgba(255,255,255,0.1)',
-              backdropFilter: 'blur(10px)',
-              border: '1px solid rgba(255,255,255,0.25)',
-              color: '#fff',
-              padding: '14px 32px',
-              borderRadius: '50px',
-              fontWeight: 600,
-              fontSize: '1rem',
-              textDecoration: 'none',
-            }}
-          >
-            Contact presse
-          </a>
-        </div>
-      </section>
+    <div className="min-h-screen pt-4 pb-16">
+      <SEO {...SEO_PAGES['/dossier-presse']} />
+      <div className="container-custom">
+        <Breadcrumb label="Dossier de Presse" />
 
-      {/* PDF viewer intégré */}
-      <section style={{ background: '#0d1b27', padding: '40px 24px 60px' }}>
-        <div style={{ maxWidth: '900px', margin: '0 auto' }}>
-          <p style={{ color: 'rgba(255,255,255,0.45)', textAlign: 'center', fontSize: '0.85rem', marginBottom: '20px' }}>
-            Aperçu du dossier —{' '}
-            <a href="/assets/Dossier_presse_karim-saari-dark-massilia-marseille.pdf" download style={{ color: '#21c47b' }}>télécharger le PDF complet</a>
-          </p>
-          <iframe
-            src="/assets/Dossier_presse_karim-saari-dark-massilia-marseille.pdf"
-            title="Dossier de presse Dark Massilia"
+        {/* ── Hero ────────────────────────────────────────────────────── */}
+        <motion.div
+          initial="hidden"
+          animate="visible"
+          variants={STAGGER_CONTAINER}
+          className="relative rounded-3xl overflow-hidden mb-12"
+          style={{ minHeight: '52vh' }}
+        >
+          {/* Background */}
+          <div
+            className="absolute inset-0"
             style={{
-              width: '100%',
-              height: 'min(85vh, 1100px)',
-              border: 'none',
-              borderRadius: '12px',
-              boxShadow: '0 8px 40px rgba(0,0,0,0.6)',
-              background: '#fff',
+              background: 'linear-gradient(rgba(0,0,0,0.45) 0%, rgba(12,34,48,0.88) 100%), url(https://cms.karimsaari.com/wp-content/uploads/2026/05/fight-scaled.jpg) center/cover no-repeat',
             }}
           />
-        </div>
-      </section>
+          {/* Content */}
+          <div className="relative z-10 flex flex-col items-center justify-center text-center px-6 py-20 gap-6" style={{ minHeight: '52vh' }}>
+            <motion.p variants={FADE_IN_UP} className="text-astroide text-xs font-semibold uppercase tracking-widest">
+              Dark Massilia — Karim Saari
+            </motion.p>
+            <motion.h1 variants={FADE_IN_UP} className="text-4xl md:text-5xl lg:text-6xl font-bold text-white leading-tight">
+              Dossier de Presse
+            </motion.h1>
+            <motion.p variants={FADE_IN_UP} className="text-text-secondary text-lg max-w-xl leading-relaxed">
+              Photographe environnemental, apnéiste et militant pour la protection
+              des Calanques de Marseille depuis 10 ans.
+            </motion.p>
+            <motion.div variants={FADE_IN_UP} className="flex flex-wrap gap-4 justify-center">
+              <a
+                href={PDF}
+                download="Dossier-Presse-Dark-Massilia-Karim-Saari.pdf"
+                className="btn-primary inline-flex items-center gap-2"
+              >
+                <FileDown className="w-5 h-5" />
+                Télécharger le PDF
+              </a>
+              <a
+                href="mailto:contact@karimsaari.com?subject=Demande%20presse%20—%20Dark%20Massilia"
+                className="btn inline-flex items-center gap-2"
+              >
+                <Mail className="w-4 h-4" />
+                Contact presse
+              </a>
+            </motion.div>
+          </div>
+        </motion.div>
 
-      {/* Contact */}
-      <section style={{
-        background: 'linear-gradient(135deg, #21c47b 0%, #0fa869 100%)',
-        padding: '48px 24px',
-        textAlign: 'center',
-      }}>
-        <h2 style={{ color: '#fff', margin: '0 0 8px', fontSize: '1.6rem', fontWeight: 700 }}>
-          Contact presse
-        </h2>
-        <p style={{ color: 'rgba(255,255,255,0.85)', margin: '0 0 24px', fontSize: '1rem' }}>
-          Pour toute demande d'interview, reportage ou partenariat médiatique
-        </p>
-        <div style={{ display: 'flex', gap: '16px', justifyContent: 'center', flexWrap: 'wrap' }}>
-          <a href="mailto:contact@karimsaari.com" style={{
-            color: '#fff', fontWeight: 700, fontSize: '1.05rem', textDecoration: 'none',
-            background: 'rgba(0,0,0,0.15)', padding: '10px 24px', borderRadius: '50px',
-          }}>
-            contact@karimsaari.com
-          </a>
-          <a href="https://wa.me/33695331301" target="_blank" rel="noopener noreferrer" style={{
-            color: '#fff', fontWeight: 700, fontSize: '1.05rem', textDecoration: 'none',
-            background: 'rgba(0,0,0,0.15)', padding: '10px 24px', borderRadius: '50px',
-          }}>
-            WhatsApp +33 6 95 33 13 01
-          </a>
-        </div>
-      </section>
-    </>
+        {/* ── PDF viewer ──────────────────────────────────────────────── */}
+        <motion.div
+          initial="hidden"
+          whileInView="visible"
+          viewport={VIEW_OPTS}
+          variants={FADE_IN_UP}
+          className="max-w-5xl mx-auto mb-12"
+        >
+          <p className="text-center text-sm text-text-secondary mb-4">
+            Aperçu du dossier —{' '}
+            <a href={PDF} download className="text-astroide hover:underline">
+              télécharger le PDF complet
+            </a>
+          </p>
+          <div className="glass-strong rounded-2xl overflow-hidden border border-white/10 p-2">
+            <iframe
+              src={PDF}
+              title="Dossier de presse Dark Massilia"
+              className="w-full rounded-xl"
+              style={{ height: 'min(85vh, 1100px)', border: 'none' }}
+            />
+          </div>
+        </motion.div>
+
+        {/* ── Contact presse ──────────────────────────────────────────── */}
+        <motion.div
+          initial="hidden"
+          whileInView="visible"
+          viewport={VIEW_OPTS}
+          variants={FADE_IN_UP}
+          className="max-w-5xl mx-auto"
+        >
+          <div
+            className="glass-strong rounded-3xl p-8 md:p-12 flex flex-col md:flex-row items-center justify-between gap-8"
+            style={{ border: '1px solid rgba(33,196,123,0.3)' }}
+          >
+            <div>
+              <p className="text-astroide text-xs font-semibold uppercase tracking-widest mb-2">Contact presse</p>
+              <h2 className="text-2xl font-bold text-white mb-2">Pour toute demande médiatique</h2>
+              <p className="text-text-secondary text-sm">
+                Interviews, reportages, cessions de droits, partenariats documentaires.
+              </p>
+            </div>
+            <div className="flex flex-col sm:flex-row gap-3 flex-shrink-0">
+              <a
+                href="mailto:contact@karimsaari.com"
+                className="btn-primary inline-flex items-center gap-2 whitespace-nowrap"
+              >
+                <Mail className="w-4 h-4" />
+                contact@karimsaari.com
+              </a>
+              <a
+                href="https://wa.me/33695331301"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="btn inline-flex items-center gap-2 whitespace-nowrap"
+                style={{ borderColor: 'rgba(37,211,102,0.4)', color: '#25D366' }}
+              >
+                <MessageCircle className="w-4 h-4" />
+                WhatsApp
+              </a>
+            </div>
+          </div>
+        </motion.div>
+
+      </div>
+    </div>
   );
 }
