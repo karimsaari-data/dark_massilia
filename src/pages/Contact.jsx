@@ -177,37 +177,6 @@ const Contact = () => {
           </div>
         </motion.div>
 
-        {/* ── Section éditoriale SEO ───────────────────────────────────── */}
-        <motion.div
-          initial="hidden"
-          whileInView="visible"
-          viewport={VIEW_OPTS}
-          variants={STAGGER_CONTAINER}
-          className="max-w-5xl mx-auto mb-12"
-        >
-          <motion.div variants={FADE_IN_UP} className="glass-strong rounded-3xl p-8 md:p-12">
-            <h2 className="text-2xl md:text-3xl font-bold text-white mb-6">
-              Contact direct : Expositions, Interventions et Reportages
-            </h2>
-            <p className="text-text-secondary leading-relaxed text-lg">
-              Vous souhaitez organiser une{' '}
-              <strong className="text-white">exposition photographique</strong>, planifier une{' '}
-              <strong className="text-white">intervention de sensibilisation</strong> sur la
-              pollution marine, ou proposer une collaboration avec l'association{' '}
-              <strong className="text-ocean-teal">Team Oxygen</strong>&nbsp;? Basé à{' '}
-              <strong className="text-white">Marseille</strong>, je privilégie l'échange direct
-              et sans intermédiaire. Que ce soit pour la réalisation de{' '}
-              <strong className="text-white">reportages documentaires</strong> sur le littoral
-              méditerranéen, l'acquisition de tirages d'art, ou une demande de presse (interviews,
-              cessions de droits), vous pouvez me joindre instantanément par{' '}
-              <strong className="text-white">email</strong> ou via{' '}
-              <strong className="text-white">WhatsApp</strong>. Discutons de vos projets pour
-              amplifier ensemble l'impact du{' '}
-              <strong className="text-ocean-teal">Projet Sentinelle</strong>.
-            </p>
-          </motion.div>
-        </motion.div>
-
         {/* ── 3 blocs d'intention ──────────────────────────────────────── */}
         <motion.div
           initial="hidden"
@@ -319,6 +288,37 @@ const Contact = () => {
                 Voir les photos
               </Link>
             </div>
+          </motion.div>
+        </motion.div>
+
+        {/* ── Section éditoriale SEO ───────────────────────────────────── */}
+        <motion.div
+          initial="hidden"
+          whileInView="visible"
+          viewport={VIEW_OPTS}
+          variants={STAGGER_CONTAINER}
+          className="max-w-5xl mx-auto mt-12"
+        >
+          <motion.div variants={FADE_IN_UP} className="glass-strong rounded-3xl p-8 md:p-12">
+            <h2 className="text-2xl md:text-3xl font-bold text-white mb-6">
+              Contact direct : Expositions, Interventions et Reportages
+            </h2>
+            <p className="text-text-secondary leading-relaxed text-lg">
+              Vous souhaitez organiser une{' '}
+              <strong className="text-white">exposition photographique</strong>, planifier une{' '}
+              <strong className="text-white">intervention de sensibilisation</strong> sur la
+              pollution marine, ou proposer une collaboration avec l'association{' '}
+              <strong className="text-ocean-teal">Team Oxygen</strong>&nbsp;? Basé à{' '}
+              <strong className="text-white">Marseille</strong>, je privilégie l'échange direct
+              et sans intermédiaire. Que ce soit pour la réalisation de{' '}
+              <strong className="text-white">reportages documentaires</strong> sur le littoral
+              méditerranéen, l'acquisition de tirages d'art, ou une demande de presse (interviews,
+              cessions de droits), vous pouvez me joindre instantanément par{' '}
+              <strong className="text-white">email</strong> ou via{' '}
+              <strong className="text-white">WhatsApp</strong>. Discutons de vos projets pour
+              amplifier ensemble l'impact du{' '}
+              <strong className="text-ocean-teal">Projet Sentinelle</strong>.
+            </p>
           </motion.div>
         </motion.div>
 
