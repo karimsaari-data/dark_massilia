@@ -8,6 +8,7 @@ import { supabase } from '../lib/supabase';
 import {
   Lock, LogOut, Search, Save, Eye, EyeOff,
   ChevronDown, ChevronUp, MapPin, ExternalLink, ArrowUp, X, Upload, Rss, Trash2, Download,
+  FileText, Bell, BellOff, AlertCircle, CheckCircle, XCircle, RefreshCw, Clock,
 } from 'lucide-react';
 
 const ADMIN_PASSWORD = import.meta.env.VITE_ADMIN_PASSWORD || 'darkm';
@@ -250,7 +251,7 @@ const PhotoPreviewModal = ({ photo, onClose }) => {
 };
 
 /* ── PhotoRow (galerie) ─────────────────────────────────────── */
-const PhotoRow = ({ photo, onSave, onToggleVisible, onPreview, onDelete, showCategorie, categorieOptions }) => {
+const PhotoRow = ({ photo, onSave, onToggleVisible, onPreview, onDelete, onBroken, showCategorie, categorieOptions }) => {
   const [draft, setDraft]       = useState({ title: photo.title, alt: photo.alt, lieu: photo.lieu, lat: photo.lat ?? null, lng: photo.lng ?? null, categorie: photo.categorie ?? null });
   const [saving, setSaving]     = useState(false);
   const [saved, setSaved]       = useState(false);
@@ -297,7 +298,7 @@ const PhotoRow = ({ photo, onSave, onToggleVisible, onPreview, onDelete, showCat
             alt=""
             className={`w-full h-full object-cover rounded-lg bg-white/5 group-hover:brightness-75 transition-all ${imgBroken ? 'opacity-0' : ''}`}
             loading="lazy"
-            onError={() => setImgBroken(true)}
+            onError={() => { setImgBroken(true); onBroken?.(photo.uid); }}
           />
           {imgBroken && (
             <div className="absolute inset-0 flex flex-col items-center justify-center rounded-lg bg-red-500/10 border border-red-500/30 gap-1.5 pointer-events-none">
@@ -321,6 +322,7 @@ const PhotoRow = ({ photo, onSave, onToggleVisible, onPreview, onDelete, showCat
             {photo.title || <span className="text-white/30 italic">Sans titre</span>}
           </p>
           <p className="text-xs text-white/40 truncate mt-0.5">{photo.uid}</p>
+          <p className="text-[10px] font-mono text-white/20 truncate mt-0.5">{photo.src}</p>
           {photo.lieu && (
             <p className="text-xs text-white/50 truncate mt-0.5 flex items-center gap-1">
               <MapPin className="w-3 h-3 text-white/25 flex-shrink-0" />
@@ -425,6 +427,8 @@ const TabGalerie = ({ tableName }) => {
   const [incompleteOnly, setIncompleteOnly] = useState(false);
   const [hiddenOnly,     setHiddenOnly]     = useState(false);
   const [noTitleOnly,    setNoTitleOnly]    = useState(false);
+  const [brokenOnly,     setBrokenOnly]     = useState(false);
+  const [brokenUids,     setBrokenUids]     = useState(() => new Set());
   const [search, setSearch]                = useState('');
   const [photos, setPhotos]                = useState([]);
   const [loading, setLoading]              = useState(false);
@@ -435,6 +439,10 @@ const TabGalerie = ({ tableName }) => {
     !p.title || !p.alt || !p.lieu || !p.lat || !p.lng;
   const isPaysage    = tableName === 'photos_paysage';
   const isSousMarine = tableName === 'photos_sous_marine';
+
+  const handleBroken = useCallback((uid) => {
+    setBrokenUids(prev => { const n = new Set(prev); n.add(uid); return n; });
+  }, []);
 
   const load = useCallback(async () => {
     setLoading(true);
@@ -463,6 +471,7 @@ const TabGalerie = ({ tableName }) => {
     if (incompleteOnly && !isIncomplete(p)) return false;
     if (hiddenOnly && p.visible !== false) return false;
     if (noTitleOnly && p.title) return false;
+    if (brokenOnly && !brokenUids.has(p.uid)) return false;
     const q = search.toLowerCase();
     if (!q) return true;
     return (
@@ -536,6 +545,13 @@ const TabGalerie = ({ tableName }) => {
         >
           Sans titre {noTitleOnly && `(${filtered.length})`}
         </button>
+        <button type="button" onClick={() => setBrokenOnly(v => !v)}
+          className={`px-3 py-1.5 rounded-lg text-xs font-medium transition-colors flex items-center gap-1.5 ${
+            brokenOnly ? 'bg-red-500/20 border border-red-500/50 text-red-300' : 'bg-white/5 border border-white/10 text-white/50 hover:text-white'
+          }`}
+        >
+          ⚠ Images KO{brokenUids.size > 0 ? ` (${brokenUids.size})` : ''}
+        </button>
         <span className="ml-auto text-xs text-white/30">{loading ? 'Chargement…' : `${filtered.length} photo${filtered.length > 1 ? 's' : ''}`}</span>
       </div>
 
@@ -564,6 +580,7 @@ const TabGalerie = ({ tableName }) => {
             onToggleVisible={handleToggleVisible}
             onPreview={setPreview}
             onDelete={handleDelete}
+            onBroken={handleBroken}
             showCategorie={isPaysage || isSousMarine}
             categorieOptions={catOptions}
           />
@@ -637,6 +654,255 @@ const PLATFORM_META = {
   local_guide_views_m:       { label: 'Local Guide — Vues générées (Home)',    unit: 'millions' },
   local_guide_level:         { label: 'Local Guide — Niveau',                  unit: 'niveau' },
   '500px_impressions':       { label: '500px — Impressions photos',         unit: 'K impressions' },
+};
+
+/* ── Tab Blog ────────────────────────────────────────────────── */
+const blogFmtDate = (iso, opts = {}) => {
+  if (!iso) return '—';
+  try { return new Date(iso).toLocaleDateString('fr-FR', { day: '2-digit', month: '2-digit', year: '2-digit', ...opts }); }
+  catch { return '—'; }
+};
+const blogFmtLong = iso => {
+  if (!iso) return '—';
+  try { return new Date(iso).toLocaleDateString('fr-FR', { year: 'numeric', month: 'long', day: 'numeric' }); }
+  catch { return '—'; }
+};
+const blogDecode = s => s
+  .replace(/&rsquo;/g, '\u2019').replace(/&lsquo;/g, '\u2018').replace(/&hellip;/g, '…')
+  .replace(/&amp;/g, '&').replace(/&nbsp;/g, ' ').replace(/&quot;/g, '"')
+  .replace(/&#039;/g, "'").replace(/&lt;/g, '<').replace(/&gt;/g, '>');
+const blogStrip = h => h.replace(/<[^>]*>/g, '').replace(/\s+/g, ' ').trim();
+
+const BlogStatCard = ({ icon: Icon, value, label, accent }) => (
+  <div className="rounded-2xl border border-white/10 p-5 flex items-center gap-4" style={{ background: 'rgba(255,255,255,0.04)', backdropFilter: 'blur(12px)' }}>
+    <div className="w-11 h-11 rounded-xl flex items-center justify-center flex-shrink-0" style={{ background: `${accent}22`, border: `1px solid ${accent}40` }}>
+      <Icon className="w-5 h-5" style={{ color: accent }} />
+    </div>
+    <div>
+      <p className="text-2xl font-bold text-white leading-none">{value ?? '—'}</p>
+      <p className="text-xs text-white/40 mt-0.5">{label}</p>
+    </div>
+  </div>
+);
+
+const BlogArticleRow = ({ article, onNotify, onUnnotify }) => {
+  const [loading, setLoading] = useState(false);
+  const act = async fn => { setLoading(true); await fn(); setLoading(false); };
+  return (
+    <tr className="border-t border-white/5 hover:bg-white/[0.03] transition-colors">
+      <td className="px-3 py-3 w-14">
+        {article.image
+          ? <img src={article.image} alt="" className="w-11 h-11 object-cover rounded-lg bg-white/5" loading="lazy" onError={e => { e.target.style.display = 'none'; }} />
+          : <div className="w-11 h-11 rounded-lg bg-white/5 flex items-center justify-center"><FileText className="w-4 h-4 text-white/20" /></div>}
+      </td>
+      <td className="px-3 py-3 min-w-0">
+        <a href={`/blog/${article.slug}`} target="_blank" rel="noopener noreferrer" className="text-sm font-medium text-white hover:text-[#21c47b] transition-colors line-clamp-2 leading-snug block">
+          {article.title || article.slug}
+        </a>
+        <p className="text-[11px] text-white/30 font-mono mt-0.5 truncate">{article.slug}</p>
+      </td>
+      <td className="px-3 py-3 text-sm text-white/60 whitespace-nowrap hidden sm:table-cell">{blogFmtLong(article.date)}</td>
+      <td className="px-3 py-3 text-xs text-white/40 whitespace-nowrap hidden md:table-cell">{blogFmtDate(article.modified)}</td>
+      <td className="px-3 py-3 whitespace-nowrap">
+        {article.notified_at
+          ? <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-medium bg-[#21c47b]/15 text-[#21c47b] border border-[#21c47b]/30"><CheckCircle className="w-3 h-3" />{blogFmtDate(article.notified_at)}</span>
+          : <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-medium bg-orange-500/15 text-orange-400 border border-orange-500/30"><AlertCircle className="w-3 h-3" />À notifier</span>}
+      </td>
+      <td className="px-3 py-3 text-xs text-white/30 whitespace-nowrap hidden lg:table-cell">{blogFmtDate(article.synced_at)}</td>
+      <td className="px-3 py-3 whitespace-nowrap">
+        {article.notified_at
+          ? <button type="button" disabled={loading} onClick={() => act(() => onUnnotify(article.slug))} className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs text-white/50 hover:text-white bg-white/5 hover:bg-white/10 border border-white/10 transition-colors disabled:opacity-50">
+              {loading ? <span className="w-3 h-3 border border-white/30 border-t-transparent rounded-full animate-spin" /> : <XCircle className="w-3 h-3" />}Annuler
+            </button>
+          : <button type="button" disabled={loading} onClick={() => act(() => onNotify(article.slug))} className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-medium text-black disabled:opacity-50 transition-opacity hover:opacity-90" style={{ background: 'linear-gradient(135deg,#21c47b,#1aaa6a)' }}>
+              {loading ? <span className="w-3 h-3 border border-black/30 border-t-transparent rounded-full animate-spin" /> : <CheckCircle className="w-3 h-3" />}Notifier
+            </button>}
+      </td>
+    </tr>
+  );
+};
+
+const TabBlog = () => {
+  const [articles, setArticles] = useState([]);
+  const [loading, setLoading] = useState(false);
+  const [syncing, setSyncing] = useState(false);
+  const [syncMsg, setSyncMsg] = useState('');
+  const [search, setSearch] = useState('');
+  const [filter, setFilter] = useState('all');
+  const [toasts, setToasts] = useState([]);
+
+  const addToast = useCallback((msg, type = 'success') => {
+    const id = Date.now();
+    setToasts(prev => [...prev, { id, msg, type }]);
+    setTimeout(() => setToasts(prev => prev.filter(t => t.id !== id)), 3500);
+  }, []);
+
+  const fetchArticles = useCallback(async () => {
+    setLoading(true);
+    const { data, error } = await supabase
+      .from('blog_posts')
+      .select('id,wp_id,slug,title,date,modified,image,notified_at,synced_at')
+      .order('date', { ascending: false });
+    if (error) addToast('Erreur chargement articles', 'error');
+    else setArticles(data || []);
+    setLoading(false);
+  }, [addToast]);
+
+  useEffect(() => { fetchArticles(); }, [fetchArticles]);
+
+  const stats = useMemo(() => {
+    const total = articles.length;
+    const notified = articles.filter(a => a.notified_at).length;
+    const lastSync = articles.reduce((m, a) => (!a.synced_at ? m : (!m || a.synced_at > m ? a.synced_at : m)), null);
+    return { total, notified, pending: total - notified, lastSync };
+  }, [articles]);
+
+  const filtered = useMemo(() => {
+    let list = articles;
+    if (filter === 'pending') list = list.filter(a => !a.notified_at);
+    if (filter === 'notified') list = list.filter(a => a.notified_at);
+    if (search.trim()) { const q = search.toLowerCase(); list = list.filter(a => (a.title || '').toLowerCase().includes(q) || (a.slug || '').toLowerCase().includes(q)); }
+    return list;
+  }, [articles, filter, search]);
+
+  const handleNotify = useCallback(async slug => {
+    const { error } = await supabase.from('blog_posts').update({ notified_at: new Date().toISOString() }).eq('slug', slug);
+    error ? addToast(`Erreur : ${error.message}`, 'error') : addToast('Marqué comme notifié ✓');
+    await fetchArticles();
+  }, [addToast, fetchArticles]);
+
+  const handleUnnotify = useCallback(async slug => {
+    const { error } = await supabase.from('blog_posts').update({ notified_at: null }).eq('slug', slug);
+    error ? addToast(`Erreur : ${error.message}`, 'error') : addToast('Notification annulée');
+    await fetchArticles();
+  }, [addToast, fetchArticles]);
+
+  const handleSync = async () => {
+    setSyncing(true); setSyncMsg('Connexion à WordPress…');
+    try {
+      const WP = 'https://cms.karimsaari.com/wp-json/wp/v2/posts';
+      const allPosts = []; let page = 1, totalPages = 1;
+      do {
+        setSyncMsg(`Page ${page}/${totalPages}…`);
+        const res = await fetch(`${WP}?per_page=100&_embed&status=publish&page=${page}`, { signal: AbortSignal.timeout(20000) });
+        if (!res.ok) throw new Error(`HTTP ${res.status}`);
+        totalPages = parseInt(res.headers.get('X-WP-TotalPages') || '1', 10);
+        allPosts.push(...await res.json());
+        page++;
+      } while (page <= totalPages);
+      setSyncMsg(`${allPosts.length} articles récupérés…`);
+      const { data: existing } = await supabase.from('blog_posts').select('wp_id,notified_at');
+      const notifiedMap = Object.fromEntries((existing || []).map(r => [r.wp_id, r.notified_at]));
+      const rows = allPosts.map(p => {
+        const media = p._embedded?.['wp:featuredmedia']?.[0];
+        const og = media?.source_url || null;
+        return {
+          wp_id: p.id, slug: p.slug,
+          title: blogDecode(p.title?.rendered || ''),
+          excerpt: blogStrip(p.excerpt?.rendered || ''),
+          date: p.date, modified: p.modified,
+          date_formatted: new Date(p.date).toLocaleDateString('fr-FR', { year: 'numeric', month: 'long', day: 'numeric' }),
+          image_og: og, image: og ? og.replace(/\.(jpg|jpeg|png)(\?.*)?$/, '.webp') : null,
+          image_alt: media?.alt_text || null,
+          author: p._embedded?.author?.[0]?.name || 'Dark Massilia',
+          synced_at: new Date().toISOString(),
+          notified_at: notifiedMap[p.id] ?? null,
+        };
+      });
+      const { error } = await supabase.from('blog_posts').upsert(rows, { onConflict: 'wp_id' });
+      if (error) throw new Error(error.message);
+      addToast(`${rows.length} articles synchronisés ✓`);
+      await fetchArticles();
+    } catch (err) {
+      const isCors = err.name === 'TypeError' || /cors|failed to fetch|network/i.test(err.message || '');
+      addToast(isCors ? 'WordPress inaccessible — lancez `npm run wp:sync` localement' : `Erreur : ${err.message}`, 'error');
+    } finally { setSyncing(false); setSyncMsg(''); }
+  };
+
+  return (
+    <div className="space-y-5">
+      {/* Toasts */}
+      <div className="fixed bottom-6 right-6 z-[300] flex flex-col gap-2 pointer-events-none">
+        {toasts.map(t => (
+          <div key={t.id} className={`px-4 py-3 rounded-xl text-sm font-medium shadow-xl border ${t.type === 'success' ? 'bg-[#21c47b]/15 border-[#21c47b]/40 text-[#21c47b]' : 'bg-red-500/15 border-red-500/40 text-red-400'}`}>
+            {t.msg}
+          </div>
+        ))}
+      </div>
+
+      {/* Stats */}
+      <div className="grid grid-cols-2 lg:grid-cols-4 gap-3">
+        <BlogStatCard icon={FileText} value={stats.total} label="Total articles" accent="#0091ff" />
+        <BlogStatCard icon={Bell} value={stats.notified} label="Notifiés" accent="#21c47b" />
+        <BlogStatCard icon={BellOff} value={stats.pending} label="À notifier" accent="#f97316" />
+        <BlogStatCard icon={Clock} value={stats.lastSync ? blogFmtDate(stats.lastSync) : '—'} label="Dernière sync" accent="#a78bfa" />
+      </div>
+
+      {/* Toolbar */}
+      <div className="rounded-2xl border border-white/10 p-4 flex flex-col sm:flex-row gap-3" style={{ background: 'rgba(255,255,255,0.03)', backdropFilter: 'blur(12px)' }}>
+        <div className="relative flex-1">
+          <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-white/30 pointer-events-none" />
+          <input type="text" value={search} onChange={e => setSearch(e.target.value)} placeholder="Rechercher un titre ou slug…" className="w-full bg-white/5 border border-white/10 rounded-xl pl-9 pr-4 py-2.5 text-sm text-white placeholder-white/25 focus:outline-none focus:border-[#21c47b]/50 transition-colors" />
+        </div>
+        <div className="flex items-center gap-2">
+          <div className="flex gap-1 bg-white/5 rounded-xl p-1">
+            {[['all','Tous'],['pending','À notifier'],['notified','Notifiés']].map(([k,l]) => (
+              <button key={k} type="button" onClick={() => setFilter(k)} className={`px-3 py-1.5 rounded-lg text-sm font-medium transition-colors ${filter === k ? 'text-black' : 'text-white/50 hover:text-white'}`} style={filter === k ? { background: 'linear-gradient(135deg,#21c47b,#1aaa6a)' } : {}}>
+                {l}
+              </button>
+            ))}
+          </div>
+          <button type="button" onClick={handleSync} disabled={syncing} className="flex items-center gap-1.5 px-3 py-2 rounded-xl text-xs font-medium text-black disabled:opacity-60 transition-opacity hover:opacity-90 flex-shrink-0" style={{ background: 'linear-gradient(135deg,#21c47b,#1aaa6a)' }}>
+            <RefreshCw className={`w-3.5 h-3.5 ${syncing ? 'animate-spin' : ''}`} />
+            {syncing ? syncMsg || 'Sync…' : 'Sync WP'}
+          </button>
+        </div>
+      </div>
+
+      {/* Table */}
+      <div className="rounded-2xl border border-white/10 overflow-hidden" style={{ background: 'rgba(255,255,255,0.03)', backdropFilter: 'blur(12px)' }}>
+        {loading ? (
+          <div className="flex items-center justify-center gap-3 py-16 text-white/40">
+            <span className="w-5 h-5 border-2 border-[#21c47b] border-t-transparent rounded-full animate-spin" />Chargement…
+          </div>
+        ) : filtered.length === 0 ? (
+          <div className="flex flex-col items-center justify-center gap-2 py-16 text-white/30">
+            <FileText className="w-8 h-8 opacity-40" />
+            <p className="text-sm">{search || filter !== 'all' ? 'Aucun article trouvé' : 'Aucun article — lancez une synchronisation'}</p>
+          </div>
+        ) : (
+          <div className="overflow-x-auto">
+            <table className="w-full min-w-[720px]">
+              <thead>
+                <tr className="text-xs text-white/40 uppercase tracking-wider">
+                  <th className="px-3 py-3 text-left font-semibold w-14">Img</th>
+                  <th className="px-3 py-3 text-left font-semibold w-[35%]">Titre / Slug</th>
+                  <th className="px-3 py-3 text-left font-semibold hidden sm:table-cell w-32">Publication</th>
+                  <th className="px-3 py-3 text-left font-semibold hidden md:table-cell w-24">Modifié</th>
+                  <th className="px-3 py-3 text-left font-semibold w-36">Notification</th>
+                  <th className="px-3 py-3 text-left font-semibold hidden lg:table-cell w-24">Sync</th>
+                  <th className="px-3 py-3 text-left font-semibold w-24">Action</th>
+                </tr>
+              </thead>
+              <tbody>
+                {filtered.map(a => (
+                  <BlogArticleRow key={a.id} article={a} onNotify={handleNotify} onUnnotify={handleUnnotify} />
+                ))}
+              </tbody>
+            </table>
+          </div>
+        )}
+        {!loading && filtered.length > 0 && (
+          <div className="px-4 py-3 border-t border-white/5 text-xs text-white/30 flex items-center justify-between">
+            <span>{filtered.length} article{filtered.length > 1 ? 's' : ''}</span>
+            {(filter !== 'all' || search) && (
+              <button type="button" onClick={() => { setFilter('all'); setSearch(''); }} className="text-[#21c47b]/60 hover:text-[#21c47b] transition-colors">Effacer les filtres</button>
+            )}
+          </div>
+        )}
+      </div>
+    </div>
+  );
 };
 
 /* ── Tab Stats FB ────────────────────────────────────────────── */
@@ -798,12 +1064,86 @@ const TabStatsFB = () => {
   );
 };
 
-/* ── Tab Contrôle EXIF ──────────────────────────────────────── */
+/* ── Composants utilitaires EXIF (module-level pour ExifRow) ── */
+const ExifBadge = ({ ok, label }) => (
+  <span className={`inline-flex items-center gap-1 px-1.5 py-0.5 rounded text-xs font-mono ${
+    ok === true  ? 'bg-[#21c47b]/15 text-[#21c47b]' :
+    ok === false ? 'bg-red-500/15 text-red-400' :
+                   'bg-white/5 text-white/30'
+  }`}>
+    {ok === true ? '✓' : ok === false ? '✗' : '—'} {label}
+  </span>
+);
+
+const ExifDetailRow = ({ label, val, ok, dbVal, colSpan }) => (
+  <div className={colSpan ? 'md:col-span-2' : ''}>
+    <span className={`text-white/30 mr-2 ${dbVal ? 'text-[#21c47b]/50' : ''}`}>{label} :</span>
+    {val != null && val !== ''
+      ? <span className={ok === true ? 'text-[#21c47b]' : ok === false ? 'text-red-400' : 'text-white/70'}>{val}</span>
+      : <span className="text-white/20 italic">vide</span>
+    }
+  </div>
+);
+
+/* ── Ligne EXIF avec détection image cassée ─────────────────── */
+const ExifRow = ({ db, exif, c, isOpen, onToggle, onBroken, children }) => {
+  const [imgBroken, setImgBroken] = useState(false);
+  const filename = db.src.split('/').pop();
+  // Miniature 800w : on insère /800w/ avant le nom de fichier
+  const thumbSrc = db.src.replace(/\/([^/]+\.webp)$/, '/800w/$1');
+  return (
+    <div className={`border rounded-lg overflow-hidden ${
+      imgBroken ? 'border-red-500/40 bg-red-500/5' :
+      !exif ? 'border-red-500/20 bg-red-500/5' : isOpen ? 'border-[#21c47b]/40 bg-white/5' : 'border-white/8 bg-white/3'
+    }`}>
+      <div
+        className="px-3 py-2.5 flex items-center gap-3 cursor-pointer hover:bg-white/5 transition-colors"
+        onClick={onToggle}
+      >
+        <div className="relative w-20 h-14 flex-shrink-0">
+          <img
+            src={thumbSrc}
+            alt=""
+            className={`w-20 h-14 rounded object-cover bg-white/5 ${imgBroken ? 'opacity-0' : ''}`}
+            onError={() => { setImgBroken(true); onBroken?.(db.src); }}
+          />
+          {imgBroken && (
+            <div className="absolute inset-0 flex flex-col items-center justify-center rounded bg-red-500/15 border border-red-500/40 gap-0.5">
+              <span className="text-sm">⚠️</span>
+              <span className="text-[9px] font-semibold text-red-400 text-center leading-tight">image<br/>manquante</span>
+            </div>
+          )}
+        </div>
+        <div className="flex-1 min-w-0">
+          <p className="text-xs text-white/80 font-medium truncate">
+            {db.title || <span className="text-white/30 italic">sans titre</span>}
+          </p>
+          <p className="text-xs text-white/25 font-mono truncate">{filename}</p>
+        </div>
+        <div className="flex items-center gap-1.5 flex-shrink-0">
+          {imgBroken && <span className="text-[10px] font-semibold text-red-400 font-mono">fichier KO</span>}
+          <ExifBadge ok={exif ? c.titleOk : null}                      label="titre" />
+          <ExifBadge ok={c.gpsDb ? (exif ? c.gpsOk : null) : undefined} label="gps" />
+          <ExifBadge ok={exif ? c.kwOk : null}                         label="kw" />
+          {!exif && <span className="text-xs text-red-400 font-mono">non audité</span>}
+          <span className="text-white/20 text-xs ml-1">{isOpen ? '▲' : '▼'}</span>
+        </div>
+      </div>
+      {children}
+    </div>
+  );
+};
+
+/* ── Tab Contrôle EXIF ─────────────────────────────────────── */
 const TabExif = () => {
-  const [rows, setRows]       = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [filter, setFilter]   = useState('all'); // all | non_audit | title_ko | gps_ko | keywords_ko
+  const [rows, setRows]         = useState([]);
+  const [loading, setLoading]   = useState(true);
+  const [filter, setFilter]     = useState('all'); // all | non_audit | title_ko | gps_ko | keywords_ko | fichier_ko
   const [expanded, setExpanded] = useState(null); // src de la ligne ouverte
+  const [brokenSrcs, setBrokenSrcs] = useState(new Set());
+  const handleBroken = useCallback((src) => {
+    setBrokenSrcs(prev => { const next = new Set(prev); next.add(src); return next; });
+  }, []);
 
   useEffect(() => {
     const fetchAll = async () => {
@@ -834,11 +1174,12 @@ const TabExif = () => {
   const stats = rows.reduce((acc, { db, exif }) => {
     const c = check(db, exif);
     acc.total++;
-    if (c.titleOk)           acc.titleOk++;
-    if (c.gpsDb && c.gpsOk)  acc.gpsOk++;
-    if (c.kwOk)              acc.kwOk++;
+    if (c.titleOk)                      acc.titleOk++;
+    if (c.gpsDb && c.gpsOk)             acc.gpsOk++;
+    if (c.kwOk)                         acc.kwOk++;
+    if (exif?.file_exists === false || brokenSrcs.has(db.src)) acc.fileKo++;
     return acc;
-  }, { total: 0, titleOk: 0, gpsOk: 0, kwOk: 0 });
+  }, { total: 0, titleOk: 0, gpsOk: 0, kwOk: 0, fileKo: 0 });
 
   const filtered = rows.filter(({ db, exif }) => {
     const c = check(db, exif);
@@ -846,28 +1187,10 @@ const TabExif = () => {
     if (filter === 'title_ko')    return exif != null && !c.titleOk;
     if (filter === 'gps_ko')      return exif != null && c.gpsDb && !c.gpsOk;
     if (filter === 'keywords_ko') return exif != null && !c.kwOk;
+    if (filter === 'fichier_ko')  return exif?.file_exists === false || brokenSrcs.has(db.src);
     return true;
   });
 
-  const Row = ({ label, val, ok, dbVal, colSpan }) => (
-    <div className={colSpan ? 'md:col-span-2' : ''}>
-      <span className={`text-white/30 mr-2 ${dbVal ? 'text-[#21c47b]/50' : ''}`}>{label} :</span>
-      {val != null && val !== ''
-        ? <span className={ok === true ? 'text-[#21c47b]' : ok === false ? 'text-red-400' : 'text-white/70'}>{val}</span>
-        : <span className="text-white/20 italic">vide</span>
-      }
-    </div>
-  );
-
-  const Badge = ({ ok, label }) => (
-    <span className={`inline-flex items-center gap-1 px-1.5 py-0.5 rounded text-xs font-mono ${
-      ok === true  ? 'bg-[#21c47b]/15 text-[#21c47b]' :
-      ok === false ? 'bg-red-500/15 text-red-400' :
-                     'bg-white/5 text-white/30'
-    }`}>
-      {ok === true ? '✓' : ok === false ? '✗' : '—'} {label}
-    </span>
-  );
 
   if (loading) return (
     <div className="flex justify-center py-20">
@@ -877,6 +1200,7 @@ const TabExif = () => {
 
   const gpsKoCount    = rows.filter(({ db, exif }) => { const c = check(db, exif); return exif != null && c.gpsDb && !c.gpsOk; }).length;
   const nonAuditCount = rows.filter(({ exif }) => exif === null).length;
+  const fichierKoCount = rows.filter(({ db, exif }) => exif?.file_exists === false || brokenSrcs.has(db.src)).length;
 
   const FILTERS = [
     { key: 'all',         label: `Tout (${rows.length})` },
@@ -884,6 +1208,7 @@ const TabExif = () => {
     { key: 'title_ko',    label: `Titre KO (${rows.filter(({ db, exif }) => exif != null && !check(db, exif).titleOk).length})` },
     { key: 'gps_ko',      label: `GPS KO (${gpsKoCount})` },
     { key: 'keywords_ko', label: `Keywords KO (${rows.filter(({ db, exif }) => exif != null && !check(db, exif).kwOk).length})` },
+    { key: 'fichier_ko',  label: `Fichier KO (${fichierKoCount})`, danger: true },
   ];
 
   return (
@@ -897,19 +1222,22 @@ const TabExif = () => {
       </div>
 
       {/* Synthèse */}
-      <div className="grid grid-cols-3 gap-3 mb-5">
+      <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 mb-5">
         {[
-          { label: 'Titres OK',   val: stats.titleOk, total: stats.total },
-          { label: 'GPS OK',      val: stats.gpsOk,   total: stats.total },
-          { label: 'Keywords OK', val: stats.kwOk,    total: stats.total },
-        ].map(({ label, val, total }) => {
+          { label: 'Titres OK',   val: stats.titleOk, total: stats.total, danger: false },
+          { label: 'GPS OK',      val: stats.gpsOk,   total: stats.total, danger: false },
+          { label: 'Keywords OK', val: stats.kwOk,    total: stats.total, danger: false },
+          { label: 'Fichiers KO', val: stats.fileKo,  total: stats.total, danger: true  },
+        ].map(({ label, val, total, danger }) => {
           const pct = total ? Math.round(val / total * 100) : 0;
           return (
-            <div key={label} className="border border-white/10 rounded-xl p-4 bg-white/3">
-              <p className="text-xs text-white/40 mb-1">{label}</p>
-              <p className="text-2xl font-bold text-white">{val}<span className="text-sm text-white/30">/{total}</span></p>
+            <div key={label} className={`border rounded-xl p-4 ${danger ? 'border-red-500/30 bg-red-500/5' : 'border-white/10 bg-white/3'}`}>
+              <p className={`text-xs mb-1 ${danger ? 'text-red-400/70' : 'text-white/40'}`}>{label}</p>
+              <p className={`text-2xl font-bold ${danger && val > 0 ? 'text-red-400' : 'text-white'}`}>
+                {val}<span className="text-sm text-white/30">/{total}</span>
+              </p>
               <div className="mt-2 h-1 bg-white/10 rounded-full overflow-hidden">
-                <div className="h-full bg-[#21c47b] rounded-full" style={{ width: `${pct}%` }} />
+                <div className={`h-full rounded-full ${danger ? 'bg-red-500' : 'bg-[#21c47b]'}`} style={{ width: `${pct}%` }} />
               </div>
             </div>
           );
@@ -918,12 +1246,16 @@ const TabExif = () => {
 
       {/* Filtres */}
       <div className="flex gap-2 mb-4 flex-wrap">
-        {FILTERS.map(({ key, label }) => (
+        {FILTERS.map(({ key, label, danger }) => (
           <button key={key} type="button" onClick={() => setFilter(key)}
             className={`px-3 py-1.5 rounded-lg text-xs font-medium transition-colors border ${
               filter === key
-                ? 'border-[#21c47b]/60 text-[#21c47b] bg-[#21c47b]/10'
-                : 'border-white/10 text-white/40 hover:text-white hover:border-white/30'
+                ? danger
+                  ? 'border-red-500/60 text-red-400 bg-red-500/10'
+                  : 'border-[#21c47b]/60 text-[#21c47b] bg-[#21c47b]/10'
+                : danger
+                  ? 'border-red-500/30 text-red-400/60 hover:text-red-400 hover:border-red-500/50'
+                  : 'border-white/10 text-white/40 hover:text-white hover:border-white/30'
             }`}>
             {label}
           </button>
@@ -934,38 +1266,17 @@ const TabExif = () => {
       <div className="space-y-1">
         {filtered.map(({ db, exif }) => {
           const c = check(db, exif);
-          const filename = db.src.split('/').pop();
           const isOpen = expanded === db.src;
           return (
-            <div key={db.src} className={`border rounded-lg overflow-hidden ${
-              !exif ? 'border-red-500/20 bg-red-500/5' : isOpen ? 'border-[#21c47b]/40 bg-white/5' : 'border-white/8 bg-white/3'
-            }`}>
-              {/* Ligne principale — cliquable */}
-              <div
-                className="px-3 py-2.5 flex items-center gap-3 cursor-pointer hover:bg-white/5 transition-colors"
-                onClick={() => setExpanded(isOpen ? null : db.src)}
-              >
-                <img
-                  src={db.src}
-                  alt=""
-                  className="w-20 h-14 rounded object-cover flex-shrink-0 bg-white/5"
-                  loading="lazy"
-                />
-                <div className="flex-1 min-w-0">
-                  <p className="text-xs text-white/80 font-medium truncate">
-                    {db.title || <span className="text-white/30 italic">sans titre</span>}
-                  </p>
-                  <p className="text-xs text-white/25 font-mono truncate">{filename}</p>
-                </div>
-                <div className="flex items-center gap-1.5 flex-shrink-0">
-                  <Badge ok={exif ? c.titleOk : null}                      label="titre" />
-                  <Badge ok={c.gpsDb ? (exif ? c.gpsOk : null) : undefined} label="gps" />
-                  <Badge ok={exif ? c.kwOk : null}                         label="kw" />
-                  {!exif && <span className="text-xs text-red-400 font-mono">non audité</span>}
-                  <span className="text-white/20 text-xs ml-1">{isOpen ? '▲' : '▼'}</span>
-                </div>
-              </div>
-
+            <ExifRow
+              key={db.src}
+              db={db}
+              exif={exif}
+              c={c}
+              isOpen={isOpen}
+              onToggle={() => setExpanded(isOpen ? null : db.src)}
+              onBroken={handleBroken}
+            >
               {/* Panneau de détail EXIF */}
               {isOpen && (
                 <div className="border-t border-white/8 px-4 py-3 bg-black/20 text-xs font-mono">
@@ -974,33 +1285,33 @@ const TabExif = () => {
                   ) : (
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-1.5">
                       {/* ── Titre ── */}
-                      <Row label="DB title"        val={db.title}      dbVal ok={c.titleOk} />
-                      <Row label="XMP title"        val={exif.xmp_title}       ok={c.titleOk} />
+                      <ExifDetailRow label="DB title"        val={db.title}      dbVal ok={c.titleOk} />
+                      <ExifDetailRow label="XMP title"        val={exif.xmp_title}       ok={c.titleOk} />
                       {/* ── Description ── */}
-                      <Row label="XMP description"  val={exif.xmp_description} colSpan />
+                      <ExifDetailRow label="XMP description"  val={exif.xmp_description} colSpan />
                       {/* ── GPS ── */}
-                      <Row label="DB lat/lng"       val={db.lat != null ? `${db.lat}, ${db.lng}` : null} dbVal ok={c.gpsOk || !c.gpsDb} />
-                      <Row label="EXIF lat/lng"     val={exif.gps_lat != null ? `${exif.gps_lat}, ${exif.gps_lng}` : null} ok={c.gpsOk || !c.gpsDb} />
+                      <ExifDetailRow label="DB lat/lng"       val={db.lat != null ? `${db.lat}, ${db.lng}` : null} dbVal ok={c.gpsOk || !c.gpsDb} />
+                      <ExifDetailRow label="EXIF lat/lng"     val={exif.gps_lat != null ? `${exif.gps_lat}, ${exif.gps_lng}` : null} ok={c.gpsOk || !c.gpsDb} />
                       {/* ── Lieu ── */}
-                      <Row label="DB lieu"          val={db.lieu}       dbVal />
-                      <Row label="IPTC city"        val={exif.iptc_city || null} />
-                      <Row label="IPTC country"     val={exif.iptc_country || null} />
-                      <Row label="IPTC state"       val={exif.iptc_state || null} />
+                      <ExifDetailRow label="DB lieu"          val={db.lieu}       dbVal />
+                      <ExifDetailRow label="IPTC city"        val={exif.iptc_city || null} />
+                      <ExifDetailRow label="IPTC country"     val={exif.iptc_country || null} />
+                      <ExifDetailRow label="IPTC state"       val={exif.iptc_state || null} />
                       {/* ── Keywords ── */}
-                      <Row label="XMP keywords"     val={Array.isArray(exif.xmp_keywords) && exif.xmp_keywords.length ? exif.xmp_keywords.join(', ') : null} ok={c.kwOk} colSpan />
+                      <ExifDetailRow label="XMP keywords"     val={Array.isArray(exif.xmp_keywords) && exif.xmp_keywords.length ? exif.xmp_keywords.join(', ') : null} ok={c.kwOk} colSpan />
                       {/* ── Auteur / droits ── */}
-                      <Row label="XMP creator"      val={exif.xmp_creator} />
-                      <Row label="XMP rights"       val={exif.xmp_rights} />
-                      <Row label="EXIF artist"      val={exif.exif_artist} />
-                      <Row label="EXIF copyright"   val={exif.exif_copyright} />
+                      <ExifDetailRow label="XMP creator"      val={exif.xmp_creator} />
+                      <ExifDetailRow label="XMP rights"       val={exif.xmp_rights} />
+                      <ExifDetailRow label="EXIF artist"      val={exif.exif_artist} />
+                      <ExifDetailRow label="EXIF copyright"   val={exif.exif_copyright} />
                       {/* ── Fichier ── */}
-                      <Row label="file_exists"      val={exif.file_exists === true ? 'oui' : exif.file_exists === false ? 'non ⚠️' : null} ok={exif.file_exists !== false} />
-                      <Row label="Vérifié le"       val={exif.checked_at ? new Date(exif.checked_at).toLocaleString('fr-FR') : null} />
+                      <ExifDetailRow label="file_exists"      val={exif.file_exists === true ? 'oui' : exif.file_exists === false ? 'non ⚠️' : null} ok={exif.file_exists !== false} />
+                      <ExifDetailRow label="Vérifié le"       val={exif.checked_at ? new Date(exif.checked_at).toLocaleString('fr-FR') : null} />
                     </div>
                   )}
                 </div>
               )}
-            </div>
+            </ExifRow>
           );
         })}
       </div>
@@ -1138,6 +1449,7 @@ export default function Admin() {
   const TABS = [
     { key: 'paysage',     label: 'Galerie Paysage' },
     { key: 'sous_marine', label: 'Galerie Sous-marine' },
+    { key: 'blog',        label: 'Blog' },
     { key: 'reseaux',     label: 'Réseaux' },
     { key: 'exif',        label: 'Contrôle EXIF' },
     { key: 'stats_fb',    label: 'Stats FB' },
@@ -1303,6 +1615,7 @@ export default function Admin() {
       <main className="relative z-10 max-w-5xl mx-auto px-4 py-6">
         {tab === 'paysage'     && <TabGalerie tableName="photos_paysage" />}
         {tab === 'sous_marine' && <TabGalerie tableName="photos_sous_marine" />}
+        {tab === 'blog'        && <TabBlog />}
         {tab === 'reseaux'     && <TabReseaux />}
         {tab === 'exif'        && <TabExif />}
         {tab === 'stats_fb'    && <TabStatsFB />}

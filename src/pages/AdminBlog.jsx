@@ -618,16 +618,16 @@ export default function AdminBlog() {
             </div>
           ) : (
             <div className="overflow-x-auto">
-              <table className="w-full">
+              <table className="w-full min-w-[720px]">
                 <thead>
                   <tr className="text-xs text-white/40 uppercase tracking-wider">
-                    <th className="px-3 py-3 text-left font-semibold w-16">Img</th>
-                    <th className="px-3 py-3 text-left font-semibold">Titre / Slug</th>
-                    <th className="px-3 py-3 text-left font-semibold hidden sm:table-cell">Publication</th>
-                    <th className="px-3 py-3 text-left font-semibold hidden md:table-cell">Modifié</th>
-                    <th className="px-3 py-3 text-left font-semibold">Notification</th>
-                    <th className="px-3 py-3 text-left font-semibold hidden lg:table-cell">Sync</th>
-                    <th className="px-3 py-3 text-left font-semibold">Action</th>
+                    <th className="px-3 py-3 text-left font-semibold w-14">Img</th>
+                    <th className="px-3 py-3 text-left font-semibold w-[35%]">Titre / Slug</th>
+                    <th className="px-3 py-3 text-left font-semibold hidden sm:table-cell w-32">Publication</th>
+                    <th className="px-3 py-3 text-left font-semibold hidden md:table-cell w-24">Modifié</th>
+                    <th className="px-3 py-3 text-left font-semibold w-36">Notification</th>
+                    <th className="px-3 py-3 text-left font-semibold hidden lg:table-cell w-24">Sync</th>
+                    <th className="px-3 py-3 text-left font-semibold w-24">Action</th>
                   </tr>
                 </thead>
                 <tbody>
