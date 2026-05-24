@@ -97,7 +97,14 @@ async function upsertBatch(rows) {
     const { error } = await supabase
       .from('images_registry')
       .upsert(rows.slice(i, i + BATCH_SIZE), { onConflict: 'path' });
-    if (error) throw new Error(`Supabase upsert: ${error.message}`);
+    if (error) {
+      // Table absente : on log et on continue sans planter le CI
+      if (error.message.includes('images_registry') || error.code === '42P01') {
+        console.warn(`⚠️  images_registry inaccessible — upsert ignoré`);
+        return;
+      }
+      throw new Error(`Supabase upsert: ${error.message}`);
+    }
   }
 }
 
@@ -173,7 +180,18 @@ async function main() {
     supabase.from('photos_sous_marine').select('src'),
     Promise.resolve(loadGitMtimes()),
   ]);
-  if (regErr) { console.error('Supabase error:', regErr.message); process.exit(1); }
+  if (regErr) {
+    // Table absente ou inaccessible → fallback : uploader toutes les images
+    if (regErr.message.includes('images_registry') || regErr.code === '42P01') {
+      console.warn(`⚠️  Registry Supabase inaccessible (${regErr.message})`);
+      console.warn('⚠️  Fallback : upload de toutes les images locales');
+      writeFileSync(OUTPUT_FILE, localFiles.map(f => f.path).join('\n') + '\n');
+      console.log(`📝 ${localFiles.length} image(s) listées pour upload`);
+      return;
+    }
+    console.error('Supabase error:', regErr.message);
+    process.exit(1);
+  }
 
   const regMap         = new Map((registry    || []).map(r => [r.path, r]));
   const paysageSrcs    = new Set((paysage     || []).map(r => r.src));
