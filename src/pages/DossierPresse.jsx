@@ -28,7 +28,7 @@ export default function DossierPresse() {
           <div
             className="absolute inset-0"
             style={{
-              background: 'linear-gradient(rgba(0,0,0,0.45) 0%, rgba(12,34,48,0.88) 100%), url(https://cms.karimsaari.com/wp-content/uploads/2026/05/fight-scaled.jpg) center/cover no-repeat',
+              background: 'linear-gradient(rgba(0,0,0,0.45) 0%, rgba(12,34,48,0.88) 100%), url(/images/fond%20m%C3%A9diterran%C3%A9e.png) center/cover no-repeat',
             }}
           />
           {/* Content */}
@@ -60,30 +60,6 @@ export default function DossierPresse() {
                 Contact presse
               </a>
             </motion.div>
-          </div>
-        </motion.div>
-
-        {/* ── PDF viewer ──────────────────────────────────────────────── */}
-        <motion.div
-          initial="hidden"
-          whileInView="visible"
-          viewport={VIEW_OPTS}
-          variants={FADE_IN_UP}
-          className="max-w-5xl mx-auto mb-12"
-        >
-          <p className="text-center text-sm text-text-secondary mb-4">
-            Aperçu du dossier —{' '}
-            <a href={PDF} download className="text-astroide hover:underline">
-              télécharger le PDF complet
-            </a>
-          </p>
-          <div className="glass-strong rounded-2xl overflow-hidden border border-white/10 p-2">
-            <iframe
-              src={PDF}
-              title="Dossier de presse Dark Massilia"
-              className="w-full rounded-xl"
-              style={{ height: 'min(85vh, 1100px)', border: 'none' }}
-            />
           </div>
         </motion.div>
 
