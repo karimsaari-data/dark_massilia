@@ -1,6 +1,6 @@
 import { motion, AnimatePresence } from 'framer-motion';
 import { Link, useNavigate } from 'react-router-dom';
-import { Mail, Phone, MapPin, Newspaper, UserPlus, MessageCircle, X } from 'lucide-react';
+import { Mail, Phone, MapPin, FileText, UserPlus, MessageCircle, X, Users, Camera } from 'lucide-react';
 import QRCodeLib from 'react-qr-code';
 const QRCode = QRCodeLib?.default ?? QRCodeLib;
 import { useState } from 'react';
@@ -208,109 +208,118 @@ const Contact = () => {
           </motion.div>
         </motion.div>
 
-        {/* ── Newsletter CTA ───────────────────────────────────────────── */}
+        {/* ── 3 blocs d'intention ──────────────────────────────────────── */}
         <motion.div
           initial="hidden"
           whileInView="visible"
           viewport={VIEW_OPTS}
-          variants={FADE_IN_UP}
-          className="max-w-5xl mx-auto"
+          variants={STAGGER_CONTAINER}
+          className="max-w-5xl mx-auto mt-8 grid grid-cols-1 md:grid-cols-3 gap-6"
         >
+          {/* Presse & Médias */}
           <motion.div
-            className="rounded-3xl p-8 md:p-10 flex flex-col md:flex-row items-center justify-between gap-6 cursor-pointer"
-            style={{ background: 'linear-gradient(135deg, rgba(33,196,123,0.12) 0%, rgba(0,145,255,0.10) 100%)', border: '1px solid rgba(33,196,123,0.25)' }}
-            onClick={() => { navigate('/'); setTimeout(() => { document.getElementById('newsletter')?.scrollIntoView({ behavior: 'smooth' }); }, 100); }}
-            whileHover={{ scale: 1.01, borderColor: 'rgba(33,196,123,0.5)' }}
-            transition={{ type: 'spring', stiffness: 300 }}
+            variants={FADE_IN_UP}
+            className="glass-strong rounded-2xl p-7 flex flex-col gap-4 border border-white/10 hover:border-astroide/40 transition-colors"
           >
-            <div className="flex items-center gap-5">
-              <motion.div
-                className="w-14 h-14 rounded-2xl bg-gradient-to-br from-astroide to-astroide-dark flex items-center justify-center flex-shrink-0"
-                whileHover={{ rotate: [0, -8, 8, 0] }}
-                transition={{ duration: 0.4 }}
-              >
-                <Newspaper className="w-7 h-7 text-white" />
-              </motion.div>
-              <div>
-                <h3 className="text-white font-bold text-xl mb-1">Alertes terrain — Newsletter</h3>
-                <p className="text-gray-400 text-sm">Missions de dépollution, reportages et actualités des Calanques directement dans ta boîte mail.</p>
-              </div>
+            <div className="w-12 h-12 rounded-xl bg-astroide/15 border border-astroide/25 flex items-center justify-center">
+              <FileText className="w-6 h-6 text-astroide" />
             </div>
-            <span className="btn-primary whitespace-nowrap flex-shrink-0">
-              S'inscrire gratuitement →
-            </span>
-          </motion.div>
-        </motion.div>
-
-        {/* ── Card engagement ──────────────────────────────────────────── */}
-        <motion.div
-          initial="hidden"
-          whileInView="visible"
-          viewport={VIEW_OPTS}
-          variants={FADE_IN_UP}
-          className="max-w-6xl mx-auto mt-16"
-        >
-          <div className="glass-strong rounded-2xl overflow-hidden flex flex-col lg:flex-row">
-            {/* Texte */}
-            <motion.div
-              className="flex flex-col gap-6 p-8 lg:p-12 lg:flex-1 justify-center"
-              variants={STAGGER_CONTAINER}
-            >
-              <motion.p variants={FADE_IN_UP} className="text-astroide text-sm font-semibold uppercase tracking-widest">
-                Un engagement à 360°
-              </motion.p>
-              <motion.h2 variants={FADE_IN_UP} className="text-2xl md:text-3xl font-bold text-white leading-tight">
-                La Méditerranée pour bureau, l'action pour moteur
-              </motion.h2>
-              <motion.p variants={FADE_IN_UP} className="text-text-secondary leading-relaxed">
-                Photographe environnemental et sous-marin, Karim Saari documente et
-                combat la pollution marine depuis plus de dix ans sur le littoral marseillais. Chaque
-                plongée est une mission : collecter les données, ramener les déchets, alerter le public.
-                Que vous soyez journaliste, institution, marque engagée ou simple passionné de la mer —
-                il y a une place pour vous dans ce combat.
-              </motion.p>
-            </motion.div>
-            {/* Photo + boutons */}
-            <div className="lg:w-[42%] flex-shrink-0 flex flex-col items-stretch gap-3 p-6 lg:p-8 justify-center">
-              <Link
-                to="/depollution-marine"
-                className="btn-secondary inline-flex items-center justify-center gap-2 w-full"
-              >
-                Nos missions de dépollution
-              </Link>
+            <div>
+              <p className="text-astroide text-xs font-semibold uppercase tracking-widest mb-1">Presse & Médias</p>
+              <h3 className="text-white font-bold text-lg leading-tight">Journalistes & documentaristes</h3>
+            </div>
+            <p className="text-text-secondary text-sm leading-relaxed flex-1">
+              Reportages, interviews, cessions de droits photographiques, participation à des documentaires sur la Méditerranée.
+            </p>
+            <div className="flex flex-col gap-2 mt-auto pt-2">
               <Link
                 to="/dossier-presse"
-                className="btn-secondary inline-flex items-center justify-center gap-2 w-full"
+                className="inline-flex items-center justify-center gap-2 py-2.5 px-4 rounded-xl text-sm font-semibold text-white transition-all"
+                style={{ background: 'linear-gradient(135deg, #21c47b, #0fa869)' }}
               >
-                <svg width="16" height="16" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+                <FileText className="w-4 h-4" />
                 Dossier de presse
               </Link>
-              <motion.picture
-                whileHover={{ scale: 1.02 }}
-                transition={{ type: 'spring', stiffness: 200 }}
-                className="overflow-hidden rounded-xl"
-              >
-                <source srcSet="/images/contact-karim-saari.webp" type="image/webp" />
-                <img
-                  src="/images/contact-karim-saari.webp"
-                  alt="Karim Saari en action lors d'une mission de dépollution sous-marine dans les Calanques de Marseille avec Team Oxygen"
-                  width="1440"
-                  height="1212"
-                  className="w-full h-auto"
-                  loading="lazy"
-                />
-              </motion.picture>
               <a
-                href="https://www.team-oxygen.com/"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="btn-primary inline-flex items-center justify-center gap-2 w-full"
+                href="mailto:contact@karimsaari.com?subject=Demande%20presse"
+                className="inline-flex items-center justify-center gap-2 py-2.5 px-4 rounded-xl text-sm font-medium text-gray-300 hover:text-white bg-white/5 hover:bg-white/10 transition-all"
               >
-                Soutenir Team Oxygen
-                <span aria-hidden="true">↗</span>
+                <Mail className="w-4 h-4" />
+                contact@karimsaari.com
               </a>
             </div>
-          </div>
+          </motion.div>
+
+          {/* Partenariats */}
+          <motion.div
+            variants={FADE_IN_UP}
+            className="glass-strong rounded-2xl p-7 flex flex-col gap-4 border border-white/10 hover:border-[#25D366]/40 transition-colors"
+          >
+            <div className="w-12 h-12 rounded-xl bg-[#25D366]/10 border border-[#25D366]/25 flex items-center justify-center">
+              <Users className="w-6 h-6 text-[#25D366]" />
+            </div>
+            <div>
+              <p className="text-[#25D366] text-xs font-semibold uppercase tracking-widest mb-1">Partenariats</p>
+              <h3 className="text-white font-bold text-lg leading-tight">Marques & institutions</h3>
+            </div>
+            <p className="text-text-secondary text-sm leading-relaxed flex-1">
+              Marques engagées, collectivités, associations : collaborations terrain, campagnes de sensibilisation, mécénat.
+            </p>
+            <div className="flex flex-col gap-2 mt-auto pt-2">
+              <a
+                href={`https://wa.me/${APP_CONFIG.contactWhatsApp.replace(/[\s+]/g, '')}?text=Bonjour%20Karim%2C%20je%20souhaite%20vous%20proposer%20un%20partenariat`}
+                target="_blank"
+                rel="noopener noreferrer"
+                onClick={() => trackEvent('contact_click', { method: 'whatsapp', source: 'intent_block' })}
+                className="inline-flex items-center justify-center gap-2 py-2.5 px-4 rounded-xl text-sm font-semibold text-white transition-all"
+                style={{ background: 'rgba(37,211,102,0.18)', border: '1px solid rgba(37,211,102,0.4)' }}
+              >
+                <MessageCircle className="w-4 h-4 text-[#25D366]" />
+                WhatsApp direct
+              </a>
+              <a
+                href="mailto:contact@karimsaari.com?subject=Proposition%20de%20partenariat"
+                className="inline-flex items-center justify-center gap-2 py-2.5 px-4 rounded-xl text-sm font-medium text-gray-300 hover:text-white bg-white/5 hover:bg-white/10 transition-all"
+              >
+                <Mail className="w-4 h-4" />
+                contact@karimsaari.com
+              </a>
+            </div>
+          </motion.div>
+
+          {/* Expositions & Interventions */}
+          <motion.div
+            variants={FADE_IN_UP}
+            className="glass-strong rounded-2xl p-7 flex flex-col gap-4 border border-white/10 hover:border-blue-400/40 transition-colors"
+          >
+            <div className="w-12 h-12 rounded-xl bg-blue-500/10 border border-blue-500/25 flex items-center justify-center">
+              <Camera className="w-6 h-6 text-blue-400" />
+            </div>
+            <div>
+              <p className="text-blue-400 text-xs font-semibold uppercase tracking-widest mb-1">Expositions & Interventions</p>
+              <h3 className="text-white font-bold text-lg leading-tight">Galeries, écoles & conférences</h3>
+            </div>
+            <p className="text-text-secondary text-sm leading-relaxed flex-1">
+              Expositions photographiques, conférences de sensibilisation, ateliers éducatifs sur la biodiversité marine.
+            </p>
+            <div className="flex flex-col gap-2 mt-auto pt-2">
+              <a
+                href="mailto:contact@karimsaari.com?subject=Demande%20exposition%20%2F%20intervention"
+                className="inline-flex items-center justify-center gap-2 py-2.5 px-4 rounded-xl text-sm font-semibold text-white transition-all"
+                style={{ background: 'rgba(96,165,250,0.15)', border: '1px solid rgba(96,165,250,0.35)' }}
+              >
+                <Mail className="w-4 h-4 text-blue-400" />
+                Envoyer une demande
+              </a>
+              <Link
+                to="/photographie-sous-marine"
+                className="inline-flex items-center justify-center gap-2 py-2.5 px-4 rounded-xl text-sm font-medium text-gray-300 hover:text-white bg-white/5 hover:bg-white/10 transition-all"
+              >
+                <Camera className="w-4 h-4" />
+                Voir les photos
+              </Link>
+            </div>
+          </motion.div>
         </motion.div>
 
       </div>
