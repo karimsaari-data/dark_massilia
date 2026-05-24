@@ -45,6 +45,7 @@ const STATIC_ROUTES = [
   '/blog',
   '/depollution-marine',
   '/presse',
+  '/dossier-presse',
   '/photographie-paysage-mer',
   '/photographie-sous-marine',
   '/videos',
