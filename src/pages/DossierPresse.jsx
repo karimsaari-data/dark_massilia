@@ -223,33 +223,44 @@ const DossierPresse = () => (
 
         <div className="grid md:grid-cols-[2fr_1fr] gap-8 items-start">
           {/* Bio longue */}
-          <motion.div variants={FADE_IN_UP} className="glass-strong rounded-3xl p-8 md:p-10 border border-white/8">
-            <p className="text-[10px] font-bold uppercase tracking-[0.25em] text-ocean-teal mb-6">Version longue</p>
-            <p className="text-text-secondary leading-relaxed mb-4">
-              <strong className="text-white">Karim Saari</strong>, alias <strong className="text-white">Dark Massilia</strong>,
-              est photographe environnemental et sous-marin basé à Marseille. Depuis 2018, il documente la beauté et la
-              fragilité des Calanques en pratiquant l'apnée, et coordonne avec son association{' '}
-              <strong className="text-white">Team Oxygen</strong> le{' '}
-              <strong className="text-white">Projet Sentinelle</strong> — opération annuelle de dépollution sous-marine.
-            </p>
-            <p className="text-text-secondary leading-relaxed mb-4">
-              Depuis 2022, quatre éditions ont permis de retirer{' '}
-              <strong className="text-white">5 724 kg de déchets</strong> des fonds méditerranéens dans les Calanques,
-              le Frioul, la Côte Bleue et la Rade de Marseille. La communauté Dark Massilia fédère aujourd'hui plus de{' '}
-              <strong className="text-white">{SOCIAL_STATS_DEFAULTS.total_community.toLocaleString('fr-FR')} membres</strong>{' '}
-              engagés pour la protection des Calanques.
-            </p>
-            <p className="text-text-secondary leading-relaxed mb-4">
-              Ses images et ses missions ont été diffusées sur <strong className="text-white">ARTE</strong>{' '}
-              (documentaires <em>Sauver Marseille</em> et <em>Méduses, les souveraines des océans</em>),{' '}
-              <strong className="text-white">TF1</strong> et <strong className="text-white">M6 Zone Interdite</strong>.
-              Certifié Google Street View Trusted et Google Local Guides Level&nbsp;10.
-            </p>
-            <p className="text-text-secondary leading-relaxed">
-              Son travail repose sur une dualité : la beauté documentée des fonds marins méditerranéens, et l'urgence
-              écologique qui les menace. 170+ photographies accessibles en ligne, régulièrement mises à jour depuis
-              les missions de terrain.
-            </p>
+          <motion.div variants={FADE_IN_UP} className="space-y-4">
+            {/* Portrait */}
+            <div className="rounded-3xl overflow-hidden aspect-[4/3]">
+              <img
+                src="/images/karim-saari-marseille-dark-massilia-portrait-2024.jpg"
+                alt="Karim Saari — Dark Massilia, photographe environnemental et sous-marin à Marseille"
+                className="w-full h-full object-cover object-top"
+                loading="lazy"
+              />
+            </div>
+            <div className="glass-strong rounded-3xl p-8 md:p-10 border border-white/8">
+              <p className="text-[10px] font-bold uppercase tracking-[0.25em] text-ocean-teal mb-6">Version longue</p>
+              <p className="text-text-secondary leading-relaxed mb-4">
+                <strong className="text-white">Karim Saari</strong>, alias <strong className="text-white">Dark Massilia</strong>,
+                est photographe environnemental et sous-marin basé à Marseille. Depuis 2018, il documente la beauté et la
+                fragilité des Calanques en pratiquant l'apnée, et coordonne avec son association{' '}
+                <strong className="text-white">Team Oxygen</strong> le{' '}
+                <strong className="text-white">Projet Sentinelle</strong> — opération annuelle de dépollution sous-marine.
+              </p>
+              <p className="text-text-secondary leading-relaxed mb-4">
+                Depuis 2022, quatre éditions ont permis de retirer{' '}
+                <strong className="text-white">5 724 kg de déchets</strong> des fonds méditerranéens dans les Calanques,
+                le Frioul, la Côte Bleue et la Rade de Marseille. La communauté Dark Massilia fédère aujourd'hui plus de{' '}
+                <strong className="text-white">{SOCIAL_STATS_DEFAULTS.total_community.toLocaleString('fr-FR')} membres</strong>{' '}
+                engagés pour la protection des Calanques.
+              </p>
+              <p className="text-text-secondary leading-relaxed mb-4">
+                Ses images et ses missions ont été diffusées sur <strong className="text-white">ARTE</strong>{' '}
+                (documentaires <em>Sauver Marseille</em> et <em>Méduses, les souveraines des océans</em>),{' '}
+                <strong className="text-white">TF1</strong> et <strong className="text-white">M6 Zone Interdite</strong>.
+                Certifié Google Street View Trusted et Google Local Guides Level&nbsp;10.
+              </p>
+              <p className="text-text-secondary leading-relaxed">
+                Son travail repose sur une dualité : la beauté documentée des fonds marins méditerranéens, et l'urgence
+                écologique qui les menace. 170+ photographies accessibles en ligne, régulièrement mises à jour depuis
+                les missions de terrain.
+              </p>
+            </div>
           </motion.div>
 
           {/* Bio courte + identité */}
@@ -287,6 +298,16 @@ const DossierPresse = () => (
                 <span>Calanques de Marseille · Méditerranée</span>
               </div>
             </motion.div>
+
+            {/* Photo profil secondaire */}
+            <motion.div variants={FADE_IN_UP} className="rounded-2xl overflow-hidden aspect-square">
+              <img
+                src="/images/karim-saari-photographe-sous-marin-marseille-dark-massilia.webp"
+                alt="Karim Saari en apnée dans les Calanques de Marseille"
+                className="w-full h-full object-cover"
+                loading="lazy"
+              />
+            </motion.div>
           </div>
         </div>
       </motion.section>
@@ -316,7 +337,6 @@ const DossierPresse = () => (
               variants={FADE_IN_UP}
               className="glass rounded-2xl p-6 border border-white/8 hover:border-ocean-teal/30 transition-colors group relative overflow-hidden"
             >
-              {/* Numéro de fond */}
               <span className="absolute right-4 top-3 text-6xl font-black text-white/[0.04] select-none leading-none">
                 {String(i + 1).padStart(2, '0')}
               </span>
@@ -331,6 +351,19 @@ const DossierPresse = () => (
             </motion.div>
           ))}
         </div>
+
+        {/* Photos de mission */}
+        <motion.div variants={FADE_IN_UP} className="mt-6 grid grid-cols-3 gap-2 rounded-3xl overflow-hidden">
+          {[
+            { src: '/images/marseille-dark-massilia-port-goudes-depollution-apnee-projet-sentinelle.webp', alt: 'Dépollution en apnée — Port des Goudes' },
+            { src: '/images/Marseille-dark-massilia-plastique-pollution-projet-sentinelle-teamoxygen.webp', alt: 'Team Oxygen — Opération Sentinelle' },
+            { src: '/images/marseille-dark-massilia-depollution-maritime-calanques-projet-sentinelle.webp', alt: 'Dépollution maritime — Calanques de Marseille' },
+          ].map(({ src, alt }) => (
+            <div key={src} className="aspect-[4/3] overflow-hidden">
+              <img src={src} alt={alt} className="w-full h-full object-cover hover:scale-105 transition-transform duration-500" loading="lazy" />
+            </div>
+          ))}
+        </motion.div>
       </motion.section>
 
       {/* ── 03 · Angles rédactionnels ────────────────────────────── */}
@@ -457,37 +490,71 @@ const DossierPresse = () => (
           <SectionLabel num="05">Visuels disponibles</SectionLabel>
         </motion.div>
 
-        <div className="grid md:grid-cols-2 gap-6">
-          <motion.div variants={FADE_IN_UP} className="glass-strong rounded-3xl p-8 border border-white/8">
-            <div className="flex items-center gap-3 mb-4">
-              <Camera className="w-5 h-5 text-ocean-teal" />
-              <h2 className="text-white font-semibold">Photographie sous-marine</h2>
+        <div className="space-y-6">
+          {/* Sous-marine */}
+          <motion.div variants={FADE_IN_UP} className="glass-strong rounded-3xl border border-white/8 overflow-hidden">
+            <div className="grid grid-cols-3 md:grid-cols-6 gap-0.5">
+              {[
+                { src: '/images/Marseille-dark-massilia-plastique-pollution-projet-sentinelle-poulpe.webp', alt: 'Poulpe — Calanques de Marseille' },
+                { src: '/images/Marseille-dark-massilia-plastique-pollution-projet-sentinelle-spirographe.webp', alt: 'Spirographes sous-marins' },
+                { src: '/images/le-maitre-du-camouflage-rascasse-brune-sur-recif-corallien.webp', alt: 'Rascasse brune sur récif corallien' },
+                { src: '/images/Marseille-dark-massilia-plastique-pollution-projet-sentinelle-grotte.webp', alt: 'Grotte sous-marine Calanques' },
+                { src: '/images/Marseille-dark-massilia-plastique-pollution-projet-sentinelle-paysage-sous-marin.webp', alt: 'Paysage sous-marin Méditerranée' },
+                { src: '/images/Marseille-dark-massilia-plastique-pollution-projet-sentinelle-octopus.webp', alt: 'Pieuvre — fonds marins Marseille' },
+              ].map(({ src, alt }) => (
+                <div key={src} className="aspect-square overflow-hidden">
+                  <img src={src} alt={alt} className="w-full h-full object-cover hover:scale-110 transition-transform duration-500" loading="lazy" />
+                </div>
+              ))}
             </div>
-            <p className="text-text-secondary text-sm leading-relaxed mb-6">
-              101 photographies en haute résolution. Mérous, murènes, poulpes, gorgones, coraux — et la réalité de la pollution plastique dans les Calanques.
-            </p>
-            <div className="h-px bg-white/8 mb-6" />
-            <p className="text-[11px] text-white/30 mb-4">Usage éditorial · Crédit obligatoire : <strong className="text-white/50">© Karim Saari</strong></p>
-            <Link to="/photographie-sous-marine" className="inline-flex items-center gap-2 text-ocean-teal hover:text-white transition-colors text-sm font-medium group">
-              Accéder à la galerie
-              <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
-            </Link>
+            <div className="p-6 md:p-8">
+              <div className="flex items-center justify-between gap-4 flex-wrap">
+                <div>
+                  <div className="flex items-center gap-3 mb-1">
+                    <Camera className="w-5 h-5 text-ocean-teal" />
+                    <h2 className="text-white font-semibold">Photographie sous-marine</h2>
+                  </div>
+                  <p className="text-text-secondary text-sm">101 photographies HR · mérous, murènes, poulpes, gorgones, pollution plastique</p>
+                </div>
+                <Link to="/photographie-sous-marine" className="inline-flex items-center gap-2 text-ocean-teal hover:text-white transition-colors text-sm font-medium group shrink-0">
+                  Voir la galerie <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                </Link>
+              </div>
+              <p className="mt-3 text-[11px] text-white/30">Usage éditorial · Crédit obligatoire : <strong className="text-white/50">© Karim Saari</strong></p>
+            </div>
           </motion.div>
 
-          <motion.div variants={FADE_IN_UP} className="glass-strong rounded-3xl p-8 border border-white/8">
-            <div className="flex items-center gap-3 mb-4">
-              <Image className="w-5 h-5 text-ocean-teal" />
-              <h2 className="text-white font-semibold">Photographie de paysage</h2>
+          {/* Paysage */}
+          <motion.div variants={FADE_IN_UP} className="glass-strong rounded-3xl border border-white/8 overflow-hidden">
+            <div className="grid grid-cols-3 md:grid-cols-6 gap-0.5">
+              {[
+                { src: '/images/biodiversite-calanques-marseille-1.webp', alt: 'Biodiversité — Calanques de Marseille' },
+                { src: '/images/biodiversite-calanques-marseille-2.webp', alt: 'Faune des Calanques' },
+                { src: '/images/biodiversite-calanques-marseille-3.webp', alt: 'Calanques de Marseille' },
+                { src: '/images/acces-massifs-calanques_1.webp', alt: 'Massifs des Calanques' },
+                { src: '/images/posidonie-calanque-sormiou-marseille.webp', alt: 'Posidonie — Calanque de Sormiou' },
+                { src: '/images/acces-massifs-calanques_2.webp', alt: 'Falaises des Calanques' },
+              ].map(({ src, alt }) => (
+                <div key={src} className="aspect-square overflow-hidden">
+                  <img src={src} alt={alt} className="w-full h-full object-cover hover:scale-110 transition-transform duration-500" loading="lazy" />
+                </div>
+              ))}
             </div>
-            <p className="text-text-secondary text-sm leading-relaxed mb-6">
-              92 photographies de paysage côtier et maritime — Calanques, Méditerranée, Provence. Format grand angle, lumière naturelle.
-            </p>
-            <div className="h-px bg-white/8 mb-6" />
-            <p className="text-[11px] text-white/30 mb-4">Usage éditorial · Crédit obligatoire : <strong className="text-white/50">© Karim Saari</strong></p>
-            <Link to="/photographie-paysage-mer" className="inline-flex items-center gap-2 text-ocean-teal hover:text-white transition-colors text-sm font-medium group">
-              Accéder à la galerie
-              <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
-            </Link>
+            <div className="p-6 md:p-8">
+              <div className="flex items-center justify-between gap-4 flex-wrap">
+                <div>
+                  <div className="flex items-center gap-3 mb-1">
+                    <Image className="w-5 h-5 text-ocean-teal" />
+                    <h2 className="text-white font-semibold">Photographie de paysage</h2>
+                  </div>
+                  <p className="text-text-secondary text-sm">92 photographies HR · Calanques, Méditerranée, Provence — lumière naturelle</p>
+                </div>
+                <Link to="/photographie-paysage-mer" className="inline-flex items-center gap-2 text-ocean-teal hover:text-white transition-colors text-sm font-medium group shrink-0">
+                  Voir la galerie <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                </Link>
+              </div>
+              <p className="mt-3 text-[11px] text-white/30">Usage éditorial · Crédit obligatoire : <strong className="text-white/50">© Karim Saari</strong></p>
+            </div>
           </motion.div>
         </div>
 
