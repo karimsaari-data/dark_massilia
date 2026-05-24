@@ -20,12 +20,12 @@ export default function DossierPresse() {
           Dossier de Presse
         </h1>
         <p style={{ margin: 0, maxWidth: '540px', color: 'rgba(255,255,255,0.75)', fontSize: '1.1rem', lineHeight: 1.6 }}>
-          Photographe environnemental, apnéiste et fondateur du Projet Sentinelle —
-          dépollution des Calanques de Marseille depuis 2018.
+          Photographe environnemental, apnéiste et militant pour la protection
+          des Calanques de Marseille depuis 10 ans.
         </p>
         <div style={{ display: 'flex', gap: '16px', flexWrap: 'wrap', justifyContent: 'center' }}>
           <a
-            href="/dossier-presse.pdf"
+            href="/assets/Dossier_presse_karim-saari-dark-massilia-marseille.pdf"
             download="Dossier-Presse-Dark-Massilia-Karim-Saari.pdf"
             style={{
               display: 'inline-flex',
@@ -73,10 +73,10 @@ export default function DossierPresse() {
         <div style={{ maxWidth: '900px', margin: '0 auto' }}>
           <p style={{ color: 'rgba(255,255,255,0.45)', textAlign: 'center', fontSize: '0.85rem', marginBottom: '20px' }}>
             Aperçu du dossier —{' '}
-            <a href="/dossier-presse.pdf" download style={{ color: '#21c47b' }}>télécharger le PDF complet</a>
+            <a href="/assets/Dossier_presse_karim-saari-dark-massilia-marseille.pdf" download style={{ color: '#21c47b' }}>télécharger le PDF complet</a>
           </p>
           <iframe
-            src="/dossier-presse.pdf"
+            src="/assets/Dossier_presse_karim-saari-dark-massilia-marseille.pdf"
             title="Dossier de presse Dark Massilia"
             style={{
               width: '100%',
