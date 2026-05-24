@@ -52,6 +52,7 @@ scripts/.notified-slugs.json
 # Claude Code (configs locales, worktrees)
 .claude/
 .playwright-mcp/
+.mcp.json
 backup/
 nul
 brevo.txt
