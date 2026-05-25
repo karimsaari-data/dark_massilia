@@ -101,16 +101,18 @@ async function fetchTargetQueries(start, end) {
 }
 
 async function fetchDiscoveryQueries(start, end) {
+  // Fetch all queries then filter in JS — plus fiable que NOT IN Supabase
   const { data, error } = await supabase
     .from('gsc_daily_queries')
     .select('query, clicks, impressions, position')
     .gte('date', start)
-    .lte('date', end)
-    .not('query', 'in', `(${TARGET_QUERIES.map(q => `"${q}"`).join(',')})`);
+    .lte('date', end);
   if (error) throw new Error(`gsc_daily_queries discovery: ${error.message}`);
 
+  const targetSet = new Set(TARGET_QUERIES);
   const map = {};
   for (const r of (data || [])) {
+    if (targetSet.has(r.query)) continue;
     if (!map[r.query]) map[r.query] = { query: r.query, clicks: 0, impressions: 0, posSum: 0, posCount: 0 };
     map[r.query].clicks      += r.clicks;
     map[r.query].impressions += r.impressions;
@@ -260,8 +262,7 @@ function buildHtml({ currData, prevData, currRange, prevRange, generatedAt, disc
   </table>
 
   <!-- ══ PAGE 2 — Requêtes découvertes ══ -->
-  <div style="page-break-before:always"></div>
-  <table width="100%" cellpadding="0" cellspacing="0" style="background:#f4f4f4;padding:24px 16px">
+  <table width="100%" cellpadding="0" cellspacing="0" style="background:#f4f4f4;padding:24px 16px;page-break-before:always;break-before:page">
     <tr><td align="center">
       <table width="640" cellpadding="0" cellspacing="0" style="max-width:640px;width:100%;background:#ffffff;border-radius:12px;overflow:hidden;box-shadow:0 2px 8px rgba(0,0,0,0.08)">
 
