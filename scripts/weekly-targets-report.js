@@ -285,7 +285,7 @@ function buildHtml({ currData, prevData, currRange, prevRange, generatedAt, disc
 <!-- ══════════════════════════════════════════════════════════════
      PAGE 1 — DASHBOARD
 ════════════════════════════════════════════════════════════════ -->
-<div class="page">
+<div class="page" style="page-break-after:always;break-after:page">
 <div class="card">
 
   <!-- Header -->
@@ -360,7 +360,7 @@ function buildHtml({ currData, prevData, currRange, prevRange, generatedAt, disc
 <!-- ══════════════════════════════════════════════════════════════
      PAGE 2 — TABLEAU REQUÊTES CIBLES
 ════════════════════════════════════════════════════════════════ -->
-<div class="page" style="page-break-before:always;break-before:page">
+<div class="page" style="page-break-after:always;break-after:page">
 <div class="card">
 
   <div style="background:linear-gradient(135deg,#0d1f2d 0%,#1a3a4a 100%);padding:22px 28px">
@@ -402,7 +402,7 @@ function buildHtml({ currData, prevData, currRange, prevRange, generatedAt, disc
 <!-- ══════════════════════════════════════════════════════════════
      PAGE 3 — REQUÊTES DÉCOUVERTES
 ════════════════════════════════════════════════════════════════ -->
-<div class="page" style="page-break-before:always;break-before:page">
+<div class="page">
 <div class="card">
 
   <div style="background:linear-gradient(135deg,#0d1f2d 0%,#1a3a4a 100%);padding:22px 28px">
