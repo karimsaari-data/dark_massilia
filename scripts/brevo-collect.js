@@ -54,12 +54,25 @@ async function fetchAllCampaigns() {
 
 function extractStats(c) {
   const src = c.statistics?.campaignStats?.[0] ?? c.statistics?.globalStats ?? {};
+
+  const envoyes        = src.requests        ?? 0;
+  const delivres       = src.delivered       ?? 0;
+  const soft_bounces   = src.softBounces     ?? 0;
+  const hard_bounces   = src.hardBounces     ?? 0;
+  const vues_uniques   = src.uniqueViews     ?? 0;
+  const vues_totales   = src.viewed          ?? 0;
+  const clics_uniques  = src.uniqueClicks    ?? 0;
+  const desabonnements = src.unsubscriptions ?? 0;
+  const plaintes       = src.complaints      ?? 0;
+
+  const taux_ouverture = envoyes > 0 ? Math.round((vues_uniques  / envoyes) * 10000) / 100 : 0;
+  const taux_clic      = envoyes > 0 ? Math.round((clics_uniques / envoyes) * 10000) / 100 : 0;
+
   return {
-    delivres:       src.delivered       ?? 0,
-    vues_uniques:   src.uniqueViews     ?? 0,
-    clics_uniques:  src.uniqueClicks    ?? 0,
-    desabonnements: src.unsubscriptions ?? 0,
-    bounces:        (src.softBounces    ?? 0) + (src.hardBounces ?? 0),
+    envoyes, delivres, soft_bounces, hard_bounces,
+    vues_uniques, vues_totales, clics_uniques,
+    desabonnements, plaintes,
+    taux_ouverture, taux_clic,
   };
 }
 
@@ -80,7 +93,7 @@ async function main() {
 
     // ── brevo_campagnes ──────────────────────────────────────────────────────
     const campagneRow = {
-      campagne_id: c.id,
+      campaign_id: c.id,
       nom:         c.name    ?? 'Sans nom',
       sujet:       c.subject ?? null,
       date_envoi:  sentDate,
@@ -90,16 +103,16 @@ async function main() {
 
     const { error: eCampagne } = await supabase
       .from('brevo_campagnes')
-      .upsert(campagneRow, { onConflict: 'campagne_id' });
+      .upsert(campagneRow, { onConflict: 'campaign_id' });
     if (eCampagne) throw new Error(`brevo_campagnes upsert [${c.id}]: ${eCampagne.message}`);
 
     // ── brevo_campagne_stats ─────────────────────────────────────────────────
     const stats = extractStats(c);
-    const statsRow = { campagne_id: c.id, ...stats };
+    const statsRow = { campaign_id: c.id, ...stats };
 
     const { error: eStats } = await supabase
       .from('brevo_campagne_stats')
-      .upsert(statsRow, { onConflict: 'campagne_id' });
+      .upsert(statsRow, { onConflict: 'campaign_id' });
     if (eStats) throw new Error(`brevo_campagne_stats upsert [${c.id}]: ${eStats.message}`);
 
     upserted++;
