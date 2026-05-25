@@ -1,6 +1,10 @@
 // scripts/instagram-collect.js
 // ETL : Instagram Graph API → Supabase
 // Tables cibles : instagram_compte_stats, dim_instagram_post, instagram_post_stats
+//
+// Note API v22+ : impressions et plays ne sont plus disponibles.
+//   - Compte  : on utilise accounts_engaged (stocké dans la colonne impressions)
+//   - Posts   : on utilise reach, saved, shares (sans impressions)
 
 import { createClient } from '@supabase/supabase-js';
 
@@ -37,16 +41,16 @@ async function fetchProfile() {
 }
 
 // ── 2. Insights journaliers du compte ──────────────────────────────────────────
+// API v22+ : impressions supprimé → on utilise accounts_engaged à la place
 
 async function fetchAccountInsights() {
   try {
     const data = await igGet(`${ACCOUNT_ID}/insights`, {
-      metric: 'reach,impressions,profile_views,website_clicks',
+      metric: 'reach,profile_views,website_clicks,accounts_engaged',
       period: 'day',
     });
     const out = {};
     for (const item of (data.data || [])) {
-      // Selon version API : total_value.value ou values[0].value
       out[item.name] = item.total_value?.value ?? item.values?.[0]?.value ?? 0;
     }
     return out;
@@ -66,15 +70,12 @@ async function fetchPosts(limit = 25) {
   return data.data || [];
 }
 
-// ── 4. Insights d'un post (reach, impressions, saved, shares) ─────────────────
+// ── 4. Insights d'un post ─────────────────────────────────────────────────────
+// API v22+ : impressions et plays supprimés → on garde reach, saved, shares
 
-async function fetchPostInsights(mediaId, mediaType) {
-  const isVideo = mediaType === 'VIDEO';
-  const metrics = isVideo
-    ? 'reach,impressions,saved,shares,plays'
-    : 'reach,impressions,saved,shares';
+async function fetchPostInsights(mediaId) {
   try {
-    const data = await igGet(`${mediaId}/insights`, { metric: metrics });
+    const data = await igGet(`${mediaId}/insights`, { metric: 'reach,saved,shares' });
     const out = {};
     for (const item of (data.data || [])) {
       out[item.name] = item.values?.[0]?.value ?? item.value ?? 0;
@@ -86,7 +87,7 @@ async function fetchPostInsights(mediaId, mediaType) {
   }
 }
 
-// ── 5. Likes + commentaires (champs du média) ──────────────────────────────────
+// ── 5. Likes + commentaires (champs du média, toujours disponibles) ───────────
 
 async function fetchPostCounts(mediaId) {
   try {
@@ -108,11 +109,12 @@ async function main() {
 
   const compteRow = {
     date_stat:      today,
-    followers:      profile.followers_count  ?? 0,
-    impressions:    insights.impressions      ?? 0,
-    portee:         insights.reach            ?? 0,
-    profil_visites: insights.profile_views    ?? 0,
-    clics_site_web: insights.website_clicks   ?? 0,
+    followers:      profile.followers_count      ?? 0,
+    // accounts_engaged stocké dans la colonne impressions (impressions supprimé API v22+)
+    impressions:    insights.accounts_engaged     ?? 0,
+    portee:         insights.reach                ?? 0,
+    profil_visites: insights.profile_views        ?? 0,
+    clics_site_web: insights.website_clicks       ?? 0,
   };
 
   const { error: eCompte } = await supabase
@@ -120,7 +122,7 @@ async function main() {
     .upsert(compteRow, { onConflict: 'date_stat' });
   if (eCompte) throw new Error(`instagram_compte_stats upsert: ${eCompte.message}`);
 
-  console.log(`✅ Compte — followers: ${compteRow.followers}, reach: ${compteRow.portee}, impressions: ${compteRow.impressions}`);
+  console.log(`✅ Compte — followers: ${compteRow.followers}, reach: ${compteRow.portee}, engaged: ${compteRow.impressions}`);
 
   // ── Étape 2 : posts ───────────────────────────────────────────────────────────
   const posts = await fetchPosts(25);
@@ -144,7 +146,7 @@ async function main() {
 
     // instagram_post_stats
     const [insightsPost, counts] = await Promise.all([
-      fetchPostInsights(post.id, post.media_type),
+      fetchPostInsights(post.id),
       fetchPostCounts(post.id),
     ]);
 
@@ -152,10 +154,10 @@ async function main() {
       post_id:      post.id,
       likes:        counts.likes,
       commentaires: counts.commentaires,
-      sauvegardes:  insightsPost.saved       ?? 0,
-      partages:     insightsPost.shares      ?? 0,
-      portee:       insightsPost.reach       ?? 0,
-      impressions:  insightsPost.impressions ?? 0,
+      sauvegardes:  insightsPost.saved   ?? 0,
+      partages:     insightsPost.shares  ?? 0,
+      portee:       insightsPost.reach   ?? 0,
+      impressions:  0, // supprimé API v22+
     };
 
     const { error: eStats } = await supabase
