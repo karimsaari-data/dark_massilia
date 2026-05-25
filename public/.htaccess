@@ -32,11 +32,18 @@
 
   # ── Redirections 301 — legacy URLs (ex-site statique .html) ─────────────
   RewriteRule ^home/?$       /  [R=301,L]
+  RewriteRule ^index$        /  [R=301,L]
   RewriteRule ^index\.html$  /  [R=301,L]
   RewriteRule ^photos\.html$ /photographie-paysage-mer        [R=301,L]
   RewriteRule ^videos\.html$ /videos                          [R=301,L]
   RewriteRule ^medias\.html$ /presse                          [R=301,L]
   RewriteRule ^arte\.html$   /sauver-marseille-documentaire-arte [R=301,L]
+
+  # ── Redirections 301 — anciennes URLs photo/carte ───────────────────────
+  RewriteRule ^carte-photos/?$ /photographie-paysage-mer      [R=301,L]
+
+  # ── Redirections 301 — articles blog renommés/supprimés ─────────────────
+  RewriteRule ^blog/oxygene-le-documentaire-sur-la-depollution-de-la-mediterranee/?$ /blog [R=301,L]
 
   # ── Redirections 301 — slugs WordPress avec emoji (anciens slugs indexés par Google) ──
   RewriteRule ^blog/%F0%9F%8C%8A-proteger-notre-grande-bleue-4-gestes-simples-pour-sauver-la-mediterranee/?$ /blog/proteger-notre-grande-bleue-4-gestes-simples-pour-sauver-la-mediterranee [R=301,L]
