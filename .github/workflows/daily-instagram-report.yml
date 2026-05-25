@@ -27,6 +27,14 @@ jobs:
       - name: Installation des dépendances
         run: npm ci
 
+      - name: Collecte Instagram → Supabase
+        env:
+          INSTAGRAM_ACCESS_TOKEN:        ${{ secrets.INSTAGRAM_ACCESS_TOKEN }}
+          INSTAGRAM_BUSINESS_ACCOUNT_ID: '17841401329930518'
+          VITE_SUPABASE_URL:             ${{ secrets.VITE_SUPABASE_URL }}
+          SUPABASE_SERVICE_KEY:          ${{ secrets.SUPABASE_SERVICE_KEY }}
+        run: node scripts/instagram-collect.js
+
       - name: Générer et envoyer le rapport Instagram
         env:
           INSTAGRAM_ACCESS_TOKEN:           ${{ secrets.INSTAGRAM_ACCESS_TOKEN }}
