@@ -1,6 +1,8 @@
 User-agent: *
 Allow: /
 Disallow: /admin
+# Bloque les URLs avec query params (SPA : le canonical pointe toujours vers l'URL propre)
+Disallow: /*?*
 
 # AI search crawlers — autorisés pour la visibilité dans les résultats IA
 # (Google AI Overviews, ChatGPT Search, Perplexity, Claude)
