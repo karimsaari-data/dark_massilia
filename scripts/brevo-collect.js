@@ -1,6 +1,7 @@
 // scripts/brevo-collect.js
 // ETL : Brevo REST API → Supabase
 // Tables cibles : brevo_campagnes, brevo_campagne_stats
+// Note : taux_ouverture et taux_clic sont des colonnes GENERATED ALWAYS — ne pas les insérer
 
 import { createClient } from '@supabase/supabase-js';
 
@@ -51,28 +52,22 @@ async function fetchAllCampaigns() {
 
 // ── Extrait les stats depuis la structure Brevo ───────────────────────────────
 // Les stats peuvent être dans campaignStats[0] (par liste) ou dans globalStats
+// taux_ouverture et taux_clic sont calculés automatiquement par PostgreSQL (GENERATED ALWAYS)
 
 function extractStats(c) {
   const src = c.statistics?.campaignStats?.[0] ?? c.statistics?.globalStats ?? {};
 
-  const envoyes        = src.requests        ?? 0;
-  const delivres       = src.delivered       ?? 0;
-  const soft_bounces   = src.softBounces     ?? 0;
-  const hard_bounces   = src.hardBounces     ?? 0;
-  const vues_uniques   = src.uniqueViews     ?? 0;
-  const vues_totales   = src.viewed          ?? 0;
-  const clics_uniques  = src.uniqueClicks    ?? 0;
-  const desabonnements = src.unsubscriptions ?? 0;
-  const plaintes       = src.complaints      ?? 0;
-
-  const taux_ouverture = envoyes > 0 ? Math.round((vues_uniques  / envoyes) * 10000) / 100 : 0;
-  const taux_clic      = envoyes > 0 ? Math.round((clics_uniques / envoyes) * 10000) / 100 : 0;
-
   return {
-    envoyes, delivres, soft_bounces, hard_bounces,
-    vues_uniques, vues_totales, clics_uniques,
-    desabonnements, plaintes,
-    taux_ouverture, taux_clic,
+    envoyes:        src.requests        ?? 0,
+    delivres:       src.delivered       ?? 0,
+    soft_bounces:   src.softBounces     ?? 0,
+    hard_bounces:   src.hardBounces     ?? 0,
+    vues_uniques:   src.uniqueViews     ?? 0,
+    vues_totales:   src.viewed          ?? 0,
+    clics_uniques:  src.uniqueClicks    ?? 0,
+    desabonnements: src.unsubscriptions ?? 0,
+    plaintes:       src.complaints      ?? 0,
+    // taux_ouverture et taux_clic : colonnes GENERATED ALWAYS, pas à insérer
   };
 }
 
