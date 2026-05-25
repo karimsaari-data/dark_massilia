@@ -21,6 +21,7 @@
     "notify": "node scripts/notify-new-articles.js",
     "build:full": "node scripts/generate-sitemap.js && node scripts/generate-sitemap-images.js && vite build && node scripts/prerender.js && node scripts/generate-photo-shares.js",
     "indexnow": "node scripts/notify-indexnow.js",
+    "pages:sync": "node --env-file-if-exists=.env scripts/sync-indexed-pages.mjs",
     "wp:cache": "node scripts/update-wp-cache.js",
     "wp:sync": "node scripts/sync-wp-to-supabase.mjs",
     "lint": "eslint .",
@@ -46,6 +47,7 @@
     "build:photos": "node scripts/generate-sitemap-images.js && node scripts/sync-new-images.js",
     "ftp:deploy": "node scripts/ftp-deploy.js",
     "build:deploy": "npm run build:full && node scripts/ftp-deploy.js",
+    "weekly-targets-report": "node --env-file-if-exists=.env scripts/weekly-targets-report.js",
     "prepare": "git config core.hooksPath .githooks || true"
   },
   "dependencies": {

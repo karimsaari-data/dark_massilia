@@ -1,0 +1,42 @@
+name: Weekly Targets Report
+
+on:
+  schedule:
+    - cron: '0 6 * * 1'  # Chaque lundi à 6h UTC = 7h Paris (hiver) / 8h Paris (été)
+  workflow_dispatch:       # Déclenchement manuel possible
+
+env:
+  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
+  PUPPETEER_SKIP_CHROMIUM_DOWNLOAD: true
+  PUPPETEER_EXECUTABLE_PATH: /usr/bin/google-chrome-stable
+
+jobs:
+  targets-report:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js 24
+        uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+          cache: 'npm'
+
+      - name: Installation Chrome (pour Puppeteer PDF)
+        run: |
+          wget -q -O - https://dl.google.com/linux/linux_signing_key.pub | sudo apt-key add -
+          sudo sh -c 'echo "deb [arch=amd64] http://dl.google.com/linux/chrome/deb/ stable main" > /etc/apt/sources.list.d/google-chrome.list'
+          sudo apt-get update -q && sudo apt-get install -y google-chrome-stable
+
+      - name: Installation des dépendances
+        run: npm ci
+
+      - name: Rapport requêtes cibles → Brevo
+        env:
+          VITE_SUPABASE_URL:         ${{ secrets.VITE_SUPABASE_URL }}
+          VITE_SUPABASE_ANON_KEY:    ${{ secrets.VITE_SUPABASE_ANON_KEY }}
+          BREVO_API_KEY:             ${{ secrets.BREVO_API_KEY }}
+          PUPPETEER_EXECUTABLE_PATH: /usr/bin/google-chrome-stable
+        run: npm run weekly-targets-report
