@@ -66,6 +66,13 @@ jobs:
           BACKFILL_WEEKS:       ${{ github.event.inputs.backfill_weeks || '1' }}
         run: node scripts/gsc-collect.js
 
+      - name: Collecte Brevo → Supabase
+        env:
+          BREVO_API_KEY:        ${{ secrets.BREVO_API_KEY }}
+          VITE_SUPABASE_URL:    ${{ secrets.VITE_SUPABASE_URL }}
+          SUPABASE_SERVICE_KEY: ${{ secrets.SUPABASE_SERVICE_KEY }}
+        run: node scripts/brevo-collect.js
+
       - name: Rapport journalier (GSC + Cloudflare) → Brevo
         if: ${{ github.event.inputs.skip_report != 'true' }}
         env:
