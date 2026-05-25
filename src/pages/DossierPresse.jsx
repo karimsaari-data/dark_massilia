@@ -29,7 +29,7 @@ export default function DossierPresse() {
               background: 'linear-gradient(rgba(0,0,0,0.45) 0%, rgba(12,34,48,0.88) 100%), url(/images/fond%20m%C3%A9diterran%C3%A9e.png) center/cover no-repeat',
             }}
           />
-          <div className="relative z-10 flex flex-col items-center justify-center text-center px-6 py-24 gap-6" style={{ minHeight: '60vh' }}>
+          <div className="relative z-10 flex flex-col items-center justify-center text-center px-6 pt-20 pb-16 gap-6" style={{ minHeight: '60vh' }}>
             <motion.p variants={FADE_IN_UP} className="text-astroide text-xs font-semibold uppercase tracking-widest">
               Dark Massilia — Karim Saari
             </motion.p>
@@ -46,25 +46,21 @@ export default function DossierPresse() {
                 Télécharger le PDF
               </a>
             </motion.div>
-          </div>
-        </motion.div>
 
-        {/* ── Texte de présentation ────────────────────────────────────── */}
-        <motion.div
-          initial="hidden"
-          whileInView="visible"
-          viewport={VIEW_OPTS}
-          variants={FADE_IN_UP}
-          className="max-w-3xl mx-auto text-center mb-16 px-4"
-        >
-          <p className="text-text-secondary text-lg leading-relaxed">
-            Photographe environnemental, apnéiste et militant pour la protection
-            des Calanques de Marseille depuis 10 ans. Membre de{' '}
-            <span className="text-astroide font-semibold">Team Oxygen</span> depuis 5 ans,
-            président depuis 2026. Participant au{' '}
-            <span className="text-white font-semibold">Projet Sentinelle</span> depuis
-            sa première édition — 5ème édition prévue en octobre 2026.
-          </p>
+            {/* Séparateur + bio */}
+            <motion.div variants={FADE_IN_UP} className="w-full max-w-2xl mt-4">
+              <div className="border-t border-white/20 pt-8">
+                <p className="text-white/75 text-base md:text-lg leading-relaxed">
+                  Photographe environnemental, apnéiste et militant pour la protection
+                  des Calanques de Marseille depuis 10 ans. Membre de{' '}
+                  <span className="text-astroide font-semibold">Team Oxygen</span> depuis 5 ans,
+                  président depuis 2026. Participant au{' '}
+                  <span className="text-white font-semibold">Projet Sentinelle</span> depuis
+                  sa première édition — 5ème édition prévue en octobre 2026.
+                </p>
+              </div>
+            </motion.div>
+          </div>
         </motion.div>
 
         {/* ── Contact presse ──────────────────────────────────────────── */}
