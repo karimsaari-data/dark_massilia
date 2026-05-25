@@ -37,6 +37,8 @@
     "backlink-report": "node scripts/backlink-report.js",
     "cloudflare-report": "node --env-file-if-exists=.env scripts/cloudflare-report.js",
     "instagram-report": "node --env-file-if-exists=.env scripts/instagram-daily-report.js",
+    "instagram-collect": "node --env-file-if-exists=.env scripts/instagram-collect.js",
+    "brevo-collect": "node --env-file-if-exists=.env scripts/brevo-collect.js",
     "wp:audit-images": "node --env-file-if-exists=.env scripts/wp-optimize-images.mjs --audit",
     "wp:fix-images": "node --env-file-if-exists=.env scripts/wp-optimize-images.mjs --fix",
     "wp:fix-images-dry": "node --env-file-if-exists=.env scripts/wp-optimize-images.mjs --fix --dry-run",
