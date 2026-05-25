@@ -714,8 +714,9 @@ const Medias = () => {
             <div className="space-y-4 text-text-secondary leading-relaxed text-sm mb-8">
               <p>
                 Mon parcours d'<strong className="text-white">apnéiste et de photographe</strong> a trouvé
-                un écho dans les médias nationaux et internationaux, validant une démarche qui lie{' '}
-                <strong className="text-ocean-teal">l'art à l'alerte environnementale</strong>. Que ce soit
+                un écho dans les médias nationaux et internationaux, validant une{' '}
+                <Link to="/photographe-environnemental-marseille" className="text-ocean-teal hover:text-white transition-colors">démarche de photographe environnemental</Link>{' '}
+                qui lie <strong className="text-ocean-teal">l'art à l'alerte environnementale</strong>. Que ce soit
                 pour mon expertise de terrain sur <strong className="text-white">TF1</strong> et{' '}
                 <strong className="text-white">ARTE</strong>, mes expéditions dans{' '}
                 <strong className="text-white">Échappées Belles (France 5)</strong>, ou mon regard

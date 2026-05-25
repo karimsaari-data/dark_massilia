@@ -87,7 +87,8 @@ const Missions = () => {
                     De la surface à 20 mètres de profondeur, <strong className="text-ocean-teal">Team Oxygen</strong> conduit des opérations structurées de dépollution sous-marine en apnée, combinant extraction de déchets, <Link to="/photographie-sous-marine" className="text-ocean-teal hover:text-white transition-colors">documentation photographique des fonds marins des Calanques</Link> et collecte de données environnementales sur les fonds marins de Méditerranée.
                   </p>
                   <p>
-                    L'association est aujourd'hui présidée par <strong className="text-white font-semibold">Karim Saari</strong>, apnéiste et photographe engagé à Marseille, impliqué dans les actions de dépollution du littoral méditerranéen depuis 10 ans.
+                    L'association est aujourd'hui présidée par <strong className="text-white font-semibold">Karim Saari</strong>, apnéiste et{' '}
+                    <Link to="/photographe-environnemental-marseille" className="text-ocean-teal hover:text-white transition-colors">photographe environnemental engagé à Marseille</Link>, impliqué dans les actions de dépollution du littoral méditerranéen depuis 10 ans.
                   </p>
                 </div>
               </div>

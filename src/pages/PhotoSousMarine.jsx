@@ -784,7 +784,8 @@ const PhotoSousMarine = () => {
               <p className="text-text-secondary leading-[1.8] mb-6">
                 Mon travail photographique s'articule autour de trois axes complémentaires qui forment
                 un cycle complet de préservation marine. Chaque rubrique de cette galerie répond à un
-                besoin spécifique de l'engagement environnemental.
+                besoin spécifique de la{' '}
+                <Link to="/photographe-environnemental-marseille" className="text-ocean-teal hover:text-white transition-colors">démarche de photographe environnemental</Link>.
               </p>
 
               <div className="space-y-5 text-text-secondary leading-[1.8]">

@@ -1,4 +1,5 @@
 import { motion } from 'framer-motion';
+import { Link } from 'react-router-dom';
 import { FileDown, Mail, MessageCircle } from 'lucide-react';
 import { FADE_IN_UP, STAGGER_CONTAINER } from '../utils/constants';
 import SEO from '../components/SEO';
@@ -51,7 +52,7 @@ export default function DossierPresse() {
             <motion.div variants={FADE_IN_UP} className="w-full max-w-2xl mt-4">
               <div className="border-t border-white/20 pt-8">
                 <p className="text-white/75 text-base md:text-lg leading-relaxed">
-                  Photographe environnemental, apnéiste et militant pour la protection
+                  <Link to="/photographe-environnemental-marseille" className="text-astroide hover:text-white transition-colors">Photographe environnemental</Link>, apnéiste et militant pour la protection
                   des Calanques de Marseille depuis 10 ans. Membre de{' '}
                   <span className="text-astroide font-semibold">Team Oxygen</span> depuis 5 ans,
                   président depuis 2026. Participant au{' '}

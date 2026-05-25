@@ -277,7 +277,8 @@ function buildHtml({ currData, prevData, currRange, prevRange, generatedAt, disc
   * { box-sizing: border-box; }
   body { margin:0; padding:0; background:#f4f4f4; font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif; }
   .page { padding:20px 16px; background:#f4f4f4; }
-  .card { max-width:640px; width:100%; margin:0 auto; background:#fff; border-radius:12px; overflow:hidden; box-shadow:0 2px 8px rgba(0,0,0,0.08); }
+  .card { max-width:640px; width:100%; margin:0 auto; background:#fff; border-radius:12px; box-shadow:0 2px 8px rgba(0,0,0,0.08); }
+  .page-break { page-break-before:always; break-before:page; height:0; overflow:hidden; }
 </style>
 </head>
 <body>
@@ -285,11 +286,11 @@ function buildHtml({ currData, prevData, currRange, prevRange, generatedAt, disc
 <!-- ══════════════════════════════════════════════════════════════
      PAGE 1 — DASHBOARD
 ════════════════════════════════════════════════════════════════ -->
-<div class="page" style="page-break-after:always;break-after:page">
+<div class="page">
 <div class="card">
 
   <!-- Header -->
-  <div style="background:linear-gradient(135deg,#0d1f2d 0%,#1a3a4a 100%);padding:22px 28px">
+  <div style="background:linear-gradient(135deg,#0d1f2d 0%,#1a3a4a 100%);padding:22px 28px;border-radius:12px 12px 0 0">
     <table width="100%" cellpadding="0" cellspacing="0"><tr>
       <td>
         <div style="font-size:10px;color:#21c47b;font-weight:600;letter-spacing:1px;text-transform:uppercase">Dark Massilia — GSC · Page 1/3</div>
@@ -357,13 +358,15 @@ function buildHtml({ currData, prevData, currRange, prevRange, generatedAt, disc
 </div>
 </div>
 
+<div class="page-break"></div>
+
 <!-- ══════════════════════════════════════════════════════════════
      PAGE 2 — TABLEAU REQUÊTES CIBLES
 ════════════════════════════════════════════════════════════════ -->
-<div class="page" style="page-break-after:always;break-after:page">
+<div class="page">
 <div class="card">
 
-  <div style="background:linear-gradient(135deg,#0d1f2d 0%,#1a3a4a 100%);padding:22px 28px">
+  <div style="background:linear-gradient(135deg,#0d1f2d 0%,#1a3a4a 100%);padding:22px 28px;border-radius:12px 12px 0 0">
     <div style="font-size:10px;color:#21c47b;font-weight:600;letter-spacing:1px;text-transform:uppercase">Dark Massilia — GSC · Page 2/3</div>
     <div style="font-size:19px;font-weight:700;color:#fff;margin-top:3px">Suivi Requêtes Cibles — Détail</div>
     <div style="font-size:12px;color:#8ab4c4;margin-top:5px">${frDateRange(currRange.start, currRange.end)} · vs ${frDateRange(prevRange.start, prevRange.end)}</div>
@@ -399,13 +402,15 @@ function buildHtml({ currData, prevData, currRange, prevRange, generatedAt, disc
 </div>
 </div>
 
+<div class="page-break"></div>
+
 <!-- ══════════════════════════════════════════════════════════════
      PAGE 3 — REQUÊTES DÉCOUVERTES
 ════════════════════════════════════════════════════════════════ -->
 <div class="page">
 <div class="card">
 
-  <div style="background:linear-gradient(135deg,#0d1f2d 0%,#1a3a4a 100%);padding:22px 28px">
+  <div style="background:linear-gradient(135deg,#0d1f2d 0%,#1a3a4a 100%);padding:22px 28px;border-radius:12px 12px 0 0">
     <div style="font-size:10px;color:#21c47b;font-weight:600;letter-spacing:1px;text-transform:uppercase">Dark Massilia — GSC · Page 3/3</div>
     <div style="font-size:19px;font-weight:700;color:#fff;margin-top:3px">Requêtes Découvertes</div>
     <div style="font-size:12px;color:#8ab4c4;margin-top:5px">${frDateRange(currRange.start, currRange.end)} · Top 20 hors requêtes cibles</div>
