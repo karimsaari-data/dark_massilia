@@ -100,9 +100,41 @@ async function fetchTargetQueries(start, end) {
   }));
 }
 
+async function fetchDiscoveryQueries(start, end) {
+  const { data, error } = await supabase
+    .from('gsc_daily_queries')
+    .select('query, clicks, impressions, position')
+    .gte('date', start)
+    .lte('date', end)
+    .not('query', 'in', `(${TARGET_QUERIES.map(q => `"${q}"`).join(',')})`);
+  if (error) throw new Error(`gsc_daily_queries discovery: ${error.message}`);
+
+  const map = {};
+  for (const r of (data || [])) {
+    if (!map[r.query]) map[r.query] = { query: r.query, clicks: 0, impressions: 0, posSum: 0, posCount: 0 };
+    map[r.query].clicks      += r.clicks;
+    map[r.query].impressions += r.impressions;
+    if (r.position > 0) {
+      map[r.query].posSum   += r.position * r.impressions;
+      map[r.query].posCount += r.impressions;
+    }
+  }
+  return Object.values(map)
+    .map(r => ({
+      query:       r.query,
+      clicks:      r.clicks,
+      impressions: r.impressions,
+      ctr:         r.impressions > 0 ? r.clicks / r.impressions : 0,
+      position:    r.posCount > 0 ? r.posSum / r.posCount : null,
+    }))
+    .filter(r => r.impressions > 0)
+    .sort((a, b) => b.impressions - a.impressions)
+    .slice(0, 20);
+}
+
 // ── HTML ──────────────────────────────────────────────────────────────────────
 
-function buildHtml({ currData, prevData, currRange, prevRange, generatedAt }) {
+function buildHtml({ currData, prevData, currRange, prevRange, generatedAt, discoveryData }) {
   const rows = TARGET_QUERIES.map(q => {
     const c = currData.find(r => r.query === q) || { clicks: 0, impressions: 0, ctr: 0, position: null };
     const p = prevData.find(r => r.query === q) || { clicks: 0, impressions: 0, ctr: 0, position: null };
@@ -213,7 +245,81 @@ function buildHtml({ currData, prevData, currRange, prevRange, generatedAt }) {
           </td>
         </tr>
 
-        <!-- Footer -->
+        <!-- Footer page 1 -->
+        <tr>
+          <td style="background:#f8f9fa;padding:16px 28px;border-top:1px solid #eee">
+            <p style="margin:0;font-size:11px;color:#999">
+              Données Google Search Console — karimsaari.com · Semaine : ${frDateRange(currRange.start, currRange.end)}<br>
+              Généré automatiquement · <a href="https://karimsaari.com/home" style="color:#21c47b;text-decoration:none">karimsaari.com</a>
+            </p>
+          </td>
+        </tr>
+
+      </table>
+    </td></tr>
+  </table>
+
+  <!-- ══ PAGE 2 — Requêtes découvertes ══ -->
+  <div style="page-break-before:always"></div>
+  <table width="100%" cellpadding="0" cellspacing="0" style="background:#f4f4f4;padding:24px 16px">
+    <tr><td align="center">
+      <table width="640" cellpadding="0" cellspacing="0" style="max-width:640px;width:100%;background:#ffffff;border-radius:12px;overflow:hidden;box-shadow:0 2px 8px rgba(0,0,0,0.08)">
+
+        <!-- Header page 2 -->
+        <tr>
+          <td style="background:linear-gradient(135deg,#0d1f2d 0%,#1a3a4a 100%);padding:24px 28px">
+            <div style="font-size:11px;color:#21c47b;font-weight:600;letter-spacing:1px;text-transform:uppercase">Dark Massilia — GSC · Page 2</div>
+            <div style="font-size:20px;font-weight:700;color:#ffffff;margin-top:4px">Requêtes Découvertes</div>
+            <div style="font-size:13px;color:#8ab4c4;margin-top:6px">${frDateRange(currRange.start, currRange.end)} · Top 20 hors requêtes cibles</div>
+            <div style="font-size:11px;color:#5a7a8a;margin-top:4px">Requêtes où Google t'affiche sans que tu les surveilles</div>
+          </td>
+        </tr>
+
+        <!-- Table découverte -->
+        <tr>
+          <td style="padding:24px 28px">
+            <table width="100%" cellpadding="0" cellspacing="0">
+              <thead>
+                <tr style="border-bottom:2px solid #f0f0f0">
+                  <th style="padding:6px 12px 6px 0;font-size:10px;text-transform:uppercase;color:#999;font-weight:600;text-align:left">Requête</th>
+                  <th style="padding:6px 8px;font-size:10px;text-transform:uppercase;color:#999;font-weight:600;text-align:center">Position</th>
+                  <th style="padding:6px 8px;font-size:10px;text-transform:uppercase;color:#999;font-weight:600;text-align:right">Impr.</th>
+                  <th style="padding:6px 8px;font-size:10px;text-transform:uppercase;color:#999;font-weight:600;text-align:right">Clics</th>
+                  <th style="padding:6px 0;font-size:10px;text-transform:uppercase;color:#999;font-weight:600;text-align:right">CTR</th>
+                </tr>
+              </thead>
+              <tbody>
+                ${discoveryData.length === 0
+                  ? `<tr><td colspan="5" style="padding:20px 0;font-size:12px;color:#bbb;font-style:italic">Aucune donnée cette semaine</td></tr>`
+                  : discoveryData.map(r => {
+                      const pc = posColor(r.position);
+                      const isOpportunity = r.position && r.position >= 8 && r.position <= 20 && r.impressions >= 3;
+                      return `
+                        <tr style="border-bottom:1px solid #f0f0f0;${isOpportunity ? 'background:#fffdf4' : ''}">
+                          <td style="padding:9px 12px 9px 0;font-size:12px;color:#333">
+                            ${isOpportunity ? '<span style="font-size:9px;background:#fff3cd;color:#856404;border-radius:3px;padding:1px 5px;margin-right:6px;font-weight:600">OPPORTUNITÉ</span>' : ''}
+                            ${r.query}
+                          </td>
+                          <td style="padding:9px 8px;text-align:center;font-size:16px;font-weight:700;color:${pc}">${posStr(r.position)}</td>
+                          <td style="padding:9px 8px;text-align:right;font-size:12px;font-weight:600">${r.impressions}</td>
+                          <td style="padding:9px 8px;text-align:right;font-size:12px;color:${r.clicks > 0 ? '#21c47b' : '#bbb'};font-weight:${r.clicks > 0 ? '700' : '400'}">${r.clicks}</td>
+                          <td style="padding:9px 0;text-align:right;font-size:12px;color:#888">${pctStr(r.ctr)}</td>
+                        </tr>`;
+                    }).join('')
+                }
+              </tbody>
+            </table>
+
+            <!-- Note opportunités -->
+            <div style="margin-top:20px;padding:12px 16px;background:#fffdf4;border-radius:8px;border-left:3px solid #f39c12">
+              <div style="font-size:11px;color:#856404;line-height:1.7">
+                <strong>OPPORTUNITÉ</strong> = position 8–20 avec ≥3 impressions · ces requêtes sont à portée du top 10 avec une page dédiée ou un renforcement du contenu existant.
+              </div>
+            </div>
+          </td>
+        </tr>
+
+        <!-- Footer page 2 -->
         <tr>
           <td style="background:#f8f9fa;padding:16px 28px;border-top:1px solid #eee">
             <p style="margin:0;font-size:11px;color:#999">
@@ -279,10 +385,12 @@ async function sendEmail(html, currRange, pdfBuffer) {
   console.log(`📅 Semaine courante  : ${currRange.start} → ${currRange.end}`);
   console.log(`📅 Semaine précédente: ${prevRange.start} → ${prevRange.end}\n`);
 
-  const [currData, prevData] = await Promise.all([
+  const [currData, prevData, discoveryData] = await Promise.all([
     fetchTargetQueries(currRange.start, currRange.end),
     fetchTargetQueries(prevRange.start, prevRange.end),
+    fetchDiscoveryQueries(currRange.start, currRange.end),
   ]);
+  console.log(`  ${discoveryData.length} requêtes découvertes cette semaine`);
 
   for (const r of currData) {
     const p    = prevData.find(x => x.query === r.query);
@@ -296,7 +404,7 @@ async function sendEmail(html, currRange, pdfBuffer) {
     hour: '2-digit', minute: '2-digit', timeZone: 'Europe/Paris',
   });
 
-  const html = buildHtml({ currData, prevData, currRange, prevRange, generatedAt });
+  const html = buildHtml({ currData, prevData, currRange, prevRange, generatedAt, discoveryData });
 
   console.log('\n📄 Génération PDF...');
   const pdfBuffer = await generatePDF(html);
