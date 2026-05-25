@@ -32,6 +32,7 @@
   RewriteRule ^home/?$       /  [R=301,L]
   RewriteRule ^index$        /  [R=301,L]
   RewriteRule ^index\.html$  /  [R=301,L]
+  RewriteRule ^index\.php$   /  [R=301,L]
   RewriteRule ^photos\.html$ /photographie-paysage-mer        [R=301,L]
   RewriteRule ^videos\.html$ /videos                          [R=301,L]
   RewriteRule ^medias\.html$ /presse                          [R=301,L]
