@@ -25,6 +25,7 @@
   RewriteRule ^carte/?$       /carte-calanques                 [R=301,L]
   RewriteRule ^arte/?$        /sauver-marseille-documentaire-arte [R=301,L]
   RewriteRule ^twitter/?$     /actualites                      [R=301,L]
+  RewriteRule ^actu-x/?$      /actualites                      [R=301,L]
 
   # ── Redirections 301 — legacy URLs (ex-site statique .html) ─────────────
   RewriteRule ^home/?$       /  [R=301,L]
