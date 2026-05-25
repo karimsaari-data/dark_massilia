@@ -188,7 +188,7 @@ const Contact = () => {
           {/* Presse & Médias */}
           <motion.div
             variants={FADE_IN_UP}
-            className="glass-strong rounded-2xl p-7 flex flex-col gap-4 border border-white/10 hover:border-astroide/40 transition-colors"
+            className="glass-strong rounded-2xl p-7 flex flex-col gap-4 border border-astroide/25 animate-border-pulse-orange"
           >
             <div className="w-12 h-12 rounded-xl bg-astroide/15 border border-astroide/25 flex items-center justify-center">
               <FileText className="w-6 h-6 text-astroide" />
@@ -222,7 +222,7 @@ const Contact = () => {
           {/* Partenariats */}
           <motion.div
             variants={FADE_IN_UP}
-            className="glass-strong rounded-2xl p-7 flex flex-col gap-4 border border-white/10 hover:border-[#25D366]/40 transition-colors"
+            className="glass-strong rounded-2xl p-7 flex flex-col gap-4 border border-[#25D366]/25 animate-border-pulse-green"
           >
             <div className="w-12 h-12 rounded-xl bg-[#25D366]/10 border border-[#25D366]/25 flex items-center justify-center">
               <Users className="w-6 h-6 text-[#25D366]" />
@@ -259,7 +259,7 @@ const Contact = () => {
           {/* Expositions & Interventions */}
           <motion.div
             variants={FADE_IN_UP}
-            className="glass-strong rounded-2xl p-7 flex flex-col gap-4 border border-white/10 hover:border-blue-400/40 transition-colors"
+            className="glass-strong rounded-2xl p-7 flex flex-col gap-4 border border-blue-400/25 animate-border-pulse-blue"
           >
             <div className="w-12 h-12 rounded-xl bg-blue-500/10 border border-blue-500/25 flex items-center justify-center">
               <Camera className="w-6 h-6 text-blue-400" />
