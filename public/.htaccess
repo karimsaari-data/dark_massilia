@@ -13,13 +13,9 @@
   RewriteCond %{HTTP_HOST} ^www\.karimsaari\.com$ [NC]
   RewriteRule ^(.*)$ https://karimsaari.com/$1 [R=301,L]
 
-  # ── Canonicalisation — supprimer le slash final (sauf racine) ────────────
-  # Redirige /page/ → /page en 301 pour aligner les URLs crawlées par Ahrefs/Google
-  # avec les canonicals déclarés (sans slash) et les liens internes React Router
-  RewriteCond %{REQUEST_URI} ^/(.+)/$
-  RewriteRule ^(.+)/$ /$1 [R=301,L]
-
   # ── Redirections 301 — nouvelles URLs SEO ───────────────────────────────
+  # IMPORTANT : ces règles doivent être AVANT la suppression du slash final
+  # pour éviter les chaînes de redirects (ex: /carte/ → /carte → /carte-calanques = 2 sauts)
   RewriteRule ^missions/?$    /depollution-marine              [R=301,L]
   RewriteRule ^photos/?$      /photographie-paysage-mer        [R=301,L]
   RewriteRule ^sources/?$     /donnees-scientifiques           [R=301,L]
@@ -55,6 +51,11 @@
   RewriteRule ^home/arte/?$     /sauver-marseille-documentaire-arte [R=301,L]
   RewriteRule ^home/carte/?$    /carte-calanques                    [R=301,L]
   RewriteRule ^home/twitter/?$  /actualites                         [R=301,L]
+
+  # ── Canonicalisation — supprimer le slash final (sauf racine) ────────────
+  # Après les redirections spécifiques pour éviter les chaînes de redirects
+  RewriteCond %{REQUEST_URI} ^/(.+)/$
+  RewriteRule ^(.+)/$ /$1 [R=301,L]
 
   # ── Prérendu statique — servir {route}/index.html si disponible ────────
   RewriteCond %{REQUEST_FILENAME} !-f
