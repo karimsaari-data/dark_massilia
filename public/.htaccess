@@ -21,6 +21,7 @@
   RewriteRule ^sources/?$     /donnees-scientifiques           [R=301,L]
   RewriteRule ^medias/?$      /presse                          [R=301,L]
   RewriteRule ^reseaux/?$     /communaute                      [R=301,L]
+  RewriteRule ^instagram/?$   /communaute                      [R=301,L]
   RewriteRule ^local-guide/?$ /local-guide-marseille           [R=301,L]
   RewriteRule ^carte/?$       /carte-calanques                 [R=301,L]
   RewriteRule ^arte/?$        /sauver-marseille-documentaire-arte [R=301,L]
