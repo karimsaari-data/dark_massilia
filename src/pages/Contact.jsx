@@ -325,7 +325,7 @@ const Contact = () => {
               </div>
               {/* Photo */}
               <motion.div
-                className="lg:w-[42%] flex-shrink-0 overflow-hidden"
+                className="lg:w-[42%] flex-shrink-0"
                 whileHover={{ scale: 1.02 }}
                 transition={{ type: 'spring', stiffness: 200 }}
               >
@@ -334,7 +334,7 @@ const Contact = () => {
                   alt="Karim Saari en action lors d'une mission de dépollution sous-marine dans les Calanques de Marseille avec Team Oxygen"
                   width="1440"
                   height="1212"
-                  className="w-full h-full object-cover"
+                  className="w-full h-auto block"
                   loading="lazy"
                 />
               </motion.div>
