@@ -889,7 +889,12 @@ const Photos = () => {
 
             <div className="max-w-prose mx-auto space-y-0 text-text-secondary leading-loose text-sm md:text-[0.95rem]">
 
-              {/* Photo flottante — style journal */}
+              {/* Lead paragraph — pleine largeur avant le float */}
+              <p className="text-base md:text-lg text-white/90 leading-relaxed font-light mb-6">
+                Vingt ans à sillonner la Méditerranée, de la côte basque aux Calanques — et la conviction que les plus beaux paysages ne sont jamais au bout du monde, mais au bout du chemin que tu empruntes chaque matin.
+              </p>
+
+              {/* Photo flottante — style journal, après le lead */}
               <figure className="float-right ml-8 mb-5 w-72 md:w-96 clear-right">
                 <div
                   className="overflow-hidden"
@@ -908,11 +913,6 @@ const Photos = () => {
                   Karim Saari, photographe de paysages
                 </figcaption>
               </figure>
-
-              {/* Lead paragraph */}
-              <p className="text-base md:text-lg text-white/90 leading-relaxed font-light mb-6">
-                Vingt ans à sillonner la Méditerranée, de la côte basque aux Calanques — et la conviction que les plus beaux paysages ne sont jamais au bout du monde, mais au bout du chemin que tu empruntes chaque matin.
-              </p>
 
               {/* Chapitre 1 */}
               <p className="text-[0.65rem] uppercase tracking-[0.2em] text-ocean-teal/70 font-semibold pt-5 pb-1">L'apprentissage</p>
