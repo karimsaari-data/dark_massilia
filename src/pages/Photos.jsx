@@ -898,7 +898,7 @@ const Photos = () => {
                   }}
                 >
                   <img
-                    src="/images/karim saari photographe de paysage.png"
+                    src="/images/karim%20saari%20photographe%20de%20paysage.png"
                     alt="Karim Saari photographe de paysages — portrait"
                     className="w-full h-auto block"
                     loading="lazy"
