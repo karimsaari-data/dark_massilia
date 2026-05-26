@@ -380,10 +380,10 @@ const PhotographeEnvironnemental = () => {
                     <div className="w-3 h-3 rounded-full bg-ocean-teal ring-4 ring-ocean-teal/20 mt-1.5" aria-hidden="true" />
                   </div>
                   <div className="flex-1 pb-2">
-                    <p className="text-ocean-teal text-xs font-semibold uppercase tracking-widest mb-1">Années 90 — Les premières images</p>
-                    <h3 className="text-white font-semibold text-base mb-2">La montagne et l'argentique</h3>
+                    <p className="text-ocean-teal text-xs font-semibold uppercase tracking-widest mb-1">Années 80–90 — Les premières images</p>
+                    <p className="text-white font-semibold text-base mb-2">Les Alpes et l'argentique</p>
                     <p className="text-text-secondary text-sm leading-relaxed">
-                      Tout a commencé en haute montagne. Adolescent, j'enchaîne les étés à Chamonix — d'abord comme grimpeur, bientôt comme guide. C'est là que j'acquiers mon premier reflex argentique. La contrainte de la pellicule est une école de rigueur : on ne déclenche pas sans raison. Natif de la côte basque, mes premières images sont celles de l'océan — la dune du Pilat, Biarritz, Capbreton, ce rapport physique à l'eau qui ne m'a jamais quitté.
+                      Né en 1971, j'ai grandi avec les étés dans les Alpes. Adolescent, c'est là que je découvre la photographie de paysage — la lumière qui sculpte les reliefs, le silence minéral des hauteurs. Je m'équipe d'un premier reflex argentique. La contrainte de la pellicule est une école de rigueur : chaque déclenchement est un choix. Ces premières images — névés, forêts, alpages — installent un rapport à la lumière naturelle qui ne me quittera plus.
                     </p>
                   </div>
                 </div>
@@ -394,10 +394,10 @@ const PhotographeEnvironnemental = () => {
                     <div className="w-3 h-3 rounded-full bg-ocean-teal ring-4 ring-ocean-teal/20 mt-1.5" aria-hidden="true" />
                   </div>
                   <div className="flex-1 pb-2">
-                    <p className="text-ocean-teal text-xs font-semibold uppercase tracking-widest mb-1">2001 — Le basculement</p>
-                    <h3 className="text-white font-semibold text-base mb-2">Marseille et la révélation méditerranéenne</h3>
+                    <p className="text-ocean-teal text-xs font-semibold uppercase tracking-widest mb-1">1997–2001 — Toulouse</p>
+                    <p className="text-white font-semibold text-base mb-2">Quatre ans entre Pyrénées et Atlantique</p>
                     <p className="text-text-secondary text-sm leading-relaxed">
-                      En 2001, je pose mes valises à Marseille. Je découvre les Calanques — la lumière blanche sur le calcaire, la mer d'un bleu que je n'avais jamais vu. Mon regard bascule. La photographie de paysages trouve ici son terrain le plus exigeant et le plus généreux à la fois : falaises, criques, lavandes de Provence, lumière rasante du soir. Vingt ans à photographier ce territoire depuis ses hauteurs, depuis la mer, depuis les airs avec le drone — sans jamais en épuiser la surface.
+                      Quatre ans à Toulouse, à portée des Pyrénées d'un côté, de la côte basque de l'autre. La dune du Pilat, Biarritz, Capbreton — mes premières images de l'océan. L'eau entre dans le cadre pour la première fois. Je photographie ce rapport physique entre la lumière, la matière et l'horizon.
                     </p>
                   </div>
                 </div>
@@ -408,10 +408,10 @@ const PhotographeEnvironnemental = () => {
                     <div className="w-3 h-3 rounded-full bg-ocean-teal ring-4 ring-ocean-teal/20 mt-1.5" aria-hidden="true" />
                   </div>
                   <div className="flex-1 pb-2">
-                    <p className="text-ocean-teal text-xs font-semibold uppercase tracking-widest mb-1">Il y a 10 ans — La profondeur</p>
-                    <h3 className="text-white font-semibold text-base mb-2">L'apnée et le regard tourné vers les fonds</h3>
+                    <p className="text-ocean-teal text-xs font-semibold uppercase tracking-widest mb-1">2001–2017 — Aix-en-Provence puis Marseille</p>
+                    <p className="text-white font-semibold text-base mb-2">La Provence, et les quartiers nord de Marseille</p>
                     <p className="text-text-secondary text-sm leading-relaxed">
-                      Je découvre l'apnée. Je plonge dans les fonds des Calanques pour la première fois — et je comprends que l'urgence n'est pas en surface. En dessous, des pneus, des cordages, des filets fantômes s'accumulent dans un silence que personne ne voit. La photographie cesse d'être un acte contemplatif pour devenir un acte de témoignage. Je remonte les déchets d'une main, l'appareil de l'autre. C'est la naissance de ce que j'appelle la <strong className="text-white">photographie engagée</strong> : non plus célébrer la beauté, mais la défendre — en montrant ce qu'elle risque de perdre.
+                      Juin 2001 : j'arrive en Provence. D'abord à Aix-en-Provence, puis à Marseille dès 2006. Je m'installe dans les quartiers nord — à Sainte-Marthe, quartier historique de la famille Ricard, chargé d'une mémoire populaire et industrielle que peu de photographes ont documentée. J'y découvre une autre Marseille : les collines, les calanques vues de loin, la lumière blanche sur le calcaire. La photographie de paysages méditerranéens prend ici une nouvelle dimension — non plus alpine mais côtière, solaire, presque minérale.
                     </p>
                   </div>
                 </div>
@@ -419,13 +419,27 @@ const PhotographeEnvironnemental = () => {
                 {/* Acte IV */}
                 <div className="flex gap-6 md:gap-8">
                   <div className="flex-shrink-0 w-8 md:w-10 flex justify-center">
+                    <div className="w-3 h-3 rounded-full bg-ocean-teal ring-4 ring-ocean-teal/20 mt-1.5" aria-hidden="true" />
+                  </div>
+                  <div className="flex-1 pb-2">
+                    <p className="text-ocean-teal text-xs font-semibold uppercase tracking-widest mb-1">2017 — Le basculement</p>
+                    <p className="text-white font-semibold text-base mb-2">Chemin de Morgiou, l'apnée et les fonds</p>
+                    <p className="text-text-secondary text-sm leading-relaxed">
+                      En 2017, je déménage chemin de Morgiou, dans les quartiers sud — au bord des Calanques. Je découvre l'apnée. Je plonge dans les fonds pour la première fois — et je comprends que l'urgence n'est pas en surface. En dessous, des pneus, des cordages, des filets fantômes s'accumulent dans un silence que personne ne voit. La photographie cesse d'être un acte contemplatif pour devenir un acte de témoignage. Je remonte les déchets d'une main, l'appareil de l'autre. C'est la naissance de ce que j'appelle la <strong className="text-white">photographie engagée</strong> : non plus seulement célébrer la beauté, mais la défendre.
+                    </p>
+                  </div>
+                </div>
+
+                {/* Acte V */}
+                <div className="flex gap-6 md:gap-8">
+                  <div className="flex-shrink-0 w-8 md:w-10 flex justify-center">
                     <div className="w-3 h-3 rounded-full bg-white/40 ring-4 ring-white/10 mt-1.5" aria-hidden="true" />
                   </div>
                   <div className="flex-1">
                     <p className="text-ocean-teal text-xs font-semibold uppercase tracking-widest mb-1">Depuis 2022 — L'action collective</p>
-                    <h3 className="text-white font-semibold text-base mb-2">Team Oxygen et le Projet Sentinelle</h3>
+                    <p className="text-white font-semibold text-base mb-2">Team Oxygen et le Projet Sentinelle</p>
                     <p className="text-text-secondary text-sm leading-relaxed">
-                      Le Projet Sentinelle naît de cette conviction : une image seule ne suffit pas, elle doit s'accompagner d'une action concrète. Avec Team Oxygen, nous organisons chaque année une opération de dépollution sous-marine en apnée — quatre éditions, 5 724 kg de déchets remontés des fonds. La photographie documente chaque mission : les déchets caractérisés, les plongeurs en action, les fonds avant et après. Le cercle est complet : la beauté a nourri l'engagement, et l'engagement a transformé le regard sur la beauté.
+                      Le Projet Sentinelle naît de cette conviction : une image seule ne suffit pas, elle doit s'accompagner d'une action concrète. Avec Team Oxygen, nous organisons chaque année une opération de dépollution sous-marine en apnée — quatre éditions, 5 724 kg de déchets remontés des fonds. La photographie documente chaque mission. Le cercle est complet : la beauté a nourri l'engagement, et l'engagement a transformé le regard sur la beauté.
                     </p>
                     <p className="mt-3 text-white/60 italic text-sm border-l-2 border-ocean-teal pl-4">
                       « Photographier les Calanques, c'est les défendre. »
