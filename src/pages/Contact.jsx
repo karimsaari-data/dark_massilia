@@ -324,7 +324,7 @@ const Contact = () => {
                 </p>
               </div>
               {/* Photo */}
-              <div className="lg:w-[42%] flex-shrink-0 self-stretch overflow-hidden">
+              <div className="flex-1 self-stretch overflow-hidden min-h-[300px]">
                 <img
                   src="/images/contact-karim-saari.webp"
                   alt="Karim Saari en action lors d'une mission de dépollution sous-marine dans les Calanques de Marseille avec Team Oxygen"
