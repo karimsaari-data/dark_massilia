@@ -374,21 +374,31 @@ const PhotographeEnvironnemental = () => {
 
               <div className="space-y-10">
 
-                {/* Acte I */}
+                {/* Acte I — Côte basque */}
                 <div className="flex gap-6 md:gap-8">
                   <div className="flex-shrink-0 w-8 md:w-10 flex justify-center">
                     <div className="w-3 h-3 rounded-full bg-ocean-teal ring-4 ring-ocean-teal/20 mt-1.5" aria-hidden="true" />
                   </div>
-                  <div className="flex-1 pb-2">
-                    <p className="text-ocean-teal text-xs font-semibold uppercase tracking-widest mb-1">1971–1997 — Les premières images</p>
-                    <p className="text-white font-semibold text-base mb-2">La côte basque, l'océan et l'argentique</p>
-                    <p className="text-text-secondary text-sm leading-relaxed">
-                      Né en 1971, je grandis sur la côte basque dès l'âge de 5 ans — Biarritz, Capbreton, la dune du Pilat, cet Atlantique qui sculpte le paysage autant que les gens. C'est ici que s'installe le rapport à l'eau, à la lumière rasante, à l'horizon. Adolescent, les étés m'emmènent dans les Alpes — et c'est là que je découvre la photographie de paysage et acquiers mon premier reflex argentique. La contrainte de la pellicule est une école de rigueur : chaque déclenchement est un choix.
-                    </p>
+                  <div className="flex-1 pb-2 flex flex-col sm:flex-row gap-4">
+                    <div className="flex-1">
+                      <p className="text-ocean-teal text-xs font-semibold uppercase tracking-widest mb-1">1971–1997 — Les premières images</p>
+                      <p className="text-white font-semibold text-base mb-2">La côte basque, l'océan et l'argentique</p>
+                      <p className="text-text-secondary text-sm leading-relaxed">
+                        Né en 1971, je grandis sur la côte basque dès l'âge de 5 ans — Biarritz, Capbreton, la dune du Pilat, cet Atlantique qui sculpte le paysage autant que les gens. C'est ici que s'installe le rapport à l'eau, à la lumière rasante, à l'horizon. Adolescent, les étés m'emmènent dans les Alpes — et c'est là que je découvre la photographie de paysage et acquiers mon premier reflex argentique.
+                      </p>
+                    </div>
+                    <div className="flex-shrink-0 w-full sm:w-36 md:w-44 rounded-xl overflow-hidden ring-1 ring-white/10 self-start">
+                      <img
+                        src="/images/portfolio/Horizons/biarritz-cote-basque-karimsaari-1.webp"
+                        alt="Côte basque — Biarritz, Karim Saari"
+                        className="w-full h-full object-cover aspect-[4/3]"
+                        loading="lazy"
+                      />
+                    </div>
                   </div>
                 </div>
 
-                {/* Acte II */}
+                {/* Acte II — Toulouse */}
                 <div className="flex gap-6 md:gap-8">
                   <div className="flex-shrink-0 w-8 md:w-10 flex justify-center">
                     <div className="w-3 h-3 rounded-full bg-ocean-teal ring-4 ring-ocean-teal/20 mt-1.5" aria-hidden="true" />
@@ -402,7 +412,7 @@ const PhotographeEnvironnemental = () => {
                   </div>
                 </div>
 
-                {/* Acte III */}
+                {/* Acte III — Aix / Marseille nord */}
                 <div className="flex gap-6 md:gap-8">
                   <div className="flex-shrink-0 w-8 md:w-10 flex justify-center">
                     <div className="w-3 h-3 rounded-full bg-ocean-teal ring-4 ring-ocean-teal/20 mt-1.5" aria-hidden="true" />
@@ -411,39 +421,103 @@ const PhotographeEnvironnemental = () => {
                     <p className="text-ocean-teal text-xs font-semibold uppercase tracking-widest mb-1">2001–2017 — Aix-en-Provence puis Marseille</p>
                     <p className="text-white font-semibold text-base mb-2">La Provence, et les quartiers nord de Marseille</p>
                     <p className="text-text-secondary text-sm leading-relaxed">
-                      Juin 2001 : j'arrive en Provence. D'abord à Aix-en-Provence, puis à Marseille dès 2006. Je m'installe dans les quartiers nord — à Sainte-Marthe, quartier historique de la famille Ricard, chargé d'une mémoire populaire et industrielle que peu de photographes ont documentée. J'y découvre une autre Marseille : les collines, les calanques vues de loin, la lumière blanche sur le calcaire. La photographie de paysages méditerranéens prend ici une nouvelle dimension — non plus alpine mais côtière, solaire, presque minérale.
+                      Juin 2001 : j'arrive en Provence. D'abord à Aix-en-Provence, puis à Marseille dès 2006. Je m'installe dans les quartiers nord — à Sainte-Marthe, quartier historique de la famille Ricard, chargé d'une mémoire populaire et industrielle. J'y découvre une autre Marseille : les collines, les calanques vues de loin, la lumière blanche sur le calcaire.
                     </p>
                   </div>
                 </div>
 
-                {/* Acte IV */}
+                {/* Acte IV — 2017, Morgiou, apnée */}
+                <div className="flex gap-6 md:gap-8">
+                  <div className="flex-shrink-0 w-8 md:w-10 flex justify-center">
+                    <div className="w-3 h-3 rounded-full bg-ocean-teal ring-4 ring-ocean-teal/20 mt-1.5" aria-hidden="true" />
+                  </div>
+                  <div className="flex-1 pb-2 flex flex-col sm:flex-row gap-4">
+                    <div className="flex-1">
+                      <p className="text-ocean-teal text-xs font-semibold uppercase tracking-widest mb-1">2017 — Le basculement</p>
+                      <p className="text-white font-semibold text-base mb-2">Chemin de Morgiou, l'apnée et les fonds</p>
+                      <p className="text-text-secondary text-sm leading-relaxed">
+                        En 2017, je déménage chemin de Morgiou, dans les quartiers sud — au bord des Calanques. Je découvre l'apnée. Je plonge dans les fonds pour la première fois — et je comprends que l'urgence n'est pas en surface. Pneus, cordages, filets fantômes : un silence que personne ne voit depuis la surface. La photographie devient un acte de témoignage. Je remonte les déchets d'une main, l'appareil de l'autre.
+                      </p>
+                    </div>
+                    <div className="flex-shrink-0 w-full sm:w-36 md:w-44 rounded-xl overflow-hidden ring-1 ring-white/10 self-start">
+                      <img
+                        src="/images/portfolio/Mer/karim-saari-marseille-aerien-calanque-nageur-turquoise.webp"
+                        alt="Calanque de Marseille vue du ciel — nageur dans les eaux turquoise"
+                        className="w-full h-full object-cover aspect-[4/3]"
+                        loading="lazy"
+                      />
+                    </div>
+                  </div>
+                </div>
+
+                {/* Acte V — 2019, Carrousel Vieux-Port */}
                 <div className="flex gap-6 md:gap-8">
                   <div className="flex-shrink-0 w-8 md:w-10 flex justify-center">
                     <div className="w-3 h-3 rounded-full bg-ocean-teal ring-4 ring-ocean-teal/20 mt-1.5" aria-hidden="true" />
                   </div>
                   <div className="flex-1 pb-2">
-                    <p className="text-ocean-teal text-xs font-semibold uppercase tracking-widest mb-1">2017 — Le basculement</p>
-                    <p className="text-white font-semibold text-base mb-2">Chemin de Morgiou, l'apnée et les fonds</p>
+                    <p className="text-ocean-teal text-xs font-semibold uppercase tracking-widest mb-1">2019 — Commande institutionnelle</p>
+                    <p className="text-white font-semibold text-base mb-2">Carrousel au Vieux-Port — Ville de Marseille</p>
                     <p className="text-text-secondary text-sm leading-relaxed">
-                      En 2017, je déménage chemin de Morgiou, dans les quartiers sud — au bord des Calanques. Je découvre l'apnée. Je plonge dans les fonds pour la première fois — et je comprends que l'urgence n'est pas en surface. En dessous, des pneus, des cordages, des filets fantômes s'accumulent dans un silence que personne ne voit. La photographie cesse d'être un acte contemplatif pour devenir un acte de témoignage. Je remonte les déchets d'une main, l'appareil de l'autre. C'est la naissance de ce que j'appelle la <strong className="text-white">photographie engagée</strong> : non plus seulement célébrer la beauté, mais la défendre.
+                      La Ville de Marseille me commande un cliché du Carrousel du Vieux-Port. Une reconnaissance qui marque l'ancrage de mon travail photographique dans l'identité marseillaise — entre patrimoine urbain et littoral méditerranéen.
                     </p>
                   </div>
                 </div>
 
-                {/* Acte V */}
+                {/* Acte VI — Team Oxygen */}
+                <div className="flex gap-6 md:gap-8">
+                  <div className="flex-shrink-0 w-8 md:w-10 flex justify-center">
+                    <div className="w-3 h-3 rounded-full bg-ocean-teal ring-4 ring-ocean-teal/20 mt-1.5" aria-hidden="true" />
+                  </div>
+                  <div className="flex-1 pb-2 flex flex-col sm:flex-row gap-4">
+                    <div className="flex-1">
+                      <p className="text-ocean-teal text-xs font-semibold uppercase tracking-widest mb-1">2022–2026 — L'action collective</p>
+                      <p className="text-white font-semibold text-base mb-2">Team Oxygen et le Projet Sentinelle</p>
+                      <p className="text-text-secondary text-sm leading-relaxed">
+                        En 2022, je rejoins Team Oxygen comme simple apnéiste lors de la première édition du Projet Sentinelle. Je m'investis progressivement, prends la vice-présidence, puis la présidence en janvier 2026. Quatre éditions, 5 724 kg de déchets remontés des fonds méditerranéens.
+                      </p>
+                      <p className="mt-3 text-white/60 italic text-sm border-l-2 border-ocean-teal pl-4">
+                        « Photographier les Calanques, c'est les défendre. »
+                      </p>
+                    </div>
+                    <div className="flex-shrink-0 w-full sm:w-36 md:w-44 rounded-xl overflow-hidden ring-1 ring-white/10 self-start">
+                      <img
+                        src="/images/Marseille-dark-massilia-plastique-pollution-projet-sentinelle-teamoxygen.webp"
+                        alt="Team Oxygen — Projet Sentinelle, dépollution marine Marseille"
+                        className="w-full h-full object-cover aspect-[4/3]"
+                        loading="lazy"
+                      />
+                    </div>
+                  </div>
+                </div>
+
+                {/* Acte VII — 2026, film Oxygène */}
                 <div className="flex gap-6 md:gap-8">
                   <div className="flex-shrink-0 w-8 md:w-10 flex justify-center">
                     <div className="w-3 h-3 rounded-full bg-white/40 ring-4 ring-white/10 mt-1.5" aria-hidden="true" />
                   </div>
-                  <div className="flex-1">
-                    <p className="text-ocean-teal text-xs font-semibold uppercase tracking-widest mb-1">2022 → 2026 — L'action collective</p>
-                    <p className="text-white font-semibold text-base mb-2">Team Oxygen, le Projet Sentinelle, et la présidence</p>
-                    <p className="text-text-secondary text-sm leading-relaxed">
-                      En 2022, je rejoins Team Oxygen comme simple apnéiste lors de la première édition du Projet Sentinelle — une opération de dépollution sous-marine dans les Calanques et la rade de Marseille. Je m'investis progressivement, prends la vice-présidence, puis la présidence de l'association en janvier 2026. Quatre éditions, 5 724 kg de déchets remontés des fonds. La photographie documente chaque mission. Le cercle est complet : la beauté a nourri l'engagement, et l'engagement a transformé le regard sur la beauté.
-                    </p>
-                    <p className="mt-3 text-white/60 italic text-sm border-l-2 border-ocean-teal pl-4">
-                      « Photographier les Calanques, c'est les défendre. »
-                    </p>
+                  <div className="flex-1 flex flex-col sm:flex-row gap-4">
+                    <div className="flex-1">
+                      <p className="text-ocean-teal text-xs font-semibold uppercase tracking-widest mb-1">2026 — Le film</p>
+                      <p className="text-white font-semibold text-base mb-2">Oxygène — documentaire 52 min</p>
+                      <p className="text-text-secondary text-sm leading-relaxed">
+                        Produit par Transfuges et Zéké Film, réalisé par Roxane Perrot et Ugo Isoard, <em>Oxygène</em> raconte une semaine de tournage en apnée dans les Calanques — sans équipement lourd, juste en retenant notre souffle. Soutenu par Citeo. Présenté au FIFES Cannes, à Nausicaá (Boulogne-sur-Mer) et à Marseille.
+                      </p>
+                      <a
+                        href="/blog/oxygene-le-documentaire-sur-la-depollution-de-la-mediterranee"
+                        className="inline-flex items-center gap-1.5 mt-3 text-ocean-teal hover:text-white transition-colors text-xs font-medium"
+                      >
+                        Lire l'article <ArrowRight className="w-3 h-3" aria-hidden="true" />
+                      </a>
+                    </div>
+                    <div className="flex-shrink-0 w-full sm:w-28 md:w-36 rounded-xl overflow-hidden ring-1 ring-white/10 self-start">
+                      <img
+                        src="https://cms.karimsaari.com/wp-content/uploads/2026/05/Oxygene-Affiche-fim-210x300.jpg"
+                        alt="Affiche du film Oxygène — documentaire dépollution Méditerranée"
+                        className="w-full h-full object-cover aspect-[2/3]"
+                        loading="lazy"
+                      />
+                    </div>
                   </div>
                 </div>
 
