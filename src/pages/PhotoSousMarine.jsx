@@ -909,8 +909,8 @@ const PhotoSousMarine = () => {
                   Cette galerie rassemble des images de missions{' '}
                   <strong className="text-white">Team Oxygen</strong> et de l'
                   <strong className="text-white">Opération Sentinelle</strong>, mais aussi d'opérations
-                  menées aux côtés d'autres associations engagées — Boud'mer, Clean My Calanques,
-                  Mer Terre, Wings of the Ocean, le Parc National des Calanques — qui partagent le
+                  menées aux côtés d'autres associations engagées — Boud'mer, Clean My Calanques, Mer Terre,
+                  Wings of the Ocean, Association Merveille, Team AVA, le Parc National des Calanques — qui partagent le
                   même combat pour la Méditerranée. Des{' '}
                   <strong className="text-ocean-teal">abysses pollués</strong> à la résilience de la
                   vie sauvage — poulpes, spirographes, méduses, fonds rocheux — des images qui
