@@ -323,21 +323,36 @@ const Contact = () => {
                   <strong className="text-ocean-teal">Projet Sentinelle</strong>.
                 </p>
               </div>
-              {/* Photo */}
-              <motion.div
-                className="lg:w-[42%] flex-shrink-0"
-                whileHover={{ scale: 1.02 }}
-                transition={{ type: 'spring', stiffness: 200 }}
-              >
-                <img
-                  src="/images/contact-karim-saari.webp"
-                  alt="Karim Saari en action lors d'une mission de dépollution sous-marine dans les Calanques de Marseille avec Team Oxygen"
-                  width="1440"
-                  height="1212"
-                  className="w-full h-auto block"
-                  loading="lazy"
-                />
-              </motion.div>
+              {/* Mosaïque photos */}
+              <div className="lg:w-[44%] flex-shrink-0 grid grid-cols-2 gap-2 p-4 self-stretch">
+                {/* Grande image en haut — prend les 2 colonnes */}
+                <div className="col-span-2 overflow-hidden rounded-2xl h-48">
+                  <img
+                    src="/images/Marseille-dark-massilia-plastique-pollution-projet-sentinelle-teamoxygen-freediving.webp"
+                    alt="Équipe Team Oxygen en apnée lors d'une mission de dépollution dans les Calanques"
+                    className="w-full h-full object-cover hover:scale-105 transition-transform duration-700 ease-out"
+                    loading="lazy"
+                  />
+                </div>
+                {/* Petite image bas-gauche */}
+                <div className="overflow-hidden rounded-2xl h-40">
+                  <img
+                    src="/images/Marseille-dark-massilia-plastique-pollution-projet-sentinelle-apneiste.webp"
+                    alt="Apnéiste en action dans les fonds marins des Calanques de Marseille"
+                    className="w-full h-full object-cover hover:scale-105 transition-transform duration-700 ease-out"
+                    loading="lazy"
+                  />
+                </div>
+                {/* Petite image bas-droite */}
+                <div className="overflow-hidden rounded-2xl h-40">
+                  <img
+                    src="/images/biodiversite-marseille-exploration-vie-marine-parc-national-calanques-team-oxygen-karim-saari-dark-massilia-1.webp"
+                    alt="Exploration de la biodiversité marine dans le Parc national des Calanques"
+                    className="w-full h-full object-cover hover:scale-105 transition-transform duration-700 ease-out"
+                    loading="lazy"
+                  />
+                </div>
+              </div>
             </div>
           </motion.div>
         </motion.div>
