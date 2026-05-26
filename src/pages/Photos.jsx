@@ -890,7 +890,7 @@ const Photos = () => {
             <div className="space-y-5 text-text-secondary leading-[1.85] text-sm md:text-base">
 
               {/* Photo flottante — style journal */}
-              <figure className="float-right ml-7 mb-5 w-64 md:w-80 clear-right">
+              <figure className="float-right ml-8 mb-5 w-72 md:w-96 clear-right">
                 <div
                   className="overflow-hidden"
                   style={{
