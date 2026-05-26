@@ -921,7 +921,7 @@ const Photos = () => {
         >
           <motion.div variants={FADE_IN_UP} className="glass-strong rounded-3xl p-8 md:p-12">
             <h2 className="text-xl md:text-2xl font-bold text-white mb-6">
-              Ma passion pour la photographie de paysage
+              Ma passion pour la photographie de paysages
             </h2>
 
             <div className="space-y-5 text-text-secondary leading-[1.85] text-sm md:text-base">
@@ -939,8 +939,8 @@ const Photos = () => {
               </p>
               <p>
                 Depuis dix ans, j'habite chemin de Morgiou, à quelques minutes à pied de la mer, à l'entrée du Parc National des Calanques. Cette proximité quotidienne avec un territoire d'une beauté exceptionnelle a progressivement transformé mon regard. Ce n'était plus seulement de la{' '}
-                <strong className="text-white font-medium">photographie de paysage à Marseille</strong>{' '}
-                : c'était de la documentation, du témoignage. C'est en plongeant en apnée dans ces eaux pour aller photographier sous la surface que j'ai découvert l'ampleur de la pollution plastique sur les fonds marins. La photographie de paysage m'avait appris à voir. L'apnée m'a appris ce qu'il y avait à perdre.
+                <strong className="text-white font-medium">photographie de paysages à Marseille</strong>{' '}
+                : c'était de la documentation, du témoignage. C'est en plongeant en apnée dans ces eaux pour aller photographier sous la surface que j'ai découvert l'ampleur de la pollution plastique sur les fonds marins. La photographie de paysages m'avait appris à voir. L'apnée m'a appris ce qu'il y avait à perdre.
               </p>
               <p className="text-white/80 italic border-l-2 border-ocean-teal pl-4">
                 « Inutile d'aller au bout du monde — il suffit d'observer ce qui nous entoure. »
