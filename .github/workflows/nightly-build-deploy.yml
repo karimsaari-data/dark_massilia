@@ -80,6 +80,24 @@ jobs:
           VITE_SUPABASE_ANON_KEY: ${{ secrets.VITE_SUPABASE_ANON_KEY }}
         run: node scripts/wp-alt-vision.mjs --apply --posts-only
 
+      # ── 3d. Titres/descriptions photos Vision (nouvelles uniquement, cache) ────
+      - name: Titres & descriptions photos — Vision
+        continue-on-error: true
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          VITE_SUPABASE_URL: ${{ secrets.VITE_SUPABASE_URL }}
+          VITE_SUPABASE_ANON_KEY: ${{ secrets.VITE_SUPABASE_ANON_KEY }}
+        run: node scripts/photos-vision-titles.mjs --apply
+
+      # ── 3e. Alt + titres galeries paysage & sous-marine (cache) ──────────────
+      - name: Alt & titres galeries — Vision
+        continue-on-error: true
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          VITE_SUPABASE_URL: ${{ secrets.VITE_SUPABASE_URL }}
+          VITE_SUPABASE_ANON_KEY: ${{ secrets.VITE_SUPABASE_ANON_KEY }}
+        run: node scripts/galleries-vision-alt.mjs --apply
+
       # ── 4. Build complet ─────────────────────────────────────────────────────
       - name: Build (sitemap + vite + prerender)
         env:
@@ -99,6 +117,14 @@ jobs:
           VITE_INSTAGRAM_ACCESS_TOKEN: ${{ secrets.VITE_INSTAGRAM_ACCESS_TOKEN }}
           NOTIFY_SECRET: ${{ secrets.NOTIFY_SECRET }}
         run: npm run build:full
+
+      # ── 4b. Sync indexed_pages + titres → Supabase ──────────────────────────
+      - name: Sync indexed_pages (URLs + titres)
+        continue-on-error: true
+        env:
+          VITE_SUPABASE_URL: ${{ secrets.VITE_SUPABASE_URL }}
+          SUPABASE_SERVICE_KEY: ${{ secrets.SUPABASE_SERVICE_KEY }}
+        run: node scripts/sync-indexed-pages.mjs
 
       # ── 5. Déploiement FTP ───────────────────────────────────────────────────
       - name: Déploiement FTP vers karimsaari.com/home

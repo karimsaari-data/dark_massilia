@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Workflow import photos — Dark Massilia</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+      background: #f8f9fa;
+      color: #1a1a2e;
+      font-size: 13.5px;
+      line-height: 1.6;
+      padding: 32px 24px 60px;
+    }
+    h1 {
+      font-size: 17px;
+      font-weight: 700;
+      color: #111;
+      margin-bottom: 20px;
+      padding-bottom: 12px;
+      border-bottom: 2px solid #e0e0e0;
+      letter-spacing: -.2px;
+    }
+    .grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 18px;
+    }
+    .col { display: flex; flex-direction: column; gap: 18px; }
+    .section {
+      background: #fff;
+      border: 1px solid #e0e7ef;
+      border-radius: 10px;
+      padding: 16px 18px;
+    }
+    .section h2 {
+      font-size: 12px;
+      font-weight: 700;
+      color: #444;
+      text-transform: uppercase;
+      letter-spacing: .6px;
+      margin-bottom: 10px;
+    }
+    .section h2 span {
+      display: inline-block;
+      background: #1a1a2e;
+      color: #fff;
+      border-radius: 50%;
+      width: 18px; height: 18px;
+      line-height: 18px;
+      text-align: center;
+      font-size: 10px;
+      margin-right: 6px;
+    }
+    ul { list-style: none; padding: 0; }
+    ul li { padding: 2px 0 2px 14px; position: relative; color: #333; }
+    ul li::before { content: '•'; position: absolute; left: 0; color: #21c47b; font-weight: 700; }
+    ul li a { color: #0066cc; text-decoration: none; }
+    ul li a:hover { text-decoration: underline; }
+    ul.check li::before { content: '✅'; font-size: 11px; }
+    ul.cross li::before { content: '❌'; font-size: 11px; }
+    code, .cmd {
+      display: inline-block;
+      background: #f1f3f5;
+      border: 1px solid #dde;
+      border-radius: 5px;
+      padding: 1px 7px;
+      font-family: 'SF Mono', 'Fira Code', Consolas, monospace;
+      font-size: 12px;
+      color: #c7254e;
+    }
+    .cmd-block {
+      display: block;
+      background: #1a1a2e;
+      color: #21c47b;
+      font-family: 'SF Mono', 'Fira Code', Consolas, monospace;
+      font-size: 12.5px;
+      border-radius: 7px;
+      padding: 10px 14px;
+      margin: 8px 0 4px;
+      cursor: pointer;
+      user-select: all;
+      letter-spacing: .2px;
+    }
+    .cmd-block:hover { background: #111; }
+    .hint { color: #888; font-size: 11.5px; margin-top: 4px; }
+    .tag-ok  { display:inline-block; background:#d4edda; color:#155724; border-radius:4px; padding:1px 7px; font-size:11px; font-weight:600; margin-left:6px; }
+    .tag-new { display:inline-block; background:#cce5ff; color:#004085; border-radius:4px; padding:1px 7px; font-size:11px; font-weight:600; margin-left:6px; }
+    .alert {
+      background: #fff8e1;
+      border: 1px solid #ffe082;
+      border-left: 4px solid #f59e0b;
+      border-radius: 8px;
+      padding: 12px 14px;
+    }
+    .alert h2 { color: #92400e; margin-bottom: 8px; }
+    .alert li { color: #78350f; }
+    .folder { font-family: monospace; font-size: 11.5px; background: #e8f4fd; color: #0366d6; border-radius: 4px; padding: 2px 6px; }
+    .step-desc { color: #555; margin-bottom: 6px; }
+    @media (max-width: 700px) { .grid { grid-template-columns: 1fr; } }
+  </style>
+</head>
+<body>
+
+<h1>Workflow import photos — Dark Massilia</h1>
+
+<div class="grid">
+  <!-- COLONNE GAUCHE -->
+  <div class="col">
+
+    <div class="section">
+      <h2><span>1</span>Prépare les fichiers</h2>
+      <p class="step-desc">Renomme tes fichiers avec un nom SEO descriptif avant tout</p>
+      <ul class="check">
+        <li><code>marseille-calanques-poulpe-apnee.jpg</code></li>
+      </ul>
+      <ul class="cross" style="margin-top:4px">
+        <li><code>P1011165.JPG</code> ou <code>557705461...n.webp</code></li>
+      </ul>
+      <p class="step-desc" style="margin-top:10px">Dépose-les dans le bon dossier <code>New/</code>&nbsp;:</p>
+      <ul>
+        <li><span class="folder">public/images/portfolio/New/photos_sous_marine/Dépollution/</span></li>
+        <li><span class="folder">public/images/portfolio/New/photos_sous_marine/Biodiversité/</span></li>
+        <li><span class="folder">public/images/portfolio/New/photos_sous_marine/Caractérisation/</span></li>
+        <li><span class="folder">public/images/portfolio/New/photos_paysages/Mer/</span></li>
+        <li><span class="folder">public/images/portfolio/New/photos_paysages/Terre/</span></li>
+        <li><span class="folder">public/images/portfolio/New/photos_paysages/Horizons/</span></li>
+      </ul>
+      <p class="hint" style="margin-top:8px">Formats acceptés&nbsp;: JPG, PNG, TIFF, WebP</p>
+    </div>
+
+    <div class="section">
+      <h2><span>2</span>Import</h2>
+      <div class="cmd-block">npm run photos:import</div>
+      <p class="hint">Le script fait automatiquement&nbsp;:</p>
+      <ul style="margin-top:6px">
+        <li>Slugifie le nom → minuscules, accents supprimés, espaces → tirets</li>
+        <li>Convertit JPG/PNG → WebP 85% (ou copie directe si déjà WebP)</li>
+        <li>Injecte EXIF basique&nbsp;: Artist + Copyright</li>
+        <li>Génère un thumbnail 800w</li>
+        <li>Insère en Supabase (uid auto-incrémenté, <code>visible = false</code>)</li>
+        <li>Archive l'original dans <span class="folder">New/done/</span></li>
+      </ul>
+    </div>
+
+    <div class="section">
+      <h2><span>3</span>Remplis les métadonnées</h2>
+      <div class="cmd-block">npm run dev</div>
+      <ul style="margin-top:6px">
+        <li>→ Ouvre l'admin → filtre <strong>"Incomplet"</strong> → remplis titre / alt / lieu / GPS pour chaque photo</li>
+        <li>→ Passe <code>visible = true</code> quand c'est prêt</li>
+        <li>→ <code>Ctrl+C</code> pour arrêter le serveur</li>
+      </ul>
+    </div>
+
+  </div>
+
+  <!-- COLONNE DROITE -->
+  <div class="col">
+
+    <div class="section">
+      <h2><span>4</span>EXIF détaillé + audit</h2>
+      <div class="cmd-block">npm run exif:inject:new &amp;&amp; npm run exif:audit:new</div>
+      <ul style="margin-top:8px">
+        <li><code>inject-exif</code> → écrit le titre/keywords dans les EXIF physiques des WebP</li>
+        <li><code>audit-exif</code> → synchronise la table <code>photos_exif</code> en Supabase</li>
+      </ul>
+      <p class="hint" style="margin-top:8px">
+        ✅ ExifTool <strong>inclus dans le projet</strong> <span class="tag-ok">v13.58</span><br>
+        Installé dans <span class="folder">scripts/exiftool/ExifTool.exe</span> — aucune installation manuelle requise.
+      </p>
+    </div>
+
+    <div class="section">
+      <h2><span>5</span>Build + déploiement</h2>
+      <div class="cmd-block">npm run build:photos</div>
+      <p class="hint">→ FTP du dossier <code>dist/</code> + nouveaux fichiers <code>public/images/</code></p>
+    </div>
+
+    <div class="section alert">
+      <h2>⚠ Points importants</h2>
+      <ul style="margin-top:4px">
+        <li>Ne jamais ajouter de règle HTTPS dans <code>.htaccess</code> (Cloudflare gère ça)</li>
+        <li>Si des images apparaissent cassées après déploiement → <strong>Purge Everything</strong> sur Cloudflare</li>
+        <li>
+          Le script de rattrapage pour anciens noms&nbsp;:<br>
+          <code>node scripts/rename-legacy-photos.js</code> (dry-run)<br>
+          puis <code>--apply</code>
+        </li>
+        <li style="margin-top:6px">
+          ExifTool est dans <span class="folder">scripts/exiftool/</span> et exclu du git (<code>.gitignore</code>).
+          <span class="tag-new">nouveau</span><br>
+          Si absent après un clone&nbsp;: télécharger <a href="https://exiftool.org" target="_blank">exiftool.org</a>
+          (Windows 64-bit zip) → extraire → copier dans <span class="folder">scripts/exiftool/ExifTool.exe</span>.
+        </li>
+      </ul>
+    </div>
+
+  </div>
+</div>
+
+</body>
+</html>
