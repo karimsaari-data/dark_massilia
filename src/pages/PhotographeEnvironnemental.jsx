@@ -295,7 +295,7 @@ const PhotographeEnvironnemental = () => {
             </div>
 
             <p className="text-text-secondary leading-relaxed text-base md:text-lg mb-5">
-              Je suis <strong className="text-white">Karim Saari</strong>, photographe environnemental et sous-marin basé à Marseille. Depuis 2018, mon travail documente le littoral méditerranéen avec un double regard : la beauté brute des Calanques et l'urgence écologique qui les menace. Apnéiste, je photographie les fonds de la même manière que je les nettoie — en immersion totale, au plus près des espèces et des déchets.
+              Je suis <strong className="text-white">Karim Saari</strong>, photographe environnemental basé à Marseille. Mon travail s'articule autour de trois disciplines complémentaires : la <Link to="/photographie-paysage-mer" className="text-ocean-teal hover:underline">photographie de paysages</Link> — des Calanques à la Provence en passant par l'Atlantique —, la <Link to="/photographie-sous-marine" className="text-ocean-teal hover:underline">photographie sous-marine</Link> en apnée dans les fonds méditerranéens, et la documentation des opérations de dépollution que je mène avec Team Oxygen depuis 2018. Je photographie les fonds de la même manière que je les nettoie — en immersion totale, au plus près des espèces et des déchets.
             </p>
 
             <p className="text-text-secondary leading-relaxed text-base md:text-lg mb-5">
