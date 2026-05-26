@@ -887,7 +887,7 @@ const Photos = () => {
               Ma passion pour la photographie de paysages
             </h2>
 
-            <div className="space-y-5 text-text-secondary leading-[1.85] text-sm md:text-base">
+            <div className="max-w-prose mx-auto space-y-0 text-text-secondary leading-loose text-sm md:text-[0.95rem]">
 
               {/* Photo flottante — style journal */}
               <figure className="float-right ml-8 mb-5 w-72 md:w-96 clear-right">
@@ -909,29 +909,41 @@ const Photos = () => {
                 </figcaption>
               </figure>
 
-              <p>
-                Tout a commencé avec un <strong className="text-ocean-teal font-semibold">boîtier argentique</strong> et des étés en haute montagne. Adolescent, je passais chaque été à rôder autour de <strong className="text-ocean-teal font-semibold">Chamonix</strong>, sac au dos, à arpenter les glaciers et les crêtes du massif du Mont-Blanc. C'est là que j'ai rencontré un guide de haute montagne qui, entre deux cordées, sortait son appareil pour capturer la <strong className="text-ocean-teal font-semibold">lumière rasante sur les séracs</strong>. Il m'a appris l'essentiel : ne pas chercher à dominer le paysage, mais à <strong className="text-ocean-teal font-semibold">l'écouter</strong>.
+              {/* Lead paragraph */}
+              <p className="text-base md:text-lg text-white/90 leading-relaxed font-light mb-6">
+                Vingt ans à sillonner la Méditerranée, de la côte basque aux Calanques — et la conviction que les plus beaux paysages ne sont jamais au bout du monde, mais au bout du chemin que tu empruntes chaque matin.
               </p>
-              <p>
+
+              {/* Chapitre 1 */}
+              <p className="text-[0.65rem] uppercase tracking-[0.2em] text-ocean-teal/70 font-semibold pt-5 pb-1">L'apprentissage</p>
+              <p className="mb-4">
+                <span className="float-left text-[3.2rem] leading-[0.8] font-bold text-ocean-teal mr-2 mt-1 select-none">T</span>out a commencé avec un <strong className="text-ocean-teal font-semibold">boîtier argentique</strong> et des étés en haute montagne. Adolescent, je passais chaque été à rôder autour de <strong className="text-ocean-teal font-semibold">Chamonix</strong>, sac au dos, à arpenter les glaciers et les crêtes du massif du Mont-Blanc. C'est là que j'ai rencontré un guide qui sortait son appareil entre deux cordées pour capturer la <strong className="text-ocean-teal font-semibold">lumière rasante sur les séracs</strong>. Il m'a appris l'essentiel : ne pas chercher à dominer le paysage, mais à <strong className="text-ocean-teal font-semibold">l'écouter</strong>.
+              </p>
+              <p className="mb-4">
                 La contrainte de la pellicule — <strong className="text-ocean-teal font-semibold">36 poses, pas une de plus</strong> — m'a enseigné la patience et l'intention. Chaque déclenchement était une décision, pas une habitude. Ma façon de travailler est restée la même : <strong className="text-ocean-teal font-semibold">peu de clichés, beaucoup d'observation</strong>. Attendre la lumière, pas la forcer.
               </p>
-              <p>
-                Natif de la <strong className="text-ocean-teal font-semibold">côte basque</strong>, mes premières images ont naturellement été celles de l'océan. Les rouleaux de <strong className="text-ocean-teal font-semibold">Biarritz</strong> sous les ciels gris d'automne, les collines vertes de l'arrière-pays, les villages perchés sur les contreforts des <strong className="text-ocean-teal font-semibold">Pyrénées</strong>. J'ai appris à lire la lumière atlantique — douce, changeante, parfois brutale.
+
+              {/* Chapitre 2 */}
+              <p className="text-[0.65rem] uppercase tracking-[0.2em] text-ocean-teal/70 font-semibold pt-5 pb-1">Les territoires</p>
+              <p className="mb-4">
+                Natif de la <strong className="text-ocean-teal font-semibold">côte basque</strong>, mes premières images ont naturellement été celles de l'océan. Les rouleaux de <strong className="text-ocean-teal font-semibold">Biarritz</strong> sous les ciels gris d'automne, les villages perchés sur les contreforts des <strong className="text-ocean-teal font-semibold">Pyrénées</strong>. J'ai appris à lire la lumière atlantique — douce, changeante, parfois brutale.
               </p>
-              <p>
-                Puis en 2001, je suis arrivé à <strong className="text-ocean-teal font-semibold">Marseille</strong>. Et tout a basculé. En quelques heures de route, on passe du <strong className="text-ocean-teal font-semibold">bleu turquoise des Calanques</strong> aux ocres du Luberon, des marais sauvages de Camargue aux <strong className="text-ocean-teal font-semibold">plateaux de lavande de Valensole</strong>, des criques du Var aux reliefs des Alpilles. Une richesse photographique qui ne m'a plus jamais lâché.
+              <p className="mb-4">
+                Puis en 2001, je suis arrivé à <strong className="text-ocean-teal font-semibold">Marseille</strong>. Et tout a basculé. En quelques heures de route, on passe du <strong className="text-ocean-teal font-semibold">bleu turquoise des Calanques</strong> aux ocres du Luberon, des marais sauvages de Camargue aux <strong className="text-ocean-teal font-semibold">plateaux de lavande de Valensole</strong>. Une richesse photographique qui ne m'a plus jamais lâché.
               </p>
-              <p>
-                Mais l'appel du large ne s'est jamais tu. Le <strong className="text-ocean-teal font-semibold">Maroc</strong> d'abord — les ruelles bleues de Chefchaouen, les medinas de Marrakech. <strong className="text-ocean-teal font-semibold">Madère</strong> ensuite, falaises verticales, forêts laurifères, levadas entre deux horizons. Et toujours <strong className="text-ocean-teal font-semibold">l'Atlantique</strong> de mon adolescence — les dunes du Pilat, les vagues de Biarritz, les plages de Capbreton.
+              <p className="mb-4">
+                L'appel du large ne s'est jamais tu. Le <strong className="text-ocean-teal font-semibold">Maroc</strong> d'abord — Chefchaouen, Marrakech. <strong className="text-ocean-teal font-semibold">Madère</strong> ensuite, falaises verticales, forêts laurifères, levadas entre deux horizons. Et toujours <strong className="text-ocean-teal font-semibold">l'Atlantique</strong> de mon adolescence.
               </p>
-              <p>
-                Depuis dix ans, j'habite <strong className="text-ocean-teal font-semibold">chemin de Morgiou</strong>, à l'entrée du <strong className="text-ocean-teal font-semibold">Parc National des Calanques</strong>. Cette proximité a progressivement transformé mon regard. Ce n'était plus seulement de la <strong className="text-ocean-teal font-semibold">photographie de paysages</strong> : c'était de la <strong className="text-ocean-teal font-semibold">documentation, du témoignage</strong>. C'est en plongeant en apnée que j'ai découvert l'ampleur de la <strong className="text-ocean-teal font-semibold">pollution plastique sur les fonds marins</strong>. La photographie m'avait appris à voir. L'apnée m'a appris ce qu'il y avait à perdre.
-              </p>
-              <p className="text-white/80 italic border-l-2 border-ocean-teal pl-4">
-                « Inutile d'aller au bout du monde — il suffit d'observer ce qui nous entoure. »
-              </p>
-              <p>
-                Vingt ans à Marseille m'ont convaincu que les plus beaux paysages ne sont pas toujours les plus lointains. Ils sont parfois au bout du chemin de terre que tu empruntes chaque matin.
+
+              {/* Pull quote */}
+              <blockquote className="clear-right my-6 mx-0 py-4 px-5 bg-white/[0.04] border-l-2 border-ocean-teal rounded-r-lg">
+                <p className="text-white/85 italic text-base leading-snug">« Inutile d'aller au bout du monde — il suffit d'observer ce qui nous entoure. »</p>
+              </blockquote>
+
+              {/* Chapitre 3 */}
+              <p className="text-[0.65rem] uppercase tracking-[0.2em] text-ocean-teal/70 font-semibold pt-3 pb-1">L'engagement</p>
+              <p className="mb-4">
+                Depuis dix ans, j'habite <strong className="text-ocean-teal font-semibold">chemin de Morgiou</strong>, à l'entrée du <strong className="text-ocean-teal font-semibold">Parc National des Calanques</strong>. Cette proximité a transformé mon regard. Ce n'était plus seulement de la <strong className="text-ocean-teal font-semibold">photographie de paysages</strong> : c'était de la <strong className="text-ocean-teal font-semibold">documentation, du témoignage</strong>. C'est en plongeant en apnée que j'ai découvert l'ampleur de la <strong className="text-ocean-teal font-semibold">pollution plastique sur les fonds marins</strong>. La photographie m'avait appris à voir. L'apnée m'a appris ce qu'il y avait à perdre.
               </p>
             </div>
 
