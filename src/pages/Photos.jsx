@@ -888,6 +888,27 @@ const Photos = () => {
             </h2>
 
             <div className="space-y-5 text-text-secondary leading-[1.85] text-sm md:text-base">
+
+              {/* Photo flottante — style journal */}
+              <figure className="float-right ml-7 mb-5 w-48 md:w-60 clear-right">
+                <div
+                  className="overflow-hidden"
+                  style={{
+                    boxShadow: '0 2px 0 rgba(255,255,255,0.08), 0 8px 32px rgba(0,0,0,0.55), 0 0 0 1px rgba(255,255,255,0.06)',
+                  }}
+                >
+                  <img
+                    src="/images/karim saari photographe de paysage.png"
+                    alt="Karim Saari photographe de paysages — portrait"
+                    className="w-full h-auto block"
+                    loading="lazy"
+                  />
+                </div>
+                <figcaption className="text-[10px] text-white/35 italic mt-1.5 text-center leading-snug tracking-wide">
+                  Karim Saari, photographe de paysages
+                </figcaption>
+              </figure>
+
               <p>
                 Tout a commencé avec un boîtier argentique et des étés en haute montagne. Adolescent, je passais chaque été à rôder autour de Chamonix, sac au dos, à arpenter les glaciers et les crêtes du massif du Mont-Blanc. C'est là que j'ai rencontré un guide de haute montagne qui, entre deux cordées, sortait son appareil pour capturer la lumière rasante sur les séracs. Il m'a appris l'essentiel : ne pas chercher à dominer le paysage, mais à l'écouter. Cette leçon, je ne l'ai jamais oubliée.
               </p>
