@@ -384,7 +384,7 @@ const PhotographeEnvironnemental = () => {
                       <p className="text-ocean-teal text-xs font-semibold uppercase tracking-widest mb-1">1971–1997 — Les premières images</p>
                       <p className="text-white font-semibold text-base mb-2">La côte basque, l'océan et l'argentique</p>
                       <p className="text-text-secondary text-sm leading-relaxed">
-                        Né en 1971, je grandis sur la côte basque dès l'âge de 5 ans — Biarritz, Capbreton, la dune du Pilat, cet Atlantique qui sculpte le paysage autant que les gens. C'est ici que s'installe le rapport à l'eau, à la lumière rasante, à l'horizon. Adolescent, les étés m'emmènent dans les Alpes — et c'est là que je découvre la photographie de paysage et acquiers mon premier reflex argentique.
+                        Né en 1971 en Algérie, j'arrive à Biarritz vers 5-6 ans — Biarritz, Capbreton, la dune du Pilat, cet Atlantique qui sculpte le paysage autant que les gens. C'est ici que s'installe le rapport à l'eau, à la lumière rasante, à l'horizon. Adolescent, les étés m'emmènent dans les Alpes — et c'est là que je découvre la photographie de paysage et acquiers mon premier reflex argentique.
                       </p>
                     </div>
                     <div className="flex-shrink-0 w-full sm:w-36 md:w-44 rounded-xl overflow-hidden ring-1 ring-white/10 self-start">
