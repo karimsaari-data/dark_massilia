@@ -355,21 +355,50 @@
 
 /* ── Prose Blog — styles du contenu WordPress ─────────────────────────────── */
 .prose-blog {
-  @apply text-gray-300 text-[17px] leading-[1.85];
+  @apply text-gray-300 text-[17px] leading-loose;
 }
-.prose-blog h2 { @apply text-2xl md:text-3xl font-bold text-text-primary mt-12 mb-5 leading-snug; }
+
+/* Lead — premier paragraphe plus grand et plus clair */
+.prose-blog > p:first-of-type {
+  @apply text-lg md:text-xl text-white/90 font-light leading-relaxed mb-8;
+}
+
+/* Drop cap — grande lettrine teal sur le deuxième paragraphe */
+.prose-blog > p:nth-of-type(2)::first-letter {
+  float: left;
+  font-size: 3.4rem;
+  line-height: 0.8;
+  font-weight: 700;
+  color: #00aba8;
+  margin-right: 0.15em;
+  margin-top: 0.1em;
+}
+
+/* Titres — style magazine avec tracé */
+.prose-blog h2 {
+  @apply text-[0.7rem] uppercase tracking-[0.2em] text-ocean-teal/80 font-semibold mt-12 mb-3;
+}
 .prose-blog h3 { @apply text-xl md:text-2xl font-bold text-text-primary mt-10 mb-4 leading-snug; }
 .prose-blog h4 { @apply text-lg md:text-xl font-semibold text-text-primary mt-8 mb-3; }
-.prose-blog p  { @apply mb-7; }
+
+.prose-blog p  { @apply mb-6; }
 .prose-blog a  { @apply text-ocean-teal underline underline-offset-2 hover:text-white transition-colors break-all; }
-.prose-blog strong, .prose-blog b { @apply text-text-primary font-semibold; }
+.prose-blog strong, .prose-blog b { @apply text-ocean-teal font-semibold; }
 .prose-blog em, .prose-blog i     { @apply italic text-gray-200; }
 .prose-blog ul { @apply list-disc list-outside pl-6 mb-5 space-y-2; }
 .prose-blog ol { @apply list-decimal list-outside pl-6 mb-5 space-y-2; }
 .prose-blog li { @apply text-gray-300; }
+
+/* Pull quote — blockquote enrichi */
 .prose-blog blockquote {
-  @apply border-l-4 border-ocean-teal pl-5 my-8 italic text-gray-400;
+  @apply my-8 py-4 px-5 rounded-r-lg italic text-white/85 text-lg leading-snug;
+  background: rgba(255,255,255,0.04);
+  border-left: 2px solid #00aba8;
 }
+.prose-blog blockquote p {
+  @apply mb-0;
+}
+
 .prose-blog img {
   @apply rounded-xl max-w-full h-auto my-8 mx-auto block;
 }
