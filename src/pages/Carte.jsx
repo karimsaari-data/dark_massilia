@@ -114,6 +114,28 @@ export default function Carte() {
           </div>
         </motion.div>
 
+        {/* ── GALERIE PHOTOS ── */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6 }}
+          className="grid sm:grid-cols-2 gap-4"
+        >
+          <img
+            src="/images/marseille-marseilleveyre-avant-rugulopteryx-biodiversite-2.webp"
+            alt="Biodiversité des fonds marins du massif de Marseilleveyre avant l'algue invasive rugulopteryx"
+            className="w-full h-64 object-cover rounded-2xl"
+            loading="lazy"
+          />
+          <img
+            src="/images/Marseille-dark-massilia-plastique-pollution-projet-sentinelle-moyades.webp"
+            alt="Dépollution marine aux Moyades — Projet Sentinelle Dark Massilia"
+            className="w-full h-64 object-cover rounded-2xl"
+            loading="lazy"
+          />
+        </motion.div>
+
         {/* ── SPOTS CLÉS ── */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}

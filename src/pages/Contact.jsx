@@ -214,7 +214,7 @@ const Contact = () => {
                 className="inline-flex items-center justify-center gap-2 py-2.5 px-4 rounded-xl text-sm font-medium text-gray-300 hover:text-white bg-white/5 hover:bg-white/10 transition-all"
               >
                 <Mail className="w-4 h-4" />
-                contact@karimsaari.com
+                Envoyer un email
               </a>
             </div>
           </motion.div>
@@ -251,7 +251,7 @@ const Contact = () => {
                 className="inline-flex items-center justify-center gap-2 py-2.5 px-4 rounded-xl text-sm font-medium text-gray-300 hover:text-white bg-white/5 hover:bg-white/10 transition-all"
               >
                 <Mail className="w-4 h-4" />
-                contact@karimsaari.com
+                Envoyer un email
               </a>
             </div>
           </motion.div>
@@ -281,7 +281,7 @@ const Contact = () => {
                 Envoyer une demande
               </a>
               <Link
-                to="/photographie-sous-marine"
+                to="/photographe-environnemental-marseille"
                 className="inline-flex items-center justify-center gap-2 py-2.5 px-4 rounded-xl text-sm font-medium text-gray-300 hover:text-white bg-white/5 hover:bg-white/10 transition-all"
               >
                 <Camera className="w-4 h-4" />
