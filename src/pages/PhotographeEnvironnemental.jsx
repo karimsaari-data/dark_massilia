@@ -380,10 +380,10 @@ const PhotographeEnvironnemental = () => {
                     <div className="w-3 h-3 rounded-full bg-ocean-teal ring-4 ring-ocean-teal/20 mt-1.5" aria-hidden="true" />
                   </div>
                   <div className="flex-1 pb-2">
-                    <p className="text-ocean-teal text-xs font-semibold uppercase tracking-widest mb-1">Années 80–90 — Les premières images</p>
-                    <p className="text-white font-semibold text-base mb-2">Les Alpes et l'argentique</p>
+                    <p className="text-ocean-teal text-xs font-semibold uppercase tracking-widest mb-1">1971–1997 — Les premières images</p>
+                    <p className="text-white font-semibold text-base mb-2">La côte basque, l'océan et l'argentique</p>
                     <p className="text-text-secondary text-sm leading-relaxed">
-                      Né en 1971, j'ai grandi avec les étés dans les Alpes. Adolescent, c'est là que je découvre la photographie de paysage — la lumière qui sculpte les reliefs, le silence minéral des hauteurs. Je m'équipe d'un premier reflex argentique. La contrainte de la pellicule est une école de rigueur : chaque déclenchement est un choix. Ces premières images — névés, forêts, alpages — installent un rapport à la lumière naturelle qui ne me quittera plus.
+                      Né en 1971, je grandis sur la côte basque dès l'âge de 5 ans — Biarritz, Capbreton, la dune du Pilat, cet Atlantique qui sculpte le paysage autant que les gens. C'est ici que s'installe le rapport à l'eau, à la lumière rasante, à l'horizon. Adolescent, les étés m'emmènent dans les Alpes — et c'est là que je découvre la photographie de paysage et acquiers mon premier reflex argentique. La contrainte de la pellicule est une école de rigueur : chaque déclenchement est un choix.
                     </p>
                   </div>
                 </div>
@@ -395,9 +395,9 @@ const PhotographeEnvironnemental = () => {
                   </div>
                   <div className="flex-1 pb-2">
                     <p className="text-ocean-teal text-xs font-semibold uppercase tracking-widest mb-1">1997–2001 — Toulouse</p>
-                    <p className="text-white font-semibold text-base mb-2">Quatre ans entre Pyrénées et Atlantique</p>
+                    <p className="text-white font-semibold text-base mb-2">Entre Pyrénées et Atlantique</p>
                     <p className="text-text-secondary text-sm leading-relaxed">
-                      Quatre ans à Toulouse, à portée des Pyrénées d'un côté, de la côte basque de l'autre. La dune du Pilat, Biarritz, Capbreton — mes premières images de l'océan. L'eau entre dans le cadre pour la première fois. Je photographie ce rapport physique entre la lumière, la matière et l'horizon.
+                      Quatre ans à Toulouse, à portée des Pyrénées d'un côté, de la côte basque à portée le week-end. Je continue de photographier les paysages que j'ai toujours connus — l'océan, les dunes, la lumière atlantique — avant que la Méditerranée ne change tout.
                     </p>
                   </div>
                 </div>
