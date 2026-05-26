@@ -80,6 +80,79 @@ const INSTITUTIONS = [
   { name: 'Ville de Marseille',          url: 'https://www.marseille.fr/',           desc: 'Collectivité territoriale, soutien aux projets environnementaux', logo: '/images/Partenaires/svg/Ville_de_Marseille_(logo).svg' },
 ];
 
+// Timeline parcours — données centralisées
+const TIMELINE_ENTRIES = [
+  {
+    period: '1971–1997',
+    label: 'Les premières images',
+    title: 'La côte basque, l\'océan et l\'argentique',
+    text: 'Né en 1971, j\'arrive sur la côte basque en 1977 — Bayonne, Biarritz, Capbreton, la dune du Pilat, cet Atlantique qui sculpte le paysage autant que les gens. C\'est ici que s\'installe le rapport à l\'eau, à la lumière rasante, à l\'horizon. Adolescent, les étés m\'emmènent dans les Alpes — et c\'est là que je découvre la photographie de paysage et acquiers mon premier reflex argentique.',
+    img: '/images/portfolio/Horizons/biarritz-cote-basque-karimsaari-1.webp',
+    alt: 'Côte basque — Biarritz, Karim Saari',
+    side: 'left',
+  },
+  {
+    period: '1997–2001',
+    label: 'Toulouse',
+    title: 'Entre Pyrénées et Atlantique',
+    text: 'Quatre ans à Toulouse, à portée des Pyrénées d\'un côté, de la côte basque le week-end. Je continue de photographier les paysages que j\'ai toujours connus — l\'océan, les dunes, la lumière atlantique — avant que la Méditerranée ne change tout.',
+    img: null,
+    side: null,
+  },
+  {
+    period: '2001–2017',
+    label: 'Aix-en-Provence puis Marseille',
+    title: 'La Provence, et les quartiers nord de Marseille',
+    text: 'Juin 2001 : j\'arrive en Provence. D\'abord à Aix-en-Provence, puis à Marseille dès 2006. Je m\'installe dans les quartiers nord — à Sainte-Marthe, quartier historique de la famille Ricard, chargé d\'une mémoire populaire et industrielle. J\'y découvre une autre Marseille : les collines, les calanques vues de loin, la lumière blanche sur le calcaire.',
+    img: '/images/portfolio/Mer/karim-saari-marseille-vieux-port-arche-cadenas-notre-dame.webp',
+    alt: 'Marseille — Vieux-Port, arche et Notre-Dame-de-la-Garde',
+    side: 'right',
+  },
+  {
+    period: '2017',
+    label: 'Le basculement',
+    title: 'Chemin de Morgiou, l\'apnée et les fonds',
+    text: 'En 2017, je déménage chemin de Morgiou, dans les quartiers sud — au bord des Calanques. Je découvre l\'apnée. Je plonge dans les fonds pour la première fois — et je comprends que l\'urgence n\'est pas en surface. Pneus, cordages, filets fantômes : un silence que personne ne voit depuis la surface. La photographie devient un acte de témoignage. Je remonte les déchets d\'une main, l\'appareil de l\'autre.',
+    img: '/images/portfolio/Mer/karim-saari-marseille-aerien-calanque-nageur-turquoise.webp',
+    alt: 'Calanque de Marseille vue du ciel — nageur dans les eaux turquoise',
+    imgScale: 'scale-[1.18]',
+    side: 'left',
+  },
+  {
+    period: '2019',
+    label: 'Commande institutionnelle',
+    title: 'Carrousel au Vieux-Port — Ville de Marseille',
+    text: 'La Ville de Marseille me commande un cliché de la Canebière pour célébrer sa piétonisation. La photo est tirée en grand format sur bâche, place Saint-Louis, façade de l\'Espace Culture — une reconnaissance publique ancrée dans l\'identité marseillaise.',
+    img: '/images/800w/karim-saari-marseille-ville-reconnaissance-officielle-dark-massilia.webp',
+    alt: 'Karim Saari — bâche grand format Canebière, Ville de Marseille, Espace Culture place Saint-Louis',
+    side: 'right',
+  },
+  {
+    period: '2022–2026',
+    label: 'L\'action collective',
+    title: 'Team Oxygen et le Projet Sentinelle',
+    text: 'En 2022, je rejoins Team Oxygen comme simple apnéiste lors de la première édition du Projet Sentinelle. Je m\'investis progressivement, prends la vice-présidence, puis la présidence en janvier 2026. Quatre éditions, 5 724 kg de déchets remontés des fonds méditerranéens.',
+    img: '/images/Marseille-dark-massilia-plastique-pollution-projet-sentinelle-teamoxygen.webp',
+    alt: 'Team Oxygen — Projet Sentinelle, dépollution marine Marseille',
+    quote: '« Photographier les Calanques, c\'est les défendre. »',
+    imgScale: 'scale-[1.18]',
+    side: 'left',
+  },
+  {
+    period: '2026',
+    label: 'Le film',
+    title: 'Oxygène — documentaire 52 min',
+    text: 'Produit par Transfuges et Zéké Film, réalisé par Roxane Perrot et Ugo Isoard, Oxygène raconte une semaine de tournage en apnée dans les Calanques — sans équipement lourd, juste en retenant notre souffle. Soutenu par Citeo. Présenté au FIFES Cannes, à Nausicaá et à Marseille.',
+    img: 'https://cms.karimsaari.com/wp-content/uploads/2026/05/Screenshot-2026-05-19-123022_edited-3.webp',
+    alt: 'Oxygène — documentaire dépollution Méditerranée, tournage en apnée dans les Calanques',
+    imgFit: 'object-contain',
+    link: '/blog/oxygene-le-documentaire-sur-la-depollution-de-la-mediterranee',
+    linkLabel: 'Lire l\'article',
+    side: 'right',
+    future: true,
+  },
+];
+
 // Blocs galeries — 2 univers × 3 sous-sections
 const UNIVERSES = [
   {
@@ -369,158 +442,110 @@ const PhotographeEnvironnemental = () => {
             </p>
 
             <div className="relative">
-              {/* Ligne verticale */}
-              <div className="absolute left-4 md:left-5 top-0 bottom-0 w-px bg-gradient-to-b from-ocean-teal/60 via-ocean-teal/30 to-transparent" aria-hidden="true" />
+              {/* Barre verticale centrale — desktop uniquement */}
+              <div
+                className="hidden md:block absolute left-1/2 top-0 bottom-0 w-px"
+                style={{ background: 'linear-gradient(to bottom, rgba(0,171,168,0.6), rgba(0,171,168,0.25), transparent)' }}
+                aria-hidden="true"
+              />
 
-              <div className="space-y-10">
+              <div className="space-y-16 md:space-y-24">
+                {TIMELINE_ENTRIES.map((entry, i) => {
+                  const dotClass = `rounded-full ring-4 z-10 ${entry.future ? 'bg-white/40 ring-white/10' : 'bg-ocean-teal ring-ocean-teal/20'}`;
 
-                {/* Acte I — Côte basque */}
-                <div className="flex gap-6 md:gap-8">
-                  <div className="flex-shrink-0 w-8 md:w-10 flex justify-center">
-                    <div className="w-3 h-3 rounded-full bg-ocean-teal ring-4 ring-ocean-teal/20 mt-1.5" aria-hidden="true" />
-                  </div>
-                  <div className="flex-1 pb-2 flex flex-col sm:flex-row gap-4">
-                    <div className="flex-1">
-                      <p className="text-ocean-teal text-xs font-semibold uppercase tracking-widest mb-1">1971–1997 — Les premières images</p>
-                      <p className="text-white font-semibold text-base mb-2">La côte basque, l'océan et l'argentique</p>
-                      <p className="text-text-secondary text-sm leading-relaxed">
-                        Né en 1971, j'arrive sur la côte basque en 1977 — Bayonne, Biarritz, Capbreton, la dune du Pilat, cet Atlantique qui sculpte le paysage autant que les gens. C'est ici que s'installe le rapport à l'eau, à la lumière rasante, à l'horizon. Adolescent, les étés m'emmènent dans les Alpes — et c'est là que je découvre la photographie de paysage et acquiers mon premier reflex argentique.
-                      </p>
+                  if (!entry.img) {
+                    return (
+                      <div key={i} className="relative flex gap-4 md:block">
+                        <div className="md:hidden flex-shrink-0 pt-1.5">
+                          <div className={`w-2.5 h-2.5 ${dotClass}`} aria-hidden="true" />
+                        </div>
+                        <div className="hidden md:flex absolute left-1/2 -translate-x-1/2 top-0 w-3.5 h-3.5 ${dotClass}" aria-hidden="true" />
+                        <div className="md:max-w-sm md:mx-auto md:text-center">
+                          <p className="text-ocean-teal text-xs font-semibold uppercase tracking-widest mb-1">{entry.label}</p>
+                          <p className="text-white font-bold text-2xl mb-2">{entry.period}</p>
+                          <p className="text-white font-semibold text-sm mb-2">{entry.title}</p>
+                          <p className="text-text-secondary text-sm leading-relaxed">{entry.text}</p>
+                        </div>
+                      </div>
+                    );
+                  }
+
+                  const textLeft = entry.side === 'left';
+
+                  const textBlock = (
+                    <div className={textLeft ? 'md:pr-10 md:text-right' : 'md:pl-10'}>
+                      <p className="text-ocean-teal text-xs font-semibold uppercase tracking-widest mb-1">{entry.label}</p>
+                      <p className="text-white font-bold text-3xl md:text-4xl mb-3 leading-tight">{entry.period}</p>
+                      <p className="text-white font-semibold text-sm mb-2">{entry.title}</p>
+                      <p className="text-text-secondary text-sm leading-relaxed">{entry.text}</p>
+                      {entry.quote && (
+                        <p className={`mt-3 text-white/60 italic text-sm ${textLeft ? 'border-r-2 border-ocean-teal pr-4' : 'border-l-2 border-ocean-teal pl-4'}`}>
+                          {entry.quote}
+                        </p>
+                      )}
+                      {entry.link && (
+                        <a
+                          href={entry.link}
+                          className={`inline-flex items-center gap-1.5 mt-3 text-ocean-teal hover:text-white transition-colors text-xs font-medium ${textLeft ? 'justify-end' : ''}`}
+                        >
+                          {entry.linkLabel} <ArrowRight className="w-3 h-3" aria-hidden="true" />
+                        </a>
+                      )}
                     </div>
-                    <div className="flex-shrink-0 w-full sm:w-36 md:w-44 rounded-xl overflow-hidden ring-1 ring-white/10 self-start">
+                  );
+
+                  const photoBlock = (
+                    <div className="aspect-square overflow-hidden ring-1 ring-white/10 bg-black/40">
                       <img
-                        src="/images/portfolio/Horizons/biarritz-cote-basque-karimsaari-1.webp"
-                        alt="Côte basque — Biarritz, Karim Saari"
-                        className="w-full h-full object-cover aspect-[4/3]"
+                        src={entry.img}
+                        alt={entry.alt}
+                        className={`w-full h-full ${entry.imgFit || 'object-cover'}${entry.imgScale ? ` ${entry.imgScale}` : ''}`}
                         loading="lazy"
                       />
                     </div>
-                  </div>
-                </div>
+                  );
 
-                {/* Acte II — Toulouse */}
-                <div className="flex gap-6 md:gap-8">
-                  <div className="flex-shrink-0 w-8 md:w-10 flex justify-center">
-                    <div className="w-3 h-3 rounded-full bg-ocean-teal ring-4 ring-ocean-teal/20 mt-1.5" aria-hidden="true" />
-                  </div>
-                  <div className="flex-1 pb-2">
-                    <p className="text-ocean-teal text-xs font-semibold uppercase tracking-widest mb-1">1997–2001 — Toulouse</p>
-                    <p className="text-white font-semibold text-base mb-2">Entre Pyrénées et Atlantique</p>
-                    <p className="text-text-secondary text-sm leading-relaxed">
-                      Quatre ans à Toulouse, à portée des Pyrénées d'un côté, de la côte basque à portée le week-end. Je continue de photographier les paysages que j'ai toujours connus — l'océan, les dunes, la lumière atlantique — avant que la Méditerranée ne change tout.
-                    </p>
-                  </div>
-                </div>
+                  return (
+                    <div key={i} className="relative grid grid-cols-1 md:grid-cols-2 gap-6 items-center">
+                      {/* Dot central — desktop */}
+                      <div className={`hidden md:flex absolute left-1/2 -translate-x-1/2 top-1/2 -translate-y-1/2 w-3.5 h-3.5 ${dotClass}`} aria-hidden="true" />
 
-                {/* Acte III — Aix / Marseille nord */}
-                <div className="flex gap-6 md:gap-8">
-                  <div className="flex-shrink-0 w-8 md:w-10 flex justify-center">
-                    <div className="w-3 h-3 rounded-full bg-ocean-teal ring-4 ring-ocean-teal/20 mt-1.5" aria-hidden="true" />
-                  </div>
-                  <div className="flex-1 pb-2">
-                    <p className="text-ocean-teal text-xs font-semibold uppercase tracking-widest mb-1">2001–2017 — Aix-en-Provence puis Marseille</p>
-                    <p className="text-white font-semibold text-base mb-2">La Provence, et les quartiers nord de Marseille</p>
-                    <p className="text-text-secondary text-sm leading-relaxed">
-                      Juin 2001 : j'arrive en Provence. D'abord à Aix-en-Provence, puis à Marseille dès 2006. Je m'installe dans les quartiers nord — à Sainte-Marthe, quartier historique de la famille Ricard, chargé d'une mémoire populaire et industrielle. J'y découvre une autre Marseille : les collines, les calanques vues de loin, la lumière blanche sur le calcaire.
-                    </p>
-                  </div>
-                </div>
+                      {/* Mobile : texte puis photo */}
+                      <div className="md:hidden col-span-1 flex gap-4">
+                        <div className="flex-shrink-0 pt-1.5">
+                          <div className={`w-2.5 h-2.5 ${dotClass}`} aria-hidden="true" />
+                        </div>
+                        <div className="flex-1 space-y-4">
+                          <div>
+                            <p className="text-ocean-teal text-xs font-semibold uppercase tracking-widest mb-0.5">{entry.label}</p>
+                            <p className="text-white font-bold text-2xl mb-1">{entry.period}</p>
+                            <p className="text-white font-semibold text-sm mb-2">{entry.title}</p>
+                            <p className="text-text-secondary text-sm leading-relaxed">{entry.text}</p>
+                            {entry.quote && <p className="mt-2 text-white/60 italic text-sm border-l-2 border-ocean-teal pl-3">{entry.quote}</p>}
+                            {entry.link && (
+                              <a href={entry.link} className="inline-flex items-center gap-1.5 mt-2 text-ocean-teal text-xs font-medium">
+                                {entry.linkLabel} <ArrowRight className="w-3 h-3" aria-hidden="true" />
+                              </a>
+                            )}
+                          </div>
+                          <div className="aspect-square overflow-hidden ring-1 ring-white/10 bg-black/40">
+                            <img src={entry.img} alt={entry.alt} className={`w-full h-full ${entry.imgFit || 'object-cover'}${entry.imgScale ? ` ${entry.imgScale}` : ''}`} loading="lazy" />
+                          </div>
+                        </div>
+                      </div>
 
-                {/* Acte IV — 2017, Morgiou, apnée */}
-                <div className="flex gap-6 md:gap-8">
-                  <div className="flex-shrink-0 w-8 md:w-10 flex justify-center">
-                    <div className="w-3 h-3 rounded-full bg-ocean-teal ring-4 ring-ocean-teal/20 mt-1.5" aria-hidden="true" />
-                  </div>
-                  <div className="flex-1 pb-2 flex flex-col sm:flex-row gap-4">
-                    <div className="flex-1">
-                      <p className="text-ocean-teal text-xs font-semibold uppercase tracking-widest mb-1">2017 — Le basculement</p>
-                      <p className="text-white font-semibold text-base mb-2">Chemin de Morgiou, l'apnée et les fonds</p>
-                      <p className="text-text-secondary text-sm leading-relaxed">
-                        En 2017, je déménage chemin de Morgiou, dans les quartiers sud — au bord des Calanques. Je découvre l'apnée. Je plonge dans les fonds pour la première fois — et je comprends que l'urgence n'est pas en surface. Pneus, cordages, filets fantômes : un silence que personne ne voit depuis la surface. La photographie devient un acte de témoignage. Je remonte les déchets d'une main, l'appareil de l'autre.
-                      </p>
+                      {/* Desktop colonne gauche */}
+                      <div className="hidden md:block">
+                        {textLeft ? textBlock : photoBlock}
+                      </div>
+
+                      {/* Desktop colonne droite */}
+                      <div className="hidden md:block">
+                        {textLeft ? photoBlock : textBlock}
+                      </div>
                     </div>
-                    <div className="flex-shrink-0 w-full sm:w-36 md:w-44 rounded-xl overflow-hidden ring-1 ring-white/10 self-start">
-                      <img
-                        src="/images/portfolio/Mer/karim-saari-marseille-aerien-calanque-nageur-turquoise.webp"
-                        alt="Calanque de Marseille vue du ciel — nageur dans les eaux turquoise"
-                        className="w-full h-full object-cover aspect-[4/3]"
-                        loading="lazy"
-                      />
-                    </div>
-                  </div>
-                </div>
-
-                {/* Acte V — 2019, Carrousel Vieux-Port */}
-                <div className="flex gap-6 md:gap-8">
-                  <div className="flex-shrink-0 w-8 md:w-10 flex justify-center">
-                    <div className="w-3 h-3 rounded-full bg-ocean-teal ring-4 ring-ocean-teal/20 mt-1.5" aria-hidden="true" />
-                  </div>
-                  <div className="flex-1 pb-2">
-                    <p className="text-ocean-teal text-xs font-semibold uppercase tracking-widest mb-1">2019 — Commande institutionnelle</p>
-                    <p className="text-white font-semibold text-base mb-2">Carrousel au Vieux-Port — Ville de Marseille</p>
-                    <p className="text-text-secondary text-sm leading-relaxed">
-                      La Ville de Marseille me commande un cliché du Carrousel du Vieux-Port. Une reconnaissance qui marque l'ancrage de mon travail photographique dans l'identité marseillaise — entre patrimoine urbain et littoral méditerranéen.
-                    </p>
-                  </div>
-                </div>
-
-                {/* Acte VI — Team Oxygen */}
-                <div className="flex gap-6 md:gap-8">
-                  <div className="flex-shrink-0 w-8 md:w-10 flex justify-center">
-                    <div className="w-3 h-3 rounded-full bg-ocean-teal ring-4 ring-ocean-teal/20 mt-1.5" aria-hidden="true" />
-                  </div>
-                  <div className="flex-1 pb-2 flex flex-col sm:flex-row gap-4">
-                    <div className="flex-1">
-                      <p className="text-ocean-teal text-xs font-semibold uppercase tracking-widest mb-1">2022–2026 — L'action collective</p>
-                      <p className="text-white font-semibold text-base mb-2">Team Oxygen et le Projet Sentinelle</p>
-                      <p className="text-text-secondary text-sm leading-relaxed">
-                        En 2022, je rejoins Team Oxygen comme simple apnéiste lors de la première édition du Projet Sentinelle. Je m'investis progressivement, prends la vice-présidence, puis la présidence en janvier 2026. Quatre éditions, 5 724 kg de déchets remontés des fonds méditerranéens.
-                      </p>
-                      <p className="mt-3 text-white/60 italic text-sm border-l-2 border-ocean-teal pl-4">
-                        « Photographier les Calanques, c'est les défendre. »
-                      </p>
-                    </div>
-                    <div className="flex-shrink-0 w-full sm:w-36 md:w-44 rounded-xl overflow-hidden ring-1 ring-white/10 self-start">
-                      <img
-                        src="/images/Marseille-dark-massilia-plastique-pollution-projet-sentinelle-teamoxygen.webp"
-                        alt="Team Oxygen — Projet Sentinelle, dépollution marine Marseille"
-                        className="w-full h-full object-cover aspect-[4/3]"
-                        loading="lazy"
-                      />
-                    </div>
-                  </div>
-                </div>
-
-                {/* Acte VII — 2026, film Oxygène */}
-                <div className="flex gap-6 md:gap-8">
-                  <div className="flex-shrink-0 w-8 md:w-10 flex justify-center">
-                    <div className="w-3 h-3 rounded-full bg-white/40 ring-4 ring-white/10 mt-1.5" aria-hidden="true" />
-                  </div>
-                  <div className="flex-1 flex flex-col sm:flex-row gap-4">
-                    <div className="flex-1">
-                      <p className="text-ocean-teal text-xs font-semibold uppercase tracking-widest mb-1">2026 — Le film</p>
-                      <p className="text-white font-semibold text-base mb-2">Oxygène — documentaire 52 min</p>
-                      <p className="text-text-secondary text-sm leading-relaxed">
-                        Produit par Transfuges et Zéké Film, réalisé par Roxane Perrot et Ugo Isoard, <em>Oxygène</em> raconte une semaine de tournage en apnée dans les Calanques — sans équipement lourd, juste en retenant notre souffle. Soutenu par Citeo. Présenté au FIFES Cannes, à Nausicaá (Boulogne-sur-Mer) et à Marseille.
-                      </p>
-                      <a
-                        href="/blog/oxygene-le-documentaire-sur-la-depollution-de-la-mediterranee"
-                        className="inline-flex items-center gap-1.5 mt-3 text-ocean-teal hover:text-white transition-colors text-xs font-medium"
-                      >
-                        Lire l'article <ArrowRight className="w-3 h-3" aria-hidden="true" />
-                      </a>
-                    </div>
-                    <div className="flex-shrink-0 w-full sm:w-28 md:w-36 rounded-xl overflow-hidden ring-1 ring-white/10 self-start">
-                      <img
-                        src="https://cms.karimsaari.com/wp-content/uploads/2026/05/Oxygene-Affiche-fim-210x300.jpg"
-                        alt="Affiche du film Oxygène — documentaire dépollution Méditerranée"
-                        className="w-full h-full object-cover aspect-[2/3]"
-                        loading="lazy"
-                      />
-                    </div>
-                  </div>
-                </div>
-
+                  );
+                })}
               </div>
             </div>
 
