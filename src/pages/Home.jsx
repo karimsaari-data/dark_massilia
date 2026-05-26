@@ -439,18 +439,28 @@ const Home = () => {
               <h2 className="text-2xl md:text-3xl font-bold text-white mb-6">
                 Karim Saari — Photographe environnemental &amp; Sentinelle des Calanques
               </h2>
-              <div className="text-lg text-text-secondary leading-relaxed space-y-4">
-                <p>
-                  De la <strong className="text-white font-semibold">photographie de paysages littoraux</strong> aux <strong className="text-white font-semibold">images sous-marines</strong>, j'utilise l'objectif pour porter la voix de <strong className="text-white font-semibold">Marseille, des Calanques</strong> et de ceux qui les protègent.
+              <div className="space-y-0 text-text-secondary leading-loose text-sm md:text-[0.95rem]">
+
+                {/* Lead */}
+                <p className="text-base md:text-lg text-white/90 leading-relaxed font-light mb-6">
+                  De la <strong className="text-ocean-teal font-semibold">photographie de paysages littoraux</strong> aux <strong className="text-ocean-teal font-semibold">images sous-marines</strong>, j'utilise l'objectif pour porter la voix de <strong className="text-ocean-teal font-semibold">Marseille, des Calanques</strong> et de ceux qui les protègent.
                 </p>
-                <p>
-                  En tant que <strong className="text-white font-semibold">photographe environnemental en Méditerranée</strong>, je capture la beauté de nos côtes, en surface comme en apnée, pour témoigner de l'état réel de nos écosystèmes. La photographie environnementale que je pratique n'est pas simplement esthétique : <strong className="text-ocean-teal font-semibold">chaque image est un document, une preuve, un appel à l'action.</strong>
+
+                {/* Chapitre 1 */}
+                <p className="text-[0.65rem] uppercase tracking-[0.2em] text-ocean-teal/70 font-semibold pt-2 pb-1">La vision</p>
+                <p className="mb-4">
+                  <span className="float-left text-[3.2rem] leading-[0.8] font-bold text-ocean-teal mr-2 mt-1 select-none">E</span>n tant que <strong className="text-ocean-teal font-semibold">photographe environnemental en Méditerranée</strong>, je capture la beauté de nos côtes, en surface comme en apnée, pour témoigner de l'état réel de nos écosystèmes.
                 </p>
-                <p>
-                  Fondateur et animateur d'une <strong className="text-white font-semibold">communauté de {SOCIAL_STATS_DEFAULTS.total_community.toLocaleString('fr-FR')} personnes</strong> engagées pour les Calanques, ma mission se vit sur le terrain et à l'écran.
-                </p>
-                <p>
-                  Pour rendre visible l'<strong className="text-white font-semibold">impact de la pollution plastique</strong>, je participe à des <strong className="text-white font-semibold">documentaires et reportages</strong> sur l'environnement marin, je conçois des <strong className="text-white font-semibold">expositions photos engagées</strong> et je mène des <strong className="text-white font-semibold">missions de dépollution sous-marine</strong> avec mon association.
+
+                {/* Pull quote */}
+                <blockquote className="clear-left my-5 py-4 px-5 bg-white/[0.04] border-l-2 border-ocean-teal rounded-r-lg">
+                  <p className="text-white/85 italic text-base leading-snug">« Chaque image est un document, une preuve, un appel à l'action. »</p>
+                </blockquote>
+
+                {/* Chapitre 2 */}
+                <p className="text-[0.65rem] uppercase tracking-[0.2em] text-ocean-teal/70 font-semibold pt-3 pb-1">L'action</p>
+                <p className="mb-4">
+                  Fondateur d'une <strong className="text-ocean-teal font-semibold">communauté de {SOCIAL_STATS_DEFAULTS.total_community.toLocaleString('fr-FR')} personnes</strong> engagées pour les Calanques, je rends visible l'<strong className="text-ocean-teal font-semibold">impact de la pollution plastique</strong> à travers des <strong className="text-ocean-teal font-semibold">documentaires</strong>, des <strong className="text-ocean-teal font-semibold">expositions photos</strong> et des <strong className="text-ocean-teal font-semibold">missions de dépollution sous-marine</strong> avec mon association.
                 </p>
               </div>
               <div className="mt-6">
