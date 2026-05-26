@@ -436,10 +436,10 @@ const PhotographeEnvironnemental = () => {
                     <div className="w-3 h-3 rounded-full bg-white/40 ring-4 ring-white/10 mt-1.5" aria-hidden="true" />
                   </div>
                   <div className="flex-1">
-                    <p className="text-ocean-teal text-xs font-semibold uppercase tracking-widest mb-1">Depuis 2022 — L'action collective</p>
-                    <p className="text-white font-semibold text-base mb-2">Team Oxygen et le Projet Sentinelle</p>
+                    <p className="text-ocean-teal text-xs font-semibold uppercase tracking-widest mb-1">2022 → 2026 — L'action collective</p>
+                    <p className="text-white font-semibold text-base mb-2">Team Oxygen, le Projet Sentinelle, et la présidence</p>
                     <p className="text-text-secondary text-sm leading-relaxed">
-                      Le Projet Sentinelle naît de cette conviction : une image seule ne suffit pas, elle doit s'accompagner d'une action concrète. Avec Team Oxygen, nous organisons chaque année une opération de dépollution sous-marine en apnée — quatre éditions, 5 724 kg de déchets remontés des fonds. La photographie documente chaque mission. Le cercle est complet : la beauté a nourri l'engagement, et l'engagement a transformé le regard sur la beauté.
+                      En 2022, je cofonde Team Oxygen et lance le Projet Sentinelle : une opération annuelle de dépollution sous-marine en apnée dans les Calanques et la rade de Marseille. Vice-président depuis les débuts, je prends la présidence de l'association en janvier 2026. Quatre éditions, 5 724 kg de déchets remontés des fonds. La photographie documente chaque mission. Le cercle est complet : la beauté a nourri l'engagement, et l'engagement a transformé le regard sur la beauté.
                     </p>
                     <p className="mt-3 text-white/60 italic text-sm border-l-2 border-ocean-teal pl-4">
                       « Photographier les Calanques, c'est les défendre. »
