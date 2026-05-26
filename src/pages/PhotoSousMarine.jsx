@@ -880,39 +880,54 @@ const PhotoSousMarine = () => {
               <h2 className="text-xl md:text-2xl font-bold text-white mb-4">
                 Apnée et photographie engagée — au cœur des Calanques de Marseille
               </h2>
-              <div className="space-y-4 text-text-secondary leading-[1.8]">
-                <p>
+              <div className="space-y-0 text-text-secondary leading-loose text-sm md:text-[0.95rem]">
+
+                {/* Lead */}
+                <p className="text-base md:text-lg text-white/90 leading-relaxed font-light mb-6">
                   <Link to="/photographie-paysage-mer" className="text-ocean-teal hover:underline">Photographe de paysages</Link>{' '}
                   depuis l'adolescence, c'est en arrivant à Marseille et en découvrant l'apnée il y a
                   dix ans que mon regard a basculé — de l'horizon à la profondeur.
                 </p>
-                <p>
-                  Je plonge en{' '}
-                  <strong className="text-white">apnée</strong> dans les eaux de Marseille avec un
+
+                {/* Chapitre 1 */}
+                <p className="text-[0.65rem] uppercase tracking-[0.2em] text-ocean-teal/70 font-semibold pt-2 pb-1">La méthode</p>
+                <p className="mb-4">
+                  <span className="float-left text-[3.2rem] leading-[0.8] font-bold text-ocean-teal mr-2 mt-1 select-none">J</span>e plonge en{' '}
+                  <strong className="text-ocean-teal font-semibold">apnée</strong> dans les eaux de Marseille avec un
                   double impératif&nbsp;: extraire les déchets <em>et</em> documenter l'agonie comme
                   la beauté des fonds marins. Contrairement à la majorité des photographes
-                  sous-marins qui travaillent en bouteille, chaque image est prise en rétention de
-                  souffle, le matériel de dépollution dans les mains, au milieu des déchets, entre 0
+                  sous-marins qui travaillent en bouteille, chaque image est prise en{' '}
+                  <strong className="text-ocean-teal font-semibold">rétention de souffle</strong>, le matériel de dépollution dans les mains, au milieu des déchets, entre 0
                   et 20 mètres de profondeur.
                 </p>
-                <p>
+
+                {/* Chapitre 2 */}
+                <p className="text-[0.65rem] uppercase tracking-[0.2em] text-ocean-teal/70 font-semibold pt-3 pb-1">L'impact</p>
+                <p className="mb-4">
                   Chaque photo est un témoignage brut — un{' '}
-                  <strong className="text-white">électrochoc visuel</strong> pour alerter le public
+                  <strong className="text-ocean-teal font-semibold">électrochoc visuel</strong> pour alerter le public
                   et convaincre les institutions. Ce regard sans filtre a trouvé un écho auprès de{' '}
-                  <strong className="text-white">ARTE, M6, France Télévisions</strong> et d'autres
+                  <strong className="text-ocean-teal font-semibold">ARTE, M6, France Télévisions</strong> et d'autres
                   médias qui ont relayé le combat pour la Méditerranée.{' '}
                   <Link to="/presse" className="text-ocean-teal hover:underline">
                     Voir toute la revue de presse →
                   </Link>
                 </p>
-                <p>
+
+                {/* Pull quote */}
+                <blockquote className="my-5 py-4 px-5 bg-white/[0.04] border-l-2 border-ocean-teal rounded-r-lg">
+                  <p className="text-white/85 italic text-base leading-snug">« Photographier les fonds marins, c'est rendre visible ce que personne ne veut voir. »</p>
+                </blockquote>
+
+                {/* Chapitre 3 */}
+                <p className="text-[0.65rem] uppercase tracking-[0.2em] text-ocean-teal/70 font-semibold pt-3 pb-1">Les missions</p>
+                <p className="mb-4">
                   Cette galerie rassemble des images de missions{' '}
-                  <strong className="text-white">Team Oxygen</strong> et de l'
-                  <strong className="text-white">Opération Sentinelle</strong>, mais aussi d'opérations
-                  menées aux côtés d'autres associations engagées — Boud'mer, Clean My Calanques, Mer Terre,
-                  Wings of the Ocean, Association Merveille, Team AVA, 1 Déchet Par Jour, le Parc National des Calanques — qui partagent le
-                  même combat pour la Méditerranée. Des{' '}
-                  <strong className="text-ocean-teal">abysses pollués</strong> à la résilience de la
+                  <strong className="text-ocean-teal font-semibold">Team Oxygen</strong> et de l'
+                  <strong className="text-ocean-teal font-semibold">Opération Sentinelle</strong>, mais aussi d'opérations
+                  menées aux côtés de Boud'mer, Clean My Calanques, Mer Terre,
+                  Wings of the Ocean, Team AVA, 1 Déchet Par Jour, le Parc National des Calanques. Des{' '}
+                  <strong className="text-ocean-teal font-semibold">abysses pollués</strong> à la résilience de la
                   vie sauvage — poulpes, spirographes, méduses, fonds rocheux — des images qui
                   témoignent à la fois de l'urgence et de la beauté de ce qui reste à protéger.
                 </p>
