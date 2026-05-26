@@ -912,21 +912,45 @@ const Photos = () => {
           </motion.div>
         </motion.div>
 
-        {/* Section éditoriale SEO */}
+        {/* Section éditoriale — Histoire & parcours photographique */}
         <motion.div
           initial="hidden"
           animate="visible"
           variants={STAGGER_CONTAINER}
           className="mt-12 mb-8"
         >
-          <motion.div variants={FADE_IN_UP} className="glass rounded-3xl p-8 md:p-10">
-            <h2 className="text-lg md:text-xl font-bold text-white mb-4">Témoigner par l'image</h2>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 text-text-secondary leading-relaxed text-sm mb-8">
-              <p>Photographe sous-marin et photographe de paysages à Marseille, j'explore la Méditerranée et la Provence de la surface aux profondeurs.</p>
-              <p>Sous l'eau, mes images révèlent la biodiversité des fonds marins méditerranéens et leurs fragilités.</p>
-              <p>Mon travail documente un territoire — la Méditerranée et la Provence — entre beauté naturelle et enjeux contemporains, en lien direct avec les <Link to="/depollution-marine" className="text-ocean-teal hover:text-white transition-colors">missions de dépollution marine</Link> que je mène avec Team Oxygen dans les Calanques.</p>
+          <motion.div variants={FADE_IN_UP} className="glass-strong rounded-3xl p-8 md:p-12">
+            <h2 className="text-xl md:text-2xl font-bold text-white mb-6">
+              Ma passion pour la photographie de paysage
+            </h2>
+
+            <div className="space-y-5 text-text-secondary leading-[1.85] text-sm md:text-base">
+              <p>
+                Tout a commencé avec un boîtier argentique et des étés en haute montagne. Adolescent, je passais chaque été à rôder autour de Chamonix, sac au dos, à arpenter les glaciers et les crêtes du massif du Mont-Blanc. C'est là que j'ai rencontré un guide de haute montagne qui, entre deux cordées, sortait son appareil pour capturer la lumière rasante sur les séracs. Il m'a appris l'essentiel : ne pas chercher à dominer le paysage, mais à l'écouter. Cette leçon, je ne l'ai jamais oubliée.
+              </p>
+              <p>
+                J'ai acheté mon premier reflex argentique peu après. La contrainte de la pellicule — 36 poses, pas une de plus — m'a enseigné la patience et l'intention. Chaque déclenchement était une décision, pas une habitude. Au fil des années, j'ai troqué l'argentique pour le numérique, mais ma façon de travailler est restée la même : peu de clichés, beaucoup d'observation. Attendre la lumière, pas la forcer.
+              </p>
+              <p>
+                Natif de la côte basque, mes premières images ont naturellement été celles de l'océan. Les rouleaux de Biarritz sous les ciels gris d'automne, les collines vertes de l'arrière-pays, les villages blancs et rouges perchés sur les contreforts des Pyrénées. J'ai appris à lire la lumière atlantique — douce, changeante, parfois brutale.
+              </p>
+              <p>
+                Puis en 2001, je suis arrivé à Marseille. Et tout a basculé. Je ne m'attendais pas à cette variété. En quelques heures de route, on passe du bleu turquoise des Calanques aux ocres du Luberon, des marais sauvages de Camargue aux plateaux de lavande de Valensole, des criques du Var aux reliefs des Alpilles. C'est une richesse photographique qui m'a immédiatement captivé — et qui ne m'a plus jamais lâché.
+              </p>
+              <p>
+                Depuis dix ans, j'habite chemin de Morgiou, à quelques minutes à pied de la mer, à l'entrée du Parc National des Calanques. Cette proximité quotidienne avec un territoire d'une beauté exceptionnelle a progressivement transformé mon regard. Ce n'était plus seulement de la{' '}
+                <strong className="text-white font-medium">photographie de paysage à Marseille</strong>{' '}
+                : c'était de la documentation, du témoignage. C'est en plongeant en apnée dans ces eaux pour aller photographier sous la surface que j'ai découvert l'ampleur de la pollution plastique sur les fonds marins. La photographie de paysage m'avait appris à voir. L'apnée m'a appris ce qu'il y avait à perdre.
+              </p>
+              <p className="text-white/80 italic border-l-2 border-ocean-teal pl-4">
+                « Inutile d'aller au bout du monde — il suffit d'observer ce qui nous entoure. »
+              </p>
+              <p>
+                Vingt ans à Marseille m'ont convaincu que les plus beaux paysages ne sont pas toujours les plus lointains. Ils sont parfois au bout du chemin de terre que tu empruntes chaque matin.
+              </p>
             </div>
-            <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
+
+            <div className="mt-8 pt-6 border-t border-white/10 flex flex-col sm:flex-row items-center justify-center gap-4">
               <Link
                 to="/photographie-sous-marine"
                 className="btn-primary inline-flex items-center gap-2"
