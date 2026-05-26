@@ -352,6 +352,103 @@ const PhotographeEnvironnemental = () => {
           </motion.div>
         </motion.div>
 
+        {/* Parcours — de la photographie de paysages à la photographie engagée */}
+        <motion.div
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true }}
+          variants={STAGGER_CONTAINER}
+          className="mb-12"
+        >
+          <motion.div variants={FADE_IN_UP} className="glass-strong rounded-3xl p-8 md:p-12">
+            <h2 className="text-xl md:text-2xl font-bold text-white mb-2">
+              De la photographie de paysages à la photographie engagée
+            </h2>
+            <p className="text-text-secondary text-sm mb-8 italic">
+              Un parcours en trois actes — la montagne, la mer, les fonds.
+            </p>
+
+            <div className="relative">
+              {/* Ligne verticale */}
+              <div className="absolute left-4 md:left-5 top-0 bottom-0 w-px bg-gradient-to-b from-ocean-teal/60 via-ocean-teal/30 to-transparent" aria-hidden="true" />
+
+              <div className="space-y-10">
+
+                {/* Acte I */}
+                <div className="flex gap-6 md:gap-8">
+                  <div className="flex-shrink-0 w-8 md:w-10 flex justify-center">
+                    <div className="w-3 h-3 rounded-full bg-ocean-teal ring-4 ring-ocean-teal/20 mt-1.5" aria-hidden="true" />
+                  </div>
+                  <div className="flex-1 pb-2">
+                    <p className="text-ocean-teal text-xs font-semibold uppercase tracking-widest mb-1">Années 90 — Les premières images</p>
+                    <h3 className="text-white font-semibold text-base mb-2">La montagne et l'argentique</h3>
+                    <p className="text-text-secondary text-sm leading-relaxed">
+                      Tout a commencé en haute montagne. Adolescent, j'enchaîne les étés à Chamonix — d'abord comme grimpeur, bientôt comme guide. C'est là que j'acquiers mon premier reflex argentique. La contrainte de la pellicule est une école de rigueur : on ne déclenche pas sans raison. Natif de la côte basque, mes premières images sont celles de l'océan — la dune du Pilat, Biarritz, Capbreton, ce rapport physique à l'eau qui ne m'a jamais quitté.
+                    </p>
+                  </div>
+                </div>
+
+                {/* Acte II */}
+                <div className="flex gap-6 md:gap-8">
+                  <div className="flex-shrink-0 w-8 md:w-10 flex justify-center">
+                    <div className="w-3 h-3 rounded-full bg-ocean-teal ring-4 ring-ocean-teal/20 mt-1.5" aria-hidden="true" />
+                  </div>
+                  <div className="flex-1 pb-2">
+                    <p className="text-ocean-teal text-xs font-semibold uppercase tracking-widest mb-1">2001 — Le basculement</p>
+                    <h3 className="text-white font-semibold text-base mb-2">Marseille et la révélation méditerranéenne</h3>
+                    <p className="text-text-secondary text-sm leading-relaxed">
+                      En 2001, je pose mes valises à Marseille. Je découvre les Calanques — la lumière blanche sur le calcaire, la mer d'un bleu que je n'avais jamais vu. Mon regard bascule. La photographie de paysages trouve ici son terrain le plus exigeant et le plus généreux à la fois : falaises, criques, lavandes de Provence, lumière rasante du soir. Vingt ans à photographier ce territoire depuis ses hauteurs, depuis la mer, depuis les airs avec le drone — sans jamais en épuiser la surface.
+                    </p>
+                  </div>
+                </div>
+
+                {/* Acte III */}
+                <div className="flex gap-6 md:gap-8">
+                  <div className="flex-shrink-0 w-8 md:w-10 flex justify-center">
+                    <div className="w-3 h-3 rounded-full bg-ocean-teal ring-4 ring-ocean-teal/20 mt-1.5" aria-hidden="true" />
+                  </div>
+                  <div className="flex-1 pb-2">
+                    <p className="text-ocean-teal text-xs font-semibold uppercase tracking-widest mb-1">Il y a 10 ans — La profondeur</p>
+                    <h3 className="text-white font-semibold text-base mb-2">L'apnée et le regard tourné vers les fonds</h3>
+                    <p className="text-text-secondary text-sm leading-relaxed">
+                      Je découvre l'apnée. Je plonge dans les fonds des Calanques pour la première fois — et je comprends que l'urgence n'est pas en surface. En dessous, des pneus, des cordages, des filets fantômes s'accumulent dans un silence que personne ne voit. La photographie cesse d'être un acte contemplatif pour devenir un acte de témoignage. Je remonte les déchets d'une main, l'appareil de l'autre. C'est la naissance de ce que j'appelle la <strong className="text-white">photographie engagée</strong> : non plus célébrer la beauté, mais la défendre — en montrant ce qu'elle risque de perdre.
+                    </p>
+                  </div>
+                </div>
+
+                {/* Acte IV */}
+                <div className="flex gap-6 md:gap-8">
+                  <div className="flex-shrink-0 w-8 md:w-10 flex justify-center">
+                    <div className="w-3 h-3 rounded-full bg-white/40 ring-4 ring-white/10 mt-1.5" aria-hidden="true" />
+                  </div>
+                  <div className="flex-1">
+                    <p className="text-ocean-teal text-xs font-semibold uppercase tracking-widest mb-1">Depuis 2022 — L'action collective</p>
+                    <h3 className="text-white font-semibold text-base mb-2">Team Oxygen et le Projet Sentinelle</h3>
+                    <p className="text-text-secondary text-sm leading-relaxed">
+                      Le Projet Sentinelle naît de cette conviction : une image seule ne suffit pas, elle doit s'accompagner d'une action concrète. Avec Team Oxygen, nous organisons chaque année une opération de dépollution sous-marine en apnée — quatre éditions, 5 724 kg de déchets remontés des fonds. La photographie documente chaque mission : les déchets caractérisés, les plongeurs en action, les fonds avant et après. Le cercle est complet : la beauté a nourri l'engagement, et l'engagement a transformé le regard sur la beauté.
+                    </p>
+                    <p className="mt-3 text-white/60 italic text-sm border-l-2 border-ocean-teal pl-4">
+                      « Photographier les Calanques, c'est les défendre. »
+                    </p>
+                  </div>
+                </div>
+
+              </div>
+            </div>
+
+            <div className="mt-8 pt-6 border-t border-white/10 flex flex-col sm:flex-row items-center justify-center gap-4">
+              <Link to="/photographie-paysage-mer" className="btn inline-flex items-center gap-2">
+                <Camera className="w-4 h-4" aria-hidden="true" />
+                Photographie de paysages
+              </Link>
+              <Link to="/photographie-sous-marine" className="btn inline-flex items-center gap-2">
+                <Camera className="w-4 h-4" aria-hidden="true" />
+                Photographie sous-marine
+              </Link>
+            </div>
+          </motion.div>
+        </motion.div>
+
         {/* H2 — Médias & Reconnaissances */}
         <motion.div
           initial="hidden"
