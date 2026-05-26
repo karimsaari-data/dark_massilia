@@ -367,16 +367,24 @@ const PhotographeEnvironnemental = () => {
               </div>
             </div>
 
-            <p className="text-text-secondary leading-relaxed text-base md:text-lg mb-5">
-              Je suis <strong className="text-white">Karim Saari</strong>, photographe environnemental basé à Marseille. Mon travail s'articule autour de trois disciplines complémentaires : la <Link to="/photographie-paysage-mer" className="text-ocean-teal hover:underline">photographie de paysages</Link> — des Calanques à la Provence en passant par l'Atlantique —, la <Link to="/photographie-sous-marine" className="text-ocean-teal hover:underline">photographie sous-marine</Link> en apnée dans les fonds méditerranéens, et la documentation des opérations de dépollution que je mène avec Team Oxygen depuis 2018. Je photographie les fonds de la même manière que je les nettoie — en immersion totale, au plus près des espèces et des déchets.
+            {/* Lead */}
+            <p className="text-base md:text-lg text-white/90 leading-relaxed font-light mb-6">
+              Je suis <strong className="text-ocean-teal font-semibold">Karim Saari</strong>, photographe environnemental basé à Marseille — <Link to="/photographie-paysage-mer" className="text-ocean-teal hover:underline">paysages</Link>, <Link to="/photographie-sous-marine" className="text-ocean-teal hover:underline">photographie sous-marine</Link> en apnée, et documentation des opérations de dépollution avec Team Oxygen depuis 2018.
             </p>
 
-            <p className="text-text-secondary leading-relaxed text-base md:text-lg mb-5">
-              Cette démarche repose sur une dualité assumée. D'un côté, des images de beauté — biodiversité sous-marine, paysages des Calanques, Provence, Atlantique. De l'autre, sur ces mêmes sites : les opérations de dépollution, l'inventaire des déchets remontés, la réalité brute des fonds que nous nettoyons. Les deux faces d'un même territoire — et les deux raisons d'agir.
+            {/* Chapitre 1 */}
+            <p className="text-[0.65rem] uppercase tracking-[0.2em] text-ocean-teal/70 font-semibold pt-2 pb-1">La démarche</p>
+            <p className="text-text-secondary leading-loose text-sm md:text-[0.95rem] mb-4">
+              <span className="float-left text-[3.2rem] leading-[0.8] font-bold text-ocean-teal mr-2 mt-1 select-none">C</span>ette démarche repose sur une <strong className="text-ocean-teal font-semibold">dualité assumée</strong>. D'un côté, des images de beauté — biodiversité sous-marine, paysages des Calanques, Provence, Atlantique. De l'autre, sur ces mêmes sites : les opérations de dépollution, l'inventaire des déchets remontés, la réalité brute des fonds. Les deux faces d'un même territoire — et les deux raisons d'agir.
+            </p>
+            <p className="text-text-secondary leading-loose text-sm md:text-[0.95rem] mb-4">
+              Je photographie les fonds de la même manière que je les nettoie — en <strong className="text-ocean-teal font-semibold">immersion totale</strong>, au plus près des espèces et des déchets, en rétention de souffle entre 0 et 20 mètres.
             </p>
 
-            <p className="text-text-secondary leading-relaxed text-base md:text-lg mb-5">
-              Président de l'association <strong className="text-white">Team Oxygen</strong> depuis janvier 2026 — après en avoir été vice-président depuis ses débuts — je pilote le <strong className="text-white">Projet Sentinelle</strong>, opération annuelle de dépollution sous-marine en apnée. Quatre éditions (2022, 2023, 2024, 2025) ont mobilisé des dizaines de bénévoles dans les Calanques, l'Archipel du Frioul, la Côte Bleue et la Rade de Marseille, pour un bilan de <strong className="text-white">5 724 kg de déchets remontés des fonds</strong>.
+            {/* Chapitre 2 */}
+            <p className="text-[0.65rem] uppercase tracking-[0.2em] text-ocean-teal/70 font-semibold pt-3 pb-1">L'engagement</p>
+            <p className="text-text-secondary leading-loose text-sm md:text-[0.95rem] mb-4">
+              Président de l'association <strong className="text-ocean-teal font-semibold">Team Oxygen</strong> depuis janvier 2026, je pilote le <strong className="text-ocean-teal font-semibold">Projet Sentinelle</strong>, opération annuelle de dépollution sous-marine en apnée. Quatre éditions (2022, 2023, 2024, 2025) ont mobilisé des dizaines de bénévoles dans les Calanques, l'Archipel du Frioul, la Côte Bleue et la Rade de Marseille, pour un bilan de <strong className="text-ocean-teal font-semibold">5 724 kg de déchets remontés des fonds</strong>.
             </p>
 
             <div className="clear-both" />
@@ -392,20 +400,28 @@ const PhotographeEnvironnemental = () => {
               </p>
             </div>
 
-            <p className="text-text-secondary leading-relaxed text-base md:text-lg mb-5">
-              <strong className="text-white">Dark Massilia</strong>, c'est aussi une présence en ligne. Sur Facebook, le groupe « Amoureux des Calanques de Marseille à Port-Cros » rassemble plus de <strong className="text-white">{SOCIAL_STATS_DEFAULTS.total_community.toLocaleString('fr-FR')} membres engagés</strong>, également actifs sur Instagram, TikTok et YouTube. Ils relayent les missions, signalent les dépôts sauvages et constituent un vivier de bénévoles pour chaque édition du Projet Sentinelle.
+            {/* Chapitre 3 */}
+            <p className="text-[0.65rem] uppercase tracking-[0.2em] text-ocean-teal/70 font-semibold pt-1 pb-1">La communauté</p>
+            <p className="text-text-secondary leading-loose text-sm md:text-[0.95rem] mb-4">
+              <strong className="text-ocean-teal font-semibold">Dark Massilia</strong>, c'est aussi une présence en ligne. Sur Facebook, le groupe « Amoureux des Calanques de Marseille à Port-Cros » rassemble plus de <strong className="text-ocean-teal font-semibold">{SOCIAL_STATS_DEFAULTS.total_community.toLocaleString('fr-FR')} membres engagés</strong>, également actifs sur Instagram, TikTok et YouTube. Ils relayent les missions, signalent les dépôts sauvages et constituent un vivier de bénévoles pour chaque édition du Projet Sentinelle.
+            </p>
+            <p className="text-text-secondary leading-loose text-sm md:text-[0.95rem] mb-4">
+              Mon équipement : appareils photo en caissons étanches et GoPro, descendus en apnée jusqu'à 20 mètres. Mes sujets varient des <strong className="text-ocean-teal font-semibold">macro-déchets</strong> coincés dans les anfractuosités aux espèces méditerranéennes (mérous, murènes, poulpes, girelles), en passant par les paysages des Calanques depuis les hauteurs ou par drone. Mes photographies cumulent plus de <strong className="text-ocean-teal font-semibold">800 000 impressions</strong> sur 500px.
             </p>
 
-            <p className="text-text-secondary leading-relaxed text-base md:text-lg mb-5">
-              Mon équipement : appareils photo en caissons étanches et GoPro, descendus en apnée jusqu'à 20 mètres. Mes sujets varient des macro-déchets coincés dans les anfractuosités aux espèces méditerranéennes (mérous, murènes, poulpes, girelles), en passant par les paysages des Calanques depuis les hauteurs ou par drone. Mes photographies cumulent plus de 800 000 impressions sur 500px.
+            {/* Chapitre 4 */}
+            <p className="text-[0.65rem] uppercase tracking-[0.2em] text-ocean-teal/70 font-semibold pt-3 pb-1">La reconnaissance</p>
+            <p className="text-text-secondary leading-loose text-sm md:text-[0.95rem] mb-4">
+              Mon travail est régulièrement couvert par les médias nationaux. En 2022, <strong className="text-ocean-teal font-semibold">ARTE</strong> me consacre un reportage dans <em>Pollution : Il faut sauver Marseille et ses Calanques</em>. <strong className="text-ocean-teal font-semibold">TF1</strong> suit les opérations à plusieurs reprises depuis 2022. <strong className="text-ocean-teal font-semibold">M6</strong> me reçoit dans <em>Zone Interdite</em>. France 5, France Bleu, La Provence, Midi Libre et Actu.fr relayent régulièrement les missions.
             </p>
 
-            <p className="text-text-secondary leading-relaxed text-base md:text-lg mb-5">
-              Mon travail est régulièrement couvert par les médias nationaux. En 2022, <strong className="text-white">ARTE</strong> me consacre un reportage dans <em>Pollution : Il faut sauver Marseille et ses Calanques</em> et m'associe à <em>Méduses, les souveraines des océans</em>. <strong className="text-white">TF1</strong> suit les opérations de dépollution à plusieurs reprises depuis 2022. <strong className="text-white">M6</strong> me reçoit dans <em>Zone Interdite</em>. France 5, France Bleu, La Provence, Midi Libre et Actu.fr relayent régulièrement les missions.
-            </p>
+            {/* Pull quote */}
+            <blockquote className="my-6 py-4 px-5 bg-white/[0.04] border-l-2 border-ocean-teal rounded-r-lg">
+              <p className="text-white/85 italic text-base leading-snug">« Une image qui émeut change plus de comportements qu'un chiffre statistique. Photographier les Calanques, c'est les défendre. »</p>
+            </blockquote>
 
-            <p className="text-text-secondary leading-relaxed text-base md:text-lg mb-8">
-              La conviction reste la même : une image qui émeut change plus de comportements qu'un chiffre statistique. Photographier les Calanques, c'est les défendre. Si vous êtes journaliste, réalisateur, institution ou marque engagée pour le littoral méditerranéen, je suis disponible pour collaborer — reportage, exposition, intervention terrain, mission documentaire.
+            <p className="text-text-secondary leading-loose text-sm md:text-[0.95rem] mb-8">
+              Si vous êtes journaliste, réalisateur, institution ou marque engagée pour le littoral méditerranéen, je suis disponible pour collaborer — reportage, exposition, intervention terrain, mission documentaire.
             </p>
 
             <div className="flex flex-wrap gap-3">
