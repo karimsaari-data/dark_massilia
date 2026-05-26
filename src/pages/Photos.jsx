@@ -938,6 +938,9 @@ const Photos = () => {
                 Puis en 2001, je suis arrivé à Marseille. Et tout a basculé. Je ne m'attendais pas à cette variété. En quelques heures de route, on passe du bleu turquoise des Calanques aux ocres du Luberon, des marais sauvages de Camargue aux plateaux de lavande de Valensole, des criques du Var aux reliefs des Alpilles. C'est une richesse photographique qui m'a immédiatement captivé — et qui ne m'a plus jamais lâché.
               </p>
               <p>
+                Mais l'appel du large ne s'est jamais tu. Entre deux saisons méditerranéennes, mes carnets de voyage s'ouvrent sur des territoires qui me fascinent depuis longtemps. Le Maroc d'abord — les ruelles bleues de Chefchaouen, ce bleu improbable qui teinte murs, escaliers et portes, et la vie dense et colorée des medinas de Marrakech. Madère ensuite, cette île portugaise aux paysages d'une diversité saisissante : falaises verticales, forêts laurifères, levadas qui serpentent entre deux horizons. Et toujours l'Atlantique, celui de mon adolescence — les dunes du Pilat sous le vent, les vagues de Biarritz, les plages de Capbreton où j'ai appris à regarder l'océan avant même de savoir ce qu'était un diaphragme.
+              </p>
+              <p>
                 Depuis dix ans, j'habite chemin de Morgiou, à quelques minutes à pied de la mer, à l'entrée du Parc National des Calanques. Cette proximité quotidienne avec un territoire d'une beauté exceptionnelle a progressivement transformé mon regard. Ce n'était plus seulement de la{' '}
                 <strong className="text-white font-medium">photographie de paysages à Marseille</strong>{' '}
                 : c'était de la documentation, du témoignage. C'est en plongeant en apnée dans ces eaux pour aller photographier sous la surface que j'ai découvert l'ampleur de la pollution plastique sur les fonds marins. La photographie de paysages m'avait appris à voir. L'apnée m'a appris ce qu'il y avait à perdre.
