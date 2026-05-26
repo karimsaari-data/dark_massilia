@@ -882,7 +882,12 @@ const PhotoSousMarine = () => {
               </h2>
               <div className="space-y-4 text-text-secondary leading-[1.8]">
                 <p>
-                  Karim Saari plonge en{' '}
+                  <Link to="/photographie-paysage-mer" className="text-ocean-teal hover:underline">Photographe de paysages</Link>{' '}
+                  depuis l'adolescence, c'est en arrivant à Marseille et en découvrant l'apnée il y a
+                  dix ans que mon regard a basculé — de l'horizon à la profondeur.
+                </p>
+                <p>
+                  Je plonge en{' '}
                   <strong className="text-white">apnée</strong> dans les eaux de Marseille avec un
                   double impératif&nbsp;: extraire les déchets <em>et</em> documenter l'agonie comme
                   la beauté des fonds marins. Contrairement à la majorité des photographes
