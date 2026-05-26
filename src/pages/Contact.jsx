@@ -330,7 +330,7 @@ const Contact = () => {
                   alt="Karim Saari en action lors d'une mission de dépollution sous-marine dans les Calanques de Marseille avec Team Oxygen"
                   width="1440"
                   height="1212"
-                  className="w-full h-full object-cover object-top"
+                  className="w-full h-full object-contain"
                   loading="lazy"
                 />
               </div>
