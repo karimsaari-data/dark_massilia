@@ -232,29 +232,29 @@ const Communaute = () => {
             <p className="text-ocean-teal text-lg md:text-xl font-semibold mb-6">
               {totalLabel} personnes mobilisées pour la Méditerranée
             </p>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
-              <p className="text-text-secondary leading-[1.8] text-lg">
-                La protection de la <strong>Méditerranée</strong> repose sur une <strong>mobilisation collective et continue</strong>.
-                À travers mes <strong>réseaux sociaux</strong>, je fédère aujourd'hui une communauté de plus de
-                {' '}<strong>{totalLabel} personnes</strong> sensibilisées aux <strong>enjeux environnementaux</strong> du littoral marseillais.
+            <div className="space-y-0 text-text-secondary leading-loose text-sm md:text-[0.95rem] mb-8">
+
+              {/* Lead */}
+              <p className="text-base md:text-lg text-white/90 leading-relaxed font-light mb-6">
+                La protection de la <strong className="text-ocean-teal font-semibold">Méditerranée</strong> repose sur une <strong className="text-ocean-teal font-semibold">mobilisation collective et continue</strong>. À travers mes réseaux sociaux, je fédère aujourd'hui une communauté de plus de <strong className="text-ocean-teal font-semibold">{totalLabel} personnes</strong> sensibilisées aux enjeux environnementaux du littoral marseillais.
               </p>
-              <p className="text-text-secondary leading-[1.8] text-lg">
-                De mes <strong>reportages en immersion</strong> sur YouTube à mes <strong>alertes environnementales</strong> sur
-                Instagram ({instaLabel}), TikTok ({tiktokLabel}) et mes photographies sur 500px, cette
-                audience numérique prolonge le <strong>travail de terrain</strong> en donnant de la visibilité aux
-                <strong> réalités observées sous la surface</strong>.
+
+              {/* Chapitre 1 */}
+              <p className="text-[0.65rem] uppercase tracking-[0.2em] text-ocean-teal/70 font-semibold pt-2 pb-1">La présence numérique</p>
+              <p className="mb-4">
+                <span className="float-left text-[3.2rem] leading-[0.8] font-bold text-ocean-teal mr-2 mt-1 select-none">D</span>e mes <strong className="text-ocean-teal font-semibold">reportages en immersion</strong> sur YouTube à mes <strong className="text-ocean-teal font-semibold">alertes environnementales</strong> sur Instagram ({instaLabel}), TikTok ({tiktokLabel}) et mes photographies sur 500px, cette audience numérique prolonge le <strong className="text-ocean-teal font-semibold">travail de terrain</strong> en donnant de la visibilité aux réalités observées sous la surface.
               </p>
-              <p className="text-text-secondary leading-[1.8] text-lg">
-                À travers l'animation du groupe incontournable des <strong>Amoureux des Calanques</strong> (plus de
-                {' '}<strong>{fbGroupLabel} membres</strong>), ma présence sur <strong>Facebook</strong> (près de {fbPagesLabel} abonnés cumulés), sur <strong>X</strong>
-                et en tant que <strong>Local Guide Google Maps</strong> à Marseille, j'informe, documente et <strong>interpelle
-                en temps réel</strong>.
+
+              {/* Chapitre 2 */}
+              <p className="text-[0.65rem] uppercase tracking-[0.2em] text-ocean-teal/70 font-semibold pt-3 pb-1">La communauté</p>
+              <p className="mb-4">
+                À travers l'animation du groupe des <strong className="text-ocean-teal font-semibold">Amoureux des Calanques</strong> (plus de <strong className="text-ocean-teal font-semibold">{fbGroupLabel} membres</strong>), ma présence sur <strong className="text-ocean-teal font-semibold">Facebook</strong> ({fbPagesLabel} abonnés), sur <strong className="text-ocean-teal font-semibold">X</strong> et en tant que <strong className="text-ocean-teal font-semibold">Local Guide Google Maps</strong> à Marseille, j'informe, documente et interpelle en temps réel.
               </p>
-              <p className="text-text-secondary leading-[1.8] text-lg">
-                Cette audience n'est pas un indicateur abstrait : elle représente une <strong>capacité
-                concrète de sensibilisation et de mobilisation</strong> au service de la <strong>préservation de
-                la Méditerranée</strong> et du littoral marseillais.
-              </p>
+
+              {/* Pull quote */}
+              <blockquote className="my-5 py-4 px-5 bg-white/[0.04] border-l-2 border-ocean-teal rounded-r-lg">
+                <p className="text-white/85 italic text-base leading-snug">« Cette audience n'est pas un indicateur abstrait : elle représente une capacité concrète de sensibilisation et de mobilisation pour la Méditerranée. »</p>
+              </blockquote>
             </div>
             {/* CTA principal */}
             <div className="flex flex-col sm:flex-row gap-4 mb-8">
