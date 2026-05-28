@@ -80,10 +80,10 @@ export default function Carte() {
           </p>
           <div className="space-y-4 text-text-secondary leading-relaxed">
             <p>
-              Explorez la carte interactive des Calanques de Marseille à Cassis, au cœur du{' '}
+              Explorez la carte interactive des Calanques de Marseille à La Ciotat, au cœur du{' '}
               <strong className="text-white">Parc national des Calanques</strong>. Cette cartographie
               couvre l'ensemble du littoral marseillais&nbsp;: Sormiou, Morgiou, En-Vau, Sugiton,
-              Callelongue, Cap Croisette, la Côte Bleue et les abords de Cassis.
+              Callelongue, Cap Croisette, Cassis et les Calanques de La Ciotat.
             </p>
             <p>
               Chaque point inscrit sur cette carte correspond à une intervention réelle ou à une
@@ -145,7 +145,7 @@ export default function Carte() {
           className="glass rounded-3xl p-8 md:p-10"
         >
           <h2 className="text-xl md:text-2xl font-bold text-white mb-2">
-            Les spots des Calanques&nbsp;: de Marseille à Cassis
+            Les spots des Calanques&nbsp;: de Marseille à La Ciotat
           </h2>
           <p className="text-text-secondary mb-8 leading-relaxed">
             Le Parc national des Calanques s'étend sur plus de{' '}
@@ -159,7 +159,7 @@ export default function Carte() {
               { name: 'En-Vau & Port-Pin', desc: "Parmi les plus belles calanques de France. Fond sableux blanc, parois calcaires à pic, eau cristalline. Accès limité en été pour préserver l'écosystème." },
               { name: 'Callelongue & Cap Croisette', desc: "Porte sud de Marseille. Zone de départ de nombreuses missions Team Oxygen. Fonds rocheux richement habités, plongées en apnée récurrentes." },
               { name: 'Archipel du Frioul', desc: "Quatre îles face à Marseille. Eaux claires, posidonie protégée, gorgones. Zone de surveillance prioritaire contre le mouillage illégal et les déchets." },
-              { name: 'Côte Bleue & Carry-le-Rouet', desc: "Au nord-ouest de Marseille. Réserve marine de Carry, zone de reproduction pour le mérou et la denti. Plongées pédagogiques régulières." },
+              { name: 'Calanques de La Ciotat', desc: "À l'est de Cassis. Calanques sauvages peu fréquentées, fonds riches en gorgones et mérous. Zone de plongée et de dépollution en extension." },
             ].map(({ name, desc }) => (
               <div key={name} className="border border-white/10 rounded-2xl p-5 hover:border-ocean-teal/30 transition-colors">
                 <div className="flex items-center gap-2 mb-2">

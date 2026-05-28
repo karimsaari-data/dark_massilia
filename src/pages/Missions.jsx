@@ -375,37 +375,29 @@ const Missions = () => {
             <h2 className="text-2xl md:text-3xl font-bold text-white mb-6">
               Quels déchets menacent les Calanques ? Types de pollution marine
             </h2>
-            <div className="space-y-4 text-text-secondary leading-[1.8]">
-              <p>
-                Les missions de nettoyage sous-marin révèlent une pollution marine d'une grande
-                diversité. Les déchets les plus fréquemment remontés des fonds des Calanques de
-                Marseille comprennent les{' '}
-                <strong className="text-white">plastiques fragmentés</strong> (sacs, emballages,
-                bouteilles), les{' '}
-                <strong className="text-white">engins de pêche abandonnés</strong> (filets fantômes,
-                hameçons, fils nylon), mais aussi des objets encombrants&nbsp;: scooters, vélos,
-                bouteilles de gaz, mobilier urbain charié par les crues des cours d'eau côtiers.
+            <div className="space-y-0 text-text-secondary leading-loose text-sm md:text-[0.95rem]">
+
+              {/* Lead */}
+              <p className="text-base md:text-lg text-white/90 leading-relaxed font-light mb-6">
+                Les missions de nettoyage sous-marin révèlent une pollution marine d'une grande diversité — des <strong className="text-ocean-teal font-semibold">plastiques fragmentés</strong> aux <strong className="text-ocean-teal font-semibold">engins de pêche abandonnés</strong>, en passant par des objets encombrants charriés par les crues des cours d'eau côtiers.
               </p>
-              <p>
-                L'impact sur la faune méditerranéenne est documenté à chaque plongée. Les{' '}
-                <strong className="text-white">filets fantômes</strong> continuent de capturer des
-                poissons, des poulpes et des langoustes longtemps après avoir été abandonnés — c'est
-                ce que les biologistes appellent la «&nbsp;pêche fantôme&nbsp;». Le nylon prend{' '}
-                <strong className="text-white">400 à 600 ans pour se dégrader</strong>, relâchant des
-                microplastiques qui intègrent la chaîne alimentaire marine. Les{' '}
-                <strong className="text-white">herbiers de Posidonie</strong>, classés habitat
-                prioritaire par l'Union Européenne, sont étouffés sous les déchets lourds qui
-                bloquent la photosynthèse et accélèrent leur régression.
+
+              {/* Chapitre 1 */}
+              <p className="text-[0.65rem] uppercase tracking-[0.2em] text-ocean-teal/70 font-semibold pt-2 pb-1">L'impact sur la faune</p>
+              <p className="mb-4">
+                <span className="float-left text-[3.2rem] leading-[0.8] font-bold text-ocean-teal mr-2 mt-1 select-none">L</span>es <strong className="text-ocean-teal font-semibold">filets fantômes</strong> continuent de capturer des poissons, des poulpes et des langoustes longtemps après avoir été abandonnés — c'est ce que les biologistes appellent la «&nbsp;pêche fantôme&nbsp;». Le nylon prend <strong className="text-ocean-teal font-semibold">400 à 600 ans pour se dégrader</strong>, relâchant des microplastiques qui intègrent la chaîne alimentaire marine. Les <strong className="text-ocean-teal font-semibold">herbiers de Posidonie</strong>, classés habitat prioritaire par l'Union Européenne, sont étouffés sous les déchets lourds qui bloquent la photosynthèse et accélèrent leur régression.
               </p>
-              <p>
-                Chaque déchet extrait est <strong className="text-white">pesé, trié et
-                caractérisé</strong>&nbsp;: plastique rigide, film plastique, métal, verre, textile,
-                caoutchouc. Ces données alimentent les rapports scientifiques partenaires et
-                contribuent à la cartographie de la pollution marine dans le Parc National des
-                Calanques. Les missions de Team Oxygen permettent également d'alerter les autorités
-                maritimes sur les zones de dépôt les plus critiques, pour prioriser les interventions
-                futures et mesurer l'efficacité des actions de sensibilisation auprès du grand public.
+
+              {/* Chapitre 2 */}
+              <p className="text-[0.65rem] uppercase tracking-[0.2em] text-ocean-teal/70 font-semibold pt-3 pb-1">La documentation</p>
+              <p className="mb-4">
+                Chaque déchet extrait est <strong className="text-ocean-teal font-semibold">pesé, trié et caractérisé</strong>&nbsp;: plastique rigide, film plastique, métal, verre, textile, caoutchouc. Ces données alimentent les rapports scientifiques partenaires et contribuent à la cartographie de la pollution marine dans le Parc National des Calanques.
               </p>
+
+              {/* Pull quote */}
+              <blockquote className="my-5 py-4 px-5 bg-white/[0.04] border-l-2 border-ocean-teal rounded-r-lg">
+                <p className="text-white/85 italic text-base leading-snug">« Chaque plongée est un inventaire. Chaque déchet remonté, une donnée pour la science. »</p>
+              </blockquote>
             </div>
           </div>
         </motion.div>
@@ -421,32 +413,29 @@ const Missions = () => {
             <h2 className="text-2xl md:text-3xl font-bold text-white mb-6">
               Comment participer à une mission de dépollution sous-marine ?
             </h2>
-            <div className="space-y-4 text-text-secondary leading-[1.8]">
-              <p>
-                Team Oxygen accueille chaque année des bénévoles motivés lors des grandes éditions du{' '}
-                <strong className="text-white">Projet Sentinelle</strong>. La pratique de l'apnée
-                n'est pas obligatoire pour participer&nbsp;: les missions mobilisent également des
-                équipes de surface chargées de la logistique, du tri des déchets, de la pesée et de
-                la documentation visuelle.
+            <div className="space-y-0 text-text-secondary leading-loose text-sm md:text-[0.95rem]">
+
+              {/* Lead */}
+              <p className="text-base md:text-lg text-white/90 leading-relaxed font-light mb-6">
+                <strong className="text-ocean-teal font-semibold">Team Oxygen</strong> accueille chaque année des bénévoles motivés lors des grandes éditions du <strong className="text-ocean-teal font-semibold">Projet Sentinelle</strong>. La pratique de l'apnée n'est pas obligatoire — les missions mobilisent aussi des équipes de surface pour la logistique, le tri et la documentation.
               </p>
-              <p>
-                Pour les <strong className="text-white">plongeurs et apnéistes</strong>, les
-                interventions se déroulent entre 0 et 20 mètres, en binôme, avec un briefing de
-                sécurité systématique avant chaque immersion. Aucun équipement spécifique n'est
-                requis au-delà du matériel standard d'apnée (masque, palmes, combinaison). Team
-                Oxygen fournit les sacs de collecte, les filets de surface et l'organisation
-                logistique complète. Les sessions durent entre 4 et 6 heures et se déroulent chaque
-                matin pendant toute la durée de l'édition.
+
+              {/* Chapitre 1 */}
+              <p className="text-[0.65rem] uppercase tracking-[0.2em] text-ocean-teal/70 font-semibold pt-2 pb-1">Pour les apnéistes</p>
+              <p className="mb-4">
+                <span className="float-left text-[3.2rem] leading-[0.8] font-bold text-ocean-teal mr-2 mt-1 select-none">L</span>es interventions se déroulent entre <strong className="text-ocean-teal font-semibold">0 et 20 mètres</strong>, en binôme, avec un briefing de sécurité systématique avant chaque immersion. Aucun équipement spécifique n'est requis au-delà du matériel standard d'apnée. Team Oxygen fournit les sacs de collecte, les filets de surface et l'organisation logistique complète. Les sessions durent entre <strong className="text-ocean-teal font-semibold">4 et 6 heures</strong> chaque matin pendant toute la durée de l'édition.
               </p>
-              <p>
-                Les candidatures pour la{' '}
-                <strong className="text-ocean-teal">5ème édition — octobre 2026</strong> seront
-                ouvertes prochainement. Inscris-toi à la newsletter pour recevoir le formulaire en
-                avant-première, les dates exactes et les lieux de rendez-vous. Les 130&nbsp;000
-                membres de la communauté Dark Massilia sont la première force de mobilisation
-                citoyenne pour la protection des Calanques de Marseille — chaque bénévole compte,
-                que tu sois apnéiste confirmé ou simple citoyen engagé.
+
+              {/* Chapitre 2 */}
+              <p className="text-[0.65rem] uppercase tracking-[0.2em] text-ocean-teal/70 font-semibold pt-3 pb-1">La 5ème édition</p>
+              <p className="mb-4">
+                Les candidatures pour la <strong className="text-ocean-teal font-semibold">5ème édition — octobre 2026</strong> seront ouvertes prochainement. Inscris-toi à la newsletter pour recevoir le formulaire en avant-première. Les <strong className="text-ocean-teal font-semibold">130&nbsp;000 membres</strong> de la communauté Dark Massilia sont la première force de mobilisation citoyenne pour la protection des Calanques — chaque bénévole compte, que tu sois apnéiste confirmé ou simple citoyen engagé.
               </p>
+
+              {/* Pull quote */}
+              <blockquote className="my-5 py-4 px-5 bg-white/[0.04] border-l-2 border-ocean-teal rounded-r-lg">
+                <p className="text-white/85 italic text-base leading-snug">« Pas besoin d'être apnéiste — il suffit d'être engagé. »</p>
+              </blockquote>
             </div>
             <div className="mt-8 flex flex-wrap gap-4">
               <Link

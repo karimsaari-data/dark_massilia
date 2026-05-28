@@ -15,7 +15,7 @@ const Sources = () => {
     {
       category: "Données Globales et Flux",
       icon: Globe,
-      image: "/images/Marseille-dark-massilia-plastique-polluttion-projet-sentinelle-huveaune.webp",
+      image: "/images/Marseille-dark-massilia-plastique-pollution-projet-sentinelle-huveaune.webp",
       references: [
         {
           authors: "Jambeck, J. R., et al.",
@@ -203,46 +203,29 @@ const Sources = () => {
             <h2 className="text-2xl md:text-3xl font-bold text-white mb-6">
               Les chiffres de l'urgence environnementale
             </h2>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-8 text-text-secondary leading-[1.8] text-lg">
-              <div className="space-y-4">
-                <p>
-                  Notre action de terrain repose sur des données scientifiques solides et convergentes.
-                  Chaque année, environ <strong className="text-white">570&nbsp;000 tonnes de plastique</strong> sont
-                  déversées en Méditerranée, soit l'équivalent de <strong className="text-white">33&nbsp;800 bouteilles par minute</strong>.
-                  Mer semi-fermée représentant moins de 1&nbsp;% de la surface océanique mondiale, la Méditerranée
-                  concentre près de <strong className="text-white">7&nbsp;% des microplastiques marins</strong>.
-                </p>
-                <p>
-                  Ces plastiques se fragmentent en micro- et nanoplastiques persistants, intégrés à la colonne
-                  d'eau, aux sédiments et aux chaînes trophiques. Ils constituent également un support biologique&nbsp;:
-                  la <em className="text-white">plastisphère</em>, écosystème microbien colonisant les débris flottants,
-                  favorise la dispersion d'agents pathogènes et d'espèces exotiques.
-                </p>
-                <p>
-                  Parallèlement, la Méditerranée subit une pression croissante liée aux <strong className="text-white">espèces invasives</strong>.
-                  Plus de <strong className="text-white">1&nbsp;000 espèces non indigènes</strong> y ont été recensées,
-                  introduites principalement via le transport maritime et le canal de Suez.
-                </p>
-              </div>
-              <div className="space-y-4">
-                <p>
-                  Parmi elles, <em className="text-ocean-teal">Rugulopteryx okamurae</em>, algue brune originaire du
-                  Pacifique nord-ouest, connaît depuis 2015 une expansion rapide en Méditerranée occidentale. Elle
-                  colonise les fonds rocheux jusqu'à 30 mètres de profondeur, forme des tapis denses, modifie les
-                  habitats benthiques et entre en compétition avec les espèces locales. Son accumulation massive sur
-                  les côtes perturbe également les écosystèmes littoraux et les usages humains.
-                </p>
-                <p>
-                  Pollution plastique et invasions biologiques sont liées&nbsp;: les déchets flottants facilitent le
-                  transport d'organismes exotiques, tandis que le réchauffement climatique accroît leur capacité
-                  d'implantation.
-                </p>
-                <p className="text-white font-medium border-l-2 border-ocean-teal pl-4">
-                  Face à ces dynamiques combinées — pollution, artificialisation du littoral, surpêche,
-                  réchauffement — la Méditerranée devient un laboratoire avancé des déséquilibres globaux.
-                  Documenter, alerter et agir ne relève plus du militantisme, mais de la nécessité écologique.
-                </p>
-              </div>
+            <div className="space-y-0 text-text-secondary leading-loose text-sm md:text-[0.95rem]">
+
+              {/* Lead */}
+              <p className="text-base md:text-lg text-white/90 leading-relaxed font-light mb-6">
+                Notre action de terrain repose sur des données scientifiques solides. Chaque année, environ <strong className="text-ocean-teal font-semibold">570&nbsp;000 tonnes de plastique</strong> sont déversées en Méditerranée — soit <strong className="text-ocean-teal font-semibold">33&nbsp;800 bouteilles par minute</strong>.
+              </p>
+
+              {/* Chapitre 1 */}
+              <p className="text-[0.65rem] uppercase tracking-[0.2em] text-ocean-teal/70 font-semibold pt-2 pb-1">La pollution plastique</p>
+              <p className="mb-4">
+                <span className="float-left text-[3.2rem] leading-[0.8] font-bold text-ocean-teal mr-2 mt-1 select-none">M</span>er semi-fermée représentant moins de 1&nbsp;% de la surface océanique mondiale, la Méditerranée concentre près de <strong className="text-ocean-teal font-semibold">7&nbsp;% des microplastiques marins</strong>. Ces plastiques se fragmentent en micro- et nanoplastiques persistants intégrés à la colonne d'eau, aux sédiments et aux chaînes trophiques. La <strong className="text-ocean-teal font-semibold">plastisphère</strong> — écosystème microbien colonisant les débris flottants — favorise la dispersion d'agents pathogènes et d'espèces exotiques.
+              </p>
+
+              {/* Chapitre 2 */}
+              <p className="text-[0.65rem] uppercase tracking-[0.2em] text-ocean-teal/70 font-semibold pt-3 pb-1">Les espèces invasives</p>
+              <p className="mb-4">
+                Plus de <strong className="text-ocean-teal font-semibold">1&nbsp;000 espèces non indigènes</strong> ont été recensées en Méditerranée, introduites principalement via le transport maritime et le canal de Suez. Parmi elles, <em className="text-ocean-teal">Rugulopteryx okamurae</em> colonise les fonds rocheux jusqu'à 30 mètres de profondeur, formant des tapis denses qui étouffent les habitats benthiques locaux. Pollution plastique et invasions biologiques sont liées&nbsp;: les déchets flottants facilitent le transport d'organismes exotiques, tandis que le réchauffement climatique accroît leur capacité d'implantation.
+              </p>
+
+              {/* Pull quote */}
+              <blockquote className="my-5 py-4 px-5 bg-white/[0.04] border-l-2 border-ocean-teal rounded-r-lg">
+                <p className="text-white/85 italic text-base leading-snug">« Face à la pollution, aux espèces invasives et au réchauffement, documenter et alerter ne relève plus du militantisme — c'est une nécessité écologique. »</p>
+              </blockquote>
             </div>
           </motion.div>
         </motion.div>
