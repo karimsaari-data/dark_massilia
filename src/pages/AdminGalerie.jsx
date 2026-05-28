@@ -8,7 +8,7 @@ import { supabase } from '../lib/supabase';
 import {
   Lock, LogOut, Search, Save, Eye, EyeOff,
   ChevronDown, ChevronUp, MapPin, ExternalLink, ArrowUp, X, Upload, Rss, Trash2, Download,
-  FileText, Bell, BellOff, AlertCircle, CheckCircle, XCircle, RefreshCw, Clock,
+  FileText, Bell, BellOff, AlertCircle, CheckCircle, XCircle, RefreshCw, Clock, Mail, Users,
 } from 'lucide-react';
 
 const ADMIN_PASSWORD = import.meta.env.VITE_ADMIN_PASSWORD || 'darkm';
@@ -1422,6 +1422,157 @@ const TabReseaux = () => {
   );
 };
 
+/* ── Tab Newsletter ─────────────────────────────────────────── */
+const TabNewsletter = () => {
+  const [subscribers, setSubscribers] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [deleting, setDeleting] = useState(null);
+
+  const load = useCallback(async () => {
+    setLoading(true);
+    const { data } = await supabase
+      .from('newsletter_subscribers')
+      .select('*')
+      .order('created_at', { ascending: false });
+    setSubscribers(data ?? []);
+    setLoading(false);
+  }, []);
+
+  useEffect(() => { load(); }, [load]);
+
+  const handleDelete = async (email) => {
+    setDeleting(email);
+    await supabase.from('newsletter_subscribers').delete().eq('email', email);
+    setSubscribers(s => s.filter(r => r.email !== email));
+    setDeleting(null);
+  };
+
+  const now = new Date();
+  const thisMonth = subscribers.filter(s => {
+    const d = new Date(s.created_at);
+    return d.getMonth() === now.getMonth() && d.getFullYear() === now.getFullYear();
+  });
+  const lastWeek = subscribers.filter(s => (now - new Date(s.created_at)) < 7 * 24 * 60 * 60 * 1000);
+
+  const chartData = useMemo(() => {
+    const counts = {};
+    subscribers.forEach(s => {
+      const d = new Date(s.created_at);
+      const key = `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}`;
+      counts[key] = (counts[key] ?? 0) + 1;
+    });
+    return Object.entries(counts)
+      .sort(([a], [b]) => a.localeCompare(b))
+      .map(([month, count]) => ({ month, count }));
+  }, [subscribers]);
+
+  const exportCsv = () => {
+    const cols = ['email', 'created_at'];
+    const escape = v => `"${String(v ?? '').replace(/"/g, '""')}"`;
+    const csv = [cols.join(','), ...subscribers.map(r => cols.map(c => escape(r[c])).join(','))].join('\n');
+    const blob = new Blob(['﻿' + csv], { type: 'text/csv;charset=utf-8' });
+    const a = document.createElement('a');
+    a.href = URL.createObjectURL(blob);
+    a.download = `newsletter_${new Date().toISOString().slice(0, 10)}.csv`;
+    a.click();
+  };
+
+  return (
+    <div className="space-y-6">
+      {/* Stats */}
+      <div className="grid grid-cols-3 gap-4">
+        {[
+          { label: 'Total', value: subscribers.length, icon: Users },
+          { label: 'Ce mois', value: thisMonth.length, icon: Mail },
+          { label: '7 derniers jours', value: lastWeek.length, icon: Clock },
+        ].map(({ label, value, icon: Icon }) => (
+          <div key={label} className="rounded-xl border border-white/10 p-4" style={{ background: 'rgba(255,255,255,0.04)' }}>
+            <div className="flex items-center gap-2 mb-1">
+              <Icon className="w-4 h-4 text-[#21c47b]" />
+              <span className="text-white/50 text-xs uppercase tracking-wider">{label}</span>
+            </div>
+            <p className="text-2xl font-bold text-white">{loading ? '…' : value}</p>
+          </div>
+        ))}
+      </div>
+
+      {/* Chart */}
+      {chartData.length > 1 && (
+        <div className="rounded-xl border border-white/10 p-4" style={{ background: 'rgba(255,255,255,0.04)' }}>
+          <p className="text-white/50 text-xs uppercase tracking-wider mb-4">Inscriptions par mois</p>
+          <ResponsiveContainer width="100%" height={120}>
+            <BarChart data={chartData} margin={{ top: 4, right: 8, bottom: 4, left: -20 }}>
+              <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.05)" />
+              <XAxis dataKey="month" tick={{ fill: 'rgba(255,255,255,0.35)', fontSize: 11 }} />
+              <YAxis tick={{ fill: 'rgba(255,255,255,0.35)', fontSize: 11 }} allowDecimals={false} />
+              <Tooltip
+                contentStyle={{ background: '#0B1C2D', border: '1px solid rgba(255,255,255,0.1)', borderRadius: 8, color: '#fff' }}
+                labelStyle={{ color: 'rgba(255,255,255,0.6)' }}
+              />
+              <Bar dataKey="count" fill="#21c47b" radius={[4, 4, 0, 0]} name="Inscriptions" />
+            </BarChart>
+          </ResponsiveContainer>
+        </div>
+      )}
+
+      {/* Liste */}
+      <div className="rounded-xl border border-white/10 overflow-hidden" style={{ background: 'rgba(255,255,255,0.03)' }}>
+        <div className="flex items-center justify-between px-4 py-3 border-b border-white/8">
+          <span className="text-sm font-semibold text-white/70">
+            {loading ? 'Chargement…' : `${subscribers.length} abonné${subscribers.length > 1 ? 's' : ''}`}
+          </span>
+          <div className="flex gap-2">
+            <button type="button" onClick={load}
+              className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-medium border border-white/15 text-white/50 hover:text-white hover:border-white/30 transition-colors">
+              <RefreshCw className="w-3 h-3" /> Actualiser
+            </button>
+            <button type="button" onClick={exportCsv} disabled={!subscribers.length}
+              className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-medium border border-white/15 text-white/50 hover:text-white hover:border-white/30 transition-colors disabled:opacity-30">
+              <Download className="w-3 h-3" /> CSV
+            </button>
+          </div>
+        </div>
+        {loading ? (
+          <div className="flex items-center justify-center py-12">
+            <div className="w-6 h-6 border-2 border-[#21c47b]/30 border-t-[#21c47b] rounded-full animate-spin" />
+          </div>
+        ) : subscribers.length === 0 ? (
+          <p className="text-center text-white/30 py-12 text-sm">Aucun abonné</p>
+        ) : (
+          <table className="w-full">
+            <thead>
+              <tr className="border-b border-white/8">
+                <th className="px-4 py-2.5 text-left text-xs font-semibold text-white/40 uppercase tracking-wider">Email</th>
+                <th className="px-4 py-2.5 text-left text-xs font-semibold text-white/40 uppercase tracking-wider hidden sm:table-cell">Inscrit le</th>
+                <th className="px-4 py-2.5 w-10" />
+              </tr>
+            </thead>
+            <tbody>
+              {subscribers.map(s => (
+                <tr key={s.email} className="border-b border-white/5 hover:bg-white/[0.03] transition-colors">
+                  <td className="px-4 py-3 text-sm text-white font-mono">{s.email}</td>
+                  <td className="px-4 py-3 text-xs text-white/40 hidden sm:table-cell whitespace-nowrap">
+                    {new Date(s.created_at).toLocaleDateString('fr-FR', { day: '2-digit', month: 'short', year: 'numeric' })}
+                  </td>
+                  <td className="px-4 py-3 text-right">
+                    <button type="button" onClick={() => handleDelete(s.email)} disabled={deleting === s.email}
+                      className="p-1.5 rounded hover:bg-red-500/10 text-white/20 hover:text-red-400 transition-colors disabled:opacity-30"
+                      title="Supprimer">
+                      {deleting === s.email
+                        ? <div className="w-3.5 h-3.5 border border-current border-t-transparent rounded-full animate-spin" />
+                        : <Trash2 className="w-3.5 h-3.5" />}
+                    </button>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        )}
+      </div>
+    </div>
+  );
+};
+
 /* ── Page principale ────────────────────────────────────────── */
 export default function Admin() {
   const [auth, setAuth]           = useState(() => localStorage.getItem('admin_auth') === '1');
@@ -1450,6 +1601,7 @@ export default function Admin() {
     { key: 'paysage',     label: 'Galerie Paysage' },
     { key: 'sous_marine', label: 'Galerie Sous-marine' },
     { key: 'blog',        label: 'Blog' },
+    { key: 'newsletter',  label: 'Newsletter' },
     { key: 'reseaux',     label: 'Réseaux' },
     { key: 'exif',        label: 'Contrôle EXIF' },
     { key: 'stats_fb',    label: 'Stats FB' },
@@ -1616,6 +1768,7 @@ export default function Admin() {
         {tab === 'paysage'     && <TabGalerie tableName="photos_paysage" />}
         {tab === 'sous_marine' && <TabGalerie tableName="photos_sous_marine" />}
         {tab === 'blog'        && <TabBlog />}
+        {tab === 'newsletter'  && <TabNewsletter />}
         {tab === 'reseaux'     && <TabReseaux />}
         {tab === 'exif'        && <TabExif />}
         {tab === 'stats_fb'    && <TabStatsFB />}

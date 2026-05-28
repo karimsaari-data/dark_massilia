@@ -70,13 +70,13 @@ const NewsletterSection = () => {
 
           {/* Titre */}
           <h2 className="text-3xl md:text-4xl font-bold text-white mb-4 leading-tight">
-            Ce que la mer cache,{' '}
-            <span className="text-ocean-teal">je te le montre</span>
+            Face à face avec Poséidon{' '}
+            <span className="text-ocean-teal">sous les eaux de Marseille</span>
           </h2>
 
           {/* Sous-titre */}
-          <p className="text-white/70 text-base md:text-lg leading-relaxed mb-8 max-w-lg">
-            Reçois une photo exclusive des Calanques dès ton inscription — puis missions de dépollution, clichés inédits, plongées en apnée et faune sous-marine directement dans ta boîte mail.
+          <p className="text-white/80 text-base md:text-lg leading-relaxed mb-8 max-w-lg">
+            Découvre les secrets du Musée Subaquatique et l'envers du décor des Calanques. Reçois ton cliché exclusif offert dès l'inscription — puis 1 email par mois : missions, faune sous-marine et plongées en apnée.
           </p>
 
           {/* Formulaire / États */}
@@ -106,7 +106,7 @@ const NewsletterSection = () => {
                       required
                       disabled={status === 'loading'}
                       aria-describedby={status === 'error' ? 'newsletter-error' : undefined}
-                      className="flex-1 px-5 py-3.5 rounded-full bg-white/10 border border-white/25 text-white placeholder-white/40 focus:outline-none focus:border-ocean-teal focus:bg-white/15 transition-all text-base disabled:opacity-60 backdrop-blur-sm"
+                      className="flex-1 px-5 py-3.5 rounded-full bg-white border border-transparent text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-ocean-teal transition-all text-base disabled:opacity-60"
                     />
                     <button
                       type="submit"
