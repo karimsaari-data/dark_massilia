@@ -109,6 +109,15 @@ const TIMELINE_ENTRIES = [
     side: 'right',
   },
   {
+    period: 'Juin 2015',
+    label: 'La photographie de paysage',
+    title: 'Valensole — vendu à National Geographic',
+    text: 'Un cliché des lavandes de Valensole sélectionné et acquis par National Geographic. Une validation par l\'une des références mondiales de la photographie de paysage — et un tournant dans la confiance portée à l\'image comme outil de narration.',
+    img: '/images/portfolio/Mer/valensole-3.webp',
+    alt: 'Champ de lavandes de Valensole, Provence — photographie de paysage Karim Saari vendue à National Geographic',
+    side: 'left',
+  },
+  {
     period: '2017',
     label: 'Le basculement',
     title: 'Chemin de Morgiou, l\'apnée et les fonds',
