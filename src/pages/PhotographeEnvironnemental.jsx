@@ -500,12 +500,12 @@ const PhotographeEnvironnemental = () => {
                         </p>
                       )}
                       {entry.link && (
-                        <a
-                          href={entry.link}
+                        <Link
+                          to={entry.link}
                           className={`inline-flex items-center gap-1.5 mt-3 text-ocean-teal hover:text-white transition-colors text-xs font-medium ${textLeft ? 'justify-end' : ''}`}
                         >
                           {entry.linkLabel} <ArrowRight className="w-3 h-3" aria-hidden="true" />
-                        </a>
+                        </Link>
                       )}
                     </div>
                   );
@@ -539,9 +539,9 @@ const PhotographeEnvironnemental = () => {
                             <p className="text-text-secondary text-sm leading-relaxed">{entry.text}</p>
                             {entry.quote && <p className="mt-2 text-white/60 italic text-sm border-l-2 border-ocean-teal pl-3">{entry.quote}</p>}
                             {entry.link && (
-                              <a href={entry.link} className="inline-flex items-center gap-1.5 mt-2 text-ocean-teal text-xs font-medium">
+                              <Link to={entry.link} className="inline-flex items-center gap-1.5 mt-2 text-ocean-teal text-xs font-medium">
                                 {entry.linkLabel} <ArrowRight className="w-3 h-3" aria-hidden="true" />
-                              </a>
+                              </Link>
                             )}
                           </div>
                           <div className="aspect-square overflow-hidden ring-1 ring-white/10 bg-black/40">
