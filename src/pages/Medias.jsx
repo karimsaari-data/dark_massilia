@@ -137,6 +137,15 @@ const Medias = () => {
       logo: '/images/Partenaires/svg/Ville_de_Marseille_(logo).svg',
     },
     {
+      title: 'National Geographic — Hors-Série n°183 Provence',
+      url: 'https://www.nationalgeographic.fr/',
+      featured: true,
+      date: 'Juin 2015',
+      image: '/images/portfolio/Mer/karim-saari-valensole-lavandes-national-geographic-provence.webp',
+      logo: '/images/Partenaires/svg/National-Geographic-Logo.svg',
+      desc: 'Un cliché de lavandes à Valensole sélectionné et publié dans le hors-série spécial Provence de National Geographic — une reconnaissance internationale pour la photographie de paysage.',
+    },
+    {
       title: 'Made in Marseille — Provence, top tourisme France',
       url: 'https://madeinmarseille.net/environnement/3753-region-provence-top-tourisme-france/',
       featured: false,
