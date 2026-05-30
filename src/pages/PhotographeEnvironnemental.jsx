@@ -249,17 +249,21 @@ const HERO_STATS = [
 ];
 
 // Médias
+// cols sur grille 6 — définit la largeur de chaque tuile dans la mosaïque
 const MEDIA_LOGOS = [
-  { name: 'TF1',                 label: 'Reportages TF1',                      svg: '/images/Partenaires/svg/TF1_logo_2006.svg',                    url: '/presse' },
-  { name: 'ARTE',                label: 'Documentaires ARTE',                   svg: '/images/Partenaires/svg/Arte-Logo.svg',                        url: '/sauver-marseille-documentaire-arte' },
-  { name: 'M6',                  label: 'Zone Interdite M6',                    svg: '/images/Partenaires/svg/Logo_M6_(2020,_fond_clair).svg',       url: '/presse' },
-  { name: 'La Provence',         label: 'La Provence',                          svg: '/images/Partenaires/svg/La-provence-2023.svg',                 url: '/presse' },
-  { name: 'France Bleu',         label: 'France Bleu',                          svg: '/images/Partenaires/svg/France_Bleu_2021.svg',                 url: '/presse', darkBg: true },
-  { name: 'Actu.fr',             label: 'Actu Marseille',                       svg: '/images/Partenaires/svg/Actu.fr_logo_2020.svg',               url: '/presse' },
-  { name: 'France 5',            label: 'France 5',                             svg: '/images/Partenaires/svg/France_5_-_logo_2018.svg',             url: '/presse' },
-  { name: 'Midi Libre',          label: 'Midi Libre',                           svg: '/images/Partenaires/svg/midi-libre-logo-vector.svg',          url: '/presse', darkBg: true },
-  { name: 'National Geographic', label: 'National Geographic — Hors-Série n°183 Provence', svg: '/images/Partenaires/svg/National-Geographic-Logo.svg', url: '/presse' },
-  { name: 'Ville de Marseille',  label: 'Ville de Marseille — Commande officielle',        svg: '/images/Partenaires/svg/Armoiries_de_Marseille.svg',  url: '/presse' },
+  // Rangée 1 — grandes chaînes TV (3 × col-span-2, hauteur xl)
+  { name: 'TF1',      label: 'Reportages TF1',          svg: '/images/Partenaires/svg/TF1_logo_2006.svg',           url: '/presse',                              cols: 2, h: 'h-20' },
+  { name: 'ARTE',     label: 'Documentaires ARTE',       svg: '/images/Partenaires/svg/Arte-Logo.svg',               url: '/sauver-marseille-documentaire-arte',  cols: 2, h: 'h-20' },
+  { name: 'France 5', label: 'France 5',                 svg: '/images/Partenaires/svg/France_5_-_logo_2018.svg',    url: '/presse',                              cols: 2, h: 'h-20' },
+  // Rangée 2 — presse & radio (2+1+1+2, hauteur md)
+  { name: 'La Provence',  label: 'La Provence',          svg: '/images/Partenaires/svg/La-provence-2023.svg',        url: '/presse',                              cols: 2, h: 'h-14' },
+  { name: 'M6',           label: 'Zone Interdite M6',    svg: '/images/Partenaires/svg/Logo_M6_(2020,_fond_clair).svg', url: '/presse',                           cols: 1, h: 'h-14' },
+  { name: 'France Bleu',  label: 'France Bleu',          svg: '/images/Partenaires/svg/France_Bleu_2021.svg',        url: '/presse', darkBg: true,               cols: 1, h: 'h-14' },
+  { name: 'Actu.fr',      label: 'Actu Marseille',       svg: '/images/Partenaires/svg/Actu.fr_logo_2020.svg',       url: '/presse',                              cols: 2, h: 'h-14' },
+  // Rangée 3 — institutionnel & presse spécialisée (2+2+2, hauteur lg)
+  { name: 'Midi Libre',          label: 'Midi Libre',                                    svg: '/images/Partenaires/svg/midi-libre-logo-vector.svg',   url: '/presse', darkBg: true, cols: 2, h: 'h-16' },
+  { name: 'National Geographic', label: 'National Geographic — Hors-Série n°183 Provence', svg: '/images/Partenaires/svg/National-Geographic-Logo.svg', url: '/presse',            cols: 2, h: 'h-16' },
+  { name: 'Ville de Marseille',  label: 'Ville de Marseille — Commande officielle',      svg: '/images/Partenaires/svg/Armoiries_de_Marseille.svg',   url: '/presse',            cols: 2, h: 'h-16' },
 ];
 
 const PhotographeEnvironnemental = () => {
@@ -624,15 +628,16 @@ const PhotographeEnvironnemental = () => {
             <p className="text-text-secondary text-center mb-8 max-w-xl mx-auto">
               Reportages, documentaires et couvertures presse depuis plus de 10 ans sur le terrain.
             </p>
-            <div className="grid grid-cols-3 sm:grid-cols-5 gap-3 mb-8">
-              {MEDIA_LOGOS.map(({ name, label, svg, url, darkBg }) => (
+            <div className="grid grid-cols-3 sm:grid-cols-6 gap-3 mb-8">
+              {MEDIA_LOGOS.map(({ name, label, svg, url, darkBg, cols, h }) => (
                 <Link
                   key={name}
                   to={url}
                   title={label}
-                  className={`${darkBg ? 'bg-gray-800' : 'bg-white'} rounded-md px-3 py-2 flex items-center justify-center opacity-80 hover:opacity-100 transition-opacity duration-300`}
+                  style={{ gridColumn: `span ${cols}` }}
+                  className={`${darkBg ? 'bg-gray-800' : 'bg-white'} ${h} rounded-xl px-4 flex items-center justify-center opacity-80 hover:opacity-100 hover:scale-[1.03] transition-all duration-300`}
                 >
-                  <img src={svg} alt={label} className="h-6 md:h-8 w-auto object-contain" loading="lazy" />
+                  <img src={svg} alt={label} className="max-h-full w-auto object-contain" loading="lazy" />
                 </Link>
               ))}
             </div>
