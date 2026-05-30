@@ -135,6 +135,8 @@ const TIMELINE_ENTRIES = [
     text: 'La Ville de Marseille me commande un cliché de la Canebière pour célébrer sa piétonisation. La photo est tirée en grand format sur bâche, place Saint-Louis, façade de l\'Espace Culture — une reconnaissance publique ancrée dans l\'identité marseillaise.',
     img: '/images/800w/karim-saari-marseille-ville-reconnaissance-officielle-dark-massilia.webp',
     alt: 'Karim Saari — bâche grand format Canebière, Ville de Marseille, Espace Culture place Saint-Louis',
+    badge: '/images/Partenaires/svg/Armoiries_de_Marseille.svg',
+    badgeAlt: 'Armoiries de la Ville de Marseille',
     side: 'right',
   },
   {
@@ -248,6 +250,7 @@ const MEDIA_LOGOS = [
   { name: 'France 5',            label: 'France 5',                             svg: '/images/Partenaires/svg/France_5_-_logo_2018.svg',             url: '/presse' },
   { name: 'Midi Libre',          label: 'Midi Libre',                           svg: '/images/Partenaires/svg/midi-libre-logo-vector.svg',          url: '/presse', darkBg: true },
   { name: 'National Geographic', label: 'National Geographic — Hors-Série n°183 Provence', svg: '/images/Partenaires/svg/National-Geographic-Logo.svg', url: '/presse' },
+  { name: 'Ville de Marseille',  label: 'Ville de Marseille — Commande officielle',        svg: '/images/Partenaires/svg/Armoiries_de_Marseille.svg',  url: '/presse' },
 ];
 
 const PhotographeEnvironnemental = () => {
@@ -490,6 +493,9 @@ const PhotographeEnvironnemental = () => {
                         <div className="md:max-w-sm md:mx-auto md:text-center">
                           <p className="text-ocean-teal text-xs font-semibold uppercase tracking-widest mb-1">{entry.label}</p>
                           <p className="text-white font-bold text-2xl mb-2">{entry.period}</p>
+                          {entry.badge && (
+                            <img src={entry.badge} alt={entry.badgeAlt} className="h-8 w-auto mb-2" loading="lazy" />
+                          )}
                           <p className="text-white font-semibold text-sm mb-2">{entry.title}</p>
                           <p className="text-text-secondary text-sm leading-relaxed">{entry.text}</p>
                         </div>
@@ -503,6 +509,9 @@ const PhotographeEnvironnemental = () => {
                     <div className={textLeft ? 'md:pr-10 md:text-right' : 'md:pl-10'}>
                       <p className="text-ocean-teal text-xs font-semibold uppercase tracking-widest mb-1">{entry.label}</p>
                       <p className="text-white font-bold text-3xl md:text-4xl mb-3 leading-tight">{entry.period}</p>
+                      {entry.badge && (
+                        <img src={entry.badge} alt={entry.badgeAlt} className={`h-10 w-auto mb-2 ${textLeft ? 'ml-auto' : ''}`} loading="lazy" />
+                      )}
                       <p className="text-white font-semibold text-sm mb-2">{entry.title}</p>
                       <p className="text-text-secondary text-sm leading-relaxed">{entry.text}</p>
                       {entry.quote && (
