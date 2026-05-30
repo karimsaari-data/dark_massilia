@@ -111,8 +111,8 @@ const TIMELINE_ENTRIES = [
   {
     period: 'Juin 2015',
     label: 'La photographie de paysage',
-    title: 'Valensole — National Geographic Hors-Série Provence',
-    text: 'Un cliché des lavandes de Valensole sélectionné et publié dans le hors-série spécial Provence de National Geographic. Une reconnaissance par l\'une des références mondiales de la photographie de paysage — et un tournant dans la confiance portée à l\'image comme outil de narration.',
+    title: 'Valensole — National Geographic Hors-Série n°183 Provence',
+    text: 'Un cliché des lavandes de Valensole sélectionné et publié dans le hors-série n°183 spécial Provence de National Geographic. Une reconnaissance par l\'une des références mondiales de la photographie de paysage — et un tournant dans la confiance portée à l\'image comme outil de narration.',
     img: '/images/portfolio/Mer/karim-saari-valensole-lavandes-national-geographic-provence.webp',
     imgSrcSet: '/images/portfolio/Mer/karim-saari-valensole-lavandes-national-geographic-provence_400w.webp 400w, /images/portfolio/Mer/karim-saari-valensole-lavandes-national-geographic-provence_800w.webp 800w, /images/portfolio/Mer/karim-saari-valensole-lavandes-national-geographic-provence_1200w.webp 1200w',
     alt: 'Champ de lavandes de Valensole, Provence — photographie de paysage Karim Saari publiée dans National Geographic hors-série Provence',
