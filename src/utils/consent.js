@@ -52,6 +52,9 @@ export function saveConsent(preferences) {
   try {
     if (typeof window !== 'undefined') {
       localStorage.setItem(CONSENT_STORAGE_KEY, JSON.stringify(data));
+      // Notifie les overlays (ex : popup newsletter) qu'un choix cookie a été fait,
+      // pour éviter qu'ils s'affichent par-dessus la bannière de consentement.
+      window.dispatchEvent(new CustomEvent('dm:consent-resolved'));
     }
   } catch {
     // localStorage indisponible (mode navigation privée, quota dépassé)

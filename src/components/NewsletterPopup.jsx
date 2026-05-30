@@ -4,6 +4,7 @@ import { X, CheckCircle, Loader2 } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { supabase } from '../lib/supabase';
 import { trackEvent } from '../lib/analytics';
+import { getStoredConsent } from '../utils/consent';
 
 const STORAGE_KEY = 'dm_newsletter_popup';
 const SUBSCRIBED_KEY = 'dm_subscribed';
@@ -13,6 +14,9 @@ const SCROLL_THRESHOLD = 0.6;
 
 function shouldShow() {
   if (typeof window === 'undefined') return false;
+  // Tant que l'utilisateur n'a pas répondu à la bannière cookies, on n'empile pas
+  // le popup par-dessus : il s'affichera une fois le choix de consentement fait.
+  if (!getStoredConsent()) return false;
   if (localStorage.getItem(SUBSCRIBED_KEY)) return false;
   const stored = localStorage.getItem(STORAGE_KEY);
   if (!stored) return true;
@@ -30,8 +34,11 @@ export default function NewsletterPopup() {
 
   const trigger = () => {
     if (triggered.current) return;
+    // On ne consomme le déclencheur que si le popup peut réellement s'afficher
+    // (sinon un timer écoulé avant le choix cookies le neutraliserait définitivement).
+    if (!shouldShow()) return;
     triggered.current = true;
-    if (shouldShow()) setVisible(true);
+    setVisible(true);
   };
 
   useEffect(() => {
@@ -42,10 +49,20 @@ export default function NewsletterPopup() {
       if (scrolled >= SCROLL_THRESHOLD) trigger();
     };
 
+    // Si le consentement est donné après l'écoulement du timer initial, on relance
+    // un court délai pour laisser le popup apparaître (sans empiéter sur la bannière).
+    let consentTimer;
+    const onConsentResolved = () => {
+      consentTimer = setTimeout(trigger, 1200);
+    };
+
     window.addEventListener('scroll', onScroll, { passive: true });
+    window.addEventListener('dm:consent-resolved', onConsentResolved);
     return () => {
       clearTimeout(timer);
+      clearTimeout(consentTimer);
       window.removeEventListener('scroll', onScroll);
+      window.removeEventListener('dm:consent-resolved', onConsentResolved);
     };
   }, []);
 

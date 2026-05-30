@@ -2,7 +2,7 @@ import { lazy, Suspense, useState, useEffect } from 'react';
 import { motion, AnimatePresence, useReducedMotion } from 'framer-motion';
 import { useCardHover } from '../hooks/useCardHover';
 import { Link } from 'react-router-dom';
-import { ArrowRight, Users, ChevronDown, Camera, MapPin } from 'lucide-react';
+import { ArrowRight, Users, ChevronDown, Camera, MapPin, Gift } from 'lucide-react';
 
 import { FADE_IN_UP, STAGGER_CONTAINER, FACEBOOK_GROUP_MEMBERS, SOCIAL_STATS_DEFAULTS } from '../utils/constants';
 import { trackEvent } from '../lib/analytics';
@@ -252,7 +252,7 @@ const Home = () => {
                 background: 'rgba(10, 20, 40, 0.45)',
                 backdropFilter: 'blur(14px)',
                 borderRadius: '24px',
-                padding: 'clamp(48px, 6vw, 88px)',
+                padding: 'clamp(20px, 5vw, 88px)',
                 border: '2px solid rgba(0,171,168,0.55)',
                 boxShadow: '0 0 0 6px rgba(0,8,24,0.88), 0 0 0 8px rgba(0,171,168,0.35), 0 0 40px rgba(0,171,168,0.18), 0 0 80px rgba(0,120,180,0.10)',
               }}
@@ -290,7 +290,7 @@ const Home = () => {
                     height="488"
                     className="h-48 w-auto rounded-xl border border-white/20 shadow-lg shadow-ocean-teal/20"
                     loading="eager"
-                    fetchpriority="high"
+                    fetchPriority="high"
                     decoding="async"
                   />
                 </motion.div>
@@ -320,7 +320,7 @@ const Home = () => {
                         className="w-[3px] bg-ocean-teal rounded-full"
                       />
                     </div>
-                    <h1 className="font-display text-3xl md:text-4xl lg:text-5xl font-extrabold text-white uppercase tracking-[0.08em] leading-[1.15]">
+                    <h1 className="font-display text-[1.7rem] sm:text-3xl md:text-4xl lg:text-5xl font-extrabold text-white uppercase tracking-[0.01em] md:tracking-[0.08em] leading-[1.15]">
                       Photographie &amp; Engagement : Révéler et Protéger les Calanques de Marseille
                     </h1>
                   </div>
@@ -348,29 +348,30 @@ const Home = () => {
                   <div className="flex flex-col sm:flex-row items-center justify-center md:justify-start gap-4 mt-2">
                     <a
                       href="#newsletter"
-                      className="btn-primary inline-flex items-center gap-2"
+                      className="btn-primary inline-flex items-center gap-2 whitespace-nowrap"
                       title="Recevoir une photo exclusive des fonds marins des Calanques"
                       onClick={() => trackEvent('cta_click', { button_name: 'Recevoir un cliché gratuit' })}
                     >
-                      <span>🎁 Recevoir un cliché gratuit</span>
+                      <Gift className="w-4 h-4 flex-shrink-0" aria-hidden="true" />
+                      <span>Recevoir un cliché gratuit</span>
                     </a>
                     <a
                       href="#galerie"
-                      className="btn-ghost inline-flex items-center gap-2"
+                      className="btn-ghost inline-flex items-center gap-2 whitespace-nowrap"
                       title="Voir les photographies des Calanques de Marseille par Karim Saari"
                       onClick={() => trackEvent('cta_click', { button_name: 'Découvrir les Calanques' })}
                     >
                       <span>Découvrir les Calanques</span>
-                      <ArrowRight className="w-4 h-4" aria-hidden="true" />
+                      <ArrowRight className="w-4 h-4 flex-shrink-0" aria-hidden="true" />
                     </a>
                     <Link
                       to="/contact"
-                      className="btn-ghost inline-flex items-center gap-2"
+                      className="btn-ghost inline-flex items-center gap-2 whitespace-nowrap"
                       title="Contacter Karim Saari — collaboration, presse, missions"
                       onClick={() => trackEvent('cta_click', { button_name: 'Me contacter' })}
                     >
                       <span>Me contacter</span>
-                      <ArrowRight className="w-4 h-4" aria-hidden="true" />
+                      <ArrowRight className="w-4 h-4 flex-shrink-0" aria-hidden="true" />
                     </Link>
                   </div>
                 </div>
@@ -390,7 +391,7 @@ const Home = () => {
                       height="488"
                       className="h-[380px] lg:h-[460px] w-auto rounded-xl border-2 border-black shadow-[0_0_0_1px_rgba(0,171,168,0.4),0_8px_32px_rgba(0,0,0,0.5)]"
                       loading="eager"
-                      fetchpriority="high"
+                      fetchPriority="high"
                       decoding="async"
                     />
                   </motion.div>
@@ -940,6 +941,14 @@ const Home = () => {
           <p className="text-center text-xs text-text-muted mb-6 tabular-nums">
             {currentFactIndex + 1} / {IMPACT_FACTS.length}
           </p>
+
+          {/* Tous les faits dans le DOM — indexables par les crawlers + lecteurs
+              d'écran (le carrousel n'en monte qu'un à la fois via AnimatePresence) */}
+          <ul className="sr-only">
+            {IMPACT_FACTS.map((fact, i) => (
+              <li key={i}>{fact}</li>
+            ))}
+          </ul>
 
           <div className="min-h-[180px] md:min-h-[140px] flex items-center justify-center text-center">
             <AnimatePresence mode="wait">
