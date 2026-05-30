@@ -870,7 +870,7 @@ const PhotoSousMarine = () => {
               <img
                 src="/images/portfolio/Mer/photographe-sous-marin-marseille-pollution-plastique-fond-marin.webp"
                 alt="Pollution plastique au fond de la mer — fonds marins des Calanques de Marseille documentés par Karim Saari, photographe sous-marin"
-                className="w-full h-full object-cover hover:scale-105 transition-transform duration-500"
+                className="w-full h-full object-cover scale-[1.08] hover:scale-[1.13] transition-transform duration-500"
                 loading="lazy"
                 decoding="async"
               />
