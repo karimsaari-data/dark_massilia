@@ -445,7 +445,7 @@ const PhotographeEnvironnemental = () => {
                 <Camera className="w-4 h-4" aria-hidden="true" />
                 Photos de paysages
               </Link>
-              <Link to="/depollution-marine" className="btn inline-flex items-center gap-2">
+              <Link to="/depollution-marine" className="btn-primary inline-flex items-center gap-2">
                 Projet Sentinelle
                 <ArrowRight className="w-4 h-4" aria-hidden="true" />
               </Link>
@@ -487,7 +487,7 @@ const PhotographeEnvironnemental = () => {
                         <div className="md:hidden flex-shrink-0 pt-1.5">
                           <div className={`w-2.5 h-2.5 ${dotClass}`} aria-hidden="true" />
                         </div>
-                        <div className="hidden md:flex absolute left-1/2 -translate-x-1/2 top-0 w-3.5 h-3.5 ${dotClass}" aria-hidden="true" />
+                        <div className={`hidden md:flex absolute left-1/2 -translate-x-1/2 top-0 w-3.5 h-3.5 ${dotClass}`} aria-hidden="true" />
                         <div className="md:max-w-sm md:mx-auto md:text-center">
                           <p className="text-ocean-teal text-xs font-semibold uppercase tracking-widest mb-1">{entry.label}</p>
                           <p className="text-white font-bold text-2xl mb-2">{entry.period}</p>
@@ -585,14 +585,10 @@ const PhotographeEnvironnemental = () => {
               </div>
             </div>
 
-            <div className="mt-8 pt-6 border-t border-white/10 flex flex-col sm:flex-row items-center justify-center gap-4">
-              <Link to="/photographie-paysage-mer" className="btn inline-flex items-center gap-2">
-                <Camera className="w-4 h-4" aria-hidden="true" />
-                Photographie de paysages
-              </Link>
-              <Link to="/photographie-sous-marine" className="btn inline-flex items-center gap-2">
-                <Camera className="w-4 h-4" aria-hidden="true" />
-                Photographie sous-marine
+            <div className="mt-8 pt-6 border-t border-white/10 flex items-center justify-center">
+              <Link to="/contact" className="btn-primary inline-flex items-center gap-2">
+                <Mail className="w-4 h-4" aria-hidden="true" />
+                Me contacter pour une collaboration
               </Link>
             </div>
           </motion.div>
@@ -655,7 +651,7 @@ const PhotographeEnvironnemental = () => {
             <h2 className="text-xl md:text-2xl font-bold text-white text-center mb-2">
               Partenaires associatifs — agir ensemble sur le terrain
             </h2>
-            <p className="text-text-secondary text-center mb-1 text-sm whitespace-nowrap">
+            <p className="text-text-secondary text-center mb-1 text-sm">
               Des années de collaborations avec les acteurs de la protection du littoral méditerranéen.
             </p>
             <p className="text-ocean-teal text-sm italic text-center mb-8">
@@ -690,9 +686,9 @@ const PhotographeEnvironnemental = () => {
           className="mb-12"
         >
           {/* Ligne 1 : portrait 1dpj (span 2 lignes) + 2 × MerTerre */}
-          <motion.div variants={FADE_IN_UP} className="grid grid-cols-2 gap-3 mb-3">
-            {/* Portrait — s'étire sur la hauteur des 2 cartes de droite */}
-            <div className="row-span-2 relative rounded-2xl overflow-hidden group ring-1 ring-white/8">
+          <motion.div variants={FADE_IN_UP} className="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-3">
+            {/* Portrait — s'étire sur la hauteur des 2 cartes de droite (desktop) */}
+            <div className="sm:row-span-2 aspect-[3/4] sm:aspect-auto relative rounded-2xl overflow-hidden group ring-1 ring-white/8">
               <img
                 src={PARTNER_PHOTO_INTRO.src}
                 alt={PARTNER_PHOTO_INTRO.alt}
@@ -733,7 +729,7 @@ const PhotographeEnvironnemental = () => {
           </motion.div>
 
           {/* Ligne 2 : 3 × PNC */}
-          <motion.div variants={FADE_IN_UP} className="grid grid-cols-3 gap-3">
+          <motion.div variants={FADE_IN_UP} className="grid grid-cols-1 sm:grid-cols-3 gap-3">
             {PARTNER_PHOTOS_PNC.map(({ src, alt, caption, credit, creditUrl }) => (
               <div key={src} className="relative rounded-2xl overflow-hidden group ring-1 ring-white/8">
                 <div className="aspect-[4/3]">
