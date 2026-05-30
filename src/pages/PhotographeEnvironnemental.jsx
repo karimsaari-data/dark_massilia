@@ -113,8 +113,9 @@ const TIMELINE_ENTRIES = [
     label: 'La photographie de paysage',
     title: 'Valensole — National Geographic Hors-Série Provence',
     text: 'Un cliché des lavandes de Valensole sélectionné et publié dans le hors-série spécial Provence de National Geographic. Une reconnaissance par l\'une des références mondiales de la photographie de paysage — et un tournant dans la confiance portée à l\'image comme outil de narration.',
-    img: '/images/portfolio/Mer/valensole-3.webp',
-    alt: 'Champ de lavandes de Valensole, Provence — photographie de paysage Karim Saari vendue à National Geographic',
+    img: '/images/portfolio/Mer/karim-saari-valensole-lavandes-national-geographic-provence.webp',
+    imgSrcSet: '/images/portfolio/Mer/karim-saari-valensole-lavandes-national-geographic-provence_400w.webp 400w, /images/portfolio/Mer/karim-saari-valensole-lavandes-national-geographic-provence_800w.webp 800w, /images/portfolio/Mer/karim-saari-valensole-lavandes-national-geographic-provence_1200w.webp 1200w',
+    alt: 'Champ de lavandes de Valensole, Provence — photographie de paysage Karim Saari publiée dans National Geographic hors-série Provence',
     side: 'left',
   },
   {
@@ -523,6 +524,8 @@ const PhotographeEnvironnemental = () => {
                     <div className="aspect-square overflow-hidden ring-1 ring-white/10 bg-black/40">
                       <img
                         src={entry.img}
+                        srcSet={entry.imgSrcSet}
+                        sizes="(max-width: 768px) 100vw, 50vw"
                         alt={entry.alt}
                         className={`w-full h-full ${entry.imgFit || 'object-cover'}${entry.imgScale ? ` ${entry.imgScale}` : ''}`}
                         loading="lazy"
@@ -554,7 +557,7 @@ const PhotographeEnvironnemental = () => {
                             )}
                           </div>
                           <div className="aspect-square overflow-hidden ring-1 ring-white/10 bg-black/40">
-                            <img src={entry.img} alt={entry.alt} className={`w-full h-full ${entry.imgFit || 'object-cover'}${entry.imgScale ? ` ${entry.imgScale}` : ''}`} loading="lazy" />
+                            <img src={entry.img} srcSet={entry.imgSrcSet} sizes="100vw" alt={entry.alt} className={`w-full h-full ${entry.imgFit || 'object-cover'}${entry.imgScale ? ` ${entry.imgScale}` : ''}`} loading="lazy" />
                           </div>
                         </div>
                       </div>
