@@ -635,8 +635,8 @@ const PhotographeEnvironnemental = () => {
                   key={name}
                   to={url}
                   title={label}
-                  style={{ gridColumn: `span ${cols}`, background: 'rgba(255,255,255,0.06)', backdropFilter: 'blur(8px)' }}
-                  className={`${h} rounded-2xl px-4 flex items-center justify-center opacity-75 hover:opacity-100 hover:scale-[1.03] transition-all duration-300 border border-white/10 hover:border-white/25`}
+                  style={{ gridColumn: `span ${cols}` }}
+                  className={`${h} rounded-2xl px-5 flex items-center justify-center opacity-90 hover:opacity-100 hover:scale-[1.02] transition-all duration-300 bg-white/95 shadow-md hover:shadow-lg`}
                 >
                   <img
                     src={svg}
