@@ -133,8 +133,8 @@ const TIMELINE_ENTRIES = [
     label: 'La communauté',
     title: 'Création du groupe « Amoureux des Calanques »',
     text: 'En 2018, je crée le groupe Facebook « Amoureux des Calanques de Marseille à Port-Cros ». Ce qui commence comme un espace de partage photographique devient rapidement une communauté engagée — des milliers de passionnés du littoral, un relais pour sensibiliser à la préservation des Calanques et mobiliser autour des actions de terrain.',
-    img: '/images/portfolio/Mer/karim-saari-marseille-paysage-calanque-sormiou-eau-turquoise.webp',
-    alt: 'Calanque de Sormiou, Marseille — communauté Amoureux des Calanques',
+    img: '/images/groupe%20des%20amoureux%20des%20calanques.webp',
+    alt: 'Groupe des Amoureux des Calanques de Marseille à Port-Cros',
     side: 'right',
   },
   {
