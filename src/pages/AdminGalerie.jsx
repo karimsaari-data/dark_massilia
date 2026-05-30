@@ -9,6 +9,7 @@ import {
   Lock, LogOut, Search, Save, Eye, EyeOff,
   ChevronDown, ChevronUp, MapPin, ExternalLink, ArrowUp, X, Upload, Rss, Trash2, Download,
   FileText, Bell, BellOff, AlertCircle, CheckCircle, XCircle, RefreshCw, Clock, Mail, Users,
+  Mountain, Fish, Share2, Camera, BarChart2,
 } from 'lucide-react';
 
 const ADMIN_PASSWORD = import.meta.env.VITE_ADMIN_PASSWORD || 'darkm';
@@ -1433,7 +1434,7 @@ const TabNewsletter = () => {
     const { data } = await supabase
       .from('newsletter_subscribers')
       .select('*')
-      .order('created_at', { ascending: false });
+      .order('subscribed_at', { ascending: false });
     setSubscribers(data ?? []);
     setLoading(false);
   }, []);
@@ -1449,15 +1450,15 @@ const TabNewsletter = () => {
 
   const now = new Date();
   const thisMonth = subscribers.filter(s => {
-    const d = new Date(s.created_at);
+    const d = new Date(s.subscribed_at);
     return d.getMonth() === now.getMonth() && d.getFullYear() === now.getFullYear();
   });
-  const lastWeek = subscribers.filter(s => (now - new Date(s.created_at)) < 7 * 24 * 60 * 60 * 1000);
+  const lastWeek = subscribers.filter(s => (now - new Date(s.subscribed_at)) < 7 * 24 * 60 * 60 * 1000);
 
   const chartData = useMemo(() => {
     const counts = {};
     subscribers.forEach(s => {
-      const d = new Date(s.created_at);
+      const d = new Date(s.subscribed_at);
       const key = `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}`;
       counts[key] = (counts[key] ?? 0) + 1;
     });
@@ -1467,7 +1468,7 @@ const TabNewsletter = () => {
   }, [subscribers]);
 
   const exportCsv = () => {
-    const cols = ['email', 'created_at'];
+    const cols = ['email', 'subscribed_at'];
     const escape = v => `"${String(v ?? '').replace(/"/g, '""')}"`;
     const csv = [cols.join(','), ...subscribers.map(r => cols.map(c => escape(r[c])).join(','))].join('\n');
     const blob = new Blob(['﻿' + csv], { type: 'text/csv;charset=utf-8' });
@@ -1552,7 +1553,7 @@ const TabNewsletter = () => {
                 <tr key={s.email} className="border-b border-white/5 hover:bg-white/[0.03] transition-colors">
                   <td className="px-4 py-3 text-sm text-white font-mono">{s.email}</td>
                   <td className="px-4 py-3 text-xs text-white/40 hidden sm:table-cell whitespace-nowrap">
-                    {new Date(s.created_at).toLocaleDateString('fr-FR', { day: '2-digit', month: 'short', year: 'numeric' })}
+                    {new Date(s.subscribed_at).toLocaleDateString('fr-FR', { day: '2-digit', month: 'short', year: 'numeric' })}
                   </td>
                   <td className="px-4 py-3 text-right">
                     <button type="button" onClick={() => handleDelete(s.email)} disabled={deleting === s.email}
@@ -1598,13 +1599,13 @@ export default function Admin() {
   };
 
   const TABS = [
-    { key: 'paysage',     label: 'Galerie Paysage' },
-    { key: 'sous_marine', label: 'Galerie Sous-marine' },
-    { key: 'blog',        label: 'Blog' },
-    { key: 'newsletter',  label: 'Newsletter' },
-    { key: 'reseaux',     label: 'Réseaux' },
-    { key: 'exif',        label: 'Contrôle EXIF' },
-    { key: 'stats_fb',    label: 'Stats FB' },
+    { key: 'paysage',     label: 'Galerie Paysage',    icon: Mountain },
+    { key: 'sous_marine', label: 'Galerie Sous-marine', icon: Fish },
+    { key: 'blog',        label: 'Blog',                icon: FileText },
+    { key: 'newsletter',  label: 'Newsletter',          icon: Mail },
+    { key: 'reseaux',     label: 'Réseaux',             icon: Share2 },
+    { key: 'exif',        label: 'Contrôle EXIF',       icon: Camera },
+    { key: 'stats_fb',    label: 'Stats FB',            icon: BarChart2 },
   ];
 
   /* ── Fond commun (login + app) ── */
@@ -1669,27 +1670,11 @@ export default function Admin() {
     <div className="relative min-h-screen text-white">
       {BG}
       {/* Header */}
-      <header className="relative z-10 sticky top-0 border-b border-white/8 px-4 py-3" style={{ background: 'rgba(6,13,26,0.92)', backdropFilter: 'blur(16px)' }}>
-        <div className="max-w-5xl mx-auto flex items-center gap-3">
-          <h1 className="font-bold text-astroide mr-auto tracking-wide">Backoffice — Dark Massilia</h1>
-
-          <div className="flex gap-1 bg-white/5 rounded-lg p-1">
-            {TABS.map(({ key, label }) => (
-              <button
-                key={key}
-                type="button"
-                onClick={() => setTab(key)}
-                className={`px-3 py-1.5 rounded-md text-sm font-medium transition-colors ${
-                  tab === key
-                    ? 'text-black font-semibold'
-                    : 'text-white/60 hover:text-white'
-                }`}
-                style={tab === key ? { background: 'linear-gradient(135deg, #FF7F00, #FF5E00)' } : {}}
-              >
-                {label}
-              </button>
-            ))}
-          </div>
+      <header className="relative z-10 sticky top-0 border-b border-white/8 px-4 pt-3 pb-2" style={{ background: 'rgba(6,13,26,0.92)', backdropFilter: 'blur(16px)' }}>
+        <div className="max-w-5xl mx-auto flex flex-col gap-2">
+          {/* Ligne 1 : titre + actions */}
+          <div className="flex items-center gap-2">
+            <h1 className="font-bold text-astroide mr-auto tracking-wide text-sm md:text-base">Backoffice — Dark Massilia</h1>
 
           <button
             type="button"
@@ -1753,14 +1738,33 @@ export default function Admin() {
             CSV
           </button>
 
-<button
-            type="button"
-            onClick={logout}
-            className="p-2 rounded-lg hover:bg-white/10 text-white/50 hover:text-white transition-colors"
-            title="Déconnexion"
-          >
-            <LogOut className="w-4 h-4" />
-          </button>
+          <button
+              type="button"
+              onClick={logout}
+              className="p-2 rounded-lg hover:bg-white/10 text-white/50 hover:text-white transition-colors"
+              title="Déconnexion"
+            >
+              <LogOut className="w-4 h-4" />
+            </button>
+          </div>
+
+          {/* Ligne 2 : onglets */}
+          <div className="flex gap-1 bg-white/5 rounded-lg p-1 overflow-x-auto" style={{ scrollbarWidth: 'none' }}>
+            {TABS.map(({ key, label, icon: Icon }) => (
+              <button
+                key={key}
+                type="button"
+                onClick={() => setTab(key)}
+                className={`flex items-center gap-1.5 px-3 py-1.5 rounded-md text-sm font-medium transition-colors whitespace-nowrap flex-shrink-0 ${
+                  tab === key ? 'text-black font-semibold' : 'text-white/60 hover:text-white'
+                }`}
+                style={tab === key ? { background: 'linear-gradient(135deg, #FF7F00, #FF5E00)' } : {}}
+              >
+                <Icon className="w-3.5 h-3.5 flex-shrink-0" />
+                {label}
+              </button>
+            ))}
+          </div>
         </div>
       </header>
 
