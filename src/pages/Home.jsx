@@ -463,6 +463,24 @@ const Home = () => {
                   Fondateur d'une <strong className="text-ocean-teal font-semibold">communauté de {SOCIAL_STATS_DEFAULTS.total_community.toLocaleString('fr-FR')} personnes</strong> engagées pour les Calanques, je rends visible l'<strong className="text-ocean-teal font-semibold">impact de la pollution plastique</strong> à travers des <strong className="text-ocean-teal font-semibold">documentaires</strong>, des <strong className="text-ocean-teal font-semibold">expositions photos</strong> et des <strong className="text-ocean-teal font-semibold">missions de dépollution sous-marine</strong> avec mon association.
                 </p>
               </div>
+
+              {/* Timeline parcours */}
+              <div className="mt-6 mb-2 space-y-0 border border-white/08 rounded-xl overflow-hidden">
+                {[
+                  { year: '1971',        label: 'Naissance' },
+                  { year: '1976 – 1996', label: 'Côte Basque' },
+                  { year: '2018',        label: 'Création du groupe Amoureux des Calanques de Marseille à Port-Cros' },
+                ].map(({ year, label }, i) => (
+                  <div
+                    key={year}
+                    className={`flex items-start gap-4 px-4 py-3 text-sm ${i % 2 === 0 ? 'bg-white/[0.03]' : 'bg-white/[0.01]'}`}
+                  >
+                    <span className="flex-shrink-0 w-20 font-bold text-ocean-teal text-xs leading-relaxed pt-0.5 tabular-nums">{year}</span>
+                    <span className="text-white/75 leading-relaxed">{label}</span>
+                  </div>
+                ))}
+              </div>
+
               <div className="mt-6">
                 <Link
                   to="/photographe-environnemental-marseille"
