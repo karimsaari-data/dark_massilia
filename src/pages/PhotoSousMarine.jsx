@@ -465,48 +465,11 @@ const PhotoGrid = ({ images, gallery }) => {
   const prefersReducedMotion = useReducedMotion();
   const filtered = images.filter(image => image.src);
   if (!filtered.length) return null;
-  const [featured, ...rest] = filtered;
-  const featuredThumb = toThumbSrc(featured.src) || featured.src;
-  const featuredCaption = featured.title || null;
   return (
   <>
-    {/* Vignette vedette — pleine largeur, au-dessus de la grille */}
-    <a
-      href={featured.src}
-      data-fancybox={gallery}
-      data-caption={featured.lieu || featured.alt}
-      data-title={featured.title || ''}
-      data-uid={featured.uid}
-      data-slug={featured.slug || featured.uid}
-      data-maps={featured.maps}
-      data-thumb={featuredThumb}
-      className="block w-full cursor-pointer relative overflow-hidden rounded-sm mb-4 group shadow-[0_0_0_1px_rgba(0,171,168,0.25)] hover:shadow-[0_0_0_2px_rgba(0,171,168,0.7),0_0_20px_rgba(0,171,168,0.15)] transition-shadow duration-300"
-      aria-label={`Ouvrir la photo : ${featured.alt}`}
-    >
-      <img
-        src={featuredThumb}
-        alt={featured.alt}
-        width={Math.min(featured.width || 800, 800)}
-        height={featured.height ? Math.round(featured.height * (Math.min(featured.width || 800, 800) / (featured.width || 800))) : undefined}
-        className="w-full h-64 md:h-80 object-cover brightness-95 saturate-[0.85] group-hover:brightness-100 group-hover:saturate-[1.05] group-hover:scale-105 transition-[transform,filter] duration-500 ease-out"
-        loading="eager"
-        fetchPriority="high"
-        decoding="async"
-      />
-      {featuredCaption && (
-        <div
-          className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/0 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-4 pointer-events-none"
-          aria-hidden="true"
-        >
-          <span className="text-white text-sm font-semibold leading-snug line-clamp-2 translate-y-2 group-hover:translate-y-0 transition-transform duration-300">
-            {featuredCaption}
-          </span>
-        </div>
-      )}
-    </a>
     {/* Grille masonry */}
     <div className="columns-1 md:columns-2 lg:columns-3 xl:columns-4 gap-4">
-      {rest.map((image, index) => {
+      {filtered.map((image, index) => {
         const thumbSrc = toThumbSrc(image.src) || image.src;
         const thumbW = Math.min(image.width || 800, 800);
         const thumbH = image.height ? Math.round(image.height * (thumbW / (image.width || 800))) : undefined;
