@@ -83,9 +83,9 @@ const INSTITUTIONS = [
 // Timeline parcours — données centralisées
 const TIMELINE_ENTRIES = [
   {
-    period: '1971–1997',
-    label: 'Les premières images',
-    title: 'La côte basque, l\'océan et l\'argentique',
+    period: '1971',
+    label: 'La naissance',
+    title: 'De l\'âge de 6 ans à 1996 sur la côte basque',
     text: 'Né en 1971, j\'arrive sur la côte basque en 1977 — Bayonne, Biarritz, Capbreton, la dune du Pilat, cet Atlantique qui sculpte le paysage autant que les gens. C\'est ici que s\'installe le rapport à l\'eau, à la lumière rasante, à l\'horizon. Adolescent, les étés m\'emmènent dans les Alpes — et c\'est là que je découvre la photographie de paysage et acquiers mon premier reflex argentique.',
     img: '/images/portfolio/Horizons/biarritz-cote-basque-karimsaari-1.webp',
     alt: 'Côte basque — Biarritz, Karim Saari',
