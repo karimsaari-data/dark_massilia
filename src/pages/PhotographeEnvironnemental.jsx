@@ -624,7 +624,7 @@ const PhotographeEnvironnemental = () => {
             <p className="text-text-secondary text-center mb-8 max-w-xl mx-auto">
               Reportages, documentaires et couvertures presse depuis plus de 10 ans sur le terrain.
             </p>
-            <div className="flex flex-wrap justify-center items-center gap-4 mb-8">
+            <div className="grid grid-cols-3 sm:grid-cols-5 gap-3 mb-8">
               {MEDIA_LOGOS.map(({ name, label, svg, url, darkBg }) => (
                 <Link
                   key={name}
