@@ -7,6 +7,7 @@ import { FADE_IN_UP, STAGGER_CONTAINER, SOCIAL_STATS_DEFAULTS } from '../utils/c
 import SEO from '../components/SEO';
 import { SEO_PAGES } from '../utils/seo';
 import Breadcrumb from '../components/Breadcrumb';
+import PartnersCarousel from '../components/PartnersCarousel';
 
 // Photo portrait — bloc intro
 const PARTNER_PHOTO_INTRO = {
@@ -249,23 +250,6 @@ const HERO_STATS = [
   { end: 4,    suffix: '',    label: 'éditions Sentinelle', duration: 1000 },
 ];
 
-// Médias
-// cols sur grille 6 — définit la largeur de chaque tuile dans la mosaïque
-const MEDIA_LOGOS = [
-  // Rangée 1 — grandes chaînes TV (3 × col-span-2, hauteur xl)
-  { name: 'TF1',      label: 'Reportages TF1',          svg: '/images/Partenaires/svg/TF1_logo_2006.svg',           url: '/presse',                              cols: 2, h: 'h-20' },
-  { name: 'ARTE',     label: 'Documentaires ARTE',       svg: '/images/Partenaires/svg/Arte-Logo.svg',               url: '/sauver-marseille-documentaire-arte',  cols: 2, h: 'h-20' },
-  { name: 'France 5', label: 'France 5',                 svg: '/images/Partenaires/svg/France_5_-_logo_2018.svg',    url: '/presse',                              cols: 2, h: 'h-20' },
-  // Rangée 2 — presse & radio (2+1+1+2, hauteur md)
-  { name: 'La Provence',  label: 'La Provence',          svg: '/images/Partenaires/svg/La-provence-2023.svg',        url: '/presse',                              cols: 2, h: 'h-14' },
-  { name: 'M6',           label: 'Zone Interdite M6',    svg: '/images/Partenaires/svg/Logo_M6_(2020,_fond_clair).svg', url: '/presse',                           cols: 1, h: 'h-14' },
-  { name: 'France Bleu',  label: 'France Bleu',          svg: '/images/Partenaires/svg/France_Bleu_2021.svg',        url: '/presse', darkBg: true,               cols: 1, h: 'h-14' },
-  { name: 'Actu.fr',      label: 'Actu Marseille',       svg: '/images/Partenaires/svg/Actu.fr_logo_2020.svg',       url: '/presse',                              cols: 2, h: 'h-14' },
-  // Rangée 3 — institutionnel & presse spécialisée (2+2+2, hauteur lg)
-  { name: 'Midi Libre',          label: 'Midi Libre',                                    svg: '/images/Partenaires/svg/midi-libre-logo-vector.svg',   url: '/presse', darkBg: true, cols: 2, h: 'h-16' },
-  { name: 'National Geographic', label: 'National Geographic — Hors-Série n°183 Provence', svg: '/images/Partenaires/svg/National-Geographic-Logo.svg', url: '/presse',            cols: 2, h: 'h-16' },
-  { name: 'Ville de Marseille',  label: 'Ville de Marseille — Commande officielle',      svg: '/images/Partenaires/svg/Armoiries_de_Marseille.svg',   url: '/presse',            cols: 2, h: 'h-16' },
-];
 
 const PhotographeEnvironnemental = () => {
   const cardHover = useCardHover();
@@ -629,25 +613,7 @@ const PhotographeEnvironnemental = () => {
             <p className="text-text-secondary text-center mb-8 max-w-xl mx-auto">
               Reportages, documentaires et couvertures presse depuis plus de 10 ans sur le terrain.
             </p>
-            <div className="grid grid-cols-3 sm:grid-cols-6 gap-3 mb-8">
-              {MEDIA_LOGOS.map(({ name, label, svg, url, cols, h }) => (
-                <Link
-                  key={name}
-                  to={url}
-                  title={label}
-                  style={{ gridColumn: `span ${cols}` }}
-                  className={`${h} rounded-2xl px-5 flex items-center justify-center opacity-90 hover:opacity-100 hover:scale-[1.02] transition-all duration-300 bg-white/95 shadow-md hover:shadow-lg`}
-                >
-                  <img
-                    src={svg}
-                    alt={label}
-                    className="max-h-full w-auto object-contain"
-                    loading="lazy"
-                    onError={e => { e.target.style.opacity = '0'; }}
-                  />
-                </Link>
-              ))}
-            </div>
+            <PartnersCarousel />
             <div className="text-center mb-8">
               <Link
                 to="/presse"
