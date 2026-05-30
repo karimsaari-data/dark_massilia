@@ -135,6 +135,7 @@ const TIMELINE_ENTRIES = [
     text: 'En 2018, je crée le groupe Facebook « Amoureux des Calanques de Marseille à Port-Cros ». Ce qui commence comme un espace de partage photographique devient rapidement une communauté engagée — des milliers de passionnés du littoral, un relais pour sensibiliser à la préservation des Calanques et mobiliser autour des actions de terrain.',
     img: '/images/groupe%20des%20amoureux%20des%20calanques.webp',
     alt: 'Groupe des Amoureux des Calanques de Marseille à Port-Cros',
+    imgPosition: 'object-left',
     side: 'right',
   },
   {
@@ -550,7 +551,7 @@ const PhotographeEnvironnemental = () => {
                         srcSet={entry.imgSrcSet}
                         sizes="(max-width: 768px) 100vw, 50vw"
                         alt={entry.alt}
-                        className={`w-full h-full ${entry.imgFit || 'object-cover'}${entry.imgScale ? ` ${entry.imgScale}` : ''}`}
+                        className={`w-full h-full ${entry.imgFit || 'object-cover'}${entry.imgScale ? ` ${entry.imgScale}` : ''}${entry.imgPosition ? ` ${entry.imgPosition}` : ''}`}
                         loading="lazy"
                       />
                     </div>
@@ -580,7 +581,7 @@ const PhotographeEnvironnemental = () => {
                             )}
                           </div>
                           <div className="aspect-square overflow-hidden ring-1 ring-white/10 bg-black/40">
-                            <img src={entry.img} srcSet={entry.imgSrcSet} sizes="100vw" alt={entry.alt} className={`w-full h-full ${entry.imgFit || 'object-cover'}${entry.imgScale ? ` ${entry.imgScale}` : ''}`} loading="lazy" />
+                            <img src={entry.img} srcSet={entry.imgSrcSet} sizes="100vw" alt={entry.alt} className={`w-full h-full ${entry.imgFit || 'object-cover'}${entry.imgScale ? ` ${entry.imgScale}` : ''}${entry.imgPosition ? ` ${entry.imgPosition}` : ''}`} loading="lazy" />
                           </div>
                         </div>
                       </div>
@@ -629,15 +630,21 @@ const PhotographeEnvironnemental = () => {
               Reportages, documentaires et couvertures presse depuis plus de 10 ans sur le terrain.
             </p>
             <div className="grid grid-cols-3 sm:grid-cols-6 gap-3 mb-8">
-              {MEDIA_LOGOS.map(({ name, label, svg, url, darkBg, cols, h }) => (
+              {MEDIA_LOGOS.map(({ name, label, svg, url, cols, h }) => (
                 <Link
                   key={name}
                   to={url}
                   title={label}
-                  style={{ gridColumn: `span ${cols}` }}
-                  className={`${darkBg ? 'bg-gray-800' : 'bg-white'} ${h} rounded-xl px-4 flex items-center justify-center opacity-80 hover:opacity-100 hover:scale-[1.03] transition-all duration-300`}
+                  style={{ gridColumn: `span ${cols}`, background: 'rgba(255,255,255,0.06)', backdropFilter: 'blur(8px)' }}
+                  className={`${h} rounded-2xl px-4 flex items-center justify-center opacity-75 hover:opacity-100 hover:scale-[1.03] transition-all duration-300 border border-white/10 hover:border-white/25`}
                 >
-                  <img src={svg} alt={label} className="max-h-full w-auto object-contain" loading="lazy" />
+                  <img
+                    src={svg}
+                    alt={label}
+                    className="max-h-full w-auto object-contain"
+                    loading="lazy"
+                    onError={e => { e.target.style.opacity = '0'; }}
+                  />
                 </Link>
               ))}
             </div>
