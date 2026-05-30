@@ -191,6 +191,7 @@ jobs:
 
           (
             echo "set ftp:passive-mode on"
+            echo "set cmd:fail-exit yes"
             echo "open -u karimsaari,$FTP_PASS ftp.cluster1.easy-hebergement.net"
             while IFS= read -r path; do
               local_file="dist/$path"
@@ -200,6 +201,12 @@ jobs:
             done < /tmp/ftp-upload-list.txt
             echo "bye"
           ) | lftp
+          LFTP_EXIT=${PIPESTATUS[0]}
+
+          if [ "$LFTP_EXIT" -ne 0 ]; then
+            echo "⚠️  lftp a signalé une erreur (exit $LFTP_EXIT) — registry NON marquée"
+            exit "$LFTP_EXIT"
+          fi
 
           echo "✅ $COUNT image(s) uploadée(s)"
           node scripts/images-ftp-sync.mjs --mark-uploaded /tmp/ftp-upload-list.txt
