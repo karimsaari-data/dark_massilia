@@ -239,14 +239,15 @@ const HERO_STATS = [
 
 // Médias
 const MEDIA_LOGOS = [
-  { name: 'TF1',         label: 'Reportages TF1',      svg: '/images/Partenaires/svg/TF1_logo_2006.svg',                    url: '/presse' },
-  { name: 'ARTE',        label: 'Documentaires ARTE',   svg: '/images/Partenaires/svg/Arte-Logo.svg',                        url: '/sauver-marseille-documentaire-arte' },
-  { name: 'M6',          label: 'Zone Interdite M6',    svg: '/images/Partenaires/svg/Logo_M6_(2020,_fond_clair).svg',       url: '/presse' },
-  { name: 'La Provence', label: 'La Provence',          svg: '/images/Partenaires/svg/La-provence-2023.svg',                 url: '/presse' },
-  { name: 'France Bleu', label: 'France Bleu',          svg: '/images/Partenaires/svg/France_Bleu_2021.svg',                 url: '/presse' },
-  { name: 'Actu.fr',     label: 'Actu Marseille',       svg: '/images/Partenaires/svg/Actu.fr_logo_2020.svg',               url: '/presse' },
-  { name: 'France 5',    label: 'France 5',             svg: '/images/Partenaires/svg/France_5_-_logo_2018.svg',             url: '/presse' },
-  { name: 'Midi Libre',  label: 'Midi Libre',           svg: '/images/Partenaires/svg/midi-libre-logo-vector.svg',          url: '/presse' },
+  { name: 'TF1',                 label: 'Reportages TF1',                      svg: '/images/Partenaires/svg/TF1_logo_2006.svg',                    url: '/presse' },
+  { name: 'ARTE',                label: 'Documentaires ARTE',                   svg: '/images/Partenaires/svg/Arte-Logo.svg',                        url: '/sauver-marseille-documentaire-arte' },
+  { name: 'M6',                  label: 'Zone Interdite M6',                    svg: '/images/Partenaires/svg/Logo_M6_(2020,_fond_clair).svg',       url: '/presse' },
+  { name: 'La Provence',         label: 'La Provence',                          svg: '/images/Partenaires/svg/La-provence-2023.svg',                 url: '/presse' },
+  { name: 'France Bleu',         label: 'France Bleu',                          svg: '/images/Partenaires/svg/France_Bleu_2021.svg',                 url: '/presse', darkBg: true },
+  { name: 'Actu.fr',             label: 'Actu Marseille',                       svg: '/images/Partenaires/svg/Actu.fr_logo_2020.svg',               url: '/presse' },
+  { name: 'France 5',            label: 'France 5',                             svg: '/images/Partenaires/svg/France_5_-_logo_2018.svg',             url: '/presse' },
+  { name: 'Midi Libre',          label: 'Midi Libre',                           svg: '/images/Partenaires/svg/midi-libre-logo-vector.svg',          url: '/presse', darkBg: true },
+  { name: 'National Geographic', label: 'National Geographic — Hors-Série n°183 Provence', svg: '/images/Partenaires/svg/National-Geographic-Logo.svg', url: '/presse' },
 ];
 
 const PhotographeEnvironnemental = () => {
@@ -606,12 +607,12 @@ const PhotographeEnvironnemental = () => {
               Reportages, documentaires et couvertures presse depuis plus de 10 ans sur le terrain.
             </p>
             <div className="flex flex-wrap justify-center items-center gap-4 mb-8">
-              {MEDIA_LOGOS.map(({ name, label, svg, url }) => (
+              {MEDIA_LOGOS.map(({ name, label, svg, url, darkBg }) => (
                 <Link
                   key={name}
                   to={url}
                   title={label}
-                  className="bg-white rounded-md px-3 py-2 flex items-center justify-center opacity-80 hover:opacity-100 transition-opacity duration-300"
+                  className={`${darkBg ? 'bg-gray-800' : 'bg-white'} rounded-md px-3 py-2 flex items-center justify-center opacity-80 hover:opacity-100 transition-opacity duration-300`}
                 >
                   <img src={svg} alt={label} className="h-6 md:h-8 w-auto object-contain" loading="lazy" />
                 </Link>
