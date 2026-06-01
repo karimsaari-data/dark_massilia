@@ -32,6 +32,14 @@ const Medias = () => {
 
   const pressLinks = [
     {
+      title: '22 Mille — À Marseille, des apnéistes nettoient les fonds marins',
+      url: 'https://www.22-med.com/a-marseille-des-apneistes-nettoient-les-fonds-marins/',
+      featured: false,
+      date: '27 mai 2026',
+      image: '/images/karim-saari-marseille-22med-apneistes-nettoient-fonds-marins.png',
+      logo: null,
+    },
+    {
       title: 'Interview Presse — Tired Earth (EN/FR)',
       url: 'https://www.tiredearth.com/interviews/interview-de-karim-saari-apneiste-et-photographe-sous-marin#',
       featured: false,

@@ -110,6 +110,20 @@
       <image:geo_location>Marseille, Calanque de Sormiou</image:geo_location>
     </image:image>
     <image:image>
+      <image:loc>https://karimsaari.com/images/portfolio/Mer/marseille-photographie-paysages-karimssari-5.webp</image:loc>
+      <image:title>Calanque d&apos;En-Vau, joyau rocheux méditerranéen — Photographe Calanques Marseille</image:title>
+      <image:caption>Vue panoramique de la calanque d&apos;En-Vau à Marseille avec ses falaises calcaires majestueuses, eaux turquoise et végétation méditerranéenne, photographiée depuis le belvédère emblématique des Calanques provençales. — © Karim Saari, photographe Calanques Marseille</image:caption>
+      <image:license>https://karimsaari.com/contact</image:license>
+      <image:geo_location>Belvédère d&apos;En-Vau</image:geo_location>
+    </image:image>
+    <image:image>
+      <image:loc>https://karimsaari.com/images/portfolio/Mer/marseille-photographie-paysages-karimssari-6.webp</image:loc>
+      <image:title>Voilier arc-en-ciel au Vieux Port de Marseille — Photographe Calanques Marseille</image:title>
+      <image:caption>Voilier Kramer avec drapeau LGBT arc-en-ciel au Vieux Port de Marseille, bâtiments historiques en arrière-plan, célébration de diversité en méditerranée — © Karim Saari, photographe Calanques Marseille</image:caption>
+      <image:license>https://karimsaari.com/contact</image:license>
+      <image:geo_location>Marseille, Vieux port</image:geo_location>
+    </image:image>
+    <image:image>
       <image:loc>https://karimsaari.com/images/portfolio/Mer/karim-saari-marseille-grotte-calanque-turquoise-pins-falaises.webp</image:loc>
       <image:title>Fenêtre sur la cathédrale calcaire — Calanque de Sugiton — Photographe Calanques Marseille</image:title>
       <image:caption>Panorama littoral capturé à travers les branches d&apos;un pin parasol révélant l&apos;eau turquoise et cristalline de la Méditerranée, entourée de falaises calcaires blanches et d&apos;une nature sauvage préservée en Provence — Calanques de Marseille — © Karim Saari — © Karim Saari, photographe Calanques Marseille</image:caption>
@@ -804,8 +818,8 @@
     </image:image>
     <image:image>
       <image:loc>https://karimsaari.com/images/portfolio/Terre/marseille-velodrome-provence-photographie-paysage-karimsaari.webp</image:loc>
-      <image:title>Marseille velodrome provence photographie paysage karimsaari</image:title>
-      <image:caption>Marseille velodrome provence photographie paysage karimsaari</image:caption>
+      <image:title>Le Stade Vélodrome et Marseille depuis les hauteurs</image:title>
+      <image:caption>Vue aérienne du Stade Vélodrome de Marseille avec son architecture distinctive en forme de voile blanche, entouré de buildings et de l&apos;urbanisation de la cité phocéenne sous un ciel dégagé</image:caption>
       <image:license>https://karimsaari.com/contact</image:license>
       <image:geo_location>Marseille</image:geo_location>
     </image:image>
@@ -1024,8 +1038,8 @@
     </image:image>
     <image:image>
       <image:loc>https://karimsaari.com/images/operation-calanques-propres-2026-goudes-team-oxygen-karim-saari-dark-massalia-3.webp</image:loc>
-      <image:title>Operation calanques propres 2026 goudes team oxygen karim saari dark massalia 3</image:title>
-      <image:caption>Operation calanques propres 2026 goudes team oxygen karim saari dark massalia 3</image:caption>
+      <image:title>Épaves colonisées par la vie marine méditerranéenne</image:title>
+      <image:caption>Épave sous-marine couverte d&apos;algues jaunes et de faune marine dans les Calanques de Marseille. Photographie de plongée en apnée montrant l&apos;écosystème marin méditerranéen par Karim Saari.</image:caption>
       <image:license>https://karimsaari.com/contact</image:license>
       <image:geo_location>Calanques de Marseille, France</image:geo_location>
     </image:image>
@@ -1072,46 +1086,11 @@
       <image:geo_location>Marseille, les goudes</image:geo_location>
     </image:image>
     <image:image>
-      <image:loc>https://karimsaari.com/images/fiat-500-pac-national-des-calanques-pollution-karim-saari-1.webp</image:loc>
-      <image:title>Pollution sous-marine : l&apos;épave d&apos;une Fiat 500 dans les Calanques</image:title>
-      <image:caption>Épave de voiture rouge capturée en photographie sous-marine, témoignant de la pollution au cœur du Parc National des Calanques.</image:caption>
-      <image:license>https://karimsaari.com/contact</image:license>
-      <image:geo_location>Marseille, les Goudes</image:geo_location>
-    </image:image>
-    <image:image>
-      <image:loc>https://karimsaari.com/images/fiat-500-pac-national-des-calanques-pollution-karim-saari-2.webp</image:loc>
-      <image:title>Pollution sous-marine : l&apos;épave d&apos;une Fiat 500 dans les Calanques</image:title>
-      <image:caption>Épave de voiture rouge capturée en photographie sous-marine, témoignant de la pollution au cœur du Parc National des Calanques.</image:caption>
-      <image:license>https://karimsaari.com/contact</image:license>
-      <image:geo_location>Marseille, les Goudes</image:geo_location>
-    </image:image>
-    <image:image>
       <image:loc>https://karimsaari.com/images/Marseille-dark-massilia-plastique-pollution-projet-sentinelle-bouteille.webp</image:loc>
       <image:title>Projet sentinelle 4  — Pollution mer Heineken</image:title>
       <image:caption>Mission Projet Sentinelle Marseille — Bouteille — © Karim Saari</image:caption>
       <image:license>https://karimsaari.com/contact</image:license>
       <image:geo_location>Calanques de Marseille</image:geo_location>
-    </image:image>
-    <image:image>
-      <image:loc>https://karimsaari.com/images/fiat-500-pac-national-des-calanques-pollution-karim-saari-3.webp</image:loc>
-      <image:title>Pollution sous-marine : l&apos;épave d&apos;une Fiat 500 dans les Calanques</image:title>
-      <image:caption>Épave de voiture rouge capturée en photographie sous-marine, témoignant de la pollution au cœur du Parc National des Calanques.</image:caption>
-      <image:license>https://karimsaari.com/contact</image:license>
-      <image:geo_location>Marseille, les Goudes</image:geo_location>
-    </image:image>
-    <image:image>
-      <image:loc>https://karimsaari.com/images/fiat-500-pac-national-des-calanques-pollution-karim-saari-4.webp</image:loc>
-      <image:title>Pollution sous-marine : l&apos;épave d&apos;une Fiat 500 dans les Calanques</image:title>
-      <image:caption>Épave de voiture rouge capturée en photographie sous-marine, témoignant de la pollution au cœur du Parc National des Calanques.</image:caption>
-      <image:license>https://karimsaari.com/contact</image:license>
-      <image:geo_location>Marseille, les Goudes</image:geo_location>
-    </image:image>
-    <image:image>
-      <image:loc>https://karimsaari.com/images/fiat-500-pac-national-des-calanques-pollution-karim-saari-5.webp</image:loc>
-      <image:title>Pollution sous-marine : l&apos;épave d&apos;une Fiat 500 dans les Calanques</image:title>
-      <image:caption>Épave de voiture rouge capturée en photographie sous-marine, témoignant de la pollution au cœur du Parc National des Calanques.</image:caption>
-      <image:license>https://karimsaari.com/contact</image:license>
-      <image:geo_location>Marseille, les Goudes</image:geo_location>
     </image:image>
     <image:image>
       <image:loc>https://karimsaari.com/images/Marseille-dark-massilia-plastique-pollution-projet-sentinelle-canette.webp</image:loc>
@@ -1591,8 +1570,8 @@
     </image:image>
     <image:image>
       <image:loc>https://karimsaari.com/images/depollution-marine-dark-massilia-karimsaari-marseille-2.webp</image:loc>
-      <image:title>Depollution marine dark massilia karimsaari marseille 2</image:title>
-      <image:caption>Depollution marine dark massilia karimsaari marseille 2</image:caption>
+      <image:title>Trésor urbain retrouvé en apnée méditerranéenne</image:title>
+      <image:caption>Plongeur en apnée tenant une bouteille Heineken couverte d&apos;algues, découverte de dépollution marine aux Calanques de Marseille lors d&apos;une expédition de nettoyage sous-marin</image:caption>
       <image:license>https://karimsaari.com/contact</image:license>
       <image:geo_location>Calanques de Marseille, France</image:geo_location>
     </image:image>
@@ -1738,65 +1717,173 @@
     </image:image>
   </url>
   <url>
+    <loc>https://karimsaari.com/blog/nettoyons-le-sud-2026-bilan-dune-mediterranee-sans-plastique</loc>
+    <image:image>
+      <image:loc>https://cms.karimsaari.com/wp-content/uploads/2026/05/20260530_180154-scaled.jpg</image:loc>
+      <image:title>Nettoyons le Sud 2026 : Bilan d&amp;rsquo;une Méditerranée sans plastique ! — Dark Massilia</image:title>
+      <image:caption>Scaled - Nettoyons le Sud 2026 : Bilan d&amp;rsquo;une Méditerranée sans plastique !</image:caption>
+      <image:license>https://karimsaari.com/contact</image:license>
+    </image:image>
+    <image:image>
+      <image:loc>https://cms.karimsaari.com/wp-content/uploads/2026/05/Nettoyons-le-sud-6-scaled.jpg</image:loc>
+      <image:title>Nettoyons le Sud 2026 : Bilan d&amp;rsquo;une Méditerranée sans plastique ! — Dark Massilia</image:title>
+      <image:caption>Nettoyons le sud 6</image:caption>
+      <image:license>https://karimsaari.com/contact</image:license>
+    </image:image>
+    <image:image>
+      <image:loc>https://cms.karimsaari.com/wp-content/uploads/2026/05/Nettoyons-le-sud-3-scaled.jpg</image:loc>
+      <image:title>Nettoyons le Sud 2026 : Bilan d&amp;rsquo;une Méditerranée sans plastique ! — Dark Massilia</image:title>
+      <image:caption>Nettoyons le sud 3</image:caption>
+      <image:license>https://karimsaari.com/contact</image:license>
+    </image:image>
+    <image:image>
+      <image:loc>https://cms.karimsaari.com/wp-content/uploads/2026/05/Nettoyons-le-sud-1-scaled.jpg</image:loc>
+      <image:title>Nettoyons le Sud 2026 : Bilan d&amp;rsquo;une Méditerranée sans plastique ! — Dark Massilia</image:title>
+      <image:caption>Nettoyons le sud 1</image:caption>
+      <image:license>https://karimsaari.com/contact</image:license>
+    </image:image>
+    <image:image>
+      <image:loc>https://cms.karimsaari.com/wp-content/uploads/2026/05/Nettoyons-le-sud-9-scaled.jpg</image:loc>
+      <image:title>Nettoyons le Sud 2026 : Bilan d&amp;rsquo;une Méditerranée sans plastique ! — Dark Massilia</image:title>
+      <image:caption>Nettoyons le sud 9</image:caption>
+      <image:license>https://karimsaari.com/contact</image:license>
+    </image:image>
+    <image:image>
+      <image:loc>https://cms.karimsaari.com/wp-content/uploads/2026/05/Nettoyons-le-sud-7-scaled.jpg</image:loc>
+      <image:title>Nettoyons le Sud 2026 : Bilan d&amp;rsquo;une Méditerranée sans plastique ! — Dark Massilia</image:title>
+      <image:caption>Nettoyons le sud 7</image:caption>
+      <image:license>https://karimsaari.com/contact</image:license>
+    </image:image>
+    <image:image>
+      <image:loc>https://cms.karimsaari.com/wp-content/uploads/2026/05/Nettoyons-le-sud-4-scaled.jpg</image:loc>
+      <image:title>Nettoyons le Sud 2026 : Bilan d&amp;rsquo;une Méditerranée sans plastique ! — Dark Massilia</image:title>
+      <image:caption>Nettoyons le sud 4</image:caption>
+      <image:license>https://karimsaari.com/contact</image:license>
+    </image:image>
+    <image:image>
+      <image:loc>https://cms.karimsaari.com/wp-content/uploads/2026/05/Nettoyons-le-sud-5-scaled.jpg</image:loc>
+      <image:title>Nettoyons le Sud 2026 : Bilan d&amp;rsquo;une Méditerranée sans plastique ! — Dark Massilia</image:title>
+      <image:caption>Nettoyons le sud 5</image:caption>
+      <image:license>https://karimsaari.com/contact</image:license>
+    </image:image>
+    <image:image>
+      <image:loc>https://cms.karimsaari.com/wp-content/uploads/2026/05/Nettoyons-le-sud-11-scaled.jpg</image:loc>
+      <image:title>Nettoyons le Sud 2026 : Bilan d&amp;rsquo;une Méditerranée sans plastique ! — Dark Massilia</image:title>
+      <image:caption>Nettoyons le sud 11</image:caption>
+      <image:license>https://karimsaari.com/contact</image:license>
+    </image:image>
+    <image:image>
+      <image:loc>https://cms.karimsaari.com/wp-content/uploads/2026/05/Nettoyons-le-sud-10-scaled.jpg</image:loc>
+      <image:title>Nettoyons le Sud 2026 : Bilan d&amp;rsquo;une Méditerranée sans plastique ! — Dark Massilia</image:title>
+      <image:caption>Nettoyons le sud 10</image:caption>
+      <image:license>https://karimsaari.com/contact</image:license>
+    </image:image>
+    <image:image>
+      <image:loc>https://cms.karimsaari.com/wp-content/uploads/2026/05/Nettoyons-le-sud-2-scaled.jpg</image:loc>
+      <image:title>Nettoyons le Sud 2026 : Bilan d&amp;rsquo;une Méditerranée sans plastique ! — Dark Massilia</image:title>
+      <image:caption>Nettoyons le sud 2</image:caption>
+      <image:license>https://karimsaari.com/contact</image:license>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://karimsaari.com/blog/quand-une-citadine-se-transforme-en-epave-sous-marine-au-bout-du-monde-marseillais</loc>
+    <image:image>
+      <image:loc>https://cms.karimsaari.com/wp-content/uploads/2026/05/voiture_4-scaled.jpg</image:loc>
+      <image:title>Quand une citadine se transforme en épave sous-marine au bout du monde marseillais — Dark Massilia</image:title>
+      <image:caption>Voiture épave rouille immergée au fond de la mer colonisée par les coraux et algues rouges — Calanques de Marseille, Méditerranée — © Karim Saari</image:caption>
+      <image:license>https://karimsaari.com/contact</image:license>
+    </image:image>
+    <image:image>
+      <image:loc>https://cms.karimsaari.com/wp-content/uploads/2026/05/voiture_1-scaled.jpg</image:loc>
+      <image:title>Quand une citadine se transforme en épave sous-marine au bout du monde marseillais — Dark Massilia</image:title>
+      <image:caption>Épave de voiture submergée recouverte de corail et de vie marine — Calanques de Marseille, Méditerranée — © Karim Saari</image:caption>
+      <image:license>https://karimsaari.com/contact</image:license>
+    </image:image>
+    <image:image>
+      <image:loc>https://cms.karimsaari.com/wp-content/uploads/2026/05/voiture_7-scaled.jpg</image:loc>
+      <image:title>Quand une citadine se transforme en épave sous-marine au bout du monde marseillais — Dark Massilia</image:title>
+      <image:caption>Épave d&apos;une voiture rouge submergée sur le fond marin avec ses roues visibles — Calanques de Marseille, Méditerranée — © Karim Saari</image:caption>
+      <image:license>https://karimsaari.com/contact</image:license>
+    </image:image>
+    <image:image>
+      <image:loc>https://cms.karimsaari.com/wp-content/uploads/2026/05/voiture_6-scaled.jpg</image:loc>
+      <image:title>Quand une citadine se transforme en épave sous-marine au bout du monde marseillais — Dark Massilia</image:title>
+      <image:caption>Panneau électrique rouillé recouvert de coraux et d&apos;algues marines sur une épave sous-marine — Calanques de Marseille, Méditerranée — © Karim Saari</image:caption>
+      <image:license>https://karimsaari.com/contact</image:license>
+    </image:image>
+    <image:image>
+      <image:loc>https://cms.karimsaari.com/wp-content/uploads/2026/05/voiture_2-scaled.jpg</image:loc>
+      <image:title>Quand une citadine se transforme en épave sous-marine au bout du monde marseillais — Dark Massilia</image:title>
+      <image:caption>Épave de camion rouillé reposant sur le fond marin avec débris métalliques dispersés — Calanques de Marseille, Méditerranée — © Karim Saari</image:caption>
+      <image:license>https://karimsaari.com/contact</image:license>
+    </image:image>
+    <image:image>
+      <image:loc>https://cms.karimsaari.com/wp-content/uploads/2026/05/voiture_5-scaled.jpg</image:loc>
+      <image:title>Quand une citadine se transforme en épave sous-marine au bout du monde marseillais — Dark Massilia</image:title>
+      <image:caption>Épave sous-marine avec équipements rouillés et cordes envahis de vie marine — Calanques de Marseille, Méditerranée — © Karim Saari</image:caption>
+      <image:license>https://karimsaari.com/contact</image:license>
+    </image:image>
+  </url>
+  <url>
     <loc>https://karimsaari.com/blog/oxygene-le-documentaire-sur-la-depollution-de-la-mediterranee</loc>
     <image:image>
       <image:loc>https://cms.karimsaari.com/wp-content/uploads/2026/05/Screenshot-2026-05-19-123022_edited-3.png</image:loc>
       <image:title>Oxygène : le documentaire sur la dépollution de la Méditerranée — Dark Massilia</image:title>
-      <image:caption>Oxygène : le documentaire sur la dépollution de la Méditerranée — Dark Massilia</image:caption>
+      <image:caption>Capture d&apos;écran du dashboard SEO karimsaari.com — Interface analytics Dark Massilia © Karim Saari</image:caption>
       <image:license>https://karimsaari.com/contact</image:license>
     </image:image>
     <image:image>
       <image:loc>https://cms.karimsaari.com/wp-content/uploads/2026/05/Screenshot-2026-05-19-123022_edited-2.png</image:loc>
       <image:title>Oxygène : le documentaire sur la dépollution de la Méditerranée — Dark Massilia</image:title>
-      <image:caption>Oxygène : le documentaire sur la dépollution de la Méditerranée — Dark Massilia</image:caption>
+      <image:caption>Capture d&apos;écran du tableau de bord SEO karimsaari.com — Suivi performances Dark Massilia © Karim Saari</image:caption>
       <image:license>https://karimsaari.com/contact</image:license>
     </image:image>
     <image:image>
       <image:loc>https://cms.karimsaari.com/wp-content/uploads/2026/05/Velo-scaled.jpg</image:loc>
       <image:title>Oxygène : le documentaire sur la dépollution de la Méditerranée — Dark Massilia</image:title>
-      <image:caption>Oxygène : le documentaire sur la dépollution de la Méditerranée — Dark Massilia</image:caption>
+      <image:caption>Cycliste en vélo lors d&apos;une sortie sportive en milieu naturel — © Karim Saari</image:caption>
       <image:license>https://karimsaari.com/contact</image:license>
     </image:image>
     <image:image>
       <image:loc>https://cms.karimsaari.com/wp-content/uploads/2026/05/trio-scaled.jpg</image:loc>
       <image:title>Oxygène : le documentaire sur la dépollution de la Méditerranée — Dark Massilia</image:title>
-      <image:caption>Oxygène : le documentaire sur la dépollution de la Méditerranée — Dark Massilia</image:caption>
+      <image:caption>Trio de participants lors d&apos;une sortie en mer dans les Calanques de Marseille — © Karim Saari</image:caption>
       <image:license>https://karimsaari.com/contact</image:license>
     </image:image>
     <image:image>
       <image:loc>https://cms.karimsaari.com/wp-content/uploads/2026/05/romu-groutte-scaled.jpg</image:loc>
       <image:title>Oxygène : le documentaire sur la dépollution de la Méditerranée — Dark Massilia</image:title>
-      <image:caption>Oxygène : le documentaire sur la dépollution de la Méditerranée — Dark Massilia</image:caption>
+      <image:caption>Portrait d&apos;un plongeur apnéiste de l&apos;équipe Team Oxygen lors d&apos;une mission — © Karim Saari</image:caption>
       <image:license>https://karimsaari.com/contact</image:license>
     </image:image>
     <image:image>
       <image:loc>https://cms.karimsaari.com/wp-content/uploads/2026/05/fight-scaled.jpg</image:loc>
       <image:title>Oxygène : le documentaire sur la dépollution de la Méditerranée — Dark Massilia</image:title>
-      <image:caption>Oxygène : le documentaire sur la dépollution de la Méditerranée — Dark Massilia</image:caption>
+      <image:caption>Scène d&apos;action lors d&apos;une opération de dépollution marine — Méditerranée — © Karim Saari</image:caption>
       <image:license>https://karimsaari.com/contact</image:license>
     </image:image>
     <image:image>
       <image:loc>https://cms.karimsaari.com/wp-content/uploads/2026/05/fond-huveaunne-1-scaled.jpg</image:loc>
       <image:title>Oxygène : le documentaire sur la dépollution de la Méditerranée — Dark Massilia</image:title>
-      <image:caption>Oxygène : le documentaire sur la dépollution de la Méditerranée — Dark Massilia</image:caption>
+      <image:caption>Fond de l&apos;Huveaune pollué par des déchets plastiques et débris urbains — Marseille — © Karim Saari</image:caption>
       <image:license>https://karimsaari.com/contact</image:license>
     </image:image>
     <image:image>
       <image:loc>https://cms.karimsaari.com/wp-content/uploads/2026/05/fond-huveaunne-2-scaled.jpg</image:loc>
       <image:title>Oxygène : le documentaire sur la dépollution de la Méditerranée — Dark Massilia</image:title>
-      <image:caption>Oxygène : le documentaire sur la dépollution de la Méditerranée — Dark Massilia</image:caption>
+      <image:caption>Accumulation de déchets sur le fond de l&apos;Huveaune — Marseille, Méditerranée — © Karim Saari</image:caption>
       <image:license>https://karimsaari.com/contact</image:license>
     </image:image>
     <image:image>
       <image:loc>https://cms.karimsaari.com/wp-content/uploads/2026/05/marseille-dark-massilia-depollution-sous-marine-sentinelle-72.webp</image:loc>
       <image:title>Oxygène : le documentaire sur la dépollution de la Méditerranée — Dark Massilia</image:title>
-      <image:caption>Oxygène : le documentaire sur la dépollution de la Méditerranée — Dark Massilia</image:caption>
+      <image:caption>Plongeur apnéiste en mission de dépollution sous-marine Projet Sentinelle 72 — Calanques de Marseille — © Karim Saari</image:caption>
       <image:license>https://karimsaari.com/contact</image:license>
     </image:image>
     <image:image>
       <image:loc>https://cms.karimsaari.com/wp-content/uploads/2026/05/Oxygene-Affiche-fim.jpg</image:loc>
       <image:title>Oxygène : le documentaire sur la dépollution de la Méditerranée — Dark Massilia</image:title>
-      <image:caption>Oxygène : le documentaire sur la dépollution de la Méditerranée — Dark Massilia</image:caption>
+      <image:caption>Affiche officielle du film Team Oxygen — Association apnée et dépollution marine, Marseille — © Karim Saari</image:caption>
       <image:license>https://karimsaari.com/contact</image:license>
     </image:image>
   </url>
@@ -1805,7 +1892,7 @@
     <image:image>
       <image:loc>https://cms.karimsaari.com/wp-content/uploads/2026/05/Le-belem_2-scaled.jpg</image:loc>
       <image:title>Le Belem et Marseille : De l&amp;rsquo;épopée de la Flamme Olympique à la célébration de ses 130 ans — Dark Massilia</image:title>
-      <image:caption>Sculpture dorée de poisson ornementale sur poutre en bois — Musée ou exposition maritime à Marseille — © Karim Saari</image:caption>
+      <image:caption>Sculpture dorée de poisson ornementale sur poutre en bois — Musée maritime à Marseille — © Karim Saari</image:caption>
       <image:license>https://karimsaari.com/contact</image:license>
     </image:image>
     <image:image>
@@ -1817,37 +1904,37 @@
     <image:image>
       <image:loc>https://cms.karimsaari.com/wp-content/uploads/2026/05/Le-belem_1-scaled.jpg</image:loc>
       <image:title>Le Belem et Marseille : De l&amp;rsquo;épopée de la Flamme Olympique à la célébration de ses 130 ans — Dark Massilia</image:title>
-      <image:caption>Vue du voilier trois-mâts Belem amarré au Vieux-Port de Marseille avec la basilique Notre-Dame de la Garde en arrière-plan — Marseille, Provence-Alpes-Côte d&apos;Azur, France — © Karim Saari</image:caption>
+      <image:caption>Vue du voilier trois-mâts Belem amarré au Vieux-Port de Marseille avec la basilique Notre-Dame de la Garde en arrière-plan — © Karim Saari</image:caption>
       <image:license>https://karimsaari.com/contact</image:license>
     </image:image>
     <image:image>
       <image:loc>https://cms.karimsaari.com/wp-content/uploads/2026/05/Le-belem_4-scaled.jpg</image:loc>
       <image:title>Le Belem et Marseille : De l&amp;rsquo;épopée de la Flamme Olympique à la célébration de ses 130 ans — Dark Massilia</image:title>
-      <image:caption>Voilier historique Le Belem amarré au Vieux-Port de Marseille avec ses voiles brunes déployées et ornements dorés, célébrant ses 130 ans devant les façades colorées de la ville méditerranéenne — © Karim Saari</image:caption>
+      <image:caption>Voilier historique Le Belem amarré au Vieux-Port de Marseille avec ses voiles brunes déployées, célébrant ses 130 ans — © Karim Saari</image:caption>
       <image:license>https://karimsaari.com/contact</image:license>
     </image:image>
     <image:image>
       <image:loc>https://cms.karimsaari.com/wp-content/uploads/2026/05/Le-belem_3-scaled.jpg</image:loc>
       <image:title>Le Belem et Marseille : De l&amp;rsquo;épopée de la Flamme Olympique à la célébration de ses 130 ans — Dark Massilia</image:title>
-      <image:caption>Vue depuis le voilier Belem avec drapeau français au premier plan et la basilique Notre-Dame de la Garde en arrière-plan, Vieux-Port de Marseille, Méditerranée — © Karim Saari</image:caption>
+      <image:caption>Vue depuis le voilier Belem avec drapeau français et la basilique Notre-Dame de la Garde — Vieux-Port de Marseille — © Karim Saari</image:caption>
       <image:license>https://karimsaari.com/contact</image:license>
     </image:image>
     <image:image>
       <image:loc>https://cms.karimsaari.com/wp-content/uploads/2026/05/GU8A9859_Realiste-scaled.jpg</image:loc>
       <image:title>Le Belem et Marseille : De l&amp;rsquo;épopée de la Flamme Olympique à la célébration de ses 130 ans — Dark Massilia</image:title>
-      <image:caption>Trois-mâts Belem naviguant en Méditerranée entouré de voiliers et de bateaux, Vieux-Port de Marseille avec les collines en arrière-plan — © Karim Saari</image:caption>
+      <image:caption>Trois-mâts Belem naviguant en Méditerranée entouré de voiliers, Vieux-Port de Marseille — © Karim Saari</image:caption>
       <image:license>https://karimsaari.com/contact</image:license>
     </image:image>
     <image:image>
       <image:loc>https://cms.karimsaari.com/wp-content/uploads/2026/05/GU8A9901_Realiste-1-scaled.jpg</image:loc>
       <image:title>Le Belem et Marseille : De l&amp;rsquo;épopée de la Flamme Olympique à la célébration de ses 130 ans — Dark Massilia</image:title>
-      <image:caption>Trois-mâts Belem naviguant en Méditerranée avec voiles blanches déployées et drapeaux internationaux, Marseille — © Karim Saari</image:caption>
+      <image:caption>Trois-mâts Belem naviguant en Méditerranée avec voiles blanches déployées et drapeaux internationaux — © Karim Saari</image:caption>
       <image:license>https://karimsaari.com/contact</image:license>
     </image:image>
     <image:image>
       <image:loc>https://cms.karimsaari.com/wp-content/uploads/2026/05/GU8A9901_Realiste-scaled.jpg</image:loc>
       <image:title>Le Belem et Marseille : De l&amp;rsquo;épopée de la Flamme Olympique à la célébration de ses 130 ans — Dark Massilia</image:title>
-      <image:caption>Trois-mâts Belem naviguant en Méditerranée avec voiles déployées, entouré de petits bateaux et drapeaux internationaux — Marseille, Méditerranée — © Karim Saari</image:caption>
+      <image:caption>Trois-mâts Belem naviguant en Méditerranée avec voiles déployées et drapeaux internationaux — Marseille — © Karim Saari</image:caption>
       <image:license>https://karimsaari.com/contact</image:license>
     </image:image>
   </url>
@@ -1856,49 +1943,49 @@
     <image:image>
       <image:loc>https://cms.karimsaari.com/wp-content/uploads/2026/05/WhatsApp-Image-2026-04-25-at-16.36.42.jpeg</image:loc>
       <image:title>Calanques Propres 2026 : Un élan collectif exceptionnel pour protéger notre littoral — Dark Massilia</image:title>
-      <image:caption>Groupe de bénévoles en tenue de plongée et gilets de sauvetage posant avec des équipements de plongée lors d&apos;une action de nettoyage des Calanques — Calanques de Marseille, Méditerranée — © Karim Saari</image:caption>
+      <image:caption>Groupe de bénévoles en tenue de plongée lors de l&apos;action Calanques Propres 2026 — Calanques de Marseille — © Karim Saari</image:caption>
       <image:license>https://karimsaari.com/contact</image:license>
     </image:image>
     <image:image>
       <image:loc>https://cms.karimsaari.com/wp-content/uploads/2026/05/679950160_10242599590628553_8555660103073579495_n.jpg</image:loc>
       <image:title>Calanques Propres 2026 : Un élan collectif exceptionnel pour protéger notre littoral — Dark Massilia</image:title>
-      <image:caption>Déchets plastiques et débris marins collectés lors d&apos;une opération de nettoyage sous-marin — Calanques de Marseille, Méditerranée — © Karim Saari</image:caption>
+      <image:caption>Déchets plastiques et débris marins collectés lors d&apos;une opération de nettoyage sous-marin — Calanques de Marseille — © Karim Saari</image:caption>
       <image:license>https://karimsaari.com/contact</image:license>
     </image:image>
     <image:image>
       <image:loc>https://cms.karimsaari.com/wp-content/uploads/2026/05/678294922_10242599589028513_8112759510365851349_n.jpg</image:loc>
       <image:title>Calanques Propres 2026 : Un élan collectif exceptionnel pour protéger notre littoral — Dark Massilia</image:title>
-      <image:caption>Collection de cartouches de mousse expansive et d&apos;aérosols rouillés récupérés lors d&apos;une opération de nettoyage sous-marin — Calanques de Marseille, Méditerranée — © Karim Saari</image:caption>
+      <image:caption>Collection de cartouches de mousse expansive et d&apos;aérosols rouillés récupérés lors d&apos;une opération sous-marine — Calanques de Marseille — © Karim Saari</image:caption>
       <image:license>https://karimsaari.com/contact</image:license>
     </image:image>
     <image:image>
       <image:loc>https://cms.karimsaari.com/wp-content/uploads/2026/05/679404653_10242599585668429_677954145904663777_n.jpg</image:loc>
       <image:title>Calanques Propres 2026 : Un élan collectif exceptionnel pour protéger notre littoral — Dark Massilia</image:title>
-      <image:caption>Groupe de bénévoles et d&apos;activistes lors d&apos;une opération de nettoyage des Calanques, avec guides présentant des initiatives de dépollution marine — Calanques de Marseille, Méditerranée — © Karim Saari</image:caption>
+      <image:caption>Groupe de bénévoles lors d&apos;une opération de nettoyage des Calanques avec guides présentant les initiatives de dépollution — © Karim Saari</image:caption>
       <image:license>https://karimsaari.com/contact</image:license>
     </image:image>
     <image:image>
       <image:loc>https://cms.karimsaari.com/wp-content/uploads/2026/05/WhatsApp-Image-2026-04-25-at-16.36.42-4.jpeg</image:loc>
       <image:title>Calanques Propres 2026 : Un élan collectif exceptionnel pour protéger notre littoral — Dark Massilia</image:title>
-      <image:caption>Équipement de plongée en apnée et déchets collectés lors d&apos;une opération de nettoyage marin — Calanques de Marseille, Méditerranée — © Karim Saari</image:caption>
+      <image:caption>Équipement de plongée en apnée et déchets collectés lors d&apos;une opération de nettoyage marin — Calanques de Marseille — © Karim Saari</image:caption>
       <image:license>https://karimsaari.com/contact</image:license>
     </image:image>
     <image:image>
       <image:loc>https://cms.karimsaari.com/wp-content/uploads/2026/05/WhatsApp-Image-2026-04-25-at-19.02.01-1.jpeg</image:loc>
       <image:title>Calanques Propres 2026 : Un élan collectif exceptionnel pour protéger notre littoral — Dark Massilia</image:title>
-      <image:caption>Karim Saari et des bénévoles récupèrent des débris et déchets en mer lors d&apos;une opération de dépollution marine — Calanques de Marseille, Méditerranée — © Karim Saari</image:caption>
+      <image:caption>Karim Saari et des bénévoles récupèrent des débris en mer lors d&apos;une opération de dépollution marine — Calanques de Marseille — © Karim Saari</image:caption>
       <image:license>https://karimsaari.com/contact</image:license>
     </image:image>
     <image:image>
       <image:loc>https://cms.karimsaari.com/wp-content/uploads/2026/05/WhatsApp-Image-2026-04-25-at-16.36.43-1.jpeg</image:loc>
       <image:title>Calanques Propres 2026 : Un élan collectif exceptionnel pour protéger notre littoral — Dark Massilia</image:title>
-      <image:caption>Femme portant un gilet de sauvetage rouge et blanc &quot;BOUD&apos;MER Pôle Environnement&quot; observant une équipe de dragon boat en action dans les Calanques de Marseille, Méditerranée — © Karim Saari</image:caption>
+      <image:caption>Femme portant un gilet de sauvetage BOUD&apos;MER Pôle Environnement observant une équipe de dragon boat dans les Calanques — © Karim Saari</image:caption>
       <image:license>https://karimsaari.com/contact</image:license>
     </image:image>
     <image:image>
       <image:loc>https://cms.karimsaari.com/wp-content/uploads/2026/05/WhatsApp-Image-2026-04-25-at-16.36.43.jpeg</image:loc>
       <image:title>Calanques Propres 2026 : Un élan collectif exceptionnel pour protéger notre littoral — Dark Massilia</image:title>
-      <image:caption>Déchets marins collectés incluant pneus usagés, plastiques et débris divers lors d&apos;une opération de dépollution des Calanques — Calanques de Marseille, Méditerranée — © Karim Saari</image:caption>
+      <image:caption>Déchets marins collectés incluant pneus usagés et plastiques lors d&apos;une opération de dépollution des Calanques — © Karim Saari</image:caption>
       <image:license>https://karimsaari.com/contact</image:license>
     </image:image>
   </url>
@@ -1907,7 +1994,7 @@
     <image:image>
       <image:loc>https://cms.karimsaari.com/wp-content/uploads/2026/04/Calanques-propres-26_4-scaled.jpg</image:loc>
       <image:title>Le fléau des bonbonnes de protoxyde d&amp;rsquo;azote : une menace sous-estimée pour notre santé et nos espaces naturels — Dark Massilia</image:title>
-      <image:caption>Bonbonne de protoxyde d&apos;azote abandonnée sur le fond marin recouvert de corail — Calanques de Marseille, Méditerranée — © Karim Saari</image:caption>
+      <image:caption>Bonbonne de protoxyde d&apos;azote abandonnée sur le fond marin recouvert de corail — Calanques de Marseille — © Karim Saari</image:caption>
       <image:license>https://karimsaari.com/contact</image:license>
     </image:image>
     <image:image>
@@ -1919,13 +2006,13 @@
     <image:image>
       <image:loc>https://cms.karimsaari.com/wp-content/uploads/2026/04/20250517_113448-scaled.jpg</image:loc>
       <image:title>Le fléau des bonbonnes de protoxyde d&amp;rsquo;azote : une menace sous-estimée pour notre santé et nos espaces naturels — Dark Massilia</image:title>
-      <image:caption>Collection de cartouches de protoxyde d&apos;azote et bonbonnes récupérées en mer — Calanques de Marseille, Méditerranée — © Karim Saari</image:caption>
+      <image:caption>Collection de cartouches de protoxyde d&apos;azote récupérées en mer — Calanques de Marseille, Méditerranée — © Karim Saari</image:caption>
       <image:license>https://karimsaari.com/contact</image:license>
     </image:image>
     <image:image>
       <image:loc>https://cms.karimsaari.com/wp-content/uploads/2026/04/20240420_115656-scaled.jpg</image:loc>
       <image:title>Le fléau des bonbonnes de protoxyde d&amp;rsquo;azote : une menace sous-estimée pour notre santé et nos espaces naturels — Dark Massilia</image:title>
-      <image:caption>Collection de bonbonnes de protoxyde d&apos;azote et produits chimiques retrouvés lors d&apos;une opération de nettoyage environnemental à Marseille — Pollution des espaces naturels méditerranéens — © Karim Saari</image:caption>
+      <image:caption>Collection de bonbonnes de protoxyde d&apos;azote retrouvées lors d&apos;une opération de nettoyage environnemental à Marseille — © Karim Saari</image:caption>
       <image:license>https://karimsaari.com/contact</image:license>
     </image:image>
     <image:image>
@@ -1946,19 +2033,19 @@
     <image:image>
       <image:loc>https://cms.karimsaari.com/wp-content/uploads/2026/04/Poster_CNC-actu.png</image:loc>
       <image:title>City Nature Challenge 2026 : Relevez le défi de la biodiversité avec Marseille ! — Dark Massilia</image:title>
-      <image:caption>Collage de biodiversité urbaine montrant une fleur rose, une libellule rouge, une abeille sur fleur violette et un escargot — City Nature Challenge illustrant la faune et flore des espaces verts de Marseille — © Karim Saari</image:caption>
+      <image:caption>Collage de biodiversité urbaine montrant une libellule, une abeille et un escargot — City Nature Challenge, Marseille — © Karim Saari</image:caption>
       <image:license>https://karimsaari.com/contact</image:license>
     </image:image>
     <image:image>
       <image:loc>https://cms.karimsaari.com/wp-content/uploads/2026/04/Screenshot_20260419_173605_iNaturalist.jpg</image:loc>
       <image:title>City Nature Challenge 2026 : Relevez le défi de la biodiversité avec Marseille ! — Dark Massilia</image:title>
-      <image:caption>Grille d&apos;observations de biodiversité montrant diverses espèces marines et terrestres de Marseille incluant crabes, araignées, plantes et fleurs des Calanques méditerranéennes — Observations participatives du City Nature Challenge à Marseille — © Karim Saari</image:caption>
+      <image:caption>Grille d&apos;observations de biodiversité montrant diverses espèces marines et terrestres de Marseille — City Nature Challenge — © Karim Saari</image:caption>
       <image:license>https://karimsaari.com/contact</image:license>
     </image:image>
     <image:image>
       <image:loc>https://cms.karimsaari.com/wp-content/uploads/2026/04/4PagesCityNature2026-v4-web_Page_1.jpg</image:loc>
       <image:title>City Nature Challenge 2026 : Relevez le défi de la biodiversité avec Marseille ! — Dark Massilia</image:title>
-      <image:caption>Main tenant un smartphone photographiant des fleurs blanches sauvages face à la mer Méditerranée — Calanques de Marseille, City Nature Challenge 2026 — © Karim Saari</image:caption>
+      <image:caption>Main tenant un smartphone photographiant des fleurs sauvages face à la mer Méditerranée — Calanques de Marseille, City Nature Challenge 2026 — © Karim Saari</image:caption>
       <image:license>https://karimsaari.com/contact</image:license>
     </image:image>
   </url>
@@ -1967,7 +2054,7 @@
     <image:image>
       <image:loc>https://cms.karimsaari.com/wp-content/uploads/2026/04/FB_IMG_1658378913374.jpg</image:loc>
       <image:title>Balades et travaux en forêt dans les Bouches-du-Rhône : Tout savoir sur la réglementation estivale — Dark Massilia</image:title>
-      <image:caption>Panneau d&apos;interdiction d&apos;accès au Parc National des Calanques en raison du risque incendie avec pictogrammes et informations bilingues — Calanques de Marseille, Bouches-du-Rhône — © Karim Saari</image:caption>
+      <image:caption>Panneau d&apos;interdiction d&apos;accès au Parc National des Calanques en raison du risque incendie — Marseille, Bouches-du-Rhône — © Karim Saari</image:caption>
       <image:license>https://karimsaari.com/contact</image:license>
     </image:image>
     <image:image>
@@ -1979,19 +2066,19 @@
     <image:image>
       <image:loc>https://cms.karimsaari.com/wp-content/uploads/2026/04/20250708_153614-scaled.jpg</image:loc>
       <image:title>Balades et travaux en forêt dans les Bouches-du-Rhône : Tout savoir sur la réglementation estivale — Dark Massilia</image:title>
-      <image:caption>Pompier en gilet jaune directeur de circulation devant un camion de pompiers GIMAEX sur une route — Bouches-du-Rhône, intervention d&apos;urgence — © Karim Saari</image:caption>
+      <image:caption>Pompier en gilet jaune directeur de circulation devant un camion de pompiers GIMAEX — Bouches-du-Rhône — © Karim Saari</image:caption>
       <image:license>https://karimsaari.com/contact</image:license>
     </image:image>
     <image:image>
       <image:loc>https://cms.karimsaari.com/wp-content/uploads/2026/04/20230508_133634-1-scaled.jpg</image:loc>
       <image:title>Balades et travaux en forêt dans les Bouches-du-Rhône : Tout savoir sur la réglementation estivale — Dark Massilia</image:title>
-      <image:caption>Deux véhicules de secours en montagne et intervention d&apos;urgence équipés de matériel de sauvetage dans les Bouches-du-Rhône — © Karim Saari</image:caption>
+      <image:caption>Deux véhicules de secours en montagne équipés de matériel de sauvetage — Bouches-du-Rhône — © Karim Saari</image:caption>
       <image:license>https://karimsaari.com/contact</image:license>
     </image:image>
     <image:image>
       <image:loc>https://cms.karimsaari.com/wp-content/uploads/2026/04/20230508_133634-scaled.jpg</image:loc>
       <image:title>Balades et travaux en forêt dans les Bouches-du-Rhône : Tout savoir sur la réglementation estivale — Dark Massilia</image:title>
-      <image:caption>Deux véhicules de secours en montagne et milieu périlleux Ford équipés de matériel de sauvetage avec kayaks de secours — Bouches-du-Rhône, intervention estivale en milieu naturel — © Karim Saari</image:caption>
+      <image:caption>Deux véhicules de secours Ford équipés de matériel de sauvetage avec kayaks de secours — Bouches-du-Rhône — © Karim Saari</image:caption>
       <image:license>https://karimsaari.com/contact</image:license>
     </image:image>
   </url>
@@ -2000,31 +2087,31 @@
     <image:image>
       <image:loc>https://cms.karimsaari.com/wp-content/uploads/2026/04/671193955_10242412714676771_4592120193441547040_n.jpg</image:loc>
       <image:title>Dépollution au J4 : quand Plastic Odyssey réunit Marseille pour nettoyer ce qui se cache sous la surface — Dark Massilia</image:title>
-      <image:caption>Navire de recherche océanographique Mastic Odyssey aux couleurs bleu et blanc avec équipements de dépollution marine, amarré au port de Marseille — Vieux-Port de Marseille, Méditerranée — © Karim Saari</image:caption>
+      <image:caption>Navire de recherche océanographique Plastic Odyssey aux couleurs bleu et blanc, amarré au port de Marseille — © Karim Saari</image:caption>
       <image:license>https://karimsaari.com/contact</image:license>
     </image:image>
     <image:image>
       <image:loc>https://cms.karimsaari.com/wp-content/uploads/2026/04/20260411_134327-scaled.jpg</image:loc>
       <image:title>Dépollution au J4 : quand Plastic Odyssey réunit Marseille pour nettoyer ce qui se cache sous la surface — Dark Massilia</image:title>
-      <image:caption>Bateau de dépollution maritime rouge et blanc des marins-pompiers de Marseille amarré au J4 lors d&apos;une opération de nettoyage sous-marin — Vieux-Port de Marseille, Méditerranée — © Karim Saari</image:caption>
+      <image:caption>Bateau de dépollution maritime des marins-pompiers de Marseille au J4 lors d&apos;une opération de nettoyage — Vieux-Port de Marseille — © Karim Saari</image:caption>
       <image:license>https://karimsaari.com/contact</image:license>
     </image:image>
     <image:image>
       <image:loc>https://cms.karimsaari.com/wp-content/uploads/2026/04/GOPR5891_1775922668464-scaled.jpg</image:loc>
       <image:title>Dépollution au J4 : quand Plastic Odyssey réunit Marseille pour nettoyer ce qui se cache sous la surface — Dark Massilia</image:title>
-      <image:caption>Bénévole de la Brigade verte nettoyant les débris et filets de pêche enchevêtrés au J4 du Vieux-Port de Marseille lors d&apos;une opération de dépollution marine organisée par Plastic Odyssey — Vieux-Port de Marseille, Méditerranée — © Karim Saari</image:caption>
+      <image:caption>Bénévole nettoyant des filets de pêche enchevêtrés au J4 du Vieux-Port lors d&apos;une opération Plastic Odyssey — Marseille — © Karim Saari</image:caption>
       <image:license>https://karimsaari.com/contact</image:license>
     </image:image>
     <image:image>
       <image:loc>https://cms.karimsaari.com/wp-content/uploads/2026/04/669030497_10242412721556943_8848470045194057927_n.jpg</image:loc>
       <image:title>Dépollution au J4 : quand Plastic Odyssey réunit Marseille pour nettoyer ce qui se cache sous la surface — Dark Massilia</image:title>
-      <image:caption>Sculpture colorée de tortue marine en plastique recyclé exposée sur un bateau — Vieux-Port de Marseille, Méditerranée — © Karim Saari</image:caption>
+      <image:caption>Sculpture colorée de tortue marine en plastique recyclé exposée lors d&apos;une action Plastic Odyssey — Vieux-Port de Marseille — © Karim Saari</image:caption>
       <image:license>https://karimsaari.com/contact</image:license>
     </image:image>
     <image:image>
       <image:loc>https://cms.karimsaari.com/wp-content/uploads/2026/04/668892149_10242412714156758_1883670495766682533_n-1.jpg</image:loc>
       <image:title>Dépollution au J4 : quand Plastic Odyssey réunit Marseille pour nettoyer ce qui se cache sous la surface — Dark Massilia</image:title>
-      <image:caption>Groupe de bénévoles en t-shirts bleus devant le navire-laboratoire Plastic Odyssey au J4 de Marseille pour une action de dépollution marine — Vieux-Port de Marseille, Méditerranée — © Karim Saari</image:caption>
+      <image:caption>Groupe de bénévoles devant le navire-laboratoire Plastic Odyssey au J4 de Marseille pour une action de dépollution — © Karim Saari</image:caption>
       <image:license>https://karimsaari.com/contact</image:license>
     </image:image>
     <image:image>
@@ -2036,37 +2123,37 @@
     <image:image>
       <image:loc>https://cms.karimsaari.com/wp-content/uploads/2026/04/668596762_10242412713596744_7275470257623305784_n.jpg</image:loc>
       <image:title>Dépollution au J4 : quand Plastic Odyssey réunit Marseille pour nettoyer ce qui se cache sous la surface — Dark Massilia</image:title>
-      <image:caption>Trois bénévoles portant des t-shirts de Plastic Odyssey et Cerveille lors d&apos;une action de dépollution marine à Marseille — Vieux-Port, Marseille, Méditerranée — © Karim Saari</image:caption>
+      <image:caption>Trois bénévoles portant des t-shirts de Plastic Odyssey et Cerveille lors d&apos;une action de dépollution à Marseille — © Karim Saari</image:caption>
       <image:license>https://karimsaari.com/contact</image:license>
     </image:image>
     <image:image>
       <image:loc>https://cms.karimsaari.com/wp-content/uploads/2026/04/669455776_10242412713076731_1177572072308670532_n.jpg</image:loc>
       <image:title>Dépollution au J4 : quand Plastic Odyssey réunit Marseille pour nettoyer ce qui se cache sous la surface — Dark Massilia</image:title>
-      <image:caption>Réunion de bénévoles et plongeurs pour une mission de dépollution marine organisée par Plastic Odyssey au J4 de Marseille — Vieux-Port, Marseille, Méditerranée — © Karim Saari</image:caption>
+      <image:caption>Réunion de bénévoles et plongeurs pour une mission de dépollution marine organisée par Plastic Odyssey au J4 de Marseille — © Karim Saari</image:caption>
       <image:license>https://karimsaari.com/contact</image:license>
     </image:image>
     <image:image>
       <image:loc>https://cms.karimsaari.com/wp-content/uploads/2026/04/669247343_10242412711156683_8574101055847704235_n.jpg</image:loc>
       <image:title>Dépollution au J4 : quand Plastic Odyssey réunit Marseille pour nettoyer ce qui se cache sous la surface — Dark Massilia</image:title>
-      <image:caption>Logo et texte &quot;Plastic Odyssey&quot; blanc sur fond bleu rayé — Identité visuelle du projet de dépollution marine — © Karim Saari</image:caption>
+      <image:caption>Logo et texte Plastic Odyssey blanc sur fond bleu rayé — Identité visuelle du projet de dépollution marine — © Karim Saari</image:caption>
       <image:license>https://karimsaari.com/contact</image:license>
     </image:image>
     <image:image>
       <image:loc>https://cms.karimsaari.com/wp-content/uploads/2026/04/671142339_10242412711916702_4320399238135710078_n-1.jpg</image:loc>
       <image:title>Dépollution au J4 : quand Plastic Odyssey réunit Marseille pour nettoyer ce qui se cache sous la surface — Dark Massilia</image:title>
-      <image:caption>Charrette rouge remplie de déchets et débris récupérés lors d&apos;une opération de dépollution marine, avec la Basilique Notre-Dame de la Garde en arrière-plan — Vieux-Port de Marseille, Méditerranée — © Karim Saari</image:caption>
+      <image:caption>Charrette rouge remplie de déchets récupérés lors d&apos;une opération de dépollution, avec Notre-Dame de la Garde en arrière-plan — Marseille — © Karim Saari</image:caption>
       <image:license>https://karimsaari.com/contact</image:license>
     </image:image>
     <image:image>
       <image:loc>https://cms.karimsaari.com/wp-content/uploads/2026/04/671142339_10242412711916702_4320399238135710078_n.jpg</image:loc>
       <image:title>Dépollution au J4 : quand Plastic Odyssey réunit Marseille pour nettoyer ce qui se cache sous la surface — Dark Massilia</image:title>
-      <image:caption>Charrette rouge remplie de bois et débris récupérés lors d&apos;une opération de dépollution marine, avec la Basilique Notre-Dame-de-la-Garde en arrière-plan à Marseille — © Karim Saari</image:caption>
+      <image:caption>Charrette rouge remplie de bois et débris lors d&apos;une opération de dépollution marine, Notre-Dame-de-la-Garde en arrière-plan — Marseille — © Karim Saari</image:caption>
       <image:license>https://karimsaari.com/contact</image:license>
     </image:image>
     <image:image>
       <image:loc>https://cms.karimsaari.com/wp-content/uploads/2026/04/671395287_10242412712436715_8699604151743790205_n.jpg</image:loc>
       <image:title>Dépollution au J4 : quand Plastic Odyssey réunit Marseille pour nettoyer ce qui se cache sous la surface — Dark Massilia</image:title>
-      <image:caption>Épaves de bateaux rouillées et débris marins exposés au J4 de Marseille lors d&apos;une opération de dépollution menée par Plastic Odyssey — Vieux-Port de Marseille, Méditerranée — © Karim Saari</image:caption>
+      <image:caption>Épaves de bateaux rouillées exposées au J4 lors d&apos;une opération de dépollution Plastic Odyssey — Vieux-Port de Marseille — © Karim Saari</image:caption>
       <image:license>https://karimsaari.com/contact</image:license>
     </image:image>
   </url>
@@ -2093,7 +2180,7 @@
     <image:image>
       <image:loc>https://cms.karimsaari.com/wp-content/uploads/2026/04/biodiversite-calanques-marseille-3.webp</image:loc>
       <image:title>Le poulpe des Calanques : l&amp;rsquo;animal le plus intelligent que vous croiserez sous l&amp;rsquo;eau — Dark Massilia</image:title>
-      <image:caption>Poulpe caché dans les roches et coraux d&apos;une grotte sous-marine avec ses tentacules visibles — Calanques de Marseille, Méditerranée — © Karim Saari</image:caption>
+      <image:caption>Poulpe caché dans les roches et coraux d&apos;une grotte sous-marine — Calanques de Marseille, Méditerranée — © Karim Saari</image:caption>
       <image:license>https://karimsaari.com/contact</image:license>
     </image:image>
   </url>
@@ -2102,7 +2189,7 @@
     <image:image>
       <image:loc>https://cms.karimsaari.com/wp-content/uploads/2026/04/20260404_130509-1-scaled.jpg</image:loc>
       <image:title>À la découverte des Parcs nationaux de France : sanctuaires de nature et territoires de vie — Dark Massilia</image:title>
-      <image:caption>Crique méditerranéenne aux eaux turquoise cristallines encadrée de pins et de roches calcaires — Calanques de Marseille, Provence-Alpes-Côte d&apos;Azur — © Karim Saari</image:caption>
+      <image:caption>Crique méditerranéenne aux eaux turquoise cristallines encadrée de pins et de roches calcaires — Calanques de Marseille — © Karim Saari</image:caption>
       <image:license>https://karimsaari.com/contact</image:license>
     </image:image>
     <image:image>
@@ -2114,49 +2201,49 @@
     <image:image>
       <image:loc>https://cms.karimsaari.com/wp-content/uploads/2026/04/reu.png</image:loc>
       <image:title>À la découverte des Parcs nationaux de France : sanctuaires de nature et territoires de vie — Dark Massilia</image:title>
-      <image:caption>Logo du Parc national de La Réunion avec emblème spiralé blanc sur fond vert — Parc national de La Réunion, France — © Karim Saari</image:caption>
+      <image:caption>Logo du Parc national de La Réunion avec emblème spiralé blanc sur fond vert — © Karim Saari</image:caption>
       <image:license>https://karimsaari.com/contact</image:license>
     </image:image>
     <image:image>
       <image:loc>https://cms.karimsaari.com/wp-content/uploads/2026/04/gua.png</image:loc>
       <image:title>À la découverte des Parcs nationaux de France : sanctuaires de nature et territoires de vie — Dark Massilia</image:title>
-      <image:caption>Logo du Parc national de la Guadeloupe avec spirale blanche stylisée sur fond rose vif — Guadeloupe, Caraïbes — © Karim Saari</image:caption>
+      <image:caption>Logo du Parc national de la Guadeloupe avec spirale blanche stylisée sur fond rose vif — © Karim Saari</image:caption>
       <image:license>https://karimsaari.com/contact</image:license>
     </image:image>
     <image:image>
       <image:loc>https://cms.karimsaari.com/wp-content/uploads/2026/04/foret.png</image:loc>
       <image:title>À la découverte des Parcs nationaux de France : sanctuaires de nature et territoires de vie — Dark Massilia</image:title>
-      <image:caption>Logo du Parc national de forêts avec spirale de feuilles blanches et texte burgundy — Parc national de forêts, France — © Karim Saari</image:caption>
+      <image:caption>Logo du Parc national de forêts avec spirale de feuilles blanches — Parc national de forêts, France — © Karim Saari</image:caption>
       <image:license>https://karimsaari.com/contact</image:license>
     </image:image>
     <image:image>
       <image:loc>https://cms.karimsaari.com/wp-content/uploads/2026/04/pnc.png</image:loc>
       <image:title>À la découverte des Parcs nationaux de France : sanctuaires de nature et territoires de vie — Dark Massilia</image:title>
-      <image:caption>Logo du Parc national des Calanques avec spirale blanche stylisée sur fond bleu — Parc national des Calanques, Marseille, Provence-Alpes-Côte d&apos;Azur — © Karim Saari</image:caption>
+      <image:caption>Logo du Parc national des Calanques avec spirale blanche sur fond bleu — Marseille, Provence-Alpes-Côte d&apos;Azur — © Karim Saari</image:caption>
       <image:license>https://karimsaari.com/contact</image:license>
     </image:image>
     <image:image>
       <image:loc>https://cms.karimsaari.com/wp-content/uploads/2026/04/mercant.png</image:loc>
       <image:title>À la découverte des Parcs nationaux de France : sanctuaires de nature et territoires de vie — Dark Massilia</image:title>
-      <image:caption>Logo du Parc national du Mercantour avec spirale blanche stylisée sur fond vert — Parc national du Mercantour, Alpes-de-Haute-Provence — © Karim Saari</image:caption>
+      <image:caption>Logo du Parc national du Mercantour avec spirale blanche sur fond vert — Alpes-de-Haute-Provence — © Karim Saari</image:caption>
       <image:license>https://karimsaari.com/contact</image:license>
     </image:image>
     <image:image>
       <image:loc>https://cms.karimsaari.com/wp-content/uploads/2026/04/ecrins-2.png</image:loc>
       <image:title>À la découverte des Parcs nationaux de France : sanctuaires de nature et territoires de vie — Dark Massilia</image:title>
-      <image:caption>Logo du Parc des Calanques avec spirale fractale blanche sur fond violet — Parc national des Calanques, Marseille, Provence-Alpes-Côte d&apos;Azur — © Karim Saari</image:caption>
+      <image:caption>Logo du Parc national des Écrins avec spirale fractale blanche sur fond violet — © Karim Saari</image:caption>
       <image:license>https://karimsaari.com/contact</image:license>
     </image:image>
     <image:image>
       <image:loc>https://cms.karimsaari.com/wp-content/uploads/2026/04/ecrins-1.png</image:loc>
       <image:title>À la découverte des Parcs nationaux de France : sanctuaires de nature et territoires de vie — Dark Massilia</image:title>
-      <image:caption>Logo du Parc des Calanques avec design spiral blanc sur fond pourpre — Identité visuelle institutionnelle, Marseille — © Karim Saari</image:caption>
+      <image:caption>Logo du Parc national des Écrins avec spirale blanche sur fond pourpre — Identité visuelle institutionnelle — © Karim Saari</image:caption>
       <image:license>https://karimsaari.com/contact</image:license>
     </image:image>
     <image:image>
       <image:loc>https://cms.karimsaari.com/wp-content/uploads/2026/04/5-1.png</image:loc>
       <image:title>À la découverte des Parcs nationaux de France : sanctuaires de nature et territoires de vie — Dark Massilia</image:title>
-      <image:caption>Logo Parc des Calanques avec design de spirale minimaliste en blanc sur fond violet — Parc national des Calanques, Marseille, Provence-Alpes-Côte d&apos;Azur — © Karim Saari</image:caption>
+      <image:caption>Logo Parc des Calanques avec design de spirale minimaliste blanc sur fond violet — Marseille, Provence-Alpes-Côte d&apos;Azur — © Karim Saari</image:caption>
       <image:license>https://karimsaari.com/contact</image:license>
     </image:image>
     <image:image>
@@ -2168,31 +2255,31 @@
     <image:image>
       <image:loc>https://cms.karimsaari.com/wp-content/uploads/2026/04/ecrins.png</image:loc>
       <image:title>À la découverte des Parcs nationaux de France : sanctuaires de nature et territoires de vie — Dark Massilia</image:title>
-      <image:caption>Logo du Parc des Calanques avec design spiral blanc sur fond violet — Parc national des Calanques, Marseille, Méditerranée — © Karim Saari</image:caption>
+      <image:caption>Logo du Parc des Calanques avec design spiral blanc sur fond violet — Parc national des Calanques, Marseille — © Karim Saari</image:caption>
       <image:license>https://karimsaari.com/contact</image:license>
     </image:image>
     <image:image>
       <image:loc>https://cms.karimsaari.com/wp-content/uploads/2026/04/5.png</image:loc>
       <image:title>À la découverte des Parcs nationaux de France : sanctuaires de nature et territoires de vie — Dark Massilia</image:title>
-      <image:caption>Logo du Parc des Calanques avec design en spirale blanche sur fond violet — Identité visuelle du parc national français situé à Marseille en Méditerranée — © Karim Saari</image:caption>
+      <image:caption>Logo du Parc des Calanques avec design en spirale blanche sur fond violet — Parc national français, Marseille Méditerranée — © Karim Saari</image:caption>
       <image:license>https://karimsaari.com/contact</image:license>
     </image:image>
     <image:image>
       <image:loc>https://cms.karimsaari.com/wp-content/uploads/2026/04/4.png</image:loc>
       <image:title>À la découverte des Parcs nationaux de France : sanctuaires de nature et territoires de vie — Dark Massilia</image:title>
-      <image:caption>Logo du Parc national des Cévennes avec spirale blanche stylisée sur fond orange — Parc national des Cévennes, France — © Karim Saari</image:caption>
+      <image:caption>Logo du Parc national des Cévennes avec spirale blanche stylisée sur fond orange — © Karim Saari</image:caption>
       <image:license>https://karimsaari.com/contact</image:license>
     </image:image>
     <image:image>
       <image:loc>https://cms.karimsaari.com/wp-content/uploads/2026/04/3.png</image:loc>
       <image:title>À la découverte des Parcs nationaux de France : sanctuaires de nature et territoires de vie — Dark Massilia</image:title>
-      <image:caption>Logo du Parc national des Pyrénées avec spirale blanche stylisée sur fond vert et blanc — Identité visuelle institutionnelle des parcs nationaux français — © Karim Saari</image:caption>
+      <image:caption>Logo du Parc national des Pyrénées avec spirale blanche sur fond vert et blanc — Identité visuelle institutionnelle — © Karim Saari</image:caption>
       <image:license>https://karimsaari.com/contact</image:license>
     </image:image>
     <image:image>
       <image:loc>https://cms.karimsaari.com/wp-content/uploads/2026/04/22.png</image:loc>
       <image:title>À la découverte des Parcs nationaux de France : sanctuaires de nature et territoires de vie — Dark Massilia</image:title>
-      <image:caption>Logo du Parc national de Port-Cros avec spirale blanche symbolisant la protection marine et la biodiversité méditerranéenne — Parc national de Port-Cros, îles d&apos;Hyères, Méditerranée — © Karim Saari</image:caption>
+      <image:caption>Logo du Parc national de Port-Cros avec spirale blanche symbolisant la protection marine méditerranéenne — Îles d&apos;Hyères — © Karim Saari</image:caption>
       <image:license>https://karimsaari.com/contact</image:license>
     </image:image>
     <image:image>
@@ -2204,136 +2291,25 @@
     <image:image>
       <image:loc>https://cms.karimsaari.com/wp-content/uploads/2026/04/20260404_130509-scaled.jpg</image:loc>
       <image:title>À la découverte des Parcs nationaux de France : sanctuaires de nature et territoires de vie — Dark Massilia</image:title>
-      <image:caption>Crique méditerranéenne aux eaux cristallines turquoise encadrée de pins et de roches calcaires — Calanques de Marseille, Provence-Alpes-Côte d&apos;Azur — © Karim Saari</image:caption>
+      <image:caption>Crique méditerranéenne aux eaux turquoise encadrée de pins et de roches calcaires — Calanques de Marseille, Provence — © Karim Saari</image:caption>
       <image:license>https://karimsaari.com/contact</image:license>
     </image:image>
     <image:image>
       <image:loc>https://cms.karimsaari.com/wp-content/uploads/2026/04/embleme_500x500-1.jpg</image:loc>
       <image:title>À la découverte des Parcs nationaux de France : sanctuaires de nature et territoires de vie — Dark Massilia</image:title>
-      <image:caption>Abstraction artistique de particules et débris dispersés symbolisant la pollution marine — Calanques de Marseille, Méditerranée — © Karim Saari</image:caption>
+      <image:caption>Abstraction artistique symbolisant la pollution marine et les débris océaniques — Calanques de Marseille — © Karim Saari</image:caption>
       <image:license>https://karimsaari.com/contact</image:license>
     </image:image>
     <image:image>
       <image:loc>https://cms.karimsaari.com/wp-content/uploads/2026/04/embleme_500x500.jpg</image:loc>
       <image:title>À la découverte des Parcs nationaux de France : sanctuaires de nature et territoires de vie — Dark Massilia</image:title>
-      <image:caption>Composition abstraite de taches et éclaboussures noires symbolisant la pollution marine et les débris océaniques — Calanques de Marseille, Méditerranée — © Karim Saari</image:caption>
+      <image:caption>Composition abstraite de taches noires symbolisant la pollution marine — Calanques de Marseille, Méditerranée — © Karim Saari</image:caption>
       <image:license>https://karimsaari.com/contact</image:license>
     </image:image>
     <image:image>
       <image:loc>https://cms.karimsaari.com/wp-content/uploads/2026/04/unnamed-scaled.png</image:loc>
       <image:title>À la découverte des Parcs nationaux de France : sanctuaires de nature et territoires de vie — Dark Massilia</image:title>
-      <image:caption>Infographie des 11 Parcs Nationaux de France présentant leur réseau géographique, biodiversité, importance territoriale et chiffres clés de protection naturelle — France métropolitaine et territoires d&apos;outre-mer — © NotebookLM</image:caption>
-      <image:license>https://karimsaari.com/contact</image:license>
-    </image:image>
-  </url>
-  <url>
-    <loc>https://karimsaari.com/blog/decouverte-des-sentiers-les-especes-communes-qui-parfument-et-colorent-les-calanques</loc>
-    <image:image>
-      <image:loc>https://cms.karimsaari.com/wp-content/uploads/2026/03/20260324_133847-scaled.jpg</image:loc>
-      <image:title>Découverte des sentiers : Les espèces communes qui parfument et colorent les Calanques — Dark Massilia</image:title>
-      <image:caption>Fleur de Cistus pourpre en fleur avec étamines jaunes au cœur, entourée de végétation méditerranéenne — Calanques de Marseille, Méditerranée — © Karim Saari</image:caption>
-      <image:license>https://karimsaari.com/contact</image:license>
-    </image:image>
-    <image:image>
-      <image:loc>https://cms.karimsaari.com/wp-content/uploads/2026/03/les-bons-gestes-1-scaled.png</image:loc>
-      <image:title>Découverte des sentiers : Les espèces communes qui parfument et colorent les Calanques — Dark Massilia</image:title>
-      <image:caption>Infographie éducative sur la préservation responsable de la biodiversité dans les Calanques avec recommandations de comportement en randonnée et engagement citoyen — Massif des Calanques, Marseille, Méditerranée — © Karim Saari</image:caption>
-      <image:license>https://karimsaari.com/contact</image:license>
-    </image:image>
-    <image:image>
-      <image:loc>https://cms.karimsaari.com/wp-content/uploads/2026/03/les-bons-gestes-scaled.png</image:loc>
-      <image:title>Découverte des sentiers : Les espèces communes qui parfument et colorent les Calanques — Dark Massilia</image:title>
-      <image:caption>Guide illustré des bonnes pratiques de randonnée et de protection de la biodiversité aux Calanques montrant les gestes essentiels et comment devenir acteur de la conservation — Calanques de Marseille, Méditerranée — © Karim Saari</image:caption>
-      <image:license>https://karimsaari.com/contact</image:license>
-    </image:image>
-    <image:image>
-      <image:loc>https://cms.karimsaari.com/wp-content/uploads/2026/03/unnamed-4-2-scaled.png</image:loc>
-      <image:title>Découverte des sentiers : Les espèces communes qui parfument et colorent les Calanques — Dark Massilia</image:title>
-      <image:caption>Guide illustré de la flore emblématique des Calanques montrant le romarin, le thym, le ciste cotonneux, la corneille et l&apos;euphorbe dans leur habitat méditerranéen — Calanques de Marseille, littoral méditerranéen — © Karim Saari</image:caption>
-      <image:license>https://karimsaari.com/contact</image:license>
-    </image:image>
-    <image:image>
-      <image:loc>https://cms.karimsaari.com/wp-content/uploads/2026/03/20260324_133958-scaled.jpg</image:loc>
-      <image:title>Découverte des sentiers : Les espèces communes qui parfument et colorent les Calanques — Dark Massilia</image:title>
-      <image:caption>Romarin en fleurs violettes et bleu pâle sur les pentes rocheuses des Calanques — Méditerranée, Marseille — © Karim Saari</image:caption>
-      <image:license>https://karimsaari.com/contact</image:license>
-    </image:image>
-    <image:image>
-      <image:loc>https://cms.karimsaari.com/wp-content/uploads/2026/03/20260324_134153.jpg</image:loc>
-      <image:title>Découverte des sentiers : Les espèces communes qui parfument et colorent les Calanques — Dark Massilia</image:title>
-      <image:caption>Fleurs violettes sauvages en fleur sur un sentier rocailleux des Calanques de Marseille, Méditerranée — © Karim Saari</image:caption>
-      <image:license>https://karimsaari.com/contact</image:license>
-    </image:image>
-    <image:image>
-      <image:loc>https://cms.karimsaari.com/wp-content/uploads/2026/03/20260324_135057.jpg</image:loc>
-      <image:title>Découverte des sentiers : Les espèces communes qui parfument et colorent les Calanques — Dark Massilia</image:title>
-      <image:caption>Euphorbe caractérisée aux fleurs jaunes et bractées vertes poussant parmi les herbes sèches des Calanques de Marseille — © Karim Saari</image:caption>
-      <image:license>https://karimsaari.com/contact</image:license>
-    </image:image>
-    <image:image>
-      <image:loc>https://cms.karimsaari.com/wp-content/uploads/2026/03/20260324_133857-scaled.jpg</image:loc>
-      <image:title>Découverte des sentiers : Les espèces communes qui parfument et colorent les Calanques — Dark Massilia</image:title>
-      <image:caption>Petites fleurs jaunes en grappes sur branches vertes dans la flore méditerranéenne des Calanques — Calanques de Marseille, Méditerranée — © Karim Saari</image:caption>
-      <image:license>https://karimsaari.com/contact</image:license>
-    </image:image>
-  </url>
-  <url>
-    <loc>https://karimsaari.com/blog/proteger-notre-grande-bleue-4-gestes-simples-pour-sauver-la-mediterranee</loc>
-    <image:image>
-      <image:loc>https://cms.karimsaari.com/wp-content/uploads/2026/03/cliche-3-3-scaled.jpg</image:loc>
-      <image:title>Protéger notre Grande Bleue : 4 gestes simples pour sauver la Méditerranée — Dark Massilia</image:title>
-      <image:caption>Apnéiste en combinaison bleue nettoyant les herbiers de posidonie et les structures coralliennes — Calanques de Marseille, Méditerranée — © Karim Saari</image:caption>
-      <image:license>https://karimsaari.com/contact</image:license>
-    </image:image>
-    <image:image>
-      <image:loc>https://cms.karimsaari.com/wp-content/uploads/2026/03/img2-scaled.jpg</image:loc>
-      <image:title>Protéger notre Grande Bleue : 4 gestes simples pour sauver la Méditerranée — Dark Massilia</image:title>
-      <image:caption>Calanque aux falaises calcaires et eaux turquoise de la Méditerranée — Calanques de Marseille — © Karim Saari</image:caption>
-      <image:license>https://karimsaari.com/contact</image:license>
-    </image:image>
-  </url>
-  <url>
-    <loc>https://karimsaari.com/blog/tresors-caches-et-perils-la-biodiversite-des-calanques-sous-haute-surveillance</loc>
-    <image:image>
-      <image:loc>https://cms.karimsaari.com/wp-content/uploads/2026/03/unnamed-5-scaled.png</image:loc>
-      <image:title>Trésors Cachés et Périls : La Biodiversité des Calanques sous Haute Surveillance — Dark Massilia</image:title>
-      <image:caption>Infographie illustrant la biodiversité fragile des Calanques : l&apos;herbier de Posidonie, espèces en péril comme le mérou brun, menaces industrielles (métaux lourds, algue R. okamura), et solutions de restauration (phytoremédiation, aires marines protégées, restauration active des herbiers) — Calanques de Marseille, Méditerranée — © Karim Saari</image:caption>
-      <image:license>https://karimsaari.com/contact</image:license>
-    </image:image>
-    <image:image>
-      <image:loc>https://cms.karimsaari.com/wp-content/uploads/2026/03/unnamed-1-scaled.png</image:loc>
-      <image:title>Trésors Cachés et Périls : La Biodiversité des Calanques sous Haute Surveillance — Dark Massilia</image:title>
-      <image:caption>Infographie pédagogique sur la biodiversité des Calanques montrant le patrimoine naturel exceptionnel, les menaces multiples de pollution et d&apos;espèces invasives, et les solutions de restauration écologique — Calanques de Marseille, Méditerranée — © Karim Saari</image:caption>
-      <image:license>https://karimsaari.com/contact</image:license>
-    </image:image>
-  </url>
-  <url>
-    <loc>https://karimsaari.com/blog/le-sanglier-des-calanques-un-acteur-discret-mais-central-de-lecosysteme</loc>
-    <image:image>
-      <image:loc>https://cms.karimsaari.com/wp-content/uploads/2026/03/HDl9KkqXYAIW-WM-scaled.jpg</image:loc>
-      <image:title>Le Sanglier des Calanques : un acteur discret mais central de l&amp;rsquo;écosystème — Dark Massilia</image:title>
-      <image:caption>Sanglier noir broutant dans une prairie fleurie avec fleurs jaunes et herbes vertes — Écosystème naturel des Calanques — © Karim Saari</image:caption>
-      <image:license>https://karimsaari.com/contact</image:license>
-    </image:image>
-    <image:image>
-      <image:loc>https://cms.karimsaari.com/wp-content/uploads/2026/03/HDl9KHEXsAAE_0Q-scaled.jpg</image:loc>
-      <image:title>Le Sanglier des Calanques : un acteur discret mais central de l&amp;rsquo;écosystème — Dark Massilia</image:title>
-      <image:caption>Sanglier sauvage au pelage noir et gris paissant dans la végétation des Calanques de Marseille — © Karim Saari</image:caption>
-      <image:license>https://karimsaari.com/contact</image:license>
-    </image:image>
-    <image:image>
-      <image:loc>https://cms.karimsaari.com/wp-content/uploads/2026/03/HDl9Iv8XMAAdGou-scaled.jpg</image:loc>
-      <image:title>Le Sanglier des Calanques : un acteur discret mais central de l&amp;rsquo;écosystème — Dark Massilia</image:title>
-      <image:caption>Sanglier noir en pelage hirsute broutant dans la végétation herbacée et verte — Écosystème naturel des Calanques de Marseille, Méditerranée — © Karim Saari</image:caption>
-      <image:license>https://karimsaari.com/contact</image:license>
-    </image:image>
-  </url>
-  <url>
-    <loc>https://karimsaari.com/blog/calanques-propres-2026-cap-sur-la-23eme-edition-du-grand-nettoyage-citoyen-et-scientifique</loc>
-    <image:image>
-      <image:loc>https://cms.karimsaari.com/wp-content/uploads/2026/03/530224122_18333005875200762_2423470975292586973_n.jpg</image:loc>
-      <image:title>Calanques Propres 2026 : Cap sur la 23ème édition du grand nettoyage citoyen et scientifique ! — Dark Massilia</image:title>
-      <image:caption>Collection de cartouches de CO2 et déchets plastiques ramassés en mer par Team Oxygen13 lors d&apos;une opération de nettoyage des fonds marins — Calanques de Marseille, Méditerranée — © Karim Saari</image:caption>
+      <image:caption>Infographie des 11 Parcs Nationaux de France présentant leur réseau géographique et biodiversité — © NotebookLM</image:caption>
       <image:license>https://karimsaari.com/contact</image:license>
     </image:image>
   </url>
@@ -2342,7 +2318,7 @@
     <image:image>
       <image:loc>https://cms.karimsaari.com/wp-content/uploads/2026/03/Calanques-propres-26_10-scaled.jpg</image:loc>
       <image:title>Méditerranée : rouge sur le plastique (et pourquoi il est urgent d&amp;rsquo;agir) — Dark Massilia</image:title>
-      <image:caption>Bouteille de vin plastique recouverte d&apos;organismes marins et d&apos;une oursin noir sur le fond marin — Méditerranée, Calanques de Marseille — © Karim Saari</image:caption>
+      <image:caption>Bouteille de vin plastique recouverte d&apos;organismes marins et d&apos;un oursin noir sur le fond marin — Calanques de Marseille — © Karim Saari</image:caption>
       <image:license>https://karimsaari.com/contact</image:license>
     </image:image>
   </url>
