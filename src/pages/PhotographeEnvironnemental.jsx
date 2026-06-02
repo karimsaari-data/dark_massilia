@@ -104,9 +104,14 @@ const TIMELINE_ENTRIES = [
     period: '2001–2017',
     label: 'Aix-en-Provence puis Marseille',
     title: 'La Provence, et les quartiers nord de Marseille',
-    text: 'Juin 2001 : j\'arrive en Provence. D\'abord à Aix-en-Provence, puis à Marseille dès 2006. Je m\'installe dans les quartiers nord — à Sainte-Marthe, quartier historique de la famille Ricard, chargé d\'une mémoire populaire et industrielle. J\'y découvre une autre Marseille : les collines, les calanques vues de loin, la lumière blanche sur le calcaire.',
+    text: 'Juin 2001 : j\'arrive en Provence. D\'abord à Aix-en-Provence, puis à Marseille dès 2006. Je m\'installe dans les quartiers nord — à Sainte-Marthe, quartier historique de la famille Ricard, chargé d\'une mémoire populaire et industrielle. C\'est ma période photographie de paysage : j\'y découvre une autre Marseille — les collines, les calanques vues de loin, la lumière blanche sur le calcaire — et je publie sur 500px, où mon travail dépasse les 800 000 impressions.',
+    stat: '800K+',
+    statLabel: 'impressions sur 500px',
     img: '/images/portfolio/Mer/karim-saari-marseille-vieux-port-arche-cadenas-notre-dame.webp',
     alt: 'Marseille — Vieux-Port, arche et Notre-Dame-de-la-Garde',
+    link: 'https://500px.com/p/karimsaari',
+    linkLabel: 'Mon portfolio 500px',
+    external: true,
     side: 'right',
   },
   {
@@ -137,7 +142,18 @@ const TIMELINE_ENTRIES = [
     img: '/images/groupe%20des%20amoureux%20des%20calanques.webp',
     alt: 'Groupe des Amoureux des Calanques de Marseille à Port-Cros',
     imgPosition: 'object-left',
+    link: '/communaute-calanques',
+    linkLabel: 'Rejoindre la communauté',
     side: 'right',
+  },
+  {
+    period: '2018',
+    label: 'Premières dépollutions',
+    title: 'Vallon des Auffes — mes premières dépollutions dans La Provence',
+    text: 'Une de mes premières dépollutions en apnée, au Vallon des Auffes — ce petit port emblématique de Marseille. L\'opération est menée à l\'initiative de la Team AVA, à laquelle je participe comme simple bénévole, avec ma planche de chasse Beuchat équipée d\'une caisse pour récupérer les déchets : on remonte pneus, ferraille et plastiques accumulés sous la surface. La Provence consacre un article à l\'action — une première rencontre avec l\'urgence cachée au fond de l\'eau.',
+    img: '/images/2018-premi%C3%A8res_d%C3%A9pollutions_vallon_des_auffes_la-provence.jpg',
+    alt: 'Article La Provence 2018 — premières dépollutions en apnée de Karim Saari au Vallon des Auffes, Marseille',
+    side: 'left',
   },
   {
     period: '2019',
@@ -148,18 +164,116 @@ const TIMELINE_ENTRIES = [
     alt: 'Karim Saari — bâche grand format Canebière, Ville de Marseille, Espace Culture place Saint-Louis',
     badge: '/images/Partenaires/svg/Armoiries_de_Marseille.svg',
     badgeAlt: 'Armoiries de la Ville de Marseille',
+    link: 'https://www.facebook.com/marseilleville/photos/a.220707724621813/3697054720320412/',
+    linkLabel: 'La publication de la Ville de Marseille',
+    external: true,
     side: 'right',
   },
   {
-    period: '2022–2026',
-    label: 'L\'action collective',
-    title: 'Team Oxygen et le Projet Sentinelle',
-    text: 'En 2022, je rejoins Team Oxygen comme simple apnéiste lors de la première édition du Projet Sentinelle. Je m\'investis progressivement, prends la vice-présidence, puis la présidence en janvier 2026. Quatre éditions, 5 724 kg de déchets remontés des fonds méditerranéens.',
-    img: '/images/Marseille-dark-massilia-plastique-pollution-projet-sentinelle-teamoxygen.webp',
-    alt: 'Team Oxygen — Projet Sentinelle, dépollution marine Marseille',
-    quote: '« Photographier les Calanques, c\'est les défendre. »',
-    imgScale: 'scale-[1.18]',
+    period: '2021',
+    label: 'Avant Team Oxygen',
+    title: 'Les Pirates du Plastique — l\'aventure zéro déchet',
+    text: 'Je rejoins « Les Pirates du Plastique », campagne initiée par le réseau associatif local et coordonnée par le Parc national des Calanques, avec le soutien de la Ville de Marseille et de la Métropole Aix-Marseille-Provence. Une trentaine d\'événements pour interroger nos modes de vie, secouer les habitudes et embarquer le grand public dans l\'aventure zéro déchet. Mon premier engagement de terrain collectif — avant même Team Oxygen.',
+    img: '/images/pirates%20du%20plastique.jpg',
+    alt: 'Les Pirates du Plastique — campagne zéro déchet du Parc national des Calanques, Karim Saari',
+    link: 'https://www.calanques-parcnational.fr/fr/actualites/lancement-de-la-campagne-les-pirates-du-plastique-rejoignez-laventure-zero-dechet',
+    linkLabel: 'La campagne du Parc national',
+    external: true,
     side: 'left',
+  },
+  {
+    period: '2021–2022',
+    label: 'Climat d\'urgence',
+    title: 'Grèves des éboueurs — face à l\'écocide',
+    text: 'Avant la première édition du Projet Sentinelle, j\'enchaîne les opérations de dépollution dans un climat d\'urgence. Les grèves à répétition des éboueurs laissent les déchets déferler vers la mer — on parle alors d\'écocide. J\'interviens dans l\'eau, principalement aux côtés de l\'association Merveille, avec l\'appui logistique de plusieurs associations. Une mobilisation intense qui prépare le terrain de Team Oxygen.',
+    stat: 'Plusieurs tonnes',
+    statLabel: 'de déchets remontés',
+    img: '/images/TF1_plongeur_karimsaari_video-greve-des-eboueurs-a-marseille-des-craintes-pour-l-environnement.webp',
+    alt: 'Karim Saari plongeur — reportage TF1 sur la grève des éboueurs à Marseille et les craintes pour l\'environnement',
+    side: 'right',
+  },
+  {
+    period: '2022',
+    label: '1ʳᵉ édition — Projet Sentinelle',
+    title: 'Côte Bleue — je rejoins Team Oxygen',
+    text: 'Déjà engagé sur le terrain depuis des années aux côtés d\'autres associations, je rejoins Team Oxygen pour la première édition du Projet Sentinelle, comme simple apnéiste. Huit jours de mobilisation le long de la Côte Bleue, de Martigues à l\'Estaque, pour remonter les déchets enfouis dans les fonds.',
+    stat: '900 kg',
+    statLabel: 'remontés en 8 jours',
+    img: '/images/Projet_sentinelle_1.jpg',
+    alt: 'Projet Sentinelle 2022, 1ʳᵉ édition — dépollution en apnée sur la Côte Bleue, Team Oxygen Marseille',
+    link: 'https://fr.wikipedia.org/wiki/Projet_Sentinelle',
+    linkLabel: 'Le Projet Sentinelle sur Wikipédia',
+    external: true,
+    side: 'left',
+  },
+  {
+    period: '2023',
+    label: '2ᵉ édition — Projet Sentinelle',
+    title: 'Archipel du Frioul — la montée en puissance',
+    text: 'Deuxième édition, cap sur l\'Archipel du Frioul. Sept jours d\'apnée et de logistique de surface : barquettes, cordages et plastiques remontés des criques. Je m\'investis davantage dans l\'organisation et prends la vice-présidence de Team Oxygen.',
+    stat: '1 357 kg',
+    statLabel: 'remontés en 7 jours',
+    img: '/images/projet_sentinelle_2_frioul.png',
+    alt: 'Projet Sentinelle 2023, 2ᵉ édition — dépollution sous-marine à l\'Archipel du Frioul, Team Oxygen Marseille',
+    link: 'https://www.laprovence.com/videos/marseille-1-4-tonne-de-dchets-sortie-des-eaux-du-frioul-par-des-apnistes/10321076',
+    linkLabel: 'Le reportage de La Provence',
+    external: true,
+    side: 'right',
+  },
+  {
+    period: '2024',
+    label: '3ᵉ édition — Projet Sentinelle',
+    title: 'Parc National des Calanques — au cœur du Port des Goudes',
+    text: 'Troisième édition, en plein Parc National des Calanques. Neuf jours d\'opérations, du Port des Goudes aux criques classées : pneus, filets fantômes et déchets plastiques extraits un à un, en apnée entre 0 et 20 mètres.',
+    stat: '1 147 kg',
+    statLabel: 'remontés en 9 jours',
+    img: '/images/marseille-dark-massilia-port-goudes-depollution-apnee-projet-sentinelle.webp',
+    alt: 'Projet Sentinelle 2024 — dépollution en apnée au Port des Goudes, Parc National des Calanques',
+    link: 'https://www.fondationdelamer.org/nos-actualites/projet-sentinelle/',
+    linkLabel: 'L\'article de la Fondation de la Mer',
+    external: true,
+    side: 'left',
+  },
+  {
+    period: 'Juin 2024',
+    label: 'Documentaire ARTE',
+    title: 'Pollution : il faut sauver Marseille et ses Calanques',
+    text: 'Tournage pour ARTE du documentaire « Pollution : il faut sauver Marseille et ses Calanques ». Je guide les équipes dans les fonds, caméra et déchets à l\'appui, pour montrer à un large public l\'ampleur de la pollution cachée sous la surface de la Méditerranée.',
+    img: '/images/contact-karim-saari.webp',
+    alt: 'Tournage ARTE « Pollution : il faut sauver Marseille et ses Calanques » — Team Oxygen et Karim Saari en dépollution dans les Calanques de Marseille',
+    imgFit: 'object-contain',
+    link: '/sauver-marseille-documentaire-arte',
+    linkLabel: 'Voir le documentaire ARTE',
+    side: 'right',
+  },
+  {
+    period: 'Décembre 2024',
+    label: 'Reconnaissance artistique',
+    title: 'Yann Arthus-Bertrand — « Les Français »',
+    text: 'Yann Arthus-Bertrand installe son Studio Photo à Marseille pour son projet « Les Français ». Je suis personnellement invité à poser — et j\'en profite pour convier toute la Team Oxygen à me rejoindre, le temps d\'une photo de groupe devant l\'objectif du célèbre photographe et réalisateur. Une reconnaissance forte de l\'engagement du collectif pour la Méditerranée.',
+    img: '/images/Marseille-2024-342-Les-Francais-copyright-Yann-Arthus-Bertrand.webp',
+    imgSrcSet: '/images/Marseille-2024-342-Les-Francais-copyright-Yann-Arthus-Bertrand_400w.webp 400w, /images/Marseille-2024-342-Les-Francais-copyright-Yann-Arthus-Bertrand_800w.webp 800w, /images/Marseille-2024-342-Les-Francais-copyright-Yann-Arthus-Bertrand_1200w.webp 1200w',
+    alt: 'Team Oxygen photographiée par Yann Arthus-Bertrand — projet « Les Français », Studio Photo Marseille décembre 2024',
+    imgPosition: 'object-[80%_50%]',
+    link: '/les-francais-yann-arthus-bertrand',
+    linkLabel: 'Découvrir le shooting',
+    side: 'left',
+  },
+  {
+    period: '2025',
+    label: '4ᵉ édition — Projet Sentinelle',
+    title: 'Rade de Marseille — l\'édition record et le tournage d\'Oxygène',
+    text: 'Quatrième édition dans la Rade de Marseille : sept jours, une équipe élargie et un record de déchets remontés. C\'est aussi pendant cette édition qu\'est tourné le documentaire Oxygène. Je serai élu président de Team Oxygen en janvier 2026.',
+    stat: '2 320 kg',
+    statLabel: 'remontés en 7 jours',
+    img: '/images/Marseille-dark-massilia-plastique-pollution-projet-sentinelle-teamoxygen.webp',
+    alt: 'Projet Sentinelle 2025 — édition record dans la Rade de Marseille, Team Oxygen, tournage Oxygène',
+    quote: '« Photographier les Calanques, c\'est les défendre. »',
+    link: 'https://www.marcelle.media/depolluer-la-mer-apnee-apres-apnee/',
+    linkLabel: 'L\'article de Marcelle Média',
+    external: true,
+    imgScale: 'scale-[1.18]',
+    side: 'right',
   },
   {
     period: '2026',
@@ -171,7 +285,7 @@ const TIMELINE_ENTRIES = [
     imgFit: 'object-contain',
     link: '/blog/oxygene-le-documentaire-sur-la-depollution-de-la-mediterranee',
     linkLabel: 'Lire l\'article',
-    side: 'right',
+    side: 'left',
     future: true,
   },
 ];
@@ -507,6 +621,12 @@ const PhotographeEnvironnemental = () => {
                     <div className={textLeft ? 'md:pr-10 md:text-right' : 'md:pl-10'}>
                       <p className="text-ocean-teal text-xs font-semibold uppercase tracking-widest mb-1">{entry.label}</p>
                       <p className="text-white font-bold text-3xl md:text-4xl mb-3 leading-tight">{entry.period}</p>
+                      {entry.stat && (
+                        <p className="mb-3 -mt-1">
+                          <span className="text-2xl md:text-3xl font-bold text-ocean-teal tabular-nums">{entry.stat}</span>
+                          {entry.statLabel && <span className="text-text-muted text-xs ml-2">{entry.statLabel}</span>}
+                        </p>
+                      )}
                       {entry.badge && (
                         <img src={entry.badge} alt={entry.badgeAlt} className={`h-10 w-auto mb-2 ${textLeft ? 'ml-auto' : ''}`} loading="lazy" />
                       )}
@@ -517,14 +637,23 @@ const PhotographeEnvironnemental = () => {
                           {entry.quote}
                         </p>
                       )}
-                      {entry.link && (
+                      {entry.link && (entry.external ? (
+                        <a
+                          href={entry.link}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className={`inline-flex items-center gap-1.5 mt-3 text-ocean-teal hover:text-white transition-colors text-xs font-medium ${textLeft ? 'justify-end' : ''}`}
+                        >
+                          {entry.linkLabel} <ArrowRight className="w-3 h-3" aria-hidden="true" />
+                        </a>
+                      ) : (
                         <Link
                           to={entry.link}
                           className={`inline-flex items-center gap-1.5 mt-3 text-ocean-teal hover:text-white transition-colors text-xs font-medium ${textLeft ? 'justify-end' : ''}`}
                         >
                           {entry.linkLabel} <ArrowRight className="w-3 h-3" aria-hidden="true" />
                         </Link>
-                      )}
+                      ))}
                     </div>
                   );
 
@@ -555,14 +684,24 @@ const PhotographeEnvironnemental = () => {
                           <div>
                             <p className="text-ocean-teal text-xs font-semibold uppercase tracking-widest mb-0.5">{entry.label}</p>
                             <p className="text-white font-bold text-2xl mb-1">{entry.period}</p>
+                            {entry.stat && (
+                              <p className="mb-1.5">
+                                <span className="text-xl font-bold text-ocean-teal tabular-nums">{entry.stat}</span>
+                                {entry.statLabel && <span className="text-text-muted text-[11px] ml-1.5">{entry.statLabel}</span>}
+                              </p>
+                            )}
                             <p className="text-white font-semibold text-sm mb-2">{entry.title}</p>
                             <p className="text-text-secondary text-sm leading-relaxed">{entry.text}</p>
                             {entry.quote && <p className="mt-2 text-white/60 italic text-sm border-l-2 border-ocean-teal pl-3">{entry.quote}</p>}
-                            {entry.link && (
+                            {entry.link && (entry.external ? (
+                              <a href={entry.link} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1.5 mt-2 text-ocean-teal text-xs font-medium">
+                                {entry.linkLabel} <ArrowRight className="w-3 h-3" aria-hidden="true" />
+                              </a>
+                            ) : (
                               <Link to={entry.link} className="inline-flex items-center gap-1.5 mt-2 text-ocean-teal text-xs font-medium">
                                 {entry.linkLabel} <ArrowRight className="w-3 h-3" aria-hidden="true" />
                               </Link>
-                            )}
+                            ))}
                           </div>
                           <div className="aspect-square overflow-hidden ring-1 ring-white/10 bg-black/40">
                             <img src={entry.img} srcSet={entry.imgSrcSet} sizes="100vw" alt={entry.alt} className={`w-full h-full ${entry.imgFit || 'object-cover'}${entry.imgScale ? ` ${entry.imgScale}` : ''}${entry.imgPosition ? ` ${entry.imgPosition}` : ''}`} loading="lazy" />

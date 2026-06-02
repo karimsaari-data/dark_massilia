@@ -22,6 +22,12 @@ const XTwitterIcon = ({ className }) => (
   </svg>
 );
 
+const Px500Icon = ({ className }) => (
+  <svg className={className} viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+    <path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm0 2.4c5.302 0 9.6 4.298 9.6 9.6s-4.298 9.6-9.6 9.6S2.4 17.302 2.4 12 6.698 2.4 12 2.4zm0 2.4c-3.977 0-7.2 3.223-7.2 7.2s3.223 7.2 7.2 7.2 7.2-3.223 7.2-7.2-3.223-7.2-7.2-7.2zm0 2.4c2.651 0 4.8 2.149 4.8 4.8S14.651 16.8 12 16.8 7.2 14.651 7.2 12s2.149-4.8 4.8-4.8zm0 2.4c-1.326 0-2.4 1.074-2.4 2.4s1.074 2.4 2.4 2.4 2.4-1.074 2.4-2.4-1.074-2.4-2.4-2.4z"/>
+  </svg>
+);
+
 /* ─── Icônes réseaux sociaux navbar ─────────────────────── */
 const NAV_SOCIALS = [
   { Icon: Send,        href: '/#newsletter',                             label: 'Newsletter',                               anchor: true },
@@ -29,6 +35,7 @@ const NAV_SOCIALS = [
   { Icon: TikTokIcon,  href: 'https://www.tiktok.com/@dark.massilia',   label: 'TikTok Dark Massilia' },
   { Icon: XTwitterIcon,href: 'https://x.com/dark_massilia',            label: 'X Dark Massilia' },
   { Icon: Facebook,    href: 'https://www.facebook.com/Photographie.Marseille', label: 'Page Facebook Karim Saari - Dark Massilia' },
+  { Icon: Px500Icon,   href: SOCIAL_LINKS.px500,                       label: '500px Karim Saari' },
 ];
 
 /* ─── Icon map pour les dropdowns ───────────────────────── */
