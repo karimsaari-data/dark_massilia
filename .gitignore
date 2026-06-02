@@ -68,6 +68,8 @@ v[0-9][0-9]-*.png
 public/images/portfolio/New/
 
 # Données analytics locales
-data/
+data/*
+# …sauf les exports Facebook (importés en CI vers Supabase au déploiement)
+!data/Facebook_Group_Insights_*.csv
 .mcp.json
 public/images/National_geogr.jpg
