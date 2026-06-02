@@ -174,7 +174,7 @@ const TIMELINE_ENTRIES = [
     label: 'Avant Team Oxygen',
     title: 'Les Pirates du Plastique — l\'aventure zéro déchet',
     text: 'Je rejoins « Les Pirates du Plastique », campagne initiée par le réseau associatif local et coordonnée par le Parc national des Calanques, avec le soutien de la Ville de Marseille et de la Métropole Aix-Marseille-Provence. Une trentaine d\'événements pour interroger nos modes de vie, secouer les habitudes et embarquer le grand public dans l\'aventure zéro déchet. Mon premier engagement de terrain collectif — avant même Team Oxygen.',
-    img: '/images/pirates%20du%20plastique.jpg',
+    img: '/images/pirates-du-plastique.jpg',
     alt: 'Les Pirates du Plastique — campagne zéro déchet du Parc national des Calanques, Karim Saari',
     link: 'https://www.calanques-parcnational.fr/fr/actualites/lancement-de-la-campagne-les-pirates-du-plastique-rejoignez-laventure-zero-dechet',
     linkLabel: 'La campagne du Parc national',
