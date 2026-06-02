@@ -586,8 +586,24 @@ const PhotographeEnvironnemental = () => {
             <div className="relative">
               {/* Barre verticale centrale — desktop uniquement */}
               <div
-                className="hidden md:block absolute left-1/2 top-0 bottom-0 w-px"
-                style={{ background: 'linear-gradient(to bottom, transparent 0%, rgba(0,171,168,0.5) 4%, rgba(0,171,168,0.5) 96%, transparent 100%)' }}
+                className="hidden md:block absolute left-1/2 -translate-x-1/2 top-0 bottom-0 w-0.5 rounded-full"
+                style={{
+                  background: 'linear-gradient(to bottom, transparent 0%, rgba(0,171,168,0.65) 3%, rgba(0,171,168,0.65) 100%)',
+                  boxShadow: '0 0 8px rgba(0,171,168,0.35)',
+                }}
+                aria-hidden="true"
+              />
+              {/* Flèche de fin de frise */}
+              <div
+                className="hidden md:block absolute left-1/2 -translate-x-1/2 bottom-0 translate-y-1/2"
+                style={{
+                  width: 0,
+                  height: 0,
+                  borderLeft: '6px solid transparent',
+                  borderRight: '6px solid transparent',
+                  borderTop: '10px solid rgba(0,171,168,0.85)',
+                  filter: 'drop-shadow(0 0 5px rgba(0,171,168,0.5))',
+                }}
                 aria-hidden="true"
               />
 
