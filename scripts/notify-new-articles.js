@@ -95,7 +95,12 @@ async function main() {
     const rawExc  = stripHtml(post.excerpt ?? '');
     const excerpt = rawExc.length > 220 ? rawExc.slice(0, 220) + '…' : rawExc;
     const url     = `https://karimsaari.com/blog/${post.slug}`;
-    const image   = post.image ?? post.image_og ?? null;
+    // Email : éviter le WebP (Outlook & certains clients mail ne le rendent
+    // pas → image cassée). On privilégie une image non-webp (souvent le JPG og).
+    const imgCandidates = [post.image_og, post.image].filter(Boolean);
+    const image   = imgCandidates.find((u) => !/\.webp(\?|$)/i.test(u))
+                 ?? imgCandidates[0]?.replace(/\.webp(\?|$)/i, '.jpg$1')
+                 ?? null;
 
     console.log(`   → ${title}`);
 
