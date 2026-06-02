@@ -40,6 +40,14 @@ const Medias = () => {
       logo: null,
     },
     {
+      title: 'Presse Agence — Florian Fiquet (Climatrek) : rando & initiation à l\'apnée à Sormiou',
+      url: 'https://presseagence.fr/marseille-florian-fiquet-le-role-des-createurs-de-contenus-est-determinant-pour-preserver-la-nature/',
+      featured: false,
+      date: '30 mars 2026',
+      image: '/images/karim-saari-marseille-florian-fiquet-climatrek-apnee-sormiou-calanques.png',
+      logo: null,
+    },
+    {
       title: 'Interview Presse — Tired Earth (EN/FR)',
       url: 'https://www.tiredearth.com/interviews/interview-de-karim-saari-apneiste-et-photographe-sous-marin#',
       featured: false,
