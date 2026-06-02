@@ -22,7 +22,7 @@ const logos = [
   { src: '/images/Partenaires/svg/Actu.fr_logo_2020.svg',                alt: 'Actu.fr',               href: 'https://actu.fr/' },
   { src: '/images/Partenaires/svg/National-Geographic-Logo.svg',          alt: 'National Geographic',   href: 'https://www.nationalgeographic.fr/' },
   { src: '/images/Partenaires/svg/Armoiries_de_Marseille.svg',           alt: 'Ville de Marseille',    href: 'https://www.marseille.fr/' },
-  { src: '/images/Partenaires/svg/logo%20fondation%20de%20la%20mer.svg', alt: 'Fondation de la Mer',   href: 'https://www.fondationdelamer.org/' },
+  { src: '/images/Partenaires/svg/logo-fondation-de-la-mer.svg', alt: 'Fondation de la Mer',   href: 'https://www.fondationdelamer.org/' },
   { src: '/images/Partenaires/svg/logo-un-geste-pour-la-mer.svg',        alt: 'Un Geste pour la Mer',  href: 'https://www.ungestepourlamer.org/' },
   { src: '/images/Partenaires/svg/Logo_NOVO19_-_2025.svg',               alt: 'Novo19',                href: 'https://www.novo19.tv/' },
 ];

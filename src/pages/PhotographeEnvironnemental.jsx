@@ -76,7 +76,7 @@ const ASSOCIATIONS = [
 // Institutions partenaires
 const INSTITUTIONS = [
   { name: 'Parc National des Calanques', url: 'https://calanques-parcnational.fr/fr', desc: 'Parc national marin et terrestre, Marseille — La Ciotat', logo: '/images/Partenaires/svg/logo-pncal.jpg' },
-  { name: 'Fondation de la Mer',         url: 'https://www.fondationdelamer.org/',    desc: 'Fondation nationale pour la protection des océans',        logo: '/images/Partenaires/svg/logo fondation de la mer.svg' },
+  { name: 'Fondation de la Mer',         url: 'https://www.fondationdelamer.org/',    desc: 'Fondation nationale pour la protection des océans',        logo: '/images/Partenaires/svg/logo-fondation-de-la-mer.svg' },
   { name: 'Citeo',                       url: 'https://www.citeo.com/',              desc: 'Organisme agréé pour le recyclage des emballages et papiers', logo: '/images/Partenaires/svg/Logo_Citeo.png' },
   { name: 'Ville de Marseille',          url: 'https://www.marseille.fr/',           desc: 'Collectivité territoriale, soutien aux projets environnementaux', logo: '/images/Partenaires/svg/Ville_de_Marseille_(logo).svg' },
 ];
@@ -139,7 +139,7 @@ const TIMELINE_ENTRIES = [
     label: 'La communauté',
     title: 'Création du groupe « Amoureux des Calanques »',
     text: 'En 2018, je crée le groupe Facebook « Amoureux des Calanques de Marseille à Port-Cros ». Ce qui commence comme un espace de partage photographique devient rapidement une communauté engagée — des milliers de passionnés du littoral, un relais pour sensibiliser à la préservation des Calanques et mobiliser autour des actions de terrain.',
-    img: '/images/groupe%20des%20amoureux%20des%20calanques.webp',
+    img: '/images/groupe-des-amoureux-des-calanques.webp',
     alt: 'Groupe des Amoureux des Calanques de Marseille à Port-Cros',
     imgPosition: 'object-left',
     link: '/communaute-calanques',

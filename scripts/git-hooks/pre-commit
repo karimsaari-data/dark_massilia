@@ -1,0 +1,6 @@
+#!/bin/sh
+# Hook pre-commit — assainit les noms d'images nouvellement ajoutées dans
+# public/images/ (espaces → tirets, accents normalisés) et met à jour les
+# références dans le code, avant que le commit ne parte.
+# Évite le plantage du déploiement FTP (lftp tronque les noms à espaces).
+node scripts/sanitize-image-names.mjs --staged || exit 1

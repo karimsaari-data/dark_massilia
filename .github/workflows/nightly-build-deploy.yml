@@ -204,8 +204,10 @@ jobs:
             while IFS= read -r path; do
               local_file="dist/$path"
               remote_dir="home/$(dirname "$path")"
-              echo "mkdir -fp $remote_dir"
-              echo "put $local_file -o home/$path"
+              # Chemins quotés : indispensable pour les noms contenant des
+              # espaces (sinon lftp tronque au premier espace → upload cassé).
+              echo "mkdir -fp \"$remote_dir\""
+              echo "put \"$local_file\" -o \"home/$path\""
             done < /tmp/ftp-upload-list.txt
             echo "bye"
           ) | lftp

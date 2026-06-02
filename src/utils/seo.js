@@ -1225,7 +1225,7 @@ export const SEO_PAGES = {
       'Plus de 65 000 passionnés des Calanques de Marseille — nature, photo et protection du littoral méditerranéen. La plus grande communauté en ligne, fondée par Karim Saari.',
     keywords: 'groupe facebook calanques marseille, amoureux calanques, communauté calanques en ligne, dark massilia groupe',
     canonical: `${BASE_URL}/communaute-calanques`,
-    image: `${BASE_URL}/images/groupe%20des%20amoureux%20des%20calanques_1200w.webp`,
+    image: `${BASE_URL}/images/groupe-des-amoureux-des-calanques_1200w.webp`,
     schema: {
       '@context': 'https://schema.org',
       '@graph': [

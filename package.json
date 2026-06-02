@@ -4,8 +4,11 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
+    "prepare": "git config core.hooksPath scripts/git-hooks || true",
     "dev": "vite",
     "build": "vite build",
+    "images:sanitize": "node scripts/sanitize-image-names.mjs --staged",
+    "images:check": "node scripts/sanitize-image-names.mjs --check",
     "build:ssr": "node scripts/prerender.js",
     "build:sitemap": "node scripts/generate-sitemap.js",
     "build:sitemap-images": "node scripts/generate-sitemap-images.js",

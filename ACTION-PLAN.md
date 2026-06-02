@@ -130,7 +130,7 @@ Analyser les KW cibles de chaque page et s'assurer qu'elles ne se cannibalisent 
 Ajouter un lien vers `/donnees-scientifiques` dans chaque article qui cite des statistiques sur la pollution marine.
 
 ### 11. Renommer l'image avec espaces
-`public/images/groupe des amoureux des calanques.webp` → `public/images/groupe-amoureux-calanques-facebook.webp`  
+`public/images/groupe-des-amoureux-des-calanques.webp` → `public/images/groupe-amoureux-calanques-facebook.webp`  
 Mettre à jour les références dans `src/pages/Home.jsx`.
 
 ### 12. Alt texts enrichis (mots-clés)

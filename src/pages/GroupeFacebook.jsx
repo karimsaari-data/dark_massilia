@@ -303,8 +303,8 @@ export default function GroupeFacebook() {
               {/* Image droite */}
               <div className="relative h-72 md:h-auto min-h-[420px] order-1 md:order-2">
                 <img
-                  src="/images/groupe%20des%20amoureux%20des%20calanques.webp"
-                  srcSet="/images/groupe%20des%20amoureux%20des%20calanques_400w.webp 400w, /images/groupe%20des%20amoureux%20des%20calanques_800w.webp 800w, /images/groupe%20des%20amoureux%20des%20calanques_1200w.webp 1200w"
+                  src="/images/groupe-des-amoureux-des-calanques.webp"
+                  srcSet="/images/groupe-des-amoureux-des-calanques_400w.webp 400w, /images/groupe-des-amoureux-des-calanques_800w.webp 800w, /images/groupe-des-amoureux-des-calanques_1200w.webp 1200w"
                   sizes="(max-width: 768px) 100vw, 50vw"
                   alt="Groupe des Amoureux des Calanques de Marseille à Port-Cros"
                   className="absolute inset-0 w-full h-full object-cover"

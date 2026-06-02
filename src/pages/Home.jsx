@@ -857,8 +857,8 @@ const Home = () => {
             {/* Image du groupe Facebook - Gauche */}
             <div className="relative h-64 md:h-auto min-h-[400px] order-1">
               <img
-                src="/images/groupe%20des%20amoureux%20des%20calanques.webp"
-                srcSet="/images/groupe%20des%20amoureux%20des%20calanques_400w.webp 400w, /images/groupe%20des%20amoureux%20des%20calanques_800w.webp 800w, /images/groupe%20des%20amoureux%20des%20calanques_1200w.webp 1200w, /images/groupe%20des%20amoureux%20des%20calanques.webp 1920w"
+                src="/images/groupe-des-amoureux-des-calanques.webp"
+                srcSet="/images/groupe-des-amoureux-des-calanques_400w.webp 400w, /images/groupe-des-amoureux-des-calanques_800w.webp 800w, /images/groupe-des-amoureux-des-calanques_1200w.webp 1200w, /images/groupe-des-amoureux-des-calanques.webp 1920w"
                 sizes="(max-width: 768px) 100vw, 50vw"
                 alt="Groupe Facebook Amoureux des Calanques de Marseille à Port-Cros"
                 width="1200"

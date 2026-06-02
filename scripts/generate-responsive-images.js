@@ -20,7 +20,7 @@ const IMAGES = [
   'public/images/portfolio/Mer/95.webp',
   'public/images/Marseille-dark-massilia-plastique-polluttion-projet-sentinelle-huveaune.webp',
   'public/images/Marseille-dark-massilia-plastique-pollution-projet-sentinelle-teamoxygen.webp',
-  'public/images/groupe des amoureux des calanques.webp',
+  'public/images/groupe-des-amoureux-des-calanques.webp',
   'public/images/Marseille-2024-342-Les-Francais-copyright-Yann-Arthus-Bertrand.webp',
 ];
 

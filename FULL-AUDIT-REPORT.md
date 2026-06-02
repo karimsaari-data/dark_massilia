@@ -265,7 +265,7 @@ Ce schema active la SiteLinks SearchBox dans les SERP pour les requêtes de marq
 
 ### ⚠️ Problèmes
 
-**[MOYEN]** Nom de fichier avec espaces : `groupe des amoureux des calanques.webp` → URL-encodé en `groupe%20des%20amoureux%20des%20calanques.webp`. Fonctionnel mais à renommer pour propret (tirets).
+**[MOYEN]** Nom de fichier avec espaces : `groupe-des-amoureux-des-calanques.webp` → URL-encodé en `groupe-des-amoureux-des-calanques.webp`. Fonctionnel mais à renommer pour propret (tirets).
 
 **[BAS]** Certains alt text sont informatifs mais manquent de mots-clés cibles. Ex : `"Team Oxygen - Projet Sentinelle Marseille"` → améliorer en `"Équipe Team Oxygen en mission de dépollution sous-marine Calanques de Marseille — Projet Sentinelle"`.
 
@@ -373,7 +373,7 @@ Le script `seo-crawl.js` a signalé 16 pages orphelines (dans le dist mais sans 
 10. **Sitemap blog : `lastmod` dynamique**
     - Le script de génération doit lire les dates réelles depuis l'API WP
 
-11. **Renommer `groupe des amoureux des calanques.webp`**
+11. **Renommer `groupe-des-amoureux-des-calanques.webp`**
     - → `groupe-amoureux-calanques-facebook.webp`
 
 12. **Améliorer les alt text des images secondaires**

@@ -86,7 +86,7 @@ const Medias = () => {
       featured: true,
       date: '21 nov. 2024',
       image: '/images/karim-saari-marseille-fondation-mer-projet-sentinelle-calanques.webp',
-      logo: '/images/Partenaires/svg/logo fondation de la mer.svg',
+      logo: '/images/Partenaires/svg/logo-fondation-de-la-mer.svg',
     },
     {
       title: "La Provence — Au fond, tout n'est pas perdu pour le littoral marseillais",
