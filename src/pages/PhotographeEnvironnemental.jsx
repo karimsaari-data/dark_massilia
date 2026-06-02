@@ -587,7 +587,7 @@ const PhotographeEnvironnemental = () => {
               {/* Barre verticale centrale — desktop uniquement */}
               <div
                 className="hidden md:block absolute left-1/2 top-0 bottom-0 w-px"
-                style={{ background: 'linear-gradient(to bottom, rgba(0,171,168,0.6), rgba(0,171,168,0.25), transparent)' }}
+                style={{ background: 'linear-gradient(to bottom, transparent 0%, rgba(0,171,168,0.5) 4%, rgba(0,171,168,0.5) 96%, transparent 100%)' }}
                 aria-hidden="true"
               />
 
