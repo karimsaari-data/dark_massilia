@@ -697,7 +697,7 @@ export const SEO_PAGES = {
   '/photographie-sous-marine': {
     title: 'Photographe Sous-Marin Marseille | Karim Saari',
     description:
-      'Galerie sous-marine de Karim Saari : dépollution, biodiversité et caractérisation des fonds des Calanques de Marseille — photographe sous-marin à Marseille.',
+      'Karim Saari, photographe sous-marin à Marseille & Calanques. Apnéiste engagé, il documente la biodiversité et la dépollution des fonds méditerranéens — galerie et missions terrain.',
     keywords: 'photographie sous-marine méditerranée, photographe apnéiste marseille, dépollution marine calanques, biodiversité sous-marine méditerranée',
     image: `${BASE_URL}/images/portfolio/Mer/photographe-sous-marin-marseille-frioul-exploration-subaquatique.webp`,
     canonical: `${BASE_URL}/photographie-sous-marine`,
