@@ -762,7 +762,7 @@ export const SEO_PAGES = {
   '/photographie-paysage-mer': {
     title: 'Photographe Paysage Marseille — Calanques & Provence | Karim Saari',
     description:
-      'Photographe de paysages à Marseille depuis 20 ans. Calanques, Luberon, Valensole, Camargue — Karim Saari documente la beauté méditerranéenne. Tirages disponibles.',
+      'Photographe de paysages à Marseille depuis 2001 — National Geographic, Ville de Marseille. Calanques, Luberon, Valensole, Camargue — Karim Saari documente la beauté méditerranéenne.',
     keywords: 'photographe paysage marseille, photographie calanques, paysage méditerranée, photographe provence, photographie paysage marseille',
     image: `${BASE_URL}/images/portfolio/Mer/karim-saari-marseille-calanque-sauvage-pins-mediterraneens.webp`,
     canonical: `${BASE_URL}/photographie-paysage-mer`,
