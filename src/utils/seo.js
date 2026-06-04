@@ -358,7 +358,7 @@ export const SEO_PAGES = {
   '/depollution-marine': {
     title: 'Dépollution Marine Marseille | Karim Saari — Projet Sentinelle',
     description:
-      'Team Oxygen, association de dépollution marine à Marseille. Depuis 2022, 5 724 kg de déchets extraits des Calanques en apnée — Opération Sentinelle.',
+      'Karim Saari, apnéiste engagé dans la dépollution marine à Marseille depuis 2018. Président de Team Oxygen — 5 724 kg remontés des Calanques en 4 éditions du Projet Sentinelle.',
     keywords: 'dépollution marine marseille, team oxygen, projet sentinelle, nettoyage sous-marin calanques, ramassage déchets mer',
     image: `${BASE_URL}/images/Marseille-dark-massilia-plastique-pollution-projet-sentinelle-teamoxygen.webp`,
     canonical: `${BASE_URL}/depollution-marine`,
