@@ -58,6 +58,20 @@ const STATIC_PAGES = [
   // mentions-legales et confidentialite : volontairement absents (noindex implicite)
 ];
 
+// ── Fallback : extraire les slugs blog de l'ancien sitemap ───────────────────
+function loadFallbackSlugs() {
+  try {
+    const xml = fs.readFileSync(outPath, 'utf-8');
+    const matches = [...xml.matchAll(/<loc>https:\/\/karimsaari\.com\/blog\/(?!categorie\/)([^<]+)<\/loc>/g)];
+    if (matches.length === 0) return [];
+    const slugs = matches.map(m => ({ slug: m[1], modified: TODAY }));
+    console.log(`  ♻️  Fallback : ${slugs.length} slug(s) récupérés depuis l'ancien sitemap.`);
+    return slugs;
+  } catch {
+    return [];
+  }
+}
+
 // ── Récupération des articles WP avec leur date de modification ───────────────
 async function fetchWPMeta() {
   const metas = [];
@@ -70,8 +84,8 @@ async function fetchWPMeta() {
         `${WP_BASE}/posts?per_page=100&page=${page}&_fields=slug,modified&status=publish`
       );
       if (!res.ok) {
-        console.warn(`  ⚠️  WP API ${res.status} — les URLs blog seront ignorées dans le sitemap.`);
-        return [];
+        console.warn(`  ⚠️  WP API ${res.status} — fallback sur l'ancien sitemap.`);
+        return loadFallbackSlugs();
       }
       const posts = await res.json();
       posts.forEach(p => metas.push({
@@ -82,8 +96,8 @@ async function fetchWPMeta() {
       page++;
     } while (page <= totalPages);
   } catch (err) {
-    console.warn(`  ⚠️  Impossible de contacter le CMS WP : ${err.message}`);
-    return [];
+    console.warn(`  ⚠️  Impossible de contacter le CMS WP : ${err.message} — fallback sur l'ancien sitemap.`);
+    return loadFallbackSlugs();
   }
 
   return metas;
