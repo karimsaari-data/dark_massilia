@@ -1928,10 +1928,10 @@ export const SEO_PAGES = {
   },
 
   '/photographe-environnemental-marseille': {
-    title: 'Photographe Environnemental Marseille | Karim Saari',
+    title: 'Photographe Environnement Marseille | Karim Saari — Dark Massilia',
     description:
-      'Karim Saari, photographe environnemental et sous-marin à Marseille. 132 000 personnes engagées pour les Calanques. Galeries, missions terrain, presse.',
-    keywords: 'photographe environnemental marseille, karim saari, dark massilia, photographe sous-marin calanques, dépollution marine, projet sentinelle',
+      'Karim Saari, photographe environnement et sous-marin à Marseille. Photographie et dépollution des Calanques depuis 2018. 132 000 personnes engagées.',
+    keywords: 'photographe environnement marseille, photographe environnemental marseille, karim saari, dark massilia, photographe sous-marin calanques, dépollution marine, projet sentinelle',
     image: `${BASE_URL}/images/Karimsaari-portfolio-sous-marin-paysages-calanques-marseille-photographie-photographe-environnemental.webp`,
     canonical: `${BASE_URL}/photographe-environnemental-marseille`,
     schema: {
@@ -1979,10 +1979,10 @@ export const SEO_PAGES = {
           mainEntity: [
             {
               '@type': 'Question',
-              name: 'Qu\'est-ce qu\'un photographe environnemental ?',
+              name: 'Qu\'est-ce qu\'un photographe environnement ?',
               acceptedAnswer: {
                 '@type': 'Answer',
-                text: 'Un photographe environnemental documente les écosystèmes naturels, la faune, la flore et les impacts humains sur la nature. À Marseille, Karim Saari combine photographie sous-marine en apnée et photographie de paysages pour témoigner de l\'état des Calanques et de la Méditerranée.',
+                text: 'Un photographe environnement — aussi appelé photographe environnemental — documente les écosystèmes naturels, la faune, la flore et les impacts humains sur la nature. À Marseille, Karim Saari combine photographie sous-marine en apnée et photographie de paysages pour témoigner de l\'état des Calanques et de la Méditerranée.',
               },
             },
             {
