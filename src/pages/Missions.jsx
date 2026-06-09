@@ -78,6 +78,7 @@ const Missions = () => {
               <h2 className="text-2xl md:text-3xl font-bold text-white mb-4">
                 Notre mission sur le littoral méditerranéen
               </h2>
+              <h3 className="sr-only">Dépollution sous-marine en apnée — Calanques, Frioul & Côte Bleue</h3>
               <div className="rounded-xl px-5 py-4" style={{ background: 'rgba(0,0,0,0.40)', backdropFilter: 'blur(8px)' }}>
                 <div className="space-y-4 text-white/90 leading-[1.8]">
                   <p className="font-medium">
@@ -204,6 +205,7 @@ const Missions = () => {
                 <h2 className="text-2xl md:text-3xl font-bold text-white mb-3 leading-tight">
                   Une décennie de missions sous-marines en images
                 </h2>
+                <h3 className="sr-only">Galerie photo des opérations de nettoyage des fonds marins</h3>
                 <p className="text-white/70 text-base mb-4 max-w-xl">
                   Dépollution documentée en apnée — fonds marins, vie marine et déchets collectés dans les Calanques.
                 </p>
@@ -230,6 +232,7 @@ const Missions = () => {
               <h2 className="text-2xl md:text-3xl font-bold text-white mb-6">
                 Agir à la source : Les Calanques et la Côte Bleue
               </h2>
+              <h3 className="sr-only">Zones d'intervention — Calanques de Marseille et littoral méditerranéen</h3>
               <p className="text-text-secondary leading-[1.8] text-lg">
                 L'urgence est à nos portes&nbsp;: 80&nbsp;% des déchets marins proviennent de la terre.
                 L'impact sur notre littoral est massif. À titre d'exemple, lors du bilan 2023 de
@@ -288,6 +291,7 @@ const Missions = () => {
             <h2 className="text-2xl md:text-3xl font-bold text-white mb-6">
               Team Oxygen — association loi 1901 pour la mer
             </h2>
+            <h3 className="sr-only">Association de dépollution marine basée à Marseille</h3>
             <div className="space-y-4 text-text-secondary leading-[1.8]">
               <p>
                 <strong className="text-ocean-teal">Team Oxygen</strong> est une{' '}

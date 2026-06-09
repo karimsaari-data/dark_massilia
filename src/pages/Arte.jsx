@@ -112,6 +112,7 @@ const Arte = () => {
           >
             Plus de contenu ARTE
           </motion.h2>
+          <h3 className="sr-only">Vidéos et reportages ARTE sur la pollution marine et la Méditerranée</h3>
 
           <motion.a
             variants={FADE_IN_UP}
@@ -139,6 +140,7 @@ const Arte = () => {
               <h2 className="text-2xl md:text-3xl font-bold text-white mb-6">
                 ARTE met les Calanques à l'honneur
               </h2>
+              <h3 className="sr-only">Documentaire environnement marin — Karim Saari dans les Calanques de Marseille</h3>
               <p className="text-text-secondary leading-[1.8] text-lg mb-4">
                 En 2024, la chaîne culturelle européenne{' '}
                 <strong className="text-white">ARTE</strong> a consacré un reportage aux éco-acteurs

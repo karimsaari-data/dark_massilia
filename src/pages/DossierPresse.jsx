@@ -79,6 +79,7 @@ export default function DossierPresse() {
             <div>
               <p className="text-astroide text-xs font-semibold uppercase tracking-widest mb-2">Contact presse</p>
               <h2 className="text-2xl font-bold text-white mb-2">Pour toute demande médiatique</h2>
+              <h3 className="sr-only">Contacts presse, visuels HD et biographie — Karim Saari Dark Massilia</h3>
               <p className="text-text-secondary text-sm">
                 Interviews, reportages, cessions de droits, partenariats documentaires.
               </p>
