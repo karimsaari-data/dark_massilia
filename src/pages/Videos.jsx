@@ -141,6 +141,7 @@ const Videos = () => {
               <h2 className="text-2xl md:text-3xl font-bold text-white mb-6">
                 Les Vidéos
               </h2>
+              <h3 className="sr-only">Reportages vidéo dépollution marine et photographie sous-marine — Karim Saari</h3>
               <div className="space-y-4 text-text-secondary leading-[1.8]">
                 <p>
                   De l'immersion en apnée dans les Calanques au reportage diffusé sur ARTE, nos vidéos racontent chaque mission de dépollution. Images tournées sous l'eau, témoignages de terrain, rétrospectives annuelles — chaque format documente une réalité que l'œil nu ne peut pas toujours atteindre.
@@ -190,6 +191,7 @@ const Videos = () => {
               <h2 className="text-xl font-bold text-white mb-3">
                 Karim Saari sur ARTE
               </h2>
+              <h3 className="sr-only">Reportage ARTE — apnée, photographie et protection de la Méditerranée</h3>
               <p className="text-text-secondary leading-relaxed text-sm">
                 En 2024, la chaîne ARTE a consacré un reportage à l'engagement de Karim Saari pour la protection de la Méditerranée — apnéiste, photographe et sentinelle des fonds marins des Calanques.
               </p>
@@ -214,6 +216,7 @@ const Videos = () => {
               <h2 className="text-xl font-bold text-white mb-3">
                 Méduses | Les souveraines des océans
               </h2>
+              <h3 className="sr-only">Documentaire ARTE sur les méduses en Méditerranée — images sous-marines Marseille</h3>
               <p className="text-text-secondary leading-relaxed text-sm">
                 Film de Sébastien Lafont (2024, 43 min). Karim Saari a fourni des images tournées en Méditerranée pour ce documentaire sur la prolifération des méduses et la transformation des écosystèmes marins.
               </p>
@@ -239,6 +242,7 @@ const Videos = () => {
             <h2 className="text-lg md:text-xl font-bold text-white mb-4">
               Documenter l'urgence : L'action en immersion
             </h2>
+            <h3 className="sr-only">Vidéos de missions de dépollution sous-marine dans les Calanques de Marseille</h3>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6 text-text-secondary leading-relaxed text-sm">
               <p>
                 Si la photographie d'art sublime nos paysages, la vidéo est le témoin brut de notre
