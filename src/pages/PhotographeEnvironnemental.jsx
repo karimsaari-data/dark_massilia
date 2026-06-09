@@ -495,7 +495,7 @@ const PhotographeEnvironnemental = () => {
 
             {/* Lead */}
             <p className="text-base md:text-lg text-white/90 leading-relaxed font-light mb-6">
-              Je suis <strong className="text-ocean-teal font-semibold">Karim Saari</strong>, photographe environnemental basé à Marseille — <Link to="/photographie-paysage-mer" className="text-ocean-teal hover:underline">paysages</Link>, <Link to="/photographie-sous-marine" className="text-ocean-teal hover:underline">photographie sous-marine</Link> en apnée, et documentation des opérations de dépollution avec Team Oxygen depuis 2018.
+              Je suis <strong className="text-ocean-teal font-semibold">Karim Saari</strong>, photographe environnement basé à Marseille — <Link to="/photographie-paysage-mer" className="text-ocean-teal hover:underline">paysages</Link>, <Link to="/photographie-sous-marine" className="text-ocean-teal hover:underline">photographie sous-marine</Link> en apnée, et documentation des opérations de dépollution avec Team Oxygen depuis 2018.
             </p>
 
             {/* Chapitre 1 */}

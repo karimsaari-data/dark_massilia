@@ -172,6 +172,7 @@ const Meduses = () => {
                 <h2 className="text-2xl md:text-3xl font-bold text-white">
                   Contribution au documentaire ARTE « Méduses | Les souveraines des océans »
                 </h2>
+                <h3 className="sr-only">Méduses en Méditerranée — images sous-marines de Karim Saari pour ARTE</h3>
                 <div className="w-14 h-14 rounded-full bg-white overflow-hidden flex-shrink-0 animate-pulse-glow">
                   <img
                     src="/assets/dark-massilia-logo-200.webp"

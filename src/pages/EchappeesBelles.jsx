@@ -172,6 +172,7 @@ const EchappeesBelles = () => {
             <h2 className="text-2xl md:text-3xl font-bold text-white mb-6">
               France 5 met les Bouches-du-Rhône à l'honneur
             </h2>
+            <h3 className="sr-only">Reportage Échappées Belles France 5 — Calanques de Marseille et Méditerranée</h3>
             <p className="text-text-secondary leading-[1.8] text-lg mb-4">
               Cette diffusion sur France 5 s'inscrit dans une longue liste de médias nationaux et internationaux qui ont documenté l'action de{' '}
               <strong className="text-ocean-teal">Karim Saari</strong> et de{' '}

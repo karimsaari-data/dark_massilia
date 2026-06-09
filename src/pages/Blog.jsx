@@ -99,6 +99,7 @@ export default function Blog() {
           <motion.h1 variants={FADE_IN_UP} className="heading-1 text-white mb-6">
             Actualités & Actions
           </motion.h1>
+          <h3 className="sr-only">Articles sur la mer Méditerranée, la faune marine et la dépollution des Calanques</h3>
 
           <motion.p variants={FADE_IN_UP} className="body-large max-w-2xl mx-auto mb-10">
             Suivez en direct les missions de dépollution, les rencontres et les coups de cœur

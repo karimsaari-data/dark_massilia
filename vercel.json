@@ -27,7 +27,9 @@
     { "source": "/actu-x.html",  "destination": "/actualites",                             "permanent": true },
 
     { "source": "/blog/🌊-proteger-notre-grande-bleue-4-gestes-simples-pour-sauver-la-mediterranee",  "destination": "/blog/proteger-notre-grande-bleue-4-gestes-simples-pour-sauver-la-mediterranee", "permanent": true },
-    { "source": "/blog/%F0%9F%8C%8A-proteger-notre-grande-bleue-4-gestes-simples-pour-sauver-la-mediterranee", "destination": "/blog/proteger-notre-grande-bleue-4-gestes-simples-pour-sauver-la-mediterranee", "permanent": true }
+    { "source": "/blog/%F0%9F%8C%8A-proteger-notre-grande-bleue-4-gestes-simples-pour-sauver-la-mediterranee", "destination": "/blog/proteger-notre-grande-bleue-4-gestes-simples-pour-sauver-la-mediterranee", "permanent": true },
+
+    { "source": "/:path+/", "destination": "/:path+", "permanent": true }
   ],
   "rewrites": [
     { "source": "/(.*)", "destination": "/index.html" }

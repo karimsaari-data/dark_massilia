@@ -781,6 +781,7 @@ const Photos = () => {
           className="mb-16 scroll-mt-8"
         >
           <SectionTitle icon={Waves} title="Le Littoral Marseillais & Calanques" count={shuffledMer.length} />
+          <h3 className="sr-only">Photographie de paysages — Calanques de Marseille & Méditerranée</h3>
           <PhotoGrid images={shuffledMer} />
         </motion.div>
 
@@ -793,6 +794,7 @@ const Photos = () => {
           className="mb-16 scroll-mt-8"
         >
           <SectionTitle icon={TreePine} title="Terres de Provence & Camargue" count={shuffledTerre.length} />
+          <h3 className="sr-only">Paysages de Provence — Champs de lavande, Valensole & arrière-pays</h3>
           <PhotoGrid images={shuffledTerre} />
         </motion.div>
 
@@ -805,6 +807,7 @@ const Photos = () => {
           className="mb-16 scroll-mt-8"
         >
           <SectionTitle icon={Compass} title="Explorations & Horizons Lointains" count={shuffledHorizons.length} />
+          <h3 className="sr-only">Photographies de voyage — Côte Basque, Maroc & Madère</h3>
           <PhotoGrid images={shuffledHorizons} />
         </motion.div>
 

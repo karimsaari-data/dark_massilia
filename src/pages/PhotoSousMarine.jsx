@@ -720,6 +720,7 @@ const PhotoSousMarine = () => {
               <h2 className="text-2xl md:text-3xl font-bold text-white mb-2">
                 La photographie sous-marine au service de l'engagement
               </h2>
+              <h3 className="sr-only">Photographie sous-marine en apnée — Méditerranée & Calanques</h3>
               <p className="text-ocean-teal font-semibold text-sm uppercase tracking-widest mb-6">
                 Comprendre ma démarche : de l'image à l'impact
               </p>
@@ -843,6 +844,7 @@ const PhotoSousMarine = () => {
               <h2 className="text-xl md:text-2xl font-bold text-white mb-4">
                 Apnée et photographie engagée — au cœur des Calanques de Marseille
               </h2>
+              <h3 className="sr-only">Plongée en apnée, faune marine et documentation environnementale</h3>
               <div className="space-y-0 text-text-secondary leading-loose text-sm md:text-[0.95rem]">
 
                 {/* Lead */}
@@ -928,6 +930,7 @@ const PhotoSousMarine = () => {
               <h2 className="text-xl md:text-2xl font-bold text-white mb-2">
                 Vous cherchez un photographe sous-marin à Marseille ?
               </h2>
+              <h3 className="sr-only">Contact et tarifs — photographe sous-marin professionnel Marseille</h3>
               <p className="text-text-secondary text-base max-w-xl">
                 Reportage documentaire, exposition photographique, production institutionnelle ou collaboration presse — je suis basé à Marseille et disponible sur les Calanques et la Méditerranée.
               </p>
