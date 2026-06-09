@@ -515,6 +515,7 @@ const Home = () => {
             <h2 className="text-3xl md:text-4xl font-bold text-white">
               10 ans d'engagement — Marseille & Calanques
             </h2>
+            <h3 className="sr-only">Dépollution marine et photographie environnementale depuis 2018</h3>
 
           </motion.div>
 
@@ -675,6 +676,7 @@ const Home = () => {
               <h2 className="text-3xl md:text-4xl font-bold text-white mb-6">
                 Agir pour la Méditerranée.
               </h2>
+              <h3 className="sr-only">Plongée, apnée et nettoyage des fonds — Calanques de Marseille</h3>
 
               <p className="text-gray-300 text-lg mb-8 leading-[1.8]">
                 À Marseille avec Team Oxygen, nous intervenons en apnée de la surface à 20 mètres pour dépolluer les fonds marins, documenter les déchets et protéger la biodiversité locale. Calanques, Frioul, Côte Bleue, La Ciotat : chaque mission est une action concrète pour notre littoral.
@@ -877,6 +879,7 @@ const Home = () => {
               <h2 className="text-3xl md:text-4xl font-bold text-white mb-6">
                 Rejoignez l'Aventure
               </h2>
+              <h3 className="sr-only">Bénévolat dépollution marine — Rejoindre Team Oxygen à Marseille</h3>
 
               {/* Badge nombre de membres */}
               <div className="mb-6 inline-flex items-center gap-2 px-4 py-2 bg-ocean-teal/10 rounded-full border border-ocean-teal/30 w-fit">
@@ -1009,6 +1012,7 @@ const Home = () => {
               <h2 className="text-3xl md:text-4xl font-bold text-white mb-6">
                 Carte interactive des Calanques de Marseille & du littoral marseillais
               </h2>
+              <h3 className="sr-only">Explorer les spots de plongée et missions de nettoyage</h3>
 
               <p className="text-gray-300 text-lg mb-8 leading-[1.8]">
                 Explorez les Calanques de Marseille via une carte interactive présentant paysages, spots de plongée et actions de dépollution menées avec Team Oxygen sur le littoral marseillais. Consultez aussi les conditions d'accès aux massifs avant de partir — ouverture ou fermeture selon le risque incendie du jour.
@@ -1103,6 +1107,7 @@ const Home = () => {
               <h2 className="text-2xl md:text-3xl font-bold text-white mb-6">
                 La Méditerranée : Un écosystème en péril
               </h2>
+              <h3 className="sr-only">Pollution plastique, espèces menacées et urgence environnementale</h3>
               <p className="text-text-secondary text-lg leading-relaxed">
                 Bien qu'elle ne représente que 1&nbsp;% des eaux mondiales, la mer Méditerranée concentre{' '}
                 <strong className="text-white">7&nbsp;% de tous les microplastiques de la planète</strong>.
