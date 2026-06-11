@@ -32,7 +32,7 @@ const PHOTOS = [
 const PARTICIPANTS = [
   {
     name: 'Karim Saari',
-    role: 'Vice-président de Team Oxygen',
+    role: 'Président de Team Oxygen',
     href: 'https://www.team-oxygen.com/',
     desc: "Apnéiste et photographe sous-marin marseillais. Avec le Projet Sentinelle, son association a sorti plus de 5,7 tonnes de déchets des fonds marins en quatre éditions, sans bateau, en partant du bord.",
   },
@@ -144,12 +144,12 @@ const GreenGot = () => {
           <motion.p variants={FADE_IN_UP} className="text-xs uppercase tracking-widest text-text-muted font-semibold mb-6 text-center">
             Extraits du court-métrage
           </motion.p>
-          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3 max-w-4xl mx-auto">
+          <div className="flex flex-wrap justify-center gap-4 max-w-5xl mx-auto">
             {PHOTOS.map((photo) => (
               <motion.div
                 key={photo.src}
                 variants={FADE_IN_UP}
-                className="glass-strong rounded-xl overflow-hidden border border-white/10"
+                className="basis-[calc(50%-0.5rem)] md:basis-[calc(33.333%-0.75rem)] glass-strong rounded-2xl overflow-hidden border border-white/10"
               >
                 <img
                   src={photo.src}
@@ -163,9 +163,6 @@ const GreenGot = () => {
               </motion.div>
             ))}
           </div>
-          <p className="text-xs text-text-muted italic mt-4 text-center">
-            Crédits images : Kim Nguyen &amp; Benoît Prabel
-          </p>
         </motion.div>
 
         {/* Participants */}
@@ -221,7 +218,7 @@ const GreenGot = () => {
                 Pour ce court-métrage, la{' '}
                 <strong className="text-white">Fondation Green-Got</strong> a suivi{' '}
                 <strong className="text-ocean-teal">Karim Saari</strong>, apnéiste et photographe sous-marin
-                marseillais, vice-président de <strong className="text-ocean-teal">Team Oxygen</strong>, dans
+                marseillais, président de <strong className="text-ocean-teal">Team Oxygen</strong>, dans
                 les fonds marins que personne ne filme. Aux côtés de Wings of the Ocean et de la chercheuse
                 Anne-Leila Meistertzheim, il documente une réalité brute : une décharge entière au fond d'un port.
               </p>
@@ -236,8 +233,8 @@ const GreenGot = () => {
             {/* Photo — extrait du reportage Green-Got */}
             <div className="lg:w-[42%] flex-shrink-0 min-h-[300px] lg:min-h-0 overflow-hidden">
               <img
-                src="/images/green-got-depollution-apnee-plastique-fond-marin-mediterranee.webp"
-                alt="Décharge sous-marine au fond d'un port de Marseille — déchets plastiques documentés en apnée par Karim Saari pour la Fondation Green-Got"
+                src="/images/green-got-team-oxygen-apneistes-depollution-calanques-marseille.webp"
+                alt="Les apnéistes de Team Oxygen rejoignant la mer pour une mission de dépollution — court-métrage Fondation Green-Got"
                 className="w-full h-full object-cover object-center"
                 loading="lazy"
                 decoding="async"
