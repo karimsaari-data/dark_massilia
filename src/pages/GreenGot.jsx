@@ -17,6 +17,7 @@ const HUBLOT_STYLE = {
 // Extraits du court-métrage — images du reportage Green-Got
 // Crédits : Kim Nguyen & Benoît Prabel
 const PHOTOS = [
+  { src: '/images/green-got-karim-saari-barque-vieux-port-marseille.jpg', alt: 'Karim Saari à bord d\'une barque dans le Vieux-Port de Marseille, t-shirt Team Oxygen — court-métrage de la Fondation Green-Got' },
   { src: '/images/green-got-karim-saari-interview-marseille-team-oxygen.jpg', alt: 'Karim Saari, habitant de Marseille et bénévole Team Oxygen, en interview dans le court-métrage de la Fondation Green-Got' },
   { src: '/images/green-got-karim-saari-vieux-port-marseille.jpg',            alt: 'Karim Saari sur une barque dans le Vieux-Port de Marseille — court-métrage Fondation Green-Got' },
   { src: '/images/green-got-karim-saari-quai-marseille-stand.jpg',           alt: 'Karim Saari sur le quai à Marseille lors du tournage du court-métrage Green-Got' },
@@ -49,7 +50,7 @@ const PARTICIPANTS = [
 const GreenGot = () => {
   return (
     <div className="min-h-screen">
-      <SEO {...SEO_PAGES['/court-metrage-green-got-mediterranee']} />
+      <SEO {...SEO_PAGES['/court-metrage-green-got-mediterranee']} preloadImage="/images/green-got-karim-saari-barque-vieux-port-marseille.jpg" />
 
       {/* Breadcrumb */}
       <div className="container-custom pt-4">
