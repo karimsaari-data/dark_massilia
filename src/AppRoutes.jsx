@@ -27,6 +27,7 @@ const Twitter    = lazy(() => import('./pages/Twitter'));
 const Contact    = lazy(() => import('./pages/Contact'));
 const Arte           = lazy(() => import('./pages/Arte'));
 const EchappeesBelles = lazy(() => import('./pages/EchappeesBelles'));
+const GreenGot        = lazy(() => import('./pages/GreenGot'));
 const Meduses    = lazy(() => import('./pages/Meduses'));
 const Sources    = lazy(() => import('./pages/Sources'));
 const Carte      = lazy(() => import('./pages/Carte'));
@@ -98,6 +99,7 @@ export default function AppRoutes() {
             <Route path="actualites"                     element={<Twitter />} />
             <Route path="sauver-marseille-documentaire-arte" element={<Arte />} />
             <Route path="echappees-belles-bouches-du-rhone"  element={<EchappeesBelles />} />
+            <Route path="court-metrage-green-got-mediterranee" element={<GreenGot />} />
             <Route path="meduses-souveraines-oceans-documentaire-arte" element={<Meduses />} />
             <Route path="donnees-scientifiques"          element={<Sources />} />
             <Route path="contact"                        element={<Contact />} />

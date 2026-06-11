@@ -19,6 +19,11 @@ const videos = [
     description: 'Documentaire de Sébastien Lafont (2024, 43 min) — images Méditerranée fournies par Karim Saari',
   },
   {
+    id: 'BoqO1LVcx5A',
+    title: 'Court-métrage Fondation Green-Got — Sous la Méditerranée',
+    description: 'Court-métrage documentaire produit par la Fondation Green-Got, tourné en apnée au large de Marseille avec Karim Saari',
+  },
+  {
     id: '1023375117',
     type: 'vimeo',
     title: 'Pilote Oxygen — Zekefilm',
@@ -178,7 +183,7 @@ const Videos = () => {
           initial="hidden"
           animate="visible"
           variants={STAGGER_CONTAINER}
-          className="mx-auto mb-12 grid grid-cols-1 md:grid-cols-2 gap-6"
+          className="mx-auto mb-12 grid grid-cols-1 md:grid-cols-3 gap-6"
         >
           {/* Sauver Marseille */}
           <motion.div
@@ -226,6 +231,31 @@ const Videos = () => {
               className="btn-primary inline-flex items-center gap-2 self-start"
             >
               Voir le documentaire
+              <ExternalLink className="w-4 h-4" />
+            </Link>
+          </motion.div>
+
+          {/* Green-Got */}
+          <motion.div
+            variants={FADE_IN_UP}
+            whileHover={{ x: 4, transition: { type: 'spring', stiffness: 400, damping: 25 } }}
+            className="glass-strong rounded-3xl p-8 border border-ocean-teal/20 flex flex-col gap-4"
+          >
+            <div className="flex-1">
+              <p className="text-xs font-semibold text-ocean-teal uppercase tracking-widest mb-2">Court-métrage · Fondation Green-Got</p>
+              <h2 className="text-xl font-bold text-white mb-3">
+                Sous la Méditerranée
+              </h2>
+              <h3 className="sr-only">Court-métrage Green-Got — décharge sous-marine et pollution plastique à Marseille</h3>
+              <p className="text-text-secondary leading-relaxed text-sm">
+                Court-métrage documentaire produit par la Fondation Green-Got. Tourné en apnée au large de Marseille, il documente une décharge sous-marine aux côtés de Karim Saari, Wings of the Ocean et Plastic At Sea.
+              </p>
+            </div>
+            <Link
+              to="/court-metrage-green-got-mediterranee"
+              className="btn-primary inline-flex items-center gap-2 self-start"
+            >
+              Voir le court-métrage
               <ExternalLink className="w-4 h-4" />
             </Link>
           </motion.div>

@@ -45,6 +45,8 @@ const SECTIONS = [
       { to: '/videos',                                       text: 'Vidéos & Documentaires' },
       { to: '/sauver-marseille-documentaire-arte',           text: 'ARTE — Sauver Marseille' },
       { to: '/meduses-souveraines-oceans-documentaire-arte', text: 'ARTE — Méduses souveraines des océans' },
+      { to: '/echappees-belles-bouches-du-rhone',            text: 'Échappées Belles — France 5' },
+      { to: '/court-metrage-green-got-mediterranee',         text: 'Green-Got — Court-métrage Méditerranée' },
       { to: '/presse',                                       text: 'Presse & médias' },
       { to: '/blog',                                         text: 'Blog' },
     ],

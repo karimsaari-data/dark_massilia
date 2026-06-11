@@ -72,6 +72,7 @@ export const NAV_LINKS = [
       { name: 'ARTE — Sauver Marseille', path: '/sauver-marseille-documentaire-arte',           icon: 'Tv',  sub: true },
       { name: 'ARTE — Méduses',          path: '/meduses-souveraines-oceans-documentaire-arte', icon: 'Tv',  sub: true },
       { name: 'Échappées Belles',        path: '/echappees-belles-bouches-du-rhone',            icon: 'Tv',  sub: true },
+      { name: 'Green-Got — Méditerranée', path: '/court-metrage-green-got-mediterranee',         icon: 'Tv',  sub: true },
       { name: 'Blog',                    path: '/blog',                                         icon: 'BookOpen' },
     ],
   },
