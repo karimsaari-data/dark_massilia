@@ -288,6 +288,18 @@ const TIMELINE_ENTRIES = [
     side: 'left',
     future: true,
   },
+  {
+    period: '2026',
+    label: 'Le court-métrage',
+    title: 'Sous la Méditerranée — court-métrage Fondation Green-Got',
+    text: 'Court-métrage documentaire produit par la Fondation Green-Got, tourné en apnée au large de Marseille. Une décharge entière au fond d\'un port, documentée aux côtés de Wings of the Ocean et de Plastic At Sea — pour financer ce que le marché ne paiera jamais : nettoyer, documenter, sensibiliser.',
+    img: '/images/Karim%20saari%20green%20got%207.jpg',
+    alt: 'Court-métrage Fondation Green-Got — Karim Saari, décharge sous-marine au large de Marseille',
+    link: '/court-metrage-green-got-mediterranee',
+    linkLabel: 'Voir le court-métrage',
+    side: 'right',
+    future: true,
+  },
 ];
 
 // Blocs galeries — 2 univers × 3 sous-sections
