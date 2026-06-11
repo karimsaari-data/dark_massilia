@@ -24,7 +24,6 @@ const PHOTOS = [
   { src: '/images/green-got-karim-saari-interview-marseille-team-oxygen.webp', alt: 'Karim Saari, habitant de Marseille et bénévole Team Oxygen, en interview dans le court-métrage de la Fondation Green-Got' },
   { src: '/images/green-got-karim-saari-barque-profil-vieux-port-marseille.webp', alt: 'Karim Saari sur une barque dans le Vieux-Port de Marseille — court-métrage Fondation Green-Got' },
   { src: '/images/green-got-karim-saari-quai-vieux-port-marseille.webp', alt: 'Karim Saari sur le quai du Vieux-Port de Marseille lors du tournage du court-métrage Green-Got' },
-  { src: '/images/green-got-team-oxygen-apneistes-depollution-calanques-marseille.webp', alt: 'Les apnéistes de Team Oxygen rejoignant la mer pour une mission de dépollution — court-métrage Green-Got' },
   { src: '/images/green-got-depollution-apnee-plastique-fond-marin-mediterranee.webp', alt: 'Dépollution en apnée des microplastiques au fond de la Méditerranée — court-métrage Fondation Green-Got' },
 ];
 
