@@ -1496,7 +1496,7 @@ export const SEO_PAGES = {
       'Court-métrage documentaire de la Fondation Green-Got tourné en apnée au large de Marseille. Karim Saari y documente une décharge sous-marine et la pollution plastique de la Méditerranée.',
     keywords: 'green-got documentaire, fondation green-got méditerranée, court-métrage pollution plastique marseille, karim saari green got, décharge sous-marine méditerranée',
     canonical: `${BASE_URL}/court-metrage-green-got-mediterranee`,
-    image: `${BASE_URL}/images/green-got-karim-saari-vieux-port-notre-dame-de-la-garde-marseille.jpg`,
+    image: `${BASE_URL}/images/green-got-karim-saari-ponton-vieux-port-notre-dame-de-la-garde-marseille.jpg`,
     imageAlt: 'Karim Saari sur un ponton du Vieux-Port de Marseille, Notre-Dame de la Garde en fond — court-métrage de la Fondation Green-Got',
     schema: {
       '@context': 'https://schema.org',

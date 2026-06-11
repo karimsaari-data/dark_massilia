@@ -16,14 +16,15 @@ const HUBLOT_STYLE = {
 
 // Extraits du court-métrage — images du reportage Green-Got
 // Crédits : Kim Nguyen & Benoît Prabel
+// (générées par scripts/convert-green-got.mjs depuis « Karim saari green got 1-7 »)
 const PHOTOS = [
-  { src: '/images/green-got-karim-saari-vieux-port-notre-dame-de-la-garde-marseille.jpg', alt: 'Karim Saari sur un ponton du Vieux-Port de Marseille, Notre-Dame de la Garde en fond — court-métrage de la Fondation Green-Got' },
-  { src: '/images/green-got-karim-saari-barque-vieux-port-marseille.jpg', alt: 'Karim Saari à bord d\'une barque dans le Vieux-Port de Marseille, t-shirt Team Oxygen — court-métrage de la Fondation Green-Got' },
-  { src: '/images/green-got-karim-saari-interview-marseille-team-oxygen.jpg', alt: 'Karim Saari, habitant de Marseille et bénévole Team Oxygen, en interview dans le court-métrage de la Fondation Green-Got' },
-  { src: '/images/green-got-karim-saari-vieux-port-marseille.jpg',            alt: 'Karim Saari sur une barque dans le Vieux-Port de Marseille — court-métrage Fondation Green-Got' },
-  { src: '/images/green-got-karim-saari-quai-marseille-stand.jpg',           alt: 'Karim Saari sur le quai à Marseille lors du tournage du court-métrage Green-Got' },
-  { src: '/images/green-got-team-oxygen-apneistes-depollution-calanques.jpg', alt: 'Les apnéistes de Team Oxygen rejoignant la mer pour une mission de dépollution — court-métrage Green-Got' },
-  { src: '/images/green-got-depollution-apnee-plastique-fond-marin-mediterranee.jpg', alt: 'Dépollution en apnée des microplastiques au fond de la Méditerranée — court-métrage Fondation Green-Got' },
+  { src: '/images/green-got-karim-saari-ponton-vieux-port-notre-dame-de-la-garde-marseille.webp', alt: 'Karim Saari sur un ponton du Vieux-Port de Marseille, Notre-Dame de la Garde en fond — court-métrage de la Fondation Green-Got' },
+  { src: '/images/green-got-karim-saari-barque-vieux-port-marseille-team-oxygen.webp', alt: 'Karim Saari à bord d\'une barque dans le Vieux-Port de Marseille, t-shirt Team Oxygen — court-métrage de la Fondation Green-Got' },
+  { src: '/images/green-got-karim-saari-interview-marseille-team-oxygen.webp', alt: 'Karim Saari, habitant de Marseille et bénévole Team Oxygen, en interview dans le court-métrage de la Fondation Green-Got' },
+  { src: '/images/green-got-karim-saari-barque-profil-vieux-port-marseille.webp',  alt: 'Karim Saari sur une barque dans le Vieux-Port de Marseille — court-métrage Fondation Green-Got' },
+  { src: '/images/green-got-karim-saari-quai-vieux-port-marseille.webp',          alt: 'Karim Saari sur le quai du Vieux-Port de Marseille lors du tournage du court-métrage Green-Got' },
+  { src: '/images/green-got-team-oxygen-apneistes-depollution-calanques-marseille.webp', alt: 'Les apnéistes de Team Oxygen rejoignant la mer pour une mission de dépollution — court-métrage Green-Got' },
+  { src: '/images/green-got-depollution-apnee-plastique-fond-marin-mediterranee.webp', alt: 'Dépollution en apnée des microplastiques au fond de la Méditerranée — court-métrage Fondation Green-Got' },
 ];
 
 // Participants au court-métrage
@@ -51,7 +52,7 @@ const PARTICIPANTS = [
 const GreenGot = () => {
   return (
     <div className="min-h-screen">
-      <SEO {...SEO_PAGES['/court-metrage-green-got-mediterranee']} preloadImage="/images/green-got-karim-saari-vieux-port-notre-dame-de-la-garde-marseille.jpg" />
+      <SEO {...SEO_PAGES['/court-metrage-green-got-mediterranee']} preloadImage="/images/green-got-karim-saari-ponton-vieux-port-notre-dame-de-la-garde-marseille.webp" />
 
       {/* Breadcrumb */}
       <div className="container-custom pt-4">
@@ -234,7 +235,7 @@ const GreenGot = () => {
             {/* Photo — extrait du reportage Green-Got */}
             <div className="lg:w-[42%] flex-shrink-0 min-h-[300px] lg:min-h-0 overflow-hidden">
               <img
-                src="/images/green-got-depollution-apnee-plastique-fond-marin-mediterranee.jpg"
+                src="/images/green-got-depollution-apnee-plastique-fond-marin-mediterranee.webp"
                 alt="Décharge sous-marine au fond d'un port de Marseille — déchets plastiques documentés en apnée par Karim Saari pour la Fondation Green-Got"
                 className="w-full h-full object-cover object-center"
                 loading="lazy"
