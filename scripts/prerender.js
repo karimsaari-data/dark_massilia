@@ -55,6 +55,7 @@ const STATIC_ROUTES = [
   '/sauver-marseille-documentaire-arte',
   '/echappees-belles-bouches-du-rhone',
   '/meduses-souveraines-oceans-documentaire-arte',
+  '/court-metrage-green-got-mediterranee',
   '/donnees-scientifiques',
   '/contact',
   '/carte-calanques',

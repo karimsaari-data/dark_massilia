@@ -54,6 +54,7 @@ const STATIC_PAGES = [
   { path: '/les-francais-yann-arthus-bertrand',            priority: '0.7', changefreq: 'yearly',  lastmod: '2024-11-01'  },
   { path: '/sauver-marseille-documentaire-arte',           priority: '0.6', changefreq: 'yearly',  lastmod: '2023-06-01'  },
   { path: '/meduses-souveraines-oceans-documentaire-arte', priority: '0.6', changefreq: 'yearly',  lastmod: '2024-03-01'  },
+  { path: '/court-metrage-green-got-mediterranee',         priority: '0.7', changefreq: 'yearly',  lastmod: '2026-06-11'  },
   { path: '/contact',                                      priority: '0.5', changefreq: 'yearly',  lastmod: '2026-01-01'  },
   // mentions-legales et confidentialite : volontairement absents (noindex implicite)
 ];

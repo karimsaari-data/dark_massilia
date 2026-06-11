@@ -42,6 +42,7 @@ const PERSON_SCHEMA = {
     'https://www.tiktok.com/@dark.massilia',
     'https://www.youtube.com/@dark.massilia',
     'https://www.youtube.com/watch?v=cxjAQtSHHyI',
+    'https://www.youtube.com/watch?v=BoqO1LVcx5A',
     'https://www.dailymotion.com/video/x8wzsm2',
     'https://www.facebook.com/EcoPlongeur/',
     'https://www.facebook.com/Photographie.Marseille',
@@ -1484,6 +1485,40 @@ export const SEO_PAGES = {
           },
           director: { '@type': 'Person', name: 'Sébastien Lafont' },
           about: { '@id': `${BASE_URL}/#person` },
+          mentions: { '@id': `${BASE_URL}/#person` },
+        },
+      ],
+    },
+  },
+  '/court-metrage-green-got-mediterranee': {
+    title: 'Court-métrage Green-Got — Sous la Méditerranée · Karim Saari',
+    description:
+      'Court-métrage documentaire de la Fondation Green-Got tourné en apnée au large de Marseille. Karim Saari y documente une décharge sous-marine et la pollution plastique de la Méditerranée.',
+    keywords: 'green-got documentaire, fondation green-got méditerranée, court-métrage pollution plastique marseille, karim saari green got, décharge sous-marine méditerranée',
+    canonical: `${BASE_URL}/court-metrage-green-got-mediterranee`,
+    image: `${BASE_URL}/images/Karim%20saari%20green%20got%207.jpg`,
+    imageAlt: 'Karim Saari sur un ponton du Vieux-Port de Marseille, Notre-Dame de la Garde en fond — court-métrage de la Fondation Green-Got',
+    schema: {
+      '@context': 'https://schema.org',
+      '@graph': [
+        breadcrumb('Court-métrage Green-Got', '/court-metrage-green-got-mediterranee'),
+        PERSON_SCHEMA,
+        {
+          '@type': 'VideoObject',
+          name: 'Sous la Méditerranée — Court-métrage documentaire de la Fondation Green-Got',
+          description:
+            "Court-métrage documentaire produit par la Fondation Green-Got, tourné en apnée et au large de Marseille. Avec Karim Saari (Team Oxygen), Nicolas Camo (Wings of the Ocean) et Anne-Leila Meistertzheim (Plastic At Sea), il documente une décharge sous-marine et la pollution plastique de la mer Méditerranée — la mer la plus polluée au monde.",
+          thumbnailUrl: 'https://img.youtube.com/vi/BoqO1LVcx5A/maxresdefault.jpg',
+          uploadDate: '2026-06-11T00:00:00+00:00',
+          embedUrl: 'https://www.youtube.com/embed/BoqO1LVcx5A',
+          contentUrl: 'https://www.youtube.com/watch?v=BoqO1LVcx5A',
+          url: 'https://www.youtube.com/watch?v=BoqO1LVcx5A',
+          publisher: { '@type': 'Organization', name: 'Fondation Green-Got', url: 'https://fondation.green-got.com/' },
+          actor: [
+            { '@id': `${BASE_URL}/#person` },
+            { '@type': 'Person', name: 'Nicolas Camo' },
+            { '@type': 'Person', name: 'Anne-Leila Meistertzheim' },
+          ],
           mentions: { '@id': `${BASE_URL}/#person` },
         },
       ],
