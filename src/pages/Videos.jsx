@@ -9,6 +9,11 @@ import Breadcrumb from '../components/Breadcrumb';
 
 const videos = [
   {
+    id: 'BoqO1LVcx5A',
+    title: 'Court-métrage Fondation Green-Got — Sous la Méditerranée',
+    description: 'Court-métrage documentaire produit par la Fondation Green-Got, tourné en apnée au large de Marseille avec Karim Saari',
+  },
+  {
     id: 'cxjAQtSHHyI',
     title: 'Documentaire ARTE',
     description: 'Reportage sur les actions de dépollution en Méditerranée',
@@ -17,11 +22,6 @@ const videos = [
     id: 'yfebiTFOq7E',
     title: 'Méduses | Les souveraines des océans — ARTE Évasion',
     description: 'Documentaire de Sébastien Lafont (2024, 43 min) — images Méditerranée fournies par Karim Saari',
-  },
-  {
-    id: 'BoqO1LVcx5A',
-    title: 'Court-métrage Fondation Green-Got — Sous la Méditerranée',
-    description: 'Court-métrage documentaire produit par la Fondation Green-Got, tourné en apnée au large de Marseille avec Karim Saari',
   },
   {
     id: '1023375117',
