@@ -14,7 +14,7 @@
  * Après exécution : git add public/images/green-got-*.webp && commit && push.
  */
 import sharp from 'sharp';
-import { stat, unlink, access } from 'node:fs/promises';
+import { stat, unlink, readdir } from 'node:fs/promises';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 
@@ -37,14 +37,23 @@ const MAPPING = [
   { n: 7, dst: 'green-got-karim-saari-ponton-vieux-port-notre-dame-de-la-garde-marseille.webp', desc: 'Ponton + Bonne Mère (mis en avant)' },
 ];
 
-const SRC_EXTS = ['.jpg', '.jpeg', '.JPG', '.JPEG', '.png', '.PNG'];
+const SRC_RE = /\.(jpe?g|png)$/i;
 
+// Recherche tolérante : tout fichier de public/images qui contient
+// « green » + « got » + le numéro n (peu importe casse, espaces, tirets,
+// préfixe « Karim saari … » ou non), et qui n'est pas déjà un green-got-*.webp/jpg.
 async function findSource(n) {
-  for (const ext of SRC_EXTS) {
-    const p = path.join(IMAGES_DIR, `Karim saari green got ${n}${ext}`);
-    try { await access(p); return p; } catch { /* next */ }
-  }
-  return null;
+  const entries = await readdir(IMAGES_DIR);
+  const match = entries.find((f) => {
+    if (!SRC_RE.test(f)) return false;
+    if (/^green-got-/i.test(f)) return false; // déjà converti
+    const base = f.toLowerCase();
+    if (!base.includes('green') || !base.includes('got')) return false;
+    // numéro isolé (entouré de non-chiffres) = n
+    const nums = base.replace(SRC_RE, '').match(/\d+/g) || [];
+    return nums.includes(String(n));
+  });
+  return match ? path.join(IMAGES_DIR, match) : null;
 }
 
 async function run() {
@@ -54,7 +63,7 @@ async function run() {
   for (const { n, dst, desc } of MAPPING) {
     const src = await findSource(n);
     if (!src) {
-      console.warn(`  ⚠️  Source introuvable : "Karim saari green got ${n}.(jpg|png)" — ${desc}`);
+      console.warn(`  ⚠️  Source #${n} introuvable (fichier *green*got*${n}*.jpg/png) — ${desc}`);
       missing++;
       continue;
     }
