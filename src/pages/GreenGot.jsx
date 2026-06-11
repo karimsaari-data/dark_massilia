@@ -144,12 +144,12 @@ const GreenGot = () => {
           <motion.p variants={FADE_IN_UP} className="text-xs uppercase tracking-widest text-text-muted font-semibold mb-6 text-center">
             Extraits du court-métrage
           </motion.p>
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-            {PHOTOS.map((photo, i) => (
+          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3 max-w-4xl mx-auto">
+            {PHOTOS.map((photo) => (
               <motion.div
                 key={photo.src}
                 variants={FADE_IN_UP}
-                className={`glass-strong rounded-2xl overflow-hidden border border-white/10 ${i === 0 ? 'sm:col-span-2' : ''}`}
+                className="glass-strong rounded-xl overflow-hidden border border-white/10"
               >
                 <img
                   src={photo.src}
@@ -157,8 +157,8 @@ const GreenGot = () => {
                   className="w-full h-auto aspect-video object-cover"
                   loading="lazy"
                   decoding="async"
-                  width="1280"
-                  height="720"
+                  width="640"
+                  height="360"
                 />
               </motion.div>
             ))}
