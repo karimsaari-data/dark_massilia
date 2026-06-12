@@ -11,6 +11,7 @@ const videos = [
   {
     id: 'BoqO1LVcx5A',
     title: 'Court-métrage Fondation Green-Got — Sous la Méditerranée',
+    date: '11 juin 2024',
     description: 'Court-métrage documentaire produit par la Fondation Green-Got, tourné en apnée au large de Marseille avec Karim Saari',
   },
   {
@@ -123,6 +124,11 @@ const Videos = () => {
 
               {/* Video Info */}
               <div className="p-4">
+                {video.date && (
+                  <p className="text-[11px] font-semibold text-ocean-teal uppercase tracking-widest mb-1">
+                    {video.date}
+                  </p>
+                )}
                 <h3 className="text-lg font-bold text-white mb-1 group-hover:text-ocean-teal transition-colors line-clamp-2">
                   {video.title}
                 </h3>
