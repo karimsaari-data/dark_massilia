@@ -30,6 +30,7 @@ const videos = [
     id: '1023375117',
     type: 'vimeo',
     title: 'Pilote Oxygen — Zekefilm',
+    date: '25 oct. 2024',
     description: 'Film pilote réalisé par Zekefilm sur les actions de dépollution marine de Team Oxygen',
     thumbnail_url: 'https://i.vimeocdn.com/video/1959544955-a137718c8ecbdfd449d6d417581e46c618125dd3b7317fdc5a3a4bee2e95159e-d_640x360',
   },
