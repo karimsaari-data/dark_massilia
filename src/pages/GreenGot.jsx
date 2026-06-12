@@ -129,39 +129,32 @@ const GreenGot = () => {
                 <strong className="text-ocean-teal font-semibold">L'océan est résilient. Si on arrête la pollution maintenant, demain il sera capable de se réparer.</strong>
               </p>
             </div>
-          </motion.div>
-        </motion.div>
 
-        {/* Galerie — extraits du court-métrage */}
-        <motion.div
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true }}
-          variants={STAGGER_CONTAINER}
-          className="mb-12"
-        >
-          <motion.p variants={FADE_IN_UP} className="text-xs uppercase tracking-widest text-text-muted font-semibold mb-6 text-center">
-            Extraits du court-métrage
-          </motion.p>
-          <div className="flex flex-wrap justify-center gap-4 max-w-5xl mx-auto">
-            {PHOTOS.map((photo) => (
-              <motion.div
-                key={photo.src}
-                variants={FADE_IN_UP}
-                className="basis-[calc(50%-0.5rem)] md:basis-[calc(33.333%-0.75rem)] glass-strong rounded-2xl overflow-hidden border border-white/10"
-              >
-                <img
-                  src={photo.src}
-                  alt={photo.alt}
-                  className="w-full h-auto aspect-video object-cover"
-                  loading="lazy"
-                  decoding="async"
-                  width="640"
-                  height="360"
-                />
-              </motion.div>
-            ))}
-          </div>
+            {/* Galerie — extraits du court-métrage, intégrée au bloc éditorial */}
+            <div className="mt-10 pt-8 border-t border-white/10">
+              <p className="text-xs uppercase tracking-widest text-text-muted font-semibold mb-6 text-center">
+                Extraits du court-métrage
+              </p>
+              <div className="flex flex-wrap justify-center gap-4">
+                {PHOTOS.map((photo) => (
+                  <div
+                    key={photo.src}
+                    className="basis-[calc(50%-0.5rem)] md:basis-[calc(33.333%-0.75rem)] rounded-2xl overflow-hidden border border-white/10"
+                  >
+                    <img
+                      src={photo.src}
+                      alt={photo.alt}
+                      className="w-full h-auto aspect-video object-cover"
+                      loading="lazy"
+                      decoding="async"
+                      width="640"
+                      height="360"
+                    />
+                  </div>
+                ))}
+              </div>
+            </div>
+          </motion.div>
         </motion.div>
 
         {/* Participants */}
@@ -216,8 +209,8 @@ const GreenGot = () => {
               <p className="text-text-secondary leading-[1.8] text-lg mb-4">
                 Pour ce court-métrage, la{' '}
                 <strong className="text-white">Fondation Green-Got</strong> a suivi{' '}
-                <strong className="text-ocean-teal">Karim Saari</strong>, apnéiste et photographe sous-marin
-                marseillais, président de <strong className="text-ocean-teal">Team Oxygen</strong>, dans
+                <strong className="text-ocean-teal">Karim Saari</strong>, apnéiste, photographe environnemental
+                et sous-marin marseillais, président de <strong className="text-ocean-teal">Team Oxygen</strong>, dans
                 les fonds marins que personne ne filme. Aux côtés de Wings of the Ocean et de la chercheuse
                 Anne-Leila Meistertzheim, il documente une réalité brute : une décharge entière au fond d'un port.
               </p>
