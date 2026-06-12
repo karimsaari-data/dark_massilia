@@ -17,11 +17,13 @@ const videos = [
   {
     id: 'cxjAQtSHHyI',
     title: 'Documentaire ARTE',
+    date: '29 oct. 2024',
     description: 'Reportage sur les actions de dépollution en Méditerranée',
   },
   {
     id: 'yfebiTFOq7E',
     title: 'Méduses | Les souveraines des océans — ARTE Évasion',
+    date: '18 nov. 2025',
     description: 'Documentaire de Sébastien Lafont (2024, 43 min) — images Méditerranée fournies par Karim Saari',
   },
   {
