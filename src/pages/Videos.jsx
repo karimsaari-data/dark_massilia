@@ -24,10 +24,19 @@ const formatDate = (iso) => {
   return dateFormatter.format(d);
 };
 
-const videos = videoList.map((video) => {
-  const iso = videoDates[video.id] || null;
-  return { ...video, iso, date: formatDate(iso) };
-});
+// Tri par date de publication décroissante (plus récente en premier).
+// Les vidéos sans date connue sont reléguées en fin de liste.
+const videos = videoList
+  .map((video) => {
+    const iso = videoDates[video.id] || null;
+    return { ...video, iso, date: formatDate(iso) };
+  })
+  .sort((a, b) => {
+    if (a.iso && b.iso) return b.iso.localeCompare(a.iso);
+    if (a.iso) return -1;
+    if (b.iso) return 1;
+    return 0;
+  });
 
 const Videos = () => {
   return (
