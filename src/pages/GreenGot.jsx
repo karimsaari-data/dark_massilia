@@ -33,7 +33,7 @@ const PARTICIPANTS = [
     name: 'Karim Saari',
     role: 'Président de Team Oxygen',
     href: 'https://www.team-oxygen.com/',
-    desc: "Apnéiste et photographe sous-marin marseillais. Avec le Projet Sentinelle, son association a sorti plus de 5,7 tonnes de déchets des fonds marins en quatre éditions, sans bateau, en partant du bord.",
+    desc: "Photographe sous-marin et apnéiste marseillais. Avec le Projet Sentinelle, son association a sorti plus de 5,7 tonnes de déchets des fonds marins en quatre éditions, sans bateau, en partant du bord.",
   },
   {
     name: 'Nicolas Camo',
