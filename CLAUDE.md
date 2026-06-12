@@ -6,7 +6,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 This is a personal portfolio website for "Dark Massilia" (Karim Saari), an environmental activist and freediver based in Marseille, France. The site showcases marine cleanup projects ("Projet Sentinelle"), underwater photography, and media coverage of environmental work in the Mediterranean Sea and Calanques of Marseille.
 
-**Site URL**: https://karimsaari.com/home
+**Site URL**: https://karimsaari.com/
 **Primary Language**: French
 **Tech Stack**: Static HTML/CSS/JS (no build system, no frameworks)
 
@@ -185,9 +185,9 @@ The site uses CSS animations for visual polish:
 **File**: `sitemap.xml`
 
 Currently includes:
-- `/home` (priority 1.0)
-- `/photos.html` (priority 0.9)
-- `/videos.html` (priority 0.9)
+- `/` (accueil, priority 1.0)
+- `/photographie-sous-marine` (priority 0.9)
+- `/videos` (priority 0.9)
 
 When adding new pages, update the sitemap with appropriate priority and changefreq values.
 
