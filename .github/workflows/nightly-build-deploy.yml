@@ -124,6 +124,7 @@ jobs:
           VITE_FACEBOOK_GROUP_URL: https://www.facebook.com/groups/calanque/
           VITE_INSTAGRAM_ACCESS_TOKEN: ${{ secrets.VITE_INSTAGRAM_ACCESS_TOKEN }}
           NOTIFY_SECRET: ${{ secrets.NOTIFY_SECRET }}
+          YOUTUBE_API_KEY: ${{ secrets.YOUTUBE_API_KEY }}
         run: npm run build:full
 
       # ── 4b. Sync indexed_pages + titres → Supabase ──────────────────────────
@@ -279,11 +280,11 @@ jobs:
         run: |
           git config user.name  "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add scripts/wp-posts-cache.json scripts/wp-alt-vision-cache.json
+          git add scripts/wp-posts-cache.json scripts/wp-alt-vision-cache.json src/data/video-dates.json
           if git diff --staged --quiet; then
             echo "Aucun changement, pas de commit."
           else
-            git commit -m "chore: update wp-cache + alt-vision-cache [skip ci]"
+            git commit -m "chore: update wp-cache + alt-vision-cache + video-dates [skip ci]"
             git stash --include-untracked || true
             git pull --rebase origin main
             git stash pop || true

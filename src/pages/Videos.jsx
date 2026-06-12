@@ -6,76 +6,28 @@ import { FADE_IN_UP, STAGGER_CONTAINER } from '../utils/constants';
 import SEO from '../components/SEO';
 import { SEO_PAGES } from '../utils/seo';
 import Breadcrumb from '../components/Breadcrumb';
+import { videos as videoList } from '../data/videos';
+import videoDates from '../data/video-dates.json';
 
-const videos = [
-  {
-    id: 'BoqO1LVcx5A',
-    title: 'Court-métrage Fondation Green-Got — Sous la Méditerranée',
-    description: 'Court-métrage documentaire produit par la Fondation Green-Got, tourné en apnée au large de Marseille avec Karim Saari',
-  },
-  {
-    id: 'cxjAQtSHHyI',
-    title: 'Documentaire ARTE',
-    description: 'Reportage sur les actions de dépollution en Méditerranée',
-  },
-  {
-    id: 'yfebiTFOq7E',
-    title: 'Méduses | Les souveraines des océans — ARTE Évasion',
-    description: 'Documentaire de Sébastien Lafont (2024, 43 min) — images Méditerranée fournies par Karim Saari',
-  },
-  {
-    id: '1023375117',
-    type: 'vimeo',
-    title: 'Pilote Oxygen — Zekefilm',
-    description: 'Film pilote réalisé par Zekefilm sur les actions de dépollution marine de Team Oxygen',
-    thumbnail_url: 'https://i.vimeocdn.com/video/1959544955-a137718c8ecbdfd449d6d417581e46c618125dd3b7317fdc5a3a4bee2e95159e-d_640x360',
-  },
-  {
-    id: 'sseo9sf7jow',
-    title: '2025, une année de dépollution en apnée à Marseille',
-    description: 'Rétrospective 2025 des actions de dépollution en apnée à Marseille',
-  },
-  {
-    id: 'XHqB603STuw',
-    title: 'Projet Sentinelle Frioul',
-    description: "Mission de dépollution dans l'archipel du Frioul",
-  },
-  {
-    id: 'a3nw8N7_lhI',
-    title: 'Pollution des Plages du Prado',
-    description: 'Documentation de la pollution sur les plages marseillaises',
-  },
-  {
-    id: '-EwJUePiAdk',
-    title: "Une Année d'Action",
-    description: 'Rétrospective de nos actions environnementales',
-  },
-  {
-    id: 'AkOFh9rwT0g',
-    title: 'Plage du Prado',
-    description: 'Nettoyage et sensibilisation au Prado',
-  },
-  {
-    id: 'rYza88fs76k',
-    title: "Une Année d'Action",
-    description: 'Bilan annuel de nos missions de dépollution',
-  },
-  {
-    id: '9OEa85XS5nU',
-    title: 'Quai Marcel Pagnol',
-    description: 'Action de nettoyage au Quai Marcel Pagnol',
-  },
-  {
-    id: 'oq_ACgCB53A',
-    title: "Une Année d'Action 2021",
-    description: 'Rétrospective 2021 de nos actions',
-  },
-  {
-    id: '7aJ4UHEHf_A',
-    title: "Embouchure de l'Huveaune",
-    description: "Mission de dépollution à l'embouchure de l'Huveaune",
-  },
-];
+const dateFormatter = new Intl.DateTimeFormat('fr-FR', {
+  day: 'numeric',
+  month: 'short',
+  year: 'numeric',
+});
+
+// Date de publication (ISO) récupérée via l'API YouTube au build, formatée en
+// français pour l'affichage. La date ISO sert aussi à l'attribut <time dateTime>.
+const formatDate = (iso) => {
+  if (!iso) return null;
+  const d = new Date(iso);
+  if (Number.isNaN(d.getTime())) return null;
+  return dateFormatter.format(d);
+};
+
+const videos = videoList.map((video) => {
+  const iso = videoDates[video.id] || null;
+  return { ...video, iso, date: formatDate(iso) };
+});
 
 const Videos = () => {
   return (
@@ -123,6 +75,14 @@ const Videos = () => {
 
               {/* Video Info */}
               <div className="p-4">
+                {video.date && (
+                  <time
+                    dateTime={video.iso}
+                    className="block text-[11px] font-semibold text-ocean-teal uppercase tracking-widest mb-1"
+                  >
+                    {video.date}
+                  </time>
+                )}
                 <h3 className="text-lg font-bold text-white mb-1 group-hover:text-ocean-teal transition-colors line-clamp-2">
                   {video.title}
                 </h3>
