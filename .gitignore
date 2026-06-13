@@ -51,6 +51,8 @@ scripts/.notified-slugs.json
 
 # Claude Code (configs locales, worktrees)
 .claude/
+# Skills agents — copies locales (restaurables via `npx skills experimental_install`)
+.agents/
 .playwright-mcp/
 backup/
 nul
