@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion';
-import { ArrowLeft, ExternalLink } from 'lucide-react';
+import { ArrowLeft, ExternalLink, Linkedin } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { FADE_IN_UP, STAGGER_CONTAINER } from '../utils/constants';
 import SEO from '../components/SEO';
@@ -270,9 +270,30 @@ const GreenGot = () => {
               </a>
             ))}
           </div>
-          <p className="text-xs text-text-muted italic mt-8">
-            Images : Kim Nguyen &amp; Benoît Prabel. Images Team Oxygen tirées du film «&nbsp;Oxygen&nbsp;» de Zéké Film — réalisation Roxane Perrot et Ugo Isoard.
-          </p>
+          <motion.div
+            variants={FADE_IN_UP}
+            className="glass-strong rounded-2xl border border-white/10 p-6 md:p-8 mt-10 max-w-2xl mx-auto"
+          >
+            <p className="text-xs uppercase tracking-widest text-ocean-teal font-semibold mb-4">
+              Crédits
+            </p>
+            <p className="text-sm md:text-base text-text-secondary leading-relaxed">
+              Images : <strong className="text-white font-semibold">Kim Nguyen</strong> &amp; <strong className="text-white font-semibold">Benoît Prabel</strong>
+            </p>
+            <p className="text-sm md:text-base text-text-secondary leading-relaxed mt-2">
+              Images Team Oxygen tirées du film «&nbsp;Oxygen&nbsp;» de <strong className="text-white font-semibold">Zéké Film</strong>.<br className="hidden sm:block" /> Réalisation : <strong className="text-white font-semibold">Roxane Perrot</strong> et <strong className="text-white font-semibold">Ugo Isoard</strong>.
+            </p>
+            <a
+              href="https://www.linkedin.com/posts/greengot_vous-m%C3%A9ritez-de-savoir-avant-de-mettre-les-activity-7471075104869941248-3M1g"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="btn inline-flex items-center gap-2 group hover:scale-105 transition-all duration-300 mt-6"
+            >
+              <Linkedin className="w-4 h-4" aria-hidden="true" />
+              <span>Le post de la Fondation Green-Got</span>
+              <ExternalLink className="w-4 h-4 group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform" aria-hidden="true" />
+            </a>
+          </motion.div>
         </motion.div>
 
         {/* CTAs — Continuer la navigation */}

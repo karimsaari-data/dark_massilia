@@ -1520,6 +1520,13 @@ export const SEO_PAGES = {
             { '@type': 'Person', name: 'Anne-Leila Meistertzheim' },
           ],
           mentions: { '@id': `${BASE_URL}/#person` },
+          subjectOf: {
+            '@type': 'SocialMediaPosting',
+            headline: 'Vous méritez de savoir avant de mettre les pieds dans l\'eau cet été',
+            url: 'https://www.linkedin.com/posts/greengot_vous-m%C3%A9ritez-de-savoir-avant-de-mettre-les-activity-7471075104869941248-3M1g',
+            author: { '@type': 'Organization', name: 'Fondation Green-Got', url: 'https://fondation.green-got.com/' },
+            mentions: { '@id': `${BASE_URL}/#person` },
+          },
         },
       ],
     },
