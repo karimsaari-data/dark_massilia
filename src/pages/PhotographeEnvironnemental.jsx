@@ -118,6 +118,8 @@ const TIMELINE_ENTRIES = [
     period: 'Juin 2015',
     label: 'La photographie de paysage',
     title: 'Valensole — National Geographic Hors-Série n°183 Provence',
+    badge: '/images/Partenaires/svg/national-geographic-logo.svg',
+    badgeAlt: 'Logo National Geographic',
     text: 'Un cliché des lavandes de Valensole sélectionné et publié dans le hors-série n°183 spécial Provence de National Geographic. Une reconnaissance par l\'une des références mondiales de la photographie de paysage — et un tournant dans la confiance portée à l\'image comme outil de narration.',
     img: '/images/portfolio/Mer/karim-saari-valensole-lavandes-national-geographic-provence.webp',
     imgSrcSet: '/images/portfolio/Mer/karim-saari-valensole-lavandes-national-geographic-provence_400w.webp 400w, /images/portfolio/Mer/karim-saari-valensole-lavandes-national-geographic-provence_800w.webp 800w, /images/portfolio/Mer/karim-saari-valensole-lavandes-national-geographic-provence_1200w.webp 1200w',
@@ -717,6 +719,9 @@ const PhotographeEnvironnemental = () => {
                                 <span className="text-xl font-bold text-ocean-teal tabular-nums">{entry.stat}</span>
                                 {entry.statLabel && <span className="text-text-muted text-[11px] ml-1.5">{entry.statLabel}</span>}
                               </p>
+                            )}
+                            {entry.badge && (
+                              <img src={entry.badge} alt={entry.badgeAlt} className="h-8 w-auto mb-2" loading="lazy" />
                             )}
                             <p className="text-white font-semibold text-sm mb-2">{entry.title}</p>
                             <p className="text-text-secondary text-sm leading-relaxed">{entry.text}</p>
