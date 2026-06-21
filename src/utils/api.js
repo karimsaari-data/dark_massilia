@@ -100,10 +100,12 @@ export function normalizePost(post) {
     media?.source_url ??
     extractFirstImage(post.content?.rendered ?? '') ??
     null;
-  const imageSrc = rawImageSrc
-    ? rawImageSrc.replace(/\.(png|jpe?g)$/i, '.webp')
-    : null;
-  // URL originale conservée comme fallback si le WebP n'existe pas (ShortPixel non traité)
+  // ShortPixel tourne en mode CDN (SPIO) : le WebP/AVIF est généré à la volée
+  // par spcdn.shortpixel.ai depuis l'original. Les fichiers .webp n'existent PAS
+  // sur l'origine → on route via le CDN au lieu de remplacer l'extension (ce qui
+  // 404ait puis retombait sur le JPEG d'origine non optimisé, d'où la lenteur).
+  const imageSrc = toCdn(rawImageSrc);
+  // URL d'origine conservée comme fallback si le CDN échoue
   const imageFallback = rawImageSrc ?? null;
 
   const wpTerms      = post._embedded?.['wp:term'] ?? [];
@@ -189,19 +191,27 @@ function extractFirstImage(html) {
   return match ? match[1] : null;
 }
 
+// Préfixe du CDN ShortPixel (SPIO) : conversion WebP/AVIF + resize à la volée
+// depuis le fichier d'origine. C'est le mode de livraison réel du site (déjà
+// utilisé dans le contenu des articles). Aucun fichier .webp sur l'origine.
+const SPIO_PREFIX = 'https://spcdn.shortpixel.ai/spio/ret_img,q_cdnize,to_auto,s_webp:avif/';
+
+// Enveloppe une URL d'image d'origine dans le CDN ShortPixel.
+function toCdn(url) {
+  if (!url) return null;
+  if (url.includes('spcdn.shortpixel.ai')) return url; // déjà sur le CDN
+  return SPIO_PREFIX + url.replace(/^https?:\/\//, '');
+}
+
 // Construit un srcset à partir des tailles générées par WordPress.
-// - Plafond à 1200px : évite les variants 1536/2048px (PNG 1-3 Mo sur Retina)
-// - URLs converties en WebP : ShortPixel stocke les WebP avec extension remplacée
-//   (ex: image-768x413.png → image-768x413.webp), ce qui réduit le poids de 60-80%.
+// - Plafond à 1200px : évite les variants 1536/2048px (lourds sur Retina)
+// - URLs routées via le CDN ShortPixel (WebP/AVIF à la volée, -60 à -80%).
 function buildSrcset(media) {
   const sizes = media?.media_details?.sizes;
   if (!sizes) return null;
   const entries = Object.values(sizes)
     .filter(s => s?.source_url && s?.width && s.width <= 1200)
-    .map(s => {
-      const webpUrl = s.source_url.replace(/\.(png|jpe?g)$/i, '.webp');
-      return `${webpUrl} ${s.width}w`;
-    });
+    .map(s => `${toCdn(s.source_url)} ${s.width}w`);
   return entries.length ? entries.join(', ') : null;
 }
 

@@ -251,13 +251,21 @@ async function prefetchWPPosts(slugs, batchSize = 5) {
   return cache;
 }
 
-// ── Construit le srcset WebP plafonné à 1200px (miroir de api.js) ────────────
+// ── CDN ShortPixel (SPIO) : WebP/AVIF + resize à la volée (miroir de api.js) ──
+const SPIO_PREFIX = 'https://spcdn.shortpixel.ai/spio/ret_img,q_cdnize,to_auto,s_webp:avif/';
+function toCdn(url) {
+  if (!url) return null;
+  if (url.includes('spcdn.shortpixel.ai')) return url;
+  return SPIO_PREFIX + url.replace(/^https?:\/\//, '');
+}
+
+// ── Construit le srcset plafonné à 1200px, routé via CDN (miroir de api.js) ──
 function buildSrcsetSSR(media) {
   const sizes = media?.media_details?.sizes;
   if (!sizes) return null;
   const entries = Object.values(sizes)
     .filter(s => s?.source_url && s?.width && s.width <= 1200)
-    .map(s => `${s.source_url.replace(/\.(png|jpe?g)$/i, '.webp')} ${s.width}w`);
+    .map(s => `${toCdn(s.source_url)} ${s.width}w`);
   return entries.length ? entries.join(', ') : null;
 }
 
@@ -274,7 +282,7 @@ async function fetchWPPost(slug) {
     const media  = post._embedded?.['wp:featuredmedia']?.[0];
     const author = post._embedded?.author?.[0];
 
-    // Utiliser medium_large (768px) comme src principal + conversion WebP
+    // Utiliser medium_large (768px) comme src principal, routé via CDN ShortPixel
     // (identique à normalizePost dans api.js pour cohérence SSR/client)
     const sizes      = media?.media_details?.sizes;
     const rawSrc     = sizes?.medium_large?.source_url
@@ -282,7 +290,7 @@ async function fetchWPPost(slug) {
                     ?? media?.source_url
                     ?? extractFirstImage(post.content?.rendered ?? '')
                     ?? null;
-    const imageSrc     = rawSrc ? rawSrc.replace(/\.(png|jpe?g)$/i, '.webp') : null;
+    const imageSrc     = toCdn(rawSrc);
     const imageSrcset  = buildSrcsetSSR(media);
 
     return {
