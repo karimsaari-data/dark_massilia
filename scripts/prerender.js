@@ -505,6 +505,18 @@ async function prerender() {
       // injecter dans <head> et améliorer le SEO (social cards, bots sans JS).
       let finalTemplate = template;
 
+      // ── Retirer le preload de l'image de profil (LCP de l'accueil) hors home ──
+      // Ce <link rel="preload"> est codé en dur dans index.html pour le LCP de la
+      // page d'accueil. Comme index.html sert de shell à toutes les routes, il
+      // déclenchait un préchargement inutilisé ailleurs (warning "preloaded but
+      // not used"). On le conserve sur '/' uniquement.
+      if (route !== '/') {
+        finalTemplate = finalTemplate.replace(
+          /\s*<link rel="preload" as="image"[^>]*karim-saari-photo-profil-arte-regard-marseille[^>]*\/>/,
+          '',
+        );
+      }
+
       // ── Injecter un <link rel="preload"> explicite pour l'image hero des articles ──
       // PSI vérifie que la ressource LCP est "visible dans le document initial" :
       // un preload dans <head> garantit que le navigateur démarre le téléchargement
