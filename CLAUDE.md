@@ -43,6 +43,18 @@ Tout le suivi SEO est **automatisé en CI** ; ce n'est PAS récupéré en live v
 - **Régénérer un rapport à la demande** : déclencher le workflow (`workflow_dispatch`) ou lancer le script npm (ex. `npm run weekly-targets-report` — nécessite secrets Supabase/Brevo).
 - **Backlinks / Domain Rating** : exports Ahrefs dans `data/gsc-links/` et `SEO/`. Dans l'environnement MCP de session, **seul le Domain Rating public gratuit d'Ahrefs répond** (DR ≈ **1,9** au 21/06/2026) ; le Site Explorer et l'intégration GSC d'Ahrefs renvoient « Insufficient plan ».
 
+### Modèle étoile GSC & runbook « collecte gelée » (FK dimensions) — ⚠️ IMPORTANT
+Les données GSC sont en **schéma étoile** : les tables de faits (`gsc_daily_queries`, `gsc_daily_page_queries`, `gsc_weekly_queries`, `gsc_daily_pages`, `gsc_daily_countries`, `gsc_daily_devices`) ont des **clés étrangères** vers des dimensions enrichies (`dim_requete`, `dim_page`, `dim_pays`, `dim_appareil`). Certains attributs de dimension sont eux-mêmes contraints par des tables de paramètres (ex. `dim_page.type_page` → `param_type_page`).
+
+**Mécanisme d'auto-alimentation (correctif juin 2026)** : des triggers **`BEFORE INSERT`** (`sync_dim_requete`, `sync_dim_page`, `sync_dim_pays`, `sync_dim_appareil`) insèrent toute valeur neuve dans la dimension *avant* la vérif FK, puis posent des **sentinelles** à reclasser : `dim_requete.categorie`/`intention='non_classe'`, `dim_page.type_page='autre'`. Migrations versionnées : `supabase/migrations/20260621_fix_sync_dim_*`.
+> Piège historique : ces triggers étaient en `AFTER INSERT` (ou absents) → la FK était validée avant que la dimension existe → toute valeur inédite faisait `violates foreign key constraint`, `process.exit(1)` du collecteur, et **gel de toute la collecte** (souvent repéré plusieurs jours après). Un trigger de synchro dim DOIT être `BEFORE INSERT` (les FK Postgres sont des triggers RI/AFTER).
+
+**Runbook si la collecte est gelée (`violates foreign key … dim_*`)** :
+1. Diagnostiquer : repérer la dimension fautive dans le log, vérifier `max(date)` par table de faits (le global `gsc_daily` n'a pas de FK → avance même quand les requêtes/pages bloquent).
+2. Corriger : s'assurer que la dimension a un trigger `BEFORE INSERT` (sinon l'ajouter via `apply_migration`).
+3. Backfill : relancer le workflow **`daily-gsc-collect.yml`** en `workflow_dispatch` (`backfill_days`, `backfill_weeks`, `skip_report=true`). Collecteur idempotent (upserts). ⚠️ Mon intégration GitHub n'a pas `actions:write` → c'est **Karim qui clique** « Run workflow ».
+4. Reclasser les sentinelles : proposer un classement cohérent en réutilisant le vocabulaire existant ; `type_page` exige une valeur de `param_type_page` (codes : `autre, blog, home, medias, photos, projet, seo, utilitaire, videos`) ; `categorie`/`intention` de `dim_requete` sont en texte libre. La ligne `utilitaire` (priorité SEO 2) et les reclassements de données ne sont **pas** versionnés en migration.
+
 ### État SEO (constat juin 2026)
 - **Top 3** : `photographe environnemental` (~2,6 ; impressions +500 %), `karim saari` (~2,1).
 - **À portée (pos. 5-15)** : `photographe sous marin marseille` (~7,2), `photographe calanques` (~8,3).
