@@ -302,6 +302,16 @@ export function PostCard({ post, priority = false }) {
   const Tag = priority ? 'article' : motion.article;
   const motionProps = priority ? {} : { variants: FADE_IN_UP, whileHover: { x: 4, transition: { type: 'spring', stiffness: 400, damping: 25 } } };
 
+  // Option A — fondu doux : on garde un fond placeholder océan derrière l'image,
+  // qui apparaît en fade-in une fois chargée (pas de spinner, pas de saut de layout).
+  // La carte prioritaire (LCP) reste affichée immédiatement pour ne pas retarder le LCP.
+  const imgRef = useRef(null);
+  const [loaded, setLoaded] = useState(priority);
+  useEffect(() => {
+    // Si l'image est déjà en cache, onLoad a pu se déclencher avant l'attache du handler.
+    if (imgRef.current?.complete) setLoaded(true);
+  }, []);
+
   return (
     <Tag
       {...motionProps}
@@ -311,21 +321,24 @@ export function PostCard({ post, priority = false }) {
       {post.image ? (
         <Link
           to={`/blog/${post.slug}`}
-          className="block overflow-hidden rounded-t-2xl aspect-video"
+          className="block overflow-hidden rounded-t-2xl aspect-video bg-gradient-to-br from-ocean-teal/10 to-ocean-blue/10"
           aria-label={`Lire : ${post.title}`}
         >
           <img
+            ref={imgRef}
             src={post.image}
             srcSet={post.imageSrcset ?? undefined}
             sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
             alt={post.imageAlt}
-            className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+            className={`w-full h-full object-cover transition-[transform,opacity] duration-500 group-hover:scale-105 ${loaded ? 'opacity-100' : 'opacity-0'}`}
             loading={priority ? 'eager' : 'lazy'}
             fetchPriority={priority ? 'high' : undefined}
             decoding={priority ? 'sync' : 'async'}
             width="640"
             height="360"
+            onLoad={() => setLoaded(true)}
             onError={(e) => {
+              setLoaded(true);
               if (post.imageFallback && e.target.src !== post.imageFallback) {
                 e.target.src = post.imageFallback;
               }
