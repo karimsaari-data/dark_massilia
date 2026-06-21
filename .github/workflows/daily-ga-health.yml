@@ -1,0 +1,31 @@
+name: Daily GA4 Health Check
+
+# Sentinelle anti-panne GA4 : détecte les arrêts silencieux de collecte
+# (tag bloqué par CSP/Cloudflare, GTM cassé…) et envoie un email Brevo
+# UNIQUEMENT en cas d'anomalie. Léger : pas de PDF, aucune dépendance npm.
+
+on:
+  schedule:
+    - cron: '0 9 * * *'    # tous les jours à 9h UTC
+  workflow_dispatch:          # déclenchement manuel possible
+
+jobs:
+  ga-health:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js 24
+        uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+
+      - name: Vérifier la collecte GA4
+        env:
+          GSC_CLIENT_ID:     ${{ secrets.GSC_CLIENT_ID }}
+          GSC_CLIENT_SECRET: ${{ secrets.GSC_CLIENT_SECRET }}
+          GSC_REFRESH_TOKEN: ${{ secrets.GSC_REFRESH_TOKEN }}
+          GA_PROPERTY_ID:    ${{ secrets.GA_PROPERTY_ID }}
+          BREVO_API_KEY:     ${{ secrets.BREVO_API_KEY }}
+        run: npm run ga-health

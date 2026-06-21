@@ -37,6 +37,7 @@
     "seo-digest": "node scripts/weekly-seo-digest.js",
     "psi-audit": "node --env-file-if-exists=.env scripts/psi-audit.js",
     "ga-report": "node scripts/ga-report.js",
+    "ga-health": "node scripts/ga-health-check.js",
     "seo-crawl": "node scripts/seo-crawl.js",
     "backlink-report": "node scripts/backlink-report.js",
     "cloudflare-report": "node --env-file-if-exists=.env scripts/cloudflare-report.js",
