@@ -37,6 +37,13 @@ const env    = loadEnv();
 const sbUrl  = env.VITE_SUPABASE_URL  ?? process.env.VITE_SUPABASE_URL;
 const sbKey  = env.VITE_SUPABASE_ANON_KEY ?? process.env.VITE_SUPABASE_ANON_KEY;
 
+// Auth WordPress : depuis juin 2026 l'API REST exige une authentification
+// (les requêtes anonymes renvoient 403). On s'aligne sur les autres scripts WP
+// (update-wp-alt-text.mjs, wp-alt-vision.mjs) en Basic Auth via Application Password.
+const wpUser  = env.WP_USER ?? process.env.WP_USER;
+const wpPass  = (env.WP_APP_PASSWORD ?? process.env.WP_APP_PASSWORD ?? '').replace(/\s/g, '');
+const WP_AUTH = wpUser && wpPass ? Buffer.from(`${wpUser}:${wpPass}`).toString('base64') : null;
+
 // ── Helpers ───────────────────────────────────────────────────────────────────
 
 function stripHtml(html) {
@@ -73,6 +80,12 @@ async function fetchAllWPPosts() {
     process.stdout.write(`  Page ${page}/${totalPages}…`);
     const res = await fetch(
       `${WP_BASE}/posts?per_page=100&page=${page}&_embed&status=publish`,
+      {
+        headers: {
+          'User-Agent': 'dark-massilia-sync/1.0',
+          ...(WP_AUTH ? { Authorization: `Basic ${WP_AUTH}` } : {}),
+        },
+      },
     );
     if (!res.ok) throw new Error(`WP API ${res.status}: ${res.statusText}`);
     const posts = await res.json();
