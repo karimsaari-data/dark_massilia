@@ -55,6 +55,7 @@ jobs:
 
       # ── 3b. Sync WordPress → Supabase blog_posts ────────────────────────────
       - name: Sync articles WordPress → Supabase
+        id: sync_wp
         continue-on-error: true
         env:
           VITE_SUPABASE_URL: ${{ secrets.VITE_SUPABASE_URL }}
@@ -62,6 +63,26 @@ jobs:
           WP_USER: ${{ secrets.WP_USER }}
           WP_APP_PASSWORD: ${{ secrets.WP_APP_PASSWORD }}
         run: node scripts/sync-wp-to-supabase.mjs
+
+      # ── 3b-bis. Filet de sécurité : alerte si la sync a échoué ────────────────
+      # La sync est en continue-on-error (le déploiement du site ne doit pas être
+      # bloqué par un hoquet de sync). Mais un échec silencieux a déjà gelé la
+      # synchro des articles pendant 13 jours (juin 2026, 403 Cloudflare). Cette
+      # étape envoie un email d'alerte immédiat dès que la sync échoue.
+      - name: Alerte email — sync WordPress échouée
+        if: steps.sync_wp.outcome == 'failure'
+        run: |
+          curl -s -X POST https://api.brevo.com/v3/smtp/email \
+            -H "api-key: ${{ secrets.BREVO_API_KEY }}" \
+            -H "Content-Type: application/json" \
+            --data '{
+              "sender":  { "name": "GitHub Actions", "email": "contact@karimsaari.com" },
+              "to":      [{ "email": "contact@karimsaari.com" }],
+              "subject": "⚠️ Sync WordPress → Supabase échouée — karimsaari.com",
+              "textContent": "La synchronisation des articles WordPress vers Supabase (blog_posts) a échoué lors du dernier déploiement.\n\nConséquence : les nouveaux articles ne sont plus envoyés aux abonnés tant que ce problème persiste.\n\nCause la plus fréquente : API WordPress en 403 (Cloudflare Bot Fight Mode ou règle WAF bloquant GitHub Actions) — vérifier Cloudflare > Security > Bots.\n\nLogs : https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}"
+            }' > /dev/null
+          echo "📧 Email alerte sync envoyé"
+
 
       # ── 3b-bis. Import stats Facebook (CSV data/ → Supabase) ─────────────────
       # Importe les exports data/Facebook_Group_Insights_*.csv versionnés dans
