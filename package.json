@@ -48,6 +48,7 @@
     "galleries:vision-alt": "node --env-file-if-exists=.env scripts/galleries-vision-alt.mjs --apply",
     "galleries:vision-alt-dry": "node --env-file-if-exists=.env scripts/galleries-vision-alt.mjs",
     "wp:audit-images": "node --env-file-if-exists=.env scripts/wp-optimize-images.mjs --audit",
+    "blog:audit-weights": "node scripts/audit-blog-images.mjs",
     "wp:fix-images": "node --env-file-if-exists=.env scripts/wp-optimize-images.mjs --fix",
     "wp:fix-images-dry": "node --env-file-if-exists=.env scripts/wp-optimize-images.mjs --fix --dry-run",
     "exif:inject": "node scripts/inject-exif.js",

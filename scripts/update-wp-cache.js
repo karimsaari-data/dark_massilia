@@ -33,12 +33,20 @@ function stripEntities(str) {
     .replace(/&rdquo;/g, '”').replace(/&ldquo;/g, '“');
 }
 
+// CDN ShortPixel (SPIO) : WebP/AVIF + resize à la volée depuis l'original.
+const SPIO_PREFIX = 'https://spcdn.shortpixel.ai/spio/ret_img,q_cdnize,to_auto,s_webp:avif/';
+function toCdn(url) {
+  if (!url) return null;
+  if (url.includes('spcdn.shortpixel.ai')) return url;
+  return SPIO_PREFIX + url.replace(/^https?:\/\//, '');
+}
+
 function buildSrcset(media) {
   const sizes = media?.media_details?.sizes;
   if (!sizes) return null;
   const entries = Object.values(sizes)
     .filter(s => s?.source_url && s?.width && s.width <= 1200)
-    .map(s => `${s.source_url.replace(/\.(png|jpe?g)$/i, '.webp')} ${s.width}w`);
+    .map(s => `${toCdn(s.source_url)} ${s.width}w`);
   return entries.length ? entries.join(', ') : null;
 }
 
@@ -67,7 +75,7 @@ async function run() {
                   ?? sizes?.large?.source_url
                   ?? media?.source_url
                   ?? null;
-      const imageSrc = rawSrc ? rawSrc.replace(/\.(png|jpe?g)$/i, '.webp') : null;
+      const imageSrc = toCdn(rawSrc);
 
       allPosts.push({
         id:            post.id,
