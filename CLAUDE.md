@@ -61,6 +61,21 @@ Les données GSC sont en **schéma étoile** : les tables de faits (`gsc_daily_q
 - **Inactives à débloquer** : `photographe paysages marseille` (page `/photographie-paysage-mer` existe pourtant), `dépollution marine marseille`, `dark massilia`.
 - **Plus gros levier = netlinking** : Domain Rating très bas (~1,9).
 
+### ⚠️ Cloudflare = couche d'en-têtes (CSP + cache) — pièges majeurs (corrigés juin 2026)
+Le site est derrière **Cloudflare** (`Server: cloudflare`, `CF-RAY`). **Cloudflare écrase les en-têtes HTTP de l'origine** : la CSP et le cache servis au navigateur **NE viennent PAS du `.htaccess`** (qui est overridé), mais de **règles Cloudflare**. Diagnostiquer en live : `curl -sI https://karimsaari.com/blog`.
+- **CSP** : posée par une **Response Header Transform Rule « Security Headers »** (Rules → Transform Rules). Le `.htaccess` du repo a sa propre CSP mais elle est **ignorée**. ➡️ **Pour autoriser un nouveau tiers (analytics, polices, embed…), il FAUT éditer cette règle Cloudflare**, pas le `.htaccess`. La CSP doit inclure : `script-src` + `connect-src` `googletagmanager.com google-analytics.com *.google-analytics.com *.analytics.google.com stats.g.doubleclick.net` (GA4/Signals), `style-src https://fonts.googleapis.com` (Google Fonts), `connect-src *.supabase.co cms.karimsaari.com`. **Piège vécu** : CSP introduite ~30 mai 2026 sans les domaines Google → GA4 **bloqué et muet pendant ~3 semaines**.
+- **Cache HTML** : une **Cache Rule** matchant `URI Full wildcard "*.*"` attrapait **aussi le HTML** (le « URI Full » inclut le domaine, qui contient des points) → HTML caché ~186 j → **déploiements invisibles longtemps**. Corrigé : match par **extension de fichier** (`http.request.uri.path.extension in {…}`) pour ne cacher que les assets, pas les pages (sans extension). **Après toute modif de règle Cloudflare : Purge Everything.**
+
+### Images blog / featured WP = CDN ShortPixel (SPIO) — ⚠️ ne PAS deviner l'extension
+ShortPixel livre en **mode CDN** : le WebP/AVIF est généré **à la volée par `spcdn.shortpixel.ai`** depuis le `.jpg`/`.png` d'origine. **Aucun fichier `.webp` n'existe sur l'origine** `cms.karimsaari.com`. Format : `https://spcdn.shortpixel.ai/spio/ret_img,q_cdnize,to_auto,s_webp:avif/cms.karimsaari.com/wp-content/uploads/…/img.jpg`.
+- **Piège vécu** : le front construisait l'URL en *remplaçant* l'extension (`img.jpg → img.webp` sur l'origine) → **404** → `onError` retombait sur le JPEG d'origine plein poids, non-CDN → **lenteur des cartes du blog**.
+- **Règle** : router l'URL d'origine via le CDN avec le helper `toCdn()`. Cette logique est **dupliquée dans 4 producteurs à garder synchrones** : `src/utils/api.js`, `scripts/prerender.js`, `scripts/update-wp-cache.js`, `scripts/sync-wp-to-supabase.mjs`. Les données stockées (Supabase `blog_posts.image/image_srcset`, `wp-posts-cache.json`) se **réécrivent au prochain build prerender** (auto-réparant tant que le CMS est joignable).
+- Outil de diagnostic : `npm run blog:audit-weights` (`scripts/audit-blog-images.mjs`).
+
+### Sentinelle GA4 + runbook « analytics muet »
+GA4 (tag client) est **distinct** de GSC (API serveur, jamais affecté). Une panne du tag est **silencieuse**. **Sentinelle** : `daily-ga-health.yml` → `scripts/ga-health-check.js` (réutilise l'auth OAuth2 `GSC_*` + `GA_PROPERTY_ID` + Brevo de `ga-report.js`) — email d'alerte **uniquement** si 0 utilisateur sur 5 j alors que la référence 28 j en avait. Réglable via `GA_HEALTH_*`.
+- **Runbook si GA4 tombe à 0** : 1) console du site → erreur CSP sur `googletagmanager.com` ? 2) `curl -sI` → la CSP Cloudflare autorise-t-elle GA ? 3) corriger la **règle Cloudflare** (pas le repo) + Purge. Dater le trou : GA4 → Acquisition → courbe « Utilisateurs au fil du temps » sur 12 mois (chercher la falaise).
+
 ---
 
 ## Architecture
