@@ -23,10 +23,15 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: '20'
+          cache: 'npm'
+
+      - name: Installation des dépendances
+        run: npm ci
 
       - name: Notify new articles
         env:
           VITE_SUPABASE_URL: ${{ secrets.VITE_SUPABASE_URL }}
+          VITE_SUPABASE_ANON_KEY: ${{ secrets.VITE_SUPABASE_ANON_KEY }}
           NOTIFY_SECRET: ${{ secrets.NOTIFY_SECRET }}
         run: node scripts/notify-new-articles.js
 
