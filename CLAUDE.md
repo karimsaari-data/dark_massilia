@@ -8,11 +8,48 @@ This is a personal portfolio website for "Dark Massilia" (Karim Saari), an envir
 
 **Site URL**: https://karimsaari.com/
 **Primary Language**: French
-**Tech Stack**: Static HTML/CSS/JS (no build system, no frameworks)
+**Tech Stack**: ⚠️ N'est PLUS un site statique. C'est désormais une app **React 19 + Vite** (SPA pré-rendue) avec CMS **Supabase**. Voir la section « Stack réel & mécanique du site (à jour — juin 2026) » ci-dessous — les sections « Architecture / Site Structure » plus bas sont conservées à titre historique (ancien site statique).
 
 ## Déploiement
 
 Tout push sur la branche `main` déclenche automatiquement le workflow GitHub Actions (`.github/workflows/nightly-build-deploy.yml`) qui build le site et le déploie en FTP sur karimsaari.com. **Il suffit de merger sur `main` et pousser — le site est en live en quelques minutes.** Pas besoin de PR ni d'étape manuelle.
+
+---
+
+## Stack réel & mécanique du site (à jour — juin 2026)
+
+> ⚠️ Le site n'est plus le site statique décrit dans les sections « Architecture / Site Structure » plus bas (gardées à titre historique). Réalité actuelle ci-dessous.
+
+### Stack technique
+- **Front** : app **React 19 + Vite** (SPA), **Tailwind CSS**. Code dans `src/`. Entrée `index.html` → `/src/main.jsx`.
+- **Pré-rendu SEO** : `scripts/prerender.js` génère le HTML statique au build et injecte les **JSON-LD**. Critique : Google doit voir le HTML pré-rendu, pas une page vide. Toujours vérifier le rendu après modif de page.
+- **CMS / blog** : **Supabase** (Postgres) + **WordPress headless** sur `cms.karimsaari.com` (images hero des articles). Sync via `scripts/sync-wp-to-supabase.mjs`, `seed-supabase.js`, `update-wp-*.mjs`.
+- **Sitemaps** : générés par `scripts/generate-sitemap.js` + `generate-sitemap-images.js` → `public/sitemap.xml` & `public/sitemap-images.xml` (~40 URLs : pages + blog + catégories).
+- **Analytics** : **GA4** (`G-R3EY7H9Y2Z`) + **GTM** avec **Consent Mode v2** (bannière, clé `dm_consent` en localStorage).
+- **Déploiement** : push `main` → `nightly-build-deploy.yml` → build + **FTP** karimsaari.com. `vercel.json` présent (Vercel également possible).
+
+### Mécanique SEO automatisée (GitHub Actions) — IMPORTANT
+Tout le suivi SEO est **automatisé en CI** ; ce n'est PAS récupéré en live via un MCP. Les rapports (le « Dashboard Requêtes Cibles » que Karim peut montrer) sortent de ces workflows :
+- **Collecte GSC** : `daily-gsc-collect.yml` → `scripts/gsc-collect.js` interroge l'**API Google Search Console** via un **compte de service** (secrets GitHub ; token via `get-gsc-token.js`) et stocke dans la table Supabase **`gsc_daily_queries`** (`date, query, clicks, impressions, position`).
+- **Rapports** (PDF Puppeteer → email via **Brevo** à `email@karimsaari.com`) :
+  - `weekly-targets-report.yml` → `scripts/weekly-targets-report.js` = **« Dashboard Requêtes Cibles »** (30 j glissants vs période précédente ; 3 pages : KPIs+graphes / tableau détaillé / requêtes découvertes). Lundi 6h UTC, `workflow_dispatch` possible.
+  - `weekly-gsc-28day-report.yml` → `gsc-28day-report.js` ; `weekly-ga-report.yml` → `ga-report.js` ; `monthly-backlink-report.yml` → `backlink-report.js` (exports Ahrefs dans `data/gsc-links/`) ; `weekly-seo-digest.yml` → `weekly-seo-digest.js` ; `monthly-seo-crawl.yml` → `seo-crawl.js` ; `lighthouse.yml` (`.lighthouserc.json`). + reports Instagram/Facebook/Cloudflare.
+
+### Requêtes cibles suivies (`TARGET_QUERIES`, weekly-targets-report.js)
+`photographe environnemental` · `photographe environnemental marseille` · `photographe sous marin marseille` · `photographe calanques` · `photographe paysages marseille` · `dark massilia` · `karim saari` · `dépollution marine marseille`
+
+### Pour faire un bilan / accéder aux données
+- **Chiffres GSC** → table Supabase **`gsc_daily_queries`** (lecture via MCP Supabase si autorisé, ou via les scripts npm).
+- **Régénérer un rapport à la demande** : déclencher le workflow (`workflow_dispatch`) ou lancer le script npm (ex. `npm run weekly-targets-report` — nécessite secrets Supabase/Brevo).
+- **Backlinks / Domain Rating** : exports Ahrefs dans `data/gsc-links/` et `SEO/`. Dans l'environnement MCP de session, **seul le Domain Rating public gratuit d'Ahrefs répond** (DR ≈ **1,9** au 21/06/2026) ; le Site Explorer et l'intégration GSC d'Ahrefs renvoient « Insufficient plan ».
+
+### État SEO (constat juin 2026)
+- **Top 3** : `photographe environnemental` (~2,6 ; impressions +500 %), `karim saari` (~2,1).
+- **À portée (pos. 5-15)** : `photographe sous marin marseille` (~7,2), `photographe calanques` (~8,3).
+- **Inactives à débloquer** : `photographe paysages marseille` (page `/photographie-paysage-mer` existe pourtant), `dépollution marine marseille`, `dark massilia`.
+- **Plus gros levier = netlinking** : Domain Rating très bas (~1,9).
+
+---
 
 ## Architecture
 
