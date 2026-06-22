@@ -9,6 +9,10 @@ import { SEO_PAGES } from '../utils/seo';
 import Breadcrumb from '../components/Breadcrumb';
 import PartnersCarousel from '../components/PartnersCarousel';
 
+// Cadre photo « presse premium » — hairline clair + passe-partout teal + ombre portée profonde
+const PHOTO_FRAME =
+  'shadow-[0_0_0_1px_rgba(255,255,255,0.14),0_0_0_5px_rgba(0,171,168,0.10),0_20px_50px_-14px_rgba(0,0,0,0.78)]';
+
 // Photo portrait — bloc intro
 const PARTNER_PHOTO_INTRO = {
   src: '/images/Partenaires/partenaires-1dpj-10ans-notre-dame-marseille.webp',
@@ -489,8 +493,8 @@ const PhotographeEnvironnemental = () => {
             {/* Portrait flottant — le texte enveloppe naturellement */}
             <div className="hidden md:block float-right ml-6 mb-4 w-44">
               <div
-                className="relative rounded-sm overflow-hidden ring-1 ring-ocean-teal/40"
-                style={{ aspectRatio: '3/4', boxShadow: '0 0 24px rgba(0,171,168,0.18)' }}
+                className={`relative rounded-lg overflow-hidden ${PHOTO_FRAME}`}
+                style={{ aspectRatio: '3/4' }}
               >
                 <img
                   src="/images/Partenaires/partenaires-karim-saari-mer-terre-calanques-propres-2024.webp"
@@ -688,7 +692,7 @@ const PhotographeEnvironnemental = () => {
                   );
 
                   const photoBlock = (
-                    <div className="aspect-square overflow-hidden ring-1 ring-white/10 bg-black/40">
+                    <div className={`aspect-square overflow-hidden rounded-xl bg-black/40 ${PHOTO_FRAME}`}>
                       <img
                         src={entry.img}
                         srcSet={entry.imgSrcSet}
@@ -736,7 +740,7 @@ const PhotographeEnvironnemental = () => {
                               </Link>
                             ))}
                           </div>
-                          <div className="aspect-square overflow-hidden ring-1 ring-white/10 bg-black/40">
+                          <div className={`aspect-square overflow-hidden rounded-xl bg-black/40 ${PHOTO_FRAME}`}>
                             <img src={entry.img} srcSet={entry.imgSrcSet} sizes="100vw" alt={entry.alt} className={`w-full h-full ${entry.imgFit || 'object-cover'}${entry.imgScale ? ` ${entry.imgScale}` : ''}${entry.imgPosition ? ` ${entry.imgPosition}` : ''}`} loading="lazy" />
                           </div>
                         </div>
