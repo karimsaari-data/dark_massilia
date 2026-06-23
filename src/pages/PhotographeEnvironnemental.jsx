@@ -8,6 +8,7 @@ import SEO from '../components/SEO';
 import { SEO_PAGES } from '../utils/seo';
 import Breadcrumb from '../components/Breadcrumb';
 import PartnersCarousel from '../components/PartnersCarousel';
+import { useTranslation } from 'react-i18next';
 
 // Cadre photo « presse premium » — hairline clair + passe-partout teal + ombre portée profonde
 const PHOTO_FRAME =
@@ -16,9 +17,6 @@ const PHOTO_FRAME =
 // Photo portrait — bloc intro
 const PARTNER_PHOTO_INTRO = {
   src: '/images/Partenaires/partenaires-1dpj-10ans-notre-dame-marseille.webp',
-  alt: 'Karim Saari aux 10 ans de 1 Déchet Par Jour — Notre-Dame-de-la-Garde, Marseille',
-  caption: '10 ans de 1 Déchet Par Jour',
-  credit: '© SEBANADO Photographies',
   creditUrl: 'https://www.sebanado.com/',
 };
 
@@ -26,16 +24,10 @@ const PARTNER_PHOTO_INTRO = {
 const PARTNER_PHOTOS_MERTERR = [
   {
     src: '/images/Partenaires/partenaires-mer-terre-calanques-propres-2024.webp',
-    alt: 'Karim Saari avec l\'équipe Mer Terre lors de l\'opération Calanques Propres 2024',
-    caption: 'Calanques Propres 2024 — Mer Terre',
-    credit: '© Fougue Photographie',
     creditUrl: 'https://www.fouguephotographie.fr/',
   },
   {
     src: '/images/Partenaires/partenaires-pnc-pirates-plastique-calanques-3.webp',
-    alt: 'Barquette de dépollution — Campagne Pirates du Plastique dans les Calanques de Marseille',
-    caption: 'Campagne Pirates du Plastique — PNC, Boud\'mer & Merveille',
-    credit: '© Parc National des Calanques',
     creditUrl: 'https://calanques-parcnational.fr/fr',
   },
 ];
@@ -43,266 +35,172 @@ const PARTNER_PHOTOS_MERTERR = [
 const PARTNER_PHOTOS_PNC = [
   {
     src: '/images/Partenaires/partenaires-pnc-pirates-plastique-calanques-1.webp',
-    alt: 'Opération Pirates du Plastique — Parc National des Calanques, apnéistes en mission',
-    caption: 'Campagne Pirates du Plastique — PNC, Boud\'mer & Merveille',
-    credit: '© Parc National des Calanques',
     creditUrl: 'https://calanques-parcnational.fr/fr',
   },
   {
     src: '/images/Partenaires/partenaires-pnc-pirates-plastique-calanques-2.webp',
-    alt: 'Dépollution marine opération Pirates du Plastique — Parc National des Calanques',
-    caption: 'Campagne Pirates du Plastique — PNC, Boud\'mer & Merveille',
-    credit: '© Parc National des Calanques',
     creditUrl: 'https://calanques-parcnational.fr/fr',
   },
   {
     src: '/images/Partenaires/partenaires-karim-saari-mer-terre-calanques-propres-2024.webp',
-    alt: 'Karim Saari et membres de l\'association Mer Terre — opération Calanques Propres 2024',
-    caption: 'Calanques Propres 2024 — Mer Terre',
-    credit: '© Fougue Photographie',
     creditUrl: 'https://www.fouguephotographie.fr/',
   },
 ];
 
 // Associations partenaires
 const ASSOCIATIONS = [
-  { name: 'Boud\'mer',            url: 'https://www.boudmer.org/',              desc: 'Support maritime lors des missions de dépollution dans les Calanques de Marseille' },
-  { name: 'Clean My Calanques',   url: 'https://cleanmycalanques.fr/',          desc: 'Nettoyages mensuels des Calanques et sensibilisation scolaire à la pollution' },
-  { name: 'Association Merveille',url: 'https://www.assomerveille.fr/',          desc: 'Dépollution des fonds marins marseillais, spécialiste de l\'extraction de pneus et macro-déchets' },
-  { name: '1 Déchet Par Jour',    url: 'https://www.1dechetparjour.com/',        desc: 'Mouvement citoyen de ramassage collectif de déchets sauvages en nature' },
-  { name: 'Team AVA',             url: 'https://www.instagram.com/team.a.v.a/', desc: 'Nettoyages littoraux réguliers centrés sur le Vallon des Auffes, Marseille' },
-  { name: 'Sauvage Méditerranée', url: 'https://sauvage-med.fr/',               desc: 'Collecte de déchets de plage et transformation artisanale en produits éco-conçus' },
-  { name: 'Mer Terre',            url: 'https://mer-terre.org/',                desc: 'Réduction des déchets terrestres atteignant la mer — programme national Zéro Déchet Sauvage' },
-  { name: 'Recyclop',             url: 'https://recyclop.fr/',                  desc: 'Collecte et valorisation énergétique des mégots de cigarette pour lutter contre la pollution urbaine' },
-  { name: 'Wings of the Ocean',   url: 'https://www.wingsoftheocean.com/',      desc: 'Ramassage de déchets sauvages et sensibilisation à la pollution plastique sur les littoraux atlantique et méditerranéen' },
+  { name: "Boud'mer",            url: 'https://www.boudmer.org/' },
+  { name: 'Clean My Calanques',   url: 'https://cleanmycalanques.fr/' },
+  { name: 'Association Merveille', url: 'https://www.assomerveille.fr/' },
+  { name: '1 Déchet Par Jour',    url: 'https://www.1dechetparjour.com/' },
+  { name: 'Team AVA',             url: 'https://www.instagram.com/team.a.v.a/' },
+  { name: 'Sauvage Méditerranée', url: 'https://sauvage-med.fr/' },
+  { name: 'Mer Terre',            url: 'https://mer-terre.org/' },
+  { name: 'Recyclop',             url: 'https://recyclop.fr/' },
+  { name: 'Wings of the Ocean',   url: 'https://www.wingsoftheocean.com/' },
 ];
 
 // Institutions partenaires
 const INSTITUTIONS = [
-  { name: 'Parc National des Calanques', url: 'https://calanques-parcnational.fr/fr', desc: 'Parc national marin et terrestre, Marseille — La Ciotat', logo: '/images/Partenaires/svg/logo-pncal.jpg' },
-  { name: 'Fondation de la Mer',         url: 'https://www.fondationdelamer.org/',    desc: 'Fondation nationale pour la protection des océans',        logo: '/images/Partenaires/svg/logo-fondation-de-la-mer.svg' },
-  { name: 'Citeo',                       url: 'https://www.citeo.com/',              desc: 'Organisme agréé pour le recyclage des emballages et papiers', logo: '/images/Partenaires/svg/Logo_Citeo.png' },
-  { name: 'Ville de Marseille',          url: 'https://www.marseille.fr/',           desc: 'Collectivité territoriale, soutien aux projets environnementaux', logo: '/images/Partenaires/svg/Ville_de_Marseille_(logo).svg' },
+  { name: 'Parc National des Calanques', url: 'https://calanques-parcnational.fr/fr', logo: '/images/Partenaires/svg/logo-pncal.jpg' },
+  { name: 'Fondation de la Mer',         url: 'https://www.fondationdelamer.org/',    logo: '/images/Partenaires/svg/logo-fondation-de-la-mer.svg' },
+  { name: 'Citeo',                       url: 'https://www.citeo.com/',               logo: '/images/Partenaires/svg/Logo_Citeo.png' },
+  { name: 'Ville de Marseille',          url: 'https://www.marseille.fr/',            logo: '/images/Partenaires/svg/Ville_de_Marseille_(logo).svg' },
 ];
 
-// Timeline parcours — données centralisées
+// Timeline parcours — données centralisées (text fields come from i18n)
 const TIMELINE_ENTRIES = [
   {
     period: '1971',
-    label: 'La naissance',
-    title: 'De l\'âge de 6 ans à 1996 sur la côte basque',
-    text: 'Né en 1971, j\'arrive sur la côte basque en 1977 — Bayonne, Biarritz, Capbreton, la dune du Pilat, cet Atlantique qui sculpte le paysage autant que les gens. C\'est ici que s\'installe le rapport à l\'eau, à la lumière rasante, à l\'horizon. Adolescent, les étés m\'emmènent dans les Alpes — et c\'est là que je découvre la photographie de paysage et acquiers mon premier reflex argentique.',
     img: '/images/portfolio/Horizons/biarritz-cote-basque-karimsaari-1.webp',
-    alt: 'Côte basque — Biarritz, Karim Saari',
     side: 'left',
   },
   {
     period: '1997–2001',
-    label: 'Toulouse',
-    title: 'Entre Pyrénées et Atlantique',
-    text: 'Quatre ans à Toulouse, à portée des Pyrénées d\'un côté, de la côte basque le week-end. Je continue de photographier les paysages que j\'ai toujours connus — l\'océan, les dunes, la lumière atlantique — avant que la Méditerranée ne change tout.',
     img: null,
     side: null,
   },
   {
     period: '2001–2017',
-    label: 'Aix-en-Provence puis Marseille',
-    title: 'La Provence, et les quartiers nord de Marseille',
-    text: 'Juin 2001 : j\'arrive en Provence. D\'abord à Aix-en-Provence, puis à Marseille dès 2006. Je m\'installe dans les quartiers nord — à Sainte-Marthe, quartier historique de la famille Ricard, chargé d\'une mémoire populaire et industrielle. C\'est ma période photographie de paysage : j\'y découvre une autre Marseille — les collines, les calanques vues de loin, la lumière blanche sur le calcaire — et je publie sur 500px, où mon travail dépasse les 800 000 impressions.',
     stat: '800K+',
-    statLabel: 'impressions sur 500px',
     img: '/images/portfolio/Mer/karim-saari-marseille-vieux-port-arche-cadenas-notre-dame.webp',
-    alt: 'Marseille — Vieux-Port, arche et Notre-Dame-de-la-Garde',
     link: 'https://500px.com/p/karimsaari',
-    linkLabel: 'Mon portfolio 500px',
     external: true,
     side: 'right',
   },
   {
     period: 'Juin 2015',
-    label: 'La photographie de paysage',
-    title: 'Valensole — National Geographic Hors-Série n°183 Provence',
     badge: '/images/Partenaires/svg/national-geographic-logo.svg',
-    badgeAlt: 'Logo National Geographic',
-    text: 'Un cliché des lavandes de Valensole sélectionné et publié dans le hors-série n°183 spécial Provence de National Geographic. Une reconnaissance par l\'une des références mondiales de la photographie de paysage — et un tournant dans la confiance portée à l\'image comme outil de narration.',
     img: '/images/portfolio/Mer/karim-saari-valensole-lavandes-national-geographic-provence.webp',
     imgSrcSet: '/images/portfolio/Mer/karim-saari-valensole-lavandes-national-geographic-provence_400w.webp 400w, /images/portfolio/Mer/karim-saari-valensole-lavandes-national-geographic-provence_800w.webp 800w, /images/portfolio/Mer/karim-saari-valensole-lavandes-national-geographic-provence_1200w.webp 1200w',
-    alt: 'Champ de lavandes de Valensole, Provence — photographie de paysage Karim Saari publiée dans National Geographic hors-série Provence',
     side: 'left',
   },
   {
     period: '2017',
-    label: 'Le basculement',
-    title: 'Chemin de Morgiou, l\'apnée et les fonds',
-    text: 'En 2017, je déménage chemin de Morgiou, dans les quartiers sud — au bord des Calanques. Je découvre l\'apnée. Je plonge dans les fonds pour la première fois — et je comprends que l\'urgence n\'est pas en surface. Pneus, cordages, filets fantômes : un silence que personne ne voit depuis la surface. La photographie devient un acte de témoignage. Je remonte les déchets d\'une main, l\'appareil de l\'autre.',
     img: '/images/portfolio/Mer/karim-saari-marseille-aerien-calanque-nageur-turquoise.webp',
-    alt: 'Calanque de Marseille vue du ciel — nageur dans les eaux turquoise',
     imgScale: 'scale-[1.18]',
     side: 'left',
   },
   {
     period: '2018',
-    label: 'La communauté',
-    title: 'Création du groupe « Amoureux des Calanques »',
-    text: 'En 2018, je crée le groupe Facebook « Amoureux des Calanques de Marseille à Port-Cros ». Ce qui commence comme un espace de partage photographique devient rapidement une communauté engagée — des milliers de passionnés du littoral, un relais pour sensibiliser à la préservation des Calanques et mobiliser autour des actions de terrain.',
     img: '/images/groupe-des-amoureux-des-calanques.webp',
-    alt: 'Groupe des Amoureux des Calanques de Marseille à Port-Cros',
     imgPosition: 'object-left',
     link: '/communaute-calanques',
-    linkLabel: 'Rejoindre la communauté',
+    external: false,
     side: 'right',
   },
   {
     period: '2018',
-    label: 'Premières dépollutions',
-    title: 'Vallon des Auffes — mes premières dépollutions dans La Provence',
-    text: 'Une de mes premières dépollutions en apnée, au Vallon des Auffes — ce petit port emblématique de Marseille. L\'opération est menée à l\'initiative de la Team AVA, à laquelle je participe comme simple bénévole, avec ma planche de chasse Beuchat équipée d\'une caisse pour récupérer les déchets : on remonte pneus, ferraille et plastiques accumulés sous la surface. La Provence consacre un article à l\'action — une première rencontre avec l\'urgence cachée au fond de l\'eau.',
     img: '/images/2018-premi%C3%A8res_d%C3%A9pollutions_vallon_des_auffes_la-provence.jpg',
-    alt: 'Article La Provence 2018 — premières dépollutions en apnée de Karim Saari au Vallon des Auffes, Marseille',
     side: 'left',
   },
   {
     period: '2019',
-    label: 'Commande institutionnelle',
-    title: 'Carrousel au Vieux-Port — Ville de Marseille',
-    text: 'La Ville de Marseille me commande un cliché de la Canebière pour célébrer sa piétonisation. La photo est tirée en grand format sur bâche, place Saint-Louis, façade de l\'Espace Culture — une reconnaissance publique ancrée dans l\'identité marseillaise.',
     img: '/images/800w/karim-saari-marseille-ville-reconnaissance-officielle-dark-massilia.webp',
-    alt: 'Karim Saari — bâche grand format Canebière, Ville de Marseille, Espace Culture place Saint-Louis',
     badge: '/images/Partenaires/svg/Armoiries_de_Marseille.svg',
-    badgeAlt: 'Armoiries de la Ville de Marseille',
     link: 'https://www.facebook.com/marseilleville/photos/a.220707724621813/3697054720320412/',
-    linkLabel: 'La publication de la Ville de Marseille',
     external: true,
     side: 'right',
   },
   {
     period: '2021',
-    label: 'Avant Team Oxygen',
-    title: 'Les Pirates du Plastique — l\'aventure zéro déchet',
-    text: 'Je rejoins « Les Pirates du Plastique », campagne initiée par le réseau associatif local et coordonnée par le Parc national des Calanques, avec le soutien de la Ville de Marseille et de la Métropole Aix-Marseille-Provence. Une trentaine d\'événements pour interroger nos modes de vie, secouer les habitudes et embarquer le grand public dans l\'aventure zéro déchet. Mon premier engagement de terrain collectif — avant même Team Oxygen.',
     img: '/images/pirates-du-plastique.jpg',
-    alt: 'Les Pirates du Plastique — campagne zéro déchet du Parc national des Calanques, Karim Saari',
     link: 'https://www.calanques-parcnational.fr/fr/actualites/lancement-de-la-campagne-les-pirates-du-plastique-rejoignez-laventure-zero-dechet',
-    linkLabel: 'La campagne du Parc national',
     external: true,
     side: 'left',
   },
   {
     period: '2021–2022',
-    label: 'Climat d\'urgence',
-    title: 'Grèves des éboueurs — face à l\'écocide',
-    text: 'Avant la première édition du Projet Sentinelle, j\'enchaîne les opérations de dépollution dans un climat d\'urgence. Les grèves à répétition des éboueurs laissent les déchets déferler vers la mer — on parle alors d\'écocide. J\'interviens dans l\'eau, principalement aux côtés de l\'association Merveille, avec l\'appui logistique de plusieurs associations. Une mobilisation intense qui prépare le terrain de Team Oxygen.',
-    stat: 'Plusieurs tonnes',
-    statLabel: 'de déchets remontés',
+    stat: true,
+    statTranslatable: true,
     img: '/images/TF1_plongeur_karimsaari_video-greve-des-eboueurs-a-marseille-des-craintes-pour-l-environnement.webp',
-    alt: 'Karim Saari plongeur — reportage TF1 sur la grève des éboueurs à Marseille et les craintes pour l\'environnement',
     side: 'right',
   },
   {
     period: '2022',
-    label: '1ʳᵉ édition — Projet Sentinelle',
-    title: 'Côte Bleue — je rejoins Team Oxygen',
-    text: 'Déjà engagé sur le terrain depuis des années aux côtés d\'autres associations, je rejoins Team Oxygen pour la première édition du Projet Sentinelle, comme simple apnéiste. Huit jours de mobilisation le long de la Côte Bleue, de Martigues à l\'Estaque, pour remonter les déchets enfouis dans les fonds.',
     stat: '900 kg',
-    statLabel: 'remontés en 8 jours',
     img: '/images/Projet_sentinelle_1.jpg',
-    alt: 'Projet Sentinelle 2022, 1ʳᵉ édition — dépollution en apnée sur la Côte Bleue, Team Oxygen Marseille',
     link: 'https://fr.wikipedia.org/wiki/Projet_Sentinelle',
-    linkLabel: 'Le Projet Sentinelle sur Wikipédia',
     external: true,
     side: 'left',
   },
   {
     period: '2023',
-    label: '2ᵉ édition — Projet Sentinelle',
-    title: 'Archipel du Frioul — la montée en puissance',
-    text: 'Deuxième édition, cap sur l\'Archipel du Frioul. Sept jours d\'apnée et de logistique de surface : barquettes, cordages et plastiques remontés des criques. Je m\'investis davantage dans l\'organisation et prends la vice-présidence de Team Oxygen.',
     stat: '1 357 kg',
-    statLabel: 'remontés en 7 jours',
     img: '/images/projet_sentinelle_2_frioul.png',
-    alt: 'Projet Sentinelle 2023, 2ᵉ édition — dépollution sous-marine à l\'Archipel du Frioul, Team Oxygen Marseille',
     link: 'https://www.laprovence.com/videos/marseille-1-4-tonne-de-dchets-sortie-des-eaux-du-frioul-par-des-apnistes/10321076',
-    linkLabel: 'Le reportage de La Provence',
     external: true,
     side: 'right',
   },
   {
     period: '2024',
-    label: '3ᵉ édition — Projet Sentinelle',
-    title: 'Parc National des Calanques — au cœur du Port des Goudes',
-    text: 'Troisième édition, en plein Parc National des Calanques. Neuf jours d\'opérations, du Port des Goudes aux criques classées : pneus, filets fantômes et déchets plastiques extraits un à un, en apnée entre 0 et 20 mètres.',
     stat: '1 147 kg',
-    statLabel: 'remontés en 9 jours',
     img: '/images/marseille-dark-massilia-port-goudes-depollution-apnee-projet-sentinelle.webp',
-    alt: 'Projet Sentinelle 2024 — dépollution en apnée au Port des Goudes, Parc National des Calanques',
     link: 'https://www.fondationdelamer.org/nos-actualites/projet-sentinelle/',
-    linkLabel: 'L\'article de la Fondation de la Mer',
     external: true,
     side: 'left',
   },
   {
     period: 'Juin 2024',
-    label: 'Documentaire ARTE',
-    title: 'Pollution : il faut sauver Marseille et ses Calanques',
-    text: 'Tournage pour ARTE du documentaire « Pollution : il faut sauver Marseille et ses Calanques ». Je guide les équipes dans les fonds, caméra et déchets à l\'appui, pour montrer à un large public l\'ampleur de la pollution cachée sous la surface de la Méditerranée.',
     img: '/images/contact-karim-saari.webp',
-    alt: 'Tournage ARTE « Pollution : il faut sauver Marseille et ses Calanques » — Team Oxygen et Karim Saari en dépollution dans les Calanques de Marseille',
     imgFit: 'object-contain',
     link: '/sauver-marseille-documentaire-arte',
-    linkLabel: 'Voir le documentaire ARTE',
+    external: false,
     side: 'right',
   },
   {
     period: 'Décembre 2024',
-    label: 'Reconnaissance artistique',
-    title: 'Yann Arthus-Bertrand — « Les Français »',
-    text: 'Yann Arthus-Bertrand installe son Studio Photo à Marseille pour son projet « Les Français ». Je suis personnellement invité à poser — et j\'en profite pour convier toute la Team Oxygen à me rejoindre, le temps d\'une photo de groupe devant l\'objectif du célèbre photographe et réalisateur. Une reconnaissance forte de l\'engagement du collectif pour la Méditerranée.',
     img: '/images/Marseille-2024-342-Les-Francais-copyright-Yann-Arthus-Bertrand.webp',
     imgSrcSet: '/images/Marseille-2024-342-Les-Francais-copyright-Yann-Arthus-Bertrand_400w.webp 400w, /images/Marseille-2024-342-Les-Francais-copyright-Yann-Arthus-Bertrand_800w.webp 800w, /images/Marseille-2024-342-Les-Francais-copyright-Yann-Arthus-Bertrand_1200w.webp 1200w',
-    alt: 'Team Oxygen photographiée par Yann Arthus-Bertrand — projet « Les Français », Studio Photo Marseille décembre 2024',
     imgPosition: 'object-[80%_50%]',
     link: '/les-francais-yann-arthus-bertrand',
-    linkLabel: 'Découvrir le shooting',
+    external: false,
     side: 'left',
   },
   {
     period: '2025',
-    label: '4ᵉ édition — Projet Sentinelle',
-    title: 'Rade de Marseille — l\'édition record et le tournage d\'Oxygène',
-    text: 'Quatrième édition dans la Rade de Marseille : sept jours, une équipe élargie et un record de déchets remontés. C\'est aussi pendant cette édition qu\'est tourné le documentaire Oxygène. Je serai élu président de Team Oxygen en janvier 2026.',
     stat: '2 320 kg',
-    statLabel: 'remontés en 7 jours',
     img: '/images/Marseille-dark-massilia-plastique-pollution-projet-sentinelle-teamoxygen.webp',
-    alt: 'Projet Sentinelle 2025 — édition record dans la Rade de Marseille, Team Oxygen, tournage Oxygène',
-    quote: '« Photographier les Calanques, c\'est les défendre. »',
     link: 'https://www.marcelle.media/depolluer-la-mer-apnee-apres-apnee/',
-    linkLabel: 'L\'article de Marcelle Média',
     external: true,
     imgScale: 'scale-[1.18]',
     side: 'right',
+    hasQuote: true,
   },
   {
     period: '2026',
-    label: 'Le film',
-    title: 'Oxygène — documentaire 52 min',
-    text: 'Produit par Transfuges et Zéké Film, réalisé par Roxane Perrot et Ugo Isoard, Oxygène raconte une semaine de tournage en apnée dans les Calanques — sans équipement lourd, juste en retenant notre souffle. Soutenu par Citeo. Présenté au FIFES Cannes, à Nausicaá et à Marseille.',
     img: 'https://cms.karimsaari.com/wp-content/uploads/2026/05/Screenshot-2026-05-19-123022_edited-3.webp',
-    alt: 'Oxygène — documentaire dépollution Méditerranée, tournage en apnée dans les Calanques',
     imgFit: 'object-contain',
     link: '/blog/oxygene-le-documentaire-sur-la-depollution-de-la-mediterranee',
-    linkLabel: 'Lire l\'article',
+    external: false,
     side: 'left',
     future: true,
   },
   {
     period: '2026',
-    label: 'Le court-métrage',
-    title: 'Sous la Méditerranée — court-métrage Fondation Green-Got',
-    text: 'Court-métrage documentaire produit par la Fondation Green-Got, tourné en apnée au large de Marseille. Une décharge entière au fond d\'un port, documentée aux côtés de Wings of the Ocean et de Plastic At Sea — pour financer ce que le marché ne paiera jamais : nettoyer, documenter, sensibiliser.',
     img: '/images/green-got-mosaique-court-metrage-mediterranee.webp',
-    alt: 'Mosaïque du court-métrage Fondation Green-Got — Karim Saari et Team Oxygen, dépollution en Méditerranée à Marseille',
     link: '/court-metrage-green-got-mediterranee',
-    linkLabel: 'Voir le court-métrage',
+    external: false,
     side: 'right',
     future: true,
   },
@@ -312,84 +210,39 @@ const TIMELINE_ENTRIES = [
 const UNIVERSES = [
   {
     id: 'sous-marin',
-    title: 'Univers Sous-Marin',
     galleries: [
-      {
-        to: '/photographie-sous-marine#depollution',
-        label: 'Dépollution',
-        desc: 'Retirer les déchets plastiques des fonds en apnée et documenter l\'urgence écologique.',
-        cta: 'Voir les photos',
-        img: '/images/Marseille-dark-massilia-plastique-pollution-projet-sentinelle-goudes-esprit-equipe-fight.webp',
-        alt: 'Mission de dépollution sous-marine dans les Calanques de Marseille — Karim Saari',
-      },
-      {
-        to: '/photographie-sous-marine#biodiversite',
-        label: 'Biodiversité',
-        desc: 'La vie marine des Calanques — faune, flore, et fragilité des écosystèmes méditerranéens.',
-        cta: 'Voir les photos',
-        img: '/images/biodiversite-calanques-marseille-1.webp',
-        alt: 'Murène dans les fonds marins des Calanques de Marseille — Karim Saari photographe sous-marin',
-      },
-      {
-        to: '/photographie-sous-marine#caracterisation',
-        label: 'Caractérisation',
-        desc: 'Identifier, mesurer et cartographier les déchets pour guider les actions de nettoyage.',
-        cta: 'Voir les photos',
-        img: '/images/marseille-dark-massilia-depollution-pneu-port-goudes-projet-sentinelle.webp',
-        alt: 'Opération de dépollution en apnée au Port des Goudes — Team Oxygen, Projet Sentinelle Marseille',
-      },
+      { to: '/photographie-sous-marine#depollution', img: '/images/Marseille-dark-massilia-plastique-pollution-projet-sentinelle-goudes-esprit-equipe-fight.webp' },
+      { to: '/photographie-sous-marine#biodiversite', img: '/images/biodiversite-calanques-marseille-1.webp' },
+      { to: '/photographie-sous-marine#caracterisation', img: '/images/marseille-dark-massilia-depollution-pneu-port-goudes-projet-sentinelle.webp' },
     ],
   },
   {
     id: 'paysages',
-    title: 'Univers Paysages',
     galleries: [
-      {
-        to: '/photographie-paysage-mer#littoral',
-        label: 'Littoral',
-        desc: 'Calanques, falaises calcaires et eaux turquoise — le littoral marseillais vu du ciel et de l\'eau.',
-        cta: 'Voir les photos',
-        img: '/images/portfolio/Mer/karim-saari-marseille-en-vau-aerien-calanque-falaises.webp',
-        srcset: '/images/portfolio/Mer/karim-saari-marseille-en-vau-aerien-calanque-falaises_400w.webp 400w, /images/portfolio/Mer/karim-saari-marseille-en-vau-aerien-calanque-falaises_800w.webp 800w, /images/portfolio/Mer/karim-saari-marseille-en-vau-aerien-calanque-falaises_1200w.webp 1200w',
-        sizes: '(max-width: 640px) 100vw, 33vw',
-        alt: 'Vue aérienne de la calanque d\'En-Vau, eaux turquoise et falaises calcaires — Karim Saari',
-      },
-      {
-        to: '/photographie-paysage-mer#provence',
-        label: 'Provence',
-        desc: 'Lavande, lumière dorée et Méditerranée — la Provence photographiée depuis les airs et le sol.',
-        cta: 'Voir les photos',
-        img: '/images/portfolio/Terre/karim-saari-photographe-provence-lavande-coucher-soleil-ciel-orange-rouge.webp',
-        alt: 'Champs de lavande de Valensole au coucher du soleil — Karim Saari photographe Provence',
-      },
-      {
-        to: '/photographie-paysage-mer#horizons',
-        label: 'Horizons',
-        desc: 'Dunes, océan Atlantique et grands espaces — portraits de paysages hors des sentiers battus.',
-        cta: 'Voir les photos',
-        img: '/images/portfolio/Terre/karim-saari-photographe-femme-robe-rouge-rochers-volcaniques-cote-sauvage.webp',
-        alt: 'Harmonie minérale en rouge — femme sur les rochers volcaniques de la Ponta de São Lourenço, Madère — Karim Saari',
-      },
+      { to: '/photographie-paysage-mer#littoral', img: '/images/portfolio/Mer/karim-saari-marseille-en-vau-aerien-calanque-falaises.webp', srcset: '/images/portfolio/Mer/karim-saari-marseille-en-vau-aerien-calanque-falaises_400w.webp 400w, /images/portfolio/Mer/karim-saari-marseille-en-vau-aerien-calanque-falaises_800w.webp 800w, /images/portfolio/Mer/karim-saari-marseille-en-vau-aerien-calanque-falaises_1200w.webp 1200w', sizes: '(max-width: 640px) 100vw, 33vw' },
+      { to: '/photographie-paysage-mer#provence', img: '/images/portfolio/Terre/karim-saari-photographe-provence-lavande-coucher-soleil-ciel-orange-rouge.webp' },
+      { to: '/photographie-paysage-mer#horizons', img: '/images/portfolio/Terre/karim-saari-photographe-femme-robe-rouge-rochers-volcaniques-cote-sauvage.webp' },
     ],
   },
 ];
 
 // Chiffres clés
 const HERO_STATS = [
-  { end: 5724, suffix: ' kg', label: 'déchets remontés',   duration: 2500 },
-  { end: 185,  suffix: ' M',  label: 'vues Google Maps',   duration: 2000 },
-  { end: 132,  suffix: ' K',  label: 'communauté',         duration: 2000 },
-  { end: 4,    suffix: '',    label: 'éditions Sentinelle', duration: 1000 },
+  { end: 5724, suffix: ' kg', duration: 2500 },
+  { end: 185,  suffix: ' M',  duration: 2000 },
+  { end: 132,  suffix: ' K',  duration: 2000 },
+  { end: 4,    suffix: '',    duration: 1000 },
 ];
 
 
 const PhotographeEnvironnemental = () => {
   const cardHover = useCardHover();
+  const { t } = useTranslation();
   return (
     <div className="min-h-screen pt-4 pb-16">
       <SEO {...SEO_PAGES['/photographe-environnemental-marseille']} />
       <div className="container-custom">
-        <Breadcrumb label="Photographe Environnemental Marseille" />
+        <Breadcrumb label={t('photographeEnv.breadcrumb')} />
 
         {/* H1 + tagline */}
         <motion.div
@@ -402,10 +255,10 @@ const PhotographeEnvironnemental = () => {
             variants={FADE_IN_UP}
             className="text-2xl md:text-4xl font-bold text-white leading-tight mb-2"
           >
-            Photographe Environnemental à Marseille
+            {t('photographeEnv.h1')}
           </motion.h1>
           <motion.p variants={FADE_IN_UP} className="text-base md:text-lg text-ocean-teal font-medium">
-            Documenter l'urgence, célébrer la beauté
+            {t('photographeEnv.tagline')}
           </motion.p>
         </motion.div>
 
@@ -428,11 +281,13 @@ const PhotographeEnvironnemental = () => {
             variants={STAGGER_CONTAINER}
             className="space-y-5"
           >
-            {UNIVERSES.map(({ id, title, galleries }) => (
+            {UNIVERSES.map(({ id, galleries }, uIdx) => (
               <motion.div key={id} variants={FADE_IN_UP}>
-                <p className="text-xs font-semibold uppercase tracking-widest text-ocean-teal mb-3">{title}</p>
+                <p className="text-xs font-semibold uppercase tracking-widest text-ocean-teal mb-3">
+                  {t('photographeEnv.uni_' + uIdx + '_title')}
+                </p>
                 <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
-                  {galleries.map(({ to, label, desc, cta, img, srcset, sizes, alt }) => (
+                  {galleries.map(({ to, img, srcset, sizes }, gIdx) => (
                     <Link
                       key={to}
                       to={to}
@@ -443,16 +298,20 @@ const PhotographeEnvironnemental = () => {
                           src={img}
                           srcSet={srcset}
                           sizes={sizes}
-                          alt={alt}
+                          alt={t('photographeEnv.uni_' + uIdx + '_gal_' + gIdx + '_alt')}
                           className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
                           loading="lazy"
                         />
                         <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/30 to-transparent" aria-hidden="true" />
                         <div className="absolute bottom-0 left-0 right-0 p-3 md:p-4">
-                          <h3 className="text-sm font-bold text-white mb-0.5">{label}</h3>
-                          <p className="text-white/70 text-xs mb-2 leading-snug">{desc}</p>
+                          <h3 className="text-sm font-bold text-white mb-0.5">
+                            {t('photographeEnv.uni_' + uIdx + '_gal_' + gIdx + '_label')}
+                          </h3>
+                          <p className="text-white/70 text-xs mb-2 leading-snug">
+                            {t('photographeEnv.uni_' + uIdx + '_gal_' + gIdx + '_desc')}
+                          </p>
                           <span className="inline-flex items-center gap-2 text-ocean-teal text-xs font-medium group-hover:gap-3 transition-all">
-                            {cta} <ArrowRight className="w-3.5 h-3.5" aria-hidden="true" />
+                            {t('photographeEnv.uni_' + uIdx + '_gal_' + gIdx + '_cta')} <ArrowRight className="w-3.5 h-3.5" aria-hidden="true" />
                           </span>
                         </div>
                       </div>
@@ -475,17 +334,19 @@ const PhotographeEnvironnemental = () => {
           <motion.div {...cardHover} variants={FADE_IN_UP} className="glass-strong rounded-3xl p-8 md:p-12">
 
             <h2 className="text-xl md:text-2xl font-bold text-white mb-4">
-              Photographe environnemental à Marseille — Qui suis-je ?
+              {t('photographeEnv.bio_h2')}
             </h2>
 
             {/* Stats pleine largeur sous le H2 */}
             <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 mb-5">
-              {HERO_STATS.map(({ end, suffix, label, duration }) => (
-                <div key={label} className="rounded-xl bg-white/5 border border-white/8 p-3 text-center">
+              {HERO_STATS.map(({ end, suffix, duration }, idx) => (
+                <div key={idx} className="rounded-xl bg-white/5 border border-white/8 p-3 text-center">
                   <p className="text-sm md:text-base font-bold text-ocean-teal leading-tight tabular-nums">
                     <StatCounter end={end} suffix={suffix} duration={duration} />
                   </p>
-                  <p className="text-[10px] text-text-secondary mt-0.5 leading-snug">{label}</p>
+                  <p className="text-[10px] text-text-secondary mt-0.5 leading-snug">
+                    {t('photographeEnv.stat_' + idx + '_label')}
+                  </p>
                 </div>
               ))}
             </div>
@@ -513,22 +374,49 @@ const PhotographeEnvironnemental = () => {
 
             {/* Lead */}
             <p className="text-base md:text-lg text-white/90 leading-relaxed font-light mb-6">
-              Je suis <strong className="text-ocean-teal font-semibold">Karim Saari</strong>, photographe environnement basé à Marseille — <Link to="/photographie-paysage-mer" className="text-ocean-teal hover:underline">paysages</Link>, <Link to="/photographie-sous-marine" className="text-ocean-teal hover:underline">photographie sous-marine</Link> en apnée, et documentation des opérations de dépollution avec Team Oxygen depuis 2018.
+              {t('photographeEnv.bio_lead_a')}{' '}
+              <strong className="text-ocean-teal font-semibold">Karim Saari</strong>
+              {t('photographeEnv.bio_lead_b')}{' '}
+              <Link to="/photographie-paysage-mer" className="text-ocean-teal hover:underline">
+                {t('photographeEnv.bio_lead_landscapes')}
+              </Link>
+              {', '}
+              <Link to="/photographie-sous-marine" className="text-ocean-teal hover:underline">
+                {t('photographeEnv.bio_lead_underwater')}
+              </Link>
+              {' '}{t('photographeEnv.bio_lead_c')}
             </p>
 
             {/* Chapitre 1 */}
-            <p className="text-[0.65rem] uppercase tracking-[0.2em] text-ocean-teal/70 font-semibold pt-2 pb-1">La démarche</p>
-            <p className="text-text-secondary leading-loose text-sm md:text-[0.95rem] mb-4">
-              <span className="float-left text-[3.2rem] leading-[0.8] font-bold text-ocean-teal mr-2 mt-1 select-none">C</span>ette démarche repose sur une <strong className="text-ocean-teal font-semibold">dualité assumée</strong>. D'un côté, des images de beauté — biodiversité sous-marine, paysages des Calanques, Provence, Atlantique. De l'autre, sur ces mêmes sites : les opérations de dépollution, l'inventaire des déchets remontés, la réalité brute des fonds. Les deux faces d'un même territoire — et les deux raisons d'agir.
+            <p className="text-[0.65rem] uppercase tracking-[0.2em] text-ocean-teal/70 font-semibold pt-2 pb-1">
+              {t('photographeEnv.bio_ch1_label')}
             </p>
             <p className="text-text-secondary leading-loose text-sm md:text-[0.95rem] mb-4">
-              Je photographie les fonds de la même manière que je les nettoie — en <strong className="text-ocean-teal font-semibold">immersion totale</strong>, au plus près des espèces et des déchets, en rétention de souffle entre 0 et 20 mètres.
+              <span className="float-left text-[3.2rem] leading-[0.8] font-bold text-ocean-teal mr-2 mt-1 select-none">
+                {t('photographeEnv.bio_ch1_dropcap')}
+              </span>
+              {t('photographeEnv.bio_ch1_a')}
+              <strong className="text-ocean-teal font-semibold">{t('photographeEnv.bio_ch1_strong')}</strong>
+              {t('photographeEnv.bio_ch1_b')}
+            </p>
+            <p className="text-text-secondary leading-loose text-sm md:text-[0.95rem] mb-4">
+              {t('photographeEnv.bio_ch1_p2_a')}
+              <strong className="text-ocean-teal font-semibold">{t('photographeEnv.bio_ch1_p2_strong')}</strong>
+              {t('photographeEnv.bio_ch1_p2_b')}
             </p>
 
             {/* Chapitre 2 */}
-            <p className="text-[0.65rem] uppercase tracking-[0.2em] text-ocean-teal/70 font-semibold pt-3 pb-1">L'engagement</p>
+            <p className="text-[0.65rem] uppercase tracking-[0.2em] text-ocean-teal/70 font-semibold pt-3 pb-1">
+              {t('photographeEnv.bio_ch2_label')}
+            </p>
             <p className="text-text-secondary leading-loose text-sm md:text-[0.95rem] mb-4">
-              Président de l'association <strong className="text-ocean-teal font-semibold">Team Oxygen</strong> depuis janvier 2026, je pilote le <strong className="text-ocean-teal font-semibold">Projet Sentinelle</strong>, opération annuelle de dépollution sous-marine en apnée. Quatre éditions (2022, 2023, 2024, 2025) ont mobilisé des dizaines de bénévoles dans les Calanques, l'Archipel du Frioul, la Côte Bleue et la Rade de Marseille, pour un bilan de <strong className="text-ocean-teal font-semibold">5 724 kg de déchets remontés des fonds</strong>.
+              {t('photographeEnv.bio_ch2_a')}{' '}
+              <strong className="text-ocean-teal font-semibold">Team Oxygen</strong>{' '}
+              {t('photographeEnv.bio_ch2_b')}{' '}
+              <strong className="text-ocean-teal font-semibold">Projet Sentinelle</strong>
+              {t('photographeEnv.bio_ch2_c')}{' '}
+              <strong className="text-ocean-teal font-semibold">5 724 kg {t('photographeEnv.bio_ch2_waste')}</strong>
+              {'.'}
             </p>
 
             <div className="clear-both" />
@@ -537,48 +425,73 @@ const PhotographeEnvironnemental = () => {
             <div className="flex items-center gap-5 bg-ocean-teal/8 border border-ocean-teal/20 rounded-xl p-4 mb-5">
               <div className="flex-shrink-0 text-center">
                 <p className="text-2xl md:text-3xl font-bold text-ocean-teal">5 724 kg</p>
-                <p className="text-[10px] text-text-muted uppercase tracking-wider mt-0.5">en 4 éditions</p>
+                <p className="text-[10px] text-text-muted uppercase tracking-wider mt-0.5">
+                  {t('photographeEnv.bio_stat_editions')}
+                </p>
               </div>
               <p className="text-text-secondary text-sm leading-relaxed">
-                pneus, cordages, filets fantômes, plastiques de toutes tailles — caractérisés, pesés et restitués aux autorités. La méthodologie de caractérisation sert aujourd'hui de référence nationale.
+                {t('photographeEnv.bio_stat_desc')}
               </p>
             </div>
 
             {/* Chapitre 3 */}
-            <p className="text-[0.65rem] uppercase tracking-[0.2em] text-ocean-teal/70 font-semibold pt-1 pb-1">La communauté</p>
-            <p className="text-text-secondary leading-loose text-sm md:text-[0.95rem] mb-4">
-              <strong className="text-ocean-teal font-semibold">Dark Massilia</strong>, c'est aussi une présence en ligne. Sur Facebook, le groupe « Amoureux des Calanques de Marseille à Port-Cros » rassemble plus de <strong className="text-ocean-teal font-semibold">{SOCIAL_STATS_DEFAULTS.total_community.toLocaleString('fr-FR')} membres engagés</strong>, également actifs sur Instagram, TikTok et YouTube. Ils relayent les missions, signalent les dépôts sauvages et constituent un vivier de bénévoles pour chaque édition du Projet Sentinelle.
+            <p className="text-[0.65rem] uppercase tracking-[0.2em] text-ocean-teal/70 font-semibold pt-1 pb-1">
+              {t('photographeEnv.bio_ch3_label')}
             </p>
             <p className="text-text-secondary leading-loose text-sm md:text-[0.95rem] mb-4">
-              Mon équipement : appareils photo en caissons étanches et GoPro, descendus en apnée jusqu'à 20 mètres. Mes sujets varient des <strong className="text-ocean-teal font-semibold">macro-déchets</strong> coincés dans les anfractuosités aux espèces méditerranéennes (mérous, murènes, poulpes, girelles), en passant par les paysages des Calanques depuis les hauteurs ou par drone. Mes photographies cumulent plus de <strong className="text-ocean-teal font-semibold">800 000 impressions</strong> sur 500px.
+              <strong className="text-ocean-teal font-semibold">Dark Massilia</strong>
+              {t('photographeEnv.bio_ch3_p1_a')}{' '}
+              <strong className="text-ocean-teal font-semibold">
+                {SOCIAL_STATS_DEFAULTS.total_community.toLocaleString('fr-FR')}{' '}
+                {t('photographeEnv.bio_ch3_p1_b')}
+              </strong>
+              {t('photographeEnv.bio_ch3_p1_c')}
+            </p>
+            <p className="text-text-secondary leading-loose text-sm md:text-[0.95rem] mb-4">
+              {t('photographeEnv.bio_ch3_p2')}
             </p>
 
             {/* Chapitre 4 */}
-            <p className="text-[0.65rem] uppercase tracking-[0.2em] text-ocean-teal/70 font-semibold pt-3 pb-1">La reconnaissance</p>
+            <p className="text-[0.65rem] uppercase tracking-[0.2em] text-ocean-teal/70 font-semibold pt-3 pb-1">
+              {t('photographeEnv.bio_ch4_label')}
+            </p>
             <p className="text-text-secondary leading-loose text-sm md:text-[0.95rem] mb-4">
-              Mon travail est régulièrement couvert par les médias nationaux. En 2022, <strong className="text-ocean-teal font-semibold">ARTE</strong> me consacre un reportage dans <em>Pollution : Il faut sauver Marseille et ses Calanques</em>. <strong className="text-ocean-teal font-semibold">TF1</strong> suit les opérations à plusieurs reprises depuis 2022. <strong className="text-ocean-teal font-semibold">M6</strong> me reçoit dans <em>Zone Interdite</em>. France 5, France Bleu, La Provence, Midi Libre et Actu.fr relayent régulièrement les missions.
+              {t('photographeEnv.bio_ch4_a')}{' '}
+              <strong className="text-ocean-teal font-semibold">ARTE</strong>{' '}
+              {t('photographeEnv.bio_ch4_b')}{' '}
+              <em>{t('photographeEnv.bio_ch4_arte_doc')}</em>
+              {'. '}
+              <strong className="text-ocean-teal font-semibold">TF1</strong>{' '}
+              {t('photographeEnv.bio_ch4_c')}{' '}
+              <strong className="text-ocean-teal font-semibold">M6</strong>{' '}
+              {t('photographeEnv.bio_ch4_d')}{' '}
+              <em>{t('photographeEnv.bio_ch4_m6_show')}</em>
+              {'. '}
+              {t('photographeEnv.bio_ch4_e')}
             </p>
 
             {/* Pull quote */}
             <blockquote className="my-6 py-4 px-5 bg-white/[0.04] border-l-2 border-ocean-teal rounded-r-lg">
-              <p className="text-white/85 italic text-base leading-snug">« Une image qui émeut change plus de comportements qu'un chiffre statistique. Photographier les Calanques, c'est les défendre. »</p>
+              <p className="text-white/85 italic text-base leading-snug">
+                {t('photographeEnv.bio_quote')}
+              </p>
             </blockquote>
 
             <p className="text-text-secondary leading-loose text-sm md:text-[0.95rem] mb-8">
-              Si vous êtes journaliste, réalisateur, institution ou marque engagée pour le littoral méditerranéen, je suis disponible pour collaborer — reportage, exposition, intervention terrain, mission documentaire.
+              {t('photographeEnv.bio_cta_p')}
             </p>
 
             <div className="flex flex-wrap gap-3">
               <Link to="/photographie-sous-marine" className="btn inline-flex items-center gap-2">
                 <Camera className="w-4 h-4" aria-hidden="true" />
-                Photos sous-marines — Calanques
+                {t('photographeEnv.bio_btn_underwater')}
               </Link>
               <Link to="/photographie-paysage-mer" className="btn inline-flex items-center gap-2">
                 <Camera className="w-4 h-4" aria-hidden="true" />
-                Photos de paysages
+                {t('photographeEnv.bio_btn_landscapes')}
               </Link>
               <Link to="/depollution-marine" className="btn-primary inline-flex items-center gap-2">
-                Projet Sentinelle
+                {t('photographeEnv.bio_btn_sentinelle')}
                 <ArrowRight className="w-4 h-4" aria-hidden="true" />
               </Link>
             </div>
@@ -595,10 +508,10 @@ const PhotographeEnvironnemental = () => {
         >
           <motion.div variants={FADE_IN_UP} className="glass-strong rounded-3xl p-8 md:p-12">
             <h2 className="text-xl md:text-2xl font-bold text-white mb-2">
-              De la photographie de paysages à la photographie engagée
+              {t('photographeEnv.timeline_h2')}
             </h2>
             <p className="text-text-secondary text-sm mb-8 italic">
-              Un parcours en trois actes — la montagne, la mer, les fonds.
+              {t('photographeEnv.timeline_subtitle')}
             </p>
 
             <div className="relative">
@@ -628,6 +541,15 @@ const PhotographeEnvironnemental = () => {
               <div className="space-y-16 md:space-y-24">
                 {TIMELINE_ENTRIES.map((entry, i) => {
                   const dotClass = `rounded-full ring-4 z-10 ${entry.future ? 'bg-white/40 ring-white/10' : 'bg-ocean-teal ring-ocean-teal/20'}`;
+                  const tlLabel = t('photographeEnv.tl_' + i + '_label');
+                  const tlTitle = t('photographeEnv.tl_' + i + '_title');
+                  const tlText = t('photographeEnv.tl_' + i + '_text');
+                  const tlAlt = entry.img ? t('photographeEnv.tl_' + i + '_alt') : '';
+                  const tlStat = entry.statTranslatable ? t('photographeEnv.tl_' + i + '_stat') : (entry.stat || null);
+                  const tlStatLabel = entry.stat ? t('photographeEnv.tl_' + i + '_statLabel') : null;
+                  const tlBadgeAlt = entry.badge ? t('photographeEnv.tl_' + i + '_badgeAlt') : null;
+                  const tlQuote = entry.hasQuote ? t('photographeEnv.tl_' + i + '_quote') : null;
+                  const tlLinkLabel = entry.link ? t('photographeEnv.tl_' + i + '_linkLabel') : null;
 
                   if (!entry.img) {
                     return (
@@ -637,13 +559,10 @@ const PhotographeEnvironnemental = () => {
                         </div>
                         <div className={`hidden md:flex absolute left-1/2 -translate-x-1/2 top-0 w-3.5 h-3.5 ${dotClass}`} aria-hidden="true" />
                         <div className="md:max-w-sm md:mx-auto md:text-center">
-                          <p className="text-ocean-teal text-xs font-semibold uppercase tracking-widest mb-1">{entry.label}</p>
+                          <p className="text-ocean-teal text-xs font-semibold uppercase tracking-widest mb-1">{tlLabel}</p>
                           <p className="text-white font-bold text-2xl mb-2">{entry.period}</p>
-                          {entry.badge && (
-                            <img src={entry.badge} alt={entry.badgeAlt} className="h-8 w-auto mb-2" loading="lazy" />
-                          )}
-                          <p className="text-white font-semibold text-sm mb-2">{entry.title}</p>
-                          <p className="text-text-secondary text-sm leading-relaxed">{entry.text}</p>
+                          <p className="text-white font-semibold text-sm mb-2">{tlTitle}</p>
+                          <p className="text-text-secondary text-sm leading-relaxed">{tlText}</p>
                         </div>
                       </div>
                     );
@@ -653,22 +572,22 @@ const PhotographeEnvironnemental = () => {
 
                   const textBlock = (
                     <div className={textLeft ? 'md:pr-10 md:text-right' : 'md:pl-10'}>
-                      <p className="text-ocean-teal text-xs font-semibold uppercase tracking-widest mb-1">{entry.label}</p>
+                      <p className="text-ocean-teal text-xs font-semibold uppercase tracking-widest mb-1">{tlLabel}</p>
                       <p className="text-white font-bold text-3xl md:text-4xl mb-3 leading-tight">{entry.period}</p>
                       {entry.stat && (
                         <p className="mb-3 -mt-1">
-                          <span className="text-2xl md:text-3xl font-bold text-ocean-teal tabular-nums">{entry.stat}</span>
-                          {entry.statLabel && <span className="text-text-muted text-xs ml-2">{entry.statLabel}</span>}
+                          <span className="text-2xl md:text-3xl font-bold text-ocean-teal tabular-nums">{tlStat}</span>
+                          {tlStatLabel && <span className="text-text-muted text-xs ml-2">{tlStatLabel}</span>}
                         </p>
                       )}
                       {entry.badge && (
-                        <img src={entry.badge} alt={entry.badgeAlt} className={`h-10 w-auto mb-2 ${textLeft ? 'ml-auto' : ''}`} loading="lazy" />
+                        <img src={entry.badge} alt={tlBadgeAlt} className={`h-10 w-auto mb-2 ${textLeft ? 'ml-auto' : ''}`} loading="lazy" />
                       )}
-                      <p className="text-white font-semibold text-sm mb-2">{entry.title}</p>
-                      <p className="text-text-secondary text-sm leading-relaxed">{entry.text}</p>
-                      {entry.quote && (
+                      <p className="text-white font-semibold text-sm mb-2">{tlTitle}</p>
+                      <p className="text-text-secondary text-sm leading-relaxed">{tlText}</p>
+                      {tlQuote && (
                         <p className={`mt-3 text-white/60 italic text-sm ${textLeft ? 'border-r-2 border-ocean-teal pr-4' : 'border-l-2 border-ocean-teal pl-4'}`}>
-                          {entry.quote}
+                          {tlQuote}
                         </p>
                       )}
                       {entry.link && (entry.external ? (
@@ -678,14 +597,14 @@ const PhotographeEnvironnemental = () => {
                           rel="noopener noreferrer"
                           className={`inline-flex items-center gap-1.5 mt-3 text-ocean-teal hover:text-white transition-colors text-xs font-medium ${textLeft ? 'justify-end' : ''}`}
                         >
-                          {entry.linkLabel} <ArrowRight className="w-3 h-3" aria-hidden="true" />
+                          {tlLinkLabel} <ArrowRight className="w-3 h-3" aria-hidden="true" />
                         </a>
                       ) : (
                         <Link
                           to={entry.link}
                           className={`inline-flex items-center gap-1.5 mt-3 text-ocean-teal hover:text-white transition-colors text-xs font-medium ${textLeft ? 'justify-end' : ''}`}
                         >
-                          {entry.linkLabel} <ArrowRight className="w-3 h-3" aria-hidden="true" />
+                          {tlLinkLabel} <ArrowRight className="w-3 h-3" aria-hidden="true" />
                         </Link>
                       ))}
                     </div>
@@ -697,7 +616,7 @@ const PhotographeEnvironnemental = () => {
                         src={entry.img}
                         srcSet={entry.imgSrcSet}
                         sizes="(max-width: 768px) 100vw, 50vw"
-                        alt={entry.alt}
+                        alt={tlAlt}
                         className={`w-full h-full ${entry.imgFit || 'object-cover'}${entry.imgScale ? ` ${entry.imgScale}` : ''}${entry.imgPosition ? ` ${entry.imgPosition}` : ''}`}
                         loading="lazy"
                       />
@@ -716,32 +635,32 @@ const PhotographeEnvironnemental = () => {
                         </div>
                         <div className="flex-1 space-y-4">
                           <div>
-                            <p className="text-ocean-teal text-xs font-semibold uppercase tracking-widest mb-0.5">{entry.label}</p>
+                            <p className="text-ocean-teal text-xs font-semibold uppercase tracking-widest mb-0.5">{tlLabel}</p>
                             <p className="text-white font-bold text-2xl mb-1">{entry.period}</p>
                             {entry.stat && (
                               <p className="mb-1.5">
-                                <span className="text-xl font-bold text-ocean-teal tabular-nums">{entry.stat}</span>
-                                {entry.statLabel && <span className="text-text-muted text-[11px] ml-1.5">{entry.statLabel}</span>}
+                                <span className="text-xl font-bold text-ocean-teal tabular-nums">{tlStat}</span>
+                                {tlStatLabel && <span className="text-text-muted text-[11px] ml-1.5">{tlStatLabel}</span>}
                               </p>
                             )}
                             {entry.badge && (
-                              <img src={entry.badge} alt={entry.badgeAlt} className="h-8 w-auto mb-2" loading="lazy" />
+                              <img src={entry.badge} alt={tlBadgeAlt} className="h-8 w-auto mb-2" loading="lazy" />
                             )}
-                            <p className="text-white font-semibold text-sm mb-2">{entry.title}</p>
-                            <p className="text-text-secondary text-sm leading-relaxed">{entry.text}</p>
-                            {entry.quote && <p className="mt-2 text-white/60 italic text-sm border-l-2 border-ocean-teal pl-3">{entry.quote}</p>}
+                            <p className="text-white font-semibold text-sm mb-2">{tlTitle}</p>
+                            <p className="text-text-secondary text-sm leading-relaxed">{tlText}</p>
+                            {tlQuote && <p className="mt-2 text-white/60 italic text-sm border-l-2 border-ocean-teal pl-3">{tlQuote}</p>}
                             {entry.link && (entry.external ? (
                               <a href={entry.link} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1.5 mt-2 text-ocean-teal text-xs font-medium">
-                                {entry.linkLabel} <ArrowRight className="w-3 h-3" aria-hidden="true" />
+                                {tlLinkLabel} <ArrowRight className="w-3 h-3" aria-hidden="true" />
                               </a>
                             ) : (
                               <Link to={entry.link} className="inline-flex items-center gap-1.5 mt-2 text-ocean-teal text-xs font-medium">
-                                {entry.linkLabel} <ArrowRight className="w-3 h-3" aria-hidden="true" />
+                                {tlLinkLabel} <ArrowRight className="w-3 h-3" aria-hidden="true" />
                               </Link>
                             ))}
                           </div>
                           <div className={`aspect-square overflow-hidden rounded-xl bg-black/40 ${PHOTO_FRAME}`}>
-                            <img src={entry.img} srcSet={entry.imgSrcSet} sizes="100vw" alt={entry.alt} className={`w-full h-full ${entry.imgFit || 'object-cover'}${entry.imgScale ? ` ${entry.imgScale}` : ''}${entry.imgPosition ? ` ${entry.imgPosition}` : ''}`} loading="lazy" />
+                            <img src={entry.img} srcSet={entry.imgSrcSet} sizes="100vw" alt={tlAlt} className={`w-full h-full ${entry.imgFit || 'object-cover'}${entry.imgScale ? ` ${entry.imgScale}` : ''}${entry.imgPosition ? ` ${entry.imgPosition}` : ''}`} loading="lazy" />
                           </div>
                         </div>
                       </div>
@@ -764,7 +683,7 @@ const PhotographeEnvironnemental = () => {
             <div className="mt-8 pt-6 border-t border-white/10 flex items-center justify-center">
               <Link to="/contact" className="btn-primary inline-flex items-center gap-2">
                 <Mail className="w-4 h-4" aria-hidden="true" />
-                Me contacter pour une collaboration
+                {t('photographeEnv.timeline_contact_btn')}
               </Link>
             </div>
           </motion.div>
@@ -780,10 +699,10 @@ const PhotographeEnvironnemental = () => {
         >
           <motion.div {...cardHover} variants={FADE_IN_UP} className="glass-strong rounded-3xl p-8 md:p-12">
             <h2 className="text-xl md:text-2xl font-bold text-white text-center mb-3">
-              Reconnu par les médias et les institutions
+              {t('photographeEnv.media_h2')}
             </h2>
             <p className="text-text-secondary text-center mb-8 max-w-xl mx-auto">
-              Reportages, documentaires et couvertures presse depuis plus de 10 ans sur le terrain.
+              {t('photographeEnv.media_subtitle')}
             </p>
             <PartnersCarousel />
             <div className="text-center mb-8">
@@ -791,23 +710,23 @@ const PhotographeEnvironnemental = () => {
                 to="/presse"
                 className="inline-flex items-center gap-2 text-ocean-teal hover:text-white transition-colors text-sm font-medium"
               >
-                Voir toutes les couvertures médias
+                {t('photographeEnv.media_link')}
                 <ArrowRight className="w-4 h-4" aria-hidden="true" />
               </Link>
             </div>
 
             {/* Contact presse */}
             <div className="border-t border-white/10 pt-8">
-              <h3 className="text-base font-semibold text-white mb-2">Contact presse</h3>
+              <h3 className="text-base font-semibold text-white mb-2">{t('photographeEnv.press_h3')}</h3>
               <p className="text-text-secondary text-sm mb-4">
-                Pour tout reportage, documentaire, exposition ou partenariat institutionnel :
+                {t('photographeEnv.press_p')}
               </p>
               <div className="flex flex-wrap gap-3">
                 <Link
                   to="/contact"
                   className="inline-flex items-center gap-2 text-sm text-ocean-teal hover:text-white transition-colors font-medium"
                 >
-                  Formulaire de contact
+                  {t('photographeEnv.press_link')}
                   <ArrowRight className="w-3.5 h-3.5" aria-hidden="true" />
                 </Link>
               </div>
@@ -825,16 +744,16 @@ const PhotographeEnvironnemental = () => {
         >
           <motion.div {...cardHover} variants={FADE_IN_UP} className="glass-strong rounded-3xl p-8 md:p-10">
             <h2 className="text-xl md:text-2xl font-bold text-white text-center mb-2">
-              Partenaires associatifs — agir ensemble sur le terrain
+              {t('photographeEnv.assoc_h2')}
             </h2>
             <p className="text-text-secondary text-center mb-1 text-sm">
-              Des années de collaborations avec les acteurs de la protection du littoral méditerranéen.
+              {t('photographeEnv.assoc_subtitle')}
             </p>
             <p className="text-ocean-teal text-sm italic text-center mb-8">
-              « Seul on va plus vite, ensemble on va plus loin »
+              {t('photographeEnv.assoc_quote')}
             </p>
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
-              {ASSOCIATIONS.map(({ name, url, desc }) => (
+              {ASSOCIATIONS.map(({ name, url }, idx) => (
                 <a
                   key={name}
                   href={url}
@@ -846,7 +765,9 @@ const PhotographeEnvironnemental = () => {
                     <p className="text-white font-semibold text-sm group-hover:text-ocean-teal transition-colors">{name}</p>
                     <ExternalLink className="w-3.5 h-3.5 text-text-muted group-hover:text-ocean-teal transition-colors flex-shrink-0 mt-0.5" aria-hidden="true" />
                   </div>
-                  <p className="text-text-secondary text-xs leading-snug">{desc}</p>
+                  <p className="text-text-secondary text-xs leading-snug">
+                    {t('photographeEnv.assoc_' + idx + '_desc')}
+                  </p>
                 </a>
               ))}
             </div>
@@ -867,37 +788,43 @@ const PhotographeEnvironnemental = () => {
             <div className="sm:row-span-2 aspect-[3/4] sm:aspect-auto relative rounded-2xl overflow-hidden group ring-1 ring-white/8">
               <img
                 src={PARTNER_PHOTO_INTRO.src}
-                alt={PARTNER_PHOTO_INTRO.alt}
+                alt={t('photographeEnv.photo_intro_alt')}
                 className="w-full h-full object-cover object-top group-hover:scale-105 transition-transform duration-500"
                 loading="lazy"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" aria-hidden="true" />
               <div className="absolute bottom-0 left-0 right-0 p-3">
-                <p className="text-white text-xs font-medium leading-snug mb-0.5">{PARTNER_PHOTO_INTRO.caption}</p>
+                <p className="text-white text-xs font-medium leading-snug mb-0.5">
+                  {t('photographeEnv.photo_intro_caption')}
+                </p>
                 <a
                   href={PARTNER_PHOTO_INTRO.creditUrl}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="text-white/50 hover:text-white/80 text-xs block transition-colors"
                 >
-                  {PARTNER_PHOTO_INTRO.credit}
+                  {t('photographeEnv.photo_intro_credit')}
                 </a>
               </div>
             </div>
             {/* 2 × MerTerre empilées */}
-            {PARTNER_PHOTOS_MERTERR.map(({ src, alt, caption, credit, creditUrl }) => (
+            {PARTNER_PHOTOS_MERTERR.map(({ src, creditUrl }, idx) => (
               <div key={src} className="relative rounded-2xl overflow-hidden group ring-1 ring-white/8">
                 <div className="aspect-[4/3]">
                   <img
                     src={src}
-                    alt={alt}
+                    alt={t('photographeEnv.photo_merterr_' + idx + '_alt')}
                     className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                     loading="lazy"
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent" aria-hidden="true" />
                   <div className="absolute bottom-0 left-0 right-0 p-3">
-                    <p className="text-white text-xs font-medium leading-snug">{caption}</p>
-                    <a href={creditUrl} target="_blank" rel="noopener noreferrer" className="text-white/50 hover:text-white/80 text-xs mt-0.5 block transition-colors">{credit}</a>
+                    <p className="text-white text-xs font-medium leading-snug">
+                      {t('photographeEnv.photo_merterr_' + idx + '_caption')}
+                    </p>
+                    <a href={creditUrl} target="_blank" rel="noopener noreferrer" className="text-white/50 hover:text-white/80 text-xs mt-0.5 block transition-colors">
+                      {t('photographeEnv.photo_merterr_' + idx + '_credit')}
+                    </a>
                   </div>
                 </div>
               </div>
@@ -906,19 +833,23 @@ const PhotographeEnvironnemental = () => {
 
           {/* Ligne 2 : 3 × PNC */}
           <motion.div variants={FADE_IN_UP} className="grid grid-cols-1 sm:grid-cols-3 gap-3">
-            {PARTNER_PHOTOS_PNC.map(({ src, alt, caption, credit, creditUrl }) => (
+            {PARTNER_PHOTOS_PNC.map(({ src, creditUrl }, idx) => (
               <div key={src} className="relative rounded-2xl overflow-hidden group ring-1 ring-white/8">
                 <div className="aspect-[4/3]">
                   <img
                     src={src}
-                    alt={alt}
+                    alt={t('photographeEnv.photo_pnc_' + idx + '_alt')}
                     className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                     loading="lazy"
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent" aria-hidden="true" />
                   <div className="absolute bottom-0 left-0 right-0 p-3">
-                    <p className="text-white text-xs font-medium leading-snug">{caption}</p>
-                    <a href={creditUrl} target="_blank" rel="noopener noreferrer" className="text-white/50 hover:text-white/80 text-xs mt-0.5 block transition-colors">{credit}</a>
+                    <p className="text-white text-xs font-medium leading-snug">
+                      {t('photographeEnv.photo_pnc_' + idx + '_caption')}
+                    </p>
+                    <a href={creditUrl} target="_blank" rel="noopener noreferrer" className="text-white/50 hover:text-white/80 text-xs mt-0.5 block transition-colors">
+                      {t('photographeEnv.photo_pnc_' + idx + '_credit')}
+                    </a>
                   </div>
                 </div>
               </div>
@@ -936,13 +867,13 @@ const PhotographeEnvironnemental = () => {
         >
           <motion.div {...cardHover} variants={FADE_IN_UP} className="glass-strong rounded-3xl p-8 md:p-10">
             <h2 className="text-xl md:text-2xl font-bold text-white text-center mb-2">
-              Soutiens institutionnels
+              {t('photographeEnv.inst_h2')}
             </h2>
             <p className="text-text-secondary text-center mb-8 max-w-xl mx-auto text-sm">
-              Via Team Oxygen, des collaborations avec les organismes engagés pour la Méditerranée.
+              {t('photographeEnv.inst_subtitle')}
             </p>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-              {INSTITUTIONS.map(({ name, url, desc, logo }) => (
+              {INSTITUTIONS.map(({ name, url, logo }, idx) => (
                 <a
                   key={name}
                   href={url}
@@ -966,7 +897,9 @@ const PhotographeEnvironnemental = () => {
                     <ExternalLink className="w-4 h-4 text-text-muted group-hover:text-ocean-teal transition-colors flex-shrink-0 mt-0.5" aria-hidden="true" />
                   </div>
                   <p className="text-white/70 text-xs font-medium mb-1 group-hover:text-ocean-teal transition-colors">{name}</p>
-                  <p className="text-text-secondary text-sm leading-snug">{desc}</p>
+                  <p className="text-text-secondary text-sm leading-snug">
+                    {t('photographeEnv.inst_' + idx + '_desc')}
+                  </p>
                 </a>
               ))}
             </div>
@@ -983,54 +916,24 @@ const PhotographeEnvironnemental = () => {
           className="mb-12"
         >
           <motion.h2 variants={FADE_IN_UP} className="text-xl md:text-2xl font-bold text-white text-center mb-8">
-            Questions fréquentes
+            {t('photographeEnv.faq_h2')}
           </motion.h2>
           <motion.div variants={FADE_IN_UP} className="space-y-4 max-w-3xl mx-auto">
-            {[
-              {
-                q: 'Qu\'est-ce que la photographie environnementale marine et côtière ?',
-                a: 'La photographie environnementale marine utilise l\'image pour documenter la beauté des écosystèmes sous-marins et des paysages côtiers, tout en illustrant l\'impact, souvent destructeur, de l\'activité humaine sur ces milieux. C\'est un art engagé qui vise à transformer la contemplation esthétique en une véritable prise de conscience et un appel à l\'action. Elle est particulièrement vitale pour révéler la fragilité d\'espaces sous pression comme la mer Méditerranée.',
-              },
-              {
-                q: 'Quel est le rôle d\'un photographe engagé dans la préservation de la Méditerranée ?',
-                a: 'Le photographe agit comme un témoin direct et un lanceur d\'alerte face à l\'urgence écologique. En documentant les paysages, les fonds marins et les opérations de dépollution, il rend tangibles les impacts parfois invisibles de l\'activité humaine sur la biosphère. Son objectif est de donner une voix aux écosystèmes fragiles, de dénoncer la pollution, et de mettre en lumière les initiatives porteuses d\'espoir pour créer une connexion émotionnelle puissante avec le public.',
-              },
-              {
-                q: 'Pourquoi la mer Méditerranée est-elle un sujet photographique si crucial ?',
-                a: 'La Méditerranée est une mer au destin unique : berceau de nombreuses civilisations, elle est aujourd\'hui soumise à une pression immense, bordée par 24 pays et 427 millions d\'habitants. Des photographes contemporains primés, comme Angel Fitor, dédient leur travail à la révélation des créatures et écosystèmes marins méditerranéens pour montrer les fils cachés et fragiles qui lient notre existence à celle de cette mer.',
-              },
-              {
-                q: 'Comment la photographie permet-elle de lutter contre la pollution marine ?',
-                a: 'L\'image a le pouvoir de traduire des statistiques abstraites sur la pollution en réalités visuelles mémorables. Le photographe Chris Jordan, par exemple, a illustré la tragédie de la pollution plastique des océans en photographiant des oiseaux l\'estomac rempli de déchets. En photographiant les actions de dépollution, on documente non seulement les conséquences de la surconsommation, mais on montre aussi la résilience de la nature et les solutions actives déployées sur le terrain.',
-              },
-              {
-                q: 'La photographie peut-elle vraiment aider à la protection des espaces naturels et côtiers ?',
-                a: 'Absolument. Historiquement, la photographie a prouvé la valeur des écosystèmes et a joué un rôle déterminant pour justifier la sanctuarisation de territoires et la création de parcs nationaux. Aujourd\'hui, des pionnières comme la biologiste Cristina Mittermeier utilisent l\'image spécifiquement pour la conservation des océans. Le suivi photographique à intervalles réguliers est également un outil précieux pour évaluer l\'évolution des littoraux et sensibiliser les élus à l\'aménagement du territoire.',
-              },
-              {
-                q: 'Quelles sont les règles éthiques à respecter en photographie sous-marine et environnementale ?',
-                a: 'L\'éthique est primordiale : le bien-être de la faune marine et la préservation de son habitat doivent toujours primer sur l\'obtention d\'une image. Le photographe éco-responsable doit garder une distance de sécurité pour ne pas stresser les animaux, ne jamais utiliser d\'appâts pour les attirer, et limiter les lumières artificielles perturbatrices. Il est essentiel de faire preuve d\'honnêteté en refusant toute manipulation numérique trompeuse afin de maintenir la crédibilité du message de conservation.',
-              },
-              {
-                q: 'Comment contacter Karim Saari pour un reportage ou une collaboration ?',
-                a: 'Karim Saari est disponible pour des collaborations documentaires, institutionnelles ou médiatiques.',
-                link: true,
-              },
-            ].map(({ q, a, link }, i) => (
+            {[0, 1, 2, 3, 4, 5, 6].map((i) => (
               <details key={i} className="glass rounded-2xl border border-white/8 group">
                 <summary className="p-5 cursor-pointer text-white font-medium list-none flex items-center justify-between hover:text-ocean-teal transition-colors">
-                  {q}
+                  {t('photographeEnv.faq_' + i + '_q')}
                   <ArrowRight className="w-4 h-4 flex-shrink-0 rotate-90 group-open:-rotate-90 transition-transform text-ocean-teal" aria-hidden="true" />
                 </summary>
                 <div className="px-5 pb-5 text-text-secondary text-sm leading-relaxed">
-                  {link ? (
+                  {i === 6 ? (
                     <>
-                      {a}{' '}
+                      {t('photographeEnv.faq_6_a')}{' '}
                       <Link to="/contact" className="text-ocean-teal hover:text-white transition-colors">
-                        Accéder à la page contact.
+                        {t('photographeEnv.faq_6_link')}
                       </Link>
                     </>
-                  ) : a}
+                  ) : t('photographeEnv.faq_' + i + '_a')}
                 </div>
               </details>
             ))}
