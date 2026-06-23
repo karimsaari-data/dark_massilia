@@ -4,7 +4,7 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "prepare": "git config core.hooksPath scripts/git-hooks || true",
+    "prepare": "git config core.hooksPath .githooks || true",
     "dev": "vite",
     "build": "vite build",
     "images:sanitize": "node scripts/sanitize-image-names.mjs --staged",
@@ -59,13 +59,13 @@
     "build:photos": "node scripts/generate-sitemap-images.js && node scripts/sync-new-images.js",
     "ftp:deploy": "node scripts/ftp-deploy.js",
     "build:deploy": "npm run build:full && node scripts/ftp-deploy.js",
-    "weekly-targets-report": "node --env-file-if-exists=.env scripts/weekly-targets-report.js",
-    "prepare": "git config core.hooksPath .githooks || true"
+    "weekly-targets-report": "node --env-file-if-exists=.env scripts/weekly-targets-report.js"
   },
   "dependencies": {
     "@fancyapps/ui": "^6.1.13",
     "@supabase/supabase-js": "^2.95.3",
     "framer-motion": "^12.34.0",
+    "i18next": "^26.3.1",
     "leaflet": "^1.9.4",
     "leaflet-gesture-handling": "^1.2.2",
     "leaflet.fullscreen": "^5.3.1",
@@ -75,6 +75,7 @@
     "lucide-react": "^0.564.0",
     "react": "^19.2.0",
     "react-dom": "^19.2.0",
+    "react-i18next": "^17.0.8",
     "react-leaflet": "^5.0.0",
     "react-qr-code": "^2.0.21",
     "react-router-dom": "^7.13.0",

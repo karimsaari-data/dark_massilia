@@ -1,12 +1,13 @@
 import { useState, useEffect, useRef, useCallback } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
+import { useTranslation } from 'react-i18next';
 import {
   Compass, Film, Camera, Video, Mail, Send,
   Menu, X as XIcon, BookOpen, Share2, MapPin, Navigation,
   ChevronDown, Newspaper, Instagram, Facebook, BarChart2, Tv, AtSign, Users,
 } from 'lucide-react';
-import { NAV_LINKS, SOCIAL_LINKS } from '../../utils/constants';
+import { NAV_LINKS, SOCIAL_LINKS, FACEBOOK_GROUP_MEMBERS } from '../../utils/constants';
 import useFocusTrap from '../../hooks/useFocusTrap';
 
 /* ─── Custom icons (Lucide n'a pas TikTok / X) ──────────── */
@@ -49,6 +50,8 @@ const NavDropdown = ({ item }) => {
   const location = useLocation();
   const navigate = useNavigate();
   const timerRef = useRef(null);
+  const { t, i18n } = useTranslation();
+  const lang = i18n.language;
 
   const pathMatches = (childPath) => {
     if (!childPath || childPath.startsWith('/#') || childPath.startsWith('https')) return false;
@@ -95,7 +98,7 @@ const NavDropdown = ({ item }) => {
             : 'text-white hover:text-astroide hover:bg-white/5'
         }`}
       >
-        {item.name}
+        {t(`nav.${item.key}.name`, item.name)}
         <ChevronDown className={`w-3.5 h-3.5 flex-shrink-0 transition-transform duration-200 ${open ? 'rotate-180' : ''}`} aria-hidden="true" />
         <span className={`absolute bottom-0 left-0 right-0 h-[2px] rounded-full transition-all duration-300 ${
           isActive ? 'bg-astroide scale-x-100' : 'bg-astroide scale-x-0 group-hover:scale-x-100 origin-left'
@@ -119,9 +122,9 @@ const NavDropdown = ({ item }) => {
               <div className="w-64 flex-shrink-0 p-8 flex flex-col gap-4" style={{ background: 'rgba(4,14,28,0.98)' }}>
                 <div className="flex gap-3 items-start">
                   <div className="w-1 self-stretch rounded-full bg-astroide flex-shrink-0 mt-1" aria-hidden="true" />
-                  <p className="font-anton text-4xl leading-none uppercase text-white">{item.dropdownTitle ?? item.name}</p>
+                  <p className="font-anton text-4xl leading-none uppercase text-white">{t(`nav.${item.key}.title`, item.dropdownTitle ?? item.name)}</p>
                 </div>
-                <p className="text-sm leading-relaxed text-gray-400">{item.description}</p>
+                <p className="text-sm leading-relaxed text-gray-400">{t(`nav.${item.key}.desc`, item.description)}</p>
                 <div className="mt-auto">
                   <div className="h-px mb-3 bg-white/10" />
                   <p className="text-xs uppercase tracking-widest text-gray-600">Karim Saari</p>
@@ -144,7 +147,7 @@ const NavDropdown = ({ item }) => {
                     const inner = (
                       <>
                         {Icon && <Icon className={`w-4 h-4 flex-shrink-0 ${childActive ? 'text-astroide' : 'text-gray-500 group-hover/link:text-astroide'}`} aria-hidden="true" />}
-                        <span className="font-semibold">{child.name}</span>
+                        <span className="font-semibold">{t(`nav.${item.key}.${child.key}.name`, child.name)}</span>
                         {childActive && <div className="ml-auto w-2 h-2 rounded-full bg-astroide flex-shrink-0" aria-hidden="true" />}
                       </>
                     );
@@ -168,14 +171,14 @@ const NavDropdown = ({ item }) => {
                           >
                             <div className="flex items-center justify-between">
                               <span className={`font-bold text-sm ${location.pathname === hub.path ? 'text-astroide' : 'text-gray-100 group-hover/hub:text-astroide'}`}>
-                                {hub.name}
+                                {t(`nav.${item.key}.${hub.key}.name`, hub.name)}
                               </span>
                               <span className={`text-xs font-semibold transition-colors ${location.pathname === hub.path ? 'text-astroide' : 'text-gray-400 group-hover/hub:text-astroide'}`}>
-                                Voir →
+                                {t('nav.see')}
                               </span>
                             </div>
                             {hub.hubDesc && (
-                              <p className="text-xs text-gray-400 mt-0.5">{hub.hubDesc}</p>
+                              <p className="text-xs text-gray-400 mt-0.5">{t(`nav.${item.key}.${hub.key}.hubDesc`, { count: FACEBOOK_GROUP_MEMBERS.toLocaleString(lang === 'en' ? 'en-US' : 'fr-FR'), defaultValue: hub.hubDesc })}</p>
                             )}
                           </button>
                         </li>
@@ -202,6 +205,7 @@ const MobileNavItem = ({ item, onClose }) => {
   const [expanded, setExpanded] = useState(false);
   const location = useLocation();
   const navigate = useNavigate();
+  const { t } = useTranslation();
 
   const pathMatches = (childPath) => {
     if (!childPath || childPath.startsWith('/#') || childPath.startsWith('https')) return false;
@@ -237,7 +241,7 @@ const MobileNavItem = ({ item, onClose }) => {
       >
         <span className="flex items-center gap-3">
           {Icon && <Icon className="w-5 h-5 flex-shrink-0" aria-hidden="true" />}
-          <span className="font-medium">{item.name}</span>
+          <span className="font-medium">{t(`nav.${item.key}.name`, item.name)}</span>
         </span>
         <ChevronDown className={`w-4 h-4 flex-shrink-0 transition-transform duration-200 ${expanded ? 'rotate-180' : ''}`} aria-hidden="true" />
       </button>
@@ -264,7 +268,7 @@ const MobileNavItem = ({ item, onClose }) => {
                       onClick={onClose}
                     >
                       {ChildIcon && <ChildIcon className={`flex-shrink-0 ${child.sub ? 'w-3.5 h-3.5' : 'w-4 h-4'}`} aria-hidden="true" />}
-                      <span className={`font-medium ${child.sub ? 'text-xs' : 'text-sm'}`}>{child.name}</span>
+                      <span className={`font-medium ${child.sub ? 'text-xs' : 'text-sm'}`}>{t(`nav.${item.key}.${child.key}.name`, child.name)}</span>
                     </a>
                   ) : (
                   <button
@@ -276,7 +280,7 @@ const MobileNavItem = ({ item, onClose }) => {
                     }`}
                   >
                     {ChildIcon && <ChildIcon className={`flex-shrink-0 ${child.sub ? 'w-3.5 h-3.5' : 'w-4 h-4'}`} aria-hidden="true" />}
-                    <span className={`font-medium ${child.sub ? 'text-xs' : 'text-sm'}`}>{child.name}</span>
+                    <span className={`font-medium ${child.sub ? 'text-xs' : 'text-sm'}`}>{t(`nav.${item.key}.${child.key}.name`, child.name)}</span>
                     {childActive && (
                       <div className="absolute left-0 top-1/2 -translate-y-1/2 w-0.5 h-3/4 bg-ocean-teal rounded-r-full" aria-hidden="true" />
                     )}
@@ -299,7 +303,21 @@ const Navbar = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const lastScrollY = useRef(0);
   const location = useLocation();
+  const navigate = useNavigate();
   const menuButtonRef = useRef(null);
+  const { t, i18n } = useTranslation();
+  const isEn = i18n.language === 'en';
+
+  const switchLang = () => {
+    if (isEn) {
+      const newPath = location.pathname.startsWith('/en')
+        ? location.pathname.slice(3) || '/'
+        : '/';
+      navigate(newPath + location.search + location.hash);
+    } else {
+      navigate('/en' + location.pathname + location.search + location.hash);
+    }
+  };
 
   const menuPanelRef = useFocusTrap(isMobileMenuOpen);
 
@@ -375,7 +393,7 @@ const Navbar = () => {
         initial={{ y: '-100%' }}
         animate={{ y: isHidden ? '-100%' : 0 }}
         transition={{ duration: 0.4, ease: 'easeInOut' }}
-        aria-label="Navigation principale"
+        aria-label={t('nav.aria_main')}
         className={`fixed top-0 left-0 right-0 z-50 transition-colors duration-500 ${
           isScrolled
             ? 'bg-[#0a142c]/95 backdrop-blur-xl border-b border-white/8 shadow-lg shadow-black/40'
@@ -389,9 +407,9 @@ const Navbar = () => {
             {/* Colonne 1 — Logo */}
             <div className="flex-shrink-0">
               <Link
-                to="/"
+                to={isEn ? '/en' : '/'}
                 className="group flex items-center"
-                aria-label="Karim Saari — Sentinelle des Calanques — Accueil"
+                aria-label={isEn ? 'Karim Saari — Calanques Sentinel — Home' : 'Karim Saari — Sentinelle des Calanques — Accueil'}
               >
                 <img
                   src="/assets/Karim SAARI WHITE.svg"
@@ -406,7 +424,7 @@ const Navbar = () => {
             </div>
 
             {/* Colonne 2 — Nav dropdowns (centré) */}
-            <nav aria-label="Menu principal" className="hidden md:flex flex-1 items-center justify-center gap-4 lg:gap-8">
+            <nav aria-label={t('nav.aria_main')} className="hidden md:flex flex-1 items-center justify-center gap-4 lg:gap-8">
               {NAV_LINKS.map((item) => (
                 <NavDropdown key={item.name} item={item} />
               ))}
@@ -427,19 +445,28 @@ const Navbar = () => {
                     );
                   }
                   return (
-                    <a key={label} href={href} target="_blank" rel="noopener noreferrer" aria-label={`${label} (ouvre dans un nouvel onglet)`} className={iconClass}>
+                    <a key={label} href={href} target="_blank" rel="noopener noreferrer" aria-label={`${label} ${t('common.open_tab')}`} className={iconClass}>
                       {inner}
                     </a>
                   );
                 })}
               </div>
 
+              {/* Language switcher */}
+              <button
+                onClick={switchLang}
+                className="text-[11px] font-bold tracking-widest text-white/60 hover:text-white border border-white/20 hover:border-white/50 rounded px-2 py-1 transition-all duration-200 uppercase"
+                aria-label={isEn ? 'Passer en français' : 'Switch to English'}
+              >
+                {isEn ? 'FR' : 'EN'}
+              </button>
+
               {/* Burger — mobile uniquement */}
               <button
                 ref={menuButtonRef}
                 onClick={openMobileMenu}
                 className="md:hidden p-2 rounded-lg glass hover:bg-white/10 transition-colors focus-ring"
-                aria-label="Ouvrir le menu de navigation"
+                aria-label={t('nav.aria_open')}
                 aria-expanded={isMobileMenuOpen}
                 aria-controls="mobile-menu-panel"
               >
@@ -469,7 +496,7 @@ const Navbar = () => {
               id="mobile-menu-panel"
               role="dialog"
               aria-modal="true"
-              aria-label="Menu de navigation"
+              aria-label={t('nav.aria_mobile')}
               initial="closed"
               animate="open"
               exit="closed"
@@ -480,17 +507,17 @@ const Navbar = () => {
                 <button
                   onClick={closeMobileMenu}
                   className="absolute top-4 right-4 p-2 rounded-lg hover:bg-white/10 transition-colors focus-ring"
-                  aria-label="Fermer le menu"
+                  aria-label={t('nav.aria_close')}
                 >
                   <XIcon className="w-6 h-6" aria-hidden="true" />
                 </button>
 
                 <div className="mb-8 mt-4">
                   <h2 className="text-xl font-bold text-white">Karim Saari</h2>
-                  <p className="text-xs text-gray-400 mt-1 uppercase tracking-widest">Photographe Environnemental</p>
+                  <p className="text-xs text-gray-400 mt-1 uppercase tracking-widest">{t('nav.mobile_subtitle')}</p>
                 </div>
 
-                <nav aria-label="Menu principal">
+                <nav aria-label={t('nav.aria_main')}>
                   <ul className="space-y-1 list-none p-0 m-0">
                     {NAV_LINKS.map((item) => (
                       <MobileNavItem key={item.name} item={item} onClose={closeMobileMenu} />
@@ -498,10 +525,20 @@ const Navbar = () => {
                   </ul>
                 </nav>
 
+                {/* Language switcher — menu mobile */}
+                <div className="mt-6 pt-4 border-t border-white/10">
+                  <button
+                    onClick={() => { switchLang(); closeMobileMenu(); }}
+                    className="w-full text-center text-sm font-semibold tracking-widest uppercase py-2 rounded-lg border border-white/20 hover:border-astroide/50 hover:bg-astroide/10 text-white/70 hover:text-white transition-all duration-200"
+                  >
+                    {isEn ? '🇫🇷 Français' : '🇬🇧 English'}
+                  </button>
+                </div>
+
                 {/* Réseaux sociaux — menu mobile */}
-                <div className="mt-8 pt-6 border-t border-white/10">
+                <div className="mt-6 pt-4 border-t border-white/10">
                   <p className="text-xs text-text-muted uppercase tracking-wider mb-3" id="social-links-label">
-                    Suivez-nous
+                    {t('nav.follow_us')}
                   </p>
                   <div className="flex flex-wrap gap-2" aria-labelledby="social-links-label">
                     {NAV_SOCIALS.map(({ Icon, href, label, anchor }) => {
@@ -521,7 +558,7 @@ const Navbar = () => {
                         );
                       }
                       return (
-                        <a key={label} href={href} target="_blank" rel="noopener noreferrer" aria-label={`${label} (ouvre dans un nouvel onglet)`} className={iconClass}>
+                        <a key={label} href={href} target="_blank" rel="noopener noreferrer" aria-label={`${label} ${t('common.open_tab')}`} className={iconClass}>
                           {inner}
                         </a>
                       );

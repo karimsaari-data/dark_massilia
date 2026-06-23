@@ -1,4 +1,5 @@
 import { Instagram, Linkedin, Facebook, AtSign, Send } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
 
 // X (Twitter) icon — Lucide n'a pas le logo X
 const XTwitterIcon = ({ className }) => (
@@ -25,59 +26,61 @@ const Px500Icon = ({ className }) => (
   </svg>
 );
 
-const navColumns = [
-  {
-    label: 'Portfolio',
-    links: [
-      { to: '/photographe-environnemental-marseille', text: 'Photographe environnemental' },
-      { to: '/photographie-sous-marine',              text: 'Photos sous-marines' },
-      { to: '/photographie-paysage-mer',              text: 'Photos de paysages' },
-      { to: '/carte-photos',                          text: 'Carte des photos' },
-      { to: '/les-francais-yann-arthus-bertrand',     text: 'Yann Arthus-Bertrand' },
-    ],
-  },
-  {
-    label: 'Missions',
-    links: [
-      { to: '/communaute',            text: 'Rejoindre la communauté' },
-      { to: '/depollution-marine',    text: 'Dépollution marine' },
-      { to: '/donnees-scientifiques', text: 'Données scientifiques' },
-      { to: '/local-guide-marseille', text: 'Google Local Guide' },
-    ],
-  },
-  {
-    label: 'Médias',
-    links: [
-      { to: '/videos',                                       text: 'Vidéos & Documentaires' },
-      { to: '/sauver-marseille-documentaire-arte',           text: 'ARTE — Sauver Marseille' },
-      { to: '/meduses-souveraines-oceans-documentaire-arte', text: 'ARTE — Méduses' },
-      { to: '/echappees-belles-bouches-du-rhone',            text: 'Échappées Belles' },
-      { to: '/blog',                                         text: 'Blog' },
-    ],
-  },
-  {
-    label: 'Calanques',
-    links: [
-      { to: '/communaute-calanques',    text: 'Groupe Facebook Calanques' },
-      { to: '/actualites',              text: 'News Parc des Calanques' },
-      { to: '/carte-calanques',         text: 'Carte interactive' },
-      { to: '/acces-massifs-calanques', text: 'Accès aux massifs' },
-    ],
-  },
-  {
-    label: 'Contact',
-    links: [
-      { to: '/contact',                        text: 'Collaborer avec nous' },
-      { to: '/presse',                         text: 'Presse & médias' },
-      { to: CONTACT_MAILTO, text: 'Email direct', external: true },
-      { to: '/#newsletter',                    text: 'Newsletter', anchor: true },
-      { to: 'https://www.team-oxygen.com/',    text: 'Team Oxygen', external: true },
-    ],
-  },
-];
 
 const Footer = () => {
+  const { t } = useTranslation();
   const currentYear = new Date().getFullYear();
+
+  const navColumns = [
+    {
+      label: t('footer.portfolio'),
+      links: [
+        { to: '/photographe-environnemental-marseille', text: t('footer.env_photo') },
+        { to: '/photographie-sous-marine',              text: t('footer.underwater') },
+        { to: '/photographie-paysage-mer',              text: t('footer.landscapes') },
+        { to: '/carte-photos',                          text: t('footer.photo_map') },
+        { to: '/les-francais-yann-arthus-bertrand',     text: t('footer.yab') },
+      ],
+    },
+    {
+      label: t('footer.missions'),
+      links: [
+        { to: '/communaute',            text: t('footer.community') },
+        { to: '/depollution-marine',    text: t('footer.depollution') },
+        { to: '/donnees-scientifiques', text: t('footer.scientific') },
+        { to: '/local-guide-marseille', text: t('footer.local_guide') },
+      ],
+    },
+    {
+      label: t('footer.medias'),
+      links: [
+        { to: '/videos',                                       text: t('footer.videos') },
+        { to: '/sauver-marseille-documentaire-arte',           text: t('footer.arte') },
+        { to: '/meduses-souveraines-oceans-documentaire-arte', text: t('footer.meduses') },
+        { to: '/echappees-belles-bouches-du-rhone',            text: t('footer.echappees') },
+        { to: '/blog',                                         text: t('footer.blog') },
+      ],
+    },
+    {
+      label: t('footer.calanques'),
+      links: [
+        { to: '/communaute-calanques',    text: t('footer.facebook_group') },
+        { to: '/actualites',              text: t('footer.news') },
+        { to: '/carte-calanques',         text: t('footer.map') },
+        { to: '/acces-massifs-calanques', text: t('footer.access') },
+      ],
+    },
+    {
+      label: t('footer.contact'),
+      links: [
+        { to: '/contact',                     text: t('footer.collaborate') },
+        { to: '/presse',                      text: t('footer.press') },
+        { to: CONTACT_MAILTO,                 text: t('footer.email'), external: true },
+        { to: '/#newsletter',                 text: t('footer.newsletter'), anchor: true },
+        { to: 'https://www.team-oxygen.com/', text: t('footer.team_oxygen'), external: true },
+      ],
+    },
+  ];
 
   const socialIcons = [
     { Icon: Send, href: '/#newsletter', label: 'Newsletter', anchor: true },
@@ -95,7 +98,7 @@ const Footer = () => {
       <div className="container-custom py-12">
 
         {/* Navigation secondaire — maillage interne SEO */}
-        <nav aria-label="Navigation secondaire" className="mb-10 pb-8 border-b border-white/5">
+        <nav aria-label={t('footer.aria_secondary')} className="mb-10 pb-8 border-b border-white/5">
           <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-6 text-center">
             {navColumns.map((col) => (
               <div key={col.label}>
@@ -180,14 +183,14 @@ const Footer = () => {
         {/* Copyright + liens légaux — SEO optimisé */}
         <div className="text-center">
           <p className="text-xs text-gray-400 mb-2">
-            Marseille, Bouches-du-Rhône · France
+            {t('footer.location')}
           </p>
           <p className="text-xs text-gray-400 leading-relaxed mb-3">
             © {currentYear}{' '}
             <span className="text-gray-300 font-medium">Karim Saari</span>
-            {' '}| Photographe environnemental &amp; sous-marin · Sentinelle des Calanques — Fondateur de{' '}
+            {' '}| {t('footer.copyright_role')}{' '}
             <span className="text-gray-300">Dark Massilia</span>
-            {' '}&amp; Président de{' '}
+            {' '}{t('footer.copyright_president')}{' '}
             <a
               href="https://www.team-oxygen.com/"
               target="_blank"
@@ -202,26 +205,26 @@ const Footer = () => {
               to="/plan-du-site"
               className="text-xs text-gray-400 hover:text-ocean-teal transition-colors duration-200 py-1.5 px-1"
             >
-              Plan du site
+              {t('footer.site_map')}
             </Link>
             <Link
               to="/mentions-legales"
               className="text-xs text-gray-400 hover:text-ocean-teal transition-colors duration-200 py-1.5 px-1"
             >
-              Mentions légales
+              {t('footer.legal')}
             </Link>
             <Link
               to="/confidentialite"
               className="text-xs text-gray-400 hover:text-ocean-teal transition-colors duration-200 py-1.5 px-1"
             >
-              Politique de confidentialité
+              {t('footer.privacy')}
             </Link>
             <button
               type="button"
               onClick={openConsentBanner}
               className="text-xs text-gray-400 hover:text-ocean-teal transition-colors duration-200 cursor-pointer py-1.5 px-1"
             >
-              Gérer les cookies
+              {t('footer.cookies')}
             </button>
           </div>
         </div>

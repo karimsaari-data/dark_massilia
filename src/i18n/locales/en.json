@@ -1,0 +1,726 @@
+{
+  "nav": {
+    "portfolio": {
+      "name": "Portfolio",
+      "title": "Photo Galleries — Marseille & Calanques",
+      "desc": "Underwater photography, coastal seascapes and environmental photography approach from the Marseille coastline.",
+      "env_photo": { "name": "Environmental Photographer", "hubDesc": "Approach, photographic universe & partners" },
+      "underwater": { "name": "Underwater Photography" },
+      "landscapes": { "name": "Landscape Photography" },
+      "photo_map": { "name": "Photo Map" },
+      "yab": { "name": "Yann Arthus-Bertrand" }
+    },
+    "missions": {
+      "name": "Missions",
+      "title": "Acting for the Mediterranean Sea",
+      "desc": "Underwater cleanup by freediving, scientific documentation and citizen mobilization in the Calanques.",
+      "community": { "name": "Join the Community", "hubDesc": "Join the mission — volunteers, divers, partners" },
+      "depollution": { "name": "Marine Cleanup" },
+      "scientific": { "name": "Scientific Data" },
+      "local_guide": { "name": "Google Local Guide" }
+    },
+    "medias": {
+      "name": "Media",
+      "title": "News & Media Presence",
+      "desc": "ARTE documentaries, national press, videos, blog and news about environmental commitment in Marseille.",
+      "videos": { "name": "Videos & Documentaries", "hubDesc": "ARTE, M6, France Télévisions, YouTube" },
+      "arte": { "name": "ARTE — Save Marseille" },
+      "meduses": { "name": "ARTE — Jellyfish" },
+      "echappees": { "name": "Échappées Belles" },
+      "green_got": { "name": "Green-Got — Mediterranean" },
+      "blog": { "name": "Blog" }
+    },
+    "calanques": {
+      "name": "Calanques",
+      "title": "Explore the Calanques of Marseille",
+      "desc": "Interactive map, forest area access, Calanques National Park news and the Calanques lover community.",
+      "facebook_group": { "name": "Facebook Calanques Group", "hubDesc": "Over {{count}} members — the largest Calanques community" },
+      "news": { "name": "Calanques Park News" },
+      "map": { "name": "Interactive Calanques Map" },
+      "access": { "name": "Forest & Mountain Access" }
+    },
+    "contact": {
+      "name": "Contact",
+      "title": "Discover How to Act for the Sea",
+      "desc": "Collaborations, media or institutional partnerships — join the Dark Massilia mission.",
+      "collaborate": { "name": "Collaborate with Us", "hubDesc": "Partnerships, media, institutions" },
+      "press": { "name": "Press & Media" },
+      "email": { "name": "Send an Email" },
+      "newsletter": { "name": "Newsletter" },
+      "team_oxygen": { "name": "Team Oxygen — Official Website" }
+    },
+    "aria_main": "Main navigation",
+    "aria_mobile": "Mobile navigation",
+    "aria_open": "Open navigation menu",
+    "aria_close": "Close menu",
+    "see": "See →",
+    "mobile_subtitle": "Environmental Photographer",
+    "follow_us": "Follow us"
+  },
+  "footer": {
+    "portfolio": "Portfolio",
+    "missions": "Missions",
+    "medias": "Media",
+    "calanques": "Calanques",
+    "contact": "Contact",
+    "env_photo": "Environmental Photographer",
+    "underwater": "Underwater Photos",
+    "landscapes": "Landscape Photos",
+    "photo_map": "Photo Map",
+    "yab": "Yann Arthus-Bertrand",
+    "community": "Join the Community",
+    "depollution": "Marine Cleanup",
+    "scientific": "Scientific Data",
+    "local_guide": "Google Local Guide",
+    "videos": "Videos & Documentaries",
+    "arte": "ARTE — Save Marseille",
+    "meduses": "ARTE — Jellyfish",
+    "echappees": "Échappées Belles",
+    "blog": "Blog",
+    "facebook_group": "Facebook Calanques Group",
+    "news": "Calanques Park News",
+    "map": "Interactive Map",
+    "access": "Forest Access",
+    "collaborate": "Collaborate with Us",
+    "press": "Press & Media",
+    "email": "Direct Email",
+    "newsletter": "Newsletter",
+    "team_oxygen": "Team Oxygen",
+    "location": "Marseille, Bouches-du-Rhône · France",
+    "copyright_role": "Environmental & underwater photographer · Sentinel of the Calanques — Founder of",
+    "copyright_president": "& President of",
+    "site_map": "Site Map",
+    "legal": "Legal Notice",
+    "privacy": "Privacy Policy",
+    "cookies": "Manage Cookies",
+    "follow": "Follow us",
+    "aria_secondary": "Secondary navigation"
+  },
+  "common": {
+    "tagline": "One Sea · One City · One Mission",
+    "mission_statement": "Sentinel of the Calanques, I document and clean the seabed of Marseille while freediving. With Team Oxygen, every dive becomes a cleanup mission.",
+    "back_home": "← Back to Home",
+    "read_more": "Read more",
+    "learn_more": "Learn more",
+    "see_more": "See more",
+    "contact_us": "Contact us",
+    "close": "Close",
+    "loading": "Loading...",
+    "error_404_label": "Error",
+    "error_404_title": "Page not found",
+    "error_404_desc": "This page doesn't exist or has been moved. The seabed is better mapped than this.",
+    "page_loader": "Loading page...",
+    "skip_content": "Skip to main content",
+    "back_to_top": "Back to top",
+    "open_tab": "(opens in a new tab)"
+  },
+  "home": {
+    "hero": {
+      "title": "Photography & Commitment: Revealing and Protecting Marseille's Calanques",
+      "subtitle": "Making the invisible visible.",
+      "desc1": "Between artistic photography and freediving exploration, I document the raw beauty of Marseille's coastline to bear witness to ecological urgency.",
+      "desc2": "As a Calanques Sentinel, I combine the power of imagery with field actions alongside Team Oxygen to sustainably preserve our Mediterranean's biodiversity.",
+      "cta_photo": "Get a free photo",
+      "cta_discover": "Discover the Calanques",
+      "cta_contact": "Contact me",
+      "community_label": "subscribers & community members"
+    },
+    "about": {
+      "name": "Karim Saari — Environmental Photographer & Calanques Sentinel",
+      "desc": "From coastal landscape photography to underwater imagery, I use my lens to amplify the voice of Marseille, the Calanques, and those who protect them.",
+      "vision_title": "The vision",
+      "vision_desc": "As an environmental photographer in the Mediterranean, I capture the beauty of our coasts, both at the surface and in apnea, to document the true state of our ecosystems.",
+      "vision_quote": "Every image is a document, proof, a call to action.",
+      "action_title": "The action",
+      "action_desc1": "Founder of a community of 130,000 people committed to protecting the Calanques,",
+      "action_desc2": "I make visible the impact of plastic pollution through documentaries, photo exhibitions, and underwater cleanup missions with my association.",
+      "learn_more": "Learn more about my approach"
+    },
+    "stats": {
+      "title": "10 years of commitment — Marseille & Calanques",
+      "subtitle": "Marine cleanup and environmental photography since 2018",
+      "community_label": "Followers passionate about the Calanques",
+      "community_sub": "across all social media platforms",
+      "community_detail": "including {{count}} on the Facebook group",
+      "waste_label": "Waste collected from Marseille's seafloor",
+      "waste_sub": "down to 20 meters deep",
+      "waste_detail": "900 + 1,357 + 1,147 + 2,320 kg · 4 editions",
+      "maps_label": "Google Maps views of Marseille and surroundings",
+      "maps_sub": "9 years of Local Guide contributions",
+      "maps_detail": "Photos and reviews of Marseille's Calanques",
+      "px500_label": "Photo impressions on 500px",
+      "px500_sub": "underwater & landscape photography",
+      "px500_detail": "798K impressions · 29.4K photo likes · 667 followers",
+      "waste_collected": "waste collected",
+      "of_adventure": "of adventure"
+    },
+    "yab": {
+      "title": "The French — Yann Arthus-Bertrand",
+      "subtitle": "Photographed by Yann Arthus-Bertrand",
+      "desc": "Karim Saari and Team Oxygen were selected by Yann Arthus-Bertrand for his project 'The French' — a photographic portrait gallery of those who make France, in Marseille in 2024.",
+      "cta": "View the project"
+    },
+    "blog_title": "Latest articles",
+    "missions": {
+      "title": "Acting for the Mediterranean.",
+      "subtitle": "Diving, freediving and seafloor cleanup — Marseille's Calanques",
+      "desc1": "In Marseille with Team Oxygen, we conduct underwater cleanup operations from the surface to 20 meters to depollute the seafloor, document waste, and protect local biodiversity.",
+      "desc2": "Calanques, Frioul, Blue Coast, La Ciotat: each mission is concrete action for our coastline.",
+      "cta_missions": "Discover our missions",
+      "cta_media": "Media coverage"
+    },
+    "videos": {
+      "title": "Mission Videos",
+      "desc": "ARTE documentaries, underwater cleanup reports, annual retrospectives... Experience our missions from the depths of Marseille's Calanques.",
+      "cta": "Watch videos"
+    },
+    "gallery": {
+      "title": "Two worlds, one commitment",
+      "desc1": "From the limestone cliffs of Marseille's coastline to the depths of the Mediterranean, discover unique visual testimony.",
+      "desc2": "Between the splendor of Provence's landscapes and the ecological urgency of the seafloor, each image tells the story of our ecosystem's fragile balance.",
+      "cta_landscapes": "Landscape & Coastal Gallery",
+      "cta_underwater": "Underwater & Cleanup Gallery",
+      "cta_map": "Photo Map"
+    },
+    "community": {
+      "title": "Join the Adventure",
+      "subtitle": "Marine cleanup volunteering — Join Team Oxygen in Marseille",
+      "desc": "Passionate about Marseille's Calanques? Join our community to follow our actions and participate in protecting the Mediterranean.",
+      "cta_fb": "Join the Facebook Group",
+      "cta_newsletter": "Subscribe to newsletter"
+    },
+    "impact_title": "Did you know?",
+    "impact_facts": [
+      "A disproportionate concentration: The Mediterranean Sea represents only 1% of the world's ocean surface, yet it concentrates 7% of all microplastics on the planet.",
+      "The absurdity of single-use: It takes about 1 second to manufacture a plastic bag and its average use lasts only 20 minutes, yet it will take more than a century to degrade in the natural environment.",
+      "Millennial persistence: While a cigarette butt takes about 10 years to degrade at sea, a plastic fishing line can take up to 600 years to disappear.",
+      "The global scale: An estimated 5.25 trillion plastic particles are currently floating on the ocean surface, equivalent to a weight of nearly 269,000 tonnes.",
+      "Omnipresence in the Mediterranean: The average plastic density in the Mediterranean (1 object every 4 m²) is comparable to that of the five major subtropical oceanic gyres, often called 'plastic continents'.",
+      "A deadly trap for wildlife: Sea turtles confuse transparent plastics with jellyfish, causing serious injuries or death, while dolphins can die with their jaws blocked by plastic rings they tried to play with.",
+      "Massive bird contamination: Over 90% of seabirds have already ingested plastic, and projections indicate that 99% of species will be affected by 2050.",
+      "The relentless flow: Coastal populations dump about 8 million tonnes of plastic waste into the oceans each year, a figure that could double in a decade without improved waste management.",
+      "The cigarette butt scourge: During the 'Clean Calanques' operation in 2023 alone, more than 70,000 cigarette butts were collected, highlighting massive and concerning local pollution.",
+      "Unavoidable pollution: During a vast Mediterranean basin sampling campaign, floating plastic debris was found at 100% of analyzed sites."
+    ],
+    "map": {
+      "title": "Interactive map of Marseille's Calanques & coastline",
+      "desc": "Explore Marseille's Calanques via an interactive map featuring landscapes, diving spots and cleanup actions conducted with Team Oxygen on the Marseille coastline.",
+      "note": "Also check massif access conditions before heading out — open or closed depending on the daily fire risk.",
+      "cta_map": "Explore the map",
+      "cta_access": "Calanques Massif Access"
+    },
+    "faq_title": "Frequently Asked Questions",
+    "faq": [
+      {
+        "q": "What is the Projet Sentinelle?",
+        "a": "Projet Sentinelle is the annual flagship operation conducted by Team Oxygen for Mediterranean protection. Throughout the year, monitoring, awareness and spot intervention actions are organized on the Marseille coastline. Each autumn, the initiative becomes intensive: a full week of underwater freediving cleanup in the Calanques of Marseille. Teams work between 0 and 20 meters deep, with daily 5-6 hour sessions in the water. Collected waste — mainly plastics and macro-debris — is brought up, sorted and quantified to document the real state of the seafloor."
+      },
+      {
+        "q": "How much waste has the Projet Sentinelle collected?",
+        "a": "In 4 editions (2022–2025), Projet Sentinelle and Team Oxygen have collected over 5,724 kg of marine waste: 900 kg on the Blue Coast (2022), 1,357 kg at the Frioul Archipelago (2023), 1,147 kg in the Calanques National Park (2024), and 2,320 kg in the Marseille Roadstead (2025)."
+      },
+      {
+        "q": "How to participate in Calanques cleanup missions?",
+        "a": "To participate in cleanup missions in the Calanques of Marseille, contact Team Oxygen via the Contact page on karimsaari.com or join the community through the 'Lovers of the Calanques' Facebook group. Freediving immersions require technical skills and supervised practice. We primarily need volunteers for land logistics support (sorting, weighing, equipment management, awareness raising) as well as kayakers for surface assistance and zone security."
+      },
+      {
+        "q": "Why is the Mediterranean Sea one of the world's most polluted seas for plastic?",
+        "a": "The Mediterranean acts as a true 'plastic trap': it's a semi-enclosed sea whose waters take about 90 years to renew, while plastics have a lifespan far exceeding a century. Its coasts are densely populated (150 million inhabitants), maritime traffic is very intense (30% of global traffic), and it faces massive tourist pressure. Although it represents only 1% of the world ocean surface, it concentrates 7% of all microplastics on the planet."
+      },
+      {
+        "q": "How much plastic is dumped in the Mediterranean every day?",
+        "a": "Between 700 and 1,400 tonnes of plastic are dumped every day in the Mediterranean Sea — equivalent to one or two garbage trucks per hour, or 33,800 plastic bottles thrown into the sea every minute. In total, more than a million tonnes of plastic are already in the Mediterranean basin."
+      },
+      {
+        "q": "Where does this plastic waste come from?",
+        "a": "About 80% of marine waste comes from land activities. It is transported by rivers (like the Rhône, Po or Nile) acting as conveyor belts, by urban runoff (rain sweeping street waste toward the sea), or is directly abandoned on coastlines. The remaining 20% comes from maritime activities such as fishing, aquaculture and maritime transport."
+      },
+      {
+        "q": "What waste is most commonly found at sea and on beaches?",
+        "a": "Plastic represents 95% of marine waste in the Mediterranean. Most commonly found objects are food packaging, plastic bottles, caps, bags and fishing equipment. Cigarette butts (whose filters contain plastic) are also a major scourge, constituting a large proportion of waste collected on beaches."
+      },
+      {
+        "q": "How long does plastic waste take to degrade at sea?",
+        "a": "Plastics barely biodegrade on a human timescale; they persist for hundreds of years. A plastic bag takes between 20 and over 100 years to degrade, a plastic bottle about 450 years, and a fishing line up to 600 years. The 'visual' disappearance of waste is misleading: it merely fragments into millions of microplastics under the effect of sun and waves."
+      },
+      {
+        "q": "What are microplastics and why are they so dangerous?",
+        "a": "Microplastics are tiny plastic fragments measuring less than 5 millimeters, resulting from the degradation of larger waste. They are particularly dangerous because their size is similar to that of plankton. In the Mediterranean, the ratio of microplastics to zooplankton can reach 1 to 2, leading to massive ingestion by fish and other marine predators. Moreover, they act as sponges, concentrating chemical and toxic pollutants on their surface."
+      },
+      {
+        "q": "Does plastic always float on the water surface?",
+        "a": "No — what we see at the surface is only the tip of the iceberg. An estimated 94% of plastic entering the Mediterranean Sea ends up sinking and settling on the seafloor. The remaining 6% is split between beaches (5%) and the surface (1%). Once on the seabed, in darkness, cold and lack of oxygen, plastic barely degrades anymore."
+      },
+      {
+        "q": "What is the impact of this pollution on marine fauna?",
+        "a": "The consequences are catastrophic: over 700 marine species are impacted globally, and all Mediterranean sea turtle species are affected by plastic ingestion. Turtles often confuse plastic bags with jellyfish. Large cetaceans swallow microplastics while filtering water, while many birds, fish and dolphins die from intestinal blockages or from entanglement in abandoned ghost nets."
+      },
+      {
+        "q": "Does marine plastic pollution have consequences for human health?",
+        "a": "Yes, the human food chain is directly contaminated. By eating seafood (such as fish, mussels or oysters) or even through sea salt, we ingest plastics. Currently, a human ingests about 5 grams of plastics per week — the weight of a credit card. These plastics contain and release chemical additives that often act as endocrine disruptors, promoting various diseases."
+      },
+      {
+        "q": "What is the role of tourism in this pollution?",
+        "a": "The Mediterranean basin receives more than 200 million tourists per year. This seasonal influx causes a 40% increase in waste production in summer, saturating local waste management infrastructure and leading to the direct abandonment of waste on coastlines."
+      },
+      {
+        "q": "What is environmental photography?",
+        "a": "Environmental photography uses images of landscapes, plants or animals to awaken in the viewer the desire to protect them — particularly in the face of dangers nature faces. In the Mediterranean, it becomes a direct witnessing tool: each image of Marseille's Calanques, their seabed or local fauna is visual evidence of ecological urgency."
+      },
+      {
+        "q": "What equipment do you use for underwater photography in the Calanques?",
+        "a": "Underwater photography in Marseille's Calanques is mainly practiced in freediving, which imposes very different constraints than scuba diving: no bubbles, no noise, natural proximity to fauna. I use a watertight housing with a wide angle to capture the depth of the seabed and natural Mediterranean light. The exceptional transparency of Calanques water — between 15 and 30 meters visibility — allows images of rare clarity, both for underwater landscapes and for documentation of species like octopuses, groupers and posidonia."
+      },
+      {
+        "q": "Where can I see your underwater photographs of Marseille's Calanques?",
+        "a": "My underwater photographs of the Calanques are accessible on this site in the gallery dedicated to underwater photography, gathering over 58 shots taken during Projet Sentinelle cleanup missions (2022–2025). You can also find a selection of seascapes and landscapes in the landscape photography gallery, as well as on my 500px profile (karimsaari) where my images accumulate over 800,000 impressions."
+      }
+    ]
+  },
+  "missions": {
+    "page_title": "Marine Cleanup Marseille | Team Oxygen — Projet Sentinelle",
+    "hero_title": "Team Oxygen: Association of Committed Freedivers for the Mediterranean Sea in Marseille",
+    "updated": "Updated March 19, 2026",
+    "section_mission": "Our mission on the Mediterranean coastline",
+    "subtitle": "Underwater cleanup by freediving — Calanques, Frioul & Blue Coast",
+    "desc1": "Association of eco-committed freedivers based in Marseille — documentation, cleanup and awareness-raising along the entire coastline: Calanques, Frioul, Blue Coast and to La Ciotat.",
+    "desc2": "From the surface to 20 meters deep, Team Oxygen conducts structured underwater cleanup operations by freediving:",
+    "bullet_photo": "photographic documentation of Calanques seafloor",
+    "bullet_data": "collection of environmental data on Mediterranean seafloor",
+    "president_note": "The association is chaired by Karim Saari, a committed freediving environmental photographer in Marseille, involved in Mediterranean coastal cleanup actions for 10 years.",
+    "editions": {
+      "2022": { "name": "Blue Coast, from Martigues to Estaque", "kg": "900" },
+      "2023": { "name": "Frioul Archipelago", "kg": "1,357" },
+      "2024": { "name": "Calanques National Park", "kg": "1,147" },
+      "2025": { "name": "Marseille Roadstead", "kg": "2,320" }
+    },
+    "next_edition_label": "Next edition",
+    "next_edition_title": "5th edition — October 2026",
+    "next_edition_desc": "The next major cleanup mission is being prepared. Subscribe to the newsletter to be informed first of the launch.",
+    "cta_team_oxygen": "View on Team Oxygen",
+    "gallery_title": "Photo gallery",
+    "gallery_subtitle": "A decade of underwater missions in images",
+    "gallery_desc": "Documented underwater cleanup — seafloor, marine life and waste collected in the Calanques.",
+    "cta_gallery": "View underwater gallery",
+    "editorial_title": "Acting at the source: The Calanques and the Blue Coast",
+    "editorial_subtitle": "Intervention zones — Marseille's Calanques and Mediterranean coastline",
+    "editorial_p1": "The urgency is at our doorstep: 80% of marine waste comes from land.",
+    "editorial_p2": "The impact on our coastline is massive.",
+    "editorial_p3": "For example, in the 2023 report of the Clean Calanques operation, 119 m³ of waste was collected on the Marseille coastline alone.",
+    "editorial_p4": "Among the most common pollutants in our nets: glass bottles, cans, plastic bottles and various packaging.",
+    "editorial_p5": "With Team Oxygen, each underwater immersion is direct action to remove these pollutants from our local biodiversity.",
+    "cta_sources": "Scientific sources",
+    "cta_landscapes": "Calanques Landscapes",
+    "org_title": "Team Oxygen — French non-profit association for the sea",
+    "org_subtitle": "Marine cleanup association based in Marseille",
+    "org_p1": "Team Oxygen is an association of eco-committed freedivers registered as a French non-profit (loi 1901),",
+    "org_p2": "Non-profit, it brings together volunteers, divers and photographers around a shared mission: to document, clean and protect Mediterranean seafloor.",
+    "org_p3": "The association works in areas inaccessible to surface cleanup: between 0 and 20 meters deep, where 94% of marine plastic settles and no longer degrades.",
+    "org_p4": "Each cleanup mission combines physical waste extraction, scientific sorting and characterization, and production of documentary images to raise public awareness.",
+    "org_p5": "Chaired by Karim Saari, Team Oxygen is also a partner of the Calanques National Park and works with the Sea Foundation.",
+    "org_p6": "Its missions are covered by ARTE, M6, France Television, La Provence, the Sea Foundation and many other media.",
+    "stat_founded": "Year founded",
+    "stat_waste": "Waste collected",
+    "stat_editions": "Sentinel Project editions",
+    "stat_sentinels": "Online Sentinels",
+    "cta_join": "Join the association",
+    "participate_title": "How to participate in an underwater cleanup mission?",
+    "participate_desc": "Team Oxygen welcomes motivated volunteers each year during the major Sentinel Project editions.",
+    "participate_note": "Freediving experience is not required — missions also mobilize surface teams for logistics, sorting and documentation.",
+    "for_freedivers": "For freedivers",
+    "freediver_p1": "Interventions take place between 0 and 20 meters, in pairs, with systematic safety briefing before each immersion.",
+    "freediver_p2": "No specific equipment is required beyond standard freediving gear.",
+    "freediver_p3": "Team Oxygen provides collection bags, surface nets and complete logistical organization.",
+    "freediver_p4": "Sessions last between 4 and 6 hours each morning throughout the edition.",
+    "edition5_label": "The 5th edition",
+    "edition5_desc": "Applications for the 5th edition — October 2026 will open soon.",
+    "edition5_newsletter": "Subscribe to the newsletter to receive the form first.",
+    "community_cta": "The 130,000 members of the Dark Massilia community are the primary force for citizen mobilization to protect the Calanques — every volunteer counts, whether you're an experienced freediver or committed citizen.",
+    "no_freediver_needed": "No need to be a freediver — just be committed.",
+    "before_mission": "Before each mission",
+    "access_title": "Access to Calanques forest massifs",
+    "access_desc": "Official real-time fire risk map — check before any outing.",
+    "cta_risk_map": "View risk map",
+    "blog_title": "Log",
+    "blog_subtitle": "News & mission reports",
+    "blog_desc": "Field reports, observed fauna and cleanup summaries from the Calanques.",
+    "cta_blog": "Read blog",
+    "videos_title": "Our missions in images and video",
+    "videos_subtitle": "Documentaries & mission videos",
+    "videos_desc": "ARTE, M6, France Television, field reports — find all our productions.",
+    "cta_videos": "Watch videos",
+    "cta_register": "Sign up to participate",
+    "cta_community": "Join the community",
+    "cta_home": "Back to Home"
+  },
+  "contact": {
+    "page_title": "Contact — Karim Saari · Dark Massilia",
+    "hero_title": "Let's collaborate for the Mediterranean: Reports, Exhibitions and Field Actions",
+    "name": "Karim Saari",
+    "brand": "Dark Massilia",
+    "role": "Environmental photographer · Marseille",
+    "whatsapp": "WhatsApp",
+    "email": "Email",
+    "location": "Marseille, France",
+    "vcard_hint": "Press to enlarge · Scan to add",
+    "vcard_add": "Add to contacts",
+    "press_title": "Press & Media",
+    "press_subtitle": "Journalists & documentarians",
+    "press_desc": "Reports, interviews, photo rights transfers, participation in Mediterranean documentaries.",
+    "press_kit": "Press kit",
+    "send_email": "Send email",
+    "partner_title": "Partnerships",
+    "partner_subtitle": "Brands & institutions",
+    "partner_desc": "Committed brands, local authorities, associations: field collaborations, awareness campaigns, sponsorship.",
+    "cta_whatsapp": "Direct WhatsApp",
+    "exhibition_title": "Exhibitions & Interventions",
+    "exhibition_subtitle": "Galleries, schools & conferences",
+    "exhibition_desc": "Photography exhibitions, awareness conferences, educational workshops on marine biodiversity.",
+    "send_request": "Send request",
+    "view_photos": "View photos",
+    "editorial_title": "Direct Contact: Exhibitions, Interventions and Reports",
+    "editorial_p1": "Do you want to organize a photography exhibition, plan an awareness intervention on marine pollution, or propose collaboration with Team Oxygen?",
+    "editorial_p2": "Based in Marseille, I prioritize direct and unmediated exchange.",
+    "editorial_p3": "Whether for documentary reports on the Mediterranean coastline, acquisition of art prints, or press requests (interviews, rights transfers), you can reach me instantly by email or WhatsApp.",
+    "editorial_p4": "Let's discuss your projects to together amplify the impact of the Sentinel Project.",
+    "qr_title": "Scan to add to contacts",
+    "qr_name": "Karim Saari — Dark Massilia",
+    "qr_close": "Close"
+  },
+  "medias": {
+    "page_title": "Press & Media — Karim Saari · Dark Massilia",
+    "hero_title": "Documentaries and Reports: Bearing Witness to Ecological Urgency in the Mediterranean",
+    "tv_label": "📺 TV Appearances",
+    "radio_label": "🎙 Radio",
+    "press_label": "📰 Press Review",
+    "tv_items": {
+      "echappees": {
+        "label": "Green Special",
+        "title": "Échappées Belles Green Special: Bouches-du-Rhône in action",
+        "desc": "Karim Saari dives into the Calanques for the Green Special of Échappées Belles — marine cleanup and threatened Mediterranean."
+      },
+      "arte": {
+        "label": "ARTE",
+        "title": "ARTE Documentary — Marseille against pollution",
+        "desc": "Documentary dive to the heart of the Calanques to film the invisible: waste, pollution and threatened marine life."
+      },
+      "arte_evasion": {
+        "label": "ARTE Escape",
+        "title": "Jellyfish | Sovereigns of the oceans",
+        "desc": "Jellyfish, fragile sentinels of ocean health — filmed testimony in the Mediterranean."
+      },
+      "tf1_1": {
+        "label": "TF1 Info",
+        "title": "The scandal of illegal dumps in Marseille's calanques",
+        "desc": "TF1 News investigates illegal dumps devastating the Calanques — with Karim Saari's underwater images."
+      },
+      "tf1_2": {
+        "title": "Garbage workers strike in Marseille: underwater impact",
+        "desc": "When uncollected garbage ends up underwater: Karim documents the impact live for TF1."
+      },
+      "novo": {
+        "label": "Novo19",
+        "title": "VIDEO. The Mediterranean, the world's most polluted sea",
+        "desc": "Novo19 report: figures, images and field testimony on the alarming state of the Mediterranean."
+      },
+      "provence": {
+        "label": "La Provence",
+        "title": "Marseille: 1.4 tons of waste removed from Frioul waters by freedivers",
+        "desc": "La Provence covers the largest cleanup operation of the Frioul archipelago by Team Oxygen."
+      }
+    },
+    "impact_title": "What each publication changes",
+    "impact_p1": "A report on TF1's evening news, immersion in Échappées Belles, or field investigations for La Provence... Each publication is not an end in itself.",
+    "impact_p2": "It opens doors: new volunteers, institutional partners, and a constant reminder that Mediterranean seafloor pollution is not an abstract problem.",
+    "impact_p3": "Three media pillars today carry this commitment:",
+    "impact_bullet1": "Échappées Belles (France 5) & ARTE — National and European reach to raise awareness of ecological urgency.",
+    "impact_bullet2": "La Provence — Echo of our local actions, documenting extraction of tons of waste at the Old Port and Frioul,",
+    "impact_bullet3": "confirming Karim Saari as an essential sentinel of Marseille's coastline.",
+    "impact_bullet4": "TF1 Info — Recognition of our expertise on major environmental news issues.",
+    "editorial_title": "The echo of commitment: Press and Media",
+    "editorial_p1": "My journey as a freediver and photographer has found resonance in national and international media,",
+    "editorial_p2": "validating an environmental photographer approach that links art to environmental alert.",
+    "editorial_p3": "Whether for my field expertise on TF1 and ARTE, my expeditions in Échappées Belles (France 5), or my artistic vision praised by National Geographic, each publication is a platform for coastal preservation.",
+    "editorial_p4": "My work and actions, carried individually or through Team Oxygen, benefit from recognition by major institutions:",
+    "editorial_p5": "the Calanques National Park, the Sea Foundation (One Gesture for the Sea program), Citeo and the City of Marseille.",
+    "editorial_p6": "Each media testimony — from La Provence to Midi Libre — brings the voice of the seafloor to the heart of public debate.",
+    "cta_newsletter": "Subscribe to newsletter",
+    "cta_blog": "Read blog"
+  },
+  "photos": {
+    "page_title": "Landscape Photographer in Marseille — Calanques, Coastline & Mediterranean | Karim Saari",
+    "hero_title": "Landscape Photographer in Marseille — Calanques, Coastline & Mediterranean",
+    "nav_coastal": "Coastline & Calanques",
+    "nav_provence": "Provence Lands",
+    "nav_horizons": "Distant Horizons",
+    "section_coastal_title": "Marseille's Coastline & Calanques",
+    "section_coastal_sub": "Landscape photography — Marseille's Calanques & Mediterranean",
+    "section_provence_title": "Provence & Camargue Lands",
+    "section_provence_sub": "Provence landscapes — Lavender fields, Valensole & hinterland",
+    "section_horizons_title": "Explorations & Distant Horizons",
+    "section_horizons_sub": "Travel photography — Basque Coast, Morocco & Madeira",
+    "portfolio_title": "Portfolio: from the abyssal to the horizon",
+    "portfolio_subtitle": "Sentinel of the coastline and wild lands",
+    "coastal_desc": "Marseille's Coastline & Calanques — An immersion in the heart of the Calanques National Park. Between monumental limestone cliffs and turquoise waters, I document the splendor and fragility of this rocky Mediterranean coastline. Exceptional geography where each wild cove calls for fauna preservation.",
+    "provence_desc": "Provence & Camargue Lands — From Camargue salt marshes to lavender fields of the Valensole plateau, I explore the Provençal hinterland. Under grazing lights, the wild relief of Luberon and Alpilles reveal the wealth of preserved Mediterranean flora.",
+    "horizons_desc": "Explorations & Distant Horizons — My travel journals open to the world's cultural diversity and landscapes. From Chefchaouen's blue alleys to Pilat dunes, my naturalist photographer's eye seeks to capture our planet's raw beauty, far beyond Marseille.",
+    "px500_desc": "Find all my high-resolution photos on 500px.",
+    "cta_px500": "View on 500px",
+    "passion_title": "My passion for landscape photography",
+    "passion_quote": "Twenty years roaming the Mediterranean, from the Basque Coast to the Calanques — and the conviction that the most beautiful landscapes are never at the end of the world, but at the end of the path you take each morning.",
+    "learning_title": "The learning",
+    "learning_p1": "It all started with a film camera and summers in the high mountains. As a teenager, I spent every summer around Chamonix, backpack in hand, traversing glaciers and ridges of the Mont-Blanc massif.",
+    "learning_p2": "That's where I met a guide who pulled out his camera between rope passages to capture grazing light on seracs. He taught me the essential: not to dominate the landscape, but to listen to it.",
+    "learning_p3": "The constraint of film — 36 exposures, no more — taught me patience and intention. Every shutter release was a decision, not a habit. My way of working has remained the same: few shots, lots of observation. Wait for the light, don't force it.",
+    "territories_title": "The territories",
+    "territories_p1": "Native of the Basque Coast, my first images were naturally of the ocean. Biarritz swells under grey autumn skies, villages perched on the foothills of the Pyrenees. I learned to read Atlantic light — soft, changing, sometimes brutal.",
+    "territories_p2": "Then in 2001, I arrived in Marseille. Everything changed. In a few hours of driving, you go from the turquoise blue of the Calanques to the ochre of the Luberon, wild Camargue marshes to Valensole lavender plateaus. A photographic wealth that never left me.",
+    "territories_p3": "The call of the open sea never stopped. Morocco first — Chefchaouen, Marrakech. Madeira next, vertical cliffs, laurel forests, levadas between two horizons. And always the Atlantic of my adolescence. No need to go to the end of the world — just observe what surrounds us.",
+    "commitment_title": "The commitment",
+    "commitment_p1": "For ten years, I've lived on Chemin de Morgiou, at the entrance to the Calanques National Park. This proximity transformed my perspective.",
+    "commitment_p2": "It was no longer just landscape photography: it was documentation, testimony. By diving in freediving, I discovered the extent of plastic pollution on the seafloor.",
+    "commitment_p3": "Photography taught me to see. Freediving taught me what there was to lose.",
+    "cta_underwater": "Underwater & Cleanup Gallery",
+    "cta_contact": "Contact us"
+  },
+  "underwater": {
+    "page_title": "Underwater Photography — Calanques of Marseille | Karim Saari",
+    "hero_title": "Team Oxygen: Calanques Cleanup and Underwater Photography",
+    "documented_label": "Documented cleanup",
+    "biodiversity_label": "Biodiversity and marine fauna"
+  },
+  "videos": {
+    "page_title": "Videos & Documentaries — Marine Cleanup | Karim Saari",
+    "hero_title": "Videos & Documentaries",
+    "hero_subtitle": "Cleanup in the Mediterranean — Marseille's Calanques",
+    "section_title": "The Videos",
+    "section_subtitle": "Video reports on marine cleanup and underwater photography — Karim Saari",
+    "desc": "From apnea immersion in the Calanques to reports broadcast on ARTE, our videos tell each cleanup mission. Images shot underwater, field testimonies, annual retrospectives — each format documents a reality the naked eye cannot always reach.",
+    "yt_desc": "Find all our productions on our YouTube channel, updated after each mission.",
+    "cta_yt": "Watch on YouTube",
+    "arte_label": "Documentary · ARTE",
+    "arte_title": "Karim Saari on ARTE",
+    "arte_subtitle": "ARTE Report — apnea, photography and Mediterranean protection",
+    "arte_desc": "In 2024, ARTE channel dedicated a report to Karim Saari's commitment to Mediterranean protection — freediver, photographer and sentinel of Calanques seafloor.",
+    "cta_arte": "Watch documentary",
+    "arte_meduses_label": "Documentary · ARTE Escape",
+    "arte_meduses_title": "Jellyfish | Sovereigns of the oceans",
+    "arte_meduses_subtitle": "ARTE documentary on Mediterranean jellyfish — underwater images Marseille",
+    "arte_meduses_desc": "Film by Sébastien Lafont (2024, 43 min). Karim Saari provided images shot in the Mediterranean for this documentary on jellyfish proliferation and marine ecosystem transformation."
+  },
+  "arte": {
+    "page_title": "ARTE — Pollution: We Must Save Marseille & its Calanques",
+    "hero_title": "Pollution: We must save Marseille and its Calanques",
+    "hero_subtitle": "Full report on the Mediterranean and eco-actors' commitment.",
+    "summary_title": "Summary of the ARTE Regards report",
+    "summary": "Marseille, France's second city, but low in the ranking for waste management. Garbage that often ends up... at sea. Faced with the scale of the problem, residents decided to tackle it themselves. The Calanques are Karim's preferred terrain of action. When not at his finance controller desk, this fifty-year-old spends time underwater and on hiking trails. A freediver for years, he joined a local club three years ago. While he initially thought to admire the seafloor's beauty, he quickly confronts Coca Cola cans and thousands of debris. 'Cleanup' outings begin, very physical. With his GoPro, he documents dozens of kilos of objects brought up. His photos join those of the coastline, also polluted. His goal? Raise public awareness on social media and at exhibitions. Eric and Isabelle have made fighting waste their profession but with very different approaches. Behind his sunglasses, young Eric believes in festive mobilization. Armed with a megaphone, he works festivals and gathers hundreds of Marseillais for 'cleanup' operations where dance and good humor are always welcome. But the key for him is elsewhere. With the association he created, Clean My Calanques, he visits schools to convince children not to repeat the behaviors of their elders. As a complement to these methods, Isabelle chose science. When she arrived in Marseille in 2000, she was a young marine biology researcher. Dismayed by what she sees, she finds that wild waste is not then considered pollution. She dives into the subject, writes a thesis, and develops a characterization methodology to try to identify sources and responsible parties. A long journey for this ecologist, as for Eric and Karim. But together and thanks to hundreds of citizens who support them, they are determined. Marseille must be saved!",
+    "quote_source": "— Excerpt from ARTE Regards documentary commentary, broadcast in 2024",
+    "more_arte": "More ARTE content",
+    "yt_channel": "ARTE YouTube channel",
+    "editorial_title": "ARTE highlights the Calanques",
+    "editorial_subtitle": "Marine environment documentary — Karim Saari in Marseille's Calanques",
+    "editorial_p1": "In 2024, European cultural channel ARTE devoted a report to Marseille eco-actors mobilized against plastic pollution in the Mediterranean.",
+    "editorial_p2": "At the heart of the documentary: Karim Saari, freediver and underwater photographer, committed within Team Oxygen and involved from the first"
+  },
+  "echappees": {
+    "page_title": "Échappées Belles — Green Special: Bouches-du-Rhône in action",
+    "hero_title": "Green Escapades Special — Bouches-du-Rhône in action",
+    "hero_desc": "France 5 dedicates an episode of Échappées Belles to field actors working for the environment in Bouches-du-Rhône — including Karim Saari's marine cleanup missions.",
+    "cta_replay": "Watch the show replay on France.tv",
+    "section_title": "The broadcast",
+    "p1": "Bouches-du-Rhône has more than 17,000 hectares of protected natural areas",
+    "p2": "— Alpilles, Camargue and Calanques — where exceptional fauna and flora coexist with heavily urbanized zones of Marseille, France's second city.",
+    "p3": "This vulnerable territory requires reconciling human pressure and ecosystem protection, which is precisely the challenge this Green Escapades Special documents.",
+    "p4": "Presented by Ismaël Khelifa and accompanied by eco-adventurer Matthieu Witvoet, the broadcast begins at the Calanques.",
+    "p5": "On the agenda: meeting with eco-citizens of the territory, inspired by landscape beauty and determined to preserve it.",
+    "p6": "Among them, Karim Saari, environmental photographer and freediver, committed for over ten years to marine cleanup actions and president of Team Oxygen.",
+    "p7": "For ten years, he documents and fights plastic pollution in Calanques seafloor through his freediving dives — and this national broadcast on France 5 gives new visibility to this fight.",
+    "gallery_title": "Broadcast excerpts"
+  },
+  "greenGot": {
+    "page_title": "Green-Got — Mediterranean Short Film | Karim Saari",
+    "hero_title": "Green-Got — Mediterranean",
+    "hero_desc": "Short film by Green-Got on the Mediterranean and marine cleanup."
+  },
+  "meduses": {
+    "page_title": "Jellyfish — Sovereigns of the Oceans | ARTE Documentary | Karim Saari",
+    "hero_title": "Jellyfish — Sovereigns of the Oceans",
+    "hero_desc": "ARTE documentary on jellyfish in the Mediterranean."
+  },
+  "sources": {
+    "page_title": "Scientific Data — Marine Pollution in the Mediterranean | Karim Saari",
+    "hero_title": "Scientific Data",
+    "hero_subtitle": "Sources & References — Mediterranean Pollution"
+  },
+  "blog": {
+    "page_title": "Blog — Marine Cleanup & Mediterranean News | Karim Saari",
+    "hero_title": "Log",
+    "hero_subtitle": "News & Actions",
+    "desc": "Articles about the Mediterranean Sea, marine fauna and Calanques cleanup",
+    "follow_desc": "Follow live the cleanup missions, encounters and favorites of the Dark Massilia team in the Mediterranean.",
+    "search_placeholder": "Search for an article...",
+    "all": "All",
+    "loading": "Loading articles...",
+    "no_results": "No articles found",
+    "read_more": "Read more",
+    "categories": {
+      "depollution": "Cleanup & Action",
+      "biodiversite": "Calanques Biodiversity",
+      "calanques": "Calanques & Coastline",
+      "pollution": "Pollution & Alerts"
+    }
+  },
+  "community": {
+    "page_title": "Join the Dark Massilia Community — Team Oxygen | Karim Saari",
+    "hero_title": "Join the Community",
+    "stats": {
+      "microplastics": "of global microplastics — for less than 1% of ocean surface",
+      "microplastics_label": "The Mediterranean trap",
+      "bottles": "plastic bottles dumped every minute into our waters",
+      "bottles_label": "The continuous deluge",
+      "land_waste": "of marine waste comes from our land activities — the solution is in our hands",
+      "land_waste_label": "Land origin",
+      "ingested": "of nanoplastics ingested per week — the weight of a credit card",
+      "ingested_label": "The boomerang impact"
+    },
+    "step1_title": "Follow and amplify",
+    "step1_desc": "Join the 'Friends of the Calanques' Facebook group and follow @karimsaari on Instagram.",
+    "step1_note": "Sharing our posts is already taking action: each share raises new audiences to the cause.",
+    "step2_title": "Provide material support",
+    "step2_desc": "Do you have a kayak, boat or utility vehicle? Contact us.",
+    "step2_note": "We need help reaching isolated areas, transporting collected waste and conducting land characterization.",
+    "step3_title": "Come in logistical support",
+    "step3_desc": "On the day, intervene from the shore or surface: sorting, waste characterization, logistics.",
+    "step3_note": "Dives are reserved for certified Team Oxygen members for safety and insurance reasons.",
+    "profile_kayak_title": "Kayaker / Boater",
+    "profile_kayak_desc": "You put your vessel at the team's service to reach inaccessible areas and transport recovered waste.",
+    "profile_land_title": "Land volunteer",
+    "profile_land_desc": "On shore, you sort and characterize collected waste, and participate in logistics and transport to recycling streams.",
+    "profile_photo_title": "Photographer / Videographer",
+    "profile_photo_desc": "From shore or surface, you document missions to amplify visibility and raise public awareness.",
+    "profile_digital_title": "Digital ambassador",
+    "profile_digital_desc": "You follow, like and share our actions on your networks.",
+    "profile_digital_note": "Visibility is concrete leverage to change mindsets."
+  },
+  "groupeFacebook": {
+    "page_title": "Facebook Group — Lovers of the Calanques | Dark Massilia",
+    "hero_title": "Facebook Calanques Group"
+  },
+  "twitter": {
+    "page_title": "News — Calanques Park Updates | Dark Massilia",
+    "hero_title": "Calanques Park News"
+  },
+  "localGuide": {
+    "page_title": "Google Local Guide Marseille — Level 10 | Karim Saari",
+    "hero_title": "Google Local Guide"
+  },
+  "carte": {
+    "page_title": "Interactive Map of the Calanques of Marseille | Karim Saari",
+    "hero_title": "Interactive Calanques Map"
+  },
+  "cartePhotos": {
+    "page_title": "Photo Map — Karim Saari Photography | Dark Massilia",
+    "hero_title": "Photo Map"
+  },
+  "accesMassifs": {
+    "page_title": "Forest Massif Access — Calanques | Karim Saari",
+    "hero_title": "Calanques Massif Access",
+    "fire_risk": "Fire risk",
+    "access_open": "Access open",
+    "access_closed": "Access closed",
+    "check_before": "Check before heading out"
+  },
+  "yab": {
+    "page_title": "The French — Yann Arthus-Bertrand | Karim Saari",
+    "hero_title": "The French — Yann Arthus-Bertrand",
+    "hero_subtitle": "Photographed by Yann Arthus-Bertrand"
+  },
+  "dossierPresse": {
+    "page_title": "Press Kit — Karim Saari · Dark Massilia",
+    "hero_title": "Press Kit"
+  },
+  "legal": {
+    "legal_title": "Legal Notice",
+    "legal_subtitle": "In accordance with Law no. 2004-575 of June 21, 2004 on confidence in the digital economy.",
+    "section1": "1. Site Editor",
+    "corporate_name": "Corporate name",
+    "brand": "Brand name",
+    "legal_form": "Legal form",
+    "individual_entrepreneur": "Individual entrepreneur",
+    "naf_code": "NAF / APE code",
+    "photo_activities": "Photography activities",
+    "registration": "Registration",
+    "at_rcs": "at the Marseille Business Register",
+    "address": "Address",
+    "email": "Email",
+    "section2": "2. Publication Director",
+    "as_editor": "as editor of karimsaari.com",
+    "section3": "3. Hosting provider",
+    "company": "Company",
+    "website": "Website",
+    "section4": "4. Intellectual Property",
+    "ip_p1": "All content on this site — texts, photographs, videos, graphics, logos and visual elements — is the exclusive property of SAARI KARIM or his partners and is protected by French and international laws on copyright and intellectual property.",
+    "ip_p2": "Any reproduction, representation, modification or exploitation, in whole or in part, of the site's contents is strictly prohibited without prior written authorization from the editor.",
+    "section5": "5. Limitation of Liability",
+    "liability_p1": "The editor endeavors to keep information published on this site current and accurate. However, he cannot be held responsible for errors, omissions or results obtained from misuse of published information.",
+    "liability_p2": "The editor cannot be held responsible for direct or indirect damages resulting from access to the site or use of its information.",
+    "section6": "6. Hyperlinks",
+    "links_p1": "This site may contain links to third-party sites. The editor exercises no control over these sites and disclaims any responsibility for their content or personal data practices.",
+    "links_p2": "Any request to establish a hyperlink to karimsaari.com must be subject to prior authorization from the editor.",
+    "section7": "7. Applicable Law",
+    "privacy_title": "Privacy Policy",
+    "privacy_subtitle": "In accordance with the General Data Protection Regulation (GDPR — EU 2016/679) and the amended Data Protection Act.",
+    "section_controller": "1. Data Controller",
+    "section_data": "2. Data collected and purposes",
+    "newsletter_section": "a. Dark Massilia Newsletter",
+    "data": "Data",
+    "email_address": "Email address",
+    "purpose": "Purpose",
+    "newsletter_purpose": "Sending newsletter about missions, photos and news.",
+    "legal_basis": "Legal basis",
+    "newsletter_legal": "Explicit consent (Art. 6.1.a GDPR) — checkbox during registration.",
+    "storage": "Storage",
+    "newsletter_storage": "Until unsubscription. Each email contains an unsubscribe link.",
+    "recipients": "Recipients",
+    "newsletter_recipients": "Supabase (storage), Brevo ex-Sendinblue (email routing).",
+    "map_section": "b. Interactive Calanques Map",
+    "map_data_desc": "Geolocated photographs, GPS coordinates of dive sites.",
+    "map_purpose": "Display of public map of cleanup missions.",
+    "map_note": "No personal user data is collected when viewing the map.",
+    "section_cookies": "3. Cookies and trackers",
+    "necessary_cookies": "a. Strictly necessary technical cookies",
+    "necessary_desc": "Technical cookies may be created by Supabase for session management during newsletter registration. These cookies do not require prior consent (Art. 82 of the Data Protection Act).",
+    "analytics_cookies": "b. Audience measurement — Google Analytics 4 (GA4)",
+    "analytics_desc": "This site uses Google Analytics 4 via Google Tag Manager (GTM) deployed with Consent Mode v2 Advanced.",
+    "without_consent": "Without consent",
+    "without_consent_desc": "GA4 operates in cookieless mode: no measurement cookies are placed, no persistent identifiers are created. Anonymized pings not attributable to any individual may be transmitted for aggregate statistical modeling by Google.",
+    "with_consent": "With consent",
+    "with_consent_desc": "Standard collection activated via the following 4 signals:",
+    "nav_cookies": "Navigation analysis cookies",
+    "sitemap_title": "Site Map",
+    "plan_du_site": "Site Map"
+  },
+  "notFound": {
+    "label": "Error",
+    "title": "Page not found",
+    "desc": "This page doesn't exist or has been moved. The seabed is better mapped than this.",
+    "cta": "← Back to Home"
+  },
+  "photographeEnv": {
+    "page_title": "Environmental Photographer Marseille — Karim Saari | Dark Massilia",
+    "hero_title": "Environmental Photographer Marseille",
+    "hero_subtitle": "Karim Saari — Sentinel of the Calanques"
+  },
+  "seo": {
+    "home_title": "Environmental Photographer Marseille & Calanques — Karim Saari",
+    "home_desc": "Karim Saari, environmental and underwater photographer from Marseille. Discover my underwater shots and commitment to protecting the Mediterranean.",
+    "missions_title": "Marine Cleanup Marseille | Karim Saari — Projet Sentinelle",
+    "missions_desc": "Team Oxygen, marine cleanup association in Marseille. Since 2022, 5,724 kg of waste extracted from the Calanques by freediving.",
+    "videos_title": "Videos — Mediterranean Cleanup | Karim Saari",
+    "videos_desc": "Watch documentaries and underwater action reports. Marine cleanup in the Mediterranean, Calanques of Marseille — broadcast on ARTE and TF1.",
+    "contact_title": "Contact — Karim Saari · Dark Massilia",
+    "contact_desc": "Contact Karim Saari for collaborations, press partnerships, photo exhibitions and marine environmental awareness.",
+    "photos_title": "Landscape Photographer Marseille — Calanques, Coastline & Mediterranean | Karim Saari",
+    "photos_desc": "Discover Karim Saari's landscape photography portfolio — Calanques of Marseille, Provence, Camargue and Mediterranean coastline."
+  }
+}

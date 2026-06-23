@@ -1,0 +1,726 @@
+{
+  "nav": {
+    "portfolio": {
+      "name": "Portfolio",
+      "title": "Galeries photo — Marseille & Calanques",
+      "desc": "Photographies sous-marines, paysages du littoral marseillais et démarche de photographe environnemental.",
+      "env_photo": { "name": "Photographe environnemental", "hubDesc": "Démarche, univers photographique & partenaires" },
+      "underwater": { "name": "Photos sous-marines" },
+      "landscapes": { "name": "Photos de paysages" },
+      "photo_map": { "name": "Carte des photos" },
+      "yab": { "name": "Yann Arthus-Bertrand" }
+    },
+    "missions": {
+      "name": "Missions",
+      "title": "Agir pour la mer Méditerranée",
+      "desc": "Dépollution des fonds marins en apnée, documentation scientifique et mobilisation citoyenne dans les Calanques.",
+      "community": { "name": "Rejoindre la communauté", "hubDesc": "Rejoins la mission — bénévoles, plongeurs, partenaires" },
+      "depollution": { "name": "Dépollution marine" },
+      "scientific": { "name": "Données scientifiques" },
+      "local_guide": { "name": "Google Local Guide" }
+    },
+    "medias": {
+      "name": "Médias",
+      "title": "Actualités & présence médias",
+      "desc": "Documentaires ARTE, presse nationale, vidéos, blog et actualités sur l'engagement environnemental à Marseille.",
+      "videos": { "name": "Vidéos & Documentaires", "hubDesc": "ARTE, M6, France Télévisions, YouTube" },
+      "arte": { "name": "ARTE — Sauver Marseille" },
+      "meduses": { "name": "ARTE — Méduses" },
+      "echappees": { "name": "Échappées Belles" },
+      "green_got": { "name": "Green-Got — Méditerranée" },
+      "blog": { "name": "Blog" }
+    },
+    "calanques": {
+      "name": "Calanques",
+      "title": "Explorer les Calanques de Marseille",
+      "desc": "Carte interactive, accès aux massifs, actualités du Parc national et communauté des amoureux des Calanques.",
+      "facebook_group": { "name": "Groupe Facebook Calanques", "hubDesc": "Plus de {{count}} membres — la plus grande communauté des Calanques" },
+      "news": { "name": "News Parc des Calanques" },
+      "map": { "name": "Carte interactive des Calanques" },
+      "access": { "name": "Accès aux massifs forestiers" }
+    },
+    "contact": {
+      "name": "Contact",
+      "title": "Découvrir comment agir pour la mer",
+      "desc": "Collaborations, partenariats médias ou institutionnels — rejoignez la mission Dark Massilia.",
+      "collaborate": { "name": "Collaborer avec nous", "hubDesc": "Partenariats, médias, institutions" },
+      "press": { "name": "Presse & médias" },
+      "email": { "name": "Envoyer un email" },
+      "newsletter": { "name": "Newsletter" },
+      "team_oxygen": { "name": "Team Oxygen — site officiel" }
+    },
+    "aria_main": "Navigation principale",
+    "aria_mobile": "Navigation mobile",
+    "aria_open": "Ouvrir le menu de navigation",
+    "aria_close": "Fermer le menu",
+    "see": "Voir →",
+    "mobile_subtitle": "Photographe environnemental",
+    "follow_us": "Suivez-nous"
+  },
+  "footer": {
+    "portfolio": "Portfolio",
+    "missions": "Missions",
+    "medias": "Médias",
+    "calanques": "Calanques",
+    "contact": "Contact",
+    "env_photo": "Photographe environnemental",
+    "underwater": "Photos sous-marines",
+    "landscapes": "Photos de paysages",
+    "photo_map": "Carte des photos",
+    "yab": "Yann Arthus-Bertrand",
+    "community": "Rejoindre la communauté",
+    "depollution": "Dépollution marine",
+    "scientific": "Données scientifiques",
+    "local_guide": "Google Local Guide",
+    "videos": "Vidéos & Documentaires",
+    "arte": "ARTE — Sauver Marseille",
+    "meduses": "ARTE — Méduses",
+    "echappees": "Échappées Belles",
+    "blog": "Blog",
+    "facebook_group": "Groupe Facebook Calanques",
+    "news": "News Parc des Calanques",
+    "map": "Carte interactive",
+    "access": "Accès massifs",
+    "collaborate": "Collaborer avec nous",
+    "press": "Presse & médias",
+    "email": "Email direct",
+    "newsletter": "Newsletter",
+    "team_oxygen": "Team Oxygen",
+    "location": "Marseille, Bouches-du-Rhône · France",
+    "copyright_role": "Photographe environnemental & sous-marin · Sentinelle des Calanques — Fondateur de",
+    "copyright_president": "& Président de",
+    "site_map": "Plan du site",
+    "legal": "Mentions légales",
+    "privacy": "Politique de confidentialité",
+    "cookies": "Gérer les cookies",
+    "follow": "Suivez-nous",
+    "aria_secondary": "Navigation secondaire"
+  },
+  "common": {
+    "tagline": "Une Mer · Une Ville · Une Mission",
+    "mission_statement": "Sentinelle des Calanques, je documente et nettoie les fonds marins de Marseille en apnée. Avec Team Oxygen, chaque plongée devient une mission de dépollution.",
+    "back_home": "← Retour à l'accueil",
+    "read_more": "Lire la suite",
+    "learn_more": "En savoir plus",
+    "see_more": "Voir plus",
+    "contact_us": "Nous contacter",
+    "close": "Fermer",
+    "loading": "Chargement…",
+    "error_404_label": "Erreur",
+    "error_404_title": "Page introuvable",
+    "error_404_desc": "Cette page n'existe pas ou a été déplacée. Les fonds marins sont mieux cartographiés que ça.",
+    "page_loader": "Chargement de la page…",
+    "skip_content": "Aller au contenu principal",
+    "back_to_top": "Retour en haut de page",
+    "open_tab": "(ouvre un nouvel onglet)"
+  },
+  "home": {
+    "hero": {
+      "title": "Photographie & Engagement : Révéler et Protéger les Calanques de Marseille",
+      "subtitle": "Rendre visible l'invisible.",
+      "desc1": "Entre photographie artistique et exploration en apnée, je documente la beauté brute du littoral marseillais pour témoigner de l'urgence écologique.",
+      "desc2": "Sentinelle des Calanques, je conjugue la puissance de l'image aux actions de terrain avec Team Oxygen pour préserver durablement la biodiversité de notre Méditerranée.",
+      "cta_photo": "Obtenir une photo offerte",
+      "cta_discover": "Découvrir les Calanques",
+      "cta_contact": "Me contacter",
+      "community_label": "abonnés & membres de la communauté"
+    },
+    "about": {
+      "name": "Karim Saari — Photographe Environnemental & Sentinelle des Calanques",
+      "desc": "De la photographie de paysages côtiers aux images sous-marines, j'utilise mon objectif pour amplifier la voix de Marseille, des Calanques et de ceux qui les protègent.",
+      "vision_title": "La vision",
+      "vision_desc": "Photographe environnemental en Méditerranée, je capture la beauté de nos côtes, en surface comme en apnée, pour documenter l'état réel de nos écosystèmes.",
+      "vision_quote": "Chaque image est un document, une preuve, un appel à l'action.",
+      "action_title": "L'action",
+      "action_desc1": "Fondateur d'une communauté de 130 000 personnes engagées pour la protection des Calanques,",
+      "action_desc2": "je rends visible l'impact de la pollution plastique à travers des documentaires, des expositions photo et des missions de nettoyage sous-marin avec mon association.",
+      "learn_more": "En savoir plus sur ma démarche"
+    },
+    "stats": {
+      "title": "10 ans d'engagement — Marseille & Calanques",
+      "subtitle": "Nettoyage marin et photographie environnementale depuis 2018",
+      "community_label": "Abonnés passionnés des Calanques",
+      "community_sub": "sur l'ensemble des réseaux sociaux",
+      "community_detail": "dont {{count}} sur le groupe Facebook",
+      "waste_label": "Déchets collectés des fonds marins de Marseille",
+      "waste_sub": "jusqu'à 20 mètres de profondeur",
+      "waste_detail": "900 + 1 357 + 1 147 + 2 320 kg · 4 éditions",
+      "maps_label": "Vues Google Maps de Marseille et alentours",
+      "maps_sub": "9 ans de contributions Local Guide",
+      "maps_detail": "Photos et avis des Calanques de Marseille",
+      "px500_label": "Impressions photo sur 500px",
+      "px500_sub": "photographie sous-marine & paysages",
+      "px500_detail": "798K impressions · 29,4K likes photo · 667 abonnés",
+      "waste_collected": "de déchets collectés",
+      "of_adventure": "d'aventure"
+    },
+    "yab": {
+      "title": "Les Français — Yann Arthus-Bertrand",
+      "subtitle": "Photographié par Yann Arthus-Bertrand",
+      "desc": "Karim Saari et Team Oxygen ont été sélectionnés par Yann Arthus-Bertrand pour son projet « Les Français » — une galerie de portraits photographiques de ceux qui font la France, à Marseille en 2024.",
+      "cta": "Voir le projet"
+    },
+    "blog_title": "Derniers articles",
+    "missions": {
+      "title": "Agir pour la Méditerranée.",
+      "subtitle": "Plongée, apnée et nettoyage des fonds — Calanques de Marseille",
+      "desc1": "À Marseille avec Team Oxygen, nous menons des opérations de nettoyage sous-marin de la surface à 20 mètres pour dépolluer les fonds, documenter les déchets et protéger la biodiversité locale.",
+      "desc2": "Calanques, Frioul, Côte Bleue, La Ciotat : chaque mission est une action concrète pour notre littoral.",
+      "cta_missions": "Découvrir nos missions",
+      "cta_media": "Couverture médias"
+    },
+    "videos": {
+      "title": "Vidéos de missions",
+      "desc": "Documentaires ARTE, reportages de nettoyage sous-marin, rétrospectives annuelles… Vivez nos missions depuis les profondeurs des Calanques de Marseille.",
+      "cta": "Voir les vidéos"
+    },
+    "gallery": {
+      "title": "Deux mondes, un engagement",
+      "desc1": "Des falaises calcaires du littoral marseillais aux profondeurs de la Méditerranée, découvrez un témoignage visuel unique.",
+      "desc2": "Entre la splendeur des paysages provençaux et l'urgence écologique des fonds marins, chaque image raconte la fragilité de l'équilibre de notre écosystème.",
+      "cta_landscapes": "Galerie paysages & littoral",
+      "cta_underwater": "Galerie sous-marine & nettoyage",
+      "cta_map": "Carte des photos"
+    },
+    "community": {
+      "title": "Rejoindre l'Aventure",
+      "subtitle": "Bénévolat nettoyage marin — Rejoignez Team Oxygen à Marseille",
+      "desc": "Passionné des Calanques de Marseille ? Rejoignez notre communauté pour suivre nos actions et participer à la protection de la Méditerranée.",
+      "cta_fb": "Rejoindre le groupe Facebook",
+      "cta_newsletter": "S'abonner à la newsletter"
+    },
+    "impact_title": "Le saviez-vous ?",
+    "impact_facts": [
+      "Une concentration disproportionnée : La mer Méditerranée ne représente que 1 % de la surface des océans mondiaux, mais elle concentre 7 % de la totalité des microplastiques de la planète.",
+      "L'absurdité du jetable : Il faut environ 1 seconde pour fabriquer un sac plastique et son utilisation moyenne ne dure que 20 minutes, pourtant il lui faudra plus d'un siècle pour se dégrader dans le milieu naturel.",
+      "Une persistance millénaire : Alors qu'un mégot de cigarette met environ 10 ans à se dégrader en mer, une ligne de pêche en plastique peut mettre jusqu'à 600 ans à disparaître.",
+      "L'échelle planétaire : On estime à 5,25 trillions le nombre de particules plastiques qui flottent actuellement à la surface des océans, soit un poids d'environ 269 000 tonnes.",
+      "L'omniprésence en Méditerranée : La densité moyenne de plastiques en Méditerranée (1 objet tous les 4 m²) est comparable à celle des cinq grands gyres océaniques subtropicaux, souvent appelés « continents de plastique ».",
+      "Un piège mortel pour la faune : Les tortues marines confondent les plastiques transparents avec des méduses, leur causant de graves blessures ou la mort, tandis que des dauphins peuvent mourir la mâchoire bloquée par des anneaux plastiques qu'ils ont tenté de jouer avec.",
+      "Une contamination massive des oiseaux : Plus de 90 % des oiseaux marins ont déjà ingéré du plastique, et les projections indiquent que 99 % des espèces seront touchées d'ici 2050.",
+      "Le flux incessant : Les populations côtières déversent environ 8 millions de tonnes de déchets plastiques dans les océans chaque année, un chiffre qui pourrait doubler en une décennie sans amélioration de la gestion des déchets.",
+      "Le fléau du mégot : Lors de la seule opération « Calanques Propres » de 2023, plus de 70 000 mégots de cigarettes ont été collectés, illustrant une pollution locale massive et préoccupante.",
+      "Une pollution inévitable : Lors d'une vaste campagne d'échantillonnage du bassin méditerranéen, des débris plastiques flottants ont été retrouvés à 100 % des sites analysés."
+    ],
+    "map": {
+      "title": "Carte interactive des Calanques & littoral de Marseille",
+      "desc": "Explorez les Calanques de Marseille via une carte interactive avec paysages, spots de plongée et actions de nettoyage menées avec Team Oxygen sur le littoral marseillais.",
+      "note": "Consultez aussi les conditions d'accès aux massifs avant de sortir — ouvert ou fermé selon le risque incendie du jour.",
+      "cta_map": "Explorer la carte",
+      "cta_access": "Accès massifs Calanques"
+    },
+    "faq_title": "Questions fréquentes",
+    "faq": [
+      {
+        "q": "Qu'est-ce que le Projet Sentinelle ?",
+        "a": "Le Projet Sentinelle est l'opération phare annuelle menée par Team Oxygen pour la protection de la Méditerranée. Tout au long de l'année, des actions de veille, de sensibilisation et d'intervention ponctuelle sont organisées sur le littoral marseillais. Chaque automne, l'initiative devient intensive : une semaine entière de nettoyage sous-marin en apnée dans les Calanques de Marseille. Les équipes interviennent entre 0 et 20 mètres de profondeur, avec des sessions quotidiennes de 5 à 6 heures dans l'eau. Les déchets collectés — essentiellement des plastiques et macro-déchets — sont remontés, triés et quantifiés pour documenter l'état réel des fonds."
+      },
+      {
+        "q": "Combien de déchets le Projet Sentinelle a-t-il collectés ?",
+        "a": "En 4 éditions (2022–2025), le Projet Sentinelle et Team Oxygen ont collecté plus de 5 724 kg de déchets marins : 900 kg sur la Côte Bleue (2022), 1 357 kg à l'archipel du Frioul (2023), 1 147 kg dans le Parc national des Calanques (2024), et 2 320 kg dans la Rade de Marseille (2025)."
+      },
+      {
+        "q": "Comment participer aux missions de nettoyage des Calanques ?",
+        "a": "Pour participer aux missions de nettoyage dans les Calanques de Marseille, contactez Team Oxygen via la page Contact de karimsaari.com ou rejoignez la communauté via le groupe Facebook « Amoureux des Calanques ». Les immersions en apnée nécessitent des compétences techniques et une pratique encadrée. Nous avons principalement besoin de bénévoles pour le soutien logistique terrestre (tri, pesée, gestion du matériel, sensibilisation) ainsi que de kayakistes pour l'assistance en surface et la sécurisation des zones."
+      },
+      {
+        "q": "Pourquoi la mer Méditerranée est-elle l'une des mers les plus polluées au monde par les plastiques ?",
+        "a": "La Méditerranée agit comme un véritable « piège à plastique » : c'est une mer semi-fermée dont les eaux mettent environ 90 ans à se renouveler, tandis que les plastiques ont une durée de vie bien supérieure à un siècle. Ses côtes sont densément peuplées (150 millions d'habitants), le trafic maritime y est très intense (30 % du trafic mondial), et elle subit une pression touristique massive. Bien qu'elle ne représente que 1 % de la surface des océans mondiaux, elle concentre 7 % de la totalité des microplastiques de la planète."
+      },
+      {
+        "q": "Quelle quantité de plastique est déversée chaque jour en Méditerranée ?",
+        "a": "Entre 700 et 1 400 tonnes de plastiques sont déversées chaque jour en mer Méditerranée — l'équivalent d'un à deux camions-poubelles par heure, soit 33 800 bouteilles plastiques jetées à la mer chaque minute. Au total, plus d'un million de tonnes de plastiques se trouvent déjà dans le bassin méditerranéen."
+      },
+      {
+        "q": "D'où proviennent ces déchets plastiques ?",
+        "a": "Environ 80 % des déchets marins proviennent d'activités terrestres. Ils sont acheminés par les fleuves (comme le Rhône, le Pô ou le Nil) qui agissent comme des convoyeurs, par les ruissellements urbains (la pluie qui balaie les déchets des rues vers la mer), ou sont directement abandonnés sur les littoraux. Les 20 % restants proviennent des activités maritimes telles que la pêche, l'aquaculture et le transport maritime."
+      },
+      {
+        "q": "Quels déchets trouve-t-on le plus souvent en mer et sur les plages ?",
+        "a": "Le plastique représente 95 % des déchets marins en Méditerranée. Les objets les plus fréquemment retrouvés sont les emballages alimentaires, les bouteilles plastiques, les bouchons, les sacs et les engins de pêche. Les mégots de cigarettes (dont les filtres contiennent du plastique) constituent également un fléau majeur, représentant une large part des déchets collectés sur les plages."
+      },
+      {
+        "q": "Combien de temps met un déchet plastique à se dégrader en mer ?",
+        "a": "Les plastiques se biodégradent à peine à l'échelle humaine ; ils persistent pendant des centaines d'années. Un sac plastique met entre 20 et plus de 100 ans à se dégrader, une bouteille plastique environ 450 ans, et une ligne de pêche jusqu'à 600 ans. La disparition « visuelle » des déchets est trompeuse : ils se fragmentent simplement en millions de microplastiques sous l'effet du soleil et des vagues."
+      },
+      {
+        "q": "Qu'est-ce que les microplastiques et pourquoi sont-ils si dangereux ?",
+        "a": "Les microplastiques sont de minuscules fragments de plastique mesurant moins de 5 millimètres, issus de la dégradation de déchets plus grands. Ils sont particulièrement dangereux car leur taille est similaire à celle du plancton. En Méditerranée, le rapport microplastiques/zooplancton peut atteindre 1 pour 2, entraînant une ingestion massive par les poissons et autres prédateurs marins. De plus, ils agissent comme des éponges, concentrant sur leur surface des polluants chimiques et toxiques."
+      },
+      {
+        "q": "Les plastiques flottent-ils toujours à la surface de l'eau ?",
+        "a": "Non — ce que l'on voit en surface n'est que la partie émergée de l'iceberg. On estime que 94 % des plastiques entrant en Méditerranée finissent par couler et se déposer sur les fonds marins. Les 6 % restants se répartissent entre les plages (5 %) et la surface (1 %). Une fois au fond, dans l'obscurité, le froid et l'absence d'oxygène, le plastique ne se dégrade presque plus."
+      },
+      {
+        "q": "Quel est l'impact de cette pollution sur la faune marine ?",
+        "a": "Les conséquences sont catastrophiques : plus de 700 espèces marines sont impactées à l'échelle mondiale, et toutes les espèces de tortues marines de Méditerranée sont touchées par l'ingestion de plastiques. Les tortues confondent souvent les sacs plastiques avec des méduses. Les grands cétacés avalent des microplastiques en filtrant l'eau, tandis que de nombreux oiseaux, poissons et dauphins meurent d'occlusions intestinales ou suite à un enchevêtrement dans des filets fantômes abandonnés."
+      },
+      {
+        "q": "La pollution plastique marine a-t-elle des conséquences sur la santé humaine ?",
+        "a": "Oui, la chaîne alimentaire humaine est directement contaminée. En consommant des fruits de mer (comme des poissons, des moules ou des huîtres) ou même via le sel marin, nous ingérons des plastiques. Actuellement, un être humain ingère environ 5 grammes de plastiques par semaine — le poids d'une carte de crédit. Ces plastiques contiennent et libèrent des additifs chimiques qui agissent souvent comme des perturbateurs endocriniens, favorisant diverses maladies."
+      },
+      {
+        "q": "Quel est le rôle du tourisme dans cette pollution ?",
+        "a": "Le bassin méditerranéen accueille plus de 200 millions de touristes par an. Cet afflux saisonnier provoque une augmentation de 40 % de la production de déchets en été, saturant les infrastructures locales de gestion des déchets et entraînant l'abandon direct de déchets sur les littoraux."
+      },
+      {
+        "q": "Qu'est-ce que la photographie environnementale ?",
+        "a": "La photographie environnementale utilise les images de paysages, de plantes ou d'animaux pour éveiller chez le spectateur le désir de les protéger — notamment face aux dangers que la nature affronte. En Méditerranée, elle devient un outil de témoignage direct : chaque image des Calanques de Marseille, de leurs fonds marins ou de la faune locale est une preuve visuelle de l'urgence écologique."
+      },
+      {
+        "q": "Quel matériel utilisez-vous pour la photographie sous-marine dans les Calanques ?",
+        "a": "La photographie sous-marine dans les Calanques de Marseille se pratique principalement en apnée, ce qui impose des contraintes très différentes de la plongée bouteille : pas de bulles, pas de bruit, une proximité naturelle avec la faune. J'utilise un caisson étanche avec un grand angle pour capturer la profondeur des fonds et la lumière naturelle méditerranéenne. La transparence exceptionnelle des eaux des Calanques — entre 15 et 30 mètres de visibilité — permet des images d'une clarté rare, aussi bien pour les paysages sous-marins que pour la documentation des espèces comme les pieuvres, les mérous et la posidonie."
+      },
+      {
+        "q": "Où peut-on voir vos photographies sous-marines des Calanques de Marseille ?",
+        "a": "Mes photographies sous-marines des Calanques sont accessibles sur ce site dans la galerie dédiée à la photographie sous-marine, rassemblant plus de 58 clichés pris lors des missions de nettoyage du Projet Sentinelle (2022–2025). Vous pouvez également retrouver une sélection de paysages marins et de paysages terrestres dans la galerie de photographie de paysages, ainsi que sur mon profil 500px (karimsaari) où mes images cumulent plus de 800 000 impressions."
+      }
+    ]
+  },
+  "missions": {
+    "page_title": "Nettoyage marin Marseille | Team Oxygen — Projet Sentinelle",
+    "hero_title": "Team Oxygen : Association de plongeurs en apnée engagés pour la mer Méditerranée à Marseille",
+    "updated": "Mis à jour le 19 mars 2026",
+    "section_mission": "Notre mission sur le littoral méditerranéen",
+    "subtitle": "Nettoyage sous-marin en apnée — Calanques, Frioul & Côte Bleue",
+    "desc1": "Association d'apnéistes éco-engagés basée à Marseille — documentation, nettoyage et sensibilisation sur tout le littoral : Calanques, Frioul, Côte Bleue et jusqu'à La Ciotat.",
+    "desc2": "De la surface à 20 mètres de fond, Team Oxygen mène des opérations structurées de nettoyage sous-marin en apnée :",
+    "bullet_photo": "documentation photographique des fonds des Calanques",
+    "bullet_data": "collecte de données environnementales sur les fonds méditerranéens",
+    "president_note": "L'association est présidée par Karim Saari, photographe environnemental engagé en apnée à Marseille, impliqué dans les actions de nettoyage du littoral méditerranéen depuis 10 ans.",
+    "editions": {
+      "2022": { "name": "Côte Bleue, de Martigues à l'Estaque", "kg": "900" },
+      "2023": { "name": "Archipel du Frioul", "kg": "1 357" },
+      "2024": { "name": "Parc national des Calanques", "kg": "1 147" },
+      "2025": { "name": "Rade de Marseille", "kg": "2 320" }
+    },
+    "next_edition_label": "Prochaine édition",
+    "next_edition_title": "5e édition — octobre 2026",
+    "next_edition_desc": "La prochaine grande mission de nettoyage est en cours de préparation. Abonnez-vous à la newsletter pour être informé en premier du lancement.",
+    "cta_team_oxygen": "Voir sur Team Oxygen",
+    "gallery_title": "Galerie photo",
+    "gallery_subtitle": "Une décennie de missions sous-marines en images",
+    "gallery_desc": "Nettoyage sous-marin documenté — fonds marins, faune et déchets collectés dans les Calanques.",
+    "cta_gallery": "Voir la galerie sous-marine",
+    "editorial_title": "Agir à la source : Les Calanques et la Côte Bleue",
+    "editorial_subtitle": "Zones d'intervention — Calanques de Marseille et littoral méditerranéen",
+    "editorial_p1": "L'urgence est à notre porte : 80 % des déchets marins viennent de la terre.",
+    "editorial_p2": "L'impact sur notre littoral est massif.",
+    "editorial_p3": "Ainsi, dans le bilan 2023 de l'opération Calanques Propres, 119 m³ de déchets ont été collectés sur le seul littoral marseillais.",
+    "editorial_p4": "Parmi les polluants les plus courants dans nos filets : bouteilles en verre, canettes, bouteilles plastiques et emballages divers.",
+    "editorial_p5": "Avec Team Oxygen, chaque immersion sous-marine est une action directe pour retirer ces polluants de notre biodiversité locale.",
+    "cta_sources": "Sources scientifiques",
+    "cta_landscapes": "Paysages des Calanques",
+    "org_title": "Team Oxygen — Association française pour la mer",
+    "org_subtitle": "Association de nettoyage marin basée à Marseille",
+    "org_p1": "Team Oxygen est une association d'apnéistes éco-engagés déclarée en loi 1901,",
+    "org_p2": "À but non lucratif, elle rassemble bénévoles, plongeurs et photographes autour d'une mission commune : documenter, nettoyer et protéger les fonds méditerranéens.",
+    "org_p3": "L'association intervient dans des zones inaccessibles au nettoyage de surface : entre 0 et 20 mètres de fond, là où 94 % des plastiques marins se déposent et ne se dégradent plus.",
+    "org_p4": "Chaque mission de nettoyage combine extraction physique de déchets, tri et caractérisation scientifique, et production d'images documentaires pour sensibiliser le grand public.",
+    "org_p5": "Présidée par Karim Saari, Team Oxygen est également partenaire du Parc national des Calanques et collabore avec la Fondation de la Mer.",
+    "org_p6": "Ses missions sont couvertes par ARTE, M6, France Télévision, La Provence, la Fondation de la Mer et de nombreux autres médias.",
+    "stat_founded": "Année de fondation",
+    "stat_waste": "Déchets collectés",
+    "stat_editions": "Éditions Projet Sentinelle",
+    "stat_sentinels": "Sentinelles en ligne",
+    "cta_join": "Rejoindre l'association",
+    "participate_title": "Comment participer à une mission de nettoyage sous-marin ?",
+    "participate_desc": "Team Oxygen accueille chaque année des bénévoles motivés lors des grandes éditions du Projet Sentinelle.",
+    "participate_note": "L'expérience en apnée n'est pas requise — les missions mobilisent aussi des équipes de surface pour la logistique, le tri et la documentation.",
+    "for_freedivers": "Pour les apnéistes",
+    "freediver_p1": "Les interventions se déroulent entre 0 et 20 mètres, en binôme, avec un briefing sécurité systématique avant chaque immersion.",
+    "freediver_p2": "Aucun matériel spécifique n'est requis au-delà du matériel d'apnée standard.",
+    "freediver_p3": "Team Oxygen fournit les sacs de collecte, les filières de surface et l'organisation logistique complète.",
+    "freediver_p4": "Les sessions durent entre 4 et 6 heures chaque matin tout au long de l'édition.",
+    "edition5_label": "La 5e édition",
+    "edition5_desc": "Les candidatures pour la 5e édition — octobre 2026 ouvriront prochainement.",
+    "edition5_newsletter": "Abonnez-vous à la newsletter pour recevoir le formulaire en premier.",
+    "community_cta": "Les 130 000 membres de la communauté Dark Massilia sont la première force de mobilisation citoyenne pour la protection des Calanques — chaque bénévole compte, qu'il soit apnéiste expérimenté ou citoyen engagé.",
+    "no_freediver_needed": "Pas besoin d'être apnéiste — juste d'être engagé.",
+    "before_mission": "Avant chaque mission",
+    "access_title": "Accès aux massifs forestiers des Calanques",
+    "access_desc": "Carte officielle du risque incendie en temps réel — à consulter avant toute sortie.",
+    "cta_risk_map": "Voir la carte des risques",
+    "blog_title": "Journal de bord",
+    "blog_subtitle": "Actualités & comptes rendus de missions",
+    "blog_desc": "Reportages de terrain, faune observée et bilans de nettoyage depuis les Calanques.",
+    "cta_blog": "Lire le blog",
+    "videos_title": "Nos missions en images et en vidéo",
+    "videos_subtitle": "Documentaires & vidéos de missions",
+    "videos_desc": "ARTE, M6, France Télévision, reportages de terrain — retrouvez toutes nos productions.",
+    "cta_videos": "Voir les vidéos",
+    "cta_register": "S'inscrire pour participer",
+    "cta_community": "Rejoindre la communauté",
+    "cta_home": "Retour à l'accueil"
+  },
+  "contact": {
+    "page_title": "Contact — Karim Saari · Dark Massilia",
+    "hero_title": "Collaborons pour la Méditerranée : Reportages, Expositions et Actions de Terrain",
+    "name": "Karim Saari",
+    "brand": "Dark Massilia",
+    "role": "Photographe environnemental · Marseille",
+    "whatsapp": "WhatsApp",
+    "email": "Email",
+    "location": "Marseille, France",
+    "vcard_hint": "Appuyer pour agrandir · Scanner pour ajouter",
+    "vcard_add": "Ajouter aux contacts",
+    "press_title": "Presse & Médias",
+    "press_subtitle": "Journalistes & documentaristes",
+    "press_desc": "Reportages, interviews, cessions de droits photo, participation à des documentaires sur la Méditerranée.",
+    "press_kit": "Dossier presse",
+    "send_email": "Envoyer un email",
+    "partner_title": "Partenariats",
+    "partner_subtitle": "Marques & institutions",
+    "partner_desc": "Marques engagées, collectivités, associations : collaborations terrain, campagnes de sensibilisation, mécénat.",
+    "cta_whatsapp": "WhatsApp direct",
+    "exhibition_title": "Expositions & Interventions",
+    "exhibition_subtitle": "Galeries, écoles & conférences",
+    "exhibition_desc": "Expositions photographiques, conférences de sensibilisation, ateliers pédagogiques sur la biodiversité marine.",
+    "send_request": "Envoyer une demande",
+    "view_photos": "Voir les photos",
+    "editorial_title": "Contact Direct : Expositions, Interventions et Reportages",
+    "editorial_p1": "Vous souhaitez organiser une exposition photographique, prévoir une intervention de sensibilisation sur la pollution marine, ou proposer une collaboration avec Team Oxygen ?",
+    "editorial_p2": "Basé à Marseille, je privilégie l'échange direct et sans intermédiaire.",
+    "editorial_p3": "Que ce soit pour des reportages documentaires sur le littoral méditerranéen, l'acquisition de tirages d'art, ou des demandes presse (interviews, cessions de droits), vous pouvez me joindre instantanément par email ou WhatsApp.",
+    "editorial_p4": "Parlons de vos projets pour amplifier ensemble l'impact du Projet Sentinelle.",
+    "qr_title": "Scanner pour ajouter aux contacts",
+    "qr_name": "Karim Saari — Dark Massilia",
+    "qr_close": "Fermer"
+  },
+  "medias": {
+    "page_title": "Presse & Médias — Karim Saari · Dark Massilia",
+    "hero_title": "Documentaires et Reportages : Témoigner de l'Urgence Écologique en Méditerranée",
+    "tv_label": "📺 Passages TV",
+    "radio_label": "🎙 Radio",
+    "press_label": "📰 Revue de presse",
+    "tv_items": {
+      "echappees": {
+        "label": "Spécial Green",
+        "title": "Échappées Belles Spécial Green : les Bouches-du-Rhône en action",
+        "desc": "Karim Saari plonge dans les Calanques pour le Spécial Green d'Échappées Belles — nettoyage marin et Méditerranée menacée."
+      },
+      "arte": {
+        "label": "ARTE",
+        "title": "Documentaire ARTE — Marseille contre la pollution",
+        "desc": "Plongée documentaire au cœur des Calanques pour filmer l'invisible : déchets, pollution et vie marine menacée."
+      },
+      "arte_evasion": {
+        "label": "ARTE Évasion",
+        "title": "Méduses | Souveraines des océans",
+        "desc": "Les méduses, sentinelles fragiles de la santé des océans — témoignage filmé en Méditerranée."
+      },
+      "tf1_1": {
+        "label": "TF1 Info",
+        "title": "Le scandale des décharges sauvages dans les calanques marseillaises",
+        "desc": "TF1 Info enquête sur les décharges sauvages qui dévastent les Calanques — avec les images sous-marines de Karim Saari."
+      },
+      "tf1_2": {
+        "title": "Grève des éboueurs à Marseille : impact sous-marin",
+        "desc": "Quand les ordures non collectées finissent sous l'eau : Karim documente l'impact en direct pour TF1."
+      },
+      "novo": {
+        "label": "Novo19",
+        "title": "VIDEO. La Méditerranée, mer la plus polluée du monde",
+        "desc": "Reportage Novo19 : chiffres, images et témoignages de terrain sur l'état alarmant de la Méditerranée."
+      },
+      "provence": {
+        "label": "La Provence",
+        "title": "Marseille : 1,4 tonne de déchets retirés des eaux du Frioul par des apnéistes",
+        "desc": "La Provence couvre la plus grande opération de nettoyage de l'archipel du Frioul par Team Oxygen."
+      }
+    },
+    "impact_title": "Ce que change chaque publication",
+    "impact_p1": "Un reportage au JT de TF1, une immersion dans Échappées Belles, ou des enquêtes de terrain pour La Provence… Chaque publication n'est pas une fin en soi.",
+    "impact_p2": "Elle ouvre des portes : de nouveaux bénévoles, des partenaires institutionnels, et un rappel constant que la pollution des fonds marins méditerranéens n'est pas un problème abstrait.",
+    "impact_p3": "Trois piliers médias portent aujourd'hui cet engagement :",
+    "impact_bullet1": "Échappées Belles (France 5) & ARTE — Rayonnement national et européen pour sensibiliser à l'urgence écologique.",
+    "impact_bullet2": "La Provence — Écho de nos actions locales, documentant l'extraction de tonnes de déchets au Vieux-Port et au Frioul,",
+    "impact_bullet3": "confirmant Karim Saari comme une sentinelle incontournable du littoral marseillais.",
+    "impact_bullet4": "TF1 Info — Reconnaissance de notre expertise sur les grands sujets d'actualité environnementale.",
+    "editorial_title": "L'écho de l'engagement : Presse et Médias",
+    "editorial_p1": "Mon parcours de plongeur et photographe a trouvé un écho dans des médias nationaux et internationaux,",
+    "editorial_p2": "validant une démarche de photographe environnemental qui lie l'art à l'alerte écologique.",
+    "editorial_p3": "Que ce soit pour mon expertise terrain sur TF1 et ARTE, mes expéditions dans Échappées Belles (France 5), ou ma vision artistique saluée par le National Geographic, chaque publication est un levier pour la préservation du littoral.",
+    "editorial_p4": "Mon travail et mes actions, portés individuellement ou via Team Oxygen, bénéficient de la reconnaissance de grandes institutions :",
+    "editorial_p5": "le Parc national des Calanques, la Fondation de la Mer (programme Un Geste pour la Mer), Citeo et la Ville de Marseille.",
+    "editorial_p6": "Chaque témoignage médiatique — de La Provence à Midi Libre — porte la voix des fonds marins au cœur du débat public.",
+    "cta_newsletter": "S'abonner à la newsletter",
+    "cta_blog": "Lire le blog"
+  },
+  "photos": {
+    "page_title": "Photographe Paysage à Marseille — Calanques, Littoral & Méditerranée | Karim Saari",
+    "hero_title": "Photographe Paysage à Marseille — Calanques, Littoral & Méditerranée",
+    "nav_coastal": "Littoral & Calanques",
+    "nav_provence": "Terres de Provence",
+    "nav_horizons": "Horizons Lointains",
+    "section_coastal_title": "Le Littoral & les Calanques de Marseille",
+    "section_coastal_sub": "Photographie de paysages — Calanques de Marseille & Méditerranée",
+    "section_provence_title": "Terres de Provence & Camargue",
+    "section_provence_sub": "Paysages de Provence — Champs de lavande, Valensole & arrière-pays",
+    "section_horizons_title": "Explorations & Horizons Lointains",
+    "section_horizons_sub": "Photographie de voyage — Côte Basque, Maroc & Madère",
+    "portfolio_title": "Portfolio : de l'abyssal à l'horizon",
+    "portfolio_subtitle": "Sentinelle du littoral et des terres sauvages",
+    "coastal_desc": "Le Littoral & les Calanques de Marseille — Une immersion au cœur du Parc national des Calanques. Entre falaises calcaires monumentales et eaux turquoise, je documente la splendeur et la fragilité de ce littoral méditerranéen rocailleux. Géographie d'exception où chaque crique sauvage invite à la préservation de la faune.",
+    "provence_desc": "Terres de Provence & Camargue — Des marais salants de Camargue aux champs de lavande du plateau de Valensole, j'explore l'arrière-pays provençal. Sous des lumières rasantes, le relief sauvage du Luberon et des Alpilles révèle la richesse de la flore méditerranéenne préservée.",
+    "horizons_desc": "Explorations & Horizons Lointains — Mes carnets de voyage s'ouvrent sur la diversité culturelle et les paysages du monde. Des ruelles bleues de Chefchaouen aux dunes du Pilat, mon œil de photographe naturaliste cherche à capturer la beauté brute de notre planète, bien au-delà de Marseille.",
+    "px500_desc": "Retrouvez l'ensemble de mes photos en haute résolution sur 500px.",
+    "cta_px500": "Voir sur 500px",
+    "passion_title": "Ma passion pour la photographie de paysages",
+    "passion_quote": "Vingt ans à sillonner la Méditerranée, de la Côte Basque aux Calanques — et la conviction que les plus beaux paysages ne sont jamais au bout du monde, mais au bout du chemin que l'on prend chaque matin.",
+    "learning_title": "L'apprentissage",
+    "learning_p1": "Tout a commencé avec un appareil argentique et des étés en haute montagne. Adolescent, je passais chaque été aux alentours de Chamonix, sac à dos, à parcourir les glaciers et les arêtes du massif du Mont-Blanc.",
+    "learning_p2": "C'est là que j'ai rencontré un guide qui sortait son appareil entre deux passages de corde pour capturer la lumière rasante sur les séracs. Il m'a enseigné l'essentiel : ne pas dominer le paysage, mais l'écouter.",
+    "learning_p3": "La contrainte de l'argentique — 36 poses, pas une de plus — m'a appris la patience et l'intention. Chaque déclenchement était une décision, pas une habitude. Ma façon de travailler est restée la même : peu de clichés, beaucoup d'observation. Attendre la lumière, ne pas la forcer.",
+    "territories_title": "Les territoires",
+    "territories_p1": "Originaire de la Côte Basque, mes premières images étaient naturellement tournées vers l'océan. Les rouleaux de Biarritz sous les ciels gris de l'automne, les villages perchés sur les contreforts des Pyrénées. J'ai appris à lire la lumière atlantique — douce, changeante, parfois brutale.",
+    "territories_p2": "Puis en 2001, j'arrive à Marseille. Tout change. En quelques heures de voiture, on passe du bleu turquoise des Calanques à l'ocre du Luberon, des marais sauvages de la Camargue aux plateaux de lavande de Valensole. Une richesse photographique qui ne m'a plus quitté.",
+    "territories_p3": "L'appel du grand large n'a jamais cessé. Le Maroc d'abord — Chefchaouen, Marrakech. Madère ensuite, falaises verticales, forêts de lauriers, levadas entre deux horizons. Et toujours l'Atlantique de mon adolescence. Pas besoin d'aller au bout du monde — juste observer ce qui nous entoure.",
+    "commitment_title": "L'engagement",
+    "commitment_p1": "Depuis dix ans, je vis au Chemin de Morgiou, à l'entrée du Parc national des Calanques. Cette proximité a transformé mon regard.",
+    "commitment_p2": "Ce n'était plus seulement de la photographie de paysages : c'était de la documentation, du témoignage. En plongeant en apnée, j'ai découvert l'étendue de la pollution plastique sur les fonds marins.",
+    "commitment_p3": "La photographie m'a appris à voir. La plongée m'a appris ce qu'il y avait à perdre.",
+    "cta_underwater": "Galerie sous-marine & nettoyage",
+    "cta_contact": "Nous contacter"
+  },
+  "underwater": {
+    "page_title": "Photographie Sous-Marine — Calanques de Marseille | Karim Saari",
+    "hero_title": "Team Oxygen : Nettoyage des Calanques et Photographie Sous-Marine",
+    "documented_label": "Nettoyage documenté",
+    "biodiversity_label": "Biodiversité et faune marine"
+  },
+  "videos": {
+    "page_title": "Vidéos & Documentaires — Nettoyage Marin | Karim Saari",
+    "hero_title": "Vidéos & Documentaires",
+    "hero_subtitle": "Nettoyage en Méditerranée — Calanques de Marseille",
+    "section_title": "Les Vidéos",
+    "section_subtitle": "Reportages vidéo sur le nettoyage marin et la photographie sous-marine — Karim Saari",
+    "desc": "De l'immersion en apnée dans les Calanques aux reportages diffusés sur ARTE, nos vidéos racontent chaque mission de nettoyage. Images tournées sous l'eau, témoignages de terrain, rétrospectives annuelles — chaque format documente une réalité que l'œil nu n'atteint pas toujours.",
+    "yt_desc": "Retrouvez toutes nos productions sur notre chaîne YouTube, mise à jour après chaque mission.",
+    "cta_yt": "Voir sur YouTube",
+    "arte_label": "Documentaire · ARTE",
+    "arte_title": "Karim Saari sur ARTE",
+    "arte_subtitle": "Reportage ARTE — apnée, photographie et protection de la Méditerranée",
+    "arte_desc": "En 2024, la chaîne ARTE a consacré un reportage à l'engagement de Karim Saari pour la protection de la Méditerranée — plongeur en apnée, photographe et sentinelle des fonds des Calanques.",
+    "cta_arte": "Voir le documentaire",
+    "arte_meduses_label": "Documentaire · ARTE Évasion",
+    "arte_meduses_title": "Méduses | Souveraines des océans",
+    "arte_meduses_subtitle": "Documentaire ARTE sur les méduses de Méditerranée — images sous-marines Marseille",
+    "arte_meduses_desc": "Film de Sébastien Lafont (2024, 43 min). Karim Saari a fourni des images tournées en Méditerranée pour ce documentaire sur la prolifération des méduses et la transformation des écosystèmes marins."
+  },
+  "arte": {
+    "page_title": "ARTE — Pollution : Il faut sauver Marseille & ses Calanques",
+    "hero_title": "Pollution : Il faut sauver Marseille et ses Calanques",
+    "hero_subtitle": "Reportage intégral sur la Méditerranée et l'engagement des éco-acteurs.",
+    "summary_title": "Résumé du reportage ARTE Regards",
+    "summary": "Marseille, deuxième ville de France, mais mal classée en matière de gestion des déchets. Des ordures qui finissent souvent... en mer. Face à l'ampleur du problème, des habitants ont décidé de s'en emparer. Les Calanques sont le terrain d'action privilégié de Karim. Quand il n'est pas derrière son bureau de contrôleur de gestion, ce quinquagénaire passe son temps sous l'eau et sur les sentiers. Plongeur en apnée depuis des années, il a rejoint il y a trois ans un club local. S'il pensait d'abord admirer la beauté des fonds, il se retrouve vite à faire face à des canettes de Coca-Cola et des milliers de débris. Des sorties « nettoyage » commencent, très physiques. Avec sa GoPro, il documente des dizaines de kilos d'objets remontés. Ses photos rejoignent celles du littoral, également pollué. Son objectif ? Sensibiliser le public sur les réseaux sociaux et lors d'expositions. Eric et Isabelle ont fait de la lutte contre les déchets leur métier mais avec des approches très différentes. Derrière ses lunettes de soleil, le jeune Eric croit en la mobilisation festive. Mégaphone en main, il travaille les festivals et rassemble des centaines de Marseillais pour des opérations « nettoyage » où la danse et la bonne humeur sont toujours au rendez-vous. Mais la clé pour lui est ailleurs. Avec l'association qu'il a créée, Clean My Calanques, il se rend dans les écoles pour convaincre les enfants de ne pas reproduire les comportements de leurs aînés. En complément de ces méthodes, Isabelle a choisi la science. Quand elle arrive à Marseille en 2000, elle est jeune chercheuse en biologie marine. Consternée par ce qu'elle voit, elle constate que les déchets sauvages ne sont alors pas considérés comme une pollution. Elle plonge dans le sujet, rédige une thèse, et développe une méthodologie de caractérisation pour tenter d'identifier les sources et les responsables. Un long chemin pour cette écologue, comme pour Eric et Karim. Mais ensemble et grâce à des centaines de citoyens qui les soutiennent, ils sont déterminés. Il faut sauver Marseille !",
+    "quote_source": "— Extrait du commentaire du documentaire ARTE Regards, diffusé en 2024",
+    "more_arte": "Plus de contenus ARTE",
+    "yt_channel": "Chaîne YouTube ARTE",
+    "editorial_title": "ARTE met en lumière les Calanques",
+    "editorial_subtitle": "Documentaire sur l'environnement marin — Karim Saari dans les Calanques de Marseille",
+    "editorial_p1": "En 2024, la chaîne culturelle européenne ARTE a consacré un reportage aux éco-acteurs marseillais mobilisés contre la pollution plastique en Méditerranée.",
+    "editorial_p2": "Au cœur du documentaire : Karim Saari, plongeur en apnée et photographe sous-marin, engagé au sein de Team Oxygen et impliqué dès les premières"
+  },
+  "echappees": {
+    "page_title": "Échappées Belles — Spécial Green : les Bouches-du-Rhône en action",
+    "hero_title": "Échappées Vertes Spécial — Les Bouches-du-Rhône en action",
+    "hero_desc": "France 5 consacre un épisode d'Échappées Belles aux acteurs de terrain qui œuvrent pour l'environnement dans les Bouches-du-Rhône — dont les missions de nettoyage marin de Karim Saari.",
+    "cta_replay": "Voir le replay de l'émission sur France.tv",
+    "section_title": "L'émission",
+    "p1": "Les Bouches-du-Rhône comptent plus de 17 000 hectares d'espaces naturels protégés",
+    "p2": "— Alpilles, Camargue et Calanques — où faune et flore exceptionnelles cohabitent avec les zones fortement urbanisées de Marseille, deuxième ville de France.",
+    "p3": "Ce territoire vulnérable impose de concilier pression humaine et protection des écosystèmes, c'est précisément le défi que documente ce Spécial Échappées Vertes.",
+    "p4": "Présentée par Ismaël Khelifa et accompagné de l'éco-aventurier Matthieu Witvoet, l'émission débute aux Calanques.",
+    "p5": "Au programme : rencontre avec des éco-citoyens du territoire, inspirés par la beauté des paysages et déterminés à la préserver.",
+    "p6": "Parmi eux, Karim Saari, photographe environnemental et plongeur en apnée, engagé depuis plus de dix ans dans des actions de nettoyage marin et président de Team Oxygen.",
+    "p7": "Depuis dix ans, il documente et combat la pollution plastique dans les fonds des Calanques grâce à ses plongées en apnée — et cette émission nationale sur France 5 donne une nouvelle visibilité à ce combat.",
+    "gallery_title": "Extraits de l'émission"
+  },
+  "greenGot": {
+    "page_title": "Green-Got — Court métrage Méditerranée | Karim Saari",
+    "hero_title": "Green-Got — Méditerranée",
+    "hero_desc": "Court métrage de Green-Got sur la Méditerranée et le nettoyage marin."
+  },
+  "meduses": {
+    "page_title": "Méduses — Souveraines des Océans | Documentaire ARTE | Karim Saari",
+    "hero_title": "Méduses — Souveraines des Océans",
+    "hero_desc": "Documentaire ARTE sur les méduses en Méditerranée."
+  },
+  "sources": {
+    "page_title": "Données Scientifiques — Pollution Marine en Méditerranée | Karim Saari",
+    "hero_title": "Données Scientifiques",
+    "hero_subtitle": "Sources & Références — Pollution Méditerranée"
+  },
+  "blog": {
+    "page_title": "Blog — Nettoyage Marin & Actualités Méditerranée | Karim Saari",
+    "hero_title": "Journal de bord",
+    "hero_subtitle": "Actualités & Actions",
+    "desc": "Articles sur la mer Méditerranée, la faune marine et le nettoyage des Calanques",
+    "follow_desc": "Suivez en direct les missions de nettoyage, les rencontres et les coups de cœur de l'équipe Dark Massilia en Méditerranée.",
+    "search_placeholder": "Rechercher un article…",
+    "all": "Tous",
+    "loading": "Chargement des articles…",
+    "no_results": "Aucun article trouvé",
+    "read_more": "Lire la suite",
+    "categories": {
+      "depollution": "Dépollution & Action",
+      "biodiversite": "Biodiversité des Calanques",
+      "calanques": "Calanques & Littoral",
+      "pollution": "Pollution & Alertes"
+    }
+  },
+  "community": {
+    "page_title": "Rejoindre la Communauté Dark Massilia — Team Oxygen | Karim Saari",
+    "hero_title": "Rejoindre la Communauté",
+    "stats": {
+      "microplastics": "des microplastiques mondiaux — pour moins de 1 % de la surface des océans",
+      "microplastics_label": "Le piège méditerranéen",
+      "bottles": "bouteilles plastiques déversées chaque minute dans nos eaux",
+      "bottles_label": "Le déluge continu",
+      "land_waste": "des déchets marins viennent de nos activités terrestres — la solution est entre nos mains",
+      "land_waste_label": "Origine terrestre",
+      "ingested": "de nanoplastiques ingérés par semaine — le poids d'une carte de crédit",
+      "ingested_label": "L'impact boomerang"
+    },
+    "step1_title": "Suivre et amplifier",
+    "step1_desc": "Rejoindre le groupe Facebook « Amis des Calanques » et suivre @karimsaari sur Instagram.",
+    "step1_note": "Partager nos posts, c'est déjà agir : chaque partage sensibilise de nouveaux publics à la cause.",
+    "step2_title": "Apporter un soutien matériel",
+    "step2_desc": "Vous avez un kayak, un bateau ou un véhicule utilitaire ? Contactez-nous.",
+    "step2_note": "Nous avons besoin d'aide pour atteindre des zones isolées, transporter les déchets collectés et effectuer la caractérisation terrestre.",
+    "step3_title": "Venir en soutien logistique",
+    "step3_desc": "Le jour J, intervenir depuis le bord ou en surface : tri, caractérisation des déchets, logistique.",
+    "step3_note": "Les plongées sont réservées aux membres certifiés de Team Oxygen pour des raisons de sécurité et d'assurance.",
+    "profile_kayak_title": "Kayakiste / Plaisancier",
+    "profile_kayak_desc": "Vous mettez votre embarcation au service de l'équipe pour atteindre des zones inaccessibles et transporter les déchets récupérés.",
+    "profile_land_title": "Bénévole terrestre",
+    "profile_land_desc": "À terre, vous triez et caractérisez les déchets collectés, et participez à la logistique et au transport vers les filières de recyclage.",
+    "profile_photo_title": "Photographe / Vidéaste",
+    "profile_photo_desc": "Depuis le bord ou la surface, vous documentez les missions pour amplifier la visibilité et sensibiliser le grand public.",
+    "profile_digital_title": "Ambassadeur numérique",
+    "profile_digital_desc": "Vous suivez, aimez et partagez nos actions sur vos réseaux.",
+    "profile_digital_note": "La visibilité est un levier concret pour changer les mentalités."
+  },
+  "groupeFacebook": {
+    "page_title": "Groupe Facebook — Amoureux des Calanques | Dark Massilia",
+    "hero_title": "Groupe Facebook Calanques"
+  },
+  "twitter": {
+    "page_title": "Actualités — News du Parc des Calanques | Dark Massilia",
+    "hero_title": "News Parc des Calanques"
+  },
+  "localGuide": {
+    "page_title": "Google Local Guide Marseille — Niveau 10 | Karim Saari",
+    "hero_title": "Google Local Guide"
+  },
+  "carte": {
+    "page_title": "Carte Interactive des Calanques de Marseille | Karim Saari",
+    "hero_title": "Carte Interactive des Calanques"
+  },
+  "cartePhotos": {
+    "page_title": "Carte des Photos — Photographies de Karim Saari | Dark Massilia",
+    "hero_title": "Carte des Photos"
+  },
+  "accesMassifs": {
+    "page_title": "Accès Massifs Forestiers — Calanques | Karim Saari",
+    "hero_title": "Accès Massifs des Calanques",
+    "fire_risk": "Risque incendie",
+    "access_open": "Accès ouvert",
+    "access_closed": "Accès fermé",
+    "check_before": "À vérifier avant de sortir"
+  },
+  "yab": {
+    "page_title": "Les Français — Yann Arthus-Bertrand | Karim Saari",
+    "hero_title": "Les Français — Yann Arthus-Bertrand",
+    "hero_subtitle": "Photographié par Yann Arthus-Bertrand"
+  },
+  "dossierPresse": {
+    "page_title": "Dossier Presse — Karim Saari · Dark Massilia",
+    "hero_title": "Dossier Presse"
+  },
+  "legal": {
+    "legal_title": "Mentions Légales",
+    "legal_subtitle": "Conformément à la Loi n° 2004-575 du 21 juin 2004 pour la confiance dans l'économie numérique.",
+    "section1": "1. Éditeur du site",
+    "corporate_name": "Raison sociale",
+    "brand": "Nom de marque",
+    "legal_form": "Forme juridique",
+    "individual_entrepreneur": "Entrepreneur individuel",
+    "naf_code": "Code NAF / APE",
+    "photo_activities": "Activités photographiques",
+    "registration": "Immatriculation",
+    "at_rcs": "au RCS de Marseille",
+    "address": "Adresse",
+    "email": "Email",
+    "section2": "2. Directeur de publication",
+    "as_editor": "en qualité d'éditeur de karimsaari.com",
+    "section3": "3. Hébergeur",
+    "company": "Société",
+    "website": "Site web",
+    "section4": "4. Propriété intellectuelle",
+    "ip_p1": "L'ensemble des contenus de ce site — textes, photographies, vidéos, graphismes, logos et éléments visuels — est la propriété exclusive de SAARI KARIM ou de ses partenaires et est protégé par les lois françaises et internationales relatives au droit d'auteur et à la propriété intellectuelle.",
+    "ip_p2": "Toute reproduction, représentation, modification ou exploitation, totale ou partielle, des contenus du site est strictement interdite sans autorisation écrite préalable de l'éditeur.",
+    "section5": "5. Limitation de responsabilité",
+    "liability_p1": "L'éditeur s'efforce de maintenir les informations publiées sur ce site actuelles et exactes. Toutefois, il ne peut être tenu responsable des erreurs, omissions ou résultats obtenus par un mauvais usage des informations publiées.",
+    "liability_p2": "L'éditeur ne peut être tenu responsable de dommages directs ou indirects résultant de l'accès au site ou de l'utilisation de ses informations.",
+    "section6": "6. Liens hypertextes",
+    "links_p1": "Ce site peut contenir des liens vers des sites tiers. L'éditeur n'exerce aucun contrôle sur ces sites et décline toute responsabilité quant à leur contenu ou à leurs pratiques en matière de données personnelles.",
+    "links_p2": "Toute demande d'établissement d'un lien hypertexte vers karimsaari.com doit faire l'objet d'une autorisation préalable de l'éditeur.",
+    "section7": "7. Droit applicable",
+    "privacy_title": "Politique de Confidentialité",
+    "privacy_subtitle": "Conformément au Règlement Général sur la Protection des Données (RGPD — UE 2016/679) et à la loi Informatique et Libertés modifiée.",
+    "section_controller": "1. Responsable du traitement",
+    "section_data": "2. Données collectées et finalités",
+    "newsletter_section": "a. Newsletter Dark Massilia",
+    "data": "Donnée",
+    "email_address": "Adresse email",
+    "purpose": "Finalité",
+    "newsletter_purpose": "Envoi de la newsletter sur les missions, photos et actualités.",
+    "legal_basis": "Base légale",
+    "newsletter_legal": "Consentement explicite (Art. 6.1.a RGPD) — case à cocher lors de l'inscription.",
+    "storage": "Conservation",
+    "newsletter_storage": "Jusqu'à désinscription. Chaque email contient un lien de désinscription.",
+    "recipients": "Destinataires",
+    "newsletter_recipients": "Supabase (stockage), Brevo ex-Sendinblue (routage email).",
+    "map_section": "b. Carte interactive des Calanques",
+    "map_data_desc": "Photographies géolocalisées, coordonnées GPS des sites de plongée.",
+    "map_purpose": "Affichage de la carte publique des missions de nettoyage.",
+    "map_note": "Aucune donnée personnelle de l'utilisateur n'est collectée lors de la consultation de la carte.",
+    "section_cookies": "3. Cookies et traceurs",
+    "necessary_cookies": "a. Cookies techniques strictement nécessaires",
+    "necessary_desc": "Des cookies techniques peuvent être créés par Supabase pour la gestion de session lors de l'inscription à la newsletter. Ces cookies ne nécessitent pas de consentement préalable (Art. 82 de la loi Informatique et Libertés).",
+    "analytics_cookies": "b. Mesure d'audience — Google Analytics 4 (GA4)",
+    "analytics_desc": "Ce site utilise Google Analytics 4 via Google Tag Manager (GTM) déployé avec le Consent Mode v2 Advanced.",
+    "without_consent": "Sans consentement",
+    "without_consent_desc": "GA4 fonctionne en mode cookieless : aucun cookie de mesure n'est posé, aucun identifiant persistant n'est créé. Des pings anonymisés non attribuables à un individu peuvent être transmis pour la modélisation statistique agrégée par Google.",
+    "with_consent": "Avec consentement",
+    "with_consent_desc": "Collecte standard activée via les 4 signaux suivants :",
+    "nav_cookies": "Cookies d'analyse de navigation",
+    "sitemap_title": "Plan du Site",
+    "plan_du_site": "Plan du site"
+  },
+  "notFound": {
+    "label": "Erreur",
+    "title": "Page introuvable",
+    "desc": "Cette page n'existe pas ou a été déplacée. Les fonds marins sont mieux cartographiés que ça.",
+    "cta": "← Retour à l'accueil"
+  },
+  "photographeEnv": {
+    "page_title": "Photographe Environnemental Marseille — Karim Saari | Dark Massilia",
+    "hero_title": "Photographe Environnemental Marseille",
+    "hero_subtitle": "Karim Saari — Sentinelle des Calanques"
+  },
+  "seo": {
+    "home_title": "Photographe Environnemental Marseille & Calanques — Karim Saari",
+    "home_desc": "Karim Saari, photographe environnemental et sous-marin à Marseille. Découvrez mes prises de vues sous-marines et mon engagement pour la protection de la Méditerranée.",
+    "missions_title": "Nettoyage Marin Marseille | Karim Saari — Projet Sentinelle",
+    "missions_desc": "Team Oxygen, association de nettoyage marin à Marseille. Depuis 2022, 5 724 kg de déchets extraits des Calanques en apnée.",
+    "videos_title": "Vidéos — Nettoyage Méditerranée | Karim Saari",
+    "videos_desc": "Regardez les documentaires et reportages d'action sous-marine. Nettoyage marin en Méditerranée, Calanques de Marseille — diffusés sur ARTE et TF1.",
+    "contact_title": "Contact — Karim Saari · Dark Massilia",
+    "contact_desc": "Contactez Karim Saari pour des collaborations, partenariats presse, expositions photo et sensibilisation environnementale marine.",
+    "photos_title": "Photographe Paysage Marseille — Calanques, Littoral & Méditerranée | Karim Saari",
+    "photos_desc": "Découvrez le portfolio de photographies de paysages de Karim Saari — Calanques de Marseille, Provence, Camargue et littoral méditerranéen."
+  }
+}
