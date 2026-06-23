@@ -1,6 +1,8 @@
 import { useState, useEffect, useMemo, useRef } from 'react';
+import { useTranslation } from 'react-i18next';
 import { motion, useReducedMotion } from 'framer-motion';
 import { Waves, TreePine, Compass, ArrowLeft, ZoomIn, ExternalLink } from 'lucide-react';
+import i18n from '../i18n';
 // Référence Fancybox — peuplée dynamiquement côté client uniquement
 let _FB = null;
 const getFB = () => _FB;
@@ -363,7 +365,7 @@ function showShareMenu(_triggerEl, slide) {
   const header = document.createElement('div');
   Object.assign(header.style, { display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '24px' });
   const title = document.createElement('p');
-  title.textContent = 'Partager';
+  title.textContent = i18n.t('photos.share_title');
   Object.assign(title.style, { color: '#1a1a2e', fontWeight: '700', fontSize: '16px', margin: '0' });
   const closeBtn = document.createElement('button');
   closeBtn.innerHTML = `<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>`;
@@ -418,7 +420,7 @@ function showShareMenu(_triggerEl, slide) {
   urlInput.addEventListener('click', () => urlInput.select());
 
   const copyBtn = document.createElement('button');
-  copyBtn.innerHTML = `${SHARE_ICONS.copy}<span>Copier</span>`;
+  copyBtn.innerHTML = `${SHARE_ICONS.copy}<span>${i18n.t('photos.copy')}</span>`;
   Object.assign(copyBtn.style, {
     display: 'flex', alignItems: 'center', gap: '6px',
     padding: '8px 14px', borderRadius: '10px', background: 'rgba(33,196,123,0.15)',
@@ -432,7 +434,7 @@ function showShareMenu(_triggerEl, slide) {
       t.value = relayUrl; document.body.appendChild(t); t.select();
       document.execCommand('copy'); document.body.removeChild(t);
     }
-    copyBtn.innerHTML = `${SHARE_ICONS.copy}<span>Copié !</span>`;
+    copyBtn.innerHTML = `${SHARE_ICONS.copy}<span>${i18n.t('photos.copied')}</span>`;
     copyBtn.style.color = '#fff';
     setTimeout(() => overlay.remove(), 1200);
   });
@@ -470,9 +472,9 @@ const buildOpts = () => ({
             : `<span class="fb-caption-lieu">${pin}${lieu}</span>`
           : '';
         const cartIcon = `<svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>`;
-        const buyBtn = `<button class="fb-caption-buy" data-uid="${uid}" data-title="${title}" title="Demander l'utilisation">${cartIcon}<span>Demander l'utilisation</span></button>`;
+        const buyBtn = `<button class="fb-caption-buy" data-uid="${uid}" data-title="${title}" title="${i18n.t('photos.fb_buy')}">${cartIcon}<span>${i18n.t('photos.fb_buy')}</span></button>`;
         const mapIcon = `<svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polygon points="3 6 9 3 15 6 21 3 21 18 15 21 9 18 3 21"/><line x1="9" y1="3" x2="9" y2="18"/><line x1="15" y1="6" x2="15" y2="21"/></svg>`;
-        const mapBtn = uid ? `<button class="fb-caption-map" data-map-uid="${uid}" title="Voir sur la carte">${mapIcon}<span>Voir sur la carte</span></button>` : '';
+        const mapBtn = uid ? `<button class="fb-caption-map" data-map-uid="${uid}" title="${i18n.t('photos.fb_map')}">${mapIcon}<span>${i18n.t('photos.fb_map')}</span></button>` : '';
         return `<span class="fb-caption-wrapper"><span class="fb-caption-info">${titleHtml}${lieuHtml}</span><span style="display:inline-flex;gap:6px;align-items:center;flex-shrink:0">${mapBtn}${buyBtn}</span></span>`;
       };
     },
@@ -541,12 +543,12 @@ const buildOpts = () => ({
     },
   },
   l10n: {
-    CLOSE:  'Fermer',
-    NEXT:   'Suivant',
-    PREV:   'Précédent',
-    TOGGLE_FS:      'Plein écran',
-    TOGGLE_SIDEBAR: 'Vignettes',
-    TOGGLE_AUTOPLAY: 'Diaporama',
+    CLOSE:           i18n.t('photos.fb_close'),
+    NEXT:            i18n.t('photos.fb_next'),
+    PREV:            i18n.t('photos.fb_prev'),
+    TOGGLE_FS:       i18n.t('photos.fb_fullscreen'),
+    TOGGLE_SIDEBAR:  i18n.t('photos.fb_thumbs'),
+    TOGGLE_AUTOPLAY: i18n.t('photos.fb_autoplay'),
   },
 });
 
@@ -567,6 +569,7 @@ const toThumbSrc = (src) =>
   src.replace(/\/images\/portfolio\/(Mer|Terre)\//, '/images/portfolio/$1/800w/');
 
 const PhotoGrid = ({ images }) => {
+  const { t } = useTranslation();
   const prefersReducedMotion = useReducedMotion();
   if (!images.length) return null;
   return (
@@ -595,7 +598,7 @@ const PhotoGrid = ({ images }) => {
             data-maps={image.maps}
             data-thumb={thumbSrc}
             className="block w-full cursor-pointer relative overflow-hidden rounded-sm focus-ring group shadow-[0_0_0_1px_rgba(0,171,168,0.25)] hover:shadow-[0_0_0_2px_rgba(0,171,168,0.7),0_0_20px_rgba(0,171,168,0.15)] transition-shadow duration-300"
-            aria-label={`Ouvrir la photo : ${image.alt}`}
+            aria-label={`${t('photos.open_photo')} : ${image.alt}`}
           >
             <img
               src={thumbSrc}
@@ -644,6 +647,7 @@ const mergeWithDims = (rows) => {
 
 /* ─── Composant principal ─────────────────────────────────── */
 const Photos = () => {
+  const { t } = useTranslation();
   const [merImages_,      setMerImages]      = useState(merImages);
   const [terreImages_,    setTerreImages]    = useState(terreImages);
   const [horizonsImages_, setHorizonsImages] = useState(horizonsImages);
@@ -735,7 +739,7 @@ const Photos = () => {
     <div className="min-h-screen py-24">
       <SEO {...SEO_PAGES['/photographie-paysage-mer']} />
       <div className="container-custom">
-        <Breadcrumb label="Galerie Paysages Marseille" />
+        <Breadcrumb label={t('photos.breadcrumb')} />
         {/* H1 SEO */}
         <motion.h1
           initial={{ opacity: 0, y: 20 }}
@@ -743,7 +747,7 @@ const Photos = () => {
           transition={{ duration: 0.6 }}
           className="text-xl md:text-2xl font-bold text-white text-center mb-6 leading-tight"
         >
-          Photographe de Paysages à Marseille — Calanques, Littoral & Méditerranée
+          {t('photos.hero_title')}
         </motion.h1>
 
         {/* Raccourcis catégories */}
@@ -754,10 +758,10 @@ const Photos = () => {
           className="flex flex-wrap justify-center gap-3 mb-10"
         >
           {[
-            { href: '#littoral', icon: <Waves className="w-4 h-4" />, label: 'Littoral & Calanques' },
-            { href: '#provence', icon: <TreePine className="w-4 h-4" />, label: 'Terres de Provence' },
-            { href: '#horizons', icon: <Compass className="w-4 h-4" />, label: 'Horizons Lointains' },
-          ].map(({ href, icon, label }) => (
+            { href: '#littoral', icon: <Waves className="w-4 h-4" />, labelKey: 'photos.nav_coastal' },
+            { href: '#provence', icon: <TreePine className="w-4 h-4" />, labelKey: 'photos.nav_provence' },
+            { href: '#horizons', icon: <Compass className="w-4 h-4" />, labelKey: 'photos.nav_horizons' },
+          ].map(({ href, icon, labelKey }) => (
             <a
               key={href}
               href={href}
@@ -767,7 +771,7 @@ const Photos = () => {
                          transition-colors duration-200"
             >
               {icon}
-              {label}
+              {t(labelKey)}
             </a>
           ))}
         </motion.div>
@@ -780,8 +784,8 @@ const Photos = () => {
           variants={STAGGER_CONTAINER}
           className="mb-16 scroll-mt-8"
         >
-          <SectionTitle icon={Waves} title="Le Littoral Marseillais & Calanques" count={shuffledMer.length} />
-          <h3 className="sr-only">Photographie de paysages — Calanques de Marseille & Méditerranée</h3>
+          <SectionTitle icon={Waves} title={t('photos.section_coastal_title')} count={shuffledMer.length} />
+          <h3 className="sr-only">{t('photos.section_coastal_sub')}</h3>
           <PhotoGrid images={shuffledMer} />
         </motion.div>
 
@@ -793,8 +797,8 @@ const Photos = () => {
           variants={STAGGER_CONTAINER}
           className="mb-16 scroll-mt-8"
         >
-          <SectionTitle icon={TreePine} title="Terres de Provence & Camargue" count={shuffledTerre.length} />
-          <h3 className="sr-only">Paysages de Provence — Champs de lavande, Valensole & arrière-pays</h3>
+          <SectionTitle icon={TreePine} title={t('photos.section_provence_title')} count={shuffledTerre.length} />
+          <h3 className="sr-only">{t('photos.section_provence_sub')}</h3>
           <PhotoGrid images={shuffledTerre} />
         </motion.div>
 
@@ -806,8 +810,8 @@ const Photos = () => {
           variants={STAGGER_CONTAINER}
           className="mb-16 scroll-mt-8"
         >
-          <SectionTitle icon={Compass} title="Explorations & Horizons Lointains" count={shuffledHorizons.length} />
-          <h3 className="sr-only">Photographies de voyage — Côte Basque, Maroc & Madère</h3>
+          <SectionTitle icon={Compass} title={t('photos.section_horizons_title')} count={shuffledHorizons.length} />
+          <h3 className="sr-only">{t('photos.section_horizons_sub')}</h3>
           <PhotoGrid images={shuffledHorizons} />
         </motion.div>
 
@@ -820,16 +824,16 @@ const Photos = () => {
         >
           <motion.div variants={FADE_IN_UP} className="glass-strong rounded-3xl overflow-hidden flex flex-col lg:flex-row">
             <div className="p-8 md:p-12 lg:flex-1 flex flex-col justify-center">
-              <h2 className="text-2xl md:text-3xl font-bold text-white mb-2">Portfolio : de l'abyssal à l'horizon</h2>
+              <h2 className="text-2xl md:text-3xl font-bold text-white mb-2">{t('photos.portfolio_title')}</h2>
               <p className="text-ocean-teal font-semibold text-sm uppercase tracking-widest mb-6">
-                Sentinelle du littoral et des terres sauvages
+                {t('photos.portfolio_subtitle')}
               </p>
               <div className="flex flex-wrap gap-2 mb-6">
                 {[
-                  { href: '#littoral', label: '🌊 Littoral & Calanques' },
-                  { href: '#provence', label: '🌿 Provence & Camargue' },
-                  { href: '#horizons', label: '🧭 Horizons Lointains' },
-                ].map(({ href, label }) => (
+                  { href: '#littoral', labelKey: 'photos.nav_coastal_anchor' },
+                  { href: '#provence', labelKey: 'photos.nav_provence_anchor' },
+                  { href: '#horizons', labelKey: 'photos.nav_horizons_anchor' },
+                ].map(({ href, labelKey }) => (
                   <a
                     key={href}
                     href={href}
@@ -838,31 +842,25 @@ const Photos = () => {
                                hover:bg-ocean-teal/10 hover:border-ocean-teal/40 hover:text-ocean-teal
                                transition-colors duration-200"
                   >
-                    {label}
+                    {t(labelKey)}
                   </a>
                 ))}
               </div>
               <div className="space-y-4 text-text-secondary leading-[1.8]">
-                <p>
-                  <span className="text-ocean-teal font-semibold">Le Littoral Marseillais & Calanques</span> — Une immersion au cœur du Parc national des Calanques. Entre falaises calcaires monumentales et eaux turquoises, je documente la splendeur et la fragilité de ce littoral rocheux de la mer Méditerranée. Une géographie d'exception où chaque crique sauvage appelle à la préservation de la faune.
-                </p>
-                <p>
-                  <span className="text-ocean-teal font-semibold">Terres de Provence & Camargue</span> — Des marais salants de Camargue aux champs de lavande du plateau de Valensole, je parcours l'arrière-pays provençal. Sous les lumières rasantes, les reliefs sauvages du Luberon et des Alpilles révèlent la richesse d'une flore méditerranéenne préservée.
-                </p>
-                <p>
-                  <span className="text-ocean-teal font-semibold">Explorations & Horizons Lointains</span> — Mes carnets de voyage s'ouvrent sur la diversité culturelle et les paysages du monde. Des ruelles bleues de Chefchaouen aux dunes du Pilat, mon regard de photographe naturaliste cherche à capturer la beauté brute de notre planète, bien au-delà de Marseille.
-                </p>
-                <p>Retrouvez l'ensemble de mes photographies en haute résolution sur 500px.</p>
+                <p>{t('photos.coastal_desc')}</p>
+                <p>{t('photos.provence_desc')}</p>
+                <p>{t('photos.horizons_desc')}</p>
+                <p>{t('photos.px500_desc')}</p>
               </div>
               <div className="mt-6">
                 <a
                   href="https://500px.com/p/karimsaari?view=photos"
                   target="_blank"
                   rel="noopener noreferrer"
-                  aria-label="Voir la galerie complète sur 500px (ouvre dans un nouvel onglet)"
+                  aria-label="View full gallery on 500px (opens in new tab)"
                   className="inline-flex items-center gap-2 text-ocean-teal hover:text-white transition-colors font-medium"
                 >
-                  Voir sur 500px
+                  {t('photos.cta_px500')}
                   <ExternalLink className="w-4 h-4" aria-hidden="true" />
                 </a>
               </div>
@@ -887,14 +885,14 @@ const Photos = () => {
         >
           <motion.div variants={FADE_IN_UP} className="glass-strong rounded-3xl p-8 md:p-12">
             <h2 className="text-xl md:text-2xl font-bold text-white mb-6">
-              Ma passion pour la photographie de paysages
+              {t('photos.passion_title')}
             </h2>
 
             <div className="max-w-prose mx-auto space-y-0 text-text-secondary leading-loose text-sm md:text-[0.95rem]">
 
-              {/* Lead paragraph — pleine largeur avant le float */}
+              {/* Lead paragraph */}
               <p className="text-base md:text-lg text-white/90 leading-relaxed font-light mb-6">
-                Vingt ans à sillonner la Méditerranée, de la côte basque aux Calanques — et la conviction que les plus beaux paysages ne sont jamais au bout du monde, mais au bout du chemin que tu empruntes chaque matin.
+                {t('photos.passion_quote')}
               </p>
 
               {/* Photo flottante — style journal, après le lead */}
@@ -913,41 +911,29 @@ const Photos = () => {
                   />
                 </div>
                 <figcaption className="text-[10px] text-white/35 italic mt-1.5 text-center leading-snug tracking-wide">
-                  Karim Saari, photographe de paysages
+                  {t('photos.figcaption_photographer')}
                 </figcaption>
               </figure>
 
               {/* Chapitre 1 */}
-              <p className="text-[0.65rem] uppercase tracking-[0.2em] text-ocean-teal/70 font-semibold pt-5 pb-1">L'apprentissage</p>
-              <p className="mb-4">
-                <span className="float-left text-[3.2rem] leading-[0.8] font-bold text-ocean-teal mr-2 mt-1 select-none">T</span>out a commencé avec un <strong className="text-ocean-teal font-semibold">boîtier argentique</strong> et des étés en haute montagne. Adolescent, je passais chaque été à rôder autour de <strong className="text-ocean-teal font-semibold">Chamonix</strong>, sac au dos, à arpenter les glaciers et les crêtes du massif du Mont-Blanc. C'est là que j'ai rencontré un guide qui sortait son appareil entre deux cordées pour capturer la <strong className="text-ocean-teal font-semibold">lumière rasante sur les séracs</strong>. Il m'a appris l'essentiel : ne pas chercher à dominer le paysage, mais à <strong className="text-ocean-teal font-semibold">l'écouter</strong>.
-              </p>
-              <p className="mb-4">
-                La contrainte de la pellicule — <strong className="text-ocean-teal font-semibold">36 poses, pas une de plus</strong> — m'a enseigné la patience et l'intention. Chaque déclenchement était une décision, pas une habitude. Ma façon de travailler est restée la même : <strong className="text-ocean-teal font-semibold">peu de clichés, beaucoup d'observation</strong>. Attendre la lumière, pas la forcer.
-              </p>
+              <p className="text-[0.65rem] uppercase tracking-[0.2em] text-ocean-teal/70 font-semibold pt-5 pb-1">{t('photos.learning_title')}</p>
+              <p className="mb-4">{t('photos.learning_p1')} {t('photos.learning_p2')}</p>
+              <p className="mb-4">{t('photos.learning_p3')}</p>
 
               {/* Chapitre 2 */}
-              <p className="text-[0.65rem] uppercase tracking-[0.2em] text-ocean-teal/70 font-semibold pt-5 pb-1">Les territoires</p>
-              <p className="mb-4">
-                Natif de la <strong className="text-ocean-teal font-semibold">côte basque</strong>, mes premières images ont naturellement été celles de l'océan. Les rouleaux de <strong className="text-ocean-teal font-semibold">Biarritz</strong> sous les ciels gris d'automne, les villages perchés sur les contreforts des <strong className="text-ocean-teal font-semibold">Pyrénées</strong>. J'ai appris à lire la lumière atlantique — douce, changeante, parfois brutale.
-              </p>
-              <p className="mb-4">
-                Puis en 2001, je suis arrivé à <strong className="text-ocean-teal font-semibold">Marseille</strong>. Et tout a basculé. En quelques heures de route, on passe du <strong className="text-ocean-teal font-semibold">bleu turquoise des Calanques</strong> aux ocres du Luberon, des marais sauvages de Camargue aux <strong className="text-ocean-teal font-semibold">plateaux de lavande de Valensole</strong>. Une richesse photographique qui ne m'a plus jamais lâché.
-              </p>
-              <p className="mb-4">
-                L'appel du large ne s'est jamais tu. Le <strong className="text-ocean-teal font-semibold">Maroc</strong> d'abord — Chefchaouen, Marrakech. <strong className="text-ocean-teal font-semibold">Madère</strong> ensuite, falaises verticales, forêts laurifères, levadas entre deux horizons. Et toujours <strong className="text-ocean-teal font-semibold">l'Atlantique</strong> de mon adolescence.
-              </p>
+              <p className="text-[0.65rem] uppercase tracking-[0.2em] text-ocean-teal/70 font-semibold pt-5 pb-1">{t('photos.territories_title')}</p>
+              <p className="mb-4">{t('photos.territories_p1')}</p>
+              <p className="mb-4">{t('photos.territories_p2')}</p>
+              <p className="mb-4">{t('photos.territories_p3')}</p>
 
               {/* Pull quote */}
               <blockquote className="clear-right my-6 mx-0 py-4 px-5 bg-white/[0.04] border-l-2 border-ocean-teal rounded-r-lg">
-                <p className="text-white/85 italic text-base leading-snug">« Inutile d'aller au bout du monde — il suffit d'observer ce qui nous entoure. »</p>
+                <p className="text-white/85 italic text-base leading-snug">{t('photos.passion_blockquote')}</p>
               </blockquote>
 
               {/* Chapitre 3 */}
-              <p className="text-[0.65rem] uppercase tracking-[0.2em] text-ocean-teal/70 font-semibold pt-3 pb-1">L'engagement</p>
-              <p className="mb-4">
-                Depuis dix ans, j'habite <strong className="text-ocean-teal font-semibold">chemin de Morgiou</strong>, à l'entrée du <strong className="text-ocean-teal font-semibold">Parc National des Calanques</strong>. Cette proximité a transformé mon regard. Ce n'était plus seulement de la <strong className="text-ocean-teal font-semibold">photographie de paysages</strong> : c'était de la <strong className="text-ocean-teal font-semibold">documentation, du témoignage</strong>. C'est en plongeant en apnée que j'ai découvert l'ampleur de la <strong className="text-ocean-teal font-semibold">pollution plastique sur les fonds marins</strong>. La photographie m'avait appris à voir. L'apnée m'a appris ce qu'il y avait à perdre.
-              </p>
+              <p className="text-[0.65rem] uppercase tracking-[0.2em] text-ocean-teal/70 font-semibold pt-3 pb-1">{t('photos.commitment_title')}</p>
+              <p className="mb-4">{t('photos.commitment_p1')} {t('photos.commitment_p2')} {t('photos.commitment_p3')}</p>
             </div>
 
             <div className="mt-8 pt-6 border-t border-white/10 flex flex-col sm:flex-row items-center justify-center gap-4">
@@ -956,14 +942,14 @@ const Photos = () => {
                 className="btn-primary inline-flex items-center gap-2"
                 title="Découvrir la galerie sous-marine de Karim Saari"
               >
-                <span>Galerie Sous-marine &amp; Dépollution</span>
+                <span>{t('photos.cta_underwater')}</span>
                 <ArrowLeft className="w-4 h-4 rotate-180" aria-hidden="true" />
               </Link>
               <Link
                 to="/contact"
                 className="btn-secondary inline-flex items-center gap-2 group"
               >
-                <span>Nous contacter</span>
+                <span>{t('photos.cta_contact')}</span>
                 <ArrowLeft className="w-4 h-4 rotate-180 group-hover:translate-x-1 transition-transform" aria-hidden="true" />
               </Link>
             </div>

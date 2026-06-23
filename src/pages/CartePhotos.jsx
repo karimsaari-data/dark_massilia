@@ -10,6 +10,8 @@ import 'leaflet.fullscreen/dist/Control.FullScreen.css';
 import FullScreenPlugin from 'leaflet.fullscreen';
 import 'leaflet.heat/dist/leaflet-heat.js';
 import { ChevronLeft, Layers } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
+import i18n from '../i18n';
 import { supabase } from '../lib/supabase';
 import SEO from '../components/SEO';
 import { SEO_PAGES } from '../utils/seo';
@@ -72,7 +74,7 @@ function popupHtml(photo) {
         background:${c}22;border:1px solid ${c}66;
         border-radius:8px;font-size:12px;color:${c};
         text-decoration:none;font-weight:500">
-        Voir la photo →
+        ${i18n.t('cartePhotos.popup_see_photo')}
       </a>
     </div>`;
 }
@@ -151,11 +153,11 @@ function LocateControl() {
       setView: 'untilPan',
       locateOptions: { maxZoom: 14, enableHighAccuracy: true, timeout: 10000 },
       strings: {
-        title: 'Ma position',
+        title: i18n.t('cartePhotos.locate_title', 'My location'),
         metersUnit: 'm',
         feetUnit: 'ft',
-        popup: 'Vous êtes ici (±{distance} {unit})',
-        outsideMapBoundsMsg: 'Position hors de la carte',
+        popup: i18n.t('cartePhotos.locate_popup', 'You are here (±{distance} {unit})'),
+        outsideMapBoundsMsg: i18n.t('cartePhotos.locate_outside', 'Location outside map bounds'),
       },
       onLocationError(err) {
         if (err.code === 1) return; // permission refusée — silencieux
@@ -181,8 +183,8 @@ function FullscreenControl() {
   useEffect(() => {
     const fs = new FullScreenPlugin({
       position: 'topright',
-      title: 'Plein écran',
-      titleCancel: 'Quitter le plein écran',
+      title: i18n.t('cartePhotos.fullscreen_enter', 'Fullscreen'),
+      titleCancel: i18n.t('cartePhotos.fullscreen_exit', 'Exit fullscreen'),
       forceSeparateButton: true,
     });
     fs.addTo(map);
@@ -303,18 +305,19 @@ const POPUP_CSS = `
 
 const SUBCATS = {
   paysage:     [
-    { key: 'mer',       label: 'Mer'          },
-    { key: 'terre',     label: 'Terre'        },
-    { key: 'horizons',  label: 'Horizons'     },
+    { key: 'mer'       },
+    { key: 'terre'     },
+    { key: 'horizons'  },
   ],
   sous_marine: [
-    { key: 'depollution',      label: 'Dépollution'     },
-    { key: 'biodiversite',     label: 'Biodiversité'    },
-    { key: 'caracterisation',  label: 'Caractérisation' },
+    { key: 'depollution'     },
+    { key: 'biodiversite'    },
+    { key: 'caracterisation' },
   ],
 };
 
 export default function CartePhotos() {
+  const { t } = useTranslation();
   const mapRef = useRef(null);
   const markersRef = useRef({});
   const clusterGroupRef = useRef(null);
@@ -395,23 +398,23 @@ export default function CartePhotos() {
             {/* En-tête */}
             <div className="px-5 pt-6 pb-5 border-b border-white/8 flex-shrink-0">
               <h1 className="text-xs font-black uppercase tracking-[0.15em] text-white/50 mb-1">
-                Carte des photos
+                {t('cartePhotos.sidebar_title')}
               </h1>
               <p className="text-white text-lg font-bold leading-tight">
-                Filtrez vos recherches
+                {t('cartePhotos.sidebar_subtitle')}
               </p>
             </div>
 
             {/* ── Vue : Marqueurs / Zones chaudes ── */}
             <div className="px-5 py-4 border-b border-white/8 flex-shrink-0">
               <p className="text-[11px] font-black uppercase tracking-[0.12em] text-white/40 mb-3">
-                Vue :
+                {t('cartePhotos.view_label')}
               </p>
               <div className="grid grid-cols-2 gap-1.5">
                 {[
-                  { mode: false, label: 'Marqueurs',    icon: '📍' },
-                  { mode: true,  label: 'Zones chaudes', icon: '🔥' },
-                ].map(({ mode, label, icon }) => (
+                  { mode: false, labelKey: 'cartePhotos.markers',  icon: '📍' },
+                  { mode: true,  labelKey: 'cartePhotos.heatmap',  icon: '🔥' },
+                ].map(({ mode, labelKey, icon }) => (
                   <button
                     key={String(mode)}
                     onClick={() => setHeatMode(mode)}
@@ -422,7 +425,7 @@ export default function CartePhotos() {
                     }`}
                   >
                     <span>{icon}</span>
-                    {label}
+                    {t(labelKey)}
                   </button>
                 ))}
               </div>
@@ -431,14 +434,14 @@ export default function CartePhotos() {
             {/* ── Filtres principaux ── */}
             <div className="px-5 py-5 border-b border-white/8 flex-shrink-0">
               <p className="text-[11px] font-black uppercase tracking-[0.12em] text-white/40 mb-3">
-                Filtrer par type :
+                {t('cartePhotos.filter_label')}
               </p>
               <div className="space-y-1">
                 {[
-                  { key: 'all',         label: 'Toutes les photos', count: photos.length,   color: null,      desc: 'Paysage & sous-marine' },
-                  { key: 'paysage',     label: 'Paysages',          count: paysageCount,    color: '#00ABA8', desc: 'Littoral & nature'     },
-                  { key: 'sous_marine', label: 'Sous-marine',       count: sousMarineCount, color: '#0091ff', desc: 'Plongée & dépollution' },
-                ].map(({ key, label, count, color, desc }) => (
+                  { key: 'all',         labelKey: 'cartePhotos.filter_all',         count: photos.length,   color: null,      descKey: 'cartePhotos.filter_all_desc'         },
+                  { key: 'paysage',     labelKey: 'cartePhotos.filter_paysage',     count: paysageCount,    color: '#00ABA8', descKey: 'cartePhotos.filter_paysage_desc'     },
+                  { key: 'sous_marine', labelKey: 'cartePhotos.filter_sous_marine', count: sousMarineCount, color: '#0091ff', descKey: 'cartePhotos.filter_sous_marine_desc' },
+                ].map(({ key, labelKey, count, color, descKey }) => (
                   <button
                     key={key}
                     onClick={() => handleMainFilter(key)}
@@ -463,9 +466,9 @@ export default function CartePhotos() {
                     </span>
                     <span className="flex-1 min-w-0">
                       <span className={`block text-sm font-semibold leading-tight ${filter === key ? 'text-white' : 'text-white/70'}`}>
-                        {label}
+                        {t(labelKey)}
                       </span>
-                      <span className="block text-[11px] text-white/35 mt-0.5">{desc}</span>
+                      <span className="block text-[11px] text-white/35 mt-0.5">{t(descKey)}</span>
                     </span>
                     <span
                       className="text-xs font-bold tabular-nums px-2 py-0.5 rounded-full flex-shrink-0"
@@ -485,10 +488,10 @@ export default function CartePhotos() {
             {subcats.length > 0 && (
               <div className="px-5 py-4 border-b border-white/8 flex-shrink-0">
                 <p className="text-[11px] font-black uppercase tracking-[0.12em] text-white/40 mb-3">
-                  Affiner par catégorie :
+                  {t('cartePhotos.refine_label')}
                 </p>
                 <div className="flex flex-wrap gap-2">
-                  {subcats.map(({ key, label }) => {
+                  {subcats.map(({ key }) => {
                     const count = byType.filter(p => p.categorie === key).length;
                     const active = subFilter === key;
                     return (
@@ -501,7 +504,7 @@ export default function CartePhotos() {
                             : 'border-white/15 text-white/50 hover:border-white/30 hover:text-white/80'
                         }`}
                       >
-                        {label}
+                        {t('cartePhotos.subcat_' + key)}
                         <span className={`text-[10px] ${active ? 'text-white/70' : 'text-white/30'}`}>{count}</span>
                       </button>
                     );
@@ -527,8 +530,8 @@ export default function CartePhotos() {
                     <span className="w-1.5 h-1.5 rounded-full flex-shrink-0" style={{
                       background: filter === 'paysage' ? '#00ABA8' : filter === 'sous_marine' ? '#0091ff' : 'rgba(255,255,255,0.4)'
                     }} />
-                    {filter === 'paysage' ? 'Paysages' : filter === 'sous_marine' ? 'Sous-marine' : 'Toutes les photos'}
-                    {subFilter && ` — ${subcats.find(s => s.key === subFilter)?.label}`}
+                    {filter === 'paysage' ? t('cartePhotos.filter_paysage') : filter === 'sous_marine' ? t('cartePhotos.filter_sous_marine') : t('cartePhotos.filter_all')}
+                    {subFilter && ` — ${t('cartePhotos.subcat_' + subFilter)}`}
                   </div>
                 </div>
               )}
@@ -538,8 +541,7 @@ export default function CartePhotos() {
                 <div className="flex flex-col items-center justify-center gap-3 py-10 px-6 text-center">
                   <span className="text-3xl">🔥</span>
                   <p className="text-white/50 text-xs leading-relaxed">
-                    Vue zones chaudes — les couleurs indiquent la densité de photos.
-                    Passez en vue Marqueurs pour accéder aux photos individuelles.
+                    {t('cartePhotos.heat_desc')}
                   </p>
                 </div>
               ) : loading ? (
@@ -547,7 +549,7 @@ export default function CartePhotos() {
                   <div className="spinner" />
                 </div>
               ) : filtered.length === 0 ? (
-                <p className="text-center text-white/30 text-sm py-10 px-5">Aucune photo pour ce filtre.</p>
+                <p className="text-center text-white/30 text-sm py-10 px-5">{t('cartePhotos.no_results')}</p>
               ) : (
                 <ul className="py-2">
                   {filtered.map(photo => {
@@ -595,7 +597,7 @@ export default function CartePhotos() {
                                 onMouseEnter={e => { e.currentTarget.style.background = `${c}35`; }}
                                 onMouseLeave={e => { e.currentTarget.style.background = `${c}20`; }}
                               >
-                                Voir la photo →
+                                {t('cartePhotos.see_photo')}
                               </a>
                               <button
                                 onClick={() => {
@@ -617,7 +619,7 @@ export default function CartePhotos() {
                                 onMouseEnter={e => { e.currentTarget.style.background = 'rgba(255,255,255,0.12)'; e.currentTarget.style.color = 'white'; }}
                                 onMouseLeave={e => { e.currentTarget.style.background = 'rgba(255,255,255,0.05)'; e.currentTarget.style.color = 'rgba(255,255,255,0.55)'; }}
                               >
-                                Voir sur la carte →
+                                {t('cartePhotos.see_on_map')}
                               </button>
                             </div>
                           </div>
@@ -640,7 +642,7 @@ export default function CartePhotos() {
             background: 'rgba(5,15,30,0.9)',
             transition: 'left 0.3s ease-in-out, background 0.2s',
           }}
-          aria-label={sidebarOpen ? 'Masquer le panneau' : 'Afficher le panneau'}
+          aria-label={sidebarOpen ? t('cartePhotos.toggle_hide') : t('cartePhotos.toggle_show')}
         >
           <ChevronLeft
             className="w-3.5 h-3.5 transition-transform duration-300"
@@ -678,30 +680,30 @@ export default function CartePhotos() {
       {!loading && photos.length > 0 && (
         <div className="border-t border-white/8 px-6 py-3 flex flex-wrap items-center gap-x-6 gap-y-2"
           style={{ background: 'rgba(4,12,24,0.85)' }}>
-          <span className="text-white/30 text-xs">{photos.length} lieux cartographiés</span>
+          <span className="text-white/30 text-xs">{photos.length} {t('cartePhotos.locations_count')}</span>
           {heatMode ? (
             <>
               <span className="flex items-center gap-2 text-xs text-white/50">
                 <span className="inline-block w-10 h-2 rounded-full flex-shrink-0"
                   style={{ background: 'linear-gradient(to right, #0091ff, #00ABA8, #21c47b)' }} />
-                Densité de photos
+                {t('cartePhotos.heat_legend')}
               </span>
             </>
           ) : (
             <>
               <span className="flex items-center gap-2 text-xs text-white/50">
                 <span className="w-2.5 h-2.5 rounded-full flex-shrink-0" style={{ background: '#00ABA8', boxShadow: '0 0 6px #00ABA8' }} />
-                Paysages
+                {t('cartePhotos.legend_landscape')}
               </span>
               <span className="flex items-center gap-2 text-xs text-white/50">
                 <span className="w-2.5 h-2.5 rounded-full flex-shrink-0" style={{ background: '#0091ff', boxShadow: '0 0 6px #0091ff' }} />
-                Sous-marine
+                {t('cartePhotos.legend_underwater')}
               </span>
             </>
           )}
           <span className="ml-auto flex items-center gap-3 text-xs text-white/30">
-            <a href="/photographie-paysage-mer" className="hover:text-white/70 transition-colors">Galerie paysages →</a>
-            <a href="/photographie-sous-marine" className="hover:text-white/70 transition-colors">Galerie sous-marine →</a>
+            <a href="/photographie-paysage-mer" className="hover:text-white/70 transition-colors">{t('cartePhotos.gallery_landscape')}</a>
+            <a href="/photographie-sous-marine" className="hover:text-white/70 transition-colors">{t('cartePhotos.gallery_underwater')}</a>
           </span>
         </div>
       )}

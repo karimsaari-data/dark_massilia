@@ -14,6 +14,7 @@ import {
   AlertTriangle,
   Anchor,
 } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
 import InstagramStats from '../components/ui/InstagramStats';
 import StatCounter from '../components/ui/StatCounter';
 import { supabase } from '../lib/supabase';
@@ -25,97 +26,31 @@ import Breadcrumb from '../components/Breadcrumb';
 // ── Données statiques ───────────────────────────────────────────────────────
 
 const IMPACT = [
-  {
-    num: 7, suffix: ' %',
-    label: 'des microplastiques mondiaux — pour moins de 1 % de la surface océanique',
-    icon: Waves,
-    note: 'Le piège méditerranéen',
-  },
-  {
-    num: 33800, suffix: '',
-    label: 'bouteilles plastique déversées chaque minute dans nos eaux',
-    icon: AlertTriangle,
-    note: 'Le déluge continu',
-  },
-  {
-    num: 80, suffix: ' %',
-    label: 'des déchets marins viennent de nos activités à terre — la solution est entre nos mains',
-    icon: Leaf,
-    note: "L'origine terrestre",
-  },
-  {
-    num: 5, suffix: ' g',
-    label: "de nanoplastiques ingérés par semaine — le poids d'une carte de crédit",
-    icon: Heart,
-    note: "L'impact boomerang",
-  },
+  { num: 7,     suffix: ' %', labelKey: 'community.stats.microplastics', noteKey: 'community.stats.microplastics_label', icon: Waves },
+  { num: 33800, suffix: '',   labelKey: 'community.stats.bottles',       noteKey: 'community.stats.bottles_label',       icon: AlertTriangle },
+  { num: 80,    suffix: ' %', labelKey: 'community.stats.land_waste',    noteKey: 'community.stats.land_waste_label',    icon: Leaf },
+  { num: 5,     suffix: ' g', labelKey: 'community.stats.ingested',      noteKey: 'community.stats.ingested_label',      icon: Heart },
 ];
 
 const STEPS = [
-  {
-    num: '01',
-    icon: Users,
-    title: 'Suivre et amplifier',
-    desc: "Rejoignez le groupe Facebook « Amoureux des Calanques » et suivez @karimsaari sur Instagram. Partager nos posts, c'est déjà agir : chaque partage sensibilise de nouveaux publics à la cause.",
-  },
-  {
-    num: '02',
-    icon: Anchor,
-    title: 'Apporter son aide matérielle',
-    desc: "Vous avez un kayak, un bateau ou un véhicule utilitaire ? Contactez-nous. Nous avons besoin d'aide pour atteindre les zones isolées, transporter les déchets collectés et réaliser la caractérisation à terre.",
-  },
-  {
-    num: '03',
-    icon: CheckCircle2,
-    title: 'Venir en soutien logistique',
-    desc: "Le jour J, intervenez depuis le rivage ou en surface : tri, caractérisation des déchets, logistique. Les plongées sont réservées aux membres certifiés de Team Oxygen pour des raisons de sécurité et d'assurance.",
-  },
+  { num: '01', icon: Users,        id: 'follow'    },
+  { num: '02', icon: Anchor,       id: 'material'  },
+  { num: '03', icon: CheckCircle2, id: 'logistics' },
 ];
 
 const PROFILES = [
-  {
-    emoji: '🛶',
-    title: 'Kayakiste / Plaisancier',
-    desc: "Vous mettez votre embarcation au service de l'équipe pour atteindre les zones inaccessibles à pied et transporter les déchets récupérés.",
-  },
-  {
-    emoji: '🧹',
-    title: 'Bénévole terrestre',
-    desc: "Sur le rivage, vous triez et caractérisez les déchets collectés, et vous participez à la logistique et au transport vers les filières de recyclage.",
-  },
-  {
-    emoji: '📸',
-    title: 'Photographe / Vidéaste',
-    desc: "Depuis le bord ou la surface, vous documentez les missions pour amplifier leur visibilité et sensibiliser le grand public.",
-  },
-  {
-    emoji: '📢',
-    title: 'Ambassadeur digital',
-    desc: "Vous suivez, aimez et partagez nos actions sur vos réseaux. La visibilité est un levier d'action concret pour changer les mentalités.",
-  },
+  { emoji: '🛶', id: 'kayak'   },
+  { emoji: '🧹', id: 'land'    },
+  { emoji: '📸', id: 'photo'   },
+  { emoji: '📢', id: 'digital' },
 ];
 
 const FAQ = [
-  {
-    q: "Puis-je plonger ou faire de l'apnée lors des missions ?",
-    a: "Non. Pour des raisons de sécurité et d'assurance, les plongées et l'apnée sont strictement réservées aux membres certifiés de l'association Team Oxygen. Les bénévoles extérieurs interviennent exclusivement depuis la surface, en kayak ou depuis le rivage.",
-  },
-  {
-    q: "Comment aider concrètement sans être plongeur ?",
-    a: "Il y a plusieurs façons de contribuer : mettre un kayak ou un bateau à disposition pour accéder aux zones isolées, participer au tri et à la caractérisation des déchets à terre, assurer le transport des sacs vers les filières de recyclage, ou documenter la mission avec photos et vidéos depuis le bord.",
-  },
-  {
-    q: 'Comment être prévenu de la prochaine mission ?',
-    a: "Rejoignez le groupe Facebook « Amoureux des Calanques » et suivez @karimsaari sur Instagram : nous annonçons toutes les dates sur ces canaux en priorité. Vous pouvez aussi nous contacter via la page Contact pour être ajouté à notre liste de diffusion.",
-  },
-  {
-    q: 'Team Oxygen est-elle une association officielle ?',
-    a: "Oui. Team Oxygen est une association loi 1901, dont Karim Saari est président. Les plongées sont encadrées par des membres certifiés couverts par l'assurance associative. Les bénévoles extérieurs interviennent uniquement en surface ou à terre.",
-  },
-  {
-    q: "Comment soutenir le mouvement sans pouvoir venir physiquement ?",
-    a: "Le soutien digital compte autant que la présence terrain : suivez nos comptes, partagez nos posts et nos réels, commentez, taggez vos proches sensibles à la cause. Chaque partage touche de nouveaux publics. Vous pouvez aussi soutenir l'association directement sur team-oxygen.com.",
-  },
+  { id: 'dive'     },
+  { id: 'nodiver'  },
+  { id: 'notify'   },
+  { id: 'official' },
+  { id: 'remote'   },
 ];
 
 // ── Composant FAQ accordéon ─────────────────────────────────────────────────
@@ -157,6 +92,7 @@ const fmt = (value, decimals, suffix) =>
   parseFloat(value).toFixed(decimals ?? 1).replace('.', ',') + (suffix ?? '');
 
 const Communaute = () => {
+  const { t } = useTranslation();
   const [fbGroupLabel,  setFbGroupLabel]  = useState(FACEBOOK_GROUP_MEMBERS.toLocaleString('fr-FR'));
   const [totalLabel,    setTotalLabel]    = useState(SOCIAL_STATS_DEFAULTS.total_community.toLocaleString('fr-FR'));
   const [instaLabel,    setInstaLabel]    = useState(fmt(SOCIAL_STATS_DEFAULTS.instagram, 1, 'K'));
@@ -199,7 +135,7 @@ const Communaute = () => {
     <div className="min-h-screen pt-4 pb-16">
       <SEO {...SEO_PAGES['/communaute']} />
       <div className="container-custom pt-4">
-        <Breadcrumb label="Communauté" />
+        <Breadcrumb label={t('community.breadcrumb')} />
       </div>
       <div className="container-custom space-y-12">
 
@@ -226,34 +162,43 @@ const Communaute = () => {
                 aria-hidden="true"
               />
               <h1 className="text-2xl md:text-4xl font-bold text-white leading-tight">
-                Suivez les missions en direct — rejoignez la communauté
+                {t('community.h1')}
               </h1>
             </div>
             <p className="text-ocean-teal text-lg md:text-xl font-semibold mb-6">
-              {totalLabel} personnes mobilisées pour la Méditerranée
+              {t('community.total_mobilized', { total: totalLabel })}
             </p>
             <div className="space-y-0 text-text-secondary leading-loose text-sm md:text-[0.95rem] mb-8">
 
               {/* Lead */}
               <p className="text-base md:text-lg text-white/90 leading-relaxed font-light mb-6">
-                La protection de la <strong className="text-ocean-teal font-semibold">Méditerranée</strong> repose sur une <strong className="text-ocean-teal font-semibold">mobilisation collective et continue</strong>. À travers mes réseaux sociaux, je fédère aujourd'hui une communauté de plus de <strong className="text-ocean-teal font-semibold">{totalLabel} personnes</strong> sensibilisées aux enjeux environnementaux du littoral marseillais.
+                {t('community.lead_p1_before')}{' '}
+                <strong className="text-ocean-teal font-semibold">{totalLabel} {t('community.lead_p1_people')}</strong>
+                {' '}{t('community.lead_p1_after')}
               </p>
 
               {/* Chapitre 1 */}
-              <p className="text-[0.65rem] uppercase tracking-[0.2em] text-ocean-teal/70 font-semibold pt-2 pb-1">La présence numérique</p>
+              <p className="text-[0.65rem] uppercase tracking-[0.2em] text-ocean-teal/70 font-semibold pt-2 pb-1">
+                {t('community.ch1_label')}
+              </p>
               <p className="mb-4">
-                <span className="float-left text-[3.2rem] leading-[0.8] font-bold text-ocean-teal mr-2 mt-1 select-none">D</span>e mes <strong className="text-ocean-teal font-semibold">reportages en immersion</strong> sur YouTube à mes <strong className="text-ocean-teal font-semibold">alertes environnementales</strong> sur Instagram ({instaLabel}), TikTok ({tiktokLabel}) et mes photographies sur 500px, cette audience numérique prolonge le <strong className="text-ocean-teal font-semibold">travail de terrain</strong> en donnant de la visibilité aux réalités observées sous la surface.
+                <span className="float-left text-[3.2rem] leading-[0.8] font-bold text-ocean-teal mr-2 mt-1 select-none">
+                  {t('community.ch1_dropcap')}
+                </span>
+                {t('community.ch1_after_dropcap', { instagram: instaLabel, tiktok: tiktokLabel })}
               </p>
 
               {/* Chapitre 2 */}
-              <p className="text-[0.65rem] uppercase tracking-[0.2em] text-ocean-teal/70 font-semibold pt-3 pb-1">La communauté</p>
+              <p className="text-[0.65rem] uppercase tracking-[0.2em] text-ocean-teal/70 font-semibold pt-3 pb-1">
+                {t('community.ch2_label')}
+              </p>
               <p className="mb-4">
-                À travers l'animation du groupe des <strong className="text-ocean-teal font-semibold">Amoureux des Calanques</strong> (plus de <strong className="text-ocean-teal font-semibold">{fbGroupLabel} membres</strong>), ma présence sur <strong className="text-ocean-teal font-semibold">Facebook</strong> ({fbPagesLabel} abonnés), sur <strong className="text-ocean-teal font-semibold">X</strong> et en tant que <strong className="text-ocean-teal font-semibold">Local Guide Google Maps</strong> à Marseille, j'informe, documente et interpelle en temps réel.
+                {t('community.ch2_p', { fbGroup: fbGroupLabel, fbPages: fbPagesLabel })}
               </p>
 
               {/* Pull quote */}
               <blockquote className="my-5 py-4 px-5 bg-white/[0.04] border-l-2 border-ocean-teal rounded-r-lg">
-                <p className="text-white/85 italic text-base leading-snug">« Cette audience n'est pas un indicateur abstrait : elle représente une capacité concrète de sensibilisation et de mobilisation pour la Méditerranée. »</p>
+                <p className="text-white/85 italic text-base leading-snug">{t('community.blockquote')}</p>
               </blockquote>
             </div>
             {/* CTA principal */}
@@ -262,20 +207,20 @@ const Communaute = () => {
                 href="#reseaux"
                 className="btn-primary inline-flex items-center justify-center gap-2"
               >
-                S'abonner aux réseaux
+                {t('community.cta_subscribe')}
               </a>
               <Link
                 to="/depollution-marine"
                 className="btn-secondary inline-flex items-center justify-center gap-2 group"
               >
-                Rejoindre l'association
+                {t('community.cta_join')}
                 <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
               </Link>
             </div>
             {/* Photo de groupe — candidat LCP, chargée en priorité */}
             <img
               src="/images/karim-saari-marseille-130000-sentinelles-calanques-depollution.webp"
-              alt={`Karim Saari entouré des bénévoles du Projet Sentinelle — ${SOCIAL_STATS_DEFAULTS.total_community.toLocaleString('fr-FR')} sentinelles pour la dépollution des Calanques de Marseille`}
+              alt={t('community.img_alt')}
               className="w-full rounded-2xl"
               loading="eager"
               fetchPriority="high"
@@ -292,22 +237,22 @@ const Communaute = () => {
         >
           <motion.div variants={FADE_IN_UP} className="glass rounded-3xl p-8 md:p-12">
             <h2 className="text-2xl md:text-3xl font-bold text-white mb-2 text-center">
-              Pourquoi agir maintenant ?
+              {t('community.impact_h2')}
             </h2>
             <p className="text-text-secondary text-center mb-8 text-lg">
-              La Méditerranée est un piège à plastiques. Voici les chiffres qui rendent l'urgence impossible à ignorer.
+              {t('community.impact_subtitle')}
             </p>
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6">
-              {IMPACT.map(({ num, suffix, label, note, icon: Icon }) => (
-                <div key={label} className="text-center flex flex-col items-center">
+              {IMPACT.map(({ num, suffix, labelKey, noteKey, icon: Icon }) => (
+                <div key={labelKey} className="text-center flex flex-col items-center">
                   <div className="w-12 h-12 mx-auto mb-3 rounded-full bg-ocean-teal/20 flex items-center justify-center">
                     <Icon className="w-6 h-6 text-ocean-teal" />
                   </div>
-                  <div className="text-xs font-semibold text-ocean-teal/70 uppercase tracking-widest mb-1">{note}</div>
+                  <div className="text-xs font-semibold text-ocean-teal/70 uppercase tracking-widest mb-1">{t(noteKey)}</div>
                   <div className="text-2xl md:text-3xl font-bold text-ocean-teal mb-1">
                     <StatCounter end={num} suffix={suffix} duration={num > 1000 ? 2500 : 1500} />
                   </div>
-                  <div className="text-xs text-text-secondary leading-snug">{label}</div>
+                  <div className="text-xs text-text-secondary leading-snug">{t(labelKey)}</div>
                 </div>
               ))}
             </div>
@@ -323,14 +268,14 @@ const Communaute = () => {
         >
           <motion.div variants={FADE_IN_UP} className="glass-strong rounded-3xl p-8 md:p-12">
             <h2 className="text-2xl md:text-3xl font-bold text-white mb-2">
-              Comment participer à une mission de dépollution ?
+              {t('community.steps_h2')}
             </h2>
             <p className="text-text-secondary mb-10 text-lg">
-              Trois étapes simples pour passer du spectateur au bénévole actif.
+              {t('community.steps_subtitle')}
             </p>
             <div className="grid md:grid-cols-3 gap-8">
-              {STEPS.map(({ num, icon: Icon, title, desc }) => (
-                <div key={num} className="relative">
+              {STEPS.map(({ num, icon: Icon, id }) => (
+                <div key={id} className="relative">
                   <div className="flex items-start gap-4 mb-4">
                     <span className="text-4xl font-black text-ocean-teal/30 leading-none select-none">
                       {num}
@@ -339,23 +284,23 @@ const Communaute = () => {
                       <Icon className="w-5 h-5 text-ocean-teal" />
                     </div>
                   </div>
-                  <h3 className="text-white font-bold text-lg mb-2">{title}</h3>
-                  <p className="text-text-secondary leading-relaxed text-sm">{desc}</p>
+                  <h3 className="text-white font-bold text-lg mb-2">{t('community.step_' + id + '_title')}</h3>
+                  <p className="text-text-secondary leading-relaxed text-sm">{t('community.step_' + id + '_desc')}</p>
                 </div>
               ))}
             </div>
             {/* Vidéo — dépollution J4 avec Plastic Odyssey, 11 avril 2026 */}
             <div className="mt-10">
-              <p className="text-ocean-teal text-sm font-semibold uppercase tracking-widest mb-2">Mission terrain</p>
+              <p className="text-ocean-teal text-sm font-semibold uppercase tracking-widest mb-2">{t('community.video_label')}</p>
               <p className="text-white font-bold text-lg mb-1">
-                Dépollution au J4 — 14 associations réunies à Marseille
+                {t('community.video_title')}
               </p>
               <p className="text-text-secondary text-sm mb-4">
-                11 avril 2026 · Bassin du J4 (devant le MUCEM) · avec{' '}
+                {t('community.video_date_venue')}{' '}
                 <Link to="/blog/depollution-au-j4-quand-plastic-odyssey-reunit-marseille-pour-nettoyer-ce-qui-se-cache-sous-la-surface" className="text-ocean-teal hover:underline">
                   Plastic Odyssey
                 </Link>
-                , Team Oxygen, Clean My Calanques, Parc National des Calanques, Wings of the Ocean et 9 autres structures marseillaises.
+                {t('community.video_orgs_after')}
               </p>
               <video
                 src="/assets/video/communaut%C3%A9.mp4"
@@ -364,7 +309,7 @@ const Communaute = () => {
                 preload="metadata"
                 className="w-full rounded-2xl"
                 style={{ maxHeight: '540px', background: '#000' }}
-                aria-label="Vidéo de la dépollution sous-marine au bassin du J4 à Marseille — opération Plastic Odyssey du 11 avril 2026 réunissant 14 associations environnementales"
+                aria-label={t('community.video_aria')}
               />
             </div>
           </motion.div>
@@ -379,21 +324,21 @@ const Communaute = () => {
         >
           <motion.div variants={FADE_IN_UP}>
             <h2 className="text-2xl md:text-3xl font-bold text-white mb-3 text-center">
-              Quel que soit votre profil, vous avez votre place
+              {t('community.profiles_h2')}
             </h2>
             <p className="text-text-secondary text-center mb-8 text-lg">
-              Le bénévolat en dépollution marine à Marseille s'adapte à chaque niveau.
+              {t('community.profiles_subtitle')}
             </p>
             <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
-              {PROFILES.map(({ emoji, title, desc }) => (
+              {PROFILES.map(({ emoji, id }) => (
                 <motion.div
-                  key={title}
+                  key={id}
                   variants={FADE_IN_UP}
                   className="glass rounded-2xl p-6 text-center hover:border-ocean-teal/40 border border-white/10 transition-colors"
                 >
                   <div className="text-4xl mb-3">{emoji}</div>
-                  <h3 className="text-white font-bold mb-2">{title}</h3>
-                  <p className="text-text-secondary text-sm leading-relaxed">{desc}</p>
+                  <h3 className="text-white font-bold mb-2">{t('community.profile_' + id + '_title')}</h3>
+                  <p className="text-text-secondary text-sm leading-relaxed">{t('community.profile_' + id + '_desc')}</p>
                 </motion.div>
               ))}
             </div>
@@ -410,31 +355,30 @@ const Communaute = () => {
         >
           <motion.div variants={FADE_IN_UP} className="glass-strong rounded-3xl p-8 md:p-12">
             <h2 className="text-2xl md:text-3xl font-bold text-white mb-2">
-              {totalLabel} sentinelles déjà mobilisées
+              {t('community.social_h2', { total: totalLabel })}
             </h2>
             <p className="text-text-secondary mb-8 text-lg">
-              Une audience numérique au service d'une cause réelle. Rejoindre nos réseaux, c'est
-              amplifier chaque mission de terrain.
+              {t('community.social_subtitle')}
             </p>
             <InstagramStats />
             <div className="mt-8 pt-6 border-t border-white/10">
-              <p className="text-text-secondary mb-4 font-medium text-white">Nous rejoindre sur :</p>
+              <p className="text-text-secondary mb-4 font-medium text-white">{t('community.social_join_title')}</p>
               <div className="flex flex-wrap gap-4">
                 {[
-                  { label: 'Groupe Facebook', href: 'https://www.facebook.com/groups/calanque/' },
-                  { label: 'Instagram @karimsaari', href: 'https://www.instagram.com/karimsaari' },
-                  { label: 'TikTok @dark.massilia', href: 'https://www.tiktok.com/@dark.massilia' },
+                  { labelKey: 'community.social_link_fb_group', href: 'https://www.facebook.com/groups/calanque/' },
+                  { label: 'Instagram @karimsaari',  href: 'https://www.instagram.com/karimsaari' },
+                  { label: 'TikTok @dark.massilia',  href: 'https://www.tiktok.com/@dark.massilia' },
                   { label: 'YouTube @dark.massilia', href: 'https://www.youtube.com/@dark.massilia' },
-                  { label: '500px', href: 'https://500px.com/p/karimsaari?view=photos' },
-                ].map(({ label, href }) => (
+                  { label: '500px',                  href: 'https://500px.com/p/karimsaari?view=photos' },
+                ].map(({ labelKey, label, href }) => (
                   <a
-                    key={label}
+                    key={href}
                     href={href}
                     target="_blank"
                     rel="noopener noreferrer"
                     className="inline-flex items-center gap-2 text-ocean-teal hover:text-white transition-colors font-medium text-sm"
                   >
-                    {label}
+                    {labelKey ? t(labelKey) : label}
                     <ExternalLink className="w-3.5 h-3.5" />
                   </a>
                 ))}
@@ -454,12 +398,12 @@ const Communaute = () => {
             <div className="flex items-center gap-3 mb-8">
               <ShieldCheck className="w-7 h-7 text-ocean-teal flex-shrink-0" />
               <h2 className="text-2xl md:text-3xl font-bold text-white">
-                Questions fréquentes — Bénévolat dépollution
+                {t('community.faq_h2')}
               </h2>
             </div>
             <div>
-              {FAQ.map((item) => (
-                <FaqItem key={item.q} q={item.q} a={item.a} />
+              {FAQ.map(({ id }) => (
+                <FaqItem key={id} q={t('community.faq_' + id + '_q')} a={t('community.faq_' + id + '_a')} />
               ))}
             </div>
           </motion.div>
@@ -475,10 +419,10 @@ const Communaute = () => {
         >
           <Heart className="w-10 h-10 text-ocean-teal mx-auto mb-4" />
           <h2 className="text-2xl md:text-3xl font-bold text-white mb-3">
-            Prêt à rejoindre le mouvement ?
+            {t('community.cta_h2')}
           </h2>
           <p className="text-text-secondary text-lg mb-8 max-w-xl mx-auto">
-            Suivre nos actions, c'est déjà agir. Rejoignez le groupe Facebook « Amoureux des Calanques » pour être informé des prochaines missions et amplifier la cause sur vos réseaux.
+            {t('community.cta_p')}
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Link
@@ -486,13 +430,13 @@ const Communaute = () => {
               className="btn-primary inline-flex items-center justify-center gap-2"
             >
               <Users className="w-5 h-5" />
-              Rejoindre le groupe · {fbGroupLabel} membres
+              {t('community.cta_group_btn')} · {fbGroupLabel} {t('community.cta_group_suffix')}
             </Link>
             <Link
               to="/contact"
               className="btn-secondary inline-flex items-center justify-center gap-2 group"
             >
-              Nous écrire directement
+              {t('community.cta_write')}
               <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
             </Link>
           </div>
@@ -502,42 +446,42 @@ const Communaute = () => {
               to="/depollution-marine"
               className="text-text-secondary hover:text-ocean-teal transition-colors text-sm inline-flex items-center gap-1"
             >
-              En savoir plus sur nos missions de dépollution
+              {t('community.cta_link_missions')}
               <ArrowRight className="w-4 h-4" />
             </Link>
             <Link
               to="/presse"
               className="text-text-secondary hover:text-ocean-teal transition-colors text-sm inline-flex items-center gap-1"
             >
-              Nos passages dans les médias
+              {t('community.cta_link_media')}
               <ArrowRight className="w-4 h-4" />
             </Link>
             <Link
               to="/photographie-sous-marine"
               className="text-text-secondary hover:text-ocean-teal transition-colors text-sm inline-flex items-center gap-1"
             >
-              Galerie photos sous-marines
+              {t('community.cta_link_gallery')}
               <ArrowRight className="w-4 h-4" />
             </Link>
             <Link
               to="/communaute-calanques"
               className="text-text-secondary hover:text-ocean-teal transition-colors text-sm inline-flex items-center gap-1"
             >
-              Groupe Facebook Calanques
+              {t('community.cta_link_group')}
               <ArrowRight className="w-4 h-4" />
             </Link>
             <Link
               to="/local-guide-marseille"
               className="text-text-secondary hover:text-ocean-teal transition-colors text-sm inline-flex items-center gap-1"
             >
-              Local Guide Marseille
+              {t('community.cta_link_local_guide')}
               <ArrowRight className="w-4 h-4" />
             </Link>
             <Link
               to="/blog"
               className="text-text-secondary hover:text-ocean-teal transition-colors text-sm inline-flex items-center gap-1"
             >
-              Actualités &amp; missions
+              {t('community.cta_link_blog')}
               <ArrowRight className="w-4 h-4" />
             </Link>
           </div>
