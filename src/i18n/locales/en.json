@@ -187,9 +187,12 @@
       "subtitle": "Marine cleanup volunteering — Join Team Oxygen in Marseille",
       "desc": "Passionate about Marseille's Calanques? Join our community to follow our actions and participate in protecting the Mediterranean.",
       "cta_fb": "Join the Facebook Group",
-      "cta_newsletter": "Subscribe to newsletter"
+      "cta_newsletter": "Subscribe to newsletter",
+      "members": "members"
     },
     "impact_title": "Did you know?",
+    "impact_aria": "Show fact {{n}}",
+    "impact_paused": "Paused",
     "impact_facts": [
       "A disproportionate concentration: The Mediterranean Sea represents only 1% of the world's ocean surface, yet it concentrates 7% of all microplastics on the planet.",
       "The absurdity of single-use: It takes about 1 second to manufacture a plastic bag and its average use lasts only 20 minutes, yet it will take more than a century to degrade in the natural environment.",
@@ -208,6 +211,12 @@
       "note": "Also check massif access conditions before heading out — open or closed depending on the daily fire risk.",
       "cta_map": "Explore the map",
       "cta_access": "Calanques Massif Access"
+    },
+    "editorial": {
+      "title": "The Mediterranean: An ecosystem under threat",
+      "h3": "Plastic pollution, threatened species and environmental urgency",
+      "p": "Although it represents only 1% of world waters, the Mediterranean Sea concentrates 7% of all microplastics on the planet. As a semi-enclosed sea, its waters take about 90 years to renew — durably trapping waste. In Marseille and worldwide, over 600 marine species are impacted by plastic ingestion or entanglement. Through my images and my freediving commitment in the Calanques, I document this urgency to make the invisible, visible.",
+      "cta": "Consult scientific sources"
     },
     "faq_title": "Frequently Asked Questions",
     "faq": [

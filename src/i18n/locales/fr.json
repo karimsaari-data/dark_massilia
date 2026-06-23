@@ -187,9 +187,12 @@
       "subtitle": "Bénévolat nettoyage marin — Rejoignez Team Oxygen à Marseille",
       "desc": "Passionné des Calanques de Marseille ? Rejoignez notre communauté pour suivre nos actions et participer à la protection de la Méditerranée.",
       "cta_fb": "Rejoindre le groupe Facebook",
-      "cta_newsletter": "S'abonner à la newsletter"
+      "cta_newsletter": "S'abonner à la newsletter",
+      "members": "membres"
     },
     "impact_title": "Le saviez-vous ?",
+    "impact_aria": "Afficher le fait {{n}}",
+    "impact_paused": "En pause",
     "impact_facts": [
       "Une concentration disproportionnée : La mer Méditerranée ne représente que 1 % de la surface des océans mondiaux, mais elle concentre 7 % de la totalité des microplastiques de la planète.",
       "L'absurdité du jetable : Il faut environ 1 seconde pour fabriquer un sac plastique et son utilisation moyenne ne dure que 20 minutes, pourtant il lui faudra plus d'un siècle pour se dégrader dans le milieu naturel.",
@@ -208,6 +211,12 @@
       "note": "Consultez aussi les conditions d'accès aux massifs avant de sortir — ouvert ou fermé selon le risque incendie du jour.",
       "cta_map": "Explorer la carte",
       "cta_access": "Accès massifs Calanques"
+    },
+    "editorial": {
+      "title": "La Méditerranée : Un écosystème en péril",
+      "h3": "Pollution plastique, espèces menacées et urgence environnementale",
+      "p": "Bien qu'elle ne représente que 1 % des eaux mondiales, la mer Méditerranée concentre 7 % de tous les microplastiques de la planète. Mer semi-fermée, le renouvellement de ses eaux prend environ 90 ans — emprisonnant durablement les déchets. À Marseille et dans le monde, plus de 600 espèces marines sont impactées par l'ingestion de plastique ou l'enchevêtrement. À travers mes images et mon engagement en apnée dans les Calanques, je documente cette urgence pour rendre l'invisible, visible.",
+      "cta": "Consulter les sources scientifiques"
     },
     "faq_title": "Questions fréquentes",
     "faq": [
