@@ -2,6 +2,7 @@ import { motion } from 'framer-motion';
 import { useCardHover } from '../hooks/useCardHover';
 import { ArrowLeft, ArrowRight, ExternalLink, Play } from 'lucide-react';
 import { Link } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import { FADE_IN_UP, STAGGER_CONTAINER } from '../utils/constants';
 import SEO from '../components/SEO';
 import { SEO_PAGES } from '../utils/seo';
@@ -9,6 +10,7 @@ import PartnersCarousel from '../components/PartnersCarousel';
 import Breadcrumb from '../components/Breadcrumb';
 
 const Medias = () => {
+  const { t } = useTranslation();
   const cardHover = useCardHover();
   // Données extraites de l'ancien site medias.html
   const radioLinks = [
@@ -175,7 +177,7 @@ const Medias = () => {
     <div className="min-h-screen pt-4 pb-16">
       <SEO {...SEO_PAGES['/presse']} />
       <div className="container-custom">
-        <Breadcrumb label="Presse & Médias" />
+        <Breadcrumb label={t('medias.breadcrumb')} />
         {/* H1 SEO — visible, keyword-rich */}
         <div className="flex items-stretch gap-4 mb-8">
           <motion.div
@@ -192,7 +194,7 @@ const Medias = () => {
             transition={{ duration: 0.6 }}
             className="text-xl md:text-2xl font-bold text-white leading-tight"
           >
-            Documentaires et Reportages : Témoigner de l'urgence écologique en Méditerranée
+            {t('medias.hero_title')}
           </motion.h1>
         </div>
 
@@ -210,7 +212,7 @@ const Medias = () => {
           <motion.div variants={FADE_IN_UP} className="relative flex items-center mb-10">
             <div className="flex-1 border-t border-white/15" />
             <span className="mx-4 px-5 py-2 rounded-full glass-strong border border-white/20 text-xs uppercase tracking-widest font-bold text-white whitespace-nowrap">
-              📺 Passage TV
+              {t('medias.tv_label')}
             </span>
             <div className="flex-1 border-t border-white/15" />
           </motion.div>
@@ -248,9 +250,9 @@ const Medias = () => {
                     <p className="text-xs text-text-muted mb-1">2 mai 2026</p>
                     <p className="text-xs uppercase tracking-widest text-ocean-teal font-semibold mb-1">France 5 — Rediffusion</p>
                     <h3 className="text-lg font-bold text-white group-hover:text-ocean-teal transition-colors">
-                      Échappées Belles — Spéciale Verte : les Bouches-du-Rhône en action
+                      {t('medias.tv_items.echappees.title')}
                     </h3>
-                    <p className="text-sm text-gray-400 mt-2 leading-snug">Karim Saari plonge dans les Calanques pour la Spéciale Verte d'Échappées Belles — dépollution marine et Méditerranée menacée.</p>
+                    <p className="text-sm text-gray-400 mt-2 leading-snug">{t('medias.tv_items.echappees.desc')}</p>
                   </div>
                   <ArrowLeft className="w-5 h-5 rotate-180 text-gray-400 group-hover:text-ocean-teal group-hover:translate-x-1 transition-all flex-shrink-0 ml-4" />
                 </div>
@@ -285,9 +287,9 @@ const Medias = () => {
                     </div>
                     <p className="text-xs uppercase tracking-widest text-ocean-teal font-semibold mb-1">ARTE / YouTube</p>
                     <h3 className="text-lg font-bold text-white group-hover:text-ocean-teal transition-colors">
-                      Documentaire ARTE — Marseille contre la pollution
+                      {t('medias.tv_items.arte.title')}
                     </h3>
-                    <p className="text-sm text-gray-400 mt-2 leading-snug">Plongée documentaire au cœur des Calanques pour filmer l'invisible : déchets, pollution et vie marine menacée.</p>
+                    <p className="text-sm text-gray-400 mt-2 leading-snug">{t('medias.tv_items.arte.desc')}</p>
                   </div>
                   <ArrowLeft className="w-5 h-5 rotate-180 text-gray-400 group-hover:text-ocean-teal group-hover:translate-x-1 transition-all flex-shrink-0 ml-4" />
                 </div>
@@ -325,9 +327,9 @@ const Medias = () => {
                     </div>
                     <p className="text-xs uppercase tracking-widest text-ocean-teal font-semibold mb-1">ARTE Évasion</p>
                     <h3 className="text-lg font-bold text-white group-hover:text-ocean-teal transition-colors">
-                      Méduses | Les souveraines des océans
+                      {t('medias.tv_items.arte_evasion.title')}
                     </h3>
-                    <p className="text-sm text-gray-400 mt-2 leading-snug">Les méduses, sentinelles fragiles de la santé des océans — témoignage filmé en Méditerranée.</p>
+                    <p className="text-sm text-gray-400 mt-2 leading-snug">{t('medias.tv_items.arte_evasion.desc')}</p>
                   </div>
                   <ArrowLeft className="w-5 h-5 rotate-180 text-gray-400 group-hover:text-ocean-teal group-hover:translate-x-1 transition-all flex-shrink-0 ml-4" />
                 </div>
@@ -364,9 +366,9 @@ const Medias = () => {
                     </div>
                     <p className="text-xs uppercase tracking-widest text-ocean-teal font-semibold mb-1">TF1 Info</p>
                     <h3 className="text-lg font-bold text-white group-hover:text-ocean-teal transition-colors">
-                      Le scandale des décharges sauvages dans les calanques marseillaises
+                      {t('medias.tv_items.tf1_1.title')}
                     </h3>
-                    <p className="text-sm text-gray-400 mt-2 leading-snug">Le JT de TF1 enquête sur les dépôts sauvages qui dévastent les Calanques — avec les images sous-marines de Karim Saari.</p>
+                    <p className="text-sm text-gray-400 mt-2 leading-snug">{t('medias.tv_items.tf1_1.desc')}</p>
                   </div>
                   <ExternalLink className="w-5 h-5 text-gray-400 group-hover:text-ocean-teal group-hover:translate-x-1 group-hover:-translate-y-1 transition-all flex-shrink-0 ml-4" />
                 </div>
@@ -403,9 +405,9 @@ const Medias = () => {
                     </div>
                     <p className="text-xs uppercase tracking-widest text-ocean-teal font-semibold mb-1">TF1 Info</p>
                     <h3 className="text-lg font-bold text-white group-hover:text-ocean-teal transition-colors">
-                      Grève des éboueurs à Marseille : l'impact sous-marin
+                      {t('medias.tv_items.tf1_2.title')}
                     </h3>
-                    <p className="text-sm text-gray-400 mt-2 leading-snug">Quand les ordures non collectées finissent sous la mer : Karim documente l'impact en direct pour TF1.</p>
+                    <p className="text-sm text-gray-400 mt-2 leading-snug">{t('medias.tv_items.tf1_2.desc')}</p>
                   </div>
                   <ExternalLink className="w-5 h-5 text-gray-400 group-hover:text-ocean-teal group-hover:translate-x-1 group-hover:-translate-y-1 transition-all flex-shrink-0 ml-4" />
                 </div>
@@ -442,9 +444,9 @@ const Medias = () => {
                     </div>
                     <p className="text-xs uppercase tracking-widest text-ocean-teal font-semibold mb-1">Novo19</p>
                     <h3 className="text-lg font-bold text-white group-hover:text-ocean-teal transition-colors">
-                      VIDÉO. La Méditerranée, la mer la plus polluée du monde
+                      {t('medias.tv_items.novo.title')}
                     </h3>
-                    <p className="text-sm text-gray-400 mt-2 leading-snug">Reportage Novo19 : chiffres, images et témoignage de terrain sur l'état alarmant de la Méditerranée.</p>
+                    <p className="text-sm text-gray-400 mt-2 leading-snug">{t('medias.tv_items.novo.desc')}</p>
                   </div>
                   <ExternalLink className="w-5 h-5 text-gray-400 group-hover:text-ocean-teal group-hover:translate-x-1 group-hover:-translate-y-1 transition-all flex-shrink-0 ml-4" />
                 </div>
@@ -481,9 +483,9 @@ const Medias = () => {
                     </div>
                     <p className="text-xs uppercase tracking-widest text-ocean-teal font-semibold mb-1">La Provence</p>
                     <h3 className="text-lg font-bold text-white group-hover:text-ocean-teal transition-colors">
-                      Marseille : 1,4 tonnes de déchets sorties des eaux du Frioul par des apnéistes
+                      {t('medias.tv_items.provence.title')}
                     </h3>
-                    <p className="text-sm text-gray-400 mt-2 leading-snug">La Provence couvre la plus grande opération de dépollution de l'archipel du Frioul par Team Oxygen.</p>
+                    <p className="text-sm text-gray-400 mt-2 leading-snug">{t('medias.tv_items.provence.desc')}</p>
                   </div>
                   <ExternalLink className="w-5 h-5 text-gray-400 group-hover:text-ocean-teal group-hover:translate-x-1 group-hover:-translate-y-1 transition-all flex-shrink-0 ml-4" />
                 </div>
@@ -503,7 +505,7 @@ const Medias = () => {
           <motion.div variants={FADE_IN_UP} className="relative flex items-center mb-10">
             <div className="flex-1 border-t border-white/15" />
             <span className="mx-4 px-5 py-2 rounded-full glass-strong border border-white/20 text-xs uppercase tracking-widest font-bold text-white whitespace-nowrap">
-              🎙 Radio
+              {t('medias.radio_label')}
             </span>
             <div className="flex-1 border-t border-white/15" />
           </motion.div>
@@ -559,7 +561,7 @@ const Medias = () => {
           <motion.div variants={FADE_IN_UP} className="relative flex items-center mb-10">
             <div className="flex-1 border-t border-white/15" />
             <span className="mx-4 px-5 py-2 rounded-full glass-strong border border-ocean-teal/40 text-xs uppercase tracking-widest font-bold text-ocean-teal whitespace-nowrap">
-              📰 Revue de presse
+              {t('medias.press_label')}
             </span>
             <div className="flex-1 border-t border-white/15" />
           </motion.div>
@@ -684,41 +686,23 @@ const Medias = () => {
         >
           <motion.div variants={FADE_IN_UP} className="glass-strong rounded-3xl p-8 md:p-12">
             <h2 className="text-2xl md:text-3xl font-bold text-white mb-6">
-              Ce que chaque parution change
+              {t('medias.impact_title')}
             </h2>
             <div className="space-y-5 text-text-secondary leading-relaxed">
-              <p>
-                Un reportage au <strong className="text-white">JT de 20h de TF1</strong>, une immersion dans{' '}
-                <strong className="text-white">Échappées Belles</strong>, ou des enquêtes de terrain pour{' '}
-                <strong className="text-white">La Provence</strong>... Chaque parution n'est pas une fin en soi.
-                Elle ouvre des portes : de <strong className="text-ocean-teal">nouveaux bénévoles</strong>, des{' '}
-                <strong className="text-ocean-teal">partenaires institutionnels</strong>, et un rappel constant
-                que la <strong className="text-white">pollution des fonds marins méditerranéens</strong> n'est
-                pas un problème abstrait.
-              </p>
-              <p className="font-semibold text-white">Trois piliers médiatiques portent aujourd'hui cet engagement :</p>
+              <p>{t('medias.impact_p1')} {t('medias.impact_p2')}</p>
+              <p className="font-semibold text-white">{t('medias.impact_p3')}</p>
               <ul className="space-y-3 pl-1">
                 <li className="flex gap-3">
                   <span className="text-ocean-teal mt-1 flex-shrink-0">▸</span>
-                  <span>
-                    <strong className="text-white">Échappées Belles (France 5) & ARTE</strong> — Le rayonnement
-                    national et européen pour sensibiliser à <strong className="text-ocean-teal">l'urgence écologique</strong>.
-                  </span>
+                  <span>{t('medias.impact_bullet1')}</span>
                 </li>
                 <li className="flex gap-3">
                   <span className="text-ocean-teal mt-1 flex-shrink-0">▸</span>
-                  <span>
-                    <strong className="text-white">La Provence</strong> — L'écho de nos actions locales,
-                    documentant l'extraction de <strong className="text-white">tonnes de déchets au Vieux-Port et au Frioul</strong>,
-                    confirmant Karim Saari comme une <strong className="text-ocean-teal">sentinelle incontournable du littoral marseillais</strong>.
-                  </span>
+                  <span>{t('medias.impact_bullet2')} {t('medias.impact_bullet3')}</span>
                 </li>
                 <li className="flex gap-3">
                   <span className="text-ocean-teal mt-1 flex-shrink-0">▸</span>
-                  <span>
-                    <strong className="text-white">TF1 Info</strong> — La reconnaissance de notre expertise
-                    lors des <strong className="text-white">grands enjeux d'actualité environnementale</strong>.
-                  </span>
+                  <span>{t('medias.impact_bullet4')}</span>
                 </li>
               </ul>
             </div>
@@ -734,47 +718,25 @@ const Medias = () => {
         >
           <motion.div variants={FADE_IN_UP} className="glass rounded-3xl p-8 md:p-10">
             <h2 className="text-lg md:text-xl font-bold text-white mb-4">
-              L'écho d'un engagement : Presse et Médias
+              {t('medias.editorial_title')}
             </h2>
             <div className="space-y-4 text-text-secondary leading-relaxed text-sm mb-8">
-              <p>
-                Mon parcours d'<strong className="text-white">apnéiste et de photographe</strong> a trouvé
-                un écho dans les médias nationaux et internationaux, validant une{' '}
-                <Link to="/photographe-environnemental-marseille" className="text-ocean-teal hover:text-white transition-colors">démarche de photographe environnemental</Link>{' '}
-                qui lie <strong className="text-ocean-teal">l'art à l'alerte environnementale</strong>. Que ce soit
-                pour mon expertise de terrain sur <strong className="text-white">TF1</strong> et{' '}
-                <strong className="text-white">ARTE</strong>, mes expéditions dans{' '}
-                <strong className="text-white">Échappées Belles (France 5)</strong>, ou mon regard
-                artistique salué par <strong className="text-white">National Geographic</strong>, chaque
-                parution est une tribune pour la{' '}
-                <strong className="text-ocean-teal">préservation du littoral</strong>.
-              </p>
-              <p>
-                Mon travail et mes actions, portés individuellement ou via la{' '}
-                <strong className="text-white">Team Oxygen</strong>, bénéficient de la reconnaissance
-                d'institutions majeures : le{' '}
-                <strong className="text-white">Parc national des Calanques</strong>, la{' '}
-                <strong className="text-white">Fondation de la Mer</strong> (programme{' '}
-                <em>Un Geste pour la Mer</em>), <strong className="text-white">Citeo</strong> et la{' '}
-                <strong className="text-white">Ville de Marseille</strong>. Chaque témoignage médiatique —
-                de <strong className="text-white">La Provence</strong> au{' '}
-                <strong className="text-white">Midi Libre</strong> — porte la voix des fonds marins
-                au cœur du <strong className="text-ocean-teal">débat public</strong>.
-              </p>
+              <p>{t('medias.editorial_p1')} {t('medias.editorial_p2')} {t('medias.editorial_p3')}</p>
+              <p>{t('medias.editorial_p4')} {t('medias.editorial_p5')} {t('medias.editorial_p6')}</p>
             </div>
             <div className="flex flex-col sm:flex-row items-center justify-center gap-4 pt-6 border-t border-white/8">
               <Link
                 to="/#newsletter"
                 className="btn-primary inline-flex items-center gap-2"
               >
-                <span>S'inscrire à la newsletter</span>
+                <span>{t('medias.cta_newsletter')}</span>
                 <ArrowRight className="w-4 h-4" aria-hidden="true" />
               </Link>
               <Link
                 to="/blog"
                 className="btn-secondary inline-flex items-center gap-2 group"
               >
-                <span>Lire le blog</span>
+                <span>{t('medias.cta_blog')}</span>
                 <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" aria-hidden="true" />
               </Link>
               <Link
@@ -782,7 +744,7 @@ const Medias = () => {
                 className="btn-secondary inline-flex items-center gap-2 group"
               >
                 <ArrowLeft className="w-4 h-4 group-hover:-translate-x-1 transition-transform" aria-hidden="true" />
-                <span>Retour à l'Accueil</span>
+                <span>{t('common.back_home')}</span>
               </Link>
             </div>
           </motion.div>

@@ -1,3 +1,4 @@
+import { useTranslation } from 'react-i18next';
 import { motion } from 'framer-motion';
 import { useCardHover } from '../hooks/useCardHover';
 import { ArrowLeft, ArrowRight, ExternalLink, Camera, Flame } from 'lucide-react';
@@ -8,20 +9,21 @@ import { SEO_PAGES } from '../utils/seo';
 import Breadcrumb from '../components/Breadcrumb';
 import StatCounter from '../components/ui/StatCounter';
 
-const EDITIONS = [
-  { year: '2022', waste: 900,  duration: '8 jours', location: 'Côte Bleue, de Martigues à l\'Estaque', color: '#21c47b' },
-  { year: '2023', waste: 1357, duration: '7 jours', location: 'Archipel du Frioul',                     color: '#0091ff' },
-  { year: '2024', waste: 1147, duration: '9 jours', location: 'Parc National des Calanques',            color: '#ff6b35' },
-  { year: '2025', waste: 2320, duration: '7 jours', location: 'Rade de Marseille',                      color: '#ffd93d' },
-];
+const EDITION_YEARS = ['2022', '2023', '2024', '2025'];
+const EDITION_WASTE = { '2022': 900, '2023': 1357, '2024': 1147, '2025': 2320 };
+const EDITION_DAYS  = { '2022': 8,   '2023': 7,    '2024': 9,    '2025': 7    };
+const EDITION_COLOR = { '2022': '#21c47b', '2023': '#0091ff', '2024': '#ff6b35', '2025': '#ffd93d' };
 
 const Missions = () => {
+  const { t, i18n } = useTranslation();
   const cardHover = useCardHover();
+  const lng = i18n.language;
+
   return (
     <div className="min-h-screen pt-8 pb-24">
       <SEO {...SEO_PAGES['/depollution-marine']} />
       <div className="container-custom">
-        <Breadcrumb label="Missions de Dépollution Marine" />
+        <Breadcrumb label={t('missions.breadcrumb')} />
 
         {/* H1 SEO */}
         <div className="flex items-stretch gap-4 mb-3">
@@ -39,11 +41,11 @@ const Missions = () => {
             transition={{ duration: 0.6 }}
             className="text-xl md:text-2xl font-bold text-white leading-tight"
           >
-            Team Oxygen : Association d'apnéistes engagés pour la mer Méditerranée à Marseille
+            {t('missions.hero_title')}
           </motion.h1>
         </div>
         <p className="text-center text-xs text-gray-500 mb-8">
-          Mis à jour le <time dateTime="2026-03-19">19 mars 2026</time>
+          {t('missions.updated')}
         </p>
 
         {/* Mission Description */}
@@ -76,20 +78,25 @@ const Missions = () => {
             {/* Contenu */}
             <div className="relative p-8 md:p-12 flex flex-col justify-center" style={{ zIndex: 1 }}>
               <h2 className="text-2xl md:text-3xl font-bold text-white mb-4">
-                Notre mission sur le littoral méditerranéen
+                {t('missions.section_mission')}
               </h2>
-              <h3 className="sr-only">Dépollution sous-marine en apnée — Calanques, Frioul & Côte Bleue</h3>
+              <h3 className="sr-only">{t('missions.subtitle')}</h3>
               <div className="rounded-xl px-5 py-4" style={{ background: 'rgba(0,0,0,0.40)', backdropFilter: 'blur(8px)' }}>
                 <div className="space-y-4 text-white/90 leading-[1.8]">
-                  <p className="font-medium">
-                    Association d'apnéistes éco-engagés basée à Marseille — documentation, dépollution et sensibilisation sur l'ensemble du littoral : Calanques, Frioul, Côte Bleue et jusqu'à La Ciotat.
+                  <p className="font-medium">{t('missions.desc1')}</p>
+                  <p>
+                    {t('missions.desc2')}{' '}
+                    <strong className="text-ocean-teal">Team Oxygen</strong>{' '}
+                    <Link to="/photographie-sous-marine" className="text-ocean-teal hover:text-white transition-colors">
+                      {t('missions.bullet_photo')}
+                    </Link>{' '}
+                    {t('missions.bullet_data')}.
                   </p>
                   <p>
-                    De la surface à 20 mètres de profondeur, <strong className="text-ocean-teal">Team Oxygen</strong> conduit des opérations structurées de dépollution sous-marine en apnée, combinant extraction de déchets, <Link to="/photographie-sous-marine" className="text-ocean-teal hover:text-white transition-colors">documentation photographique des fonds marins des Calanques</Link> et collecte de données environnementales sur les fonds marins de Méditerranée.
-                  </p>
-                  <p>
-                    L'association est aujourd'hui présidée par <strong className="text-white font-semibold">Karim Saari</strong>, apnéiste et{' '}
-                    <Link to="/photographe-environnemental-marseille" className="text-ocean-teal hover:text-white transition-colors">photographe environnemental engagé à Marseille</Link>, impliqué dans les actions de dépollution du littoral méditerranéen depuis 10 ans.
+                    {t('missions.president_note')}{' '}
+                    <Link to="/photographe-environnemental-marseille" className="text-ocean-teal hover:text-white transition-colors">
+                      {lng === 'en' ? 'environmental photographer in Marseille' : 'photographe environnemental engagé à Marseille'}
+                    </Link>.
                   </p>
                 </div>
               </div>
@@ -105,25 +112,25 @@ const Missions = () => {
           className="mx-auto mb-12"
         >
           <motion.div variants={FADE_IN_UP} className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            {EDITIONS.map((edition, index) => (
-              <div key={index} className="glass-strong rounded-2xl p-6 md:p-8">
+            {EDITION_YEARS.map((year) => (
+              <div key={year} className="glass-strong rounded-2xl p-6 md:p-8">
                 <div className="flex items-start justify-between mb-4">
                   <h3
                     className="text-3xl md:text-4xl font-bold"
-                    style={{ color: edition.color }}
+                    style={{ color: EDITION_COLOR[year] }}
                   >
-                    {edition.year}
+                    {year}
                   </h3>
                   <div className="text-right">
                     <p className="text-2xl md:text-3xl font-bold text-white">
-                      <StatCounter end={edition.waste} suffix=" kg" />
+                      <StatCounter end={EDITION_WASTE[year]} suffix=" kg" />
                     </p>
-                    <p className="text-sm text-text-muted">déchets collectés</p>
+                    <p className="text-sm text-text-muted">{t('missions.waste_collected')}</p>
                   </div>
                 </div>
                 <div className="space-y-2">
-                  <p className="text-white font-medium">{edition.duration} d'aventure</p>
-                  <p className="text-text-secondary text-sm">{edition.location}</p>
+                  <p className="text-white font-medium">{t('missions.duration', { count: EDITION_DAYS[year] })}</p>
+                  <p className="text-text-secondary text-sm">{t(`missions.editions.${year}.name`)}</p>
                 </div>
               </div>
             ))}
@@ -146,7 +153,7 @@ const Missions = () => {
             <svg className="w-4 h-4 flex-shrink-0" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
               <path d="M12 2C6.477 2 2 6.477 2 12s4.477 10 10 10 10-4.477 10-10S17.523 2 12 2zm0 1.5a8.5 8.5 0 1 1 0 17 8.5 8.5 0 0 1 0-17zm-.75 3.5v1.25H9.5v1.5h1.75v5.5H9.5v1.5h5v-1.5h-1.75V7h-1.5z"/>
             </svg>
-            Projet Sentinelle — article Wikipédia
+            {t('missions.wikipedia_label')}
             <ExternalLink className="w-3 h-3" aria-hidden="true" />
           </a>
         </motion.div>
@@ -164,13 +171,13 @@ const Missions = () => {
             className="glass-strong rounded-3xl p-8 md:p-12 border border-ocean-teal/30 text-center animate-border-pulse"
           >
             <span className="inline-flex items-center gap-1.5 px-4 py-1.5 rounded-full bg-ocean-teal/15 border border-ocean-teal/30 text-ocean-teal text-xs font-semibold mb-6">
-              📅 Prochaine édition
+              📅 {t('missions.next_edition_label')}
             </span>
             <h3 className="text-2xl md:text-3xl font-bold text-white mb-4">
-              5ème édition — Octobre 2026
+              {t('missions.next_edition_title')}
             </h3>
             <p className="text-text-secondary text-lg max-w-xl mx-auto mb-8">
-              La prochaine grande mission de dépollution se prépare. Inscris-toi à la newsletter pour être informé en avant-première du lancement.
+              {t('missions.next_edition_desc')}
             </p>
             <a
               href="https://www.team-oxygen.com/"
@@ -178,7 +185,7 @@ const Missions = () => {
               rel="noopener noreferrer"
               className="inline-flex items-center gap-2 text-ocean-teal hover:text-white transition-colors text-base font-medium"
             >
-              Voir sur Team Oxygen
+              {t('missions.cta_team_oxygen')}
               <ExternalLink className="w-4 h-4" />
             </a>
           </motion.div>
@@ -195,23 +202,23 @@ const Missions = () => {
             <div className="aspect-[16/7] relative">
               <img
                 src="/images/Marseille-dark-massilia-plastique-pollution-projet-sentinelle-teamoxygen_1200w.webp"
-                alt="Team Oxygen en apnée lors d'une mission de dépollution sous-marine dans les Calanques de Marseille — Karim Saari photographe sous-marin"
+                alt={t('missions.gallery_photo_alt')}
                 className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
                 loading="lazy"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" aria-hidden="true" />
               <div className="absolute bottom-0 left-0 right-0 p-6 md:p-10">
-                <p className="text-ocean-teal text-sm font-semibold uppercase tracking-widest mb-2">Galerie photographique</p>
+                <p className="text-ocean-teal text-sm font-semibold uppercase tracking-widest mb-2">{t('missions.gallery_photo_label')}</p>
                 <h2 className="text-2xl md:text-3xl font-bold text-white mb-3 leading-tight">
-                  Une décennie de missions sous-marines en images
+                  {t('missions.gallery_subtitle')}
                 </h2>
-                <h3 className="sr-only">Galerie photo des opérations de nettoyage des fonds marins</h3>
+                <h3 className="sr-only">{t('missions.gallery_title')}</h3>
                 <p className="text-white/70 text-base mb-4 max-w-xl">
-                  Dépollution documentée en apnée — fonds marins, vie marine et déchets collectés dans les Calanques.
+                  {t('missions.gallery_desc')}
                 </p>
                 <span className="inline-flex items-center gap-2 text-ocean-teal font-medium group-hover:gap-3 transition-all">
                   <Camera className="w-4 h-4" aria-hidden="true" />
-                  Voir la galerie sous-marine
+                  {t('missions.cta_gallery')}
                   <ArrowRight className="w-4 h-4" aria-hidden="true" />
                 </span>
               </div>
@@ -219,7 +226,7 @@ const Missions = () => {
           </Link>
         </motion.div>
 
-        {/* Section éditoriale SEO — après le hero photo */}
+        {/* Section éditoriale SEO */}
         <motion.div
           initial="hidden"
           whileInView="visible"
@@ -230,31 +237,29 @@ const Missions = () => {
           <motion.div {...cardHover} variants={FADE_IN_UP} className="glass-strong rounded-3xl overflow-hidden flex flex-col lg:flex-row">
             <div className="p-8 md:p-12 lg:flex-1 flex flex-col justify-center">
               <h2 className="text-2xl md:text-3xl font-bold text-white mb-6">
-                Agir à la source : Les Calanques et la Côte Bleue
+                {t('missions.editorial_title')}
               </h2>
-              <h3 className="sr-only">Zones d'intervention — Calanques de Marseille et littoral méditerranéen</h3>
+              <h3 className="sr-only">{t('missions.editorial_subtitle')}</h3>
               <p className="text-text-secondary leading-[1.8] text-lg">
-                L'urgence est à nos portes&nbsp;: 80&nbsp;% des déchets marins proviennent de la terre.
-                L'impact sur notre littoral est massif. À titre d'exemple, lors du bilan 2023 de
-                l'opération Calanques Propres, 119&nbsp;m³ de déchets ont été récoltés sur le seul
-                littoral marseillais. Parmi les polluants les plus présents dans nos filets&nbsp;: les
-                bouteilles en verre, les canettes, les bouteilles en plastique et divers emballages.
-                Avec <strong className="text-ocean-teal">Team Oxygen</strong>, chaque immersion en
-                apnée est une action directe pour soustraire ces polluants de notre biodiversité locale.
+                {t('missions.editorial_p1')}{' '}
+                {t('missions.editorial_p2')}{' '}
+                {t('missions.editorial_p3')}{' '}
+                {t('missions.editorial_p4')}{' '}
+                {t('missions.editorial_p5', { defaultValue: '' })}
               </p>
               <div className="mt-6 flex flex-wrap gap-6">
                 <Link
                   to="/donnees-scientifiques"
                   className="inline-flex items-center gap-2 text-ocean-teal hover:text-white transition-colors text-sm font-medium"
                 >
-                  Sources scientifiques
+                  {t('missions.cta_sources')}
                   <ExternalLink className="w-4 h-4" />
                 </Link>
                 <Link
                   to="/photographie-paysage-mer"
                   className="inline-flex items-center gap-2 text-ocean-teal hover:text-white transition-colors text-sm font-medium"
                 >
-                  Paysages des Calanques
+                  {t('missions.cta_landscapes')}
                   <ArrowRight className="w-4 h-4" />
                 </Link>
               </div>
@@ -262,7 +267,7 @@ const Missions = () => {
             <div className="lg:w-[38%] flex-shrink-0 min-h-[260px] lg:min-h-0">
               <img
                 src="/images/Marseille-dark-massilia-plastique-pollution-projet-sentinelle-plaque-immatriculation.webp"
-                alt="Plaque d'immatriculation récupérée lors d'une mission de dépollution sous-marine Projet Sentinelle dans les Calanques de Marseille"
+                alt={t('missions.plate_img_alt')}
                 className="w-full h-full object-cover"
                 loading="lazy"
               />
@@ -270,7 +275,7 @@ const Missions = () => {
           </motion.div>
         </motion.div>
 
-        {/* À propos de l'association — section sémantique SEO */}
+        {/* À propos de l'association */}
         <motion.div
           initial="hidden"
           whileInView="visible"
@@ -282,48 +287,29 @@ const Missions = () => {
             <div className="lg:w-[38%] flex-shrink-0 min-h-[260px] lg:min-h-0">
               <img
                 src="/images/Marseille-dark-massilia-plastique-pollution-projet-sentinelle-teamoxygen-freediving.webp"
-                alt="Apnéiste Team Oxygen en freediving lors d'une mission de dépollution sous-marine dans les Calanques de Marseille"
+                alt={t('missions.freediver_img_alt')}
                 className="w-full h-full object-cover"
                 loading="lazy"
               />
             </div>
             <div className="p-8 md:p-12 lg:flex-1 flex flex-col justify-center">
             <h2 className="text-2xl md:text-3xl font-bold text-white mb-6">
-              Team Oxygen — association loi 1901 pour la mer
+              {t('missions.org_title')}
             </h2>
-            <h3 className="sr-only">Association de dépollution marine basée à Marseille</h3>
+            <h3 className="sr-only">{t('missions.org_subtitle')}</h3>
             <div className="space-y-4 text-text-secondary leading-[1.8]">
-              <p>
-                <strong className="text-ocean-teal">Team Oxygen</strong> est une{' '}
-                <strong className="text-white">association d'apnéistes éco-engagés</strong> déclarée
-                sous la loi 1901, fondée en 2018 à Marseille. À but non lucratif, elle réunit
-                bénévoles, plongeurs et photographes autour d'une mission commune&nbsp;: documenter,
-                nettoyer et protéger les fonds marins méditerranéens.
-              </p>
-              <p>
-                L'association intervient sur des zones inaccessibles aux ramassages de surface&nbsp;:
-                entre 0 et 20 mètres de profondeur, là où 94&nbsp;% du plastique marin se dépose et
-                ne se dégrade plus. Chaque mission de l'<strong className="text-white">association
-                dépollution</strong> associe extraction physique des déchets, tri et caractérisation
-                scientifique, et production d'images documentaires diffusées pour sensibiliser le
-                grand public.
-              </p>
-              <p>
-                Présidée par Karim Saari, l'association dépollution Team Oxygen est également
-                partenaire du <strong className="text-white">Parc National des Calanques</strong> et
-                travaille en lien avec la{' '}
-                <strong className="text-white">Fondation de la Mer</strong>. Ses missions sont
-                couvertes par ARTE, M6, France Télévisions, La Provence, la Fondation de la Mer et bien d'autres médias.
-              </p>
+              <p>{t('missions.org_p1')}{' '}{t('missions.org_p2')}</p>
+              <p>{t('missions.org_p3')}{' '}{t('missions.org_p4')}</p>
+              <p>{t('missions.org_p5')}{' '}{t('missions.org_p6')}</p>
             </div>
 
             {/* Chiffres clés association */}
             <div className="mt-8 grid grid-cols-2 md:grid-cols-4 gap-4">
               {[
-                { value: '2018', label: 'Année de fondation' },
-                { value: '5 724 kg', label: 'Déchets collectés' },
-                { value: '4', label: 'Éditions du Projet Sentinelle' },
-                { value: SOCIAL_STATS_DEFAULTS.total_community.toLocaleString('fr-FR'), label: 'Sentinelles en ligne' },
+                { value: '2018', label: t('missions.stat_founded') },
+                { value: '5 724 kg', label: t('missions.stat_waste') },
+                { value: '4', label: t('missions.stat_editions') },
+                { value: SOCIAL_STATS_DEFAULTS.total_community.toLocaleString(lng === 'en' ? 'en-US' : 'fr-FR'), label: t('missions.stat_sentinels') },
               ].map((stat) => (
                 <div key={stat.label} className="text-center p-4 rounded-2xl bg-white/5 border border-white/10">
                   <p className="text-xl md:text-2xl font-bold text-ocean-teal">{stat.value}</p>
@@ -337,7 +323,7 @@ const Missions = () => {
                 to="/communaute"
                 className="inline-flex items-center gap-2 text-ocean-teal hover:text-white transition-colors text-sm font-medium"
               >
-                Rejoindre l'association
+                {t('missions.cta_join')}
                 <ArrowRight className="w-4 h-4" />
               </Link>
             </div>
@@ -345,7 +331,7 @@ const Missions = () => {
           </motion.div>
         </motion.div>
 
-        {/* Section ramassage fonds marins — SEO "ramassage déchets mer Marseille" */}
+        {/* Section ramassage fonds marins */}
         <motion.div
           initial={{ opacity: 0, y: 16 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -354,16 +340,10 @@ const Missions = () => {
         >
           <div className="glass rounded-2xl px-8 py-6 border border-white/5">
             <h2 className="text-lg font-bold text-white mb-3">
-              Comment se déroule le ramassage de déchets sur les fonds marins à Marseille ?
+              {t('missions.cleanup_title')}
             </h2>
             <p className="text-text-secondary leading-[1.8]">
-              Chaque opération de <strong className="text-white">ramassage de déchets en mer</strong> combine
-              plongée en apnée et logistique de surface. Les apnéistes descendent entre 0 et 20 mètres pour
-              collecter plastiques, métaux et déchets divers déposés sur les{' '}
-              <strong className="text-white">fonds marins des Calanques</strong>. Les sacs remontés sont triés
-              à bord, pesés et acheminés vers des filières de traitement adaptées. Cette méthode de{' '}
-              <strong className="text-white">nettoyage sous-marin</strong> à Marseille permet d'atteindre des
-              zones inaccessibles aux dispositifs classiques de ramassage en mer.
+              {t('missions.cleanup_p')}
             </p>
           </div>
         </motion.div>
@@ -377,36 +357,32 @@ const Missions = () => {
         >
           <div className="glass-strong rounded-3xl p-8 md:p-12">
             <h2 className="text-2xl md:text-3xl font-bold text-white mb-6">
-              Quels déchets menacent les Calanques ? Types de pollution marine
+              {t('missions.pollution_title')}
             </h2>
             <div className="space-y-0 text-text-secondary leading-loose text-sm md:text-[0.95rem]">
 
               {/* Lead */}
               <p className="text-base md:text-lg text-white/90 leading-relaxed font-light mb-6">
-                Les missions de nettoyage sous-marin révèlent une pollution marine d'une grande diversité — des <strong className="text-ocean-teal font-semibold">plastiques fragmentés</strong> aux <strong className="text-ocean-teal font-semibold">engins de pêche abandonnés</strong>, en passant par des objets encombrants charriés par les crues des cours d'eau côtiers.
+                {t('missions.pollution_lead')}
               </p>
 
               {/* Chapitre 1 */}
-              <p className="text-[0.65rem] uppercase tracking-[0.2em] text-ocean-teal/70 font-semibold pt-2 pb-1">L'impact sur la faune</p>
-              <p className="mb-4">
-                <span className="float-left text-[3.2rem] leading-[0.8] font-bold text-ocean-teal mr-2 mt-1 select-none">L</span>es <strong className="text-ocean-teal font-semibold">filets fantômes</strong> continuent de capturer des poissons, des poulpes et des langoustes longtemps après avoir été abandonnés — c'est ce que les biologistes appellent la «&nbsp;pêche fantôme&nbsp;». Le nylon prend <strong className="text-ocean-teal font-semibold">400 à 600 ans pour se dégrader</strong>, relâchant des microplastiques qui intègrent la chaîne alimentaire marine. Les <strong className="text-ocean-teal font-semibold">herbiers de Posidonie</strong>, classés habitat prioritaire par l'Union Européenne, sont étouffés sous les déchets lourds qui bloquent la photosynthèse et accélèrent leur régression.
-              </p>
+              <p className="text-[0.65rem] uppercase tracking-[0.2em] text-ocean-teal/70 font-semibold pt-2 pb-1">{t('missions.fauna_section')}</p>
+              <p className="mb-4">{t('missions.fauna_p')}</p>
 
               {/* Chapitre 2 */}
-              <p className="text-[0.65rem] uppercase tracking-[0.2em] text-ocean-teal/70 font-semibold pt-3 pb-1">La documentation</p>
-              <p className="mb-4">
-                Chaque déchet extrait est <strong className="text-ocean-teal font-semibold">pesé, trié et caractérisé</strong>&nbsp;: plastique rigide, film plastique, métal, verre, textile, caoutchouc. Ces données alimentent les rapports scientifiques partenaires et contribuent à la cartographie de la pollution marine dans le Parc National des Calanques.
-              </p>
+              <p className="text-[0.65rem] uppercase tracking-[0.2em] text-ocean-teal/70 font-semibold pt-3 pb-1">{t('missions.doc_section')}</p>
+              <p className="mb-4">{t('missions.doc_p')}</p>
 
               {/* Pull quote */}
               <blockquote className="my-5 py-4 px-5 bg-white/[0.04] border-l-2 border-ocean-teal rounded-r-lg">
-                <p className="text-white/85 italic text-base leading-snug">« Chaque plongée est un inventaire. Chaque déchet remonté, une donnée pour la science. »</p>
+                <p className="text-white/85 italic text-base leading-snug">{t('missions.dive_quote')}</p>
               </blockquote>
             </div>
           </div>
         </motion.div>
 
-        {/* Rejoindre une mission — bénévolat */}
+        {/* Rejoindre une mission */}
         <motion.div
           initial={{ opacity: 0, y: 16 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -415,30 +391,34 @@ const Missions = () => {
         >
           <div className="glass-strong rounded-3xl p-8 md:p-12">
             <h2 className="text-2xl md:text-3xl font-bold text-white mb-6">
-              Comment participer à une mission de dépollution sous-marine ?
+              {t('missions.participate_title')}
             </h2>
             <div className="space-y-0 text-text-secondary leading-loose text-sm md:text-[0.95rem]">
 
               {/* Lead */}
               <p className="text-base md:text-lg text-white/90 leading-relaxed font-light mb-6">
-                <strong className="text-ocean-teal font-semibold">Team Oxygen</strong> accueille chaque année des bénévoles motivés lors des grandes éditions du <strong className="text-ocean-teal font-semibold">Projet Sentinelle</strong>. La pratique de l'apnée n'est pas obligatoire — les missions mobilisent aussi des équipes de surface pour la logistique, le tri et la documentation.
+                {t('missions.participate_desc')}{' '}{t('missions.participate_note')}
               </p>
 
               {/* Chapitre 1 */}
-              <p className="text-[0.65rem] uppercase tracking-[0.2em] text-ocean-teal/70 font-semibold pt-2 pb-1">Pour les apnéistes</p>
+              <p className="text-[0.65rem] uppercase tracking-[0.2em] text-ocean-teal/70 font-semibold pt-2 pb-1">{t('missions.for_freedivers')}</p>
               <p className="mb-4">
-                <span className="float-left text-[3.2rem] leading-[0.8] font-bold text-ocean-teal mr-2 mt-1 select-none">L</span>es interventions se déroulent entre <strong className="text-ocean-teal font-semibold">0 et 20 mètres</strong>, en binôme, avec un briefing de sécurité systématique avant chaque immersion. Aucun équipement spécifique n'est requis au-delà du matériel standard d'apnée. Team Oxygen fournit les sacs de collecte, les filets de surface et l'organisation logistique complète. Les sessions durent entre <strong className="text-ocean-teal font-semibold">4 et 6 heures</strong> chaque matin pendant toute la durée de l'édition.
+                {t('missions.freediver_p1')}{' '}
+                {t('missions.freediver_p2')}{' '}
+                {t('missions.freediver_p3')}{' '}
+                {t('missions.freediver_p4')}
               </p>
 
               {/* Chapitre 2 */}
-              <p className="text-[0.65rem] uppercase tracking-[0.2em] text-ocean-teal/70 font-semibold pt-3 pb-1">La 5ème édition</p>
+              <p className="text-[0.65rem] uppercase tracking-[0.2em] text-ocean-teal/70 font-semibold pt-3 pb-1">{t('missions.edition5_label')}</p>
               <p className="mb-4">
-                Les candidatures pour la <strong className="text-ocean-teal font-semibold">5ème édition — octobre 2026</strong> seront ouvertes prochainement. Inscris-toi à la newsletter pour recevoir le formulaire en avant-première. Les <strong className="text-ocean-teal font-semibold">130&nbsp;000 membres</strong> de la communauté Dark Massilia sont la première force de mobilisation citoyenne pour la protection des Calanques — chaque bénévole compte, que tu sois apnéiste confirmé ou simple citoyen engagé.
+                {t('missions.edition5_desc')}{' '}{t('missions.edition5_newsletter')}{' '}
+                {t('missions.community_cta')}
               </p>
 
               {/* Pull quote */}
               <blockquote className="my-5 py-4 px-5 bg-white/[0.04] border-l-2 border-ocean-teal rounded-r-lg">
-                <p className="text-white/85 italic text-base leading-snug">« Pas besoin d'être apnéiste — il suffit d'être engagé. »</p>
+                <p className="text-white/85 italic text-base leading-snug">{t('missions.no_freediver_needed')}</p>
               </blockquote>
             </div>
             <div className="mt-8 flex flex-wrap gap-4">
@@ -446,21 +426,21 @@ const Missions = () => {
                 to="/#newsletter"
                 className="btn-primary inline-flex items-center gap-2"
               >
-                <span>S'inscrire pour participer</span>
+                <span>{t('missions.cta_register')}</span>
                 <ArrowRight className="w-4 h-4" aria-hidden="true" />
               </Link>
               <Link
                 to="/communaute"
                 className="btn-secondary inline-flex items-center gap-2"
               >
-                <span>Rejoindre la communauté</span>
+                <span>{t('missions.cta_community')}</span>
                 <ArrowRight className="w-4 h-4" />
               </Link>
             </div>
           </div>
         </motion.div>
 
-        {/* Accès aux massifs forestiers — risque incendie */}
+        {/* Accès aux massifs forestiers */}
         <motion.div
           initial={{ opacity: 0, y: 16 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -471,13 +451,13 @@ const Missions = () => {
             <div>
               <p className="text-xs uppercase tracking-widest text-orange-400 font-semibold mb-1 flex items-center gap-1.5">
                 <Flame className="w-3.5 h-3.5" />
-                Avant chaque mission
+                {t('missions.before_mission')}
               </p>
               <p className="text-white font-semibold text-lg leading-snug">
-                Accès aux massifs forestiers des Calanques
+                {t('missions.access_title')}
               </p>
               <p className="text-text-secondary text-sm mt-1">
-                Carte officielle du risque incendie en temps réel — consultez avant toute sortie.
+                {t('missions.access_desc')}
               </p>
             </div>
             <Link
@@ -485,12 +465,12 @@ const Missions = () => {
               className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full border border-orange-500/40 text-orange-400 text-sm font-semibold hover:bg-orange-500/10 transition-colors whitespace-nowrap flex-shrink-0"
             >
               <Flame className="w-4 h-4" />
-              Voir la carte risque
+              {t('missions.cta_risk_map')}
             </Link>
           </div>
         </motion.div>
 
-        {/* Dernières actualités — maillage interne blog */}
+        {/* Dernières actualités */}
         <motion.div
           initial={{ opacity: 0, y: 16 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -501,20 +481,20 @@ const Missions = () => {
           <div className="glass rounded-2xl px-8 py-6 flex flex-col sm:flex-row items-center justify-between gap-4 border border-white/5">
             <div>
               <p className="text-xs uppercase tracking-widest text-ocean-teal font-semibold mb-1">
-                Journal de bord
+                {t('missions.blog_title')}
               </p>
               <p className="text-white font-semibold text-lg leading-snug">
-                Actualités &amp; comptes rendus de mission
+                {t('missions.blog_subtitle')}
               </p>
               <p className="text-text-secondary text-sm mt-1">
-                Reportages terrain, faune observée et bilans de dépollution depuis les Calanques.
+                {t('missions.blog_desc')}
               </p>
             </div>
             <Link
               to="/blog"
               className="btn-secondary inline-flex items-center gap-2 whitespace-nowrap flex-shrink-0"
             >
-              <span>Lire le blog</span>
+              <span>{t('missions.cta_blog')}</span>
               <ArrowRight className="w-4 h-4" />
             </Link>
           </div>
@@ -532,20 +512,20 @@ const Missions = () => {
             <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
               <div>
                 <p className="text-xs uppercase tracking-widest text-ocean-teal font-semibold mb-1">
-                  Nos missions en images et en vidéo
+                  {t('missions.videos_title')}
                 </p>
                 <p className="text-white font-semibold text-lg leading-snug">
-                  Documentaires &amp; vidéos de mission
+                  {t('missions.videos_subtitle')}
                 </p>
                 <p className="text-text-secondary text-sm mt-1">
-                  ARTE, M6, France Télévisions, reportages terrain — retrouvez toutes nos productions.
+                  {t('missions.videos_desc')}
                 </p>
               </div>
               <Link
                 to="/videos"
                 className="btn-secondary inline-flex items-center gap-2 whitespace-nowrap flex-shrink-0"
               >
-                <span>Voir les vidéos</span>
+                <span>{t('missions.cta_videos')}</span>
                 <ArrowRight className="w-4 h-4" />
               </Link>
             </div>
@@ -554,7 +534,7 @@ const Missions = () => {
                 to="/#newsletter"
                 className="btn-primary inline-flex items-center gap-2"
               >
-                <span>S'inscrire à la newsletter</span>
+                <span>{t('missions.newsletter_cta')}</span>
                 <ArrowRight className="w-4 h-4" aria-hidden="true" />
               </Link>
               <Link
@@ -562,7 +542,7 @@ const Missions = () => {
                 className="btn-secondary inline-flex items-center gap-2 group"
               >
                 <ArrowLeft className="w-4 h-4 group-hover:-translate-x-1 transition-transform" aria-hidden="true" />
-                <span>Retour à l'Accueil</span>
+                <span>{t('missions.cta_home')}</span>
               </Link>
             </div>
           </div>

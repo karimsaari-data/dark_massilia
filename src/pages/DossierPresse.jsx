@@ -1,6 +1,7 @@
 import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import { FileDown, Mail, MessageCircle } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
 import { FADE_IN_UP, STAGGER_CONTAINER } from '../utils/constants';
 import SEO from '../components/SEO';
 import { SEO_PAGES } from '../utils/seo';
@@ -10,11 +11,12 @@ const VIEW_OPTS = { once: true, margin: '-80px' };
 const PDF = '/assets/Dossier_presse_karim-saari-dark-massilia-marseille.pdf';
 
 export default function DossierPresse() {
+  const { t } = useTranslation();
   return (
     <div className="min-h-screen pt-4 pb-16">
       <SEO {...SEO_PAGES['/dossier-presse']} />
       <div className="container-custom">
-        <Breadcrumb label="Dossier de Presse" />
+        <Breadcrumb label={t('dossierPresse.breadcrumb')} />
 
         {/* ── Hero ────────────────────────────────────────────────────── */}
         <motion.div
@@ -35,7 +37,7 @@ export default function DossierPresse() {
               Dark Massilia — Karim Saari
             </motion.p>
             <motion.h1 variants={FADE_IN_UP} className="text-4xl md:text-5xl lg:text-6xl font-bold text-white leading-tight">
-              Dossier de Presse
+              {t('dossierPresse.hero_title')}
             </motion.h1>
             <motion.div variants={FADE_IN_UP} className="flex flex-wrap gap-4 justify-center">
               <a
@@ -44,7 +46,7 @@ export default function DossierPresse() {
                 className="btn-primary inline-flex items-center gap-2"
               >
                 <FileDown className="w-5 h-5" />
-                Télécharger le PDF
+                {t('dossierPresse.download_pdf')}
               </a>
             </motion.div>
 
@@ -52,12 +54,12 @@ export default function DossierPresse() {
             <motion.div variants={FADE_IN_UP} className="w-full max-w-2xl mt-4">
               <div className="border-t border-white/20 pt-8">
                 <p className="text-white/75 text-base md:text-lg leading-relaxed">
-                  <Link to="/photographe-environnemental-marseille" className="text-astroide hover:text-white transition-colors">Photographe environnemental</Link>, apnéiste et militant pour la protection
-                  des Calanques de Marseille depuis 10 ans. Membre de{' '}
-                  <span className="text-astroide font-semibold">Team Oxygen</span> depuis 5 ans,
-                  président depuis 2026. Participant au{' '}
-                  <span className="text-white font-semibold">Projet Sentinelle</span> depuis
-                  sa première édition — 5ème édition prévue en octobre 2026.
+                  <Link to="/photographe-environnemental-marseille" className="text-astroide hover:text-white transition-colors">{t('dossierPresse.bio_link')}</Link>
+                  {t('dossierPresse.bio_p1')}
+                  <span className="text-astroide font-semibold">Team Oxygen</span>
+                  {t('dossierPresse.bio_p2')}
+                  <span className="text-white font-semibold">Projet Sentinelle</span>
+                  {t('dossierPresse.bio_p3')}
                 </p>
               </div>
             </motion.div>
@@ -77,11 +79,11 @@ export default function DossierPresse() {
             style={{ border: '1px solid rgba(33,196,123,0.3)' }}
           >
             <div>
-              <p className="text-astroide text-xs font-semibold uppercase tracking-widest mb-2">Contact presse</p>
-              <h2 className="text-2xl font-bold text-white mb-2">Pour toute demande médiatique</h2>
-              <h3 className="sr-only">Contacts presse, visuels HD et biographie — Karim Saari Dark Massilia</h3>
+              <p className="text-astroide text-xs font-semibold uppercase tracking-widest mb-2">{t('dossierPresse.press_contact_label')}</p>
+              <h2 className="text-2xl font-bold text-white mb-2">{t('dossierPresse.press_contact_title')}</h2>
+              <h3 className="sr-only">{t('dossierPresse.press_contact_subtitle')}</h3>
               <p className="text-text-secondary text-sm">
-                Interviews, reportages, cessions de droits, partenariats documentaires.
+                {t('dossierPresse.press_contact_desc')}
               </p>
             </div>
             <div className="flex flex-col sm:flex-row gap-3 flex-shrink-0">

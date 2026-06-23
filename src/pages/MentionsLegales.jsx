@@ -1,5 +1,6 @@
 import SEO from '../components/SEO';
 import Breadcrumb from '../components/Breadcrumb';
+import { useTranslation } from 'react-i18next';
 
 const Section = ({ title, children }) => (
   <section className="mb-8">
@@ -20,6 +21,7 @@ const Row = ({ label, value }) => (
 );
 
 export default function MentionsLegales() {
+  const { t } = useTranslation();
   return (
     <>
       <SEO
@@ -30,7 +32,7 @@ export default function MentionsLegales() {
       />
 
       <div className="container-custom pt-4">
-        <Breadcrumb label="Mentions légales" />
+        <Breadcrumb label={t('legal.legal_title')} />
       </div>
       <div className="container-custom py-16 md:py-24 max-w-3xl">
 

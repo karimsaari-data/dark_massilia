@@ -3,6 +3,7 @@ import { motion, useReducedMotion } from 'framer-motion';
 import { useCardHover } from '../hooks/useCardHover';
 import { ArrowLeft, ArrowRight, Trash2, Fish, ClipboardList } from 'lucide-react';
 import { Link, useSearchParams, useNavigate } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 // Référence Fancybox — peuplée dynamiquement côté client uniquement
 let _FB = null;
 const getFB = () => _FB;
@@ -535,6 +536,7 @@ const PhotoGrid = ({ images, gallery }) => {
 
 /* ─── Composant principal ─────────────────────────────────── */
 const PhotoSousMarine = () => {
+  const { t } = useTranslation();
   const cardHover = useCardHover();
   const navigate = useNavigate();
   const [depollImages, setDepollImages] = useState(baseDepollution);
@@ -620,7 +622,7 @@ const PhotoSousMarine = () => {
     <div className="min-h-screen py-24">
       <SEO {...SEO_PAGES['/photographie-sous-marine']} />
       <div className="container-custom">
-        <Breadcrumb label="Photographe Sous-Marin — Galerie" />
+        <Breadcrumb label={t('underwater.breadcrumb')} />
 
         {/* H1 SEO */}
         <div className="flex items-stretch gap-4 mb-6">
@@ -638,7 +640,7 @@ const PhotoSousMarine = () => {
             transition={{ duration: 0.6 }}
             className="text-xl md:text-2xl font-bold text-white leading-tight"
           >
-            Photographe sous-marin à Marseille — Documenter pour alerter
+            {t('underwater.h1')}
           </motion.h1>
         </div>
 
@@ -650,10 +652,10 @@ const PhotoSousMarine = () => {
           className="flex flex-wrap justify-center gap-3 mb-10"
         >
           {[
-            { href: '#depollution', icon: <Trash2 className="w-4 h-4" />, label: 'Actions de dépollution' },
-            { href: '#biodiversite', icon: <Fish className="w-4 h-4" />, label: 'Biodiversité' },
-            { href: '#caracterisation', icon: <ClipboardList className="w-4 h-4" />, label: 'Caractérisation' },
-          ].map(({ href, icon, label }) => (
+            { href: '#depollution', icon: <Trash2 className="w-4 h-4" />, labelKey: 'underwater.cat_cleanup' },
+            { href: '#biodiversite', icon: <Fish className="w-4 h-4" />, labelKey: 'underwater.cat_biodiversity' },
+            { href: '#caracterisation', icon: <ClipboardList className="w-4 h-4" />, labelKey: 'underwater.cat_characterization' },
+          ].map(({ href, icon, labelKey }) => (
             <a
               key={href}
               href={href}
@@ -663,7 +665,7 @@ const PhotoSousMarine = () => {
                          transition-colors duration-200"
             >
               {icon}
-              {label}
+              {t(labelKey)}
             </a>
           ))}
         </motion.div>
@@ -676,7 +678,7 @@ const PhotoSousMarine = () => {
           variants={STAGGER_CONTAINER}
           className="mb-16 scroll-mt-8"
         >
-          <SectionTitle icon={Trash2} title="Actions de dépollution" count={depollImages.length} />
+          <SectionTitle icon={Trash2} title={t('underwater.cat_cleanup')} count={depollImages.length} />
           <PhotoGrid images={depollImages} gallery="gallery-depollution" />
         </motion.div>
 
@@ -688,7 +690,7 @@ const PhotoSousMarine = () => {
           variants={STAGGER_CONTAINER}
           className="mb-16 scroll-mt-8"
         >
-          <SectionTitle icon={Fish} title="Biodiversité" count={biodivImages.length} />
+          <SectionTitle icon={Fish} title={t('underwater.cat_biodiversity')} count={biodivImages.length} />
           <PhotoGrid images={biodivImages} gallery="gallery-biodiversite" />
         </motion.div>
 
@@ -701,7 +703,7 @@ const PhotoSousMarine = () => {
             variants={STAGGER_CONTAINER}
             className="mb-16 scroll-mt-8"
           >
-            <SectionTitle icon={ClipboardList} title="Caractérisation" count={caracImages.length} />
+            <SectionTitle icon={ClipboardList} title={t('underwater.cat_characterization')} count={caracImages.length} />
             <PhotoGrid images={caracImages} gallery="gallery-caracterisation" />
           </motion.div>
         )}
@@ -718,20 +720,20 @@ const PhotoSousMarine = () => {
             {/* Texte */}
             <div className="p-8 md:p-12 lg:flex-1 flex flex-col justify-center">
               <h2 className="text-2xl md:text-3xl font-bold text-white mb-2">
-                La photographie sous-marine au service de l'engagement
+                {t('underwater.editorial_h2')}
               </h2>
-              <h3 className="sr-only">Photographie sous-marine en apnée — Méditerranée & Calanques</h3>
+              <h3 className="sr-only">{t('underwater.hero_title')}</h3>
               <p className="text-ocean-teal font-semibold text-sm uppercase tracking-widest mb-6">
-                Comprendre ma démarche : de l'image à l'impact
+                {t('underwater.editorial_label')}
               </p>
 
               {/* Liens d'ancres */}
               <div className="flex flex-wrap gap-2 mb-7">
                 {[
-                  { href: '#depollution', label: '🤿 Actions de dépollution' },
-                  { href: '#biodiversite', label: '🐟 Biodiversité' },
-                  { href: '#caracterisation', label: '🔬 Caractérisation' },
-                ].map(({ href, label }) => (
+                  { href: '#depollution', emoji: '🤿', labelKey: 'underwater.cat_cleanup' },
+                  { href: '#biodiversite', emoji: '🐟', labelKey: 'underwater.cat_biodiversity' },
+                  { href: '#caracterisation', emoji: '🔬', labelKey: 'underwater.cat_characterization' },
+                ].map(({ href, emoji, labelKey }) => (
                   <a
                     key={href}
                     href={href}
@@ -740,71 +742,40 @@ const PhotoSousMarine = () => {
                                hover:bg-ocean-teal/10 hover:border-ocean-teal/40 hover:text-ocean-teal
                                transition-colors duration-200"
                   >
-                    {label}
+                    {emoji} {t(labelKey)}
                   </a>
                 ))}
               </div>
 
               <p className="text-text-secondary leading-[1.8] mb-6">
-                Mon travail photographique s'articule autour de trois axes complémentaires qui forment
-                un cycle complet de préservation marine. Chaque rubrique de cette galerie répond à un
-                besoin spécifique de la{' '}
-                <Link to="/photographe-environnemental-marseille" className="text-ocean-teal hover:text-white transition-colors">démarche de photographe environnemental</Link>.
+                {t('underwater.editorial_p1')}
               </p>
 
               <div className="space-y-5 text-text-secondary leading-[1.8]">
                 <div>
                   <p className="font-semibold text-white mb-1">
-                    1. <a href="#depollution" className="hover:text-ocean-teal transition-colors">Actions de dépollution</a>
-                    {' '}<span className="text-text-secondary font-normal">— L'urgence de l'intervention</span>
+                    {t('underwater.editorial_p2_title')}
                   </p>
-                  <p>
-                    Extraire un pneu, un filet fantôme ou des batteries à 15 mètres de profondeur en apnée
-                    demande une logistique précise. Ces images servent de{' '}
-                    <strong className="text-white">preuves visuelles</strong> pour alerter l'opinion publique
-                    et montrer que chaque déchet retiré est une victoire immédiate pour l'écosystème local.
-                    Les chiffres derrière ces images sont disponibles dans les{' '}
-                    <Link to="/donnees-scientifiques" className="text-ocean-teal hover:text-white transition-colors">
-                      données scientifiques sur la pollution plastique en Méditerranée
-                    </Link>.
-                  </p>
+                  <p>{t('underwater.editorial_p2')}</p>
                 </div>
 
                 <div>
                   <p className="font-semibold text-white mb-1">
-                    2. <a href="#biodiversite" className="hover:text-ocean-teal transition-colors">Biodiversité</a>
-                    {' '}<span className="text-text-secondary font-normal">— Ce que nous protégeons</span>
+                    {t('underwater.editorial_p3_title')}
                   </p>
-                  <p>
-                    On ne protège bien que ce que l'on aime, et on n'aime que ce que l'on connaît.
-                    Malgré la proximité des zones urbaines, coralligène, herbiers de posidonie, mérous et
-                    nudibranches colorés{' '}
-                    <strong className="text-white">luttent et s'épanouissent</strong>. Ces clichés visent
-                    à recréer un lien émotionnel entre le public et la mer.
-                  </p>
+                  <p>{t('underwater.editorial_p3')}</p>
                 </div>
 
                 <div>
                   <p className="font-semibold text-white mb-1">
-                    3. <a href="#caracterisation" className="hover:text-ocean-teal transition-colors">Caractérisation</a>
-                    {' '}<span className="text-text-secondary font-normal">— Transformer l'image en donnée scientifique</span>
+                    {t('underwater.editorial_p4_title')}
                   </p>
-                  <p>
-                    En identifiant la nature des matériaux, les marques et l'état de dégradation, nous
-                    transformons une action citoyenne en{' '}
-                    <strong className="text-white">information exploitable</strong>. Toutes les données
-                    sont reportées sur la plateforme{' '}
-                    <strong className="text-ocean-teal">ReMed Zéro Déchet Sauvage</strong>, alimentant
-                    une base nationale pour chercheurs et décideurs.
-                  </p>
+                  <p>{t('underwater.editorial_p4')}</p>
                 </div>
               </div>
 
               <p className="text-text-secondary leading-[1.8] mt-6 text-sm border-t border-white/10 pt-5">
-                Au-delà du cadre technique ou esthétique, chaque plongée, chaque cliché et chaque donnée
-                reportée est une brique supplémentaire pour la préservation de ce bien commun.
-                L'objectif reste le même&nbsp;:{' '}
-                <strong className="text-white">transformer le regard en action et l'indignation en solution durable</strong>.
+                {t('underwater.editorial_p5')}
               </p>
             </div>
             {/* Photo */}
@@ -842,67 +813,43 @@ const PhotoSousMarine = () => {
             {/* Texte */}
             <div className="p-6 md:p-8 lg:flex-1 flex flex-col justify-center">
               <h2 className="text-xl md:text-2xl font-bold text-white mb-4">
-                Apnée et photographie engagée — au cœur des Calanques de Marseille
+                {t('underwater.editorial2_h2')}
               </h2>
-              <h3 className="sr-only">Plongée en apnée, faune marine et documentation environnementale</h3>
               <div className="space-y-0 text-text-secondary leading-loose text-sm md:text-[0.95rem]">
 
                 {/* Lead */}
                 <p className="text-base md:text-lg text-white/90 leading-relaxed font-light mb-6">
-                  <Link to="/photographie-paysage-mer" className="text-ocean-teal hover:underline">Photographe de paysages</Link>{' '}
-                  depuis l'adolescence, c'est en arrivant à Marseille et en découvrant l'apnée il y a
-                  dix ans que mon regard a basculé — de l'horizon à la profondeur.
+                  {t('underwater.editorial2_lead')}
                 </p>
 
                 {/* Chapitre 1 */}
-                <p className="text-[0.65rem] uppercase tracking-[0.2em] text-ocean-teal/70 font-semibold pt-2 pb-1">La méthode</p>
-                <p className="mb-4">
-                  <span className="float-left text-[3.2rem] leading-[0.8] font-bold text-ocean-teal mr-2 mt-1 select-none">J</span>e plonge en{' '}
-                  <strong className="text-ocean-teal font-semibold">apnée</strong> dans les eaux de Marseille avec un
-                  double impératif&nbsp;: extraire les déchets <em>et</em> documenter l'agonie comme
-                  la beauté des fonds marins. Contrairement à la majorité des photographes
-                  sous-marins qui travaillent en bouteille, chaque image est prise en{' '}
-                  <strong className="text-ocean-teal font-semibold">rétention de souffle</strong>, le matériel de dépollution dans les mains, au milieu des déchets, entre 0
-                  et 20 mètres de profondeur.
-                </p>
+                <p className="text-[0.65rem] uppercase tracking-[0.2em] text-ocean-teal/70 font-semibold pt-2 pb-1">{t('underwater.editorial2_method_label')}</p>
+                <p className="mb-4">{t('underwater.editorial2_method')}</p>
 
                 {/* Chapitre 2 */}
-                <p className="text-[0.65rem] uppercase tracking-[0.2em] text-ocean-teal/70 font-semibold pt-3 pb-1">L'impact</p>
+                <p className="text-[0.65rem] uppercase tracking-[0.2em] text-ocean-teal/70 font-semibold pt-3 pb-1">{t('underwater.editorial2_impact_label')}</p>
                 <p className="mb-4">
-                  Chaque photo est un témoignage brut — un{' '}
-                  <strong className="text-ocean-teal font-semibold">électrochoc visuel</strong> pour alerter le public
-                  et convaincre les institutions. Ce regard sans filtre a trouvé un écho auprès de{' '}
-                  <strong className="text-ocean-teal font-semibold">ARTE, M6, France Télévisions</strong> et d'autres
-                  médias qui ont relayé le combat pour la Méditerranée.{' '}
+                  {t('underwater.editorial2_impact')}{' '}
                   <Link to="/presse" className="text-ocean-teal hover:underline">
-                    Voir toute la revue de presse →
+                    {t('underwater.editorial2_press_link')}
                   </Link>
                 </p>
 
                 {/* Pull quote */}
                 <blockquote className="my-5 py-4 px-5 bg-white/[0.04] border-l-2 border-ocean-teal rounded-r-lg">
-                  <p className="text-white/85 italic text-base leading-snug">« Photographier les fonds marins, c'est rendre visible ce que personne ne veut voir. »</p>
+                  <p className="text-white/85 italic text-base leading-snug">{t('underwater.editorial2_quote')}</p>
                 </blockquote>
 
                 {/* Chapitre 3 */}
-                <p className="text-[0.65rem] uppercase tracking-[0.2em] text-ocean-teal/70 font-semibold pt-3 pb-1">Les missions</p>
-                <p className="mb-4">
-                  Cette galerie rassemble des images de missions{' '}
-                  <strong className="text-ocean-teal font-semibold">Team Oxygen</strong> et de l'
-                  <strong className="text-ocean-teal font-semibold">Opération Sentinelle</strong>, mais aussi d'opérations
-                  menées aux côtés de Boud'mer, Clean My Calanques, Mer Terre,
-                  Wings of the Ocean, Team AVA, 1 Déchet Par Jour, le Parc National des Calanques. Des{' '}
-                  <strong className="text-ocean-teal font-semibold">abysses pollués</strong> à la résilience de la
-                  vie sauvage — poulpes, spirographes, méduses, fonds rocheux — des images qui
-                  témoignent à la fois de l'urgence et de la beauté de ce qui reste à protéger.
-                </p>
+                <p className="text-[0.65rem] uppercase tracking-[0.2em] text-ocean-teal/70 font-semibold pt-3 pb-1">{t('underwater.editorial2_missions_label')}</p>
+                <p className="mb-4">{t('underwater.editorial2_missions')}</p>
               </div>
               <div className="flex flex-col sm:flex-row items-center justify-start gap-4 mt-8 pt-6 border-t border-white/8">
                 <Link
                   to="/depollution-marine"
                   className="btn-primary inline-flex items-center gap-2"
                 >
-                  <span>Découvrir les missions de dépollution</span>
+                  <span>{t('underwater.cta_missions')}</span>
                   <ArrowRight className="w-4 h-4" aria-hidden="true" />
                 </Link>
                 <Link
@@ -910,7 +857,7 @@ const PhotoSousMarine = () => {
                   className="btn-secondary inline-flex items-center gap-2 group"
                 >
                   <ArrowLeft className="w-4 h-4 group-hover:-translate-x-1 transition-transform" aria-hidden="true" />
-                  <span>Galerie paysages &amp; littoral</span>
+                  <span>{t('underwater.cta_landscapes')}</span>
                 </Link>
               </div>
             </div>
@@ -928,18 +875,17 @@ const PhotoSousMarine = () => {
           <div className="glass-strong rounded-3xl p-8 md:p-10 flex flex-col md:flex-row items-center justify-between gap-6">
             <div>
               <h2 className="text-xl md:text-2xl font-bold text-white mb-2">
-                Vous cherchez un photographe sous-marin à Marseille ?
+                {t('underwater.cta_h2')}
               </h2>
-              <h3 className="sr-only">Contact et tarifs — photographe sous-marin professionnel Marseille</h3>
               <p className="text-text-secondary text-base max-w-xl">
-                Reportage documentaire, exposition photographique, production institutionnelle ou collaboration presse — je suis basé à Marseille et disponible sur les Calanques et la Méditerranée.
+                {t('underwater.cta_desc')}
               </p>
             </div>
             <Link
               to="/contact"
               className="btn-primary inline-flex items-center gap-2 flex-shrink-0"
             >
-              <span>Me contacter</span>
+              <span>{t('underwater.cta_contact')}</span>
               <ArrowRight className="w-4 h-4" aria-hidden="true" />
             </Link>
           </div>

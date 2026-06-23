@@ -2,6 +2,7 @@ import { lazy, Suspense } from 'react';
 import { motion } from 'framer-motion';
 import { ExternalLink, BookOpen, Globe, FileText, ArrowLeft } from 'lucide-react';
 import { Link } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import { FADE_IN_UP, STAGGER_CONTAINER } from '../utils/constants';
 import SEO from '../components/SEO';
 import { SEO_PAGES } from '../utils/seo';
@@ -11,9 +12,16 @@ import Breadcrumb from '../components/Breadcrumb';
 const RecentArticles = lazy(() => import('../components/RecentArticles'));
 
 const Sources = () => {
+  const { t, i18n } = useTranslation();
+  const isEn = i18n.language === 'en';
+
+  const sourceCategories = isEn
+    ? ['Global Data and Flows', 'Mediterranean: Concentrations and Impacts', 'Local Focus: Marseille and Calanques']
+    : ['Données Globales et Flux', 'Méditerranée : Concentrations et Impacts', 'Focus Local : Marseille et Calanques'];
+
   const sources = [
     {
-      category: "Données Globales et Flux",
+      category: sourceCategories[0],
       icon: Globe,
       image: "/images/Marseille-dark-massilia-plastique-pollution-projet-sentinelle-huveaune.webp",
       references: [
@@ -64,7 +72,7 @@ const Sources = () => {
       ]
     },
     {
-      category: "Méditerranée : Concentrations et Impacts",
+      category: sourceCategories[1],
       icon: FileText,
       image: "/images/portfolio/Mer/photographe-sous-marin-marseille-depollution-posidonie-apnee-projet-sentinelle.webp",
       references: [
@@ -127,7 +135,7 @@ const Sources = () => {
       ]
     },
     {
-      category: "Focus Local : Marseille et Calanques",
+      category: sourceCategories[2],
       icon: BookOpen,
       image: "/images/Marseille-dark-massilia-plastique-pollution-projet-sentinelle-vélo-métropole.webp",
       references: [
@@ -175,7 +183,7 @@ const Sources = () => {
     <div className="min-h-screen py-24">
       <SEO {...SEO_PAGES['/donnees-scientifiques']} />
       <div className="container-custom">
-        <Breadcrumb label="Données Scientifiques" />
+        <Breadcrumb label={t('sources.breadcrumb')} />
         {/* H1 SEO — visible, keyword-rich */}
         <motion.h1
           initial={{ opacity: 0, y: 20 }}
@@ -183,13 +191,13 @@ const Sources = () => {
           transition={{ duration: 0.6 }}
           className="text-3xl md:text-4xl font-bold text-white text-center mb-4 leading-tight"
         >
-          Sources Scientifiques —
+          {t('sources.hero_title')} —
           <span className="block text-xl md:text-2xl font-medium text-ocean-teal mt-3">
-            Pollution Plastique en Méditerranée & espèces invasives
+            {t('sources.hero_subtitle')}
           </span>
         </motion.h1>
         <p className="text-center text-xs text-gray-500 mb-10">
-          Mis à jour le <time dateTime="2026-03-19">19 mars 2026</time>
+          {t('sources.updated')} <time dateTime="2026-03-19">{isEn ? 'March 19, 2026' : '19 mars 2026'}</time>
         </p>
 
         {/* Section éditoriale SEO — chiffres de l'urgence */}
@@ -201,30 +209,26 @@ const Sources = () => {
         >
           <motion.div variants={FADE_IN_UP} className="glass-strong rounded-3xl p-8 md:p-12">
             <h2 className="text-2xl md:text-3xl font-bold text-white mb-6">
-              Les chiffres de l'urgence environnementale
+              {t('sources.editorial_title')}
             </h2>
             <div className="space-y-0 text-text-secondary leading-loose text-sm md:text-[0.95rem]">
 
               {/* Lead */}
               <p className="text-base md:text-lg text-white/90 leading-relaxed font-light mb-6">
-                Notre action de terrain repose sur des données scientifiques solides. Chaque année, environ <strong className="text-ocean-teal font-semibold">570&nbsp;000 tonnes de plastique</strong> sont déversées en Méditerranée — soit <strong className="text-ocean-teal font-semibold">33&nbsp;800 bouteilles par minute</strong>.
+                {t('sources.editorial_lead')}
               </p>
 
               {/* Chapitre 1 */}
-              <p className="text-[0.65rem] uppercase tracking-[0.2em] text-ocean-teal/70 font-semibold pt-2 pb-1">La pollution plastique</p>
-              <p className="mb-4">
-                <span className="float-left text-[3.2rem] leading-[0.8] font-bold text-ocean-teal mr-2 mt-1 select-none">M</span>er semi-fermée représentant moins de 1&nbsp;% de la surface océanique mondiale, la Méditerranée concentre près de <strong className="text-ocean-teal font-semibold">7&nbsp;% des microplastiques marins</strong>. Ces plastiques se fragmentent en micro- et nanoplastiques persistants intégrés à la colonne d'eau, aux sédiments et aux chaînes trophiques. La <strong className="text-ocean-teal font-semibold">plastisphère</strong> — écosystème microbien colonisant les débris flottants — favorise la dispersion d'agents pathogènes et d'espèces exotiques.
-              </p>
+              <p className="text-[0.65rem] uppercase tracking-[0.2em] text-ocean-teal/70 font-semibold pt-2 pb-1">{t('sources.plastic_chapter')}</p>
+              <p className="mb-4">{t('sources.plastic_p')}</p>
 
               {/* Chapitre 2 */}
-              <p className="text-[0.65rem] uppercase tracking-[0.2em] text-ocean-teal/70 font-semibold pt-3 pb-1">Les espèces invasives</p>
-              <p className="mb-4">
-                Plus de <strong className="text-ocean-teal font-semibold">1&nbsp;000 espèces non indigènes</strong> ont été recensées en Méditerranée, introduites principalement via le transport maritime et le canal de Suez. Parmi elles, <em className="text-ocean-teal">Rugulopteryx okamurae</em> colonise les fonds rocheux jusqu'à 30 mètres de profondeur, formant des tapis denses qui étouffent les habitats benthiques locaux. Pollution plastique et invasions biologiques sont liées&nbsp;: les déchets flottants facilitent le transport d'organismes exotiques, tandis que le réchauffement climatique accroît leur capacité d'implantation.
-              </p>
+              <p className="text-[0.65rem] uppercase tracking-[0.2em] text-ocean-teal/70 font-semibold pt-3 pb-1">{t('sources.invasive_chapter')}</p>
+              <p className="mb-4">{t('sources.invasive_p')}</p>
 
               {/* Pull quote */}
               <blockquote className="my-5 py-4 px-5 bg-white/[0.04] border-l-2 border-ocean-teal rounded-r-lg">
-                <p className="text-white/85 italic text-base leading-snug">« Face à la pollution, aux espèces invasives et au réchauffement, documenter et alerter ne relève plus du militantisme — c'est une nécessité écologique. »</p>
+                <p className="text-white/85 italic text-base leading-snug">{t('sources.blockquote')}</p>
               </blockquote>
             </div>
           </motion.div>
@@ -324,7 +328,7 @@ const Sources = () => {
                 <BookOpen className="w-7 h-7 text-white" />
               </div>
               <h2 className="text-2xl md:text-3xl font-bold text-white">
-                L'invasion de l'algue <em className="text-ocean-teal not-italic">Rugulopteryx okamurae</em> dans les Calanques
+                {t('sources.rugulopteryx_title')}
               </h2>
             </motion.div>
           </div>
@@ -362,7 +366,7 @@ const Sources = () => {
                 {/* Colonne Avant */}
                 <div className="space-y-2 md:space-y-4">
                   <div className="flex items-center justify-center gap-2 py-2 rounded-xl bg-blue-500/20 border border-blue-400/30">
-                    <span className="text-blue-300 font-bold text-sm md:text-base tracking-widest uppercase">Avant</span>
+                    <span className="text-blue-300 font-bold text-sm md:text-base tracking-widest uppercase">{t('sources.before')}</span>
                   </div>
                   <div className="rounded-xl overflow-hidden aspect-[4/3]">
                     <img
@@ -384,7 +388,7 @@ const Sources = () => {
                 {/* Colonne Après */}
                 <div className="space-y-2 md:space-y-4">
                   <div className="flex items-center justify-center gap-2 py-2 rounded-xl bg-red-500/20 border border-red-400/30">
-                    <span className="text-red-300 font-bold text-sm md:text-base tracking-widest uppercase">Après</span>
+                    <span className="text-red-300 font-bold text-sm md:text-base tracking-widest uppercase">{t('sources.after')}</span>
                   </div>
                   <div className="rounded-xl overflow-hidden aspect-[4/3]">
                     <img
@@ -409,7 +413,7 @@ const Sources = () => {
             {/* Références */}
             <motion.div variants={FADE_IN_UP} className="space-y-4">
               <h3 className="text-lg font-semibold text-white border-b border-white/10 pb-3">
-                Pour aller plus loin — 4 références scientifiques
+                {t('sources.references_title')}
               </h3>
               <div className="space-y-4">
                 {[
@@ -448,7 +452,7 @@ const Sources = () => {
                   >
                     <div className="mb-3">
                       <p className="text-ocean-teal font-semibold text-sm mb-1">
-                        Référence {ref.num}
+                        {t('sources.ref_label')} {ref.num}
                       </p>
                       <h4 className="text-white font-semibold text-base mb-1">{ref.title}</h4>
                       <p className="text-gray-400 text-sm italic">{ref.journal}</p>
@@ -469,10 +473,10 @@ const Sources = () => {
               {/* Documentaire vidéo */}
               <div className="pt-4">
                 <h3 className="text-lg font-semibold text-white border-b border-white/10 pb-3 mb-4">
-                  🎬 Documentaire — Marseille sous les algues
+                  {t('sources.video_doc_title')}
                 </h3>
                 <p className="text-gray-400 text-sm italic mb-4">
-                  L'invasion de la Rugulopteryx okamurae vue depuis les Calanques
+                  {t('sources.video_doc_desc')}
                 </p>
                 <VideoPlayer
                   media={{
@@ -497,40 +501,22 @@ const Sources = () => {
         >
           <motion.div variants={FADE_IN_UP} className="glass-strong rounded-3xl p-8 md:p-12">
             <h2 className="text-2xl md:text-3xl font-bold text-white mb-6">
-              Les Références Scientifiques
+              {t('sources.section_title')}
             </h2>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8 text-text-secondary leading-[1.8] text-lg">
               <div className="space-y-4">
-                <p>
-                  Chaque donnée présentée sur ce site, qu'elle concerne la pollution plastique, la{' '}
-                  <em className="text-white">plastisphère</em> ou les espèces invasives comme{' '}
-                  <em className="text-ocean-teal">Rugulopteryx okamurae</em>, s'appuie sur des publications
-                  scientifiques vérifiées.
-                </p>
-                <p>
-                  Cette page regroupe les études qui documentent l'état réel des écosystèmes méditerranéens&nbsp;:
-                  concentration de macro- et microplastiques, impacts écotoxicologiques, dynamiques d'introduction
-                  d'espèces exotiques, modifications des habitats benthiques et interactions avec le réchauffement
-                  climatique.
-                </p>
+                <p>{t('sources.section_p1')}</p>
+                <p>{t('sources.section_p2')}</p>
               </div>
               <div className="space-y-4">
-                <p>
-                  Les sources citées proviennent de revues à comité de lecture (
-                  <em>Science</em>, <em>Nature</em>, <em>PNAS</em>, <em>Marine Pollution Bulletin</em>,{' '}
-                  <em>Frontiers in Marine Science</em>), d'organismes internationaux (WWF, PNUE, FAO, Commission
-                  européenne), ainsi que de travaux académiques et institutionnels spécifiquement consacrés à la
-                  Méditerranée et au littoral marseillais.
-                </p>
+                <p>{t('sources.section_p3')}</p>
                 <p className="text-white font-medium border-l-2 border-ocean-teal pl-4">
-                  L'objectif est double&nbsp;: garantir la traçabilité des informations diffusées et fonder
-                  l'action de terrain sur un socle scientifique robuste. Découvrez comment ces données guident
-                  nos opérations concrètes sur nos{' '}
+                  {t('sources.section_cta')}{' '}
                   <Link to="/depollution-marine" className="text-ocean-teal hover:text-white transition-colors">
-                    missions de dépollution marine
-                  </Link>, et explorez leur réalité visuelle dans la{' '}
+                    {t('sources.link_missions')}
+                  </Link>, {isEn ? 'and explore their visual reality in the ' : 'et explorez leur réalité visuelle dans la '}{' '}
                   <Link to="/photographie-sous-marine" className="text-ocean-teal hover:text-white transition-colors">
-                    galerie de photographies sous-marines des Calanques
+                    {t('sources.link_photos')}
                   </Link>.
                 </p>
               </div>
@@ -538,7 +524,7 @@ const Sources = () => {
             {/* Articles liés — maillage interne */}
             <div className="mt-10 pt-8 border-t border-white/10">
               <Suspense fallback={null}>
-                <RecentArticles title="Articles sur ce thème" count={3} />
+                <RecentArticles title={t('sources.articles_title')} count={3} />
               </Suspense>
             </div>
 
@@ -547,14 +533,14 @@ const Sources = () => {
                 to="/sauver-marseille-documentaire-arte"
                 className="btn-primary inline-flex items-center gap-2"
               >
-                <span>Documentaire ARTE</span>
+                <span>{t('sources.cta_arte')}</span>
                 <ArrowLeft className="w-4 h-4 rotate-180" aria-hidden="true" />
               </Link>
               <Link
                 to="/videos"
                 className="btn-secondary inline-flex items-center gap-2 group"
               >
-                <span>Voir nos vidéos</span>
+                <span>{t('sources.cta_videos')}</span>
                 <ArrowLeft className="w-4 h-4 rotate-180 group-hover:translate-x-1 transition-transform" aria-hidden="true" />
               </Link>
             </div>
