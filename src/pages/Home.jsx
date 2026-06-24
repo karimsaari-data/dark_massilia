@@ -3,6 +3,7 @@ import { motion, AnimatePresence, useReducedMotion } from 'framer-motion';
 import { useCardHover } from '../hooks/useCardHover';
 import { Link } from 'react-router-dom';
 import { ArrowRight, Users, ChevronDown, Camera, MapPin, Gift } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
 
 import { FADE_IN_UP, STAGGER_CONTAINER, FACEBOOK_GROUP_MEMBERS, SOCIAL_STATS_DEFAULTS } from '../utils/constants';
 import { trackEvent } from '../lib/analytics';
@@ -11,129 +12,10 @@ import { SEO_PAGES } from '../utils/seo';
 import FireRiskBadge from '../components/FireRiskBadge';
 
 // Lazy-loaded — rompt la chaîne statique Home → supabase → @supabase/supabase-js
-// Supabase ne sera chargé qu'après le premier rendu de la page (chunk async)
 const NewsletterSection = lazy(() => import('../components/NewsletterSection'));
 const RecentArticles    = lazy(() => import('../components/RecentArticles'));
 
-// Chiffres clés — impact terrain (valeurs statiques de base)
-// La valeur end de la stat 500px est remplacée dynamiquement via Supabase (site_config)
-const KEY_STATS_BASE = [
-  {
-    end: SOCIAL_STATS_DEFAULTS.total_community,
-    suffix: '',
-    label: 'Abonnés passionnés par les Calanques',
-    sub: 'sur l\'ensemble des réseaux sociaux',
-    detail: `dont ${FACEBOOK_GROUP_MEMBERS.toLocaleString('fr-FR')} sur le groupe Facebook`,
-    href: '/communaute',
-  },
-  {
-    end: 5724,
-    suffix: ' kg',
-    label: 'Déchets collectés dans les fonds marins marseillais',
-    sub: 'jusqu\'à 20 m de profondeur',
-    detail: '900 + 1 357 + 1 147 + 2 320 kg · 4 éditions',
-    href: '/depollution-marine',
-  },
-  {
-    end: 143,
-    suffix: ' M',
-    label: 'Vues Google Maps sur Marseille et ses environs',
-    sub: '9 ans de contributions Local Guide',
-    detail: 'Photos et avis sur les Calanques de Marseille',
-    href: '/local-guide-marseille',
-  },
-  {
-    key: 'impressions_500px',   // valeur chargée depuis Supabase site_config
-    end: 800,
-    suffix: ' K',
-    label: 'Impressions photos sur 500px',
-    sub: 'photographie underwater & paysage',
-    detail: '798 K impressions · 29,4 K photo likes · 667 followers',
-  },
-];
-
 import StatCounter from '../components/ui/StatCounter';
-
-// Phrases choc sur la pollution marine
-const IMPACT_FACTS = [
-  "Une concentration disproportionnée : La mer Méditerranée ne représente que 1 % de la surface océanique mondiale, mais elle concentre pourtant 7 % de tous les microplastiques de la planète.",
-  "L'absurdité de l'usage unique : Il faut environ 1 seconde pour fabriquer un sac plastique et son utilisation moyenne ne dure que 20 minutes, alors qu'il lui faudra plus d'un siècle pour se dégrader dans le milieu naturel.",
-  "Une persistance millénaire : Si un mégot de cigarette met environ 10 ans à se dégrader en mer, une ligne de pêche en plastique peut mettre jusqu'à 600 ans pour disparaître.",
-  "L'ampleur mondiale : On estime à 5 250 milliards le nombre de particules plastiques qui flottent actuellement à la surface des océans, ce qui équivaut à un poids de près de 269 000 tonnes.",
-  "L'omniprésence en Méditerranée : La densité moyenne de plastique en Méditerranée (1 objet tous les 4 m²) est comparable à celle des zones d'accumulation des cinq grands gyres océaniques subtropicaux, souvent qualifiés de « continents de plastique ».",
-  "Un piège mortel pour la faune : Les tortues marines confondent les plastiques transparents avec des méduses, ce qui provoque des lésions graves ou la mort, tandis que des dauphins peuvent mourir la mâchoire bloquée par des anneaux en plastique avec lesquels ils tentaient de jouer.",
-  "Une contamination massive des oiseaux : On estime aujourd'hui que plus de 90 % des oiseaux marins ont déjà ingéré du plastique, et les projections indiquent que 99 % des espèces seront touchées d'ici 2050.",
-  "Le flux incessant : Les populations côtières déversent environ 8 millions de tonnes de déchets plastiques dans les océans chaque année, un chiffre qui pourrait doubler en une décennie sans amélioration de la gestion des déchets.",
-  "Le fléau des mégots : Lors de la seule opération « Calanques Propres » en 2023, plus de 70 000 mégots ont été ramassés, soulignant une pollution locale massive et préoccupante.",
-  "Une pollution inévitable : Lors d'une vaste campagne d'échantillonnage à travers le bassin méditerranéen, des débris plastiques flottants ont été retrouvés dans 100 % des sites analysés.",
-];
-
-const FAQ_ITEMS = [
-  {
-    q: "Qu'est-ce que le Projet Sentinelle ?",
-    a: "Le Projet Sentinelle est l'opération annuelle structurante menée par Team Oxygen pour la protection de la Méditerranée. Tout au long de l'année, des actions de veille, de sensibilisation et d'interventions ponctuelles sont organisées sur le littoral marseillais. Chaque automne, le dispositif prend une dimension intensive : une semaine complète de dépollution sous-marine en apnée dans les Calanques de Marseille. Les équipes interviennent entre 0 et 20 mètres de profondeur, avec des sessions quotidiennes de 5 à 6 heures dans l'eau. Les déchets collectés — principalement plastiques et macro-déchets — sont remontés, triés et quantifiés afin de documenter l'état réel des fonds marins.",
-  },
-  {
-    q: "Combien de déchets a collecté le Projet Sentinelle ?",
-    a: "En 4 éditions (2022–2025), le Projet Sentinelle et Team Oxygen ont collecté plus de 5 724 kg de déchets marins : 900 kg sur la Côte Bleue (2022), 1 357 kg à l'Archipel du Frioul (2023), 1 147 kg dans le Parc National des Calanques (2024) et 2 320 kg dans la Rade de Marseille (2025).",
-  },
-  {
-    q: "Comment participer aux missions de dépollution des Calanques ?",
-    a: "Pour participer aux missions de dépollution organisées dans les Calanques de Marseille, vous pouvez contacter Team Oxygen via la page Contact du site karimsaari.com ou rejoindre la communauté à travers le groupe Facebook « Amoureux des Calanques ». Les immersions en apnée nécessitent des compétences techniques et une pratique encadrée. Nous recherchons principalement des bénévoles pour l'appui logistique terrestre (tri, pesée, gestion du matériel, sensibilisation) ainsi que des kayakistes pour l'assistance en surface et la sécurisation des zones d'intervention. Ces rôles sont essentiels au bon déroulement des opérations et accessibles à un plus grand nombre.",
-  },
-  {
-    q: "Pourquoi la mer Méditerranée est-elle l'une des mers les plus polluées au monde par le plastique ?",
-    a: "La Méditerranée agit comme un véritable « piège à plastique » en raison de sa géographie : c'est une mer semi-fermée dont les eaux mettent environ 90 ans à se renouveler, alors que la durée de vie des plastiques dépasse largement un siècle. De plus, ses côtes sont densément peuplées (150 millions d'habitants), le trafic maritime y est très intense (30 % du trafic mondial) et elle subit une pression touristique massive. Conséquence : bien qu'elle ne représente que 1 % de la surface océanique mondiale, elle concentre 7 % de tous les microplastiques de la planète.",
-  },
-  {
-    q: "Quelle quantité de plastique est déversée dans la Méditerranée chaque jour ?",
-    a: "On estime qu'entre 700 et 1 400 tonnes de plastique sont déversées chaque jour dans la mer Méditerranée, ce qui équivaut à un ou deux camions poubelles par heure. À une autre échelle, cela représente l'équivalent de 33 800 bouteilles en plastique jetées à la mer chaque minute. Au total, plus d'un million de tonnes de plastique se trouvent déjà dans le bassin méditerranéen.",
-  },
-  {
-    q: "D'où proviennent ces déchets plastiques ?",
-    a: "Environ 80 % des déchets marins proviennent d'activités terrestres. Ils sont transportés par les fleuves (comme le Rhône, le Pô ou le Nil) qui agissent comme des tapis roulants, par le ruissellement urbain (pluies entraînant les déchets des rues vers la mer), ou sont directement abandonnés sur les littoraux. Les 20 % restants proviennent des activités maritimes telles que la pêche, l'aquaculture et le transport maritime.",
-  },
-  {
-    q: "Quels sont les déchets que l'on retrouve le plus souvent en mer et sur les plages ?",
-    a: "Le plastique représente 95 % des déchets marins en Méditerranée. Les objets les plus fréquemment retrouvés sont les emballages alimentaires, les bouteilles en plastique, les bouchons, les sacs et les équipements de pêche. Les mégots de cigarette (dont le filtre contient du plastique) sont également un fléau majeur, constituant une part très importante des déchets collectés sur les plages.",
-  },
-  {
-    q: "Combien de temps faut-il à un déchet plastique pour se dégrader en mer ?",
-    a: "Les plastiques ne se biodégradent quasiment pas à l'échelle d'une vie humaine ; ils persistent des centaines d'années. Par exemple, un sac plastique met entre 20 et plus de 100 ans à se dégrader, une bouteille en plastique environ 450 ans, et un fil de pêche jusqu'à 600 ans. De plus, la disparition « visuelle » d'un déchet est trompeuse : il ne fait que se fragmenter en millions de microplastiques sous l'effet du soleil et des vagues.",
-  },
-  {
-    q: "Qu'est-ce qu'un microplastique et pourquoi est-ce si dangereux ?",
-    a: "Les microplastiques sont de minuscules fragments de plastique mesurant moins de 5 millimètres, issus de la dégradation de déchets plus gros. Ils sont particulièrement dangereux car leur taille est similaire à celle du plancton. En Méditerranée, le ratio entre microplastiques et zooplancton peut atteindre 1 pour 2, ce qui entraîne une ingestion massive par les poissons et autres prédateurs marins. De plus, ils agissent comme des éponges, concentrant des polluants chimiques et toxiques à leur surface.",
-  },
-  {
-    q: "Le plastique flotte-t-il toujours à la surface de l'eau ?",
-    a: "Non, ce que l'on voit à la surface n'est que la partie émergée de l'iceberg. On estime que 94 % du plastique qui entre en mer Méditerranée finit par couler et sédimenter sur les fonds marins. Les 6 % restants se répartissent entre les plages (5 %) et la surface (1 %). Une fois au fond de l'eau, dans l'obscurité, le froid et le manque d'oxygène, le plastique ne se dégrade quasiment plus.",
-  },
-  {
-    q: "Quel est l'impact de cette pollution sur la faune marine ?",
-    a: "Les conséquences sont catastrophiques : plus de 700 espèces marines sont impactées à l'échelle globale, et toutes les espèces de tortues marines de Méditerranée sont touchées par l'ingestion de plastique. Les tortues confondent souvent les sacs plastiques avec des méduses. Les grands cétacés, comme les rorquals, avalent des microplastiques en filtrant l'eau, tandis que de nombreux oiseaux, poissons et dauphins meurent d'occlusions intestinales ou en s'emmêlant dans des filets fantômes abandonnés.",
-  },
-  {
-    q: "La pollution plastique marine a-t-elle des conséquences sur la santé humaine ?",
-    a: "Oui, la chaîne alimentaire humaine est directement contaminée. En mangeant des produits de la mer (comme les poissons, les moules ou les huîtres) ou même via le sel marin, nous absorbons des plastiques. À l'heure actuelle, on estime qu'un être humain ingère environ 5 grammes de plastiques par semaine, ce qui représente le poids d'une carte de crédit. Ces plastiques contiennent et libèrent des additifs chimiques qui agissent souvent comme des perturbateurs endocriniens, favorisant diverses maladies.",
-  },
-  {
-    q: "Quel est le rôle du tourisme dans cette pollution ?",
-    a: "Le bassin méditerranéen reçoit plus de 200 millions de touristes par an, ce qui exerce une pression gigantesque sur le littoral. Durant les mois d'été, cette affluence saisonnière provoque une augmentation de 40 % de la production de déchets. Les infrastructures locales de gestion des déchets sont souvent saturées, ce qui entraîne des débordements et l'abandon direct de nombreux déchets (bouteilles, emballages, objets de plage) sur les côtes.",
-  },
-  {
-    q: "Qu'est-ce que la photographie environnementale ?",
-    a: "La photographie environnementale se sert d'images de paysages, de plantes ou d'animaux pour éveiller chez l'observateur le désir d'en protéger l'existence — particulièrement face aux dangers auxquels la nature est confrontée. En Méditerranée, elle devient un outil de témoignage direct : chaque image des calanques de Marseille, de leurs fonds marins ou de la faune locale est une preuve visuelle de l'urgence écologique. La photographie environnementale que je pratique n'est pas simplement esthétique : chaque cliché est un document, une preuve, un appel à l'action.",
-  },
-  {
-    q: "Quel matériel utilisez-vous pour photographier sous l'eau dans les Calanques ?",
-    a: "La photographie sous-marine dans les Calanques de Marseille se pratique principalement en apnée, ce qui impose des contraintes très différentes de la plongée bouteille : aucune bulle, aucun bruit, une proximité naturelle avec la faune. J'utilise un boîtier étanche monté avec un grand angle pour capter la profondeur des fonds marins et la lumière naturelle de la Méditerranée. La transparence exceptionnelle de l'eau des Calanques — entre 15 et 30 mètres de visibilité — permet d'obtenir des images d'une clarté rare, à la fois pour les paysages sous-marins et pour la documentation des espèces comme les poulpes, les mérous et les posidonies.",
-  },
-  {
-    q: "Où voir vos photographies sous-marines des Calanques de Marseille ?",
-    a: "Mes photographies sous-marines des Calanques sont accessibles sur ce site dans la galerie dédiée à la photographie sous-marine, qui regroupe plus de 58 clichés pris lors des missions de dépollution du Projet Sentinelle (2022–2025). Vous pouvez également retrouver une sélection de paysages marins et terrestres dans la galerie de photographie de paysages, ainsi que sur mon profil 500px (karimsaari) où mes images cumulent plus de 800 000 impressions. Pour les expositions et demandes de tirage, n'hésitez pas à me contacter directement.",
-  },
-];
 
 const FaqItem = ({ question, answer }) => {
   const [isOpen, setIsOpen] = useState(false);
@@ -163,17 +45,57 @@ const FaqItem = ({ question, answer }) => {
 };
 
 const Home = () => {
+  const { t, i18n } = useTranslation();
+  const lng = i18n.language;
   const prefersReducedMotion = useReducedMotion();
   const cardHover = useCardHover();
   const [showScroll, setShowScroll] = useState(true);
   const [currentFactIndex, setCurrentFactIndex] = useState(0);
 
+  const IMPACT_FACTS = t('home.impact_facts', { returnObjects: true });
+  const FAQ_ITEMS = t('home.faq', { returnObjects: true });
+
+  const KEY_STATS_BASE = [
+    {
+      end: SOCIAL_STATS_DEFAULTS.total_community,
+      suffix: '',
+      label: t('home.stats.community_label'),
+      sub: t('home.stats.community_sub'),
+      detail: t('home.stats.community_detail', { count: FACEBOOK_GROUP_MEMBERS.toLocaleString(lng === 'en' ? 'en-US' : 'fr-FR') }),
+      href: '/communaute',
+    },
+    {
+      end: 5724,
+      suffix: ' kg',
+      label: t('home.stats.waste_label'),
+      sub: t('home.stats.waste_sub'),
+      detail: t('home.stats.waste_detail'),
+      href: '/depollution-marine',
+    },
+    {
+      end: 143,
+      suffix: ' M',
+      label: t('home.stats.maps_label'),
+      sub: t('home.stats.maps_sub'),
+      detail: t('home.stats.maps_detail'),
+      href: '/local-guide-marseille',
+    },
+    {
+      key: 'impressions_500px',
+      end: 800,
+      suffix: ' K',
+      label: t('home.stats.px500_label'),
+      sub: t('home.stats.px500_sub'),
+      detail: t('home.stats.px500_detail'),
+    },
+  ];
+
   // Stats réseaux — valeurs dynamiques depuis Supabase (fallback sur KEY_STATS_BASE)
-  const [communityEnd, setCommunityEnd]       = useState(KEY_STATS_BASE[0].end);
-  const [communityDetail, setCommunityDetail] = useState(KEY_STATS_BASE[0].detail);
-  const [localGuidesEnd, setLocalGuidesEnd]   = useState(KEY_STATS_BASE[2].end);
+  const [communityEnd, setCommunityEnd]       = useState(SOCIAL_STATS_DEFAULTS.total_community);
+  const [communityDetail, setCommunityDetail] = useState('');
+  const [localGuidesEnd, setLocalGuidesEnd]   = useState(143);
   const [fbGroupMembers, setFbGroupMembers]   = useState(FACEBOOK_GROUP_MEMBERS);
-  const [impressions500px, setImpressions500px] = useState(KEY_STATS_BASE[3].end);
+  const [impressions500px, setImpressions500px] = useState(800);
 
   useEffect(() => {
     import('../lib/supabase').then(({ supabase }) => {
@@ -201,11 +123,12 @@ const Home = () => {
   }, []);
 
   const KEY_STATS = [
-    { ...KEY_STATS_BASE[0], end: communityEnd, detail: `dont ${fbGroupMembers.toLocaleString('fr-FR')} sur le groupe Facebook` },
+    { ...KEY_STATS_BASE[0], end: communityEnd, detail: t('home.stats.community_detail', { count: fbGroupMembers.toLocaleString(lng === 'en' ? 'en-US' : 'fr-FR') }) },
     KEY_STATS_BASE[1],
     { ...KEY_STATS_BASE[2], end: localGuidesEnd },
     { ...KEY_STATS_BASE[3], end: impressions500px, href: 'https://500px.com/p/karimsaari' },
   ];
+
   const [factsPaused, setFactsPaused] = useState(false);
   const [factsTimerKey, setFactsTimerKey] = useState(0);
 
@@ -216,7 +139,7 @@ const Home = () => {
       setCurrentFactIndex((prev) => (prev + 1) % IMPACT_FACTS.length);
     }, 10000);
     return () => clearInterval(interval);
-  }, [factsPaused, factsTimerKey]);
+  }, [factsPaused, factsTimerKey, IMPACT_FACTS.length]);
 
   useEffect(() => {
     const onScroll = () => setShowScroll(window.scrollY < 80);
@@ -321,17 +244,16 @@ const Home = () => {
                       />
                     </div>
                     <h1 className="font-display text-[1.7rem] sm:text-3xl md:text-4xl lg:text-5xl font-extrabold text-white uppercase tracking-[0.01em] md:tracking-[0.08em] leading-[1.15]">
-                      Photographie &amp; Engagement : Révéler et Protéger les Calanques de Marseille
+                      {t('home.hero.title')}
                     </h1>
                   </div>
 
                   {/* Texte + compteur */}
                   <div className="">
                     <p className="font-display text-base md:text-lg font-normal text-white/90 leading-[1.85] mb-4">
-                      <strong className="text-white font-semibold">Rendre visible l'invisible.</strong>{' '}
-                      Entre photographie d'art et exploration en apnée, je documente la beauté brute du littoral marseillais pour témoigner de l'urgence écologique. En tant que Sentinelle des Calanques, j'allie le pouvoir de l'image aux actions de terrain avec{' '}
-                      <strong className="text-white font-semibold">Team Oxygen</strong>{' '}
-                      pour préserver durablement la biodiversité de notre Méditerranée.
+                      <strong className="text-white font-semibold">{t('home.hero.subtitle')}</strong>{' '}
+                      {t('home.hero.desc1')}{' '}
+                      {t('home.hero.desc2')}
                     </p>
                     {/* Compteur communauté */}
                     <div className="flex items-center gap-3">
@@ -339,7 +261,7 @@ const Home = () => {
                       <span className="text-white font-bold text-lg tabular-nums leading-none">
                         <StatCounter end={communityEnd} suffix="" />
                       </span>
-                      <span className="text-white/70 text-sm font-medium">abonnés & membres de la communauté</span>
+                      <span className="text-white/70 text-sm font-medium">{t('home.hero.community_label')}</span>
                     </div>
                   </div>{/* fin texte+compteur */}
                   </div>{/* fin grand cadre */}
@@ -349,28 +271,25 @@ const Home = () => {
                     <a
                       href="#newsletter"
                       className="btn-primary inline-flex items-center gap-2 whitespace-nowrap"
-                      title="Recevoir une photo exclusive des fonds marins des Calanques"
-                      onClick={() => trackEvent('cta_click', { button_name: 'Recevoir un cliché gratuit' })}
+                      onClick={() => trackEvent('cta_click', { button_name: 'cta_photo' })}
                     >
                       <Gift className="w-4 h-4 flex-shrink-0" aria-hidden="true" />
-                      <span>Recevoir un cliché gratuit</span>
+                      <span>{t('home.hero.cta_photo')}</span>
                     </a>
                     <a
                       href="#galerie"
                       className="btn-ghost inline-flex items-center gap-2 whitespace-nowrap"
-                      title="Voir les photographies des Calanques de Marseille par Karim Saari"
-                      onClick={() => trackEvent('cta_click', { button_name: 'Découvrir les Calanques' })}
+                      onClick={() => trackEvent('cta_click', { button_name: 'cta_discover' })}
                     >
-                      <span>Découvrir les Calanques</span>
+                      <span>{t('home.hero.cta_discover')}</span>
                       <ArrowRight className="w-4 h-4 flex-shrink-0" aria-hidden="true" />
                     </a>
                     <Link
                       to="/contact"
                       className="btn-ghost inline-flex items-center gap-2 whitespace-nowrap"
-                      title="Contacter Karim Saari — collaboration, presse, missions"
-                      onClick={() => trackEvent('cta_click', { button_name: 'Me contacter' })}
+                      onClick={() => trackEvent('cta_click', { button_name: 'cta_contact' })}
                     >
-                      <span>Me contacter</span>
+                      <span>{t('home.hero.cta_contact')}</span>
                       <ArrowRight className="w-4 h-4 flex-shrink-0" aria-hidden="true" />
                     </Link>
                   </div>
@@ -438,30 +357,37 @@ const Home = () => {
             {/* Contenu — Gauche */}
             <div className="p-8 md:p-12 flex flex-col justify-center order-2 md:order-1">
               <h2 className="text-2xl md:text-3xl font-bold text-white mb-6">
-                Karim Saari — Photographe environnemental &amp; Sentinelle des Calanques
+                {t('home.about.name')}
               </h2>
               <div className="space-y-0 text-text-secondary leading-loose text-sm md:text-[0.95rem]">
 
                 {/* Lead */}
                 <p className="text-base md:text-lg text-white/90 leading-relaxed font-light mb-6">
-                  De la <strong className="text-ocean-teal font-semibold">photographie de paysages littoraux</strong> aux <strong className="text-ocean-teal font-semibold">images sous-marines</strong>, j'utilise l'objectif pour porter la voix de <strong className="text-ocean-teal font-semibold">Marseille, des Calanques</strong> et de ceux qui les protègent.
+                  {t('home.about.desc')}
                 </p>
 
                 {/* Chapitre 1 */}
-                <p className="text-[0.65rem] uppercase tracking-[0.2em] text-ocean-teal/70 font-semibold pt-2 pb-1">La vision</p>
-                <p className="mb-4">
-                  <span className="float-left text-[3.2rem] leading-[0.8] font-bold text-ocean-teal mr-2 mt-1 select-none">E</span>n tant que <strong className="text-ocean-teal font-semibold">photographe environnemental en Méditerranée</strong>, je capture la beauté de nos côtes, en surface comme en apnée, pour témoigner de l'état réel de nos écosystèmes.
-                </p>
+                <p className="text-[0.65rem] uppercase tracking-[0.2em] text-ocean-teal/70 font-semibold pt-2 pb-1">{t('home.about.vision_title')}</p>
+                {(() => {
+                  const vd = t('home.about.vision_desc');
+                  return (
+                    <p className="mb-4">
+                      <span className="float-left text-[3.2rem] leading-[0.8] font-bold text-ocean-teal mr-2 mt-1 select-none" aria-hidden="true">{vd[0]}</span>
+                      {vd.slice(1)}
+                    </p>
+                  );
+                })()}
 
                 {/* Pull quote */}
                 <blockquote className="clear-left my-5 py-4 px-5 bg-white/[0.04] border-l-2 border-ocean-teal rounded-r-lg">
-                  <p className="text-white/85 italic text-base leading-snug">« Chaque image est un document, une preuve, un appel à l'action. »</p>
+                  <p className="text-white/85 italic text-base leading-snug">« {t('home.about.vision_quote')} »</p>
                 </blockquote>
 
                 {/* Chapitre 2 */}
-                <p className="text-[0.65rem] uppercase tracking-[0.2em] text-ocean-teal/70 font-semibold pt-3 pb-1">L'action</p>
+                <p className="text-[0.65rem] uppercase tracking-[0.2em] text-ocean-teal/70 font-semibold pt-3 pb-1">{t('home.about.action_title')}</p>
                 <p className="mb-4">
-                  Fondateur d'une <strong className="text-ocean-teal font-semibold">communauté de {SOCIAL_STATS_DEFAULTS.total_community.toLocaleString('fr-FR')} personnes</strong> engagées pour les Calanques, je rends visible l'<strong className="text-ocean-teal font-semibold">impact de la pollution plastique</strong> à travers des <strong className="text-ocean-teal font-semibold">documentaires</strong>, des <strong className="text-ocean-teal font-semibold">expositions photos</strong> et des <strong className="text-ocean-teal font-semibold">missions de dépollution sous-marine</strong> avec mon association.
+                  {t('home.about.action_desc1')}{' '}
+                  {t('home.about.action_desc2')}
                 </p>
               </div>
 
@@ -469,10 +395,9 @@ const Home = () => {
                 <Link
                   to="/photographe-environnemental-marseille"
                   className="btn-primary inline-flex items-center gap-2"
-                  title="Photographe environnemental Marseille — démarche, associations et engagements"
-                  onClick={() => trackEvent('cta_click', { button_name: 'En savoir plus sur ma démarche' })}
+                  onClick={() => trackEvent('cta_click', { button_name: 'about_learn_more' })}
                 >
-                  <span>En savoir plus sur ma démarche</span>
+                  <span>{t('home.about.learn_more')}</span>
                   <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" /></svg>
                 </Link>
               </div>
@@ -513,9 +438,9 @@ const Home = () => {
             className="text-center mb-8"
           >
             <h2 className="text-3xl md:text-4xl font-bold text-white">
-              10 ans d'engagement — Marseille & Calanques
+              {t('home.stats.title')}
             </h2>
-            <h3 className="sr-only">Dépollution marine et photographie environnementale depuis 2018</h3>
+            <h3 className="sr-only">{t('home.stats.subtitle')}</h3>
 
           </motion.div>
 
@@ -583,8 +508,8 @@ const Home = () => {
             variants={FADE_IN_UP}
             className="flex flex-col items-center mt-8 gap-2"
           >
-            <p className="text-xs text-white/40 uppercase tracking-widest">Accès Massifs des Calanques</p>
-            <Link to="/acces-massifs-calanques" className="hover:opacity-80 transition-opacity" title="Consulter les conditions d'accès aux massifs des Calanques">
+            <p className="text-xs text-white/40 uppercase tracking-widest">{t('home.map.cta_access')}</p>
+            <Link to="/acces-massifs-calanques" className="hover:opacity-80 transition-opacity" title={t('home.map.cta_access')}>
               <FireRiskBadge inline />
             </Link>
           </motion.div>
@@ -631,23 +556,23 @@ const Home = () => {
               <div className="mb-6 inline-flex items-center gap-2 px-4 py-2 bg-ocean-teal/10 rounded-full border border-ocean-teal/30 w-fit">
                 <Camera className="w-5 h-5 text-ocean-teal" />
                 <span className="text-sm font-semibold text-ocean-teal">
-                  Les Français — Yann Arthus-Bertrand
+                  {t('home.yab.title')}
                 </span>
               </div>
 
               <h2 className="text-3xl md:text-4xl font-bold text-white mb-6">
-                Photographiés par Yann Arthus-Bertrand
+                {t('home.yab.subtitle')}
               </h2>
 
               <p className="text-gray-300 text-lg mb-8 leading-[1.8]">
-                Karim Saari et Team Oxygen ont été sélectionnés par Yann Arthus-Bertrand pour son projet <strong className="text-white">« Les Français »</strong> — une galerie photographique portrait de celles et ceux qui font la France, à Marseille en 2024.
+                {t('home.yab.desc')}
               </p>
 
               <Link
                 to="/les-francais-yann-arthus-bertrand"
                 className="btn-primary inline-flex items-center gap-2 w-fit"
               >
-                <span>Voir le projet</span>
+                <span>{t('home.yab.cta')}</span>
                 <ArrowRight className="w-5 h-5" />
               </Link>
             </div>
@@ -657,7 +582,7 @@ const Home = () => {
 
       {/* Derniers articles du blog — maillage interne + contenu frais */}
       <Suspense fallback={<section className="container-custom py-8 md:py-12" />}>
-        <RecentArticles title="Derniers articles" count={3} />
+        <RecentArticles title={t('home.blog_title')} count={3} />
       </Suspense>
 
       {/* Missions Section - image droite */}
@@ -674,29 +599,30 @@ const Home = () => {
             {/* Contenu - Gauche */}
             <div className="p-8 md:p-12 flex flex-col justify-center order-2 md:order-1">
               <h2 className="text-3xl md:text-4xl font-bold text-white mb-6">
-                Agir pour la Méditerranée.
+                {t('home.missions.title')}
               </h2>
-              <h3 className="sr-only">Plongée, apnée et nettoyage des fonds — Calanques de Marseille</h3>
+              <h3 className="sr-only">{t('home.missions.subtitle')}</h3>
 
               <p className="text-gray-300 text-lg mb-8 leading-[1.8]">
-                À Marseille avec Team Oxygen, nous intervenons en apnée de la surface à 20 mètres pour dépolluer les fonds marins, documenter les déchets et protéger la biodiversité locale. Calanques, Frioul, Côte Bleue, La Ciotat : chaque mission est une action concrète pour notre littoral.
+                {t('home.missions.desc1')}{' '}
+                {t('home.missions.desc2')}
               </p>
 
               <div className="flex flex-wrap gap-3">
                 <Link
                   to="/depollution-marine"
                   className="btn-primary inline-flex items-center gap-2"
-                  onClick={() => trackEvent('cta_click', { button_name: 'Découvrir nos missions' })}
+                  onClick={() => trackEvent('cta_click', { button_name: 'missions_cta' })}
                 >
-                  <span>Découvrir nos missions</span>
+                  <span>{t('home.missions.cta_missions')}</span>
                   <ArrowRight className="w-5 h-5" />
                 </Link>
                 <Link
                   to="/presse"
                   className="btn-ghost inline-flex items-center gap-2"
-                  onClick={() => trackEvent('cta_click', { button_name: 'Couverture médiatique' })}
+                  onClick={() => trackEvent('cta_click', { button_name: 'media_coverage' })}
                 >
-                  <span>Couverture médiatique</span>
+                  <span>{t('home.missions.cta_media')}</span>
                   <ArrowRight className="w-5 h-5" />
                 </Link>
               </div>
@@ -753,26 +679,26 @@ const Home = () => {
             {/* Contenu - Droite */}
             <div className="p-8 md:p-12 flex flex-col justify-center order-2">
               <h2 className="text-3xl md:text-4xl font-bold text-white mb-6">
-                Les Vidéos des Missions
+                {t('home.videos.title')}
               </h2>
               <p className="text-gray-300 text-lg mb-8 leading-[1.8]">
-                Documentaires ARTE, reportages de dépollution en apnée, rétrospectives annuelles… Vivez nos missions depuis les profondeurs des Calanques de Marseille.
+                {t('home.videos.desc')}
               </p>
               <div className="flex flex-wrap gap-3">
                 <Link
                   to="/videos"
                   className="btn-primary inline-flex items-center gap-2"
-                  onClick={() => trackEvent('cta_click', { button_name: 'Voir les vidéos' })}
+                  onClick={() => trackEvent('cta_click', { button_name: 'videos_cta' })}
                 >
-                  <span>Voir les vidéos</span>
+                  <span>{t('home.videos.cta')}</span>
                   <ArrowRight className="w-5 h-5" />
                 </Link>
                 <Link
                   to="/presse"
                   className="btn-ghost inline-flex items-center gap-2"
-                  onClick={() => trackEvent('cta_click', { button_name: 'Couverture médiatique' })}
+                  onClick={() => trackEvent('cta_click', { button_name: 'media_coverage' })}
                 >
-                  <span>Couverture médiatique</span>
+                  <span>{t('home.missions.cta_media')}</span>
                   <ArrowRight className="w-5 h-5" />
                 </Link>
               </div>
@@ -795,34 +721,32 @@ const Home = () => {
             {/* Contenu - Gauche */}
             <div className="p-8 md:p-12 flex flex-col justify-center order-2 md:order-1">
               <h2 className="text-3xl md:text-4xl font-bold text-white mb-6">
-                Deux univers, un même engagement
+                {t('home.gallery.title')}
               </h2>
               <p className="text-gray-300 text-lg mb-8 leading-[1.8]">
-                Des falaises calcaires du littoral marseillais aux profondeurs de la Méditerranée, découvrez un témoignage visuel unique. Entre la splendeur des paysages de Provence et l'urgence écologique des fonds marins, chaque image raconte l'équilibre fragile de notre écosystème.
+                {t('home.gallery.desc1')}{' '}
+                {t('home.gallery.desc2')}
               </p>
               <div className="flex flex-col gap-3 items-start">
                 <Link
                   to="/photographie-paysage-mer"
                   className="btn-primary inline-flex items-center justify-between gap-2 w-auto min-w-[280px]"
-                  title="Voir les photographies de paysages et du littoral marseillais par Karim Saari"
                 >
-                  <span>Galerie Paysages &amp; Littoral</span>
+                  <span>{t('home.gallery.cta_landscapes')}</span>
                   <ArrowRight className="w-5 h-5" />
                 </Link>
                 <Link
                   to="/photographie-sous-marine"
                   className="btn-ghost inline-flex items-center justify-between gap-2 w-auto min-w-[280px]"
-                  title="Voir les photographies sous-marines et les actions de dépollution par Karim Saari"
                 >
-                  <span>Galerie Sous-marine &amp; Dépollution</span>
+                  <span>{t('home.gallery.cta_underwater')}</span>
                   <ArrowRight className="w-5 h-5" />
                 </Link>
                 <Link
                   to="/carte-photos"
                   className="btn-ghost inline-flex items-center justify-between gap-2 w-auto min-w-[280px]"
-                  title="Voir toutes les photos géolocalisées sur la carte interactive"
                 >
-                  <span>Carte des photos</span>
+                  <span>{t('home.gallery.cta_map')}</span>
                   <MapPin className="w-5 h-5" />
                 </Link>
               </div>
@@ -877,29 +801,29 @@ const Home = () => {
             {/* Contenu - Droite */}
             <div className="p-8 md:p-12 flex flex-col justify-center order-2">
               <h2 className="text-3xl md:text-4xl font-bold text-white mb-6">
-                Rejoignez l'Aventure
+                {t('home.community.title')}
               </h2>
-              <h3 className="sr-only">Bénévolat dépollution marine — Rejoindre Team Oxygen à Marseille</h3>
+              <h3 className="sr-only">{t('home.community.subtitle')}</h3>
 
               {/* Badge nombre de membres */}
               <div className="mb-6 inline-flex items-center gap-2 px-4 py-2 bg-ocean-teal/10 rounded-full border border-ocean-teal/30 w-fit">
                 <Users className="w-5 h-5 text-ocean-teal" />
                 <span className="text-xl font-bold text-white">
-                  {fbGroupMembers.toLocaleString('fr-FR')}
+                  {fbGroupMembers.toLocaleString(lng === 'en' ? 'en-US' : 'fr-FR')}
                 </span>
-                <span className="text-gray-300">membres</span>
+                <span className="text-gray-300">{t('home.community.members')}</span>
               </div>
 
               <p className="text-gray-300 text-lg mb-8 leading-[1.8]">
-                Amoureux des Calanques de Marseille à Port-Cros ? Rejoignez notre communauté pour suivre nos actions et participer à la protection de la Méditerranée.
+                {t('home.community.desc')}
               </p>
 
               <Link
                 to="/communaute-calanques"
                 className="btn-primary inline-flex items-center gap-2 w-fit"
-                onClick={() => trackEvent('cta_click', { button_name: 'Rejoindre le Groupe Facebook' })}
+                onClick={() => trackEvent('cta_click', { button_name: 'join_fb_group' })}
               >
-                <span>Rejoindre le Groupe Facebook</span>
+                <span>{t('home.community.cta_fb')}</span>
                 <ArrowRight className="w-5 h-5" />
               </Link>
             </div>
@@ -927,7 +851,7 @@ const Home = () => {
           className="text-center mb-6"
         >
           <span className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-ocean-teal/30 bg-ocean-teal/10 text-ocean-teal text-xs font-semibold uppercase tracking-widest">
-            <span>🌊</span> Le saviez-vous ?
+            <span>🌊</span> {t('home.impact_title')}
           </span>
         </motion.div>
 
@@ -975,7 +899,7 @@ const Home = () => {
                 key={index}
                 onClick={() => goToFact(index)}
                 className="inline-flex items-center justify-center p-2"
-                aria-label={`Afficher le fait ${index + 1}`}
+                aria-label={t('home.impact_aria', { n: index + 1 })}
               >
                 <span className={`rounded-full transition-all duration-300 ${
                   index === currentFactIndex
@@ -985,7 +909,7 @@ const Home = () => {
               </button>
             ))}
             {factsPaused && (
-              <span className="ml-3 text-xs text-text-muted italic">En pause</span>
+              <span className="ml-3 text-xs text-text-muted italic">{t('home.impact_paused')}</span>
             )}
           </div>
         </motion.div>
@@ -1010,12 +934,13 @@ const Home = () => {
               </div>
 
               <h2 className="text-3xl md:text-4xl font-bold text-white mb-6">
-                Carte interactive des Calanques de Marseille & du littoral marseillais
+                {t('home.map.title')}
               </h2>
-              <h3 className="sr-only">Explorer les spots de plongée et missions de nettoyage</h3>
+              <h3 className="sr-only">{t('home.editorial.h3')}</h3>
 
               <p className="text-gray-300 text-lg mb-8 leading-[1.8]">
-                Explorez les Calanques de Marseille via une carte interactive présentant paysages, spots de plongée et actions de dépollution menées avec Team Oxygen sur le littoral marseillais. Consultez aussi les conditions d'accès aux massifs avant de partir — ouverture ou fermeture selon le risque incendie du jour.
+                {t('home.map.desc')}{' '}
+                {t('home.map.note')}
               </p>
 
               <div className="flex flex-wrap items-center gap-3">
@@ -1023,14 +948,14 @@ const Home = () => {
                   to="/carte-calanques"
                   className="btn-primary inline-flex items-center gap-2 w-fit"
                 >
-                  <span>Explorer la carte</span>
+                  <span>{t('home.map.cta_map')}</span>
                   <ArrowRight className="w-5 h-5" />
                 </Link>
                 <Link
                   to="/acces-massifs-calanques"
                   className="btn-ghost inline-flex items-center gap-2 w-fit"
                 >
-                  <span>Accès aux massifs des Calanques</span>
+                  <span>{t('home.map.cta_access')}</span>
                   <ArrowRight className="w-4 h-4" />
                 </Link>
               </div>
@@ -1065,7 +990,7 @@ const Home = () => {
           className="glass-strong rounded-3xl border border-white/10 p-8 md:p-12"
         >
           <h2 className="text-2xl md:text-3xl font-bold text-white mb-8 text-center">
-            Questions Fréquentes
+            {t('home.faq_title')}
           </h2>
           <div className="max-w-3xl mx-auto space-y-3">
             {FAQ_ITEMS.map((item, index) => (
@@ -1105,25 +1030,18 @@ const Home = () => {
             {/* Contenu — Droite */}
             <div className="p-8 md:p-12 flex flex-col justify-center">
               <h2 className="text-2xl md:text-3xl font-bold text-white mb-6">
-                La Méditerranée : Un écosystème en péril
+                {t('home.editorial.title')}
               </h2>
-              <h3 className="sr-only">Pollution plastique, espèces menacées et urgence environnementale</h3>
+              <h3 className="sr-only">{t('home.editorial.h3')}</h3>
               <p className="text-text-secondary text-lg leading-relaxed">
-                Bien qu'elle ne représente que 1&nbsp;% des eaux mondiales, la mer Méditerranée concentre{' '}
-                <strong className="text-white">7&nbsp;% de tous les microplastiques de la planète</strong>.
-                Mer semi-fermée, le renouvellement de ses eaux prend environ 90&nbsp;ans — emprisonnant
-                durablement les déchets. À Marseille et dans le monde, plus de{' '}
-                <strong className="text-white">600 espèces marines</strong> sont impactées
-                par l'ingestion de plastique ou l'enchevêtrement.
-                À travers mes images et mon engagement en apnée dans les Calanques, je documente cette
-                urgence pour rendre l'invisible, visible.
+                {t('home.editorial.p')}
               </p>
               <div className="mt-6">
                 <Link
                   to="/donnees-scientifiques"
                   className="inline-flex items-center gap-2 text-ocean-teal hover:text-white transition-colors text-sm font-medium"
                 >
-                  Consulter les sources scientifiques
+                  {t('home.editorial.cta')}
                   <ArrowRight className="w-4 h-4" />
                 </Link>
               </div>

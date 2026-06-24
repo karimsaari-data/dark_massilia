@@ -1,6 +1,7 @@
 import { motion } from 'framer-motion';
 import { ArrowLeft, ExternalLink } from 'lucide-react';
 import { Link } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import { FADE_IN_UP, STAGGER_CONTAINER } from '../utils/constants';
 import SEO from '../components/SEO';
 import { SEO_PAGES } from '../utils/seo';
@@ -18,13 +19,15 @@ const HUBLOT_STYLE = {
 };
 
 const Meduses = () => {
+  const { t } = useTranslation();
+
   return (
     <div className="min-h-screen">
       <SEO {...SEO_PAGES['/meduses-souveraines-oceans-documentaire-arte']} />
 
       {/* Breadcrumb */}
       <div className="container-custom pt-4">
-        <Breadcrumb label="Méduses — Documentaire ARTE" />
+        <Breadcrumb label={t('meduses.breadcrumb')} />
       </div>
 
       {/* Hero — hublot vidéo */}
@@ -49,16 +52,16 @@ const Meduses = () => {
             <div className="p-8 md:p-10 pt-6" style={{ background: 'rgba(3, 10, 28, 0.93)', backdropFilter: 'blur(12px)' }}>
               <div className="mt-4 max-w-3xl">
                 <motion.p variants={FADE_IN_UP} className="text-ocean-teal text-sm font-semibold uppercase tracking-widest mb-2">
-                  ARTE Évasion · Sébastien Lafont, 2024
+                  {t('meduses.hero_label')}
                 </motion.p>
                 <motion.h1
                   variants={FADE_IN_UP}
                   className="text-3xl md:text-5xl font-bold text-white mb-3 leading-tight"
                 >
-                  Méduses — Les souveraines des océans
+                  {t('meduses.hero_title')}
                 </motion.h1>
                 <motion.p variants={FADE_IN_UP} className="text-white/70 text-base md:text-lg max-w-2xl">
-                  Documentaire ARTE aux images envoûtantes sur la prolifération des méduses — avec des images fournies par Karim Saari, tournées en Méditerranée.
+                  {t('meduses.hero_subtitle')}
                 </motion.p>
               </div>
             </div>
@@ -87,33 +90,13 @@ const Meduses = () => {
                 </span>
                 <span className="text-text-muted">·</span>
                 <span className="text-sm text-text-muted">
-                  Réalisé par <strong className="text-white">Sébastien Lafont</strong> — France, 2024, 43 min
+                  {t('meduses.director_info')}
                 </span>
               </div>
               <div className="space-y-4 text-text-secondary leading-[1.8] text-lg">
-                <p>
-                  Les méduses sont-elles en passe de dominer les océans ? Donnant la parole à l'une
-                  d'elles, ce documentaire aux images envoûtantes dévoile les superpouvoirs de ces
-                  créatures d'apparence si fragile, qui profitent de la surpêche, de la pollution et
-                  du réchauffement climatique pour proliférer.
-                </p>
-                <p>
-                  Elles n'ont ni cœur, ni cerveau, ni squelette et sont constituées à 90 % d'eau.
-                  Malgré leur apparente fragilité, les méduses ont conquis toutes les mers du globe
-                  au fil de leurs{' '}
-                  <strong className="text-white">650 millions d'années d'évolution</strong>. Mais
-                  depuis quelques décennies, de la{' '}
-                  <strong className="text-ocean-teal">Méditerranée</strong> aux fjords norvégiens en
-                  passant par les côtes namibiennes, leur prolifération inquiète. Cette{' '}
-                  <em>« gélification »</em> des mers et océans menace des pêcheries et aquacultures
-                  aux quatre coins du monde.
-                </p>
-                <p>
-                  Capacités de reproduction hors normes, venins redoutables, immortalité… Par la
-                  voix d'<em>Aurelia aurita</em>, la méduse commune, ce documentaire passe en revue
-                  les superpouvoirs de ses congénères et se penche sur les raisons de leur expansion
-                  spectaculaire.
-                </p>
+                <p>{t('meduses.desc_p1')}</p>
+                <p>{t('meduses.desc_p2')}</p>
+                <p>{t('meduses.desc_p3')}</p>
               </div>
             </div>
 
@@ -170,9 +153,9 @@ const Meduses = () => {
             <div className="p-8 md:p-12 lg:flex-1 flex flex-col justify-center">
               <div className="flex items-start justify-between gap-6 mb-6">
                 <h2 className="text-2xl md:text-3xl font-bold text-white">
-                  Contribution au documentaire ARTE « Méduses | Les souveraines des océans »
+                  {t('meduses.editorial_title')}
                 </h2>
-                <h3 className="sr-only">Méduses en Méditerranée — images sous-marines de Karim Saari pour ARTE</h3>
+                <h3 className="sr-only">{t('meduses.editorial_subtitle')}</h3>
                 <div className="w-14 h-14 rounded-full bg-white overflow-hidden flex-shrink-0 animate-pulse-glow">
                   <img
                     src="/assets/dark-massilia-logo-200.webp"
@@ -182,29 +165,9 @@ const Meduses = () => {
                 </div>
               </div>
               <div className="space-y-4 text-text-secondary leading-[1.8] text-lg">
-                <p>
-                  Le documentaire{' '}
-                  <strong className="text-white">« Méduses | Les souveraines des océans »</strong>{' '}
-                  a été mis en ligne sur YouTube le 18 novembre 2025 par{' '}
-                  <strong className="text-ocean-teal">ARTE Évasion</strong>. Diffusé initialement en
-                  2024, ce film réalisé par{' '}
-                  <strong className="text-white">Sébastien Lafont</strong> explore la prolifération
-                  des méduses et la transformation des écosystèmes marins. J'ai fourni plusieurs
-                  images tournées en Méditerranée pour cette production, issues de mon travail de
-                  terrain.
-                </p>
-                <p>
-                  La méduse n'est pas un sujet anecdotique dans mon univers : elle est au cœur de
-                  l'identité visuelle de{' '}
-                  <strong className="text-ocean-teal">Dark Massilia</strong>. Symbole d'adaptation
-                  et d'évolution, elle représente à la fois la fragilité des équilibres marins et la
-                  capacité du vivant à survivre aux bouleversements.
-                </p>
-                <p>
-                  Contribuer à ce documentaire s'inscrit dans la continuité de mon engagement :
-                  documenter l'océan, comprendre ses mutations et rendre visibles les signaux faibles
-                  qui annoncent ses transformations.
-                </p>
+                <p>{t('meduses.editorial_p1')}</p>
+                <p>{t('meduses.editorial_p2')}</p>
+                <p>{t('meduses.editorial_p3')}</p>
               </div>
 
               {/* Bouton YouTube intégré */}
@@ -215,7 +178,7 @@ const Meduses = () => {
                   rel="noopener noreferrer"
                   className="btn inline-flex items-center gap-3 group hover:scale-105 transition-all duration-300"
                 >
-                  <span>Voir sur YouTube — ARTE Évasion</span>
+                  <span>{t('meduses.yt_cta')}</span>
                   <ExternalLink className="w-4 h-4 group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform flex-shrink-0" />
                 </a>
               </div>
@@ -234,14 +197,14 @@ const Meduses = () => {
             to="/depollution-marine"
             className="btn-primary inline-flex items-center gap-2"
           >
-            <span>Nos missions de dépollution</span>
+            <span>{t('meduses.cta_missions')}</span>
             <ArrowLeft className="w-4 h-4 rotate-180" aria-hidden="true" />
           </Link>
           <Link
             to="/sauver-marseille-documentaire-arte"
             className="btn-secondary inline-flex items-center gap-2 group"
           >
-            <span>ARTE — Sauver Marseille</span>
+            <span>{t('meduses.cta_arte')}</span>
             <ArrowLeft className="w-4 h-4 rotate-180 group-hover:translate-x-1 transition-transform" aria-hidden="true" />
           </Link>
           <Link
@@ -249,7 +212,7 @@ const Meduses = () => {
             className="btn-secondary inline-flex items-center gap-2 group"
           >
             <ArrowLeft className="w-4 h-4 group-hover:-translate-x-1 transition-transform" />
-            <span>Retour aux Médias</span>
+            <span>{t('meduses.cta_back_medias')}</span>
           </Link>
         </motion.div>
 

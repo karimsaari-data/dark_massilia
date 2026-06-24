@@ -6,6 +6,7 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { ExternalLink, ChevronDown, Flame, AlertTriangle, TreePine, Map } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
 import SEO from '../components/SEO';
 import { SEO_PAGES } from '../utils/seo';
 import FireRiskBanner from '../components/FireRiskBanner';
@@ -15,58 +16,20 @@ const IFRAME_URL =
   'https://opendfci.fr/13/index.php/view/map?repository=openmassifs&project=open_massifs';
 
 const NIVEAUX_RISQUE = [
-  {
-    color: '#22c55e',
-    label: 'Faible',
-    text: 'Accès libre. Toutes les activités sont autorisées dans les massifs.',
-  },
-  {
-    color: '#eab308',
-    label: 'Limité',
-    text: 'Accès autorisé. Vigilance renforcée conseillée — évitez tout comportement à risque (feu, mégot, barbecue).',
-  },
-  {
-    color: '#f97316',
-    label: 'Modéré',
-    text: 'Accès autorisé avec restrictions. Certains travaux peuvent être encadrés ou limités.',
-  },
-  {
-    color: '#ef4444',
-    label: 'Sévère',
-    text: 'Accès restreint ou interdit selon les secteurs. Les massifs les plus exposés peuvent être fermés.',
-  },
-  {
-    color: '#7f1d1d',
-    label: 'Très sévère / Extrême',
-    text: 'Fermeture totale des massifs. Tous travaux et activités extérieures interdits dans les zones à risque.',
-  },
+  { color: '#22c55e', id: 'faible'  },
+  { color: '#eab308', id: 'limite'  },
+  { color: '#f97316', id: 'modere'  },
+  { color: '#ef4444', id: 'severe'  },
+  { color: '#7f1d1d', id: 'extreme' },
 ];
 
 const FAQ_ACCES = [
-  {
-    q: 'Quand les massifs forestiers des Bouches-du-Rhône sont-ils soumis à une réglementation d\'accès ?',
-    a: 'Du 1er juin au 30 septembre inclus, l\'accès, la présence et la circulation dans les massifs forestiers font l\'objet d\'une réglementation spécifique définie par l\'arrêté préfectoral du 22 avril 2025. En dehors de cette période, l\'accès est libre mais la vigilance reste de mise toute l\'année, notamment lors de vagues de chaleur printanières ou automnales.',
-  },
-  {
-    q: 'Les Calanques de Marseille peuvent-elles fermer pour risque incendie ?',
-    a: 'Oui. Le Parc National des Calanques, le massif de Marseilleveyre et la Côte Bleue sont soumis à la réglementation préfectorale des massifs forestiers. Chaque jour, selon le niveau de risque évalué par Météo France, la préfecture des Bouches-du-Rhône peut restreindre ou interdire l\'accès à tout ou partie de ces secteurs. La carte officielle de la DFCI est mise à jour quotidiennement.',
-  },
-  {
-    q: 'Pourquoi les Bouches-du-Rhône sont-elles particulièrement exposées au risque incendie ?',
-    a: 'Les Bouches-du-Rhône constituent le département le plus exposé au risque feu de forêt en France métropolitaine. Cette vulnérabilité est liée à un cumul de facteurs : des étés chauds et secs, le mistral qui accélère la propagation des flammes, une végétation de garrigue et de pins très inflammable, et une forte densité de population et de fréquentation touristique. On dénombre environ 250 départs de feux par an dans le département, pour une surface brûlée d\'environ 1 900 ha par an, dont près de 90 % sont d\'origine humaine.',
-  },
-  {
-    q: 'Quels comportements sont interdits dans les massifs en période à risque ?',
-    a: 'En période de risque élevé, il est interdit de fumer, d\'allumer un feu ou un barbecue, de faire fonctionner des engins thermiques, d\'effectuer des travaux de débroussaillement ou tout autre travail générant des étincelles. Ces interdictions s\'appliquent aussi bien aux professionnels qu\'aux particuliers à proximité des massifs forestiers.',
-  },
-  {
-    q: 'Comment vérifier si les Calanques sont ouvertes avant de partir ?',
-    a: 'La méthode la plus fiable est de consulter la carte interactive de la DFCI Bouches-du-Rhône (opendfci.fr/13) ou le site risque-prevention-incendie.fr/13, tous deux mis à jour chaque matin. Cette page karimsaari.com/acces-massifs-calanques intègre directement la carte officielle et affiche en temps réel l\'état des massifs.',
-  },
-  {
-    q: 'Team Oxygen peut-elle organiser des missions de dépollution en période de fermeture des massifs ?',
-    a: 'Non. Avant chaque mission de dépollution sous-marine dans les Calanques, Team Oxygen vérifie systématiquement l\'état d\'accès aux massifs. En cas de fermeture préfectorale, les sorties terrestres et les mises à l\'eau depuis les calanques sont annulées ou reportées. La sécurité des bénévoles et le respect de la réglementation sont non négociables.',
-  },
+  { id: 'season'   },
+  { id: 'close'    },
+  { id: 'why'      },
+  { id: 'forbidden'},
+  { id: 'check'    },
+  { id: 'team'     },
 ];
 
 const FaqItem = ({ question, answer }) => {
@@ -96,6 +59,7 @@ const FaqItem = ({ question, answer }) => {
 };
 
 export default function AccesMassifs() {
+  const { t } = useTranslation();
   return (
     <>
       <SEO {...SEO_PAGES['/acces-massifs-calanques']} />
@@ -104,10 +68,10 @@ export default function AccesMassifs() {
       <FireRiskBanner />
 
       <div className="container-custom py-6">
-        <Breadcrumb label="Accès Massifs Forestiers — Risque Incendie" />
+        <Breadcrumb label={t('accesMassifs.breadcrumb')} />
 
         <h1 className="text-3xl md:text-4xl font-bold text-white mt-4 mb-6">
-          Accès aux Massifs Forestiers des Bouches-du-Rhône
+          {t('accesMassifs.h1')}
         </h1>
 
         {/* ── BLOC DFCI — lien direct ── */}
@@ -116,11 +80,11 @@ export default function AccesMassifs() {
             <div className="flex-1 min-w-0">
               <div className="flex items-center gap-2 mb-1">
                 <Flame className="w-4 h-4 text-orange-400 flex-shrink-0" />
-                <span className="text-orange-400 font-semibold text-xs uppercase tracking-widest">DFCI Bouches-du-Rhône</span>
+                <span className="text-orange-400 font-semibold text-xs uppercase tracking-widest">{t('accesMassifs.dfci_label')}</span>
               </div>
-              <p className="text-white font-semibold text-base">Carte officielle des accès aux massifs</p>
+              <p className="text-white font-semibold text-base">{t('accesMassifs.dfci_title')}</p>
               <p className="text-text-secondary text-sm mt-1">
-                Mise à jour chaque matin — état en temps réel de tous les massifs forestiers du 13.
+                {t('accesMassifs.dfci_desc')}
               </p>
             </div>
             <a
@@ -130,7 +94,7 @@ export default function AccesMassifs() {
               className="flex-shrink-0 inline-flex items-center gap-2 bg-orange-500 hover:bg-orange-400 text-white font-bold text-sm px-5 py-3 rounded-xl transition-colors"
             >
               <Map className="w-4 h-4" />
-              Voir la carte
+              {t('accesMassifs.dfci_btn')}
               <ExternalLink className="w-3.5 h-3.5 opacity-70" />
             </a>
           </div>
@@ -147,44 +111,26 @@ export default function AccesMassifs() {
                 <div className="flex items-center gap-3 mb-6">
                   <Flame className="w-6 h-6 text-orange-400 flex-shrink-0" />
                   <h2 className="text-2xl md:text-3xl font-bold text-white">
-                    Le département le plus exposé de France métropolitaine
+                    {t('accesMassifs.context_h2')}
                   </h2>
                 </div>
 
                 <div className="space-y-4 text-text-secondary text-lg leading-relaxed">
-                  <p>
-                    Les Bouches-du-Rhône cumulent les conditions les plus défavorables face au risque incendie :
-                    étés chauds et secs, mistral qui transforme les flammes en torrent,{' '}
-                    <strong className="text-white">végétation de garrigue et de pins d'Alep</strong> qui s'embrase au
-                    moindre contact. Résultat : ce territoire est reconnu comme le département de France métropolitaine
-                    le plus exposé au feu de forêt.
-                  </p>
-                  <p>
-                    Les chiffres parlent d'eux-mêmes :{' '}
-                    <strong className="text-white">environ 250 départs de feux par an</strong>, pour une surface
-                    brûlée d'environ <strong className="text-white">1 900 hectares annuels</strong>. Et le plus
-                    troublant : <strong className="text-ocean-teal">près de 90 % de ces incendies sont d'origine humaine</strong>.
-                    Un mégot jeté par la vitre, une étincelle de meuleuse, un barbecue improvisé — chacun de ces
-                    gestes peut déclencher une catastrophe irréversible en quelques minutes.
-                  </p>
-                  <p>
-                    Ce que je documente depuis dix ans — les falaises calcaires depuis les sentiers, la lumière
-                    unique des calanques, la biodiversité des fonds marins en apnée, les posidonies, les mérous —
-                    peut disparaître à jamais en quelques heures si le feu atteint les versants.
-                    La mer et la forêt forment un seul écosystème. Protéger l'un, c'est protéger l'autre.
-                  </p>
+                  <p>{t('accesMassifs.context_p1')}</p>
+                  <p>{t('accesMassifs.context_p2')}</p>
+                  <p>{t('accesMassifs.context_p3')}</p>
                 </div>
 
                 {/* Stats en ligne */}
                 <div className="grid grid-cols-3 gap-4 mt-8 pt-8 border-t border-white/10">
                   {[
-                    { value: '~250', label: 'départs de feux par an dans les Bouches-du-Rhône' },
-                    { value: '~1 900 ha', label: 'brûlés en moyenne chaque année' },
-                    { value: '90 %', label: 'des incendies sont d\'origine humaine' },
-                  ].map(stat => (
-                    <div key={stat.label} className="text-center">
-                      <p className="text-2xl md:text-3xl font-bold text-ocean-teal">{stat.value}</p>
-                      <p className="text-xs text-text-muted mt-1 leading-snug">{stat.label}</p>
+                    { valueKey: 'accesMassifs.stat1_value', labelKey: 'accesMassifs.stat1_label' },
+                    { valueKey: 'accesMassifs.stat2_value', labelKey: 'accesMassifs.stat2_label' },
+                    { valueKey: 'accesMassifs.stat3_value', labelKey: 'accesMassifs.stat3_label' },
+                  ].map(({ valueKey, labelKey }) => (
+                    <div key={labelKey} className="text-center">
+                      <p className="text-2xl md:text-3xl font-bold text-ocean-teal">{t(valueKey)}</p>
+                      <p className="text-xs text-text-muted mt-1 leading-snug">{t(labelKey)}</p>
                     </div>
                   ))}
                 </div>
@@ -225,30 +171,14 @@ export default function AccesMassifs() {
             <div className="flex items-center gap-3 mb-6">
               <AlertTriangle className="w-6 h-6 text-yellow-400 flex-shrink-0" />
               <h2 className="text-2xl md:text-3xl font-bold text-white">
-                La réglementation saisonnière : du 1er juin au 30 septembre
+                {t('accesMassifs.regulation_h2')}
               </h2>
             </div>
 
             <div className="space-y-4 text-text-secondary text-lg leading-relaxed mb-8">
-              <p>
-                Chaque année, par arrêté préfectoral, l'accès, la présence et la circulation dans les massifs
-                forestiers des Bouches-du-Rhône sont soumis à une{' '}
-                <strong className="text-white">réglementation spécifique du 1er juin au 30 septembre inclus</strong>,
-                définie par l'arrêté préfectoral du 22 avril 2025.
-                L'objectif est clair : réduire les risques de départ de feu, protéger les personnes et permettre
-                aux services de secours d'intervenir sans obstacle.
-              </p>
-              <p>
-                Chaque matin, Météo France évalue le niveau de risque pour chaque massif. En fonction de ce niveau,
-                la préfecture autorise, restreint ou interdit l'accès aux zones concernées. Cette décision est
-                publiée avant 6h et s'applique pour toute la journée.
-              </p>
-              <p>
-                La réglementation s'applique également aux{' '}
-                <strong className="text-white">travaux dans et à proximité des massifs</strong> :
-                débroussaillement, engins thermiques, travaux agricoles. En cas de risque très sévère ou extrême,
-                même les professionnels doivent cesser toute activité susceptible de provoquer une étincelle.
-              </p>
+              <p>{t('accesMassifs.regulation_p1')}</p>
+              <p>{t('accesMassifs.regulation_p2')}</p>
+              <p>{t('accesMassifs.regulation_p3')}</p>
             </div>
 
             {/* Panneau fermeture — illustration terrain */}
@@ -265,19 +195,10 @@ export default function AccesMassifs() {
                 decoding="async"
               />
               <div className="text-text-secondary text-base leading-relaxed space-y-3">
+                <p>{t('accesMassifs.sign_caption1')}</p>
+                <p>{t('accesMassifs.sign_caption2')}</p>
                 <p>
-                  Ce panneau rouge, vous pouvez le croiser à chaque entrée des Calanques dès que le risque
-                  incendie est jugé trop élevé. Il s'accompagne d'une amende de{' '}
-                  <strong className="text-white">135 € en cas de non-respect</strong>.
-                </p>
-                <p>
-                  La décision de fermeture est publiée chaque matin avant 6h par la préfecture des
-                  Bouches-du-Rhône, sur la base des prévisions Météo France pour la journée.
-                  Elle peut changer d'un jour à l'autre, y compris en plein mois de juillet.
-                </p>
-                <p>
-                  <strong className="text-white">La règle est simple :</strong> avant de partir,
-                  consultez la carte ci-dessus ou le site{' '}
+                  {t('accesMassifs.sign_caption3')}{' '}
                   <a href="https://www.risque-prevention-incendie.fr/13" target="_blank" rel="noopener noreferrer"
                     className="text-ocean-teal hover:text-white transition-colors font-medium">
                     risque-prevention-incendie.fr/13
@@ -287,18 +208,18 @@ export default function AccesMassifs() {
             </div>
 
             {/* Niveaux de risque */}
-            <h3 className="text-lg font-semibold text-white mb-4">Les 5 niveaux de risque et leurs conséquences</h3>
+            <h3 className="text-lg font-semibold text-white mb-4">{t('accesMassifs.risk_levels_h3')}</h3>
             <div className="space-y-3">
               {NIVEAUX_RISQUE.map(niveau => (
-                <div key={niveau.label} className="flex items-start gap-4 p-4 rounded-xl bg-white/[0.03] border border-white/8">
+                <div key={niveau.id} className="flex items-start gap-4 p-4 rounded-xl bg-white/[0.03] border border-white/8">
                   <span
                     className="w-3 h-3 rounded-sm flex-shrink-0 mt-1.5"
                     style={{ backgroundColor: niveau.color }}
                     aria-hidden="true"
                   />
                   <div>
-                    <p className="font-semibold text-white text-sm">{niveau.label}</p>
-                    <p className="text-text-secondary text-sm mt-0.5">{niveau.text}</p>
+                    <p className="font-semibold text-white text-sm">{t('accesMassifs.risk_' + niveau.id + '_label')}</p>
+                    <p className="text-text-secondary text-sm mt-0.5">{t('accesMassifs.risk_' + niveau.id + '_text')}</p>
                   </div>
                 </div>
               ))}
@@ -312,29 +233,26 @@ export default function AccesMassifs() {
             <div className="flex items-center gap-3 mb-6">
               <TreePine className="w-6 h-6 text-green-400 flex-shrink-0" />
               <h2 className="text-2xl md:text-3xl font-bold text-white">
-                Prévenir l'incendie, c'est l'affaire de tous
+                {t('accesMassifs.prevention_h2')}
               </h2>
             </div>
 
             <p className="text-text-secondary text-lg leading-relaxed mb-8">
-              Derrière cette réglementation, il n'y a pas une volonté d'interdire, mais une ambition de
-              préserver. Nos forêts méditerranéennes sont parmi les plus riches en biodiversité d'Europe.
-              Les femmes et les hommes qui combattent les flammes chaque été le font parfois au péril de
-              leur vie. Chaque visiteur qui respecte les consignes est un maillon de cette chaîne de protection.
+              {t('accesMassifs.prevention_intro')}
             </p>
 
             <div className="grid sm:grid-cols-2 gap-4">
               {[
-                { icon: '🚬', title: 'Ne jamais fumer', text: 'Ni dans les massifs, ni depuis un véhicule à proximité. Un mégot peut déclencher un incendie des heures après avoir été jeté.' },
-                { icon: '🔥', title: 'Aucun feu, aucun barbecue', text: 'Même dans les zones de pique-nique, toute flamme nue est interdite en période de risque. Les réchauds à gaz sont à éviter également.' },
-                { icon: '🛠️', title: 'Travaux et engins thermiques', text: 'Tronçonneuses, meuleuses, débroussailleuses — tout outil générant des étincelles est interdit en période de risque sévère.' },
-                { icon: '📱', title: 'Signaler un départ de feu', text: 'Appelez le 18 (pompiers) ou le 112 immédiatement. Ne tentez pas d\'éteindre seul et éloignez-vous rapidement du secteur.' },
-              ].map(item => (
-                <div key={item.title} className="flex gap-4 p-5 rounded-2xl bg-white/[0.03] border border-white/8">
-                  <span className="text-2xl flex-shrink-0">{item.icon}</span>
+                { icon: '🚬', titleKey: 'accesMassifs.geste_smoking_title', textKey: 'accesMassifs.geste_smoking_text' },
+                { icon: '🔥', titleKey: 'accesMassifs.geste_fire_title',    textKey: 'accesMassifs.geste_fire_text'    },
+                { icon: '🛠️', titleKey: 'accesMassifs.geste_tools_title',   textKey: 'accesMassifs.geste_tools_text'   },
+                { icon: '📱', titleKey: 'accesMassifs.geste_report_title',  textKey: 'accesMassifs.geste_report_text'  },
+              ].map(({ icon, titleKey, textKey }) => (
+                <div key={titleKey} className="flex gap-4 p-5 rounded-2xl bg-white/[0.03] border border-white/8">
+                  <span className="text-2xl flex-shrink-0">{icon}</span>
                   <div>
-                    <p className="font-semibold text-white mb-1">{item.title}</p>
-                    <p className="text-sm text-text-secondary leading-relaxed">{item.text}</p>
+                    <p className="font-semibold text-white mb-1">{t(titleKey)}</p>
+                    <p className="text-sm text-text-secondary leading-relaxed">{t(textKey)}</p>
                   </div>
                 </div>
               ))}
@@ -346,11 +264,11 @@ export default function AccesMassifs() {
         <section className="mb-16">
           <div className="glass-strong rounded-3xl border border-white/10 p-8 md:p-12">
             <h2 className="text-2xl md:text-3xl font-bold text-white mb-8">
-              Questions fréquentes sur l'accès aux massifs
+              {t('accesMassifs.faq_h2')}
             </h2>
             <div className="space-y-4 max-w-3xl">
-              {FAQ_ACCES.map((item, i) => (
-                <FaqItem key={i} question={item.q} answer={item.a} />
+              {FAQ_ACCES.map(({ id }) => (
+                <FaqItem key={id} question={t('accesMassifs.faq_' + id + '_q')} answer={t('accesMassifs.faq_' + id + '_a')} />
               ))}
             </div>
           </div>

@@ -13,6 +13,7 @@ import { useState, useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { motion, useReducedMotion } from 'framer-motion';
 import { Calendar, ArrowLeft, ArrowRight, User, Loader2, Clock } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
 import SEO from '../components/SEO';
 import { fetchPostBySlug } from '../utils/api';
 import { FADE_IN_UP } from '../utils/constants';
@@ -120,6 +121,7 @@ function buildSchema(post, slug) {
 }
 
 export default function BlogPost() {
+  const { t } = useTranslation();
   const { slug } = useParams();
   const prefersReducedMotion = useReducedMotion();
 
@@ -221,7 +223,7 @@ export default function BlogPost() {
           className="inline-flex items-center gap-2 text-gray-400 hover:text-ocean-teal transition-colors text-sm mb-10 group"
         >
           <ArrowLeft className="w-4 h-4 transition-transform group-hover:-translate-x-1" aria-hidden="true" />
-          Toutes les actualités
+          {t('blogCategory.back')}
         </Link>
 
         {/* ── Chargement ──────────────────────────────────────────────────── */}
@@ -236,7 +238,7 @@ export default function BlogPost() {
           <div className="glass-strong rounded-2xl p-12 text-center">
             <p className="text-gray-400 mb-8">{error}</p>
             <Link to="/blog" className="btn-primary">
-              Retour au blog
+              {t('blogPost.back_blog')}
             </Link>
           </div>
         )}
@@ -299,7 +301,7 @@ export default function BlogPost() {
                     <span className="text-gray-600" aria-hidden="true">·</span>
                     <span className="flex items-center gap-1.5 text-gray-400 text-xs">
                       <Clock className="w-3.5 h-3.5" aria-hidden="true" />
-                      {post.readingTime} min de lecture
+                      {post.readingTime} {t('blogPost.reading_min')}
                     </span>
                   </>
                 )}
@@ -319,7 +321,7 @@ export default function BlogPost() {
 
               {/* Partage */}
               <div className="mt-10 pt-6 border-t border-white/10">
-                <p className="text-sm font-semibold text-gray-300 mb-4">Partager cet article</p>
+                <p className="text-sm font-semibold text-gray-300 mb-4">{t('blogPost.share_title')}</p>
                 <div className="flex flex-wrap gap-3">
                   <a
                     href={`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(`${BASE_URL}/blog/${slug}/`)}`}
@@ -358,7 +360,7 @@ export default function BlogPost() {
                     aria-label="Copier le lien"
                   >
                     <svg className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24" aria-hidden="true"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg>
-                    {copied ? 'Copié !' : 'Copier le lien'}
+                    {copied ? t('blogPost.copied') : t('blogPost.copy_link')}
                   </button>
                 </div>
               </div>
@@ -380,19 +382,19 @@ export default function BlogPost() {
             {/* ── Cluster interne ──────────────────────────────────────── */}
             <div className="mt-10 pt-8 border-t border-white/10 flex flex-col sm:flex-row flex-wrap items-center justify-center gap-4 text-sm">
               <Link to="/depollution-marine" className="text-text-secondary hover:text-ocean-teal transition-colors inline-flex items-center gap-1">
-                Nos missions de dépollution <ArrowRight className="w-4 h-4" />
+                {t('blog.cluster_missions')} <ArrowRight className="w-4 h-4" />
               </Link>
               <Link to="/photographie-sous-marine" className="text-text-secondary hover:text-ocean-teal transition-colors inline-flex items-center gap-1">
-                Galerie photos sous-marines <ArrowRight className="w-4 h-4" />
+                {t('blog.cluster_gallery')} <ArrowRight className="w-4 h-4" />
               </Link>
               <Link to="/photographie-paysage-mer" className="text-text-secondary hover:text-ocean-teal transition-colors inline-flex items-center gap-1">
-                Galerie paysages Marseille <ArrowRight className="w-4 h-4" />
+                {t('blog.cluster_landscapes')} <ArrowRight className="w-4 h-4" />
               </Link>
               <Link to="/communaute" className="text-text-secondary hover:text-ocean-teal transition-colors inline-flex items-center gap-1">
-                Rejoindre la communauté <ArrowRight className="w-4 h-4" />
+                {t('blogPost.join_community')} <ArrowRight className="w-4 h-4" />
               </Link>
               <Link to="/communaute-calanques" className="text-text-secondary hover:text-ocean-teal transition-colors inline-flex items-center gap-1">
-                Groupe Facebook Calanques <ArrowRight className="w-4 h-4" />
+                {t('blogPost.fb_group')} <ArrowRight className="w-4 h-4" />
               </Link>
             </div>
 
@@ -403,11 +405,11 @@ export default function BlogPost() {
                 className="inline-flex items-center gap-2 text-gray-400 hover:text-ocean-teal transition-colors text-sm group"
               >
                 <ArrowLeft className="w-4 h-4 transition-transform group-hover:-translate-x-1" aria-hidden="true" />
-                Retour aux actualités
+                {t('blogPost.back_news')}
               </Link>
 
               <Link to="/communaute" className="btn-primary text-sm">
-                Rejoindre la mission →
+                {t('blogPost.join_mission')}
               </Link>
             </div>
           </motion.article>
@@ -419,7 +421,7 @@ export default function BlogPost() {
       {/* ── Articles similaires ─────────────────────────────────────────────── */}
       {!loading && post && (
         <div className="mt-16">
-          <RecentArticles title="Articles similaires" count={3} excludeSlug={slug} />
+          <RecentArticles title={t('blogPost.similar_articles')} count={3} excludeSlug={slug} />
         </div>
       )}
     </div>

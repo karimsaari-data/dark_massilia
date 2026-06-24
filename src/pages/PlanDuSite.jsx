@@ -8,6 +8,7 @@ import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { BookOpen, Camera, Compass, Film, MapPin, Mail, ExternalLink, Loader2 } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
 import SEO from '../components/SEO';
 import Breadcrumb from '../components/Breadcrumb';
 import { SEO_PAGES } from '../utils/seo';
@@ -73,6 +74,7 @@ const SECTIONS = [
 // ── Composant ─────────────────────────────────────────────────────────────────
 
 const PlanDuSite = () => {
+  const { t } = useTranslation();
   const [posts, setPosts]   = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError]   = useState(false);
@@ -101,7 +103,7 @@ const PlanDuSite = () => {
       })} />
 
       <div className="container-custom pt-4">
-        <Breadcrumb label="Plan du site" />
+        <Breadcrumb label={t('footer.sitemap_title')} />
       </div>
       <div className="container-custom py-16 md:py-24" style={{ position: 'relative', zIndex: 1 }}>
         {/* Voile pour lisibilité sur fond animé */}
@@ -114,7 +116,7 @@ const PlanDuSite = () => {
           className="mb-14"
         >
           <p className="text-ocean-teal text-xs font-semibold uppercase tracking-widest mb-3">Navigation</p>
-          <h1 className="text-4xl md:text-5xl font-bold text-white mb-4">Plan du site</h1>
+          <h1 className="text-4xl md:text-5xl font-bold text-white mb-4">{t('footer.sitemap_title')}</h1>
           <p className="text-gray-400 text-lg max-w-2xl">
             Naviguez dans l'univers de <span className="text-white">karimsaari.com</span> — portfolio, missions terrain, médias et blog.
           </p>

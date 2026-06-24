@@ -9,7 +9,8 @@
  * En mode client ils restent lazy pour le code-splitting.
  */
 import { Suspense, lazy } from 'react';
-import { Routes, Route, Navigate } from 'react-router-dom';
+import { Routes, Route, Navigate, useLocation, Link } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import ErrorBoundary from './components/ErrorBoundary';
 import Layout from './components/layout/Layout';
 import ScrollToTop from './components/ScrollToTop';
@@ -53,21 +54,56 @@ const PageLoader = () => (
 );
 
 function NotFound() {
+  const { t } = useTranslation();
+  const location = useLocation();
+  const homeUrl = location.pathname.startsWith('/en') ? '/en' : '/';
   return (
     <div className="min-h-[80vh] flex flex-col items-center justify-center text-center px-4 py-20">
       <div className="glass-strong rounded-3xl border border-white/10 p-12 md:p-16 max-w-lg w-full">
-        <p className="text-ocean-teal text-sm font-semibold uppercase tracking-widest mb-4">Erreur</p>
+        <p className="text-ocean-teal text-sm font-semibold uppercase tracking-widest mb-4">{t('notFound.label')}</p>
         <h1 className="text-8xl font-bold gradient-text mb-4">404</h1>
-        <p className="text-xl text-white font-semibold mb-3">Page introuvable</p>
-        <p className="text-gray-400 mb-10 leading-relaxed">
-          Cette page n'existe pas ou a été déplacée. Les fonds marins sont mieux cartographiés que ça.
-        </p>
-        <a href="/" className="btn-primary inline-flex items-center gap-2">
-          ← Retour à l'accueil
-        </a>
+        <p className="text-xl text-white font-semibold mb-3">{t('notFound.title')}</p>
+        <p className="text-gray-400 mb-10 leading-relaxed">{t('notFound.desc')}</p>
+        <Link to={homeUrl} className="btn-primary inline-flex items-center gap-2">
+          {t('notFound.cta')}
+        </Link>
       </div>
     </div>
   );
+}
+
+function renderSharedRoutes() {
+  return [
+    <Route key="index" index element={<Home />} />,
+    <Route key="blog" path="blog" element={<Blog />} />,
+    <Route key="blog-cat" path="blog/categorie/:slug" element={<BlogCategory />} />,
+    <Route key="blog-post" path="blog/:slug" element={<BlogPost />} />,
+    <Route key="depollution" path="depollution-marine" element={<Missions />} />,
+    <Route key="presse" path="presse" element={<Medias />} />,
+    <Route key="photos" path="photographie-paysage-mer" element={<Photos />} />,
+    <Route key="sous-marine" path="photographie-sous-marine" element={<PhotoSousMarine />} />,
+    <Route key="env-photo" path="photographe-environnemental-marseille" element={<PhotographeEnvironnemental />} />,
+    <Route key="dossier-presse" path="dossier-presse" element={<DossierPresse />} />,
+    <Route key="videos" path="videos" element={<Videos />} />,
+    <Route key="communaute" path="communaute" element={<Instagram />} />,
+    <Route key="communaute-cal" path="communaute-calanques" element={<GroupeFacebook />} />,
+    <Route key="actualites" path="actualites" element={<Twitter />} />,
+    <Route key="arte" path="sauver-marseille-documentaire-arte" element={<Arte />} />,
+    <Route key="echappees" path="echappees-belles-bouches-du-rhone" element={<EchappeesBelles />} />,
+    <Route key="green-got" path="court-metrage-green-got-mediterranee" element={<GreenGot />} />,
+    <Route key="meduses" path="meduses-souveraines-oceans-documentaire-arte" element={<Meduses />} />,
+    <Route key="sources" path="donnees-scientifiques" element={<Sources />} />,
+    <Route key="contact" path="contact" element={<Contact />} />,
+    <Route key="carte-cal" path="carte-calanques" element={<Carte />} />,
+    <Route key="carte-photos" path="carte-photos" element={<CartePhotos />} />,
+    <Route key="acces" path="acces-massifs-calanques" element={<AccesMassifs />} />,
+    <Route key="local-guide" path="local-guide-marseille" element={<LocalGuide />} />,
+    <Route key="yab" path="les-francais-yann-arthus-bertrand" element={<Yab />} />,
+    <Route key="mentions" path="mentions-legales" element={<MentionsLegales />} />,
+    <Route key="confidentialite" path="confidentialite" element={<Confidentialite />} />,
+    <Route key="plan" path="plan-du-site" element={<PlanDuSite />} />,
+    <Route key="not-found" path="*" element={<NotFound />} />,
+  ];
 }
 
 export default function AppRoutes() {
@@ -81,37 +117,10 @@ export default function AppRoutes() {
           <Route path="admin-galerie" element={<Navigate to="/admin" replace />} />
           <Route path="admin-blog"    element={<AdminBlog />} />
 
+          {/* Routes françaises (/) */}
           <Route path="/" element={<Layout />}>
-            <Route index element={<Home />} />
-            {/* Blog WordPress Headless */}
-            <Route path="blog"                      element={<Blog />} />
-            <Route path="blog/categorie/:slug"  element={<BlogCategory />} />
-            <Route path="blog/:slug"            element={<BlogPost />} />
-            <Route path="depollution-marine"              element={<Missions />} />
-            <Route path="presse"                         element={<Medias />} />
-            <Route path="photographie-paysage-mer"       element={<Photos />} />
-            <Route path="photographie-sous-marine"       element={<PhotoSousMarine />} />
-            <Route path="photographe-environnemental-marseille" element={<PhotographeEnvironnemental />} />
-            <Route path="dossier-presse"                        element={<DossierPresse />} />
-            <Route path="videos"                         element={<Videos />} />
-            <Route path="communaute"                     element={<Instagram />} />
-            <Route path="communaute-calanques"              element={<GroupeFacebook />} />
-            <Route path="actualites"                     element={<Twitter />} />
-            <Route path="sauver-marseille-documentaire-arte" element={<Arte />} />
-            <Route path="echappees-belles-bouches-du-rhone"  element={<EchappeesBelles />} />
-            <Route path="court-metrage-green-got-mediterranee" element={<GreenGot />} />
-            <Route path="meduses-souveraines-oceans-documentaire-arte" element={<Meduses />} />
-            <Route path="donnees-scientifiques"          element={<Sources />} />
-            <Route path="contact"                        element={<Contact />} />
-            <Route path="carte-calanques"                element={<Carte />} />
-            <Route path="carte-photos"                   element={<CartePhotos />} />
-            <Route path="acces-massifs-calanques"        element={<AccesMassifs />} />
-            <Route path="local-guide-marseille"          element={<LocalGuide />} />
-            <Route path="les-francais-yann-arthus-bertrand" element={<Yab />} />
-            <Route path="mentions-legales"                element={<MentionsLegales />} />
-            <Route path="confidentialite"                 element={<Confidentialite />} />
-            <Route path="plan-du-site"                    element={<PlanDuSite />} />
-            {/* Redirections legacy — anciennes URLs */}
+            {renderSharedRoutes()}
+            {/* Redirections legacy — anciennes URLs FR uniquement */}
             <Route path="home"        element={<Navigate to="/" replace />} />
             <Route path="missions"    element={<Navigate to="/depollution-marine" replace />} />
             <Route path="medias"      element={<Navigate to="/presse" replace />} />
@@ -124,7 +133,11 @@ export default function AppRoutes() {
             <Route path="sources"     element={<Navigate to="/donnees-scientifiques" replace />} />
             <Route path="carte"       element={<Navigate to="/carte-calanques" replace />} />
             <Route path="local-guide" element={<Navigate to="/local-guide-marseille" replace />} />
-            <Route path="*"    element={<NotFound />} />
+          </Route>
+
+          {/* Routes anglaises (/en) */}
+          <Route path="/en" element={<Layout />}>
+            {renderSharedRoutes()}
           </Route>
         </Routes>
       </Suspense>

@@ -9,6 +9,7 @@ import { useState, useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { Calendar, ArrowRight, Rss, Search, X, Clock } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
 import SEO from '../components/SEO';
 import { SEO_PAGES } from '../utils/seo';
 import { fetchPosts } from '../utils/api';
@@ -25,6 +26,7 @@ export const CATEGORIES = [
 const POSTS_PER_PAGE = 9;
 
 export default function Blog() {
+  const { t } = useTranslation();
   const [posts,        setPosts]       = useState([]);
   const [page,         setPage]        = useState(1);
   const [totalPages,   setTotalPages]  = useState(1);
@@ -71,7 +73,7 @@ export default function Blog() {
       <SEO {...SEO_PAGES['/blog']} />
 
       <div className="container-custom">
-        <Breadcrumb label="Actualités" />
+        <Breadcrumb label={t('blog.breadcrumb')} />
 
         {/* ── Cadre hublot — en-tête + recherche + filtres ─────────────── */}
         <motion.div
@@ -92,18 +94,17 @@ export default function Blog() {
           <motion.div variants={FADE_IN_UP} className="flex items-center justify-center gap-2 mb-4">
             <Rss className="w-4 h-4 text-ocean-teal" />
             <p className="text-ocean-teal text-sm font-semibold uppercase tracking-widest">
-              Journal de bord
+              {t('blog.hero_title')}
             </p>
           </motion.div>
 
           <motion.h1 variants={FADE_IN_UP} className="heading-1 text-white mb-6">
-            Actualités & Actions
+            {t('blog.hero_subtitle')}
           </motion.h1>
-          <h3 className="sr-only">Articles sur la mer Méditerranée, la faune marine et la dépollution des Calanques</h3>
+          <h3 className="sr-only">{t('blog.desc')}</h3>
 
           <motion.p variants={FADE_IN_UP} className="body-large max-w-2xl mx-auto mb-10">
-            Suivez en direct les missions de dépollution, les rencontres et les coups de cœur
-            de l'équipe Dark Massilia en Méditerranée.
+            {t('blog.follow_desc')}
           </motion.p>
 
           {/* Recherche */}
@@ -111,11 +112,11 @@ export default function Blog() {
             <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400 pointer-events-none" aria-hidden="true" />
             <input
               type="search"
-              placeholder="Rechercher un article…"
+              placeholder={t('blog.search_placeholder')}
               value={searchInput}
               onChange={handleSearchChange}
               className="w-full pl-11 pr-10 py-3 rounded-2xl glass border border-white/10 text-white placeholder-gray-500 text-sm focus:outline-none focus:border-ocean-teal/50 focus:ring-1 focus:ring-ocean-teal/30 transition-all"
-              aria-label="Rechercher dans les articles"
+              aria-label={t('blog.search_placeholder')}
             />
             {searchInput && (
               <button
@@ -129,12 +130,12 @@ export default function Blog() {
           </motion.div>
 
           {/* Filtres catégories */}
-          <motion.div variants={FADE_IN_UP} className="flex flex-wrap justify-center gap-2" role="navigation" aria-label="Filtrer par catégorie">
+          <motion.div variants={FADE_IN_UP} className="flex flex-wrap justify-center gap-2" role="navigation" aria-label={t('blog.all')}>
             <Link
               to="/blog"
               className="px-4 py-1.5 rounded-full text-sm font-semibold transition-all duration-200 bg-ocean-teal text-[#0a1428]"
             >
-              Tous
+              {t('blog.all')}
             </Link>
             {CATEGORIES.map(cat => (
               <Link
@@ -142,7 +143,7 @@ export default function Blog() {
                 to={`/blog/categorie/${cat.slug}`}
                 className="px-4 py-1.5 rounded-full text-sm font-semibold transition-all duration-200 glass text-text-secondary hover:text-white border border-white/10 hover:border-white/20"
               >
-                {cat.name}
+                {t('blog.categories.' + cat.slug)}
               </Link>
             ))}
           </motion.div>
@@ -152,10 +153,10 @@ export default function Blog() {
         {error && (
           <div className="glass rounded-2xl p-10 text-center">
             <p className="text-gray-400 mb-6">
-              Impossible de charger les articles. Réessayez dans quelques instants.
+              {t('blog.error_load')}
             </p>
             <button onClick={() => setPage(1)} className="btn-secondary">
-              Réessayer
+              {t('blog.retry')}
             </button>
           </div>
         )}
@@ -196,8 +197,8 @@ export default function Blog() {
         {!loading && !error && search && (
           <p className="text-center text-gray-400 text-sm mb-6">
             {posts.length > 0
-              ? <>{posts.length} résultat{posts.length > 1 ? 's' : ''} pour <span className="text-white font-semibold">« {search} »</span></>
-              : <>Aucun résultat pour <span className="text-white font-semibold">« {search} »</span></>
+              ? <>{posts.length} {t(posts.length > 1 ? 'blog.results' : 'blog.result')} {t('blog.results_for')} <span className="text-white font-semibold">« {search} »</span></>
+              : <>{t('blog.no_results_for_query')} <span className="text-white font-semibold">« {search} »</span></>
             }
           </p>
         )}
@@ -206,11 +207,11 @@ export default function Blog() {
         {!loading && !error && posts.length === 0 && (
           <div className="glass rounded-2xl p-12 text-center">
             <p className="text-gray-400 mb-4">
-              {search ? 'Aucun article ne correspond à cette recherche.' : 'Aucun article disponible pour le moment.'}
+              {search ? t('blog.no_results_search') : t('blog.no_results_empty')}
             </p>
             {search && (
               <button onClick={clearSearch} className="btn-secondary text-sm">
-                Voir tous les articles
+                {t('blog.show_all')}
               </button>
             )}
           </div>
@@ -223,9 +224,8 @@ export default function Blog() {
               disabled={page <= 1}
               onClick={() => setPage(p => p - 1)}
               className="btn-secondary disabled:opacity-30 disabled:cursor-not-allowed"
-              aria-label="Page précédente"
             >
-              ← Précédent
+              {t('blog.prev')}
             </button>
 
             <span className="text-gray-400 text-sm tabular-nums">
@@ -236,9 +236,8 @@ export default function Blog() {
               disabled={page >= totalPages}
               onClick={() => setPage(p => p + 1)}
               className="btn-secondary disabled:opacity-30 disabled:cursor-not-allowed"
-              aria-label="Page suivante"
             >
-              Suivant →
+              {t('blog.next')}
             </button>
           </div>
         )}
@@ -249,41 +248,41 @@ export default function Blog() {
             <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
               <div>
                 <p className="text-xs uppercase tracking-widest text-ocean-teal font-semibold mb-1">
-                  Passer à l'action
+                  {t('blog.cluster_label')}
                 </p>
                 <p className="text-white font-semibold text-lg leading-snug">
-                  Rejoindre une mission de dépollution
+                  {t('blog.cluster_title')}
                 </p>
                 <p className="text-text-secondary text-sm mt-1">
-                  Bénévoles, kayakistes, photographes — chaque profil a sa place dans nos équipes.
+                  {t('blog.cluster_desc')}
                 </p>
               </div>
               <Link
                 to="/communaute"
                 className="btn-primary inline-flex items-center gap-2 whitespace-nowrap flex-shrink-0"
               >
-                <span>Devenir bénévole</span>
+                <span>{t('blog.cluster_cta')}</span>
                 <ArrowRight className="w-4 h-4" />
               </Link>
             </div>
             <div className="flex flex-col sm:flex-row flex-wrap items-center justify-center gap-4 pt-2 border-t border-white/8 text-sm">
               <Link to="/depollution-marine" className="text-text-secondary hover:text-ocean-teal transition-colors inline-flex items-center gap-1">
-                Nos missions de dépollution <ArrowRight className="w-4 h-4" />
+                {t('blog.cluster_missions')} <ArrowRight className="w-4 h-4" />
               </Link>
               <Link to="/#newsletter" className="text-text-secondary hover:text-ocean-teal transition-colors inline-flex items-center gap-1">
-                S'inscrire à la newsletter <ArrowRight className="w-4 h-4" />
+                {t('blog.cluster_newsletter')} <ArrowRight className="w-4 h-4" />
               </Link>
               <Link to="/carte-calanques" className="text-text-secondary hover:text-ocean-teal transition-colors inline-flex items-center gap-1">
-                Carte interactive des Calanques <ArrowRight className="w-4 h-4" />
+                {t('blog.cluster_map')} <ArrowRight className="w-4 h-4" />
               </Link>
               <Link to="/donnees-scientifiques" className="text-text-secondary hover:text-ocean-teal transition-colors inline-flex items-center gap-1">
-                Données scientifiques <ArrowRight className="w-4 h-4" />
+                {t('blog.cluster_data')} <ArrowRight className="w-4 h-4" />
               </Link>
               <Link to="/photographie-sous-marine" className="text-text-secondary hover:text-ocean-teal transition-colors inline-flex items-center gap-1">
-                Galerie photos sous-marines <ArrowRight className="w-4 h-4" />
+                {t('blog.cluster_gallery')} <ArrowRight className="w-4 h-4" />
               </Link>
               <Link to="/photographie-paysage-mer" className="text-text-secondary hover:text-ocean-teal transition-colors inline-flex items-center gap-1">
-                Galerie paysages Marseille <ArrowRight className="w-4 h-4" />
+                {t('blog.cluster_landscapes')} <ArrowRight className="w-4 h-4" />
               </Link>
             </div>
           </div>
@@ -297,8 +296,7 @@ export default function Blog() {
 // ── Composant carte article ───────────────────────────────────────────────────
 
 export function PostCard({ post, priority = false }) {
-  // La carte prioritaire (LCP) utilise un article natif pour éviter le render delay
-  // causé par motion.article qui démarre à opacity:0 (FADE_IN_UP)
+  const { t } = useTranslation();
   const Tag = priority ? 'article' : motion.article;
   const motionProps = priority ? {} : { variants: FADE_IN_UP, whileHover: { x: 4, transition: { type: 'spring', stiffness: 400, damping: 25 } } };
 
@@ -322,7 +320,7 @@ export function PostCard({ post, priority = false }) {
         <Link
           to={`/blog/${post.slug}`}
           className="block overflow-hidden rounded-t-2xl aspect-video bg-gradient-to-br from-ocean-teal/10 to-ocean-blue/10"
-          aria-label={`Lire : ${post.title}`}
+          aria-label={`${t('blog.read_article')} : ${post.title}`}
         >
           <img
             ref={imgRef}
@@ -380,9 +378,9 @@ export function PostCard({ post, priority = false }) {
                 to={`/blog/categorie/${cat.slug}`}
                 className="px-2 py-0.5 rounded-full text-xs font-semibold bg-white/8 text-text-secondary hover:bg-ocean-teal/20 hover:text-ocean-teal transition-colors whitespace-nowrap"
                 onClick={e => e.stopPropagation()}
-                aria-label={`Catégorie : ${cat.name}`}
+                aria-label={`${t('blog.category_label')} : ${t('blog.categories.' + cat.slug)}`}
               >
-                {cat.name}
+                {t('blog.categories.' + cat.slug)}
               </Link>
             ) : null;
           })()}
@@ -406,9 +404,9 @@ export function PostCard({ post, priority = false }) {
         <Link
           to={`/blog/${post.slug}`}
           className="inline-flex items-center gap-2 text-ocean-teal text-sm font-semibold hover:gap-3 transition-all duration-200 mt-auto"
-          aria-label={`Lire l'article : ${post.title}`}
+          aria-label={`${t('blog.read_article')} : ${post.title}`}
         >
-          Lire la suite
+          {t('blog.read_more')}
           <ArrowRight className="w-4 h-4" aria-hidden="true" />
         </Link>
 

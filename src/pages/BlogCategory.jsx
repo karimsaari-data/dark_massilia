@@ -9,6 +9,7 @@ import { useState, useEffect } from 'react';
 import { Link, useParams, Navigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { Rss, ArrowLeft, ArrowRight } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
 import SEO from '../components/SEO';
 import { fetchPosts } from '../utils/api';
 import { FADE_IN_UP, STAGGER_CONTAINER } from '../utils/constants';
@@ -42,6 +43,7 @@ const CATEGORY_SEO = {
 const BASE_URL = 'https://karimsaari.com';
 
 export default function BlogCategory() {
+  const { t } = useTranslation();
   const { slug } = useParams();
   const category = CATEGORIES.find(c => c.slug === slug) ?? null;
 
@@ -116,7 +118,7 @@ export default function BlogCategory() {
             className="inline-flex items-center gap-2 text-gray-400 hover:text-ocean-teal transition-colors text-sm group"
           >
             <ArrowLeft className="w-4 h-4 transition-transform group-hover:-translate-x-1" aria-hidden="true" />
-            Toutes les actualités
+            {t('blogCategory.back')}
           </Link>
         </nav>
 
@@ -130,28 +132,28 @@ export default function BlogCategory() {
           <motion.div variants={FADE_IN_UP} className="flex items-center justify-center gap-2 mb-4">
             <Rss className="w-4 h-4 text-ocean-teal" />
             <p className="text-ocean-teal text-sm font-semibold uppercase tracking-widest">
-              Journal de bord
+              {t('blog.hero_title')}
             </p>
           </motion.div>
 
           <motion.h1 variants={FADE_IN_UP} className="heading-1 text-white mb-6">
-            {category.name}
+            {t('blog.categories.' + slug)}
           </motion.h1>
 
-          {seo.intro && (
+          {t('blogCategory.intros.' + slug) && (
             <motion.p variants={FADE_IN_UP} className="body-large max-w-2xl mx-auto">
-              {seo.intro}
+              {t('blogCategory.intros.' + slug)}
             </motion.p>
           )}
         </motion.div>
 
         {/* ── Filtres catégories ─────────────────────────────────────────── */}
-        <div className="flex flex-wrap justify-center gap-2 mb-10" role="navigation" aria-label="Filtrer par catégorie">
+        <div className="flex flex-wrap justify-center gap-2 mb-10" role="navigation" aria-label={t('blog.all')}>
           <Link
             to="/blog"
             className="px-4 py-1.5 rounded-full text-sm font-semibold glass text-text-secondary hover:text-white border border-white/10 hover:border-white/20 transition-all duration-200"
           >
-            Tous
+            {t('blog.all')}
           </Link>
           {CATEGORIES.map(cat => (
             <Link
@@ -164,7 +166,7 @@ export default function BlogCategory() {
                   : 'glass text-text-secondary hover:text-white border border-white/10 hover:border-white/20'
               }`}
             >
-              {cat.name}
+              {t('blog.categories.' + cat.slug)}
             </Link>
           ))}
         </div>
@@ -172,8 +174,8 @@ export default function BlogCategory() {
         {/* ── Erreur ──────────────────────────────────────────────────────── */}
         {error && (
           <div className="glass rounded-2xl p-10 text-center">
-            <p className="text-gray-400 mb-6">Impossible de charger les articles. Réessayez dans quelques instants.</p>
-            <button onClick={() => setPage(1)} className="btn-secondary">Réessayer</button>
+            <p className="text-gray-400 mb-6">{t('blog.error_load')}</p>
+            <button onClick={() => setPage(1)} className="btn-secondary">{t('blog.retry')}</button>
           </div>
         )}
 
@@ -212,7 +214,7 @@ export default function BlogCategory() {
         {/* ── État vide ───────────────────────────────────────────────────── */}
         {!loading && !error && posts.length === 0 && (
           <div className="glass rounded-2xl p-12 text-center">
-            <p className="text-gray-400">Aucun article dans cette catégorie pour le moment.</p>
+            <p className="text-gray-400">{t('blogCategory.no_results')}</p>
           </div>
         )}
 
@@ -223,18 +225,16 @@ export default function BlogCategory() {
               disabled={page <= 1}
               onClick={() => setPage(p => p - 1)}
               className="btn-secondary disabled:opacity-30 disabled:cursor-not-allowed"
-              aria-label="Page précédente"
             >
-              ← Précédent
+              {t('blog.prev')}
             </button>
             <span className="text-gray-400 text-sm tabular-nums">{page} / {totalPages}</span>
             <button
               disabled={page >= totalPages}
               onClick={() => setPage(p => p + 1)}
               className="btn-secondary disabled:opacity-30 disabled:cursor-not-allowed"
-              aria-label="Page suivante"
             >
-              Suivant →
+              {t('blog.next')}
             </button>
           </div>
         )}
@@ -246,7 +246,7 @@ export default function BlogCategory() {
             className="inline-flex items-center gap-2 text-text-secondary hover:text-ocean-teal transition-colors text-sm"
           >
             <ArrowRight className="w-4 h-4 rotate-180" aria-hidden="true" />
-            Voir tous les articles
+            {t('blog.show_all')}
           </Link>
         </div>
 

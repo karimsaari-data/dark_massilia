@@ -1,5 +1,6 @@
 import SEO from '../components/SEO';
 import Breadcrumb from '../components/Breadcrumb';
+import { useTranslation } from 'react-i18next';
 
 const Section = ({ title, children }) => (
   <section className="mb-8">
@@ -26,6 +27,7 @@ const Tag = ({ children }) => (
 );
 
 export default function Confidentialite() {
+  const { t } = useTranslation();
   return (
     <>
       <SEO
@@ -36,7 +38,7 @@ export default function Confidentialite() {
       />
 
       <div className="container-custom pt-4">
-        <Breadcrumb label="Politique de confidentialité" />
+        <Breadcrumb label={t('legal.privacy_title')} />
       </div>
       <div className="container-custom py-16 md:py-24 max-w-3xl">
 

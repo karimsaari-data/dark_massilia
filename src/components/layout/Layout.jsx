@@ -2,10 +2,21 @@ import { useState, useEffect, Suspense } from 'react';
 import { Outlet, useLocation } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ChevronUp } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
 import Navbar from './Navbar';
 import Footer from './Footer';
 import CookieBanner from '../CookieBanner';
 import NewsletterPopup from '../NewsletterPopup';
+
+function LanguageSync() {
+  const { i18n } = useTranslation();
+  const location = useLocation();
+  useEffect(() => {
+    const lang = location.pathname.startsWith('/en') ? 'en' : 'fr';
+    if (i18n.language !== lang) i18n.changeLanguage(lang);
+  }, [location.pathname, i18n]);
+  return null;
+}
 
 const PageLoader = () => (
   <div className="min-h-[60vh] flex items-center justify-center">
@@ -15,6 +26,7 @@ const PageLoader = () => (
 
 const ScrollToTop = () => {
   const [visible, setVisible] = useState(false);
+  const { t } = useTranslation();
 
   useEffect(() => {
     const onScroll = () => setVisible(window.scrollY > 400);
@@ -31,7 +43,7 @@ const ScrollToTop = () => {
           exit={{ opacity: 0, y: 12 }}
           transition={{ duration: 0.2 }}
           onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
-          aria-label="Retour en haut de page"
+          aria-label={t('common.back_to_top')}
           className="fixed bottom-6 left-4 md:bottom-6 md:left-6 z-50 w-11 h-11 rounded-full flex items-center justify-center transition-all duration-300 bg-white/10 border border-white/20 backdrop-blur-sm hover:bg-astroide/20 hover:border-astroide/50 shadow-lg shadow-black/30 group"
         >
           <ChevronUp className="w-5 h-5 text-white/70 group-hover:text-astroide transition-colors duration-300" strokeWidth={2.5} />
@@ -48,15 +60,17 @@ const pageVariants = {
 
 const Layout = () => {
   const location = useLocation();
+  const { t } = useTranslation();
   return (
     <div className="min-h-screen flex flex-col">
+      <LanguageSync />
       {/* Schema Person géré page par page via SEO_PAGES dans seo.js */}
       {/* Skip link — accessibilité clavier / lecteurs d'écran (WCAG 2.1 AA) */}
       <a
         href="#main-content"
         className="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-[100] focus:px-4 focus:py-2 focus:rounded-lg focus:bg-ocean-teal focus:text-black focus:font-semibold focus:shadow-lg"
       >
-        Aller au contenu principal
+        {t('common.skip_content')}
       </a>
       {/* Fixed background image - Calanques de Marseille */}
       <div className="fixed inset-0 pointer-events-none z-0">

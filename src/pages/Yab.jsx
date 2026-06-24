@@ -1,17 +1,19 @@
 import { motion } from 'framer-motion';
 import { ArrowLeft, ArrowRight, ExternalLink } from 'lucide-react';
 import { Link } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import { FADE_IN_UP, STAGGER_CONTAINER } from '../utils/constants';
 import SEO from '../components/SEO';
 import { SEO_PAGES } from '../utils/seo';
 import Breadcrumb from '../components/Breadcrumb';
 
 const Yab = () => {
+  const { t } = useTranslation();
   return (
     <div className="min-h-screen py-32">
       <SEO {...SEO_PAGES['/les-francais-yann-arthus-bertrand']} />
       <div className="container-custom">
-        <Breadcrumb label="Les Français — Yann Arthus-Bertrand" />
+        <Breadcrumb label={t('yab.breadcrumb')} />
 
         {/* H1 */}
         <motion.div
@@ -32,7 +34,7 @@ const Yab = () => {
             variants={FADE_IN_UP}
             className="text-text-secondary text-lg max-w-2xl mx-auto"
           >
-            Team Oxygen à l'honneur dans le projet photographique de YAB — Marseille, 2024.
+            {t('yab.subtitle')}
           </motion.p>
         </motion.div>
 
@@ -48,7 +50,7 @@ const Yab = () => {
               src="/images/Marseille-2024-342-Les-Francais-copyright-Yann-Arthus-Bertrand.webp"
               srcSet="/images/Marseille-2024-342-Les-Francais-copyright-Yann-Arthus-Bertrand_400w.webp 400w, /images/Marseille-2024-342-Les-Francais-copyright-Yann-Arthus-Bertrand_800w.webp 800w, /images/Marseille-2024-342-Les-Francais-copyright-Yann-Arthus-Bertrand_1200w.webp 1200w"
               sizes="(max-width: 480px) 100vw, (max-width: 900px) 100vw, 1200px"
-              alt="Team Oxygen à Marseille — Portrait par Yann Arthus-Bertrand pour le projet Les Français (2024)"
+              alt={t('yab.img_alt')}
               className="w-full object-cover"
               loading="eager"
               fetchPriority="high"
@@ -69,35 +71,13 @@ const Yab = () => {
             variants={FADE_IN_UP}
             className="p-8 md:p-12 space-y-5 text-text-secondary leading-relaxed max-w-4xl mx-auto"
           >
-            <p>
-              Ce portrait de la{' '}
-              <strong className="text-ocean-teal">Team Oxygen</strong> a été réalisé par{' '}
-              <strong className="text-white">Yann Arthus-Bertrand</strong>, figure majeure de la
-              photographie contemporaine et pionnier du regard environnemental porté sur notre
-              planète.
-            </p>
-            <p>
-              Photographe de paysages depuis mon adolescence, j'ai grandi avec ses images. Son
-              travail a profondément façonné ma vision : raconter un territoire, révéler sa beauté,
-              mais surtout montrer sa fragilité. À ce titre, il représente pour moi un véritable{' '}
-              <strong className="text-white">mentor artistique</strong>.
-            </p>
-            <p>
-              Lorsque la production m'a contacté pour participer au shooting, l'évidence s'est
-              imposée immédiatement : réaliser cette photo avec la{' '}
-              <strong className="text-ocean-teal">Team Oxygen</strong>. Parce que notre engagement
-              pour la <strong className="text-white">Méditerranée</strong>, nos actions de
-              dépollution et notre ancrage marseillais résonnent directement avec la démarche
-              humaniste et écologique qu'il défend depuis des décennies.
-            </p>
-            <p>
-              Ce cliché dépasse le simple portrait. Il symbolise une{' '}
-              <strong className="text-white">transmission</strong> : celle d'un regard, d'une
-              exigence et d'un engagement au service des océans.
-            </p>
+            <p>{t('yab.p1')}</p>
+            <p>{t('yab.p2')}</p>
+            <p>{t('yab.p3')}</p>
+            <p>{t('yab.p4')}</p>
             <div className="pt-6 border-t border-white/8">
               <p className="text-xs uppercase tracking-widest text-text-muted mb-4 font-semibold">
-                Découvrir le projet
+                {t('yab.discover_label')}
               </p>
               <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
                 <a
@@ -114,7 +94,7 @@ const Yab = () => {
                   className="btn-secondary inline-flex items-center gap-2 group"
                 >
                   <ArrowLeft className="w-4 h-4 group-hover:-translate-x-1 transition-transform" />
-                  <span>Retour aux Médias</span>
+                  <span>{t('yab.cta_back')}</span>
                 </Link>
               </div>
             </div>
@@ -129,13 +109,13 @@ const Yab = () => {
           className="mt-10 pt-8 border-t border-white/10 flex flex-col sm:flex-row flex-wrap items-center justify-center gap-4 text-sm"
         >
           <Link to="/depollution-marine" className="text-text-secondary hover:text-ocean-teal transition-colors inline-flex items-center gap-1">
-            Nos missions de dépollution <ArrowRight className="w-4 h-4" />
+            {t('yab.cta_missions')} <ArrowRight className="w-4 h-4" />
           </Link>
           <Link to="/photographie-sous-marine" className="text-text-secondary hover:text-ocean-teal transition-colors inline-flex items-center gap-1">
-            Galerie photos sous-marines <ArrowRight className="w-4 h-4" />
+            {t('yab.cta_gallery')} <ArrowRight className="w-4 h-4" />
           </Link>
           <Link to="/communaute" className="text-text-secondary hover:text-ocean-teal transition-colors inline-flex items-center gap-1">
-            Rejoindre la communauté <ArrowRight className="w-4 h-4" />
+            {t('yab.cta_community')} <ArrowRight className="w-4 h-4" />
           </Link>
         </motion.div>
 

@@ -4,6 +4,7 @@ import { Mail, Phone, MapPin, FileText, UserPlus, MessageCircle, X, Users, Camer
 import QRCodeLib from 'react-qr-code';
 const QRCode = QRCodeLib?.default ?? QRCodeLib;
 import { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { FADE_IN_UP, STAGGER_CONTAINER, APP_CONFIG } from '../utils/constants';
 import SEO from '../components/SEO';
 import { SEO_PAGES } from '../utils/seo';
@@ -42,12 +43,13 @@ const CONTACT_ROWS = [
 const Contact = () => {
   const navigate = useNavigate();
   const [showQR, setShowQR] = useState(false);
+  const { t } = useTranslation();
 
   return (
     <div className="min-h-screen pt-4 pb-16">
       <SEO {...SEO_PAGES['/contact']} />
       <div className="container-custom">
-        <Breadcrumb label="Contact & Partenariats" />
+        <Breadcrumb label={t('contact.breadcrumb')} />
 
         {/* Header */}
         <motion.div
@@ -60,7 +62,7 @@ const Contact = () => {
             variants={FADE_IN_UP}
             className="text-3xl md:text-4xl font-bold text-white mb-4"
           >
-            Collaborons pour la Méditerranée : Reportages, Expositions et Actions sur le terrain
+            {t('contact.hero_title')}
           </motion.h1>
         </motion.div>
 
@@ -108,9 +110,9 @@ const Contact = () => {
               className="flex flex-col justify-center gap-2 p-8 flex-1 border-t lg:border-t-0 lg:border-r border-white/10 text-sm"
             >
               <motion.div variants={FADE_IN_UP} className="mb-2">
-                <p className="text-white font-bold text-xl leading-tight">Karim Saari</p>
-                <p className="text-astroide text-sm font-medium">Dark Massilia</p>
-                <p className="text-gray-500 text-xs mt-0.5">Photographe environnemental · Marseille</p>
+                <p className="text-white font-bold text-xl leading-tight">{t('contact.name')}</p>
+                <p className="text-astroide text-sm font-medium">{t('contact.brand')}</p>
+                <p className="text-gray-500 text-xs mt-0.5">{t('contact.role')}</p>
               </motion.div>
               {CONTACT_ROWS.map(({ href, icon: Icon, label, event, external, highlight }) => (
                 <motion.a
@@ -146,7 +148,7 @@ const Contact = () => {
                 type="button"
                 onClick={() => { setShowQR(true); trackEvent('contact_click', { method: 'vcard', source: 'qr_code' }); }}
                 className="p-3 rounded-2xl bg-white shadow-xl cursor-pointer"
-                aria-label="Agrandir le QR code"
+                aria-label={t('contact.qr_aria')}
                 whileHover={{ scale: 1.08, boxShadow: '0 0 24px rgba(0,171,168,0.5)' }}
                 transition={{ type: 'spring', stiffness: 300 }}
               >
@@ -159,7 +161,7 @@ const Contact = () => {
                 />
               </motion.button>
               <p className="text-gray-400 text-xs text-center leading-relaxed">
-                Appuyer pour agrandir · Scanner pour ajouter
+                {t('contact.vcard_hint')}
               </p>
               <motion.a
                 href="/karim-saari.vcf"
@@ -171,7 +173,7 @@ const Contact = () => {
                 transition={{ type: 'spring', stiffness: 300 }}
               >
                 <UserPlus className="w-4 h-4" />
-                Ajouter aux contacts
+                {t('contact.vcard_add')}
               </motion.a>
             </motion.div>
           </div>
@@ -194,11 +196,11 @@ const Contact = () => {
               <FileText className="w-6 h-6 text-astroide" />
             </div>
             <div>
-              <p className="text-astroide text-xs font-semibold uppercase tracking-widest mb-1">Presse & Médias</p>
-              <h3 className="text-white font-bold text-lg leading-tight">Journalistes & documentaristes</h3>
+              <p className="text-astroide text-xs font-semibold uppercase tracking-widest mb-1">{t('contact.press_title')}</p>
+              <h3 className="text-white font-bold text-lg leading-tight">{t('contact.press_subtitle')}</h3>
             </div>
             <p className="text-text-secondary text-sm leading-relaxed flex-1">
-              Reportages, interviews, cessions de droits photographiques, participation à des documentaires sur la Méditerranée.
+              {t('contact.press_desc')}
             </p>
             <div className="flex flex-col gap-2 mt-auto pt-2">
               <Link
@@ -207,14 +209,14 @@ const Contact = () => {
                 style={{ background: 'linear-gradient(135deg, #21c47b, #0fa869)' }}
               >
                 <FileText className="w-4 h-4" />
-                Dossier de presse
+                {t('contact.press_kit')}
               </Link>
               <a
                 href="mailto:contact@karimsaari.com?subject=Demande%20presse"
                 className="inline-flex items-center justify-center gap-2 py-2.5 px-4 rounded-xl text-sm font-medium text-gray-300 hover:text-white bg-white/5 hover:bg-white/10 transition-all"
               >
                 <Mail className="w-4 h-4" />
-                Envoyer un email
+                {t('contact.send_email')}
               </a>
             </div>
           </motion.div>
@@ -228,11 +230,11 @@ const Contact = () => {
               <Users className="w-6 h-6 text-[#25D366]" />
             </div>
             <div>
-              <p className="text-[#25D366] text-xs font-semibold uppercase tracking-widest mb-1">Partenariats</p>
-              <h3 className="text-white font-bold text-lg leading-tight">Marques & institutions</h3>
+              <p className="text-[#25D366] text-xs font-semibold uppercase tracking-widest mb-1">{t('contact.partner_title')}</p>
+              <h3 className="text-white font-bold text-lg leading-tight">{t('contact.partner_subtitle')}</h3>
             </div>
             <p className="text-text-secondary text-sm leading-relaxed flex-1">
-              Marques engagées, collectivités, associations : collaborations terrain, campagnes de sensibilisation, mécénat.
+              {t('contact.partner_desc')}
             </p>
             <div className="flex flex-col gap-2 mt-auto pt-2">
               <a
@@ -244,14 +246,14 @@ const Contact = () => {
                 style={{ background: 'rgba(37,211,102,0.18)', border: '1px solid rgba(37,211,102,0.4)' }}
               >
                 <MessageCircle className="w-4 h-4 text-[#25D366]" />
-                WhatsApp direct
+                {t('contact.cta_whatsapp')}
               </a>
               <a
                 href="mailto:contact@karimsaari.com?subject=Proposition%20de%20partenariat"
                 className="inline-flex items-center justify-center gap-2 py-2.5 px-4 rounded-xl text-sm font-medium text-gray-300 hover:text-white bg-white/5 hover:bg-white/10 transition-all"
               >
                 <Mail className="w-4 h-4" />
-                Envoyer un email
+                {t('contact.send_email')}
               </a>
             </div>
           </motion.div>
@@ -265,11 +267,11 @@ const Contact = () => {
               <Camera className="w-6 h-6 text-blue-400" />
             </div>
             <div>
-              <p className="text-blue-400 text-xs font-semibold uppercase tracking-widest mb-1">Expositions & Interventions</p>
-              <h3 className="text-white font-bold text-lg leading-tight">Galeries, écoles & conférences</h3>
+              <p className="text-blue-400 text-xs font-semibold uppercase tracking-widest mb-1">{t('contact.exhibition_title')}</p>
+              <h3 className="text-white font-bold text-lg leading-tight">{t('contact.exhibition_subtitle')}</h3>
             </div>
             <p className="text-text-secondary text-sm leading-relaxed flex-1">
-              Expositions photographiques, conférences de sensibilisation, ateliers éducatifs sur la biodiversité marine.
+              {t('contact.exhibition_desc')}
             </p>
             <div className="flex flex-col gap-2 mt-auto pt-2">
               <a
@@ -278,14 +280,14 @@ const Contact = () => {
                 style={{ background: 'rgba(96,165,250,0.15)', border: '1px solid rgba(96,165,250,0.35)' }}
               >
                 <Mail className="w-4 h-4 text-blue-400" />
-                Envoyer une demande
+                {t('contact.send_request')}
               </a>
               <Link
                 to="/photographe-environnemental-marseille"
                 className="inline-flex items-center justify-center gap-2 py-2.5 px-4 rounded-xl text-sm font-medium text-gray-300 hover:text-white bg-white/5 hover:bg-white/10 transition-all"
               >
                 <Camera className="w-4 h-4" />
-                Voir les photos
+                {t('contact.view_photos')}
               </Link>
             </div>
           </motion.div>
@@ -304,30 +306,20 @@ const Contact = () => {
               {/* Texte */}
               <div className="flex-1 p-8 md:p-12">
                 <h2 className="text-2xl md:text-3xl font-bold text-white mb-6">
-                  Contact direct : Expositions, Interventions et Reportages
+                  {t('contact.editorial_title')}
                 </h2>
-                <p className="text-text-secondary leading-relaxed text-lg">
-                  Vous souhaitez organiser une{' '}
-                  <strong className="text-white">exposition photographique</strong>, planifier une{' '}
-                  <strong className="text-white">intervention de sensibilisation</strong> sur la
-                  pollution marine, ou proposer une collaboration avec l'association{' '}
-                  <strong className="text-ocean-teal">Team Oxygen</strong>&nbsp;? Basé à{' '}
-                  <strong className="text-white">Marseille</strong>, je privilégie l'échange direct
-                  et sans intermédiaire. Que ce soit pour la réalisation de{' '}
-                  <strong className="text-white">reportages documentaires</strong> sur le littoral
-                  méditerranéen, l'acquisition de tirages d'art, ou une demande de presse (interviews,
-                  cessions de droits), vous pouvez me joindre instantanément par{' '}
-                  <strong className="text-white">email</strong> ou via{' '}
-                  <strong className="text-white">WhatsApp</strong>. Discutons de vos projets pour
-                  amplifier ensemble l'impact du{' '}
-                  <strong className="text-ocean-teal">Projet Sentinelle</strong>.
-                </p>
+                <div className="space-y-4 text-text-secondary leading-relaxed text-lg">
+                  <p>{t('contact.editorial_p1')}</p>
+                  <p>{t('contact.editorial_p2')}</p>
+                  <p>{t('contact.editorial_p3')}</p>
+                  <p>{t('contact.editorial_p4')}</p>
+                </div>
               </div>
               {/* Photo */}
               <div className="flex-1 self-stretch overflow-hidden min-h-[300px]">
                 <img
                   src="/images/contact-karim-saari.webp"
-                  alt="Karim Saari en action lors d'une mission de dépollution sous-marine dans les Calanques de Marseille avec Team Oxygen"
+                  alt={t('contact.img_alt')}
                   width="1440"
                   height="1212"
                   className="w-full h-full object-contain"
@@ -369,8 +361,8 @@ const Contact = () => {
                 level="M"
               />
             </motion.div>
-            <p className="text-white text-center text-lg font-semibold">Karim Saari — Dark Massilia</p>
-            <p className="text-gray-400 text-sm text-center">Scannez pour ajouter aux contacts</p>
+            <p className="text-white text-center text-lg font-semibold">{t('contact.qr_name')}</p>
+            <p className="text-gray-400 text-sm text-center">{t('contact.qr_title')}</p>
             <motion.button
               type="button"
               onClick={() => setShowQR(false)}
@@ -379,7 +371,7 @@ const Contact = () => {
               transition={{ type: 'spring', stiffness: 300 }}
             >
               <X className="w-4 h-4" />
-              Fermer
+              {t('contact.qr_close')}
             </motion.button>
           </motion.div>
         )}

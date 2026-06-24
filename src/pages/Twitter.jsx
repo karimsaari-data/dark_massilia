@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { motion } from 'framer-motion';
 import { ArrowLeft, ArrowRight, ExternalLink, Rss, CalendarDays, AlertCircle, Loader2 } from 'lucide-react';
 import { Link } from 'react-router-dom';
@@ -12,11 +13,11 @@ import { SEO_PAGES } from '../utils/seo';
 const RSS_PROXY    = 'https://bzlllfmpojcybuyuemdx.supabase.co/functions/v1/rss-parc-calanques';
 const AGENDA_PROXY = 'https://bzlllfmpojcybuyuemdx.supabase.co/functions/v1/agenda-parc-calanques';
 
-const formatDate = (dateStr) => {
+const formatDate = (dateStr, locale = 'fr-FR') => {
   try {
-    return new Date(dateStr).toLocaleDateString('fr-FR', {
+    return new Date(dateStr).toLocaleDateString(locale, {
       day: 'numeric',
-      month: 'short', // "avr." au lieu de "avril" — cohérent avec les badges Agenda
+      month: 'short',
       year: 'numeric',
     });
   } catch {
@@ -43,7 +44,7 @@ const agendaTimestamp = (item) => {
     : candidate.getTime();
 };
 
-const useParcRss = () => {
+const useParcRss = (locale) => {
   const [items, setItems] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -72,7 +73,7 @@ const useParcRss = () => {
         const parsed = sorted.slice(0, 9).map((item) => ({
           title: item.title || '',
           link: item.link,
-          date: formatDate(item.pubDate),
+          date: formatDate(item.pubDate, locale),
           description: item.description || '',
           image: item.image || '',
         }));
@@ -86,7 +87,7 @@ const useParcRss = () => {
     };
 
     fetchRss();
-  }, []);
+  }, [locale]);
 
   return { items, loading, error };
 };
@@ -116,102 +117,111 @@ const useAgenda = () => {
 };
 
 // ── Composant carte Agenda ───────────────────────────────────────────────────
-const AgendaCard = ({ title, link, day, month, adverb, location, image }) => (
-  <a
-    href={link}
-    target="_blank"
-    rel="noopener noreferrer"
-    className="group flex flex-col rounded-2xl overflow-hidden border border-white/10 hover:border-ocean-teal/30 bg-white/5 hover:bg-white/[0.08] transition-all duration-300"
-  >
-    <div className="relative aspect-video w-full overflow-hidden bg-white/5 flex-shrink-0">
-      {image ? (
-        <img
-          src={image}
-          alt={title}
-          className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-          loading="lazy"
-        />
-      ) : (
-        <div className="w-full h-full flex items-center justify-center">
-          <CalendarDays className="w-10 h-10 text-white/10" />
-        </div>
-      )}
-      {/* Badge date */}
-      {(day || month) && (
-        <div className="absolute top-3 left-3 flex flex-col items-center justify-center bg-ocean-teal text-white rounded-xl px-2.5 py-1.5 text-center shadow-lg min-w-[44px]">
-          <span className="text-lg font-bold leading-none">{day}</span>
-          <span className="text-[10px] font-semibold uppercase tracking-wide leading-none mt-0.5">{month}</span>
-        </div>
-      )}
-    </div>
-    <div className="flex flex-col flex-1 p-4 gap-2">
-      <h3 className="text-sm font-semibold text-white group-hover:text-ocean-teal transition-colors leading-snug line-clamp-2 flex-1">
-        {title}
-      </h3>
-      {location && (
-        <p className="text-xs text-gray-400 flex items-center gap-1">
-          <span>📍</span>{location}
-        </p>
-      )}
-      <span className="inline-flex items-center gap-1.5 text-xs font-semibold text-white bg-ocean-teal/20 border border-ocean-teal/30 rounded-lg px-3 py-1.5 w-fit group-hover:bg-ocean-teal/30 transition-colors">
-        Lire la suite <ExternalLink className="w-3 h-3" />
-      </span>
-    </div>
-  </a>
-);
-
-// ── Composant carte RSS — style Parc ─────────────────────────────────────────
-const RssCard = ({ title, link, date, description, image, priority }) => (
-  <a
-    href={link}
-    target="_blank"
-    rel="noopener noreferrer"
-    className="group flex flex-col rounded-2xl overflow-hidden border border-white/10 hover:border-ocean-teal/30 bg-white/5 hover:bg-white/[0.08] transition-all duration-300"
-  >
-    {/* Image */}
-    <div className="aspect-video w-full overflow-hidden bg-white/5 flex-shrink-0">
-      {image ? (
-        <img
-          src={image}
-          alt={title}
-          className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-          loading={priority ? 'eager' : 'lazy'}
-          fetchPriority={priority ? 'high' : undefined}
-        />
-      ) : (
-        <div className="w-full h-full flex items-center justify-center">
-          <Rss className="w-10 h-10 text-white/10" />
-        </div>
-      )}
-    </div>
-
-    {/* Contenu */}
-    <div className="flex flex-col flex-1 p-5 gap-3">
-      {date && (
-        <div className="flex items-center gap-1.5 text-xs text-ocean-teal/80 font-medium">
-          <CalendarDays className="w-3.5 h-3.5" />
-          {date}
-        </div>
-      )}
-      <h3 className="text-sm font-semibold text-white group-hover:text-ocean-teal transition-colors leading-snug line-clamp-3 flex-1">
-        {title}
-      </h3>
-      {description && (
-        <p className="text-xs text-gray-400 leading-relaxed line-clamp-2">{description}</p>
-      )}
-      <div className="pt-1">
-        <span className="inline-flex items-center gap-1.5 text-xs font-semibold text-white bg-ocean-teal/20 hover:bg-ocean-teal/30 border border-ocean-teal/30 rounded-lg px-3 py-1.5 transition-colors group-hover:bg-ocean-teal/30">
-          Lire la suite
-          <ExternalLink className="w-3 h-3" />
+const AgendaCard = ({ title, link, day, month, adverb, location, image }) => {
+  const { t } = useTranslation();
+  return (
+    <a
+      href={link}
+      target="_blank"
+      rel="noopener noreferrer"
+      className="group flex flex-col rounded-2xl overflow-hidden border border-white/10 hover:border-ocean-teal/30 bg-white/5 hover:bg-white/[0.08] transition-all duration-300"
+    >
+      <div className="relative aspect-video w-full overflow-hidden bg-white/5 flex-shrink-0">
+        {image ? (
+          <img
+            src={image}
+            alt={title}
+            className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+            loading="lazy"
+          />
+        ) : (
+          <div className="w-full h-full flex items-center justify-center">
+            <CalendarDays className="w-10 h-10 text-white/10" />
+          </div>
+        )}
+        {/* Badge date */}
+        {(day || month) && (
+          <div className="absolute top-3 left-3 flex flex-col items-center justify-center bg-ocean-teal text-white rounded-xl px-2.5 py-1.5 text-center shadow-lg min-w-[44px]">
+            <span className="text-lg font-bold leading-none">{day}</span>
+            <span className="text-[10px] font-semibold uppercase tracking-wide leading-none mt-0.5">{month}</span>
+          </div>
+        )}
+      </div>
+      <div className="flex flex-col flex-1 p-4 gap-2">
+        <h3 className="text-sm font-semibold text-white group-hover:text-ocean-teal transition-colors leading-snug line-clamp-2 flex-1">
+          {title}
+        </h3>
+        {location && (
+          <p className="text-xs text-gray-400 flex items-center gap-1">
+            <span>📍</span>{location}
+          </p>
+        )}
+        <span className="inline-flex items-center gap-1.5 text-xs font-semibold text-white bg-ocean-teal/20 border border-ocean-teal/30 rounded-lg px-3 py-1.5 w-fit group-hover:bg-ocean-teal/30 transition-colors">
+          {t('twitter.read_more')} <ExternalLink className="w-3 h-3" />
         </span>
       </div>
-    </div>
-  </a>
-);
+    </a>
+  );
+};
+
+// ── Composant carte RSS — style Parc ─────────────────────────────────────────
+const RssCard = ({ title, link, date, description, image, priority }) => {
+  const { t } = useTranslation();
+  return (
+    <a
+      href={link}
+      target="_blank"
+      rel="noopener noreferrer"
+      className="group flex flex-col rounded-2xl overflow-hidden border border-white/10 hover:border-ocean-teal/30 bg-white/5 hover:bg-white/[0.08] transition-all duration-300"
+    >
+      {/* Image */}
+      <div className="aspect-video w-full overflow-hidden bg-white/5 flex-shrink-0">
+        {image ? (
+          <img
+            src={image}
+            alt={title}
+            className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+            loading={priority ? 'eager' : 'lazy'}
+            fetchPriority={priority ? 'high' : undefined}
+          />
+        ) : (
+          <div className="w-full h-full flex items-center justify-center">
+            <Rss className="w-10 h-10 text-white/10" />
+          </div>
+        )}
+      </div>
+
+      {/* Contenu */}
+      <div className="flex flex-col flex-1 p-5 gap-3">
+        {date && (
+          <div className="flex items-center gap-1.5 text-xs text-ocean-teal/80 font-medium">
+            <CalendarDays className="w-3.5 h-3.5" />
+            {date}
+          </div>
+        )}
+        <h3 className="text-sm font-semibold text-white group-hover:text-ocean-teal transition-colors leading-snug line-clamp-3 flex-1">
+          {title}
+        </h3>
+        {description && (
+          <p className="text-xs text-gray-400 leading-relaxed line-clamp-2">{description}</p>
+        )}
+        <div className="pt-1">
+          <span className="inline-flex items-center gap-1.5 text-xs font-semibold text-white bg-ocean-teal/20 hover:bg-ocean-teal/30 border border-ocean-teal/30 rounded-lg px-3 py-1.5 transition-colors group-hover:bg-ocean-teal/30">
+            {t('twitter.read_more')}
+            <ExternalLink className="w-3 h-3" />
+          </span>
+        </div>
+      </div>
+    </a>
+  );
+};
 
 // ── Page principale ──────────────────────────────────────────────────────────
 const Twitter = () => {
-  const { items, loading, error }                     = useParcRss();
+  const { t, i18n } = useTranslation();
+  const locale = i18n.language === 'en' ? 'en-US' : 'fr-FR';
+
+  const { items, loading, error }                     = useParcRss(locale);
   const { items: agendaItems, loading: agendaLoading, error: agendaError } = useAgenda();
 
   return (
@@ -219,7 +229,7 @@ const Twitter = () => {
       <SEO {...SEO_PAGES['/actualites']} />
       <FireRiskBanner />
       <div className="container-custom pt-4">
-        <Breadcrumb label="Actualités" />
+        <Breadcrumb label={t('twitter.hero_title')} />
       </div>
       <div className="py-24">
       <div className="container-custom">
@@ -230,7 +240,7 @@ const Twitter = () => {
             <div className="flex items-center justify-between mb-7">
               <div className="flex items-center gap-2">
                 <Rss className="w-4 h-4 text-ocean-teal" />
-                <h2 className="text-base font-semibold text-white">Parc National des Calanques</h2>
+                <h2 className="text-base font-semibold text-white">{t('twitter.parc_name')}</h2>
               </div>
               <a
                 href="https://calanques-parcnational.fr/fr/actualites"
@@ -238,7 +248,7 @@ const Twitter = () => {
                 rel="noopener noreferrer"
                 className="inline-flex items-center gap-1.5 text-xs text-ocean-teal hover:text-white transition-colors font-medium"
               >
-                Toutes les actus
+                {t('twitter.all_news')}
                 <ExternalLink className="w-3.5 h-3.5" />
               </a>
             </div>
@@ -246,7 +256,7 @@ const Twitter = () => {
             {loading && (
               <div className="flex items-center justify-center text-gray-400" style={{ minHeight: '420px' }}>
                 <Loader2 className="w-5 h-5 animate-spin mr-2" />
-                <span className="text-sm">Chargement…</span>
+                <span className="text-sm">{t('common.loading')}</span>
               </div>
             )}
 
@@ -254,14 +264,14 @@ const Twitter = () => {
               <div className="flex items-start gap-2 text-gray-400 py-6 px-2">
                 <AlertCircle className="w-4 h-4 flex-shrink-0 mt-0.5 text-amber-400" />
                 <p className="text-sm">
-                  Impossible de charger le flux pour l'instant.{' '}
+                  {t('twitter.error_rss')}{' '}
                   <a
                     href="https://calanques-parcnational.fr/fr/actualites"
                     target="_blank"
                     rel="noopener noreferrer"
                     className="text-ocean-teal underline underline-offset-2 hover:text-white"
                   >
-                    Consulter directement le site du Parc
+                    {t('twitter.visit_park')}
                   </a>
                   .
                 </p>
@@ -283,13 +293,13 @@ const Twitter = () => {
                   >
                     <Rss className="w-8 h-8 text-ocean-teal/60 group-hover:text-ocean-teal transition-colors" />
                     <p className="text-sm font-semibold text-white group-hover:text-ocean-teal transition-colors">
-                      Toutes les actualités
+                      {t('twitter.all_news_full')}
                     </p>
                     <p className="text-xs text-gray-500">
                       calanques-parcnational.fr
                     </p>
                     <span className="inline-flex items-center gap-1.5 text-xs text-ocean-teal border border-ocean-teal/30 rounded-lg px-3 py-1.5 group-hover:bg-ocean-teal/20 transition-colors">
-                      Voir le site <ExternalLink className="w-3 h-3" />
+                      {t('twitter.see_site')} <ExternalLink className="w-3 h-3" />
                     </span>
                   </a>
                 )}
@@ -297,11 +307,11 @@ const Twitter = () => {
             )}
 
             {!loading && !error && items.length === 0 && (
-              <p className="text-sm text-gray-400 py-6 text-center">Aucune actualité disponible.</p>
+              <p className="text-sm text-gray-400 py-6 text-center">{t('twitter.no_news')}</p>
             )}
 
             <p className="text-xs text-gray-600 mt-6 text-right">
-              Source :{' '}
+              {t('twitter.source')}{' '}
               <a
                 href="https://calanques-parcnational.fr"
                 target="_blank"
@@ -320,7 +330,7 @@ const Twitter = () => {
             <div className="flex items-center justify-between mb-7">
               <div className="flex items-center gap-2">
                 <CalendarDays className="w-4 h-4 text-ocean-teal" />
-                <h2 className="text-base font-semibold text-white">Agenda</h2>
+                <h2 className="text-base font-semibold text-white">{t('twitter.agenda')}</h2>
               </div>
               <a
                 href="https://calanques-parcnational.fr/fr/agenda"
@@ -328,7 +338,7 @@ const Twitter = () => {
                 rel="noopener noreferrer"
                 className="inline-flex items-center gap-1.5 text-xs text-ocean-teal hover:text-white transition-colors font-medium"
               >
-                Tous les événements
+                {t('twitter.all_events')}
                 <ExternalLink className="w-3.5 h-3.5" />
               </a>
             </div>
@@ -336,7 +346,7 @@ const Twitter = () => {
             {agendaLoading && (
               <div className="flex items-center justify-center text-gray-400" style={{ minHeight: '200px' }}>
                 <Loader2 className="w-5 h-5 animate-spin mr-2" />
-                <span className="text-sm">Chargement…</span>
+                <span className="text-sm">{t('common.loading')}</span>
               </div>
             )}
 
@@ -344,10 +354,10 @@ const Twitter = () => {
               <div className="flex items-start gap-2 text-gray-400 py-6 px-2">
                 <AlertCircle className="w-4 h-4 flex-shrink-0 mt-0.5 text-amber-400" />
                 <p className="text-sm">
-                  Impossible de charger l'agenda.{' '}
+                  {t('twitter.error_agenda')}{' '}
                   <a href="https://calanques-parcnational.fr/fr/agenda" target="_blank" rel="noopener noreferrer"
                     className="text-ocean-teal underline underline-offset-2 hover:text-white">
-                    Consulter directement le site du Parc
+                    {t('twitter.visit_park')}
                   </a>.
                 </p>
               </div>
@@ -367,13 +377,13 @@ const Twitter = () => {
                   >
                     <CalendarDays className="w-8 h-8 text-ocean-teal/60 group-hover:text-ocean-teal transition-colors" />
                     <p className="text-sm font-semibold text-white group-hover:text-ocean-teal transition-colors">
-                      Tous les événements
+                      {t('twitter.all_events')}
                     </p>
                     <p className="text-xs text-gray-500">
                       calanques-parcnational.fr
                     </p>
                     <span className="inline-flex items-center gap-1.5 text-xs text-ocean-teal border border-ocean-teal/30 rounded-lg px-3 py-1.5 group-hover:bg-ocean-teal/20 transition-colors">
-                      Voir l'agenda <ExternalLink className="w-3 h-3" />
+                      {t('twitter.see_agenda')} <ExternalLink className="w-3 h-3" />
                     </span>
                   </a>
                 )}
@@ -381,7 +391,7 @@ const Twitter = () => {
             )}
 
             <p className="text-xs text-gray-600 mt-6 text-right">
-              Source :{' '}
+              {t('twitter.source')}{' '}
               <a href="https://calanques-parcnational.fr" target="_blank" rel="noopener noreferrer"
                 className="hover:text-gray-400 transition-colors">
                 calanques-parcnational.fr
@@ -399,14 +409,10 @@ const Twitter = () => {
         >
           <motion.div variants={FADE_IN_UP} className="glass rounded-3xl p-8 md:p-10">
             <h1 className="text-lg md:text-xl font-bold text-white mb-4">
-              Actualités des Calanques & veille environnementale
+              {t('twitter.section_title')}
             </h1>
             <p className="text-text-secondary leading-relaxed text-sm">
-              Deux sources en direct : le fil{' '}
-              <strong className="text-ocean-teal">@dark_massilia</strong> pour les alertes terrain
-              et observations sous-marines, et les actualités officielles du{' '}
-              <strong className="text-white">Parc National des Calanques</strong> pour suivre la
-              vie du parc — espèces protégées, réglementation, événements.
+              {t('twitter.desc', { handle: '@dark_massilia' })}
             </p>
             <div className="mt-5">
               <a
@@ -415,7 +421,7 @@ const Twitter = () => {
                 rel="noopener noreferrer"
                 className="inline-flex items-center gap-2 text-ocean-teal hover:text-white transition-colors font-medium text-sm"
               >
-                Voir le profil @dark_massilia sur X
+                {t('twitter.cta_x', { handle: '@dark_massilia' })}
                 <ExternalLink className="w-4 h-4" />
               </a>
             </div>
@@ -430,19 +436,19 @@ const Twitter = () => {
           className="mt-8 pt-8 border-t border-white/10 flex flex-col sm:flex-row flex-wrap items-center justify-center gap-4 text-sm"
         >
           <Link to="/communaute" className="text-text-secondary hover:text-ocean-teal transition-colors inline-flex items-center gap-1">
-            Rejoindre la communauté <ArrowRight className="w-4 h-4" />
+            {t('twitter.join_community')} <ArrowRight className="w-4 h-4" />
           </Link>
           <Link to="/#newsletter" className="text-text-secondary hover:text-ocean-teal transition-colors inline-flex items-center gap-1">
-            S'inscrire à la newsletter <ArrowRight className="w-4 h-4" />
+            {t('twitter.subscribe')} <ArrowRight className="w-4 h-4" />
           </Link>
           <Link to="/depollution-marine" className="text-text-secondary hover:text-ocean-teal transition-colors inline-flex items-center gap-1">
-            Nos missions de dépollution <ArrowRight className="w-4 h-4" />
+            {t('twitter.missions_link')} <ArrowRight className="w-4 h-4" />
           </Link>
           <Link to="/carte-calanques" className="text-text-secondary hover:text-ocean-teal transition-colors inline-flex items-center gap-1">
-            Carte interactive des Calanques <ArrowRight className="w-4 h-4" />
+            {t('twitter.map_link')} <ArrowRight className="w-4 h-4" />
           </Link>
           <Link to="/" className="text-text-secondary hover:text-ocean-teal transition-colors inline-flex items-center gap-1">
-            <ArrowLeft className="w-4 h-4" /> Accueil
+            <ArrowLeft className="w-4 h-4" /> {t('videos.back_home')}
           </Link>
         </motion.div>
       </div>
