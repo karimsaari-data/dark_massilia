@@ -797,6 +797,15 @@ async function prerender() {
   fs.rmSync(ssrDir, { recursive: true, force: true });
   console.log('\n  🧹 Bundle SSR temporaire supprimé');
 
+  // ── 6. Créer dist/en/index.html pour le routing SPA /en/* ────────────────
+  // Apache peut avoir une règle serveur qui redirige /en → /.
+  // Un fichier physique dist/en/index.html est servi directement par Apache
+  // (règle "prérendu statique" du .htaccess) sans passer par mod_rewrite.
+  const enDir = path.resolve(rootDir, 'dist/en');
+  if (!fs.existsSync(enDir)) fs.mkdirSync(enDir, { recursive: true });
+  fs.copyFileSync(path.resolve(rootDir, 'dist/index.html'), path.resolve(enDir, 'index.html'));
+  console.log('  📄 dist/en/index.html créé (SPA shell pour /en/*)');
+
   console.log('\n✅ Prérendu terminé — tous les fichiers dans dist/\n');
 }
 
