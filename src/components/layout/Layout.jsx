@@ -12,7 +12,9 @@ function LanguageSync() {
   const { i18n } = useTranslation();
   const location = useLocation();
   useEffect(() => {
-    const lang = location.pathname.startsWith('/en') ? 'en' : 'fr';
+    // URL takes priority over localStorage (for direct /en/* links when server allows it)
+    const urlLang = location.pathname.startsWith('/en') ? 'en' : null;
+    const lang = urlLang || localStorage.getItem('dm_lang') || 'fr';
     if (i18n.language !== lang) i18n.changeLanguage(lang);
   }, [location.pathname, i18n]);
   return null;

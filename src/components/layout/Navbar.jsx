@@ -309,14 +309,9 @@ const Navbar = () => {
   const isEn = i18n.language === 'en';
 
   const switchLang = () => {
-    if (isEn) {
-      const newPath = location.pathname.startsWith('/en')
-        ? location.pathname.slice(3) || '/'
-        : '/';
-      navigate(newPath + location.search + location.hash);
-    } else {
-      navigate('/en' + location.pathname + location.search + location.hash);
-    }
+    const newLang = isEn ? 'fr' : 'en';
+    localStorage.setItem('dm_lang', newLang);
+    i18n.changeLanguage(newLang);
   };
 
   const menuPanelRef = useFocusTrap(isMobileMenuOpen);
