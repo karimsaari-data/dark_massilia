@@ -31,7 +31,6 @@ const Px500Icon = ({ className }) => (
 
 /* ─── Icônes réseaux sociaux navbar ─────────────────────── */
 const NAV_SOCIALS = [
-  { Icon: Send,        href: '/#newsletter',                             label: 'Newsletter',                               anchor: true },
   { Icon: Instagram,   href: 'https://www.instagram.com/karimsaari',    label: 'Instagram Karim Saari' },
   { Icon: TikTokIcon,  href: 'https://www.tiktok.com/@dark.massilia',   label: 'TikTok Dark Massilia' },
   { Icon: XTwitterIcon,href: 'https://x.com/dark_massilia',            label: 'X Dark Massilia' },
@@ -427,6 +426,16 @@ const Navbar = () => {
 
             {/* Colonne 3 — Icônes sociales (desktop) + Burger (mobile) */}
             <div className="flex-shrink-0 flex items-center gap-1.5 lg:gap-2 ml-auto">
+              {/* Language switcher */}
+              <button
+                onClick={switchLang}
+                className="text-xl leading-none hover:scale-110 transition-transform duration-200 focus-ring rounded px-1 py-1"
+                aria-label={isEn ? 'Passer en français' : 'Switch to English'}
+                title={isEn ? 'Passer en français' : 'Switch to English'}
+              >
+                {isEn ? '🇫🇷' : '🇬🇧'}
+              </button>
+
               {/* Réseaux — desktop uniquement */}
               <div className="hidden md:flex items-center gap-1 lg:gap-1.5">
                 {NAV_SOCIALS.map(({ Icon, href, label, anchor }) => {
@@ -446,15 +455,6 @@ const Navbar = () => {
                   );
                 })}
               </div>
-
-              {/* Language switcher */}
-              <button
-                onClick={switchLang}
-                className="text-[11px] font-bold tracking-widest text-white/60 hover:text-white border border-white/20 hover:border-white/50 rounded px-2 py-1 transition-all duration-200 uppercase"
-                aria-label={isEn ? 'Passer en français' : 'Switch to English'}
-              >
-                {isEn ? 'FR' : 'EN'}
-              </button>
 
               {/* Burger — mobile uniquement */}
               <button
