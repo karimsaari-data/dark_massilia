@@ -29,6 +29,28 @@ const Px500Icon = ({ className }) => (
   </svg>
 );
 
+const FlagFR = () => (
+  <svg viewBox="0 0 3 2" width="22" height="15" style={{ borderRadius: 2, display: 'block' }} aria-hidden="true">
+    <rect width="1" height="2" fill="#002395"/>
+    <rect x="1" width="1" height="2" fill="#FFF"/>
+    <rect x="2" width="1" height="2" fill="#ED2939"/>
+  </svg>
+);
+
+const FlagGB = () => (
+  <svg viewBox="0 0 60 40" width="22" height="15" style={{ borderRadius: 2, display: 'block' }} aria-hidden="true">
+    <rect width="60" height="40" fill="#012169"/>
+    <line x1="0" y1="0" x2="60" y2="40" stroke="#FFF" strokeWidth="8"/>
+    <line x1="60" y1="0" x2="0" y2="40" stroke="#FFF" strokeWidth="8"/>
+    <line x1="0" y1="0" x2="60" y2="40" stroke="#C8102E" strokeWidth="4"/>
+    <line x1="60" y1="0" x2="0" y2="40" stroke="#C8102E" strokeWidth="4"/>
+    <rect x="23" y="0" width="14" height="40" fill="#FFF"/>
+    <rect x="0" y="13" width="60" height="14" fill="#FFF"/>
+    <rect x="26" y="0" width="8" height="40" fill="#C8102E"/>
+    <rect x="0" y="16" width="60" height="8" fill="#C8102E"/>
+  </svg>
+);
+
 /* ─── Icônes réseaux sociaux navbar ─────────────────────── */
 const NAV_SOCIALS = [
   { Icon: Instagram,   href: 'https://www.instagram.com/karimsaari',    label: 'Instagram Karim Saari' },
@@ -429,11 +451,11 @@ const Navbar = () => {
               {/* Language switcher */}
               <button
                 onClick={switchLang}
-                className="text-xl leading-none hover:scale-110 transition-transform duration-200 focus-ring rounded px-1 py-1"
+                className="hover:scale-110 transition-transform duration-200 focus-ring rounded flex items-center"
                 aria-label={isEn ? 'Passer en français' : 'Switch to English'}
                 title={isEn ? 'Passer en français' : 'Switch to English'}
               >
-                {isEn ? '🇫🇷' : '🇬🇧'}
+                {isEn ? <FlagFR /> : <FlagGB />}
               </button>
 
               {/* Réseaux — desktop uniquement */}
