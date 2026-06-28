@@ -36,7 +36,7 @@ Tout le suivi SEO est **automatisé en CI** ; ce n'est PAS récupéré en live v
   - `weekly-gsc-28day-report.yml` → `gsc-28day-report.js` ; `weekly-ga-report.yml` → `ga-report.js` ; `monthly-backlink-report.yml` → `backlink-report.js` (exports Ahrefs dans `data/gsc-links/`) ; `weekly-seo-digest.yml` → `weekly-seo-digest.js` ; `monthly-seo-crawl.yml` → `seo-crawl.js` ; `lighthouse.yml` (`.lighthouserc.json`). + reports Instagram/Facebook/Cloudflare.
 
 ### Requêtes cibles suivies (`TARGET_QUERIES`, weekly-targets-report.js)
-`photographe environnemental` · `photographe environnemental marseille` · `photographe sous marin marseille` · `photographe calanques` · `photographe paysages marseille` · `dark massilia` · `karim saari` · `dépollution marine marseille`
+`photographe environnemental` · `photographe environnemental marseille` · `photographie environnementale` · `photographie environnementale marseille` · `photographe sous marin marseille` · `photographe calanques` · `photographe paysages marseille` · `dark massilia` · `karim saari` · `dépollution marine marseille`
 
 ### Pour faire un bilan / accéder aux données
 - **Chiffres GSC** → table Supabase **`gsc_daily_queries`** (lecture via MCP Supabase si autorisé, ou via les scripts npm).

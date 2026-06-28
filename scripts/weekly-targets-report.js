@@ -26,6 +26,8 @@ const supabase = createClient(SUPABASE_URL, SUPABASE_KEY);
 const TARGET_QUERIES = [
   'photographe environnemental',
   'photographe environnemental marseille',
+  'photographie environnementale',
+  'photographie environnementale marseille',
   'photographe sous marin marseille',
   'photographe calanques',
   'photographe paysages marseille',

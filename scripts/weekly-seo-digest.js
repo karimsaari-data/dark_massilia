@@ -119,6 +119,8 @@ const TRACKED_KEYWORDS = [
   { q: 'photographe paysages marseille',                cat: 'Local' },
   { q: 'photographe de paysages marseille',             cat: 'Local' },
   { q: 'photographe environnemental marseille',         cat: 'Local' },
+  { q: 'photographie environnementale',                 cat: 'Local' },
+  { q: 'photographie environnementale marseille',       cat: 'Local' },
   { q: 'bénévolat dépollution marseille',               cat: 'Local' },
   { q: 'bénévolat écologique marseille',                cat: 'Local' },
   { q: 'association dépollution marine marseille',      cat: 'Local' },
