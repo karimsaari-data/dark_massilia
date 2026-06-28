@@ -1972,8 +1972,8 @@ export const SEO_PAGES = {
   '/photographe-environnemental-marseille': {
     title: 'Photographe Environnement Marseille | Karim Saari — Dark Massilia',
     description:
-      'Karim Saari, photographe environnement et sous-marin à Marseille. Photographie et dépollution des Calanques depuis 2018. 132 000 personnes engagées.',
-    keywords: 'photographe environnement marseille, photographe environnemental marseille, karim saari, dark massilia, photographe sous-marin calanques, dépollution marine, projet sentinelle',
+      'Karim Saari, photographe environnement et sous-marin à Marseille. Photographie environnementale et dépollution des Calanques depuis 2018. 132 000 personnes engagées.',
+    keywords: 'photographe environnement marseille, photographe environnemental marseille, photographie environnementale, photographie environnementale marseille, karim saari, dark massilia, photographe sous-marin calanques, dépollution marine, projet sentinelle',
     image: `${BASE_URL}/images/Karimsaari-portfolio-sous-marin-paysages-calanques-marseille-photographie-photographe-environnemental.webp`,
     canonical: `${BASE_URL}/photographe-environnemental-marseille`,
     schema: {
