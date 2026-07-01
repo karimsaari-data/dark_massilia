@@ -119,8 +119,8 @@ export default function CookieBanner() {
   if (!mounted || !visible) return null;
 
   return (
-    // Conteneur positionné — bottom-right desktop, full-width bottom mobile
-    <div className="fixed bottom-0 left-0 right-0 z-[999] pointer-events-none md:bottom-4 md:left-auto md:right-4 md:max-w-[360px]">
+    // Conteneur positionné — bottom-left desktop, full-width bottom mobile
+    <div className="fixed bottom-0 left-0 right-0 z-[999] pointer-events-none md:bottom-4 md:right-auto md:left-4 md:max-w-[360px]">
       <AnimatePresence mode="wait">
 
         {!showDetails ? (
