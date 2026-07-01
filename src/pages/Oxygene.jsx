@@ -20,9 +20,9 @@ const HUBLOT_STYLE = {
 // Source : article de blog /blog/oxygene-un-plaidoyer-pour-la-mediterranee
 // FEATURED = images d'appel dans les blocs éditoriaux · GALLERY = reste de la soirée
 const FEATURED_PHOTOS = [
-  'cms.karimsaari.com/wp-content/uploads/2026/07/65-006A3810-1-1024x683.jpg',   // landscape
-  'cms.karimsaari.com/wp-content/uploads/2026/07/88-0I4A5642-683x1024.jpg',     // portrait
-  'cms.karimsaari.com/wp-content/uploads/2026/07/85-0I4A5630-1-1-1024x683.jpg', // landscape
+  'cms.karimsaari.com/wp-content/uploads/2026/07/65-006A3810-1-1024x683.jpg',      // landscape
+  'cms.karimsaari.com/wp-content/uploads/2026/07/88-0I4A5642-683x1024.jpg',        // portrait
+  'cms.karimsaari.com/wp-content/uploads/2026/07/20260624_182308-1024x577.jpg',    // landscape — écran de projection avec logos partenaires (CITEO)
 ].map(toCdn);
 
 const GALLERY_PHOTOS = [
@@ -34,7 +34,6 @@ const GALLERY_PHOTOS = [
   'cms.karimsaari.com/wp-content/uploads/2026/07/103-0I4A5815-1-683x1024.jpg',
   'cms.karimsaari.com/wp-content/uploads/2026/07/104-0I4A5819-683x1024.jpg',
   'cms.karimsaari.com/wp-content/uploads/2026/07/117-006A3885-683x1024.jpg',
-  'cms.karimsaari.com/wp-content/uploads/2026/07/20260624_182308-1024x577.jpg',
 ].map(toCdn);
 
 const Oxygene = () => {
@@ -60,7 +59,7 @@ const Oxygene = () => {
               <VimeoFacade
                 videoId="1193190954"
                 title="OXYGÈNE — Trailer VO"
-                poster={GALLERY_PHOTOS[8]}
+                poster={FEATURED_PHOTOS[2]}
                 aspectClass="aspect-[16/8]"
               />
             </motion.div>
@@ -230,12 +229,12 @@ const Oxygene = () => {
             <div className="lg:w-[42%] flex-shrink-0 min-h-[300px] lg:min-h-0 overflow-hidden">
               <img
                 src={FEATURED_PHOTOS[2]}
-                alt="Soirée de projection du documentaire Oxygène à la Grotte Cosquer Méditerranée, Marseille"
+                alt="Écran de projection du documentaire Oxygène avec les logos des partenaires, dont CITEO, à la Grotte Cosquer Méditerranée, Marseille"
                 className="w-full h-full object-cover object-center"
                 loading="lazy"
                 decoding="async"
                 width="1024"
-                height="683"
+                height="577"
               />
             </div>
           </motion.div>
