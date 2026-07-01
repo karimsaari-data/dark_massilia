@@ -32,6 +32,13 @@ export const videos = [
     thumbnail_url: 'https://i.vimeocdn.com/video/1959544955-a137718c8ecbdfd449d6d417581e46c618125dd3b7317fdc5a3a4bee2e95159e-d_640x360',
   },
   {
+    id: '1193190954',
+    type: 'vimeo',
+    title: 'OXYGÈNE — Trailer VO',
+    description: 'Bande-annonce du documentaire Oxygène, qui suit Team Oxygen en apnée pour dépolluer les fonds marins de Marseille (Zéké Films, soutenu par CITEO)',
+    thumbnail_url: 'https://spcdn.shortpixel.ai/spio/ret_img,q_cdnize,to_auto,s_webp:avif/cms.karimsaari.com/wp-content/uploads/2026/07/65-006A3810-1-1024x683.jpg',
+  },
+  {
     id: 'sseo9sf7jow',
     title: '2025, une année de dépollution en apnée à Marseille',
     description: 'Rétrospective 2025 des actions de dépollution en apnée à Marseille',
