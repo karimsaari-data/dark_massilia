@@ -56,6 +56,7 @@ const STATIC_ROUTES = [
   '/echappees-belles-bouches-du-rhone',
   '/meduses-souveraines-oceans-documentaire-arte',
   '/court-metrage-green-got-mediterranee',
+  '/oxygene-documentaire-depollution-mediterranee',
   '/donnees-scientifiques',
   '/contact',
   '/carte-calanques',

@@ -151,7 +151,7 @@ const Videos = () => {
           initial="hidden"
           animate="visible"
           variants={STAGGER_CONTAINER}
-          className="mx-auto mb-12 grid grid-cols-1 md:grid-cols-3 gap-6"
+          className="mx-auto mb-12 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6"
         >
           {/* Sauver Marseille */}
           <motion.div
@@ -212,6 +212,27 @@ const Videos = () => {
               className="btn-primary inline-flex items-center gap-2 self-start"
             >
               {t('videos.cta_greengot')}
+              <ExternalLink className="w-4 h-4" />
+            </Link>
+          </motion.div>
+
+          {/* Oxygène */}
+          <motion.div
+            variants={FADE_IN_UP}
+            whileHover={{ x: 4, transition: { type: 'spring', stiffness: 400, damping: 25 } }}
+            className="glass-strong rounded-3xl p-8 border border-ocean-teal/20 flex flex-col gap-4"
+          >
+            <div className="flex-1">
+              <p className="text-xs font-semibold text-ocean-teal uppercase tracking-widest mb-2">{t('videos.oxygene_label')}</p>
+              <h2 className="text-xl font-bold text-white mb-3">{t('videos.oxygene_title')}</h2>
+              <h3 className="sr-only">{t('videos.oxygene_subtitle')}</h3>
+              <p className="text-text-secondary leading-relaxed text-sm">{t('videos.oxygene_desc')}</p>
+            </div>
+            <Link
+              to="/oxygene-documentaire-depollution-mediterranee"
+              className="btn-primary inline-flex items-center gap-2 self-start"
+            >
+              {t('videos.cta_oxygene')}
               <ExternalLink className="w-4 h-4" />
             </Link>
           </motion.div>

@@ -197,7 +197,7 @@ function extractFirstImage(html) {
 const SPIO_PREFIX = 'https://spcdn.shortpixel.ai/spio/ret_img,q_cdnize,to_auto,s_webp:avif/';
 
 // Enveloppe une URL d'image d'origine dans le CDN ShortPixel.
-function toCdn(url) {
+export function toCdn(url) {
   if (!url) return null;
   if (url.includes('spcdn.shortpixel.ai')) return url; // déjà sur le CDN
   return SPIO_PREFIX + url.replace(/^https?:\/\//, '');

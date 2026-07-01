@@ -27,7 +27,9 @@ import Twitter    from './pages/Twitter';
 import Contact    from './pages/Contact';
 import Arte           from './pages/Arte';
 import EchappeesBelles from './pages/EchappeesBelles';
+import GreenGot        from './pages/GreenGot';
 import Meduses         from './pages/Meduses';
+import Oxygene         from './pages/Oxygene';
 import Sources    from './pages/Sources';
 // CarteSSR = version sans Leaflet (pas de window en Node)
 import CarteSSR         from './pages/CarteSSR';
@@ -78,7 +80,9 @@ export function render(url) {
             <Route path="actualites"                         element={<Twitter />} />
             <Route path="sauver-marseille-documentaire-arte" element={<Arte />} />
             <Route path="echappees-belles-bouches-du-rhone"  element={<EchappeesBelles />} />
+            <Route path="court-metrage-green-got-mediterranee" element={<GreenGot />} />
             <Route path="meduses-souveraines-oceans-documentaire-arte" element={<Meduses />} />
+            <Route path="oxygene-documentaire-depollution-mediterranee" element={<Oxygene />} />
             <Route path="donnees-scientifiques"              element={<Sources />} />
             <Route path="contact"                            element={<Contact />} />
             <Route path="carte-calanques"                    element={<CarteSSR />} />

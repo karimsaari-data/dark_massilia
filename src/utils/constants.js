@@ -76,6 +76,7 @@ export const NAV_LINKS = [
       { key: 'meduses',   name: 'ARTE — Méduses',           path: '/meduses-souveraines-oceans-documentaire-arte', icon: 'Tv',  sub: true },
       { key: 'echappees', name: 'Échappées Belles',         path: '/echappees-belles-bouches-du-rhone',            icon: 'Tv',  sub: true },
       { key: 'green_got', name: 'Green-Got — Méditerranée', path: '/court-metrage-green-got-mediterranee',         icon: 'Tv',  sub: true },
+      { key: 'oxygene',   name: 'Oxygène — Documentaire',   path: '/oxygene-documentaire-depollution-mediterranee', icon: 'Tv',  sub: true },
       { key: 'blog',      name: 'Blog',                     path: '/blog',                                         icon: 'BookOpen' },
     ],
   },

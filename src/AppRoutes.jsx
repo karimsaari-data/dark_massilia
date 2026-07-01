@@ -30,6 +30,7 @@ const Arte           = lazy(() => import('./pages/Arte'));
 const EchappeesBelles = lazy(() => import('./pages/EchappeesBelles'));
 const GreenGot        = lazy(() => import('./pages/GreenGot'));
 const Meduses    = lazy(() => import('./pages/Meduses'));
+const Oxygene    = lazy(() => import('./pages/Oxygene'));
 const Sources    = lazy(() => import('./pages/Sources'));
 const Carte      = lazy(() => import('./pages/Carte'));
 const LocalGuide = lazy(() => import('./pages/LocalGuide'));
@@ -92,6 +93,7 @@ function renderSharedRoutes() {
     <Route key="echappees" path="echappees-belles-bouches-du-rhone" element={<EchappeesBelles />} />,
     <Route key="green-got" path="court-metrage-green-got-mediterranee" element={<GreenGot />} />,
     <Route key="meduses" path="meduses-souveraines-oceans-documentaire-arte" element={<Meduses />} />,
+    <Route key="oxygene" path="oxygene-documentaire-depollution-mediterranee" element={<Oxygene />} />,
     <Route key="sources" path="donnees-scientifiques" element={<Sources />} />,
     <Route key="contact" path="contact" element={<Contact />} />,
     <Route key="carte-cal" path="carte-calanques" element={<Carte />} />,

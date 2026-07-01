@@ -1531,6 +1531,51 @@ export const SEO_PAGES = {
       ],
     },
   },
+  '/oxygene-documentaire-depollution-mediterranee': {
+    title: 'Oxygène — Documentaire sur la dépollution de la Méditerranée | Karim Saari',
+    description:
+      'Oxygène, documentaire de 52 minutes (Zéké Films, Transfuges, soutenu par CITEO) : Team Oxygen en apnée pour dépolluer les fonds marins de Marseille. Trailer, coulisses et photos.',
+    keywords: 'oxygène documentaire, documentaire dépollution méditerranée, team oxygen film, karim saari documentaire, citeo transfuges zéké films',
+    canonical: `${BASE_URL}/oxygene-documentaire-depollution-mediterranee`,
+    schema: {
+      '@context': 'https://schema.org',
+      '@graph': [
+        breadcrumb('Documentaire Oxygène', '/oxygene-documentaire-depollution-mediterranee'),
+        PERSON_SCHEMA,
+        {
+          '@type': 'VideoObject',
+          name: 'OXYGÈNE — Trailer VO',
+          description:
+            "Bande-annonce du documentaire Oxygène (52 min), qui suit les apnéistes Coralie, Jérémy, Astrid et Karim Saari de Team Oxygen dans leur 4ème Projet Sentinelle de dépollution des fonds marins de Marseille. Réalisé par Roxane Perrot et Ugo Isoard (Zéké Films), produit par Transfuges, soutenu par CITEO.",
+          thumbnailUrl: 'https://spcdn.shortpixel.ai/spio/ret_img,q_cdnize,to_auto,s_webp:avif/cms.karimsaari.com/wp-content/uploads/2026/07/20260624_182308-1024x577.jpg',
+          uploadDate: '2026-06-24T00:00:00+00:00',
+          embedUrl: 'https://player.vimeo.com/video/1193190954',
+          contentUrl: 'https://vimeo.com/1193190954',
+          url: 'https://vimeo.com/1193190954',
+          director: [
+            { '@type': 'Person', name: 'Roxane Perrot' },
+            { '@type': 'Person', name: 'Ugo Isoard' },
+          ],
+          productionCompany: { '@type': 'Organization', name: 'Zéké Films' },
+          publisher: { '@type': 'Organization', name: 'Transfuges' },
+          sponsor: { '@type': 'Organization', name: 'CITEO', url: 'https://www.citeo.com/' },
+          actor: { '@id': `${BASE_URL}/#person` },
+          mentions: { '@id': `${BASE_URL}/#person` },
+        },
+        {
+          '@type': 'NewsArticle',
+          headline: '« Oxygène », un plaidoyer pour la Méditerranée',
+          description: 'Projection privée du documentaire Oxygène le 24 juin 2026 à la Grotte Cosquer Méditerranée, Marseille, en présence de CITEO, des réalisateurs et des partenaires associatifs de Team Oxygen.',
+          datePublished: '2026-06-24',
+          url: `${BASE_URL}/oxygene-documentaire-depollution-mediterranee`,
+          publisher: { '@type': 'Organization', name: 'CITEO', url: 'https://www.citeo.com/' },
+          about: { '@id': `${BASE_URL}/#person` },
+          mentions: { '@id': `${BASE_URL}/#person` },
+          author: { '@id': `${BASE_URL}/#person` },
+        },
+      ],
+    },
+  },
   '/blog': {
     title: 'Blog — Missions Dépollution Marine · Dark Massilia',
     description:
