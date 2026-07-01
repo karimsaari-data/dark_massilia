@@ -1547,7 +1547,7 @@ export const SEO_PAGES = {
           name: 'OXYGÈNE — Trailer VO',
           description:
             "Bande-annonce du documentaire Oxygène (52 min), qui suit les apnéistes Coralie, Jérémy, Astrid et Karim Saari de Team Oxygen dans leur 4ème Projet Sentinelle de dépollution des fonds marins de Marseille. Réalisé par Roxane Perrot et Ugo Isoard (Zéké Films), produit par Transfuges, soutenu par CITEO.",
-          thumbnailUrl: 'https://spcdn.shortpixel.ai/spio/ret_img,q_cdnize,to_auto,s_webp:avif/cms.karimsaari.com/wp-content/uploads/2026/07/20260624_182308-1024x577.jpg',
+          thumbnailUrl: 'https://spcdn.shortpixel.ai/spio/ret_img,q_cdnize,to_auto,s_webp:avif/cms.karimsaari.com/wp-content/uploads/2026/07/65-006A3810-1-1024x683.jpg',
           uploadDate: '2026-06-24T00:00:00+00:00',
           embedUrl: 'https://player.vimeo.com/video/1193190954',
           contentUrl: 'https://vimeo.com/1193190954',
