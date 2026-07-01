@@ -402,6 +402,14 @@
 .prose-blog img {
   @apply rounded-xl max-w-full h-auto my-8 mx-auto block;
 }
+/* Embeds WordPress (Vimeo, YouTube…) : forcer le format 16:9 responsive,
+   sinon l'iframe garde ses width/height fixes en pixels et déborde du cadre sur mobile. */
+.prose-blog iframe {
+  @apply rounded-xl max-w-full my-8 block;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  height: auto;
+}
 .prose-blog figure     { @apply my-8; }
 .prose-blog figcaption { @apply text-center text-xs text-gray-500 mt-2 italic; }
 .prose-blog hr         { @apply border-white/10 my-10; }
