@@ -206,11 +206,11 @@ const Home = () => {
                 >
                   <img
                     src="/images/karim-saari-photographe-sous-marin-marseille.webp"
-                    srcSet="/images/karim-saari-photographe-sous-marin-marseille_300w.webp 300w, /images/karim-saari-photographe-sous-marin-marseille.webp 472w"
+                    srcSet="/images/karim-saari-photographe-sous-marin-marseille_300w.webp 300w, /images/karim-saari-photographe-sous-marin-marseille_400w.webp 400w, /images/karim-saari-photographe-sous-marin-marseille.webp 640w, /images/karim-saari-photographe-sous-marin-marseille_800w.webp 800w"
                     sizes="192px"
                     alt="Karim Saari - Photographe sous-marin en action à Marseille"
-                    width="472"
-                    height="488"
+                    width="640"
+                    height="662"
                     className="h-48 w-auto rounded-xl border border-white/20 shadow-lg shadow-ocean-teal/20"
                     loading="eager"
                     fetchPriority="high"
@@ -303,11 +303,11 @@ const Home = () => {
                   >
                     <img
                       src="/images/karim-saari-photographe-sous-marin-marseille.webp"
-                      srcSet="/images/karim-saari-photographe-sous-marin-marseille_300w.webp 300w, /images/karim-saari-photographe-sous-marin-marseille_400w.webp 400w, /images/karim-saari-photographe-sous-marin-marseille.webp 472w"
+                      srcSet="/images/karim-saari-photographe-sous-marin-marseille_300w.webp 300w, /images/karim-saari-photographe-sous-marin-marseille_400w.webp 400w, /images/karim-saari-photographe-sous-marin-marseille.webp 640w, /images/karim-saari-photographe-sous-marin-marseille_800w.webp 800w"
                       sizes="(max-width: 1024px) 280px, 360px"
                       alt="Karim Saari - Photographe sous-marin en action à Marseille"
-                      width="472"
-                      height="488"
+                      width="640"
+                      height="662"
                       className="h-[380px] lg:h-[460px] w-auto rounded-xl border-2 border-black shadow-[0_0_0_1px_rgba(0,171,168,0.4),0_8px_32px_rgba(0,0,0,0.5)]"
                       loading="eager"
                       fetchPriority="high"
