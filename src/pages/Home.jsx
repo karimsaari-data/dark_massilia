@@ -203,6 +203,7 @@ const Home = () => {
                 <motion.div
                   animate={prefersReducedMotion ? {} : { y: [0, -10, 0] }}
                   transition={{ duration: 6, repeat: Infinity, ease: 'easeInOut' }}
+                  className="relative"
                 >
                   <img
                     src="/images/karim-saari-photographe-sous-marin-marseille.webp"
@@ -216,6 +217,12 @@ const Home = () => {
                     fetchPriority="high"
                     decoding="async"
                   />
+                  <Link
+                    to="/oxygene-documentaire-depollution-mediterranee"
+                    className="absolute bottom-1.5 right-2 text-white/60 hover:text-white/90 text-[10px] font-medium transition-colors"
+                  >
+                    {t('home.hero.photo_credit')}
+                  </Link>
                 </motion.div>
               </div>
 
@@ -300,6 +307,7 @@ const Home = () => {
                   <motion.div
                     animate={prefersReducedMotion ? {} : { y: [0, -10, 0] }}
                     transition={{ duration: 6, repeat: Infinity, ease: 'easeInOut' }}
+                    className="relative"
                   >
                     <img
                       src="/images/karim-saari-photographe-sous-marin-marseille.webp"
@@ -313,6 +321,12 @@ const Home = () => {
                       fetchPriority="high"
                       decoding="async"
                     />
+                    <Link
+                      to="/oxygene-documentaire-depollution-mediterranee"
+                      className="absolute bottom-2 right-3 text-white/60 hover:text-white/90 text-xs font-medium transition-colors"
+                    >
+                      {t('home.hero.photo_credit')}
+                    </Link>
                   </motion.div>
                 </div>
               </div>
