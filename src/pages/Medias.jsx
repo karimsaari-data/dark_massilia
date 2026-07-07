@@ -34,6 +34,16 @@ const Medias = () => {
 
   const pressLinks = [
     {
+      title: 'Kilian Jornet Foundation — Running Minds dans le Parc National des Calanques',
+      url: '/blog/running-minds-parc-national-des-calanques',
+      internal: true,
+      featured: true,
+      date: '20 juin 2026',
+      image: '/images/karim-saari-running-minds-kilian-jornet-foundation-calanques-marseille.webp',
+      logo: '/images/Partenaires/logo-kilian-jornet-foundation.png',
+      desc: "La Kilian Jornet Foundation cite Karim Saari et Team Oxygen dans son bilan de la sortie trail « Running Minds » organisée avec I-Run dans le Parc National des Calanques, aux côtés de Sauvage Méditerranée.",
+    },
+    {
       title: '22 Mille — À Marseille, des apnéistes nettoient les fonds marins',
       url: 'https://www.22-med.com/a-marseille-des-apneistes-nettoient-les-fonds-marins/',
       featured: false,

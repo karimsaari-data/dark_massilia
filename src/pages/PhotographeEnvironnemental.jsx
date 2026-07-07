@@ -188,6 +188,14 @@ const TIMELINE_ENTRIES = [
     hasQuote: true,
   },
   {
+    period: 'Juin 2026',
+    img: '/images/karim-saari-running-minds-kilian-jornet-foundation-calanques-marseille.webp',
+    badge: '/images/Partenaires/logo-kilian-jornet-foundation.png',
+    link: '/blog/running-minds-parc-national-des-calanques',
+    external: false,
+    side: 'right',
+  },
+  {
     period: '2026',
     img: 'https://cms.karimsaari.com/wp-content/uploads/2026/05/Screenshot-2026-05-19-123022_edited-3.webp',
     imgFit: 'object-contain',
