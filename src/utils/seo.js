@@ -64,6 +64,7 @@ const PERSON_SCHEMA = {
     'https://commons.wikimedia.org/wiki/User:Dark_massilia',
     'https://fr.wikipedia.org/wiki/Projet_Sentinelle',
     'https://www.france.tv/france-5/echappees-belles/saison-18/5875509-speciale-echappee-verte-les-bouches-du-rhone-en-action.html',
+    'https://www.kilianjornetfoundation.org/project/running-minds/',
   ],
   knowsAbout: [
     'Protection de l\'environnement',
@@ -2058,6 +2059,15 @@ export const SEO_PAGES = {
           headline: 'Zone Interdite M6 — Dépollution marine Méditerranée, Karim Saari Dark Massilia',
           publisher: { '@type': 'Organization', name: 'M6', url: 'https://www.m6.fr' },
           datePublished: '2023-01-01',
+          about: { '@id': `${BASE_URL}/#person` },
+          mentions: { '@id': `${BASE_URL}/#person` },
+        },
+        {
+          '@type': 'NewsArticle',
+          headline: 'Running Minds — Kilian Jornet Foundation dans le Parc National des Calanques',
+          publisher: { '@type': 'Organization', name: 'Kilian Jornet Foundation', url: 'https://www.kilianjornetfoundation.org' },
+          url: 'https://www.kilianjornetfoundation.org/project/running-minds/',
+          datePublished: '2026-06-20',
           about: { '@id': `${BASE_URL}/#person` },
           mentions: { '@id': `${BASE_URL}/#person` },
         },
