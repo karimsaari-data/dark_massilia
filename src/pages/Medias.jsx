@@ -170,7 +170,7 @@ const Medias = () => {
       featured: true,
       date: 'Juin 2015',
       image: '/images/portfolio/Mer/karim-saari-valensole-lavandes-national-geographic-provence.webp',
-      logo: '/images/Partenaires/svg/National-Geographic-Logo.svg',
+      logo: '/images/Partenaires/svg/national-geographic-logo.svg',
       desc: 'Un cliché de lavandes à Valensole sélectionné et publié dans le hors-série spécial Provence de National Geographic — une reconnaissance internationale pour la photographie de paysage.',
     },
     {

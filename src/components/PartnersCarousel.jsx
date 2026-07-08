@@ -20,7 +20,7 @@ const logos = [
   { src: '/images/Partenaires/svg/La-provence-2023.svg',                 alt: 'La Provence',           href: 'https://www.laprovence.com/' },
   { src: '/images/Partenaires/svg/midi-libre-logo-vector.svg',           alt: 'Midi Libre',            href: 'https://www.midilibre.fr/' },
   { src: '/images/Partenaires/svg/Actu.fr_logo_2020.svg',                alt: 'Actu.fr',               href: 'https://actu.fr/' },
-  { src: '/images/Partenaires/svg/National-Geographic-Logo.svg',          alt: 'National Geographic',   href: 'https://www.nationalgeographic.fr/' },
+  { src: '/images/Partenaires/svg/national-geographic-logo.svg',          alt: 'National Geographic',   href: 'https://www.nationalgeographic.fr/' },
   { src: '/images/Partenaires/svg/Armoiries_de_Marseille.svg',           alt: 'Ville de Marseille',    href: 'https://www.marseille.fr/' },
   { src: '/images/Partenaires/svg/logo-fondation-de-la-mer.svg', alt: 'Fondation de la Mer',   href: 'https://www.fondationdelamer.org/' },
   { src: '/images/Partenaires/svg/logo-un-geste-pour-la-mer.svg',        alt: 'Un Geste pour la Mer',  href: 'https://www.ungestepourlamer.org/' },
