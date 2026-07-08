@@ -47,6 +47,13 @@ const PARTNER_PHOTOS_PNC = [
   },
 ];
 
+// Soirée CITEO — Villa Cosquer Méditerranée (projection d'Oxygène)
+const PARTNER_PHOTOS_CITEO = [
+  { src: '/images/Partenaires/partenaires-citeo-villa-cosquer-oxygene-1.webp', creditUrl: 'https://zartfilmsproduction.com/' },
+  { src: '/images/Partenaires/partenaires-citeo-villa-cosquer-oxygene-2.webp', creditUrl: 'https://zartfilmsproduction.com/' },
+  { src: '/images/Partenaires/partenaires-citeo-villa-cosquer-oxygene-3.webp', creditUrl: 'https://zartfilmsproduction.com/' },
+];
+
 // Associations partenaires
 const ASSOCIATIONS = [
   { name: "Boud'mer",            url: 'https://www.boudmer.org/' },
@@ -857,6 +864,31 @@ const PhotographeEnvironnemental = () => {
                     </p>
                     <a href={creditUrl} target="_blank" rel="noopener noreferrer" className="text-white/50 hover:text-white/80 text-xs mt-0.5 block transition-colors">
                       {t('photographeEnv.photo_pnc_' + idx + '_credit')}
+                    </a>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </motion.div>
+
+          {/* Ligne 3 : 3 × Soirée CITEO — Villa Cosquer Méditerranée (projection d'Oxygène) */}
+          <motion.div variants={FADE_IN_UP} className="grid grid-cols-1 sm:grid-cols-3 gap-3 mt-3">
+            {PARTNER_PHOTOS_CITEO.map(({ src, creditUrl }, idx) => (
+              <div key={src} className="relative rounded-2xl overflow-hidden group ring-1 ring-white/8">
+                <div className="aspect-[4/3]">
+                  <img
+                    src={src}
+                    alt={t('photographeEnv.photo_citeo_' + idx + '_alt')}
+                    className={`w-full h-full object-cover ${idx === 0 ? 'object-top' : ''} group-hover:scale-105 transition-transform duration-500`}
+                    loading="lazy"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent" aria-hidden="true" />
+                  <div className="absolute bottom-0 left-0 right-0 p-3">
+                    <p className="text-white text-xs font-medium leading-snug">
+                      {t('photographeEnv.photo_citeo_' + idx + '_caption')}
+                    </p>
+                    <a href={creditUrl} target="_blank" rel="noopener noreferrer" className="text-white/50 hover:text-white/80 text-xs mt-0.5 block transition-colors">
+                      {t('photographeEnv.photo_citeo_' + idx + '_credit')}
                     </a>
                   </div>
                 </div>
