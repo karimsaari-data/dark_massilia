@@ -1303,6 +1303,9 @@
     "h1": "Photographe Environnemental à Marseille",
     "tagline": "Documenter l'urgence, célébrer la beauté",
 
+    "def_q": "Qu'est-ce qu'un photographe environnemental ?",
+    "def_a": "Un photographe environnemental — aussi appelé photographe environnement — documente la nature (paysages, faune, écosystèmes) pour alerter sur les menaces qui pèsent sur elle. À Marseille, Karim Saari photographie les Calanques et leurs fonds marins en apnée afin de témoigner de la pollution plastique en Méditerranée et de donner envie de la protéger.",
+
     "uni_0_title": "Univers Sous-Marin",
     "uni_0_gal_0_label": "Dépollution",
     "uni_0_gal_0_desc": "Retirer les déchets plastiques des fonds en apnée et documenter l'urgence écologique.",
@@ -1573,7 +1576,13 @@
     "faq_5_a": "L'éthique est primordiale : le bien-être de la faune marine et la préservation de son habitat doivent toujours primer sur l'obtention d'une image. Le photographe éco-responsable doit garder une distance de sécurité pour ne pas stresser les animaux, ne jamais utiliser d'appâts pour les attirer, et limiter les lumières artificielles perturbatrices. Il est essentiel de faire preuve d'honnêteté en refusant toute manipulation numérique trompeuse afin de maintenir la crédibilité du message de conservation.",
     "faq_6_q": "Comment contacter Karim Saari pour un reportage ou une collaboration ?",
     "faq_6_a": "Karim Saari est disponible pour des collaborations documentaires, institutionnelles ou médiatiques.",
-    "faq_6_link": "Accéder à la page contact."
+    "faq_6_link": "Accéder à la page contact.",
+    "faq_7_q": "Comment appelle-t-on un photographe qui photographie la nature ?",
+    "faq_7_a": "On l'appelle photographe environnemental, photographe de nature ou photographe naturaliste. Lorsque son travail vise explicitement à défendre les écosystèmes, on parle aussi de photographe engagé ou écologique. À Marseille, Karim Saari relève de cette démarche : documenter les Calanques et la Méditerranée pour mieux les protéger.",
+    "faq_8_q": "Quel est le métier de photographe environnemental ?",
+    "faq_8_a": "Le métier consiste à photographier les milieux naturels, la faune et la flore, ainsi que les atteintes humaines qui les menacent, pour informer et sensibiliser. Il mêle compétences techniques — terrain, prise de vue sous-marine, apnée — et engagement, souvent au service d'associations, de médias ou d'institutions de protection de l'environnement.",
+    "faq_9_q": "Qu'est-ce qu'un photographe écologique ?",
+    "faq_9_a": "Un photographe écologique met son travail au service de la protection de l'environnement : ses images dénoncent la pollution, valorisent la biodiversité et soutiennent les actions de terrain. Karim Saari en est un exemple à Marseille, où il documente les missions de dépollution en apnée du Projet Sentinelle."
   },
   "seo": {
     "home_title": "Photographe Environnemental Marseille & Calanques — Karim Saari",
