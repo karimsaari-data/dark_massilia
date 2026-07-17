@@ -1448,9 +1448,9 @@ export const SEO_PAGES = {
     },
   },
   '/meduses-souveraines-oceans-documentaire-arte': {
-    title: 'Méduses Souveraines des Océans — ARTE · Karim Saari',
+    title: 'Méduses, les Souveraines des Océans — Documentaire ARTE | Karim Saari',
     description:
-      'Documentaire ARTE Évasion (2024) : plongez dans la prolifération des méduses en Méditerranée. Avec les images exclusives de Karim Saari, apnéiste à Marseille.',
+      'Documentaire ARTE Évasion sur la prolifération des méduses en Méditerranée. Découvrez les coulisses et les images sous-marines signées Karim Saari, apnéiste à Marseille.',
     keywords: 'méduses souveraines océans documentaire arte, méduses méditerranée, karim saari méduses arte évasion',
     canonical: `${BASE_URL}/meduses-souveraines-oceans-documentaire-arte`,
     schema: {
@@ -1744,9 +1744,9 @@ export const SEO_PAGES = {
     },
   },
   '/contact': {
-    title: 'Contact — Photographe Marseille | Karim Saari',
+    title: 'Photographe à Marseille (13009) — Contact | Karim Saari',
     description:
-      'Photographe environnemental & sous-marin à Marseille. Collaboration documentaire, exposition ou dépollution marine — contactez Karim Saari (Dark Massilia).',
+      'Contactez Karim Saari, photographe environnemental & sous-marin à Marseille (13009). Reportage, exposition, collaboration documentaire ou dépollution marine — réponse rapide.',
     keywords: 'contact photographe marseille, karim saari contact, collaboration documentaire, exposition photo marseille',
     canonical: `${BASE_URL}/contact`,
     schema: {
