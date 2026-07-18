@@ -179,8 +179,8 @@
       "title": "Two worlds, one commitment",
       "desc1": "From the limestone cliffs of Marseille's coastline to the depths of the Mediterranean, discover unique visual testimony.",
       "desc2": "Between the splendor of Provence's landscapes and the ecological urgency of the seafloor, each image tells the story of our ecosystem's fragile balance.",
-      "cta_landscapes": "Landscape & Coastal Gallery",
-      "cta_underwater": "Underwater & Cleanup Gallery",
+      "cta_landscapes": "Landscape photographer in Marseille",
+      "cta_underwater": "Underwater photographer in Marseille",
       "cta_map": "Photo Map"
     },
     "community": {
@@ -1303,6 +1303,9 @@
     "h1": "Environmental Photographer in Marseille",
     "tagline": "Documenting urgency, celebrating beauty",
 
+    "def_q": "What is an environmental photographer?",
+    "def_a": "An environmental photographer documents nature — landscapes, wildlife and ecosystems — to raise awareness of the threats it faces. In Marseille, Karim Saari freedives to photograph the Calanques and their seabed, bearing witness to plastic pollution in the Mediterranean and inspiring people to protect it.",
+
     "uni_0_title": "Underwater Universe",
     "uni_0_gal_0_label": "Cleanup",
     "uni_0_gal_0_desc": "Removing plastic waste from the seabed by freediving and documenting the ecological urgency.",
@@ -1377,8 +1380,8 @@
 
     "bio_quote": "\"An image that moves people changes more behaviors than a statistic. Photographing the Calanques is defending them.\"",
     "bio_cta_p": "If you are a journalist, filmmaker, institution or brand committed to the Mediterranean coastline, I am available for collaboration — reporting, exhibitions, field intervention, documentary missions.",
-    "bio_btn_underwater": "Underwater photos — Calanques",
-    "bio_btn_landscapes": "Landscape photos",
+    "bio_btn_underwater": "Underwater photographer — Calanques",
+    "bio_btn_landscapes": "Landscape photographer — Provence",
     "bio_btn_sentinelle": "Projet Sentinelle",
 
     "timeline_h2": "From landscape photography to engaged photography",
@@ -1573,7 +1576,13 @@
     "faq_5_a": "Ethics is paramount: the well-being of marine fauna and the preservation of its habitat must always take precedence over obtaining an image. The eco-responsible photographer must maintain a safe distance to avoid stressing animals, never use bait to attract them, and limit disruptive artificial lighting. It is essential to be honest by refusing any deceptive digital manipulation in order to maintain the credibility of the conservation message.",
     "faq_6_q": "How to contact Karim Saari for a report or collaboration?",
     "faq_6_a": "Karim Saari is available for documentary, institutional or media collaborations.",
-    "faq_6_link": "Access the contact page."
+    "faq_6_link": "Access the contact page.",
+    "faq_7_q": "What do you call a photographer who photographs nature?",
+    "faq_7_a": "They are called an environmental, nature or wildlife photographer. When the work explicitly aims to defend ecosystems, the terms committed or ecological photographer are also used. In Marseille, Karim Saari follows this approach: documenting the Calanques and the Mediterranean to protect them.",
+    "faq_8_q": "What does an environmental photographer do?",
+    "faq_8_a": "The job involves photographing natural environments, wildlife and plants, along with the human damage that threatens them, in order to inform and raise awareness. It combines technical skills — field, underwater, freediving — with commitment, often serving associations, media or environmental protection institutions.",
+    "faq_9_q": "What is an ecological photographer?",
+    "faq_9_a": "An ecological photographer puts their work at the service of environmental protection: their images expose pollution, celebrate biodiversity and support on-the-ground action. Karim Saari is one example in Marseille, where he documents the freediving cleanup missions of the Projet Sentinelle."
   },
   "seo": {
     "home_title": "Environmental Photographer Marseille & Calanques — Karim Saari",

@@ -277,6 +277,23 @@ const PhotographeEnvironnemental = () => {
           </motion.p>
         </motion.div>
 
+        {/* Bloc définition — texte visible ciblant l'extrait optimisé « photographe environnemental » */}
+        <motion.div
+          initial="hidden"
+          animate="visible"
+          variants={STAGGER_CONTAINER}
+          className="max-w-3xl mx-auto mb-10"
+        >
+          <motion.div variants={FADE_IN_UP} className="glass rounded-2xl border border-white/8 p-6 md:p-7">
+            <h2 className="text-lg md:text-xl font-bold text-white mb-2">
+              {t('photographeEnv.def_q')}
+            </h2>
+            <p className="text-text-secondary leading-relaxed text-sm md:text-[0.95rem]">
+              {t('photographeEnv.def_a')}
+            </p>
+          </motion.div>
+        </motion.div>
+
         {/* Cadre hublot — 6 blocs galeries */}
         <div
           className="p-6 md:p-8 mb-12"
@@ -959,7 +976,7 @@ const PhotographeEnvironnemental = () => {
             {t('photographeEnv.faq_h2')}
           </motion.h2>
           <motion.div variants={FADE_IN_UP} className="space-y-4 max-w-3xl mx-auto">
-            {[0, 1, 2, 3, 4, 5, 6].map((i) => (
+            {[0, 7, 8, 9, 1, 2, 3, 4, 5, 6].map((i) => (
               <details key={i} className="glass rounded-2xl border border-white/8 group">
                 <summary className="p-5 cursor-pointer text-white font-medium list-none flex items-center justify-between hover:text-ocean-teal transition-colors">
                   {t('photographeEnv.faq_' + i + '_q')}

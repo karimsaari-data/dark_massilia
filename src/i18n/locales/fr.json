@@ -179,8 +179,8 @@
       "title": "Deux mondes, un engagement",
       "desc1": "Des falaises calcaires du littoral marseillais aux profondeurs de la Méditerranée, découvrez un témoignage visuel unique.",
       "desc2": "Entre la splendeur des paysages provençaux et l'urgence écologique des fonds marins, chaque image raconte la fragilité de l'équilibre de notre écosystème.",
-      "cta_landscapes": "Galerie paysages & littoral",
-      "cta_underwater": "Galerie sous-marine & nettoyage",
+      "cta_landscapes": "Photographe paysage à Marseille",
+      "cta_underwater": "Photographe sous-marin à Marseille",
       "cta_map": "Carte des photos"
     },
     "community": {
@@ -1303,6 +1303,9 @@
     "h1": "Photographe Environnemental à Marseille",
     "tagline": "Documenter l'urgence, célébrer la beauté",
 
+    "def_q": "Qu'est-ce qu'un photographe environnemental ?",
+    "def_a": "Un photographe environnemental — aussi appelé photographe environnement — documente la nature (paysages, faune, écosystèmes) pour alerter sur les menaces qui pèsent sur elle. À Marseille, Karim Saari photographie les Calanques et leurs fonds marins en apnée afin de témoigner de la pollution plastique en Méditerranée et de donner envie de la protéger.",
+
     "uni_0_title": "Univers Sous-Marin",
     "uni_0_gal_0_label": "Dépollution",
     "uni_0_gal_0_desc": "Retirer les déchets plastiques des fonds en apnée et documenter l'urgence écologique.",
@@ -1377,8 +1380,8 @@
 
     "bio_quote": "« Une image qui émeut change plus de comportements qu'un chiffre statistique. Photographier les Calanques, c'est les défendre. »",
     "bio_cta_p": "Si vous êtes journaliste, réalisateur, institution ou marque engagée pour le littoral méditerranéen, je suis disponible pour collaborer — reportage, exposition, intervention terrain, mission documentaire.",
-    "bio_btn_underwater": "Photos sous-marines — Calanques",
-    "bio_btn_landscapes": "Photos de paysages",
+    "bio_btn_underwater": "Photographe sous-marin — Calanques",
+    "bio_btn_landscapes": "Photographe paysage & Provence",
     "bio_btn_sentinelle": "Projet Sentinelle",
 
     "timeline_h2": "De la photographie de paysages à la photographie environnementale engagée",
@@ -1573,7 +1576,13 @@
     "faq_5_a": "L'éthique est primordiale : le bien-être de la faune marine et la préservation de son habitat doivent toujours primer sur l'obtention d'une image. Le photographe éco-responsable doit garder une distance de sécurité pour ne pas stresser les animaux, ne jamais utiliser d'appâts pour les attirer, et limiter les lumières artificielles perturbatrices. Il est essentiel de faire preuve d'honnêteté en refusant toute manipulation numérique trompeuse afin de maintenir la crédibilité du message de conservation.",
     "faq_6_q": "Comment contacter Karim Saari pour un reportage ou une collaboration ?",
     "faq_6_a": "Karim Saari est disponible pour des collaborations documentaires, institutionnelles ou médiatiques.",
-    "faq_6_link": "Accéder à la page contact."
+    "faq_6_link": "Accéder à la page contact.",
+    "faq_7_q": "Comment appelle-t-on un photographe qui photographie la nature ?",
+    "faq_7_a": "On l'appelle photographe environnemental, photographe de nature ou photographe naturaliste. Lorsque son travail vise explicitement à défendre les écosystèmes, on parle aussi de photographe engagé ou écologique. À Marseille, Karim Saari relève de cette démarche : documenter les Calanques et la Méditerranée pour mieux les protéger.",
+    "faq_8_q": "Quel est le métier de photographe environnemental ?",
+    "faq_8_a": "Le métier consiste à photographier les milieux naturels, la faune et la flore, ainsi que les atteintes humaines qui les menacent, pour informer et sensibiliser. Il mêle compétences techniques — terrain, prise de vue sous-marine, apnée — et engagement, souvent au service d'associations, de médias ou d'institutions de protection de l'environnement.",
+    "faq_9_q": "Qu'est-ce qu'un photographe écologique ?",
+    "faq_9_a": "Un photographe écologique met son travail au service de la protection de l'environnement : ses images dénoncent la pollution, valorisent la biodiversité et soutiennent les actions de terrain. Karim Saari en est un exemple à Marseille, où il documente les missions de dépollution en apnée du Projet Sentinelle."
   },
   "seo": {
     "home_title": "Photographe Environnemental Marseille & Calanques — Karim Saari",
