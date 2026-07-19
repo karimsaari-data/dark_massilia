@@ -269,6 +269,16 @@
       "avg_lcp_ms": 7120,
       "avg_fcp_ms": 3864,
       "avg_tbt_ms": 88
+    },
+    {
+      "date": "2026-07-19",
+      "avg_perf": 65,
+      "avg_seo": 100,
+      "avg_a11y": 97,
+      "avg_bp": 91,
+      "avg_lcp_ms": 6948,
+      "avg_fcp_ms": 3952,
+      "avg_tbt_ms": 61
     }
   ]
 }
